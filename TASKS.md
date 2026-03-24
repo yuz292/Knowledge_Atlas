@@ -1,6 +1,6 @@
 # TASKS.md — Knowledge_Atlas
 
-*Last updated: 2026-03-24*
+*Last updated: 2026-03-24 (session 2)*
 *Owner repo: `/Users/davidusa/REPOS/Knowledge_Atlas/`*
 *This file is the canonical task log for all GUI / frontend work.*
 
@@ -29,12 +29,9 @@
 |----|------|-------|---------|
 | KA-T1 | **Create GitHub remote for Knowledge_Atlas and push** | 2026-03-24 | David must create `github.com/dkirsh/Knowledge_Atlas` first, then: `git remote add origin …` + `git push -u origin master`. CW cannot do this without the remote URL. |
 | KA-T2 | **Build GUI evaluation / design agent (Track 4 tool)** | 2026-03-24 | An autonomous agent that inspects KA pages, identifies usability issues against the user-type specs in `ka_gui_assignment.html`, and proposes design changes. Not just a student workbook — an actual AI agent that runs through the site on a scenario, records what it finds, and outputs a structured UX report. Proposed by David 2026-03-24. |
-| KA-T3 | **Update `ka_article_finder_assignment.html` week numbers** | 2026-03-24 | Current page spans "Weeks 1–10". Students start Week 3. Adjust all week labels to Weeks 3–8, add explicit milestone table at top of hero, sharpen per-phase quantity targets (15 queries, 20 questions, 50 papers, 150 citation records). See session notes 2026-03-24 for full milestone table. |
-| KA-T4 | **Add `howItWorks` paragraphs to all 27 measures in `ka_sensors.html`** | 2026-03-24 | Mechanistic explanations + expanded construct lists for every signal. Identified in prior session, not yet executed. |
-| KA-T5 | **Add query templates for remaining DYK topics** | 2026-03-24 | DONE for 12 topics in this session. Verify all 15 QUERY_BANK entries render correctly when clicked from `ka_home.html`. |
-| KA-T6 | **Wire `ka_topics.html` into standalone page navs** | 2026-03-24 | Pages like `ka_article_search.html`, `ka_sensors.html`, `ka_gaps.html` use simple inline navs (not the delegated nav system). Add Topics link to those navbars. |
+| KA-T1 | **Create GitHub remote for Knowledge_Atlas and push** | 2026-03-24 | David must create `github.com/dkirsh/Knowledge_Atlas` first, then: `git remote add origin …` + `git push -u origin master`. CW cannot do this without the remote URL. |
+| KA-T2 | **Build GUI evaluation / design agent (Track 4 tool)** | 2026-03-24 | Autonomous agent that navigates KA pages, runs user scenarios, compares actual vs. AI-optimal path, outputs structured UX report (friction, missing affordances, copy issues). |
 | KA-T7 | **Create GitHub remote and push AE recovery pending changes** | 2026-03-24 | 30 tracked modified files in AE recovery await push to `origin/codex/recovery-cc-migration-artifacts`. Awaiting David's go-ahead. |
-| KA-T8 | **Track 2 milestone table — update page** | 2026-03-24 | David approved the Weeks 3–8 milestone table proposed 2026-03-24. Implement in `ka_article_finder_assignment.html`: milestone table in hero, adjusted week numbers, per-phase quantity callouts. |
 
 ---
 
@@ -61,6 +58,10 @@
 | KA-C10 | Fix two bugs in `ka_hypothesis_builder.html` | 2026-03-23 | Bug 1: sum-signals replace chain (all 8 IDs). Bug 2: Stage 6 gauge not updated by credence slider. |
 | KA-C11 | Build `ka_tag_assignment.html` (Track 1) | 2026-03-23 | 5 algorithm bundles (A–E), claim modal, Phase 0 reference table. |
 | KA-C12 | Build `ka_gui_assignment.html` (Track 4) | 2026-03-23 | 4-phase workbook: User Types · Scenarios · Walkthrough · Spec Wall. |
+| KA-T3/T8 | Update `ka_article_finder_assignment.html` — Weeks 3–8 with milestone table | 2026-03-24 | Hero pill, 5-phase milestone table, workflow bar labels, phase callouts, quantity targets (15/20/50/150), PHASE_STATUS strings. Commit 53d6b9d. |
+| KA-T4 | Add `howItWorks` paragraphs to all 27 measures in `ka_sensors.html` | 2026-03-24 | Mechanistic explanations covering transduction, neural pathway, and methodological constraints. New expand-section rendered conditionally. Commit 4bd5c0a. |
+| KA-T5 | Verify all 15 QUERY_BANK entries in `ka_demo_v04.html` | 2026-03-24 | Script audit: all 15 topic keys (sleep, replication, attention … exercise) present with all 5 required fields (queryText, title, bodyHTML, evidenceHTML, followups). ✅ All verified. |
+| KA-T6 | Wire `ka_topics.html` into all standalone page navs | 2026-03-24 | Topics link added to 7 pages: ka_article_search, ka_sensors, ka_gaps, ka_question_maker, ka_hypothesis_builder, ka_evidence, ka_dashboard (both top nav + sidebar). Commit 0930943. |
 
 ---
 
