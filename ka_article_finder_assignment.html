@@ -169,10 +169,58 @@
   <div class="hero">
     <div class="hero-track-label">COGS 160 · Spring 2026 · Track 2 of 4</div>
     <h1>Article Finder Pipeline Evaluation</h1>
-    <p class="hero-sub">You are the pipeline team. Your job is to understand how scientific literature gets into Knowledge Atlas, find out where the pipeline breaks, and by Week 8 add at least 1,000–1,500 new article records. That requires learning better ways to ask questions than Boolean strings, mastering four search tools, and building an intake workflow that others can follow.</p>
+    <p class="hero-sub">You are the pipeline team. Your job is to understand how scientific literature gets into Knowledge Atlas, find out where the pipeline breaks, and by Week 8 add at least 150 new citation records — and ideally many more. That requires learning better ways to ask questions than Boolean strings, mastering four search tools, and building an intake workflow that others can follow.</p>
+
+    <!-- Milestone table -->
+    <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:16px 18px;margin:14px 0">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-lt);font-weight:600;margin-bottom:10px">Track 2 Milestones — Weeks 3–8</div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.8rem">
+        <thead>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.2)">
+            <th style="text-align:left;padding:5px 10px 7px;color:#a8c8bf;font-size:10px;letter-spacing:.07em;font-weight:600">PHASE</th>
+            <th style="text-align:left;padding:5px 10px 7px;color:#a8c8bf;font-size:10px;letter-spacing:.07em;font-weight:600">WEEKS</th>
+            <th style="text-align:left;padding:5px 10px 7px;color:#a8c8bf;font-size:10px;letter-spacing:.07em;font-weight:600">KEY DELIVERABLE</th>
+            <th style="text-align:left;padding:5px 10px 7px;color:#a8c8bf;font-size:10px;letter-spacing:.07em;font-weight:600">QUANTITY TARGETS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+            <td style="padding:6px 10px;color:#fff;font-weight:600">1 — Tool Orientation</td>
+            <td style="padding:6px 10px;color:var(--teal-lt)">Week 3</td>
+            <td style="padding:6px 10px;color:#d0ece8">Query Diary complete</td>
+            <td style="padding:6px 10px;color:#b8d8d4">15 queries · 8 Include decisions · all 4 tools sampled</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+            <td style="padding:6px 10px;color:#fff;font-weight:600">2 — Question Making</td>
+            <td style="padding:6px 10px;color:var(--teal-lt)">Week 4</td>
+            <td style="padding:6px 10px;color:#d0ece8">Question set submitted to shared queue</td>
+            <td style="padding:6px 10px;color:#b8d8d4">20 questions · 5 per tool · 4+ topic clusters</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+            <td style="padding:6px 10px;color:#fff;font-weight:600">3 — Corpus Building</td>
+            <td style="padding:6px 10px;color:var(--teal-lt)">Weeks 4–5</td>
+            <td style="padding:6px 10px;color:#d0ece8">Recall / precision table</td>
+            <td style="padding:6px 10px;color:#b8d8d4">50 papers assessed · 25+ Include · KA overlap measured</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+            <td style="padding:6px 10px;color:#fff;font-weight:600">4 — Scale-Up Campaign</td>
+            <td style="padding:6px 10px;color:var(--teal-lt)">Weeks 6–7</td>
+            <td style="padding:6px 10px;color:#d0ece8">Citation records submitted to KA</td>
+            <td style="padding:6px 10px;color:#b8d8d4">150 citation records · 50+ PDFs acquired</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 10px;color:#fff;font-weight:600">5 — Pipeline Report</td>
+            <td style="padding:6px 10px;color:var(--teal-lt)">Week 8</td>
+            <td style="padding:6px 10px;color:#d0ece8">Report + handoff package</td>
+            <td style="padding:6px 10px;color:#b8d8d4">50-question query bank · API script · 5 recommendations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="hero-meta">
-      <span class="hero-pill">📅 Weeks 1–10</span>
-      <span class="hero-pill">📚 Goal: +1,000–1,500 articles</span>
+      <span class="hero-pill">📅 Weeks 3–8</span>
+      <span class="hero-pill">📚 Goal: 150+ citation records</span>
       <span class="hero-pill">🔧 4 search tools</span>
       <span class="hero-pill">🤖 Elicit API + manual pipeline</span>
     </div>
@@ -180,19 +228,19 @@
 
   <!-- Workflow bar -->
   <div class="workflow-row" id="workflowBar">
-    <div class="wf-step active" onclick="gotoPhase(1)"><div class="wf-num">1</div><div class="wf-label">Tool Orientation</div><div class="wf-weeks">Weeks 1–2</div></div>
-    <div class="wf-step" onclick="gotoPhase(2)"><div class="wf-num">2</div><div class="wf-label">Question Making</div><div class="wf-weeks">Weeks 3–4</div></div>
-    <div class="wf-step" onclick="gotoPhase(3)"><div class="wf-num">3</div><div class="wf-label">Corpus Building</div><div class="wf-weeks">Weeks 4–6</div></div>
-    <div class="wf-step" onclick="gotoPhase(4)"><div class="wf-num">4</div><div class="wf-label">Scale-Up Campaign</div><div class="wf-weeks">Weeks 6–8</div></div>
-    <div class="wf-step" onclick="gotoPhase(5)"><div class="wf-num">5</div><div class="wf-label">Pipeline Report</div><div class="wf-weeks">Weeks 9–10</div></div>
+    <div class="wf-step active" onclick="gotoPhase(1)"><div class="wf-num">1</div><div class="wf-label">Tool Orientation</div><div class="wf-weeks">Week 3</div></div>
+    <div class="wf-step" onclick="gotoPhase(2)"><div class="wf-num">2</div><div class="wf-label">Question Making</div><div class="wf-weeks">Week 4</div></div>
+    <div class="wf-step" onclick="gotoPhase(3)"><div class="wf-num">3</div><div class="wf-label">Corpus Building</div><div class="wf-weeks">Weeks 4–5</div></div>
+    <div class="wf-step" onclick="gotoPhase(4)"><div class="wf-num">4</div><div class="wf-label">Scale-Up Campaign</div><div class="wf-weeks">Weeks 6–7</div></div>
+    <div class="wf-step" onclick="gotoPhase(5)"><div class="wf-num">5</div><div class="wf-label">Pipeline Report</div><div class="wf-weeks">Week 8</div></div>
   </div>
 
   <!-- ══ PHASE 1 ══ -->
   <div class="phase-panel active" id="phase1">
     <div class="section-title">Phase 1 — Tool Orientation &amp; Manual Baseline</div>
-    <p class="section-intro">Before you can evaluate or improve the pipeline, you must experience the problem it solves. Spend Weeks 1–2 searching manually, then systematically learn each of the four AI search tools. Your Query Diary is the evidence base for everything that follows.</p>
+    <p class="section-intro">Before you can evaluate or improve the pipeline, you must experience the problem it solves. Spend Week 3 searching manually, then systematically learn each of the four AI search tools. Your Query Diary is the evidence base for everything that follows.</p>
 
-    <div class="callout callout-amber"><strong>Week 1 task:</strong> Execute 15 manually-crafted queries on PubMed, PsycINFO, or Web of Science using Boolean operators. Record every query in the diary below. Identify 8 potentially relevant articles by title and abstract. <strong>Week 2:</strong> Extend to 25 queries, finalize at least 12 Include-status articles, write a 500-word reflection.</div>
+    <div class="callout callout-amber"><strong>Week 3 task:</strong> Execute 15 manually-crafted queries on PubMed, PsycINFO, or Web of Science using Boolean operators. Record every query in the diary below. Identify 8 potentially relevant articles by title and abstract. Sample all four tools — Elicit, Google AI Scholar, Consensus, and Scholar AI — with at least 2 queries each. Write a 500-word reflection by the end of the week comparing natural language search against Boolean strings.</div>
 
     <div class="section-title">The Four Search Tools</div>
     <div class="tool-grid">
@@ -245,10 +293,10 @@
     <div class="callout callout-blue"><strong>Critical difference:</strong> Boolean search requires you to know the controlled vocabulary in advance ("Kaplan + Attention + Restoration + Workplace"). Natural language search (Elicit, Google AI Scholar) lets you ask "do natural views from office windows reduce mental fatigue?" and allows the system to map your intent to the literature. Learning to write good natural language questions is a skill — use the <a href="ka_question_maker.html" style="color:var(--blue);">Question Maker</a> to practise.</div>
 
     <div class="section-title">Query Diary</div>
-    <p class="section-intro">One row per query. Record the tool, the query string or question, hit count, how many appeared relevant on first pass, and a note on what worked. Target: 25+ rows by end of Week 2.</p>
+    <p class="section-intro">One row per query. Record the tool, the query string or question, hit count, how many appeared relevant on first pass, and a note on what worked. Target: 15+ rows by end of Week 3 (covering at least 4 tools).</p>
     <div class="progress-grid">
-      <div class="progress-card"><div class="progress-label">Queries logged</div><div class="progress-value" id="queryCount">0</div><div class="progress-target">Target: 25+</div><div class="progress-bar-wrap"><div class="progress-bar" id="queryBar" style="width:0%"></div></div></div>
-      <div class="progress-card"><div class="progress-label">Include decisions</div><div class="progress-value" id="includeCount">0</div><div class="progress-target">Target: 12+</div><div class="progress-bar-wrap"><div class="progress-bar" id="includeBar" style="width:0%"></div></div></div>
+      <div class="progress-card"><div class="progress-label">Queries logged</div><div class="progress-value" id="queryCount">0</div><div class="progress-target">Target: 15+</div><div class="progress-bar-wrap"><div class="progress-bar" id="queryBar" style="width:0%"></div></div></div>
+      <div class="progress-card"><div class="progress-label">Include decisions</div><div class="progress-value" id="includeCount">0</div><div class="progress-target">Target: 8+</div><div class="progress-bar-wrap"><div class="progress-bar" id="includeBar" style="width:0%"></div></div></div>
       <div class="progress-card"><div class="progress-label">Tools used</div><div class="progress-value" id="toolCount">0</div><div class="progress-target">Target: 4</div><div class="progress-bar-wrap"><div class="progress-bar" id="toolBar" style="width:0%"></div></div></div>
     </div>
     <div class="diary-table-wrap">
@@ -269,7 +317,7 @@
 
     <div class="section-title" style="margin-top:24px">Phase 1 · Reflection Prompt</div>
     <div class="field-group">
-      <label class="field-label">500-word reflection (due end of Week 2)</label>
+      <label class="field-label">500-word reflection (due end of Week 3)</label>
       <textarea class="field-input field-textarea" rows="8" placeholder="What surprised you about the manual search experience? What was hardest? Where did vocabulary ambiguity cause problems? What would a good automated tool need to do that you found yourself doing manually? How did natural language questions (Elicit / Google AI Scholar) compare to Boolean queries?"></textarea>
     </div>
   </div>
@@ -354,7 +402,7 @@
     </div>
 
     <div class="callout callout-amber">
-      <strong>Phase 2 deliverable:</strong> Build a set of at least 20 well-formed questions (5 per tool) using the Question Maker, covering at least 4 different topic clusters. Your question set will become the input to the Phase 4 scale-up campaign. Document each question with the cluster it targets, the tool it is optimised for, and the expected yield.
+      <strong>Week 4 deliverable:</strong> Build a set of at least 20 well-formed questions (5 per tool) using the Question Maker, covering at least 4 different topic clusters. Your question set will become the input to the Phase 4 scale-up campaign. Document each question with the cluster it targets, the tool it is optimised for, and the expected yield. Submit to the shared question queue before end of Week 4.
     </div>
 
     <div class="section-title">Go to Question Maker</div>
@@ -416,14 +464,14 @@
     <div class="section-title">Phase 4 — Scale-Up Campaign</div>
 
     <div class="campaign-target">
-      <div class="campaign-num">+1,000–1,500</div>
-      <div class="campaign-desc"><strong>New article records by end of Week 8.</strong> This means APA citations with DOIs logged in the system, not necessarily PDFs. PDFs should be acquired for every article where the abstract passes the relevance filter, but citation-level records count toward the target. The question set you built in Phase 2 is your input. The Article Propose intake pipeline is your output channel.</div>
+      <div class="campaign-num">150+</div>
+      <div class="campaign-desc"><strong>New citation records by end of Week 7.</strong> This means APA citations with DOIs logged in the system. PDFs should be acquired for every article where the abstract passes the relevance filter (target: 50+ PDFs), but citation-level records count toward the primary milestone. The question set you built in Phase 2 is your input. The Article Propose intake pipeline is your output channel. Exceptional teams should aim beyond 150 — the pipeline has no ceiling.</div>
     </div>
 
     <div class="section-title">Campaign Pipeline</div>
     <div class="pipeline-steps">
       <div class="pipeline-step"><div class="pipe-num">1</div><div class="pipe-body"><h4>Generate questions from KA's knowledge state</h4><p>Pull the top 20 highest-VOI topic areas from the Gap Explorer. For each, use the Question Maker to generate 3–5 tool-optimised questions. Focus on clusters with fewer than 20 articles and VOI ≥ 0.6.</p><div class="pipe-tool">Tools: Question Maker → VOI panel → export question set</div></div></div>
-      <div class="pipeline-step"><div class="pipe-num">2</div><div class="pipe-body"><h4>Run questions via Elicit API (automated path)</h4><p>Elicit's API accepts a research question and returns structured results including DOIs, titles, abstracts, and methodology fields. Batch 50 questions through the API, parse the JSON output, and extract a citation list. Document your API call pattern for the handoff package.</p><div class="pipe-tool">Tools: Elicit API (explore key in Week 3), Python batch script, CSV output</div></div></div>
+      <div class="pipeline-step"><div class="pipe-num">2</div><div class="pipe-body"><h4>Run questions via Elicit API (automated path)</h4><p>Elicit's API accepts a research question and returns structured results including DOIs, titles, abstracts, and methodology fields. Batch 50 questions through the API, parse the JSON output, and extract a citation list. Document your API call pattern for the handoff package.</p><div class="pipe-tool">Tools: Elicit API (explore key in Week 4), Python batch script, CSV output</div></div></div>
       <div class="pipeline-step"><div class="pipe-num">3</div><div class="pipe-body"><h4>Run questions manually via Google AI Scholar</h4><p>For questions where the Elicit API yields fewer than 5 results, run the question manually in Google AI Scholar. Copy the citations into the shared queue. Do not skip this — Google AI Scholar accesses different corpora and finds papers Elicit misses.</p><div class="pipe-tool">Tools: Google AI Scholar chat, shared citation queue in Question Maker</div></div></div>
       <div class="pipeline-step"><div class="pipe-num">4</div><div class="pipe-body"><h4>Screen citations for relevance (abstract level)</h4><p>For every retrieved citation, paste the DOI into the Article Propose form. The form auto-fetches the abstract from CrossRef. Read the abstract and decide: Include / Exclude / Uncertain. Only Include-status articles advance to PDF acquisition.</p><div class="pipe-tool">Tools: Article Propose → abstract preview → relevance decision</div></div></div>
       <div class="pipeline-step"><div class="pipe-num">5</div><div class="pipe-body"><h4>Acquire PDFs for Include-status articles</h4><p>Use the Elicit library link first. Fallback order: Unpaywall → Google Scholar free version → Zotero connector → author email. Upload via the Article Propose form. Each uploaded PDF enters the extraction queue for KA's claim-extraction pipeline.</p><div class="pipe-tool">Tools: Elicit DL link, Unpaywall, Article Propose → PDF upload</div></div></div>
@@ -431,7 +479,7 @@
     </div>
 
     <div class="ai-box">
-      <div class="ai-label">🤖 API exploration prompt for Week 3</div>
+      <div class="ai-label">🤖 API exploration prompt for Week 4</div>
       <div class="ai-text" id="apiPrompt">"I am building an automated literature pipeline for an AI evidence-synthesis system. I have access to the Elicit API. Please show me: (1) the basic API call structure for Elicit's search endpoint, accepting a natural language research question and returning DOI, title, abstract, and year; (2) a Python function that takes a list of research questions and returns a pandas DataFrame with one row per result; (3) how to handle rate limiting and paginate through more than 25 results; (4) what the output JSON schema looks like for a typical Elicit API response. Assume I want to run 50–100 questions in a single session."</div>
       <button class="copy-btn" onclick="copyText('apiPrompt')">Copy prompt</button>
     </div>
@@ -487,11 +535,11 @@ let diaryRows = 0;
 
 const PHASE_LABELS = ['Tool Orientation','Question Making','Corpus Building','Scale-Up Campaign','Pipeline Report'];
 const PHASE_STATUS = [
-  'Complete the Query Diary (25+ rows) to advance',
-  'Build your question set in the Question Maker',
-  'Add 25+ articles and compare against KA recall',
-  'Run the campaign — target 1,000–1,500 new records',
-  'Write the report and handoff package'
+  'Week 3 — Complete the Query Diary (15+ rows, 4 tools sampled)',
+  'Week 4 — Build 20 questions in the Question Maker and submit to shared queue',
+  'Weeks 4–5 — Add 50 papers, measure KA recall, propose new articles',
+  'Weeks 6–7 — Run the campaign: target 150+ citation records, 50+ PDFs',
+  'Week 8 — Write the report and handoff package (50-question query bank)'
 ];
 
 function gotoPhase(n) {
@@ -530,7 +578,7 @@ function addDiaryRow() {
     </select></td>
     <td><input type="text" placeholder="What worked / what didn't…" style="width:100%;border:1px solid var(--border);border-radius:4px;padding:5px;font-size:0.78rem;background:var(--cream)"></td>`;
   tbody.appendChild(tr);
-  const pct=Math.min(100,Math.round(diaryRows/25*100));
+  const pct=Math.min(100,Math.round(diaryRows/15*100));
   document.getElementById('queryCount').textContent=diaryRows;
   document.getElementById('queryBar').style.width=pct+'%';
 }
