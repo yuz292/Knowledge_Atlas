@@ -195,7 +195,7 @@
   <div class="hero">
     <div class="hero-track-label">COGS 160 · Spring 2026 · Track 3 of 4</div>
     <h1>VR Environment Production</h1>
-    <p class="hero-sub">You are the environment team. Your job is to translate experimental protocols from the research fronts into navigable, instrumented virtual scenes that could actually be used to run the missing studies. By Week 8 you will produce a fully buildable A-Frame scene with at least three instrumented dependent variables, a design specification document, and a validation report from two naïve-user walkthroughs.</p>
+    <p class="hero-sub">You are the environment team. Your job is to translate experimental protocols from the research fronts into navigable, instrumented virtual scenes that could actually be used to run the missing studies. By Week 7 you will produce a fully buildable A-Frame scene with at least three instrumented dependent variables, a design specification document, and a validation report from two naïve-user walkthroughs. Weeks 8–10 are reserved for course-wide debugging of the Fall 160 site.</p>
 
     <!-- Milestone table -->
     <div class="milestone-table-wrap">
@@ -222,19 +222,19 @@
             <td class="ms-qty">≥ 6 spec fields complete</td>
           </tr>
           <tr>
-            <td class="ms-week">5–6</td>
+            <td class="ms-week">5</td>
             <td class="ms-phase">Scene Build</td>
-            <td>A-Frame HTML file renders without errors in browser</td>
+            <td>A-Frame HTML file renders without errors in browser; peer review in class</td>
             <td class="ms-qty">1 buildable scene</td>
           </tr>
           <tr>
-            <td class="ms-week">7</td>
+            <td class="ms-week">6</td>
             <td class="ms-phase">Instrumentation</td>
             <td>Event logging, gaze capture, task-event hooks wired</td>
             <td class="ms-qty">≥ 3 DVs instrumented</td>
           </tr>
           <tr>
-            <td class="ms-week">8</td>
+            <td class="ms-week">7</td>
             <td class="ms-phase">Validation &amp; Submission</td>
             <td>Naïve-user walkthroughs, validation report, PR to KA repo</td>
             <td class="ms-qty">2 walkthroughs + PR merged</td>
@@ -266,17 +266,17 @@
     <div class="wf-step" onclick="showPhase(3)">
       <div class="wf-num">3</div>
       <div class="wf-label">Scene Build</div>
-      <div class="wf-weeks">Weeks 5–6</div>
+      <div class="wf-weeks">Week 5</div>
     </div>
     <div class="wf-step" onclick="showPhase(4)">
       <div class="wf-num">4</div>
       <div class="wf-label">Instrumentation</div>
-      <div class="wf-weeks">Week 7</div>
+      <div class="wf-weeks">Week 6</div>
     </div>
     <div class="wf-step" onclick="showPhase(5)">
       <div class="wf-num">5</div>
       <div class="wf-label">Validation &amp; Submit</div>
-      <div class="wf-weeks">Week 8</div>
+      <div class="wf-weeks">Week 7</div>
     </div>
   </div>
 
@@ -622,7 +622,7 @@
     </ul>
 
     <div class="callout callout-amber">
-      <strong>Deadline:</strong> Scene file due end of Week 6. Commit <code>vr/scene.html</code> and open a draft PR. Peer review of each other's scenes in class Week 6.
+      <strong>Deadline:</strong> Scene file due end of Week 5. Commit <code>vr/scene.html</code> and open a draft PR. Peer review of each other's scenes in class during Week 5. <em>Note: the timeline is tighter than usual — start the A-Frame skeleton early in Week 5 so peer review has something real to look at.</em>
     </div>
 
     <div class="submit-bar">
@@ -757,7 +757,7 @@ AFRAME.registerComponent(<span class="code-str">'log-events'</span>, {
     </ul>
 
     <div class="callout callout-amber">
-      <strong>Deadline:</strong> Instrumented scene due end of Week 7. Commit updated <code>vr/scene.html</code> and add <code>vr/LOG_SCHEMA.md</code> (table: event name, fields, units, trigger condition).
+      <strong>Deadline:</strong> Instrumented scene due end of Week 6. Commit updated <code>vr/scene.html</code> and add <code>vr/LOG_SCHEMA.md</code> (table: event name, fields, units, trigger condition).
     </div>
 
     <div class="submit-bar">
@@ -902,7 +902,7 @@ AFRAME.registerComponent(<span class="code-str">'log-events'</span>, {
     </div>
 
     <div class="callout callout-amber">
-      <strong>Final deadline:</strong> All deliverables due Week 8. PR must be open before the last class of Week 8. Instructor will merge approved PRs to <code>track/3-staging</code> after code review and scene walkthrough during office hours.
+      <strong>Final deadline:</strong> All deliverables due Week 7. PR must be open before the last class of Week 7. Instructor will merge approved PRs to <code>track/3-staging</code> after code review and scene walkthrough during office hours. Weeks 8–10 shift to course-wide Fall 160 site debugging — your Track 3 work must be complete and submitted before that transition.
     </div>
 
     <div class="submit-bar">
@@ -1009,7 +1009,7 @@ window.KA_PAGE_FUNCTION = {
   title: 'Track 3 VR Assignment — VR Environment Production',
   audience: 'COGS 160 students registered to Track 3',
   purpose: 'Guide Track 3 contributors through the five-phase VR production pipeline: paradigm selection, protocol translation, A-Frame scene build, DV instrumentation, and naïve-user validation. Produces a submittable VR research scene with a documented log schema.',
-  workflowPos: 'Contributor track assignment — runs from Week 1 through Week 8 of the course.',
+  workflowPos: 'Contributor track assignment — runs from Week 1 through Week 7 of the course. Weeks 8–10 are reserved for Fall 160 site debugging.',
   notFor: 'General Knowledge Atlas visitors, Track 1/2/4 students, anyone not building VR scenes this term.',
   phase: 'contributor-track',
   evalQuestions: [
