@@ -88,8 +88,8 @@ Consequence:
 - the root is much cleaner, but not fully normalized yet
 
 Required next action:
-- decide whether the remaining root `MASTER_DOC_CMR_2026-02-25.md` should be retired to a pointer file or archived
-- decide whether `TOPIC_PROGRESS.md` remains a deliberate workflow-level exception
+- root `MASTER_DOC_CMR_2026-02-25.md` has now been reduced to a pointer stub; no further action required unless you later want to remove even the stub
+- `TOPIC_PROGRESS.md` remains a deliberate workspace-level exception
 
 ## Source-of-truth status after this pass
 

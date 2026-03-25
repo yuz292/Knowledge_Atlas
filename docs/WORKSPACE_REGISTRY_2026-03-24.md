@@ -117,6 +117,7 @@ Non-canonical duplicate still present:
 
 Rule:
 - do not treat the root copy as authoritative
+- the root file is now only a pointer stub redirecting readers to the canonical AE recovery docs path
 - future updates belong in the canonical AE recovery docs path
 
 ### Root-level loose files
@@ -127,10 +128,10 @@ Rule:
 
 ## Current operational exceptions at `/Users/davidusa/REPOS` root
 
-These remain for now because they are workflow-level or ambiguous, not just stranded docs:
+These remain for now because they are workflow-level or intentionally retained pointers, not just stranded docs:
 - `CLAUDE.md`
-- `MASTER_DOC_CMR_2026-02-25.md` (non-canonical duplicate pending retirement)
-- `TOPIC_PROGRESS.md`
+- `MASTER_DOC_CMR_2026-02-25.md` (pointer stub only; canonical content archived out of root)
+- `TOPIC_PROGRESS.md` (intentional workspace-level operational log)
 - selected personal documents, slide assets, lockfiles, temporary files, and non-repo artifacts
 
 ## Source-of-truth summary

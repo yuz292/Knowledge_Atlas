@@ -58,7 +58,7 @@ Canonical git-backed location:
 Disposition:
 - treat root copy as non-canonical duplicate
 - do not keep two authoritative versions
-- later replace root copy with pointer note or archive after reference cleanup
+- completed: root file reduced to a pointer stub; former full duplicate archived under `/Users/davidusa/REPOS/Backups/root_file_archive_2026-03-24/`
 
 ### 2. `ATLAS_COURSE_DESIGN_REVISED_2026-03-17.md`
 ### 3. `ATLAS_COURSE_SCAFFOLDING_TASKS_2026-03-17.md`
