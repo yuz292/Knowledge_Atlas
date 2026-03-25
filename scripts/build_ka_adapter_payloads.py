@@ -1,7 +1,18 @@
 #!/usr/bin/env python3
 import json
+import re
 from collections import defaultdict, Counter
 from pathlib import Path
+from datetime import datetime
+
+CURRENT_YEAR = datetime.now().year
+TITLE_REJECT_PATTERNS = [
+    r'^contents lists available at', r'^science of the total environment\b', r'^landscape and urban planning\b',
+    r'^frontiers in psychology\b', r'^ann\. n\.y\. acad\. sci\.', r'^march \d{4} \| volume',
+    r'^article type:', r'^doi:', r'rights reserved', r'elsevier b\.v\.', r'copyediting, typesetting, pagination',
+]
+ABSTRACT_TRIM_MARKERS = [' Published by', ' 1. Introduction', '1. Introduction', ' Introduction ', ' * Corresponding author', ' Contents lists available at ScienceDirect ', ' Contents lists available at']
+
 
 ROOT = Path('/Users/davidusa/REPOS')
 AE = ROOT / 'Article_Eater_PostQuinean_v1_recovery'
@@ -50,6 +61,42 @@ def clean_doi(value):
     if not text or text.endswith('.json'):
         return ''
     return text
+
+
+def publishable_title(text):
+    value = ' '.join(str(text or '').split()).strip()
+    if not value:
+        return ''
+    low = value.lower()
+    if any(re.search(pattern, low) for pattern in TITLE_REJECT_PATTERNS):
+        return ''
+    if value.startswith('•'):
+        return ''
+    if len(value.split()) < 3:
+        return ''
+    return value
+
+
+def sanitize_year(value):
+    try:
+        year = int(value)
+    except Exception:
+        return None
+    if year < 1900 or year > CURRENT_YEAR + 1:
+        return None
+    return year
+
+
+def sanitize_abstract(text):
+    value = ' '.join(str(text or '').split()).strip()
+    if not value:
+        return ''
+    for marker in ABSTRACT_TRIM_MARKERS:
+        idx = value.find(marker)
+        if idx > 200:
+            value = value[:idx].rstrip()
+            break
+    return value
 
 
 def load_bibliographic_repairs():
@@ -197,10 +244,10 @@ def parse_claims():
             if pid and pid not in paper_meta:
                 paper_meta[pid] = {
                     'paper_id': pid,
-                    'title': repair.get('title') or obj.get('paper_title') or obj.get('title') or '',
+                    'title': publishable_title(repair.get('title')) or publishable_title(obj.get('paper_title')) or publishable_title(obj.get('title')) or '',
                     'doi': clean_doi(repair.get('doi') or obj.get('doi')),
-                    'year': repair.get('year') or obj.get('year'),
-                    'abstract': repair.get('abstract') or obj.get('abstract_clean_text') or '',
+                    'year': sanitize_year(repair.get('year') or obj.get('year')),
+                    'abstract': sanitize_abstract(repair.get('abstract') or obj.get('abstract_clean_text')) or '',
                     'theories': theories,
                     'subject_count_total': obj.get('subject_count_total'),
                     'sample_n': obj.get('sample_n'),
@@ -234,9 +281,9 @@ def parse_claims():
                     'studyType': humanize(obj.get('article_type') or 'Unknown'),
                     'warrant': warrant_label,
                     'credence': round(float(obj.get('severity') or 0.5), 2),
-                    'year': repair.get('year') or obj.get('year') or '',
+                    'year': sanitize_year(repair.get('year') or obj.get('year')) or '',
                     'citation': pid,
-                    'abstract': compact_text(repair.get('abstract') or obj.get('abstract_clean_text') or 'Abstract not yet recovered from the current rebuild.', 500),
+                    'abstract': compact_text(sanitize_abstract(repair.get('abstract') or obj.get('abstract_clean_text')) or 'Abstract not yet recovered from the current rebuild.', 500),
                     'claim': compact_text(statement or fallback_finding or pid, 260),
                     'methodology': methodology_summary,
                     'warrant_chain': result.get('test_statistic') or '',
@@ -269,7 +316,7 @@ def parse_claims():
         top_measures = [humanize(t) for t, _ in measure_counter.most_common(3) if t]
         representative = claims[0] if claims else {}
         representative_result = representative.get('structured_result_row') or {}
-        title = meta.get('title') or representative.get('paper_title') or representative.get('title')
+        title = publishable_title(meta.get('title')) or publishable_title(representative.get('paper_title')) or publishable_title(representative.get('title'))
         if not title:
             title = compact_text(
                 representative_result.get('comparison')
@@ -283,8 +330,8 @@ def parse_claims():
             'paper_id': pid,
             'title': title,
             'doi': clean_doi(meta.get('doi')),
-            'year': meta.get('year'),
-            'abstract': meta.get('abstract') or 'Abstract not yet recovered from the current rebuild.',
+            'year': sanitize_year(meta.get('year')),
+            'abstract': sanitize_abstract(meta.get('abstract')) or 'Abstract not yet recovered from the current rebuild.',
             'claim_count': len(claims),
             'sample_n': meta.get('sample_n'),
             'subject_count_total': meta.get('subject_count_total'),
