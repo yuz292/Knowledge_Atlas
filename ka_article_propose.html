@@ -266,7 +266,7 @@
 
     <div class="section-card">
       <div class="card-title">Step 3 — Optional Citation Cleanup</div>
-      <div class="card-sub">If automatic resolution is weak, refine the record before staging. For Track 2, this is not optional: every staged item should have enough citation information to recover an abstract and create a stable APA record.</div>
+      <div class="card-sub">If automatic resolution is weak, refine the record before staging. For Track 2, this is not optional: every staged item should have enough citation information to recover an abstract and create a stable APA record, and the abstract itself should be included whenever your search tool already exposed it.</div>
 
       <div class="metadata-panel visible" id="citationPanel">
         <div class="metadata-title">Selected file metadata</div>
@@ -297,6 +297,10 @@
         <div class="field-group">
           <label class="field-label">Preferred citation / APA line</label>
           <textarea class="field-textarea" id="editCitation" rows="3" placeholder="Paste or build a citation line here. Track 2 should provide at least one stable citation string before staging."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Abstract (capture if available)</label>
+          <textarea class="field-textarea" id="editAbstract" rows="4" placeholder="If Elicit, OpenAlex, Semantic Scholar, Consensus, or another tool showed the abstract, paste it here before staging."></textarea>
         </div>
         <div class="field-group">
           <label class="field-label">Why this might matter (optional)</label>
@@ -661,6 +665,7 @@ function selectPendingFile(id) {
   document.getElementById('editAuthors').value = item.metadata.authors || '';
   document.getElementById('editJournal').value = item.metadata.journal || '';
   document.getElementById('editCitation').value = item.metadata.citation || item.sourceLabel || '';
+  document.getElementById('editAbstract').value = item.metadata.abstract || '';
   document.getElementById('editWhy').value = item.reviewerNote || '';
 }
 
@@ -676,6 +681,7 @@ function saveSelectedEdits() {
   item.metadata.authors = document.getElementById('editAuthors').value.trim();
   item.metadata.journal = document.getElementById('editJournal').value.trim();
   item.metadata.citation = document.getElementById('editCitation').value.trim();
+  item.metadata.abstract = document.getElementById('editAbstract').value.trim();
   item.reviewerNote = document.getElementById('editWhy').value.trim();
   item.metadata.resolutionConfidence = item.metadata.doi || item.metadata.title || item.metadata.citation ? 'manual_refined' : item.metadata.resolutionConfidence;
   item.duplicateMatch = findExistingMatch(item.metadata);
@@ -705,6 +711,7 @@ function resolveSelectedCitation() {
   item.metadata.authors = resolved.authors;
   item.metadata.journal = resolved.journal;
   item.metadata.citation = item.metadata.citation || [resolved.authors, `(${resolved.year})`, resolved.title, resolved.journal].filter(Boolean).join('. ');
+  item.metadata.abstract = item.metadata.abstract || resolved.abstract || '';
   item.metadata.resolutionConfidence = resolved.confidence;
   item.duplicateMatch = findExistingMatch(item.metadata);
   item.status = item.duplicateMatch ? 'duplicate' : (item.staged ? 'staged' : 'extracted');
@@ -752,7 +759,8 @@ function stagePendingFiles() {
       kind: item.kind || 'pdf',
       title: item.metadata.title || item.sourceLabel || item.fileName.replace(/\.pdf$/i,''),
       citation: item.metadata.citation || '',
-      authors: item.metadata.authors || ''
+      authors: item.metadata.authors || '',
+      abstract: item.metadata.abstract || ''
     });
   });
   saveContributionStore(store);
@@ -772,6 +780,7 @@ function clearPendingFiles() {
   document.getElementById('editAuthors').value = '';
   document.getElementById('editJournal').value = '';
   document.getElementById('editCitation').value = '';
+  document.getElementById('editAbstract').value = '';
   document.getElementById('editWhy').value = '';
 }
 
