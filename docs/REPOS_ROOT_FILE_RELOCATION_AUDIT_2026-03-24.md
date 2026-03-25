@@ -42,6 +42,11 @@ Moved into `/Users/davidusa/REPOS/Designing_Experiments/docs/`:
 Moved into `/Users/davidusa/REPOS/Knowledge_Atlas/docs/`:
 - `GOOD_IDEAS.md`
 
+Archived out of `/Users/davidusa/REPOS/` root into `/Users/davidusa/REPOS/Backups/root_file_archive_2026-03-24/`:
+- `EXPERIMENT_WIZARD_README.md`
+- `ENGINEERING_PANEL_AND_SPRINT_PLAN_2026-03-10.md`
+- `LAYER_REVISION_PANEL_DELIBERATION_2026-03-10.md`
+
 ### 1. `MASTER_DOC_CMR_2026-02-25.md`
 
 Current root path:
@@ -104,7 +109,7 @@ Disposition:
   - moved: `OVERSEER_EXECUTIVE_SUMMARY_2026-02-25.md`
   - moved: `SPRINT_PLAN_SUMMARY_2026-02-25.md`
   - moved: `PAPER_1_ATLAS_ARCHITECTURE_COMPLETE_DRAFT_2026-02-28.md`
-  - root duplicates still present for later review: `ENGINEERING_PANEL_AND_SPRINT_PLAN_2026-03-10.md`, `LAYER_REVISION_PANEL_DELIBERATION_2026-03-10.md`
+  - duplicate root copies of `ENGINEERING_PANEL_AND_SPRINT_PLAN_2026-03-10.md` and `LAYER_REVISION_PANEL_DELIBERATION_2026-03-10.md` have been archived out of the workspace root
 
 ### 13. `PORTS_REGISTRY.md`
 ### 14. `PORTS_COORDINATION_CHECKLIST.md`

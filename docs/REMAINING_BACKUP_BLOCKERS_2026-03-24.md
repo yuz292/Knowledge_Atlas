@@ -25,6 +25,7 @@ Path:
 Current state:
 - real git repo
 - local commit history exists
+- current local snapshot commit: `8f29cb2`
 - no GitHub remote configured
 
 Consequence:
@@ -40,11 +41,11 @@ Path:
 
 Current state:
 - restored as a standalone local git repo after the root repo archive
+- current local source snapshot commit: `f57d2b6`
 - no remote configured
-- no curated commit boundary yet
 
 Consequence:
-- the repo is structurally fixed, but still not backed up remotely
+- the repo is structurally fixed and has a curated local source snapshot, but still is not backed up remotely
 
 Required next action:
 - decide the canonical remote repo name
@@ -73,15 +74,21 @@ Required next action:
 Examples:
 - `/Users/davidusa/REPOS/MASTER_DOC_CMR_2026-02-25.md`
 - `/Users/davidusa/REPOS/TOPIC_PROGRESS.md`
-- `/Users/davidusa/REPOS/EXPERIMENT_WIZARD_README.md`
-- `/Users/davidusa/REPOS/ENGINEERING_PANEL_AND_SPRINT_PLAN_2026-03-10.md`
-- `/Users/davidusa/REPOS/LAYER_REVISION_PANEL_DELIBERATION_2026-03-10.md`
+
+Archived duplicate root copies now removed from the workspace root:
+- `EXPERIMENT_WIZARD_README.md`
+- `ENGINEERING_PANEL_AND_SPRINT_PLAN_2026-03-10.md`
+- `LAYER_REVISION_PANEL_DELIBERATION_2026-03-10.md`
+
+Archive location:
+- `/Users/davidusa/REPOS/Backups/root_file_archive_2026-03-24`
 
 Consequence:
 - the root is much cleaner, but not fully normalized yet
 
 Required next action:
-- decide which of these should remain workflow-level exceptions and which should be retired or archived
+- decide whether the remaining root `MASTER_DOC_CMR_2026-02-25.md` should be retired to a pointer file or archived
+- decide whether `TOPIC_PROGRESS.md` remains a deliberate workflow-level exception
 
 ## Source-of-truth status after this pass
 
