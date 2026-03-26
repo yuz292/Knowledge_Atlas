@@ -102,7 +102,7 @@
   }
 
   async function loadStats() {
-    const adapter = window.KA_DATA_ADAPTER;
+    const adapter = window.KA_DATA_ADAPTER || window.KA_PAYLOADS;
     if (!adapter || typeof adapter.loadPayload !== 'function') return null;
     const [topics, articles, evidence, status] = await Promise.all([
       adapter.loadPayload('topics'),

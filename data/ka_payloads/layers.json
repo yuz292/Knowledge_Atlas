@@ -1,0 +1,28 @@
+{
+  "layers": [
+    {
+      "id": "argumentation",
+      "title": "Argumentation Layer",
+      "href": "ka_argumentation.html",
+      "brief": "docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md",
+      "primary_metric": 75858,
+      "primary_label": "claim-level support edges"
+    },
+    {
+      "id": "annotations",
+      "title": "Annotation Layer",
+      "href": "ka_annotations.html",
+      "brief": "docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md",
+      "primary_metric": 61,
+      "primary_label": "active annotations"
+    },
+    {
+      "id": "interpretation",
+      "title": "Interpretation Layer",
+      "href": "ka_interpretation.html",
+      "brief": "docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md",
+      "primary_metric": 3,
+      "primary_label": "high-VOI frontier questions"
+    }
+  ]
+}

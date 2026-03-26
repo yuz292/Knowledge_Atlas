@@ -1,0 +1,581 @@
+{
+  "summary": {
+    "analysis_complete": true,
+    "average_completeness": 0.591,
+    "phase3_baseline": 0.62,
+    "high_voi_count": 3,
+    "medium_voi_count": 9,
+    "low_voi_count": 38,
+    "active_boundary_count": 37,
+    "identified_periphery_count": 13
+  },
+  "phase4_summary": {
+    "phase4_date": "2026-03-17T08:53:58.069015",
+    "analysis_complete": true,
+    "scope_extraction": {
+      "phase3_discovery": "0% text-based scope, but 46% have scope_json in DB",
+      "database_scope_coverage": "100.0%",
+      "key_finding": "Hidden scope data exists in database but not surfaced in belief representation"
+    },
+    "validation_closure": {
+      "average_completeness": 0.591,
+      "phase3_baseline": 0.62,
+      "assessment": "Validation metrics align with Phase 3 closure rate"
+    },
+    "boundary_mapping": {
+      "known_interior": 0,
+      "active_boundary": 37,
+      "identified_periphery": 13,
+      "uncharted_exterior": 0,
+      "key_insight": "Beliefs transition between zones through replication, scope specification, mechanism discovery"
+    },
+    "frontier_prioritization": {
+      "high_voi_questions": 3,
+      "medium_voi_questions": 9,
+      "low_voi_questions": 38,
+      "top_priority_belief": "PP"
+    },
+    "output_files": [
+      "scope_extraction_results.json",
+      "validation_completeness.json",
+      "boundary_map.json",
+      "prioritized_frontier_questions.json"
+    ]
+  },
+  "frontier_questions": [
+    {
+      "frontier_id": "PP",
+      "belief_id": "PP",
+      "framework_name": "Predictive Processing",
+      "voi_score": 0.802,
+      "voi_bucket": "high",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does PP apply?",
+        "In which settings does PP hold?",
+        "Is PP culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "NM",
+      "belief_id": "NM",
+      "framework_name": "Neuromodulatory Systems",
+      "voi_score": 0.72,
+      "voi_bucket": "high",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does NM apply?",
+        "In which settings does NM hold?",
+        "Is NM culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "IC",
+      "belief_id": "IC",
+      "framework_name": "Interoceptive / Constructionist Affect",
+      "voi_score": 0.651,
+      "voi_bucket": "high",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does IC apply?",
+        "In which settings does IC hold?",
+        "Is IC culturally universal or specific?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "DT",
+      "belief_id": "DT",
+      "framework_name": "DMN/TPN Dynamics",
+      "voi_score": 0.591,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does DT apply?",
+        "In which settings does DT hold?",
+        "Is DT culturally universal or specific?"
+      ],
+      "matching_paper_count": 5
+    },
+    {
+      "frontier_id": "SN",
+      "belief_id": "SN",
+      "framework_name": "Spatial Navigation / Cognitive Mapping",
+      "voi_score": 0.54,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does SN apply?",
+        "In which settings does SN hold?",
+        "Is SN culturally universal or specific?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "DP",
+      "belief_id": "DP",
+      "framework_name": "Dual-Process Evaluation",
+      "voi_score": 0.495,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does DP apply?",
+        "In which settings does DP hold?",
+        "Is DP culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "MSI",
+      "belief_id": "MSI",
+      "framework_name": "Multisensory Integration",
+      "voi_score": 0.455,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does MSI apply?",
+        "In which settings does MSI hold?",
+        "Is MSI culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "MS",
+      "belief_id": "MS",
+      "framework_name": "Memory Systems",
+      "voi_score": 0.42,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does MS apply?",
+        "In which settings does MS hold?",
+        "Is MS culturally universal or specific?"
+      ],
+      "matching_paper_count": 2
+    },
+    {
+      "frontier_id": "SRT",
+      "belief_id": "SRT",
+      "framework_name": "Stress Recovery Theory",
+      "voi_score": 0.388,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does SRT apply?",
+        "In which settings does SRT hold?",
+        "Is SRT culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "CB",
+      "belief_id": "CB",
+      "framework_name": "Chronobiological Regulation",
+      "voi_score": 0.36,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does CB apply?",
+        "In which settings does CB hold?",
+        "Is CB culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "EC",
+      "belief_id": "EC",
+      "framework_name": "Embodied Cognition",
+      "voi_score": 0.334,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does EC apply?",
+        "In which settings does EC hold?",
+        "Is EC culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "Biophilia",
+      "belief_id": "Biophilia",
+      "framework_name": "Biophilia Hypothesis",
+      "voi_score": 0.311,
+      "voi_bucket": "medium",
+      "zone": "active_boundary",
+      "question_set": [
+        "For which populations does Biophilia apply?",
+        "In which settings does Biophilia hold?",
+        "Is Biophilia culturally universal or specific?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "COL2",
+      "belief_id": "COL2",
+      "framework_name": "COL2",
+      "voi_score": 0.29,
+      "voi_bucket": "low",
+      "zone": "identified_periphery",
+      "question_set": [
+        "What explains variation across studies of COL2?",
+        "For which populations does COL2 apply?",
+        "In which settings does COL2 hold?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "ART",
+      "belief_id": "ART",
+      "framework_name": "Attention Restoration Theory",
+      "voi_score": 0.27,
+      "voi_bucket": "low",
+      "zone": "active_boundary",
+      "question_set": [
+        "What explains variation across studies of ART?",
+        "For which populations does ART apply?",
+        "In which settings does ART hold?"
+      ],
+      "matching_paper_count": 25
+    },
+    {
+      "frontier_id": "COL1",
+      "belief_id": "COL1",
+      "framework_name": "COL1",
+      "voi_score": 0.252,
+      "voi_bucket": "low",
+      "zone": "identified_periphery",
+      "question_set": [
+        "What explains variation across studies of COL1?",
+        "For which populations does COL1 apply?",
+        "In which settings does COL1 hold?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "A9_Task_Cognition",
+      "belief_id": "A9_Task_Cognition",
+      "framework_name": "A9_Task_Cognition",
+      "voi_score": 0.235,
+      "voi_bucket": "low",
+      "zone": "identified_periphery",
+      "question_set": [
+        "What explains variation across studies of A9_Task_Cognition?",
+        "For which populations does A9_Task_Cognition apply?",
+        "In which settings does A9_Task_Cognition hold?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "A6_Visual_Form",
+      "belief_id": "A6_Visual_Form",
+      "framework_name": "A6_Visual_Form",
+      "voi_score": 0.22,
+      "voi_bucket": "low",
+      "zone": "identified_periphery",
+      "question_set": [
+        "What explains variation across studies of A6_Visual_Form?",
+        "For which populations does A6_Visual_Form apply?",
+        "In which settings does A6_Visual_Form hold?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "AX8",
+      "belief_id": "AX8",
+      "framework_name": "AX8",
+      "voi_score": 0.206,
+      "voi_bucket": "low",
+      "zone": "identified_periphery",
+      "question_set": [
+        "What explains variation across studies of AX8?",
+        "For which populations does AX8 apply?",
+        "In which settings does AX8 hold?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "Privacy Regulation",
+      "belief_id": "Privacy Regulation",
+      "framework_name": "Privacy Regulation",
+      "voi_score": 0.192,
+      "voi_bucket": "low",
+      "zone": "active_boundary",
+      "question_set": [
+        "What explains variation across studies of Privacy Regulation?",
+        "For which populations does Privacy Regulation apply?",
+        "In which settings does Privacy Regulation hold?"
+      ],
+      "matching_paper_count": 0
+    },
+    {
+      "frontier_id": "doi:10.24382/5191:TBL-20260216233549-038:C001",
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-038:C001",
+      "framework_name": "doi:10.24382/5191:TBL-20260216233549-038:C001",
+      "voi_score": 0.18,
+      "voi_bucket": "low",
+      "zone": "active_boundary",
+      "question_set": [
+        "What explains variation across studies of doi:10.24382/5191:TBL-20260216233549-038:C001?",
+        "For which populations does doi:10.24382/5191:TBL-20260216233549-038:C001 apply?",
+        "In which settings does doi:10.24382/5191:TBL-20260216233549-038:C001 hold?"
+      ],
+      "matching_paper_count": 0
+    }
+  ],
+  "validation_beliefs": [
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-038:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 21,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.1080/17508975.2020.1732859:TBL-20260216231240-012:C003",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 3,
+      "challenging_evidence_count": 18,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "zotero:2E64CG9B:TBL-20260216234703-017:C004",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 6,
+      "challenging_evidence_count": 17,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.1098/rsos.240762:TBL-20260216231703-006:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 3,
+      "challenging_evidence_count": 16,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.3389/fpsyg.2017.01454:TBL-20260216233916-006:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 3,
+      "challenging_evidence_count": 16,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.1098/rsos.240762:TBL-20260216231703-006:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 3,
+      "challenging_evidence_count": 15,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.3389/fpsyg.2015.00637:TBL-20260216233845-005:C003",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 6,
+      "challenging_evidence_count": 15,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.3389/fpsyg.2015.00637:TBL-20260216233845-021:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 6,
+      "challenging_evidence_count": 15,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "zotero:2E64CG9B:TBL-20260216234703-017:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 6,
+      "challenging_evidence_count": 15,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "zotero:MRZL6AGQ:TBL-20260216235402-005:C003",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 6,
+      "challenging_evidence_count": 15,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "zotero:MRZL6AGQ:TBL-20260216235403-021:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 6,
+      "challenging_evidence_count": 15,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-038:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 12,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233543-005:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 11,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-035:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 10,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-037:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 9,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-037:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 9,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-037:C003",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 9,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-037:C004",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 9,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-039:C001",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 9,
+      "scope_specified": 1.0
+    },
+    {
+      "belief_id": "doi:10.24382/5191:TBL-20260216233549-039:C002",
+      "validation_completeness": 0.75,
+      "replication_status": "partially_replicated",
+      "supporting_evidence_count": 16,
+      "challenging_evidence_count": 9,
+      "scope_specified": 1.0
+    }
+  ],
+  "boundary_map": {
+    "zone_classification": {
+      "known_interior_count": 0,
+      "active_boundary_count": 37,
+      "identified_periphery_count": 13,
+      "uncharted_exterior_count": 0
+    },
+    "beliefs_by_zone": {
+      "known_interior": [],
+      "active_boundary": [
+        "PP",
+        "NM",
+        "IC",
+        "DT",
+        "SN",
+        "DP",
+        "MSI",
+        "MS",
+        "SRT",
+        "CB",
+        "EC",
+        "Biophilia",
+        "ART",
+        "Privacy Regulation",
+        "doi:10.24382/5191:TBL-20260216233549-038:C001",
+        "doi:10.24382/5191:TBL-20260216233549-038:C002",
+        "doi:10.24382/5191:TBL-20260216233543-005:C001",
+        "doi:10.24382/5191:TBL-20260216233549-035:C001",
+        "doi:10.24382/5191:TBL-20260216233549-037:C001",
+        "doi:10.24382/5191:TBL-20260216233549-037:C002",
+        "doi:10.24382/5191:TBL-20260216233549-037:C003",
+        "doi:10.24382/5191:TBL-20260216233549-037:C004",
+        "doi:10.24382/5191:TBL-20260216233549-039:C001",
+        "doi:10.24382/5191:TBL-20260216233549-039:C002",
+        "doi:10.24382/5191:TBL-20260216233549-036:C001",
+        "doi:10.24382/5191:TBL-20260216233549-036:C003",
+        "zotero:2E64CG9B:TBL-20260216234703-017:C004",
+        "doi:10.1080/17508975.2020.1732859:TBL-20260216231240-012:C003",
+        "doi:10.3389/fpsyg.2015.00637:TBL-20260216233845-005:C003",
+        "doi:10.3389/fpsyg.2015.00637:TBL-20260216233845-021:C002",
+        "zotero:2E64CG9B:TBL-20260216234703-017:C002",
+        "zotero:MRZL6AGQ:TBL-20260216235402-005:C003",
+        "zotero:MRZL6AGQ:TBL-20260216235403-021:C002",
+        "doi:10.1098/rsos.240762:TBL-20260216231703-006:C001",
+        "doi:10.3389/fpsyg.2017.01454:TBL-20260216233916-006:C001",
+        "doi:10.1098/rsos.240762:TBL-20260216231703-006:C002",
+        "doi:10.24382/5191:TBL-20260216233549-042:C002"
+      ],
+      "identified_periphery": [
+        "COL2",
+        "COL1",
+        "A9_Task_Cognition",
+        "A6_Visual_Form",
+        "AX8",
+        "AX9",
+        "EBD",
+        "TSD",
+        "AX7",
+        "SDT",
+        "A8_Social",
+        "PSD",
+        "NM7"
+      ],
+      "uncharted_exterior": []
+    },
+    "transition_dynamics": {
+      "interior_to_boundary_risk": [
+        "Failed replication in new population",
+        "Boundary conditions discovered (generalizability limit)",
+        "Contradicting high-quality evidence",
+        "Mechanism challenged"
+      ],
+      "boundary_to_interior_path": [
+        "Successful replication across 3+ populations",
+        "Scope conditions documented (population, setting, culture)",
+        "Mechanism established with evidence",
+        "Accumulated constraint support (>100 constraints)"
+      ],
+      "boundary_to_periphery_risk": [
+        "Consistent failure to replicate",
+        "Contradictions from multiple independent sources",
+        "Scope too narrow (domain-specific, artifact-dependent)",
+        "Alternative mechanism better supported"
+      ]
+    }
+  },
+  "source_files": {
+    "phase4_summary": "Article_Eater_PostQuinean_v1_recovery/data/interpretation_space/phase4/phase4_summary.json",
+    "frontier_questions": "Article_Eater_PostQuinean_v1_recovery/data/interpretation_space/phase4/prioritized_frontier_questions.json",
+    "validation_completeness": "Article_Eater_PostQuinean_v1_recovery/data/interpretation_space/phase4/validation_completeness.json",
+    "boundary_map": "Article_Eater_PostQuinean_v1_recovery/data/interpretation_space/phase4/boundary_map.json"
+  }
+}

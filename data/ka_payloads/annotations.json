@@ -1,0 +1,398 @@
+{
+  "summary": {
+    "total_beliefs": 57,
+    "total_annotations": 61,
+    "artifact_role": "derived_overlay",
+    "canonical_source": "annotation_service",
+    "description": "Algorithmically generated annotation pass (thin derived layer). NOT the full annotation inventory. For complete annotation coverage, consult AnnotationService.get_annotation_coverage() or qa_layer_status.json"
+  },
+  "by_type": [
+    {
+      "type": "REPLICATION_STATUS",
+      "count": 53
+    },
+    {
+      "type": "CALIBRATION_NOTE",
+      "count": 2
+    },
+    {
+      "type": "DISPUTE",
+      "count": 2
+    },
+    {
+      "type": "SURPRISE_FLAG",
+      "count": 2
+    },
+    {
+      "type": "CROSS_DOMAIN",
+      "count": 1
+    },
+    {
+      "type": "SENSITIVITY_FLAG",
+      "count": 1
+    }
+  ],
+  "annotations": [
+    {
+      "id": "annot_000001",
+      "type": "CALIBRATION_NOTE",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "High credence (0.95) \u2014 verify this finding has strong evidential base",
+      "confidence": 0.85,
+      "status": "active"
+    },
+    {
+      "id": "annot_000002",
+      "type": "SENSITIVITY_FLAG",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "High constraint connectivity (55) \u2014 credence sensitive to network changes",
+      "confidence": 0.75,
+      "status": "active"
+    },
+    {
+      "id": "annot_000003",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "Well-replicated: 3 cross-paper replication constraints",
+      "confidence": 0.9,
+      "status": "active"
+    },
+    {
+      "id": "annot_000004",
+      "type": "SURPRISE_FLAG",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "Credence above theory mean by 0.47 (belief: 0.95, Surprise Theory mean: 0.48)",
+      "confidence": 0.75,
+      "status": "active"
+    },
+    {
+      "id": "annot_000005",
+      "type": "DISPUTE",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "Contradicted by 1 belief(s): b_peer",
+      "confidence": 0.8,
+      "status": "active"
+    },
+    {
+      "id": "annot_000006",
+      "type": "CROSS_DOMAIN",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "Bridges 5 cross-theory connections \u2014 interdisciplinary relevance",
+      "confidence": 0.8,
+      "status": "active"
+    },
+    {
+      "id": "annot_000007",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_peer",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000008",
+      "type": "DISPUTE",
+      "target_type": "belief",
+      "target_id": "b_peer",
+      "content": "Contradicted by 1 belief(s): b_anchor",
+      "confidence": 0.8,
+      "status": "active"
+    },
+    {
+      "id": "annot_000009",
+      "type": "CALIBRATION_NOTE",
+      "target_type": "belief",
+      "target_id": "b_low",
+      "content": "Low credence (0.10) \u2014 finding may lack sufficient evidence or be theoretical",
+      "confidence": 0.85,
+      "status": "active"
+    },
+    {
+      "id": "annot_000010",
+      "type": "SURPRISE_FLAG",
+      "target_type": "belief",
+      "target_id": "b_low",
+      "content": "Credence below theory mean by 0.38 (belief: 0.10, Surprise Theory mean: 0.48)",
+      "confidence": 0.75,
+      "status": "active"
+    },
+    {
+      "id": "annot_000011",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_00",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000012",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_01",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000013",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_02",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000014",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_03",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000015",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_04",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000016",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_05",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000017",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_06",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000018",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_07",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000019",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_08",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000020",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_09",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000021",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_10",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000022",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_11",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000023",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_12",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000024",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_13",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000025",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_14",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000026",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_15",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000027",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_16",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000028",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_17",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000029",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_18",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000030",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_19",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000031",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_20",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000032",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_21",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000033",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_22",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000034",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_23",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000035",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_24",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000036",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_25",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000037",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_26",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000038",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_27",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000039",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_28",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    },
+    {
+      "id": "annot_000040",
+      "type": "REPLICATION_STATUS",
+      "target_type": "belief",
+      "target_id": "b_aux_29",
+      "content": "No cross-paper replication detected \u2014 finding may be isolated",
+      "confidence": 0.7,
+      "status": "active"
+    }
+  ],
+  "source_file": "Article_Eater_PostQuinean_v1_recovery/data/rebuild/annotations_regenerated.json"
+}

@@ -24,6 +24,7 @@
         "Edney, Julian J."
       ],
       "venue": "Psychological Bulletin",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -33,6 +34,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -58,6 +60,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -67,6 +70,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -92,6 +96,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -101,6 +106,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -128,6 +134,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -137,6 +144,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -162,6 +170,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -171,6 +180,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -202,6 +212,7 @@
         "Pyo, Sukhoon"
       ],
       "venue": "Journal of Building Engineering",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -211,6 +222,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -237,6 +249,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -246,6 +259,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -272,6 +286,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -281,6 +296,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -310,6 +326,7 @@
         "Iyendo, Timothy Onosahwo"
       ],
       "venue": "Complementary Therapies in Clinical Practice",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -319,6 +336,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -349,6 +367,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -358,6 +377,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -389,6 +409,7 @@
         "Spiers, H.J."
       ],
       "venue": "Studying Visual and Spatial Reasoning for Design Creativity",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -398,6 +419,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -422,6 +444,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -431,6 +454,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -457,6 +481,7 @@
         "Jo, Hyun In"
       ],
       "venue": "Building and Environment",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -466,6 +491,7 @@
         "sample_n": "review_required",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -494,6 +520,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -503,6 +530,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -535,6 +563,7 @@
         "van Vliet, Helena"
       ],
       "venue": "Research for Development",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -544,6 +573,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -573,6 +603,7 @@
         "Metwally, Walaa Mohamed"
       ],
       "venue": "Sustainability",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -582,6 +613,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -612,6 +644,7 @@
         "Will\u00e9n, Carin"
       ],
       "venue": "Rehabilitation Research and Practice",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -621,6 +654,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -646,6 +680,7 @@
         "Fleming, Roland W."
       ],
       "venue": "Vision Research",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -655,6 +690,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -687,6 +723,7 @@
         "Licina, Dusan"
       ],
       "venue": "Building and Environment",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -696,6 +733,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -724,6 +762,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0659/PDF-0659.abstract.txt",
       "json_status": {
@@ -733,6 +772,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -768,6 +808,7 @@
         "de Kort, Y.A.W."
       ],
       "venue": "Physiology &amp; Behavior",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -777,6 +818,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -804,6 +846,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -813,6 +856,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -842,6 +886,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-1190/PDF-1190.abstract.txt",
       "json_status": {
@@ -851,6 +896,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -881,6 +927,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -890,6 +937,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -918,6 +966,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -927,6 +976,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -953,6 +1003,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0828/PDF-0828.abstract.txt",
       "json_status": {
@@ -962,6 +1013,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -992,6 +1044,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1001,6 +1054,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1030,6 +1084,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "These studies reveal that artificial windows may serve as viable substitutes in windowless environments because they have shown progress in simulating daylight and window views",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1039,6 +1094,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1066,6 +1122,7 @@
         "Bong, Matthew"
       ],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1075,6 +1132,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1106,6 +1164,7 @@
         "Rey, G\u00fcnter Daniel"
       ],
       "venue": "Computers &amp; Education",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1115,6 +1174,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1141,6 +1201,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1150,6 +1211,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1178,6 +1240,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1187,6 +1250,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1215,6 +1279,7 @@
         "SALINGAROS, Nikos"
       ],
       "venue": "JOURNAL OF ARCHITECTURE AND URBANISM",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1224,6 +1289,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1249,6 +1315,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1258,6 +1325,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1281,6 +1349,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1290,6 +1359,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1319,6 +1389,7 @@
         "Salihoglu, Turgay"
       ],
       "venue": "AIP Conference Proceedings",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1328,6 +1399,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1353,6 +1425,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1362,6 +1435,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1386,6 +1460,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "",
       "json_status": {
@@ -1395,6 +1470,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -1422,6 +1498,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1431,6 +1508,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1461,6 +1539,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1470,6 +1549,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1493,6 +1573,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1502,6 +1583,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1531,6 +1613,7 @@
         "Low, Setha M."
       ],
       "venue": "Annual Review of Anthropology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1540,6 +1623,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1568,6 +1652,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1577,6 +1662,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1610,6 +1696,7 @@
         "Job, R. F. Soames"
       ],
       "venue": "The Journal of the Acoustical Society of America",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1619,6 +1706,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1648,6 +1736,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1657,6 +1746,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1684,6 +1774,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "",
       "json_status": {
@@ -1693,6 +1784,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -1718,6 +1810,7 @@
         "Boyce, Peter Robert"
       ],
       "venue": "TU Digital Collections (Thammasat University)",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1727,6 +1820,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1750,6 +1844,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1759,6 +1854,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1785,6 +1881,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1794,6 +1891,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1820,6 +1918,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0820/PDF-0820.abstract.txt",
       "json_status": {
@@ -1829,6 +1928,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -1856,6 +1956,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1865,6 +1966,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1891,6 +1993,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0870/PDF-0870.abstract.txt",
       "json_status": {
@@ -1900,6 +2003,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -1929,6 +2033,7 @@
         "Davis, Glenn E."
       ],
       "venue": "Journal of Personality and Social Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1938,6 +2043,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1967,6 +2073,7 @@
         "Kim, Tae-eun"
       ],
       "venue": "WMU Journal of Maritime Affairs",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1976,6 +2083,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2003,6 +2111,7 @@
         "Jeon, Jin Yong"
       ],
       "venue": "Building and Environment",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2012,6 +2121,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2041,6 +2151,7 @@
         "Tietenberg, Tom"
       ],
       "venue": "Environmental Economics and Policy",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2050,6 +2161,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2081,6 +2193,7 @@
         "Hendrick, Clyde"
       ],
       "venue": "Journal of the Illuminating Engineering Society",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2090,6 +2203,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2118,6 +2232,7 @@
         "Brambilla, Arianna"
       ],
       "venue": "Building and Environment",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2127,6 +2242,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2152,6 +2268,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2161,6 +2278,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2185,6 +2303,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0836/PDF-0836.abstract.txt",
       "json_status": {
@@ -2194,6 +2313,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -2223,6 +2343,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2232,6 +2353,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2259,6 +2381,7 @@
         "Dean, Joshua T."
       ],
       "venue": "American Economic Journal: Applied Economics",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2268,6 +2391,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2299,6 +2423,7 @@
         "Wang, Chao"
       ],
       "venue": "Applied Acoustics",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2308,6 +2433,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2332,6 +2458,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2341,6 +2468,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2368,6 +2496,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2377,6 +2506,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2404,6 +2534,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2413,6 +2544,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2436,6 +2568,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2445,6 +2578,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2472,6 +2606,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2481,6 +2616,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2508,6 +2644,7 @@
         "Teddie, Charles"
       ],
       "venue": "Journal of Personality and Social Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2517,6 +2654,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2545,6 +2683,7 @@
         "G\u00c4RLING, T."
       ],
       "venue": "Journal of Sound and Vibration",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2554,6 +2693,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2579,6 +2719,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2588,6 +2729,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2612,6 +2754,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0978/PDF-0978.abstract.txt",
       "json_status": {
@@ -2621,6 +2764,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -2647,6 +2791,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2656,6 +2801,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2684,6 +2830,7 @@
         "Konijnendijk, Cecil C."
       ],
       "venue": "Future City",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2693,6 +2840,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2720,6 +2868,7 @@
       "article_type": "qualitative",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2729,6 +2878,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2756,6 +2906,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2765,6 +2916,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2794,6 +2946,7 @@
         "R, Harikrishnan"
       ],
       "venue": "2024 Ninth International Conference on Science Technology Engineering and Mathematics (ICONSTEM)",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2803,6 +2956,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2826,6 +2980,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2835,6 +2990,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2865,6 +3021,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0652/PDF-0652.abstract.txt",
       "json_status": {
@@ -2874,6 +3031,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -2903,6 +3061,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "",
       "json_status": {
@@ -2912,6 +3071,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -2936,6 +3096,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0938/PDF-0938.abstract.txt",
       "json_status": {
@@ -2945,6 +3106,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -2973,6 +3135,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2982,6 +3145,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3009,6 +3173,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3018,6 +3183,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3042,6 +3208,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3051,6 +3218,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3083,6 +3251,7 @@
         "de Kort, Y.A.W."
       ],
       "venue": "Physiology &amp; Behavior",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3092,6 +3261,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3119,6 +3289,7 @@
         "Neumann, Heiko"
       ],
       "venue": "Frontiers in Behavioral Neuroscience",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3128,6 +3299,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3161,6 +3333,7 @@
         "Riso, Teresa"
       ],
       "venue": "Frontiers in Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3170,6 +3343,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3199,6 +3373,7 @@
         "Cain, R."
       ],
       "venue": "Applied Acoustics",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3208,6 +3383,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3235,6 +3411,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3244,6 +3421,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3267,6 +3445,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "",
       "json_status": {
@@ -3276,6 +3455,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -3299,6 +3479,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0988/PDF-0988.abstract.txt",
       "json_status": {
@@ -3308,6 +3489,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -3332,6 +3514,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3341,6 +3524,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3372,6 +3556,7 @@
         "Soleimani, Babak"
       ],
       "venue": "The Journal of the Acoustical Society of America",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3381,6 +3566,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3411,6 +3597,7 @@
         "Rapson, Richard L."
       ],
       "venue": "PsycEXTRA Dataset",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3420,6 +3607,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3445,6 +3633,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3454,6 +3643,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3482,6 +3672,7 @@
         "Maclachlan, Malcolm"
       ],
       "venue": "Journal of Health Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3491,6 +3682,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3526,6 +3718,7 @@
         "Quadflieg, Susanne"
       ],
       "venue": "Frontiers in Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3535,6 +3728,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3562,6 +3756,7 @@
         "Kang, Jian"
       ],
       "venue": "Building and Environment",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3571,6 +3766,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3602,6 +3798,7 @@
         "Hendrick, Clyde"
       ],
       "venue": "Journal of the Illuminating Engineering Society",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3611,6 +3808,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3636,6 +3834,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3645,6 +3844,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3669,6 +3869,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3678,6 +3879,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3708,6 +3910,7 @@
         "Wolfs, Emmanuel L. M."
       ],
       "venue": "Archives of Design Research",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3717,6 +3920,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3745,6 +3949,7 @@
         "Knez, Igor"
       ],
       "venue": "Journal of Environmental Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3754,6 +3959,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3784,6 +3990,7 @@
         "Sahajwalla, Veena"
       ],
       "venue": "Resources, Conservation and Recycling",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3793,6 +4000,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3819,6 +4027,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3828,6 +4037,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3856,6 +4066,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3865,6 +4076,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3892,6 +4104,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3901,6 +4114,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3931,6 +4145,7 @@
         "Ajiboye, Samson A."
       ],
       "venue": "Studies in Art and Architecture",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3940,6 +4155,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3970,6 +4186,7 @@
         "Sztrany\u00e1k, Gergely"
       ],
       "venue": "Pollack Periodica",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3979,6 +4196,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -4003,6 +4221,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4012,6 +4231,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4038,6 +4258,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "One possibility would be to show that appearance wood products possess a wide variety of benefits, including those related to health",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4047,6 +4268,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -4077,6 +4299,7 @@
         "Gjestland, Truls"
       ],
       "venue": "Applied Acoustics",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4086,6 +4309,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -4112,6 +4336,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4121,6 +4346,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4150,6 +4376,7 @@
         "Minaker, Leia"
       ],
       "venue": "Health &amp; Place",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4159,6 +4386,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4183,6 +4411,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4192,6 +4421,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4219,6 +4449,7 @@
         "Wiener, Jan M"
       ],
       "venue": "Environment and Planning B: Planning and Design",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4228,6 +4459,7 @@
         "sample_n": "review_required",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -4256,6 +4488,7 @@
         "Wang, Rui"
       ],
       "venue": "Expert Systems with Applications",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4265,6 +4498,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4290,6 +4524,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4299,6 +4534,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4323,6 +4559,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4332,6 +4569,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4372,6 +4610,7 @@
         "Weibel, J"
       ],
       "venue": "Lighting Research &amp; Technology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4381,6 +4620,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4406,6 +4646,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4415,6 +4656,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4442,6 +4684,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4451,6 +4694,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4476,6 +4720,7 @@
       "article_type": "qualitative",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4485,6 +4730,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4511,6 +4757,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4520,6 +4767,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -4544,6 +4792,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4553,6 +4802,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4578,6 +4828,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4587,6 +4838,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4611,6 +4863,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4620,6 +4873,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -4644,6 +4898,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4653,6 +4908,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4679,6 +4935,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4688,6 +4945,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4716,6 +4974,7 @@
         "Basdogan, Cagatay"
       ],
       "venue": "Computers &amp; Graphics",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4725,6 +4984,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -4751,6 +5011,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4760,6 +5021,7 @@
         "sample_n": "review_required",
         "p_value": "accepted",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -4788,6 +5050,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4797,6 +5060,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4827,6 +5091,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4836,6 +5101,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -4859,6 +5125,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4868,6 +5135,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -4898,6 +5166,7 @@
         "Joye, Yannick"
       ],
       "venue": "Review of General Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4907,6 +5176,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4932,6 +5202,7 @@
         "Mallgrave, Harry Francis"
       ],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4941,6 +5212,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4967,6 +5239,7 @@
         "Anderson, Barton L."
       ],
       "venue": "Psychological Review",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4976,6 +5249,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5006,6 +5280,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5015,6 +5290,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5041,6 +5317,7 @@
         "O'Neill, M\u00e1ire Eithne"
       ],
       "venue": "Journal of Architectural Education",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5050,6 +5327,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5075,6 +5353,7 @@
         "Varma, Sashank"
       ],
       "venue": "Frontiers in Psychology",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5084,6 +5363,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5110,6 +5390,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5119,6 +5400,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5142,6 +5424,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5151,6 +5434,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5179,6 +5463,7 @@
         "Kersten, Daniel"
       ],
       "venue": "Trends in Cognitive Sciences",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5188,6 +5473,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5211,6 +5497,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5220,6 +5507,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5243,6 +5531,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5252,6 +5541,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5277,6 +5567,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5286,6 +5577,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5312,6 +5604,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5321,6 +5614,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5347,6 +5641,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5356,6 +5651,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5379,6 +5675,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5388,6 +5685,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5414,6 +5712,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5423,6 +5722,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5449,6 +5749,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5458,6 +5759,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5484,6 +5786,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5493,6 +5796,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5517,6 +5821,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5526,6 +5831,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5549,6 +5855,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5558,6 +5865,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5584,6 +5892,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5593,6 +5902,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5620,6 +5930,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5629,6 +5940,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5655,6 +5967,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5664,6 +5977,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5687,6 +6001,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5696,6 +6011,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5719,6 +6035,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5728,6 +6045,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5755,6 +6073,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5764,6 +6083,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5789,6 +6109,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5798,6 +6119,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5825,6 +6147,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5834,6 +6157,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5860,6 +6184,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5869,6 +6194,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5897,6 +6223,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5906,6 +6233,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5936,6 +6264,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5945,6 +6274,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5973,6 +6303,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5982,6 +6313,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6011,6 +6343,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6020,6 +6353,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6045,6 +6379,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6054,6 +6389,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6083,6 +6419,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6092,6 +6429,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6118,6 +6456,7 @@
       "article_type": "qualitative",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6127,6 +6466,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6154,6 +6494,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6163,6 +6504,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6188,6 +6530,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6197,6 +6540,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6223,6 +6567,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6232,6 +6577,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6257,6 +6603,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6266,6 +6613,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6291,6 +6639,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6300,6 +6649,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6326,6 +6676,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6335,6 +6686,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6361,6 +6713,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6370,6 +6723,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6397,6 +6751,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6406,6 +6761,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6429,6 +6785,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6438,6 +6795,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6466,6 +6824,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6475,6 +6834,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6499,6 +6859,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6508,6 +6869,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6533,6 +6895,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6542,6 +6905,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6569,6 +6933,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6578,6 +6943,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6604,6 +6970,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6613,6 +6980,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6640,6 +7008,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6649,6 +7018,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6677,6 +7047,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6686,6 +7057,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6714,6 +7086,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6723,6 +7096,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6751,6 +7125,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6760,6 +7135,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6786,6 +7162,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6795,6 +7172,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6818,6 +7196,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6827,6 +7206,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6855,6 +7235,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6864,6 +7245,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6892,6 +7274,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6901,6 +7284,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6926,6 +7310,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6935,6 +7320,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6963,6 +7349,7 @@
       "article_type": "book",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6972,6 +7359,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6995,6 +7383,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7004,6 +7393,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7027,6 +7417,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7036,6 +7427,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7064,6 +7456,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7073,6 +7466,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7099,6 +7493,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7108,6 +7503,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7134,6 +7530,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7143,6 +7540,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7171,6 +7569,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7180,6 +7579,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7205,6 +7605,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7214,6 +7615,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7241,6 +7643,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7250,6 +7653,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7277,6 +7681,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7286,6 +7691,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7313,6 +7719,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7322,6 +7729,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7347,6 +7755,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7356,6 +7765,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7380,6 +7790,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7389,6 +7800,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7413,6 +7825,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7422,6 +7835,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7447,6 +7861,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7456,6 +7871,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7484,6 +7900,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7493,6 +7910,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7521,6 +7939,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7530,6 +7949,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7553,6 +7973,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7562,6 +7983,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7590,6 +8012,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7599,6 +8022,7 @@
         "sample_n": "review_required",
         "p_value": "accepted",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7627,6 +8051,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7636,6 +8061,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7663,6 +8089,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7672,6 +8099,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7698,6 +8126,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7707,6 +8136,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7735,6 +8165,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7744,6 +8175,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7769,6 +8201,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7778,6 +8211,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7803,6 +8237,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7812,6 +8247,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7839,6 +8275,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7848,6 +8285,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7875,6 +8313,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7884,6 +8323,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7909,6 +8349,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7918,6 +8359,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7942,6 +8384,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7951,6 +8394,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7983,6 +8427,7 @@
         "Oka, Koichiro"
       ],
       "venue": "Cities &amp; Health",
+      "main_conclusion": "",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -7992,6 +8437,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -8020,6 +8466,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8029,6 +8476,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8057,6 +8505,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8066,6 +8515,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8089,6 +8539,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8098,6 +8549,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8124,6 +8576,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8133,6 +8586,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8159,6 +8613,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8168,6 +8623,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8195,6 +8651,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8204,6 +8661,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8227,6 +8685,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8236,6 +8695,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8262,6 +8722,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8271,6 +8732,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8297,6 +8759,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8306,6 +8769,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8333,6 +8797,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8342,6 +8807,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8371,6 +8837,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8380,6 +8847,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8406,6 +8874,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8415,6 +8884,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8443,6 +8913,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8452,6 +8923,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8478,6 +8950,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8487,6 +8960,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8513,6 +8987,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8522,6 +8997,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8545,6 +9021,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8554,6 +9031,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8581,6 +9059,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8590,6 +9069,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8617,6 +9097,7 @@
       "article_type": "theoretical",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8626,6 +9107,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8652,6 +9134,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8661,6 +9144,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8689,6 +9173,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8698,6 +9183,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8724,6 +9210,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8733,6 +9220,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8759,6 +9247,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8768,6 +9257,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8794,6 +9284,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8803,6 +9294,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8830,6 +9322,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8839,6 +9332,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8864,6 +9358,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8873,6 +9368,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8899,6 +9395,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8908,6 +9405,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8934,6 +9432,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
+      "main_conclusion": "",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8943,6 +9442,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
+        "main_conclusion": "missing",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }

@@ -804,6 +804,41 @@ body { font-family: Arial, sans-serif; color: #2D2D2D; overflow-x: hidden; }
           </div>
         </div>
 
+        <div class="section-eyebrow" style="margin-top:34px;">Operational Layers</div>
+        <h2 class="section-title" style="font-size:1.5rem; margin-bottom:10px;">The three epistemic layers now exposed in the site</h2>
+        <p class="about-body" style="margin-bottom:22px;">
+          Knowledge Atlas is not just article cards and topic lists. The site now exposes the argumentation, annotation, and interpretation layers directly so you can inspect how claims are supported, what has been flagged, and what frontier questions remain. Each layer also has a one-page brief explaining how we build it and how it helps with QA.
+        </p>
+
+        <div class="pillars">
+          <a href="ka_argumentation.html" class="pillar" style="text-decoration:none; color:inherit;">
+            <div class="pillar-icon">🕸️</div>
+            <div class="pillar-name">Argumentation Layer</div>
+            <div class="pillar-authors"><span id="home-layer-argumentation">--</span> support edges · <a href="docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md">brief</a></div>
+            <div class="pillar-desc">
+              The support and conflict structure of the corpus. Use it to inspect debate clusters, claim-level support, and where the graph is still underspecified.
+            </div>
+          </a>
+
+          <a href="ka_annotations.html" class="pillar" style="text-decoration:none; color:inherit;">
+            <div class="pillar-icon">📝</div>
+            <div class="pillar-name">Annotation Layer</div>
+            <div class="pillar-authors"><span id="home-layer-annotations">--</span> active annotations · <a href="docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md">brief</a></div>
+            <div class="pillar-desc">
+              The review overlay for calibration notes, replication flags, sensitivity warnings, and other signals that help keep weak beliefs from being overpromoted.
+            </div>
+          </a>
+
+          <a href="ka_interpretation.html" class="pillar" style="text-decoration:none; color:inherit;">
+            <div class="pillar-icon">🧭</div>
+            <div class="pillar-name">Interpretation Layer</div>
+            <div class="pillar-authors"><span id="home-layer-interpretation">--</span> high-VOI questions · <a href="docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md">brief</a></div>
+            <div class="pillar-desc">
+              The planning surface that shows active-boundary beliefs, frontier questions, and where the field remains strategically incomplete.
+            </div>
+          </a>
+        </div>
+
       </div>
     </div>
 
@@ -818,8 +853,8 @@ body { font-family: Arial, sans-serif; color: #2D2D2D; overflow-x: hidden; }
   </p>
   <p>
     David Kirsh · UCSD Department of Cognitive Science &nbsp;·&nbsp;
-    <a href="#">Documentation</a> &nbsp;·&nbsp;
-    <a href="#">Contact</a>
+    <a href="ka_sitemap.html">Documentation</a> &nbsp;·&nbsp;
+    <a href="#about">About</a>
   </p>
   <p style="margin-top:10px; font-size:0.72rem; color:#3A5A54;">KA UI v0.4 &nbsp;·&nbsp; Design prototype — not production</p>
 </footer>
@@ -927,25 +962,35 @@ window.KA_PAGE_FUNCTION = {
     window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/topics.json', { topics: [] }),
     window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/articles.json', { articles: [] }),
     window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/evidence.json', { evidence: [] }),
-    window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/json_status.json', { summary: {} })
+    window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/json_status.json', { summary: {} }),
+    window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/layers.json', { layers: [] })
   ]).then(function(results) {
     const topics = results[0] || {};
     const articles = results[1] || {};
     const evidence = results[2] || {};
     const jsonStatus = results[3] || {};
+    const layers = results[4] || {};
     const summary = jsonStatus.summary || {};
+    const layerMap = {};
+    (layers.layers || []).forEach(function(layer) { layerMap[layer.id] = layer; });
 
     setText('home-live-topics', (topics.topics || []).length);
     setText('home-live-articles', (articles.articles || []).length);
     setText('home-live-evidence', (evidence.evidence || []).length);
     setText('home-live-abstracts', summary.abstract_good ?? '--');
     setText('home-live-subjects', summary.subject_count_good ?? '--');
+    setText('home-layer-argumentation', layerMap.argumentation ? layerMap.argumentation.primary_metric : '--');
+    setText('home-layer-annotations', layerMap.annotations ? layerMap.annotations.primary_metric : '--');
+    setText('home-layer-interpretation', layerMap.interpretation ? layerMap.interpretation.primary_metric : '--');
   }).catch(function() {
     setText('home-live-topics', '--');
     setText('home-live-articles', '--');
     setText('home-live-evidence', '--');
     setText('home-live-abstracts', '--');
     setText('home-live-subjects', '--');
+    setText('home-layer-argumentation', '--');
+    setText('home-layer-annotations', '--');
+    setText('home-layer-interpretation', '--');
   });
 })();
 </script>

@@ -708,6 +708,9 @@
             <ul class="sidebar-nav">
                 <li><a href="ka_demo_v04.html"><div class="nav-icon"></div>Ask</a></li>
                 <li><a href="ka_evidence.html"><div class="nav-icon"></div>Evidence</a></li>
+                <li><a href="ka_argumentation.html"><div class="nav-icon"></div>Argument</a></li>
+                <li><a href="ka_annotations.html"><div class="nav-icon"></div>Annotate</a></li>
+                <li><a href="ka_interpretation.html"><div class="nav-icon"></div>Interpret</a></li>
                 <li><a href="ka_hypothesis_builder.html"><div class="nav-icon"></div>Build</a></li>
                 <li><a href="ka_tagger.html"><div class="nav-icon"></div>Tag</a></li>
                 <li><a href="ka_articles.html"><div class="nav-icon"></div>Articles</a></li>
@@ -761,6 +764,28 @@
                     <div class="json-status-item">
                         <span class="json-status-label">Effect Sizes Accepted</span>
                         <div class="json-status-value" id="dashboard-json-effect-accepted">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card json-status-card">
+                <h2>Epistemic Layers</h2>
+                <p class="json-status-copy">These layer pages expose the support graph, the review overlay, and the interpretation frontier so the site walkthrough can reach the actual reasoning surfaces, not just article and evidence lists.</p>
+                <div class="json-status-grid">
+                    <div class="json-status-item">
+                        <span class="json-status-label">Argumentation</span>
+                        <div class="json-status-value" id="dashboard-layer-argumentation">0</div>
+                        <a href="ka_argumentation.html" class="progress-link">Open →</a>
+                    </div>
+                    <div class="json-status-item">
+                        <span class="json-status-label">Annotations</span>
+                        <div class="json-status-value" id="dashboard-layer-annotations">0</div>
+                        <a href="ka_annotations.html" class="progress-link">Open →</a>
+                    </div>
+                    <div class="json-status-item">
+                        <span class="json-status-label">Interpretation</span>
+                        <div class="json-status-value" id="dashboard-layer-interpretation">0</div>
+                        <a href="ka_interpretation.html" class="progress-link">Open →</a>
                     </div>
                 </div>
             </div>
@@ -1061,8 +1086,13 @@ window.KA_PAGE_FUNCTION = {
   async function initializeDashboardPage() {
     const payload = await window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/dashboard.json', {});
     const jsonStatusPayload = await window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/json_status.json', {});
+    const layersPayload = await window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/layers.json', {});
     const dashboard = payload.dashboard || {};
     const jsonSummary = jsonStatusPayload.summary || {};
+    const layerMap = {};
+    (layersPayload.layers || []).forEach(function(layer) {
+      layerMap[layer.id] = layer;
+    });
     let currentUser = null;
     try {
       currentUser = JSON.parse(localStorage.getItem('ka_current_user') || 'null');
@@ -1136,6 +1166,9 @@ window.KA_PAGE_FUNCTION = {
     document.getElementById('dashboard-json-sample-review').textContent = String(jsonSummary.sample_n_review_required || 0);
     document.getElementById('dashboard-json-p-accepted').textContent = String(jsonSummary.p_value_accepted || 0);
     document.getElementById('dashboard-json-effect-accepted').textContent = String(jsonSummary.effect_size_accepted || 0);
+    document.getElementById('dashboard-layer-argumentation').textContent = String(layerMap.argumentation ? layerMap.argumentation.primary_metric : 0);
+    document.getElementById('dashboard-layer-annotations').textContent = String(layerMap.annotations ? layerMap.annotations.primary_metric : 0);
+    document.getElementById('dashboard-layer-interpretation').textContent = String(layerMap.interpretation ? layerMap.interpretation.primary_metric : 0);
     if (jsonSummary.papers_total) {
       document.getElementById('dashboard-json-status-copy').textContent = `Current payload coverage across ${jsonSummary.papers_total} papers. Provisional and missing fields stay visible here so we can keep repairing the JSONs while the site is already reviewable.`;
     }

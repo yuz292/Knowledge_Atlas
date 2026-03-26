@@ -23,6 +23,14 @@ FRONTS_PATH = AE / 'data' / 'rebuild' / 'research_fronts_v5.json'
 CLAIMS_PATH = AE / 'data' / 'rebuild' / 'gold_claims.jsonl'
 REPAIRS_PATH = AE / 'data' / 'rebuild' / 'bibliographic_repairs.json'
 DEEP_STATS_DIR = AE / 'data' / 'verification_runs' / 'v6_deep_stats_adjudication'
+MAIN_CONCLUSION_DIR = AE / 'data' / 'verification_runs' / 'v6_main_conclusion_adjudication'
+ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'argumentation_graph_v5.json'
+CLAIM_ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'claim_argument_graph_v1.json'
+ANNOTATIONS_PATH = AE / 'data' / 'rebuild' / 'annotations_regenerated.json'
+INTERPRETATION_SUMMARY_PATH = AE / 'data' / 'interpretation_space' / 'phase4' / 'phase4_summary.json'
+FRONTIER_QUESTIONS_PATH = AE / 'data' / 'interpretation_space' / 'phase4' / 'prioritized_frontier_questions.json'
+VALIDATION_COMPLETENESS_PATH = AE / 'data' / 'interpretation_space' / 'phase4' / 'validation_completeness.json'
+BOUNDARY_MAP_PATH = AE / 'data' / 'interpretation_space' / 'phase4' / 'boundary_map.json'
 
 INSTRUMENT_PATTERNS = {
     'EEG': [' eeg ', 'electroencephal', 'alpha asymmetry', 'frontal theta', 'erp '],
@@ -152,6 +160,29 @@ def load_deep_stat_adjudications():
     return payload
 
 
+def load_main_conclusion_adjudications():
+    payload = {}
+    if not MAIN_CONCLUSION_DIR.exists():
+        return payload
+    for path in MAIN_CONCLUSION_DIR.glob('PDF-*.main_conclusion_adjudication.json'):
+        try:
+            obj = json.loads(path.read_text())
+        except Exception:
+            continue
+        paper_id = obj.get('paper_id') or path.name.split('.')[0]
+        payload[paper_id] = obj.get('decision') or {}
+    return payload
+
+
+def load_json(path, default):
+    if not path.exists():
+        return default
+    try:
+        return json.loads(path.read_text())
+    except Exception:
+        return default
+
+
 def warrant_bucket(value):
     if isinstance(value, (int, float)):
         if value >= 0.67:
@@ -272,6 +303,7 @@ def parse_claims():
     paper_meta = {}
     repairs = load_bibliographic_repairs()
     deep_stats = load_deep_stat_adjudications()
+    main_conclusions = load_main_conclusion_adjudications()
     with CLAIMS_PATH.open() as f:
         for line in f:
             if not line.strip():
@@ -309,6 +341,8 @@ def parse_claims():
                     'article_type': obj.get('article_type') or '',
                     'authors': repair.get('authors') or [],
                     'venue': repair.get('venue') or '',
+                    'main_conclusion': (main_conclusions.get(pid) or {}).get('chosen_text') or '',
+                    'main_conclusion_status': (main_conclusions.get(pid) or {}).get('status') or 'missing',
                 }
             if pid:
                 paper_claims[pid].append(obj)
@@ -398,6 +432,7 @@ def parse_claims():
             'article_type': meta.get('article_type') or '',
             'authors': meta.get('authors') or [],
             'venue': meta.get('venue') or '',
+            'main_conclusion': meta.get('main_conclusion') or '',
             'repair_source': meta.get('repair_source') or '',
             'abstract_surface_path': meta.get('abstract_surface_path') or '',
             'json_status': {
@@ -407,6 +442,7 @@ def parse_claims():
                 'sample_n': meta.get('sample_n_status') or 'missing',
                 'p_value': meta.get('p_value_status') or 'missing',
                 'effect_size': meta.get('effect_size_status') or 'missing',
+                'main_conclusion': meta.get('main_conclusion_status') or 'missing',
                 'subject_count_total': subject_count_status(meta.get('subject_count_total')),
                 'repair_source': meta.get('repair_source') or 'rebuild',
             },
@@ -507,17 +543,246 @@ def build_dashboard(articles, evidence):
     }
 
 
+def build_argumentation_payload():
+    paper_graph = load_json(ARG_GRAPH_PATH, {})
+    claim_graph = load_json(CLAIM_ARG_GRAPH_PATH, {})
+
+    paper_nodes_raw = paper_graph.get('nodes') or {}
+    if isinstance(paper_nodes_raw, dict):
+        paper_nodes = list(paper_nodes_raw.values())
+    else:
+        paper_nodes = list(paper_nodes_raw)
+
+    claim_nodes_raw = claim_graph.get('nodes') or {}
+    if isinstance(claim_nodes_raw, dict):
+        claim_nodes = list(claim_nodes_raw.values())
+    else:
+        claim_nodes = list(claim_nodes_raw)
+
+    clusters = []
+    for cluster in paper_graph.get('debate_clusters') or []:
+        theories = cluster.get('theories') or []
+        papers = cluster.get('papers') or []
+        clusters.append({
+            'cluster_id': cluster.get('cluster_id'),
+            'paper_count': len(papers),
+            'theory_count': len(theories),
+            'papers': papers[:12],
+            'theories': theories[:10],
+        })
+    clusters.sort(key=lambda item: (-item['paper_count'], item['cluster_id'] or ''))
+
+    paper_nodes.sort(
+        key=lambda node: (
+            -(node.get('contradiction_count') or 0),
+            -(node.get('claim_count') or 0),
+            str(node.get('paper_id') or node.get('belief_id') or ''),
+        )
+    )
+    claim_nodes.sort(
+        key=lambda node: (
+            -(node.get('incoming_attack_count') or 0),
+            -(node.get('incoming_support_count') or 0),
+            -(node.get('contradiction_count') or 0),
+            str(node.get('belief_id') or ''),
+        )
+    )
+
+    metadata = paper_graph.get('metadata') or {}
+    coverage = paper_graph.get('coverage_report') or {}
+    claim_metadata = claim_graph.get('metadata') or {}
+    return {
+        'summary': {
+            'paper_node_count': metadata.get('node_count', len(paper_nodes)),
+            'paper_edge_count': metadata.get('edge_count', len(paper_graph.get('edges') or [])),
+            'claim_node_count': claim_metadata.get('node_count', len(claim_nodes)),
+            'claim_edge_count': claim_metadata.get('edge_count', len(claim_graph.get('edges') or [])),
+            'cluster_count': metadata.get('cluster_count', len(clusters)),
+            'total_claims': coverage.get('total_claims', 0),
+            'stance_coverage_rate': coverage.get('stance_coverage_rate', 0),
+            'unique_theories': coverage.get('unique_theories', 0),
+            'critical_question_payload_present': bool(claim_metadata.get('critical_question_payload_present')),
+        },
+        'coverage_report': coverage,
+        'debate_clusters': clusters[:12],
+        'paper_nodes': [
+            {
+                'paper_id': node.get('paper_id') or node.get('belief_id'),
+                'content_preview': compact_text(node.get('content_preview') or node.get('content') or '', 180),
+                'contradiction_count': node.get('contradiction_count') or 0,
+                'node_qualifier': node.get('node_qualifier') or node.get('qualifier') or '',
+            }
+            for node in paper_nodes[:24]
+        ],
+        'claim_nodes': [
+            {
+                'belief_id': node.get('belief_id'),
+                'paper_id': node.get('paper_id'),
+                'content_preview': compact_text(node.get('content_preview') or node.get('content') or '', 180),
+                'incoming_support_count': node.get('incoming_support_count') or 0,
+                'incoming_attack_count': node.get('incoming_attack_count') or 0,
+                'qualifier': node.get('qualifier') or node.get('node_qualifier') or '',
+            }
+            for node in claim_nodes[:24]
+        ],
+        'source_files': {
+            'paper_graph': str(ARG_GRAPH_PATH.relative_to(ROOT)),
+            'claim_graph': str(CLAIM_ARG_GRAPH_PATH.relative_to(ROOT)),
+        },
+    }
+
+
+def build_annotations_payload():
+    annotations = load_json(ANNOTATIONS_PATH, {})
+    by_type = annotations.get('by_type') or {}
+    annotation_rows = annotations.get('annotations') or []
+    type_rows = [
+        {'type': key, 'count': value}
+        for key, value in sorted(by_type.items(), key=lambda item: (-item[1], item[0]))
+    ]
+    return {
+        'summary': {
+            'total_beliefs': annotations.get('total_beliefs', 0),
+            'total_annotations': annotations.get('total_annotations', len(annotation_rows)),
+            'artifact_role': annotations.get('artifact_role') or '',
+            'canonical_source': annotations.get('canonical_source') or '',
+            'description': annotations.get('description') or '',
+        },
+        'by_type': type_rows,
+        'annotations': [
+            {
+                'id': row.get('id'),
+                'type': row.get('type'),
+                'target_type': row.get('target_type'),
+                'target_id': row.get('target_id'),
+                'content': compact_text(row.get('content') or '', 220),
+                'confidence': row.get('confidence'),
+                'status': row.get('status') or '',
+            }
+            for row in annotation_rows[:40]
+        ],
+        'source_file': str(ANNOTATIONS_PATH.relative_to(ROOT)),
+    }
+
+
+def build_interpretation_payload():
+    phase4_summary = load_json(INTERPRETATION_SUMMARY_PATH, {})
+    frontier = load_json(FRONTIER_QUESTIONS_PATH, {})
+    validation = load_json(VALIDATION_COMPLETENESS_PATH, {})
+    boundary = load_json(BOUNDARY_MAP_PATH, {})
+
+    questions = []
+    for row in frontier.get('questions') or []:
+        questions.append({
+            'frontier_id': row.get('frontier_id'),
+            'belief_id': row.get('belief_id'),
+            'framework_name': row.get('resolved_framework_name') or row.get('resolved_framework_id') or row.get('belief_id'),
+            'voi_score': row.get('voi_score'),
+            'voi_bucket': row.get('voi_bucket'),
+            'zone': row.get('zone'),
+            'question_set': (row.get('questions') or [])[:3],
+            'matching_paper_count': len(row.get('matching_paper_ids') or []),
+        })
+    questions.sort(key=lambda row: (-(row.get('voi_score') or 0), row.get('framework_name') or ''))
+
+    beliefs = []
+    for row in validation.get('beliefs') or []:
+        beliefs.append({
+            'belief_id': row.get('belief_id'),
+            'validation_completeness': row.get('validation_completeness'),
+            'replication_status': row.get('replication_status'),
+            'supporting_evidence_count': row.get('supporting_evidence_count'),
+            'challenging_evidence_count': row.get('challenging_evidence_count'),
+            'scope_specified': row.get('scope_specified'),
+        })
+    beliefs.sort(
+        key=lambda row: (
+            -(row.get('challenging_evidence_count') or 0),
+            row.get('validation_completeness') or 0,
+            row.get('belief_id') or '',
+        )
+    )
+
+    zone_counts = (boundary.get('zone_classification') or {})
+    transitions = boundary.get('transition_dynamics') or {}
+    return {
+        'summary': {
+            'analysis_complete': bool(phase4_summary.get('analysis_complete')),
+            'average_completeness': (validation.get('average_completeness')),
+            'phase3_baseline': validation.get('phase3_baseline'),
+            'high_voi_count': frontier.get('high_voi_count', 0),
+            'medium_voi_count': frontier.get('medium_voi_count', 0),
+            'low_voi_count': frontier.get('low_voi_count', 0),
+            'active_boundary_count': zone_counts.get('active_boundary_count', 0),
+            'identified_periphery_count': zone_counts.get('identified_periphery_count', 0),
+        },
+        'phase4_summary': phase4_summary,
+        'frontier_questions': questions[:20],
+        'validation_beliefs': beliefs[:20],
+        'boundary_map': {
+            'zone_classification': zone_counts,
+            'beliefs_by_zone': boundary.get('beliefs_by_zone') or {},
+            'transition_dynamics': transitions,
+        },
+        'source_files': {
+            'phase4_summary': str(INTERPRETATION_SUMMARY_PATH.relative_to(ROOT)),
+            'frontier_questions': str(FRONTIER_QUESTIONS_PATH.relative_to(ROOT)),
+            'validation_completeness': str(VALIDATION_COMPLETENESS_PATH.relative_to(ROOT)),
+            'boundary_map': str(BOUNDARY_MAP_PATH.relative_to(ROOT)),
+        },
+    }
+
+
+def build_layers_summary(argumentation, annotations, interpretation):
+    return {
+        'layers': [
+            {
+                'id': 'argumentation',
+                'title': 'Argumentation Layer',
+                'href': 'ka_argumentation.html',
+                'brief': 'docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md',
+                'primary_metric': argumentation.get('summary', {}).get('claim_edge_count', 0),
+                'primary_label': 'claim-level support edges',
+            },
+            {
+                'id': 'annotations',
+                'title': 'Annotation Layer',
+                'href': 'ka_annotations.html',
+                'brief': 'docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md',
+                'primary_metric': annotations.get('summary', {}).get('total_annotations', 0),
+                'primary_label': 'active annotations',
+            },
+            {
+                'id': 'interpretation',
+                'title': 'Interpretation Layer',
+                'href': 'ka_interpretation.html',
+                'brief': 'docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md',
+                'primary_metric': interpretation.get('summary', {}).get('high_voi_count', 0),
+                'primary_label': 'high-VOI frontier questions',
+            },
+        ]
+    }
+
+
 def main():
     topics, gaps = load_fronts()
     evidence, articles = parse_claims()
     dashboard = build_dashboard(articles, evidence)
     json_status = build_json_status(articles)
+    argumentation = build_argumentation_payload()
+    annotations = build_annotations_payload()
+    interpretation = build_interpretation_payload()
+    layers = build_layers_summary(argumentation, annotations, interpretation)
     (OUT / 'topics.json').write_text(json.dumps({'topics': topics}, indent=2))
     (OUT / 'gaps.json').write_text(json.dumps({'gaps': gaps}, indent=2))
     (OUT / 'evidence.json').write_text(json.dumps({'evidence': evidence}, indent=2))
     (OUT / 'articles.json').write_text(json.dumps({'articles': articles}, indent=2))
     (OUT / 'dashboard.json').write_text(json.dumps({'dashboard': dashboard}, indent=2))
     (OUT / 'json_status.json').write_text(json.dumps(json_status, indent=2))
+    (OUT / 'argumentation.json').write_text(json.dumps(argumentation, indent=2))
+    (OUT / 'annotations.json').write_text(json.dumps(annotations, indent=2))
+    (OUT / 'interpretation.json').write_text(json.dumps(interpretation, indent=2))
+    (OUT / 'layers.json').write_text(json.dumps(layers, indent=2))
     print('Wrote payloads to', OUT)
 
 if __name__ == '__main__':

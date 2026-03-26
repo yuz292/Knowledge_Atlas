@@ -1245,12 +1245,14 @@
             subtitle.textContent = article.title;
             const abstractText = article.abstract || 'Abstract not yet recovered from the current rebuild.';
             const abstractVisible = articleAbstractExpanded ? abstractText : abstractText.slice(0, 260) + (abstractText.length > 260 ? '…' : '');
+            const mainConclusion = article.main_conclusion ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F7F4EF; border-left: 3px solid #E8872A; color: #4E453C; line-height: 1.6;"><strong>Working conclusion:</strong> ${article.main_conclusion}</div>` : '';
             const jsonStatus = article.json_status || {};
             const repairSource = jsonStatus.repair_source || article.repair_source || 'rebuild';
             reference.innerHTML = `
                 <strong>${article.paper_id}</strong>. ${article.title}. <em>${(article.article_type || 'Unknown').replace(/_/g, ' ')}</em>
                 <div style="margin-top: 8px;">DOI: ${article.doi ? `<a class="reference-doi" href="https://doi.org/${article.doi}" target="_blank" rel="noopener noreferrer">${article.doi}</a>` : 'Not yet recovered'}</div>
                 <div style="margin-top: 10px; color: #666; line-height: 1.6;">${abstractVisible}</div>
+                ${mainConclusion}
                 <a class="abstract-toggle" id="articles-abstract-toggle">${articleAbstractExpanded ? 'Collapse abstract' : 'Expand abstract'}</a>
                 <div class="json-status-panel">
                     <div class="json-status-title">JSON Repair Status</div>
@@ -1258,6 +1260,7 @@
                         <span class="json-status-badge"><strong>Title</strong> ${jsonStatus.title || 'unknown'}</span>
                         <span class="json-status-badge"><strong>DOI</strong> ${jsonStatus.doi || 'unknown'}</span>
                         <span class="json-status-badge"><strong>Abstract</strong> ${jsonStatus.abstract || 'unknown'}</span>
+                        <span class="json-status-badge"><strong>Conclusion</strong> ${jsonStatus.main_conclusion || 'unknown'}</span>
                         <span class="json-status-badge"><strong>Subjects</strong> ${jsonStatus.subject_count_total || 'unknown'}</span>
                     </div>
                     <div class="json-status-note">Repair source: ${repairSource}. This record stays visibly provisional until all weak JSON fields are repaired.</div>
