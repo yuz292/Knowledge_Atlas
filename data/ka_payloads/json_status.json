@@ -21,9 +21,9 @@
     "effect_size_provisional": 20,
     "effect_size_review_required": 131,
     "effect_size_missing": 99,
-    "main_conclusion_accepted": 24,
-    "main_conclusion_provisional": 0,
-    "main_conclusion_missing": 226,
+    "main_conclusion_accepted": 59,
+    "main_conclusion_provisional": 1,
+    "main_conclusion_missing": 190,
     "subject_count_good": 120,
     "subject_count_missing": 130
   },
@@ -55,7 +55,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -215,7 +215,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -279,7 +279,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -295,7 +295,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -311,7 +311,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -503,7 +503,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -775,7 +775,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -903,7 +903,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1095,7 +1095,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1127,7 +1127,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1191,7 +1191,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1367,7 +1367,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1399,7 +1399,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1495,7 +1495,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1511,7 +1511,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1575,7 +1575,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1591,7 +1591,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1671,7 +1671,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1767,7 +1767,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1783,7 +1783,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2199,7 +2199,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "provisional",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2215,7 +2215,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2311,7 +2311,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2503,7 +2503,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2519,7 +2519,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2551,7 +2551,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2631,7 +2631,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2903,7 +2903,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -2919,7 +2919,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2935,7 +2935,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3127,7 +3127,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3159,7 +3159,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3623,7 +3623,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3639,7 +3639,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3911,7 +3911,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3927,7 +3927,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }

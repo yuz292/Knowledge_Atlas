@@ -60,7 +60,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Chapter 2, 'Edges Matter,' begins with exploring a phenomenon that Jacobs found curious: people avoid the center of open spaces and tend to stick to the sides of streets, even in car-free zones",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -70,7 +70,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -444,7 +444,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "More recently, Hong et al. (2013) found that environmental exposure to Bisphenol A can impact learning disability",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -454,7 +454,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -603,7 +603,7 @@
         "Metwally, Walaa Mohamed"
       ],
       "venue": "Sustainability",
-      "main_conclusion": "",
+      "main_conclusion": "Advocating for changes in building codes is essential as it would support biometric development; therefore, this could open more opportunities",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -613,7 +613,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -644,7 +644,7 @@
         "Will\u00e9n, Carin"
       ],
       "venue": "Rehabilitation Research and Practice",
-      "main_conclusion": "",
+      "main_conclusion": "The data presented in Table 11-1 and Figures 11-1, 11-2, and 11-3, show that the threshold of hearing changes considerably across the whole range of audible frequencies",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -654,7 +654,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -680,7 +680,7 @@
         "Fleming, Roland W."
       ],
       "venue": "Vision Research",
-      "main_conclusion": "",
+      "main_conclusion": "Research over the last decade or so has started to make progress in this important area but each new finding seems to raise many new questions",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -690,7 +690,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -1164,7 +1164,7 @@
         "Rey, G\u00fcnter Daniel"
       ],
       "venue": "Computers &amp; Education",
-      "main_conclusion": "",
+      "main_conclusion": "Based on the results we propose an extension for CLT as well as a cost-benefit model of EC based on our findings",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1174,7 +1174,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -1810,7 +1810,7 @@
         "Boyce, Peter Robert"
       ],
       "venue": "TU Digital Collections (Thammasat University)",
-      "main_conclusion": "",
+      "main_conclusion": "Unfortunately, the studies that demonstrate the value of better lighting as regards reduced levels of crime contain few details of the characteristics of the lighting necessary to achieve the desired effect",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -1820,7 +1820,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2111,7 +2111,7 @@
         "Jeon, Jin Yong"
       ],
       "venue": "Building and Environment",
-      "main_conclusion": "",
+      "main_conclusion": "6-9 show the median and mean values of insertion loss in dB and dBA according to the noise sources, research methods, three receiver's locations, research approaches",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2121,7 +2121,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2568,7 +2568,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Therefore, we suggest that communication and collaboration between the related parties are urgently needed",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2578,7 +2578,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -2644,7 +2644,7 @@
         "Teddie, Charles"
       ],
       "venue": "Journal of Personality and Social Psychology",
-      "main_conclusion": "",
+      "main_conclusion": "Taken together, these results offer strong support for the prediction that personal space violations are arousing and stressful, while conditions of high density are not necessarily arousing",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2654,7 +2654,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -2791,7 +2791,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Also, the comfort-discomfort scale was found not to influence library ratings like in other library study (Ikhwanuddin et al., 2017), possibly because people visit them with a work-related purpose",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2801,7 +2801,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3208,7 +3208,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "According to this systematic literature review findings, this study emphasizes two crucial aspects: fluorescent and LED lighting, the primary types of artificial lighting significantly influencing workers' productivity due to their common usage in-office buildings",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3218,7 +3218,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3289,7 +3289,7 @@
         "Neumann, Heiko"
       ],
       "venue": "Frontiers in Behavioral Neuroscience",
-      "main_conclusion": "",
+      "main_conclusion": "Humans show heading biases if the IMO covers the FOE of the background motion or the IMO's path intersects with the observer's path (Warren and Saunders, 1995; Royden and Hildreth, 1996)",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3299,7 +3299,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3514,7 +3514,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "An asterisk rating system is used by Alexander et al. (1977) to indicate the confidence the authors have that particular individual patterns describe, 'a deep and inescapable property of a well-formed environment' (p. xiv)",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -3524,7 +3524,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -3556,7 +3556,7 @@
         "Soleimani, Babak"
       ],
       "venue": "The Journal of the Acoustical Society of America",
-      "main_conclusion": "",
+      "main_conclusion": "The findings show that the acoustic characteristics of the space can increase the intensity of the emotional impact and enhance the listener's experience",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3566,7 +3566,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -3718,7 +3718,7 @@
         "Quadflieg, Susanne"
       ],
       "venue": "Frontiers in Psychology",
-      "main_conclusion": "",
+      "main_conclusion": "The approach involves systematically tracking, comparing, and evaluating the consequences of architectural decisions on human health and wellbeing, so that the obtained findings can be applied to the design of new buildings (Lohr, 2004)",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3728,7 +3728,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3756,7 +3756,7 @@
         "Kang, Jian"
       ],
       "venue": "Building and Environment",
-      "main_conclusion": "",
+      "main_conclusion": "The results reveal that the average SPL in room 1 is the same, while those of rooms 2-5 are considerably reduced compared to those at \\( =0^ \\)",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3766,7 +3766,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -3949,7 +3949,7 @@
         "Knez, Igor"
       ],
       "venue": "Journal of Environmental Psychology",
-      "main_conclusion": "",
+      "main_conclusion": "The main effect of gender on free recall is more problematic to interpret because, females and males were equally induced in each respective mood, as regard the block 2 scores, and the data did not reveal any interaction between gender and word-list",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3959,7 +3959,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4186,7 +4186,7 @@
         "Sztrany\u00e1k, Gergely"
       ],
       "venue": "Pollack Periodica",
-      "main_conclusion": "",
+      "main_conclusion": "Finally, reveal the value of design in shaping human health and well-being and how to evaluate the quality of the architectural environment",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4196,7 +4196,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -4221,7 +4221,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "One of the consortium's main challenges is to foster public appreciation of these precious natural resources, and to build support for restoration and conservation initiatives",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -4231,7 +4231,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -5202,7 +5202,7 @@
         "Mallgrave, Harry Francis"
       ],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "In explaining how we internally simulate aspects of a building in a multisensory and emotional way, they also suggest that we do so largely in a pre-reflective manner, which is again a crucial point of the new perspective",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5212,7 +5212,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "provisional",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -5239,7 +5239,7 @@
         "Anderson, Barton L."
       ],
       "venue": "Psychological Review",
-      "main_conclusion": "",
+      "main_conclusion": "The results of Experiment 2 demonstrate that in estimating the lightness of a transparent surface, human observers are able to discount only partially the luminance generated by the underlying surfaces",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5249,7 +5249,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5463,7 +5463,7 @@
         "Kersten, Daniel"
       ],
       "venue": "Trends in Cognitive Sciences",
-      "main_conclusion": "",
+      "main_conclusion": "We found that even though they were potentially informative about surface shape, cast shadows served very weakly, if at all, in this function",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5473,7 +5473,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5892,7 +5892,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "As discussed above, only a marginally significant effect of the intervention was found for self-reported heat regulation related to window tilting",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5902,7 +5902,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5930,7 +5930,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Overall, our results strongly support our first hypothesis that participants in biophilic environments had consistently better poststress restorative responses on physiological stress level and psychological anxiety level compare to those in the non-biophilic environment",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5940,7 +5940,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6001,7 +6001,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Passengers also had trouble finding their way at Los Angeles International Airport, Amsterdam Airport Schiphol, Atlanta Hartfield International Airport, and Paris Charles de Gaulle International Airport",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6011,7 +6011,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6184,7 +6184,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "We found theoretical development and empirical work across these areas uneven, but we note progress in some major research areas",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6194,7 +6194,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6824,7 +6824,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Thus, we can conclude that the possible risk of blue light on the retina under general lighting indoors is low to very low, even if one uses cold color temperatures as general lighting",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6834,7 +6834,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -6859,7 +6859,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "They built with materials found on the site, because they did not have domesticated animals to help them haul things, so they took only what they could carry when they moved",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6869,7 +6869,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -6895,7 +6895,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "In summary, the results obtained suggest that thermal, emotional and perceptual assessments of a physical place may be intertwined with psychological schema-based (Brewer and Treyens 1981) and socio-cultural (e.g., Kitayama et al",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6905,7 +6905,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7349,7 +7349,7 @@
       "article_type": "book",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Chapter 2, 'Edges Matter,' begins with exploring a phenomenon that Jacobs found curious: people avoid the center of open spaces and tend to stick to the sides of streets, even in car-free zones",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7359,7 +7359,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -7417,7 +7417,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "To conclude, we found in the previous study that architects do not explicitly think in terms of the traditional hierarchy of materials, elements and spaces",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7427,7 +7427,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -8505,7 +8505,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "These studies demonstrate that light has visual and non-visual influences on people",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8515,7 +8515,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8539,7 +8539,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Architecture-related findings show that outcomes in a cardiac intensive care unit after a heart attack are better in sunny rooms compared to dull rooms, with lower mortality \\( ^ 8 \\)",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8549,7 +8549,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -9173,7 +9173,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "In summarizing the findings in Table 1, we can draw the following conclusions: 1",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -9183,7 +9183,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -9210,7 +9210,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "The finding that several building materials were assessed differently when excluding vision for the evaluation illustrates the need for a more elaborate consideration of the non-visual senses during design as argued by Pallasmaa (2005)",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -9220,7 +9220,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
