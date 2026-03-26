@@ -762,6 +762,10 @@
                         <div class="json-status-value" id="dashboard-json-p-accepted">0</div>
                     </div>
                     <div class="json-status-item">
+                        <span class="json-status-label">Conclusions Accepted</span>
+                        <div class="json-status-value" id="dashboard-json-conclusion-accepted">0</div>
+                    </div>
+                    <div class="json-status-item">
                         <span class="json-status-label">Effect Sizes Accepted</span>
                         <div class="json-status-value" id="dashboard-json-effect-accepted">0</div>
                     </div>
@@ -1165,6 +1169,7 @@ window.KA_PAGE_FUNCTION = {
     document.getElementById('dashboard-json-sample-accepted').textContent = String(jsonSummary.sample_n_accepted || 0);
     document.getElementById('dashboard-json-sample-review').textContent = String(jsonSummary.sample_n_review_required || 0);
     document.getElementById('dashboard-json-p-accepted').textContent = String(jsonSummary.p_value_accepted || 0);
+    document.getElementById('dashboard-json-conclusion-accepted').textContent = String(jsonSummary.main_conclusion_accepted || 0);
     document.getElementById('dashboard-json-effect-accepted').textContent = String(jsonSummary.effect_size_accepted || 0);
     document.getElementById('dashboard-layer-argumentation').textContent = String(layerMap.argumentation ? layerMap.argumentation.primary_metric : 0);
     document.getElementById('dashboard-layer-annotations').textContent = String(layerMap.annotations ? layerMap.annotations.primary_metric : 0);

@@ -474,6 +474,9 @@ def build_json_status(articles):
         'effect_size_provisional': 0,
         'effect_size_review_required': 0,
         'effect_size_missing': 0,
+        'main_conclusion_accepted': 0,
+        'main_conclusion_provisional': 0,
+        'main_conclusion_missing': 0,
         'subject_count_good': 0,
         'subject_count_missing': 0,
     }
@@ -486,6 +489,7 @@ def build_json_status(articles):
         sample_state = status.get('sample_n') or 'missing'
         p_state = status.get('p_value') or 'missing'
         effect_state = status.get('effect_size') or 'missing'
+        conclusion_state = status.get('main_conclusion') or 'missing'
         subject_state = status.get('subject_count_total') or 'missing'
         if title_state == 'good':
             summary['title_good'] += 1
@@ -506,6 +510,7 @@ def build_json_status(articles):
         summary[f"sample_n_{sample_state if sample_state in {'accepted', 'provisional', 'review_required'} else 'missing'}"] += 1
         summary[f"p_value_{p_state if p_state in {'accepted', 'provisional', 'review_required'} else 'missing'}"] += 1
         summary[f"effect_size_{effect_state if effect_state in {'accepted', 'provisional', 'review_required'} else 'missing'}"] += 1
+        summary[f"main_conclusion_{conclusion_state if conclusion_state in {'accepted', 'provisional'} else 'missing'}"] += 1
         if subject_state == 'good':
             summary['subject_count_good'] += 1
         else:

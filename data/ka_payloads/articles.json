@@ -808,7 +808,7 @@
         "de Kort, Y.A.W."
       ],
       "venue": "Physiology &amp; Behavior",
-      "main_conclusion": "",
+      "main_conclusion": "Additionally, the findings can be used in determining the required measurement resolution and timing in measurement protocols",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -818,7 +818,7 @@
         "sample_n": "provisional",
         "p_value": "provisional",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -927,7 +927,7 @@
       "article_type": "systematic_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "The findings indicated that the inclusion of greenery, access to natural views, and welldesigned daylight yielded considerable positive impacts in the workplace",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -937,7 +937,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1460,7 +1460,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "The self-assembled GO-films were found well interconnected with the limbs of the melamine skeleton that resulted in the optimal airflow resistance, tortuosity against sound wave propagation and internal reflection hence shows enhanced acoustic absorption",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "",
       "json_status": {
@@ -1470,7 +1470,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -1498,7 +1498,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Of these twelve factors there is evidence to suggest that lighting is the most influential factor shaping an occupant's perception of the comfort of a room [3], [4]",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1508,7 +1508,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }
@@ -1652,7 +1652,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Although skin conductance level (SCL) did show an arousal response in rested participants when exposed to bright light in the current study, this did not appear for fatigued persons",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -1662,7 +1662,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -1774,7 +1774,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "The application of biophilic design can alter the environmental conditions of a building or landscape in the short term, but over the long run, it should support an ecologically robust and sustainable natural community",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "",
       "json_status": {
@@ -1784,7 +1784,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -1918,7 +1918,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Their main finding was that, through learning, the texture-selective region in the ventral visual cortex (around the CoS) came to represent the weight associated with the texture",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0820/PDF-0820.abstract.txt",
       "json_status": {
@@ -1928,7 +1928,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "page_image_reread"
       }
@@ -1993,7 +1993,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Notably, we found that the grassy VR environment had the best ability to support PA restoration",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0870/PDF-0870.abstract.txt",
       "json_status": {
@@ -2003,7 +2003,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -2033,7 +2033,7 @@
         "Davis, Glenn E."
       ],
       "venue": "Journal of Personality and Social Psychology",
-      "main_conclusion": "",
+      "main_conclusion": "First, they provide confirmation of the conceptualizations that we have developed to explain our findings over the past 7 years",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -2043,7 +2043,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -2303,7 +2303,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "The findings not only present a new perspective for interpreting soundscape perception in an urban environment, but can also be used effectively to predict individuals' spatial perceptions in urban design and planning",
       "repair_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0836/PDF-0836.abstract.txt",
       "json_status": {
@@ -2313,7 +2313,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "page_image_reread"
       }
@@ -2496,7 +2496,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Studies in 1979, 1981, and 1986 by Ulrich (Heerwagen 1986) support the effectiveness of natural views",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -2506,7 +2506,7 @@
         "sample_n": "good",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -3672,7 +3672,7 @@
         "Maclachlan, Malcolm"
       ],
       "venue": "Journal of Health Psychology",
-      "main_conclusion": "",
+      "main_conclusion": "Moreover, interventions to mitigate stress and support seafarers' well-being should recognize the occupational, cultural and demographic factors that may influence how stress may be differentially experienced, expressed and alleviated on board",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -3682,7 +3682,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -4145,7 +4145,7 @@
         "Ajiboye, Samson A."
       ],
       "venue": "Studies in Art and Architecture",
-      "main_conclusion": "",
+      "main_conclusion": "1) Optimizing Acoustic Performance while Maintaining Aesthetic Integrity: Our study found that achieving optimal acoustic performance in architectural spaces requires a delicate balance between technical considerations and aesthetic vision (Everest, 2001)",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -4155,7 +4155,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -5011,7 +5011,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Ochiai [40,46] assessed nine hypertensive males to demonstrate the effects of a forest therapy program, and the comparison showed that forest therapy decreased systolic blood pressure",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -5021,7 +5021,7 @@
         "sample_n": "review_required",
         "p_value": "accepted",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -5166,7 +5166,7 @@
         "Joye, Yannick"
       ],
       "venue": "Review of General Psychology",
-      "main_conclusion": "",
+      "main_conclusion": "For example, in a playful experiment, Russian artists Vitaly Komar and Alex Melamid found that people from different cultures preferred kitschy landscape paintings over nonrepresentational abstract art (see: www.diacenter.org/km/)",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -5176,7 +5176,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "crossref"
       }
@@ -6303,7 +6303,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "The idea of increased occupant mindfulness as a mechanism is consistent with the reports that occupants in SB environments feel stronger environmental satisfaction and support \\( ^ 71 \\)",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -6313,7 +6313,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -7493,7 +7493,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "After incorporating different possible mechanisms of CCT effects on thermal sensation and comfort in the mixed linear model, we found light color sensation was neither associated with thermal sensation, nor thermal comfort",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -7503,7 +7503,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8012,7 +8012,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "This study examined the impact of color and ceiling height on neurophysiological and psychological responses in learning environments, providing valuable insights into how spatial design can support both physiological relaxation and emotional well-being",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8022,7 +8022,7 @@
         "sample_n": "review_required",
         "p_value": "accepted",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8427,7 +8427,7 @@
         "Oka, Koichiro"
       ],
       "venue": "Cities &amp; Health",
-      "main_conclusion": "",
+      "main_conclusion": "These studies should consider cultural and normative differences in the perception of density to ensure that research findings are contextspecific and culturally sensitive",
       "repair_source": "crossref",
       "abstract_surface_path": "",
       "json_status": {
@@ -8437,7 +8437,7 @@
         "sample_n": "review_required",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "crossref"
       }
@@ -8466,7 +8466,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Overall, the difference in sound level between the actual environment and the expectation of subjects did not show a significant impact",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8476,7 +8476,7 @@
         "sample_n": "provisional",
         "p_value": "review_required",
         "effect_size": "provisional",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -8613,7 +8613,7 @@
       "article_type": "empirical_research",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Although the laboratory experiments did not yield meaningful results, the results of the field experiment supported the effect of different lighting CCTs on both cognitive and behavioral performances, which concurs with the findings from the physiological responses",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -8623,7 +8623,7 @@
         "sample_n": "accepted",
         "p_value": "review_required",
         "effect_size": "review_required",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "good",
         "repair_source": "rebuild"
       }
@@ -9021,7 +9021,7 @@
       "article_type": "narrative_review",
       "authors": [],
       "venue": "",
-      "main_conclusion": "",
+      "main_conclusion": "Kim Department of Computer Science University of Texas at Dallas Richardson, TX 75080, USA (D) The ORCID identification number(s) for the author(s) of this article can be found under https://doi.org/10.1002/adfm.202008831. (C) 2021 The Authors",
       "repair_source": "",
       "abstract_surface_path": "",
       "json_status": {
@@ -9031,7 +9031,7 @@
         "sample_n": "missing",
         "p_value": "missing",
         "effect_size": "missing",
-        "main_conclusion": "missing",
+        "main_conclusion": "accepted",
         "subject_count_total": "missing",
         "repair_source": "rebuild"
       }

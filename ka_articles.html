@@ -564,6 +564,34 @@
             font-size: 0.82rem;
         }
 
+        .layer-link-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .layer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #F3EEE7;
+            border: 1px solid #E0DAD3;
+            border-radius: 999px;
+            padding: 7px 11px;
+            text-decoration: none;
+            color: #2C2C2C;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .layer-link:hover {
+            border-color: #E8872A;
+            color: #C05A1F;
+            background: #FFF4E6;
+        }
+
         .reference-doi {
             color: #2A7868;
             text-decoration: none;
@@ -1248,11 +1276,18 @@
             const mainConclusion = article.main_conclusion ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F7F4EF; border-left: 3px solid #E8872A; color: #4E453C; line-height: 1.6;"><strong>Working conclusion:</strong> ${article.main_conclusion}</div>` : '';
             const jsonStatus = article.json_status || {};
             const repairSource = jsonStatus.repair_source || article.repair_source || 'rebuild';
+            const encodedPaperId = encodeURIComponent(article.paper_id);
+            const encodedTitle = encodeURIComponent(article.title || article.paper_id);
             reference.innerHTML = `
                 <strong>${article.paper_id}</strong>. ${article.title}. <em>${(article.article_type || 'Unknown').replace(/_/g, ' ')}</em>
                 <div style="margin-top: 8px;">DOI: ${article.doi ? `<a class="reference-doi" href="https://doi.org/${article.doi}" target="_blank" rel="noopener noreferrer">${article.doi}</a>` : 'Not yet recovered'}</div>
                 <div style="margin-top: 10px; color: #666; line-height: 1.6;">${abstractVisible}</div>
                 ${mainConclusion}
+                <div class="layer-link-row">
+                    <a class="layer-link" href="ka_argumentation.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Argumentation view</a>
+                    <a class="layer-link" href="ka_annotations.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Annotation view</a>
+                    <a class="layer-link" href="ka_interpretation.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Interpretation view</a>
+                </div>
                 <a class="abstract-toggle" id="articles-abstract-toggle">${articleAbstractExpanded ? 'Collapse abstract' : 'Expand abstract'}</a>
                 <div class="json-status-panel">
                     <div class="json-status-title">JSON Repair Status</div>

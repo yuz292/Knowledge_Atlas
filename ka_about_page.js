@@ -144,6 +144,14 @@
     const usesHtml = Array.isArray(spec.uses) && spec.uses.length
       ? `<ul class="ka-about-uses-list">${spec.uses.map(u => `<li>${u}</li>`).join('')}</ul>`
       : `<p class="ka-about-card-text">${spec.uses || '—'}</p>`;
+    const resourcesHtml = Array.isArray(spec.resources) && spec.resources.length
+      ? `<div class="ka-about-card" style="margin-top:20px;">
+          <div class="ka-about-card-label">Related docs and routes</div>
+          <ul class="ka-about-uses-list">${spec.resources.map(function (row) {
+            return `<li><a href="${row.href}" style="color:#1C3D3A; font-weight:700; text-decoration:none;">${row.label}</a></li>`;
+          }).join('')}</ul>
+        </div>`
+      : '';
 
     const section = document.createElement('section');
     section.id = 'about-this-page';
@@ -161,6 +169,7 @@
             ${usesHtml}
           </div>
         </div>
+        ${resourcesHtml}
         <div class="ka-about-footer-row">
           <span class="ka-about-page-id">${spec.pageId || ''}</span>
           <button class="ka-about-fn-link" id="ka-about-fn-open"
