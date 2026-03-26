@@ -881,6 +881,8 @@ document.querySelectorAll('.track-setup-body').forEach(function(b) {
 
 <script src="ka_mode_switch.js"></script>
 <script src="ka_site_shell.js"></script>
+<script src="ka_data_adapter.js"></script>
+<script src="ka_live_context.js"></script>
 <script>
 window.KA_SHELL.initShell({
   navContainerSelector: '.nav-center',
@@ -891,6 +893,14 @@ window.KA_SHELL.initShell({
 });
 </script>
 
+<script>
+window.KA_LIVE_CONTEXT_CONFIG = {
+  surface: 'auth',
+  title: 'System State',
+  status: 'Setup flow partial',
+  warn: true
+};
+</script>
 <script>
 window.KA_PAGE_FUNCTION = {
   pageId: 'ka_student_setup',

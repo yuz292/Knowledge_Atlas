@@ -1494,6 +1494,8 @@ updateSummary();
 <script src="ka_acronyms.js"></script>
 <script src="ka_mode_switch.js"></script>
 <script src="ka_site_shell.js"></script>
+<script src="ka_data_adapter.js"></script>
+<script src="ka_live_context.js"></script>
 <script src="ka_shell_user.js"></script>
 <script>
 window.KA_SHELL.initShell({
@@ -1503,6 +1505,14 @@ window.KA_SHELL.initShell({
   defaultMode: 'contributor'
 });
 window.KA_SHELL_USER.applyUser({ avatarId: 'hypothesis-avatar', avatarFallback: 'KA' });
+</script>
+<script>
+window.KA_LIVE_CONTEXT_CONFIG = {
+  surface: 'hypothesis_builder',
+  title: 'Live Atlas Context',
+  status: 'Partial backend',
+  warn: true
+};
 </script>
 <script>
 window.KA_PAGE_FUNCTION = {

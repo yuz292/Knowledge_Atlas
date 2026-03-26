@@ -1252,6 +1252,8 @@ window.KA_PAGE_FUNCTION = {
 <script src="ka_demo_wiring.js"></script>
 <script src="ka_mode_switch.js"></script>
 <script src="ka_site_shell.js"></script>
+<script src="ka_data_adapter.js"></script>
+<script src="ka_live_context.js"></script>
 
 <section id="ka-prev-pages">
   <div class="ka-prev-inner">
@@ -1262,6 +1264,14 @@ window.KA_PAGE_FUNCTION = {
     </ul>
   </div>
 </section>
+<script>
+window.KA_LIVE_CONTEXT_CONFIG = {
+  surface: 'sensors',
+  title: 'Live Corpus Context',
+  status: 'Catalogue live, grounding partial',
+  warn: true
+};
+</script>
 <script>
 window.KA_ABOUT_PAGE = {
   pageId: 'ka_sensors',

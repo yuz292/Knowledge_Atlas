@@ -785,6 +785,8 @@ updateSubmitStrip();
 
 <script src="ka_mode_switch.js"></script>
 <script src="ka_site_shell.js"></script>
+<script src="ka_data_adapter.js"></script>
+<script src="ka_live_context.js"></script>
 <script src="ka_shell_user.js"></script>
 <script>
 window.KA_SHELL.initShell({
@@ -794,6 +796,14 @@ window.KA_SHELL.initShell({
   defaultMode: 'contributor'
 });
 window.KA_SHELL_USER.applyUser({ avatarId: 'tag-assignment-avatar', avatarFallback: 'JL' });
+</script>
+<script>
+window.KA_LIVE_CONTEXT_CONFIG = {
+  surface: 'tag_assignment',
+  title: 'Live Corpus Context',
+  status: 'Claim flow partial',
+  warn: true
+};
 </script>
 <script src="ka_page_function.js"></script>
 <script src="ka_demo_wiring.js"></script>

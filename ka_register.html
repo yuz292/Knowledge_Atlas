@@ -976,6 +976,8 @@
 
 <script src="ka_mode_switch.js"></script>
 <script src="ka_site_shell.js"></script>
+<script src="ka_data_adapter.js"></script>
+<script src="ka_live_context.js"></script>
 <script>
     (function() {
       function syncRegisterMode(mode) {
@@ -1004,6 +1006,14 @@
         });
       }
     })();
+</script>
+<script>
+window.KA_LIVE_CONTEXT_CONFIG = {
+  surface: 'auth',
+  title: 'System State',
+  status: 'Auth backend partial',
+  warn: true
+};
 </script>
 <script>
 window.KA_PAGE_FUNCTION = {
