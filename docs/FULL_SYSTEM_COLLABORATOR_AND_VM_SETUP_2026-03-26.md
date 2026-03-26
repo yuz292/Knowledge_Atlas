@@ -263,6 +263,44 @@ Purpose:
 - adds the larger local PDF / AF corpus state for discovery and acquisition work
 - useful for a fuller mirror or server deployment
 
+## Bootstrap script
+
+A bootstrap script now exists to automate the second-machine setup:
+
+- repo copy:
+  - `/Users/davidusa/REPOS/Knowledge_Atlas/scripts/bootstrap_full_system_from_handoff.sh`
+- handoff copy:
+  - `COLLABORATOR_HANDOFF_2026-03-26/bootstrap_from_handoff.sh`
+
+Run it after:
+
+1. installing system packages
+2. cloning the four repos under one common repo root
+3. placing the handoff bundles in one directory
+
+Example:
+
+```bash
+bash bootstrap_from_handoff.sh \
+  --repo-root ~/REPOS \
+  --bundle-dir ~/COLLABORATOR_HANDOFF_2026-03-26 \
+  --with-af-full
+```
+
+What it automates:
+
+1. unpack runtime bundle into the correct repo layout
+2. optionally unpack the full Article Finder bundle
+3. create the Python virtual environments
+4. install dependencies
+5. run AF, AE, and KA smoke tests
+
+This is the fastest way to bring up:
+
+- a collaborator laptop
+- a VM used for rebuilds
+- a server-like secondary machine
+
 ## Security note
 
 The runtime bundle includes local config and API-related settings.
