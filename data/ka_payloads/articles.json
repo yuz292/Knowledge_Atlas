@@ -1976,7 +1976,7 @@
         "doi": "good",
         "abstract": "good",
         "sample_n": "review_required",
-        "p_value": "accepted",
+        "p_value": "review_required",
         "effect_size": "review_required",
         "main_conclusion": "accepted",
         "subject_count_total": "missing",
