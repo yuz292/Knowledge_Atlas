@@ -25,6 +25,7 @@ FRONTS_PATH = AE / 'data' / 'rebuild' / 'research_fronts_v5.json'
 CLAIMS_PATH = AE / 'data' / 'rebuild' / 'gold_claims.jsonl'
 REPAIRS_PATH = AE / 'data' / 'rebuild' / 'bibliographic_repairs.json'
 DEEP_STATS_DIR = AE / 'data' / 'verification_runs' / 'v6_deep_stats_adjudication'
+ABSTRACT_ADJUDICATION_DIR = AE / 'data' / 'verification_runs' / 'v6_abstract_adjudication'
 MAIN_CONCLUSION_DIR = AE / 'data' / 'verification_runs' / 'v6_main_conclusion_adjudication'
 ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'argumentation_graph_v5.json'
 CLAIM_ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'claim_argument_graph_v1.json'
@@ -136,6 +137,15 @@ def abstract_status(text):
     return 'good'
 
 
+def normalize_abstract_state(value):
+    state = str(value or '').strip().lower()
+    if state == 'accepted':
+        return 'good'
+    if state in {'good', 'provisional', 'missing'}:
+        return state
+    return 'missing'
+
+
 def doi_status(value):
     return 'good' if clean_doi(value) else 'missing'
 
@@ -165,6 +175,20 @@ def load_deep_stat_adjudications():
             continue
         paper_id = obj.get('paper_id') or path.name.split('.')[0]
         payload[paper_id] = obj.get('decisions') or {}
+    return payload
+
+
+def load_abstract_adjudications():
+    payload = {}
+    if not ABSTRACT_ADJUDICATION_DIR.exists():
+        return payload
+    for path in ABSTRACT_ADJUDICATION_DIR.glob('PDF-*.abstract_adjudication.json'):
+        try:
+            obj = json.loads(path.read_text())
+        except Exception:
+            continue
+        paper_id = obj.get('paper_id') or path.name.split('.')[0]
+        payload[paper_id] = obj
     return payload
 
 
@@ -469,6 +493,7 @@ def parse_claims():
     paper_meta = {}
     repairs = load_bibliographic_repairs()
     deep_stats = load_deep_stat_adjudications()
+    abstract_adjudications = load_abstract_adjudications()
     main_conclusions = load_main_conclusion_adjudications()
     with CLAIMS_PATH.open() as f:
         for line in f:
@@ -484,6 +509,16 @@ def parse_claims():
             theories.extend(obj.get('theory_names') or [])
             repair = repairs.get(pid, {})
             if pid and pid not in paper_meta:
+                abstract_payload = abstract_adjudications.get(pid) or {}
+                abstract_decision = abstract_payload.get('decision') or {}
+                abstract_choice = sanitize_abstract(abstract_decision.get('chosen_text') or '')
+                fallback_abstract = sanitize_abstract(repair.get('abstract') or obj.get('abstract_clean_text')) or ''
+                abstract_value = abstract_choice or fallback_abstract
+                abstract_state = (
+                    normalize_abstract_state(abstract_payload.get('status') or abstract_status(abstract_choice))
+                    if abstract_choice
+                    else normalize_abstract_state(abstract_status(abstract_value))
+                )
                 stat_decisions = deep_stats.get(pid, {})
                 sample_decision = stat_decisions.get('sample_n') or {}
                 p_value_decision = stat_decisions.get('p_value') or {}
@@ -493,7 +528,9 @@ def parse_claims():
                     'title': publishable_title(repair.get('title')) or publishable_title(obj.get('paper_title')) or publishable_title(obj.get('title')) or '',
                     'doi': clean_doi(repair.get('doi') or obj.get('doi')),
                     'year': sanitize_year(repair.get('year') or obj.get('year')),
-                    'abstract': sanitize_abstract(repair.get('abstract') or obj.get('abstract_clean_text')) or '',
+                    'abstract': abstract_value,
+                    'abstract_status': abstract_state,
+                    'abstract_source': abstract_decision.get('chosen_source') or repair.get('source') or '',
                     'repair_source': repair.get('source') or '',
                     'abstract_surface_path': repair.get('abstract_surface_path') or '',
                     'theories': theories,
@@ -538,7 +575,7 @@ def parse_claims():
                     'credence': round(float(obj.get('severity') or 0.5), 2),
                     'year': sanitize_year(repair.get('year') or obj.get('year')) or '',
                     'citation': pid,
-                    'abstract': compact_text(sanitize_abstract(repair.get('abstract') or obj.get('abstract_clean_text')) or 'Abstract not yet recovered from the current rebuild.', 500),
+                    'abstract': compact_text(paper_meta[pid]['abstract'] or 'Abstract not yet recovered from the current rebuild.', 500),
                     'claim': compact_text(statement or fallback_finding or pid, 260),
                     'methodology': methodology_summary,
                     'warrant_chain': result.get('test_statistic') or '',
@@ -600,11 +637,12 @@ def parse_claims():
             'venue': meta.get('venue') or '',
             'main_conclusion': meta.get('main_conclusion') or '',
             'repair_source': meta.get('repair_source') or '',
+            'abstract_source': meta.get('abstract_source') or '',
             'abstract_surface_path': meta.get('abstract_surface_path') or '',
             'json_status': {
                 'title': title_status(title),
                 'doi': doi_status(meta.get('doi')),
-                'abstract': abstract_status(meta.get('abstract')),
+                'abstract': meta.get('abstract_status') or abstract_status(meta.get('abstract')),
                 'sample_n': meta.get('sample_n_status') or 'missing',
                 'p_value': meta.get('p_value_status') or 'missing',
                 'effect_size': meta.get('effect_size_status') or 'missing',
