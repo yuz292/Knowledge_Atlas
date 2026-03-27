@@ -24,10 +24,12 @@ WORKFLOW_DB_PATH = ROOT / 'Knowledge_Atlas' / 'data' / 'ka_workflow.db'
 FRONTS_PATH = AE / 'data' / 'rebuild' / 'research_fronts_v5.json'
 CLAIMS_PATH = AE / 'data' / 'rebuild' / 'gold_claims.jsonl'
 REPAIRS_PATH = AE / 'data' / 'rebuild' / 'bibliographic_repairs.json'
+AG_PDF_PACKAGE_REPAIRS_PATH = AE / 'data' / 'rebuild' / 'ag_pdf_package_repairs.json'
 DEEP_STATS_DIR = AE / 'data' / 'verification_runs' / 'v6_deep_stats_adjudication'
 ABSTRACT_ADJUDICATION_DIR = AE / 'data' / 'verification_runs' / 'v6_abstract_adjudication'
 MAIN_CONCLUSION_DIR = AE / 'data' / 'verification_runs' / 'v6_main_conclusion_adjudication'
 POPULATION_ADJUDICATION_DIR = AE / 'data' / 'verification_runs' / 'v6_population_count_adjudication'
+RESULT_RELATION_DIR = AE / 'data' / 'verification_runs' / 'v6_result_relation_adjudication'
 FIELD_COVERAGE_BY_TYPE_PATH = AE / 'data' / 'verification_runs' / 'field_coverage_by_article_type' / 'field_coverage_by_article_type.json'
 ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'argumentation_graph_v5.json'
 CLAIM_ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'claim_argument_graph_v1.json'
@@ -119,6 +121,44 @@ def sanitize_abstract(text):
     return value
 
 
+def normalize_authors(value):
+    if value in (None, ''):
+        return []
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    text = ' '.join(str(value).split()).strip()
+    if not text:
+        return []
+    for sep in (';', ' and ', ' & '):
+        if sep in text:
+            return [part.strip(' ,') for part in text.split(sep) if part.strip(' ,')]
+    if text.count(',') == 1:
+        left, right = text.split(',', 1)
+        if left.strip() and right.strip():
+            return [left.strip(), right.strip()]
+    return [text]
+
+
+def format_apa_citation(authors, year, title, doi):
+    title_value = publishable_title(title) or compact_text(title or '', 180)
+    if not title_value:
+        return ''
+    author_list = normalize_authors(authors)
+    author_text = ', '.join(author_list) if author_list else ''
+    year_value = sanitize_year(year)
+    parts = []
+    if author_text:
+        parts.append(author_text)
+    if year_value:
+        parts.append(f'({year_value}).')
+    if title_value:
+        parts.append(title_value.rstrip('.') + '.')
+    doi_value = clean_doi(doi)
+    if doi_value:
+        parts.append(f'https://doi.org/{doi_value}')
+    return ' '.join(parts).strip()
+
+
 def title_status(title):
     value = str(title or '').strip()
     if not value:
@@ -164,13 +204,21 @@ def normalize_adjudication_state(value):
 
 
 def load_bibliographic_repairs():
-    if not REPAIRS_PATH.exists():
-        return {}
-    try:
-        payload = json.loads(REPAIRS_PATH.read_text())
-        return payload.get('papers', {})
-    except Exception:
-        return {}
+    repairs = {}
+    for path in (REPAIRS_PATH, AG_PDF_PACKAGE_REPAIRS_PATH):
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text())
+        except Exception:
+            continue
+        for paper_id, row in (payload.get('papers', {}) or {}).items():
+            merged = dict(repairs.get(paper_id, {}))
+            for key, value in row.items():
+                if value not in (None, '', [], {}):
+                    merged[key] = value
+            repairs[paper_id] = merged
+    return repairs
 
 
 def load_deep_stat_adjudications():
@@ -226,6 +274,20 @@ def load_population_adjudications():
             continue
         paper_id = obj.get('paper_id') or path.name.split('.')[0]
         payload[paper_id] = obj.get('decision') or {}
+    return payload
+
+
+def load_result_relation_adjudications():
+    payload = {}
+    if not RESULT_RELATION_DIR.exists():
+        return payload
+    for path in RESULT_RELATION_DIR.glob('PDF-*.result_relation_adjudication.json'):
+        try:
+            obj = json.loads(path.read_text())
+        except Exception:
+            continue
+        paper_id = obj.get('paper_id') or path.name.split('.')[0]
+        payload[paper_id] = obj.get('decisions') or {}
     return payload
 
 
@@ -519,6 +581,7 @@ def parse_claims():
     abstract_adjudications = load_abstract_adjudications()
     main_conclusions = load_main_conclusion_adjudications()
     population_adjudications = load_population_adjudications()
+    result_relations = load_result_relation_adjudications()
     with CLAIMS_PATH.open() as f:
         for line in f:
             if not line.strip():
@@ -551,6 +614,9 @@ def parse_claims():
                 raw_subject_total = obj.get('subject_count_total')
                 population_value = population_decision.get('chosen_value')
                 population_state = normalize_adjudication_state(population_decision.get('status')) if population_decision else 'missing'
+                relation_decisions = result_relations.get(pid) or {}
+                construct_pair_decision = relation_decisions.get('construct_pair') or {}
+                direction_decision = relation_decisions.get('direction') or {}
                 if population_value in (None, '', 0) and raw_subject_total not in (None, '', 0):
                     population_value = raw_subject_total
                     population_state = subject_count_status(raw_subject_total)
@@ -567,6 +633,10 @@ def parse_claims():
                     'theories': theories,
                     'subject_count_total': population_value,
                     'subject_count_total_status': population_state,
+                    'construct_pair': construct_pair_decision.get('chosen_value'),
+                    'construct_pair_status': construct_pair_decision.get('status') or 'missing',
+                    'direction': direction_decision.get('chosen_value'),
+                    'direction_status': direction_decision.get('status') or 'missing',
                     'sample_n': sample_decision.get('chosen_value', obj.get('sample_n')),
                     'sample_n_status': sample_decision.get('status') or subject_count_status(obj.get('sample_n')),
                     'p_value': p_value_decision.get('chosen_value'),
@@ -574,8 +644,9 @@ def parse_claims():
                     'effect_size': effect_decision.get('chosen_value'),
                     'effect_size_status': effect_decision.get('status') or 'missing',
                     'article_type': obj.get('article_type') or '',
-                    'authors': repair.get('authors') or [],
+                    'authors': normalize_authors(repair.get('authors')),
                     'venue': repair.get('venue') or '',
+                    'apa_citation': repair.get('apa_citation') or '',
                     'main_conclusion': (main_conclusions.get(pid) or {}).get('chosen_text') or '',
                     'main_conclusion_status': (main_conclusions.get(pid) or {}).get('status') or 'missing',
                 }
@@ -655,17 +726,20 @@ def parse_claims():
             'title': title,
             'doi': clean_doi(meta.get('doi')),
             'year': sanitize_year(meta.get('year')),
+            'apa_citation': meta.get('apa_citation') or format_apa_citation(meta.get('authors'), meta.get('year'), title, meta.get('doi')),
             'abstract': sanitize_abstract(meta.get('abstract')) or 'Abstract not yet recovered from the current rebuild.',
             'claim_count': len(claims),
             'sample_n': meta.get('sample_n'),
             'p_value': meta.get('p_value'),
             'effect_size': meta.get('effect_size'),
             'subject_count_total': meta.get('subject_count_total'),
+            'construct_pair': meta.get('construct_pair'),
+            'direction': meta.get('direction'),
             'theories': top_theories,
             'constructs': top_constructs,
             'instruments': top_measures,
             'article_type': meta.get('article_type') or '',
-            'authors': meta.get('authors') or [],
+            'authors': normalize_authors(meta.get('authors')),
             'venue': meta.get('venue') or '',
                 'main_conclusion': meta.get('main_conclusion') or '',
                 'repair_source': meta.get('repair_source') or '',
@@ -680,6 +754,8 @@ def parse_claims():
                     'effect_size': meta.get('effect_size_status') or 'missing',
                     'main_conclusion': meta.get('main_conclusion_status') or 'missing',
                     'subject_count_total': meta.get('subject_count_total_status') or subject_count_status(meta.get('subject_count_total')),
+                    'construct_pair': meta.get('construct_pair_status') or 'missing',
+                    'direction': meta.get('direction_status') or 'missing',
                     'repair_source': meta.get('repair_source') or 'rebuild',
                 },
             })
@@ -719,6 +795,10 @@ def build_json_status(articles):
         'subject_count_total_missing': 0,
         'subject_count_good': 0,
         'subject_count_missing': 0,
+        'construct_pair_good': 0,
+        'construct_pair_missing': 0,
+        'direction_good': 0,
+        'direction_missing': 0,
     }
     rows = []
     for article in articles:
@@ -731,6 +811,8 @@ def build_json_status(articles):
         effect_state = status.get('effect_size') or 'missing'
         conclusion_state = status.get('main_conclusion') or 'missing'
         subject_state = status.get('subject_count_total') or 'missing'
+        construct_pair_state = status.get('construct_pair') or 'missing'
+        direction_state = status.get('direction') or 'missing'
         if title_state == 'good':
             summary['title_good'] += 1
         elif title_state == 'provisional':
@@ -762,6 +844,8 @@ def build_json_status(articles):
             summary['subject_count_good'] += 1
         else:
             summary['subject_count_missing'] += 1
+        summary[f"construct_pair_{'good' if construct_pair_state in {'accepted', 'provisional', 'good'} else 'missing'}"] += 1
+        summary[f"direction_{'good' if direction_state in {'accepted', 'provisional', 'good'} else 'missing'}"] += 1
         rows.append({
             'paper_id': article.get('paper_id'),
             'title': article.get('title'),
