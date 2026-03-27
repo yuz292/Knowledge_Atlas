@@ -738,7 +738,7 @@
                 <div class="sidebar-title">Requests</div>
                 <a href="#pending-requests" class="sidebar-link active">
                     Pending Requests
-                    <span class="badge">7</span>
+                    <span class="badge" id="pending-request-badge">7</span>
                 </a>
                 <a href="#approved-requests" class="sidebar-link">Approved</a>
                 <a href="#rejected-requests" class="sidebar-link">Rejected</a>
@@ -803,7 +803,7 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="approval-table-body">
                         <tr onclick="expandRow(this)">
                             <td class="name-cell">Maria Santos</td>
                             <td>UC San Diego</td>
@@ -962,7 +962,7 @@
             <!-- Capacity section -->
             <div class="capacity-section">
                 <div class="capacity-title">Track Capacity</div>
-                <div class="capacity-grid">
+                <div class="capacity-grid" id="track-capacity-grid">
                     <div class="capacity-card">
                         <div class="capacity-card-title">Track 1: Image Tagging</div>
                         <div class="capacity-bar">
@@ -996,7 +996,7 @@
 
             <div class="capacity-section" id="approved-requests">
                 <div class="capacity-title">Approved Requests</div>
-                <div class="capacity-card">
+                <div class="capacity-card" id="approved-requests-list">
                     <div class="capacity-card-title">Function integrated</div>
                     <div class="capacity-text">Live approved-request listing is not yet wired. This anchor keeps sidebar navigation live during walkthrough.</div>
                 </div>
@@ -1004,7 +1004,7 @@
 
             <div class="capacity-section" id="rejected-requests">
                 <div class="capacity-title">Rejected Requests</div>
-                <div class="capacity-card">
+                <div class="capacity-card" id="rejected-requests-list">
                     <div class="capacity-card-title">Spec unknown</div>
                     <div class="capacity-text">Final rejected-request review surface is not yet defined. Placeholder retained so navigation resolves cleanly.</div>
                 </div>
@@ -1012,7 +1012,7 @@
 
             <div class="capacity-section" id="all-users">
                 <div class="capacity-title">All Users</div>
-                <div class="capacity-card">
+                <div class="capacity-card" id="all-users-list">
                     <div class="capacity-card-title">Function integrated</div>
                     <div class="capacity-text">Full user-management table is not yet wired. Placeholder retained so sidebar navigation resolves cleanly.</div>
                 </div>
@@ -1020,7 +1020,7 @@
 
             <div class="capacity-section" id="track-roster">
                 <div class="capacity-title">Track Roster</div>
-                <div class="capacity-card">
+                <div class="capacity-card" id="track-roster-list">
                     <div class="capacity-card-title">Function integrated</div>
                     <div class="capacity-text">Roster-by-track surface is not yet wired. Placeholder retained so sidebar navigation resolves cleanly.</div>
                 </div>
@@ -1128,6 +1128,7 @@
     <!-- Toast notification -->
     <div class="ar-toast" id="ar-toast"></div>
 
+    <script src="ka_workflow_store.js"></script>
     <script>
         // ── ROW EXPAND ──
         function expandRow(rowElement) {
@@ -1138,21 +1139,169 @@
             }
         }
 
-        // ── STUDENT DATA (demo) ──
-        const STUDENT_DATA = {
-            'Maya Rodriguez':  { inst:'UC San Diego', email:'m.rodriguez@ucsd.edu', date:'Mar 20', t1:'Track 1 — Image Tagging', t2:'Track 2 — Article Finding' },
-            'James Okafor':    { inst:'UC San Diego', email:'j.okafor@ucsd.edu',    date:'Mar 21', t1:'Track 2 — Article Finding', t2:'Track 4 — Use Case Eval' },
-            'Priya Nair':      { inst:'UCLA',          email:'p.nair@ucla.edu',       date:'Mar 21', t1:'Track 4 — Use Case Eval',  t2:'Track 2 — Article Finding' },
-            'Alex Chen':       { inst:'UC San Diego', email:'a.chen@ucsd.edu',       date:'Mar 22', t1:'Track 3 — VR Production',  t2:'Track 1 — Image Tagging' }
-        };
-
         let _pendingApprovalName = '';
+        let _pendingApprovalId = '';
         let _pendingRejectName   = '';
+        let _pendingRejectId   = '';
+
+        function workflowStore() {
+            return window.KA_WORKFLOW_STORE;
+        }
+
+        function trackLabelFromCode(code) {
+            const labels = {
+                track1: 'Track 1 — Image Tagging',
+                track2: 'Track 2 — Article Finding',
+                track3: 'Track 3 — VR Production',
+                track4: 'Track 4 — GUI Evaluation & Experiment Design'
+            };
+            return labels[code] || code || '—';
+        }
+
+        function allRegistrationRows() {
+            return workflowStore() ? workflowStore().allUsers() : [];
+        }
+
+        function registrationById(userId) {
+            return allRegistrationRows().find(function(row) { return row.id === userId; }) || null;
+        }
+
+        function renderApprovalQueue() {
+            const rows = allRegistrationRows();
+            const pending = rows.filter(function(row) { return String(row.status || 'pending') === 'pending'; });
+            const approved = rows.filter(function(row) { return row.status === 'approved'; });
+            const rejected = rows.filter(function(row) { return row.status === 'rejected'; });
+
+            const badge = document.getElementById('pending-request-badge');
+            if (badge) badge.textContent = String(pending.length);
+
+            const body = document.getElementById('approval-table-body');
+            if (body) {
+                body.innerHTML = pending.length ? pending.map(function(row) {
+                    const fullName = [row.firstName, row.lastName].filter(Boolean).join(' ').trim() || row.email || row.id;
+                    const institution = row.institution || 'Institution not provided';
+                    const submitted = row.timestamp ? new Date(row.timestamp).toLocaleDateString() : '—';
+                    return `
+                        <tr onclick="expandRow(this)">
+                            <td class="name-cell">${fullName}</td>
+                            <td>${institution}</td>
+                            <td><span class="track-badge">${trackLabelFromCode(row.trackChoice1)}</span></td>
+                            <td><span class="track-badge">${trackLabelFromCode(row.trackChoice2)}</span></td>
+                            <td><span class="skills-truncate">${(row.department || row.role || 'Profile pending detail').slice(0, 80)}</span></td>
+                            <td>${submitted}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-small btn-approve-t1" data-user-id="${row.id}" data-track="${trackLabelFromCode(row.trackChoice1)}">Approve T1</button>
+                                    <button class="btn-small btn-approve-t2" data-user-id="${row.id}" data-track="${trackLabelFromCode(row.trackChoice2 || row.trackChoice1)}">Approve T2</button>
+                                    <button class="btn-small btn-reject" data-user-id="${row.id}">Reject</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="detail-panel">
+                            <td colspan="7">
+                                <div class="detail-grid">
+                                    <div class="detail-field">
+                                        <div class="detail-label">Academic Profile</div>
+                                        <div class="detail-value">${row.role || 'Not specified'} · ${row.department || 'Department not specified'}</div>
+                                    </div>
+                                    <div class="detail-field">
+                                        <div class="detail-label">Email</div>
+                                        <div class="detail-value">${row.email || 'Not provided'}</div>
+                                    </div>
+                                    <div class="detail-field">
+                                        <div class="detail-label">Institution</div>
+                                        <div class="detail-value">${institution}</div>
+                                    </div>
+                                    <div class="detail-field">
+                                        <div class="detail-label">Workflow status</div>
+                                        <div class="detail-value">Pending approval · ${row.userType || 'user type unspecified'}</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('') : `
+                    <tr>
+                        <td colspan="7" style="padding:20px;color:#6D645A;">No pending registrations are stored in the current workflow state.</td>
+                    </tr>
+                `;
+            }
+
+            const approvedList = document.getElementById('approved-requests-list');
+            if (approvedList) {
+                approvedList.innerHTML = approved.length ? approved.map(function(row) {
+                    const fullName = [row.firstName, row.lastName].filter(Boolean).join(' ').trim() || row.email || row.id;
+                    return `<div class="capacity-text"><strong>${fullName}</strong> · ${row.approvedTrack || trackLabelFromCode(row.trackChoice1)} · ${row.email || 'email missing'}</div>`;
+                }).join('') : '<div class="capacity-text">No approved registrations are stored yet.</div>';
+            }
+
+            const rejectedList = document.getElementById('rejected-requests-list');
+            if (rejectedList) {
+                rejectedList.innerHTML = rejected.length ? rejected.map(function(row) {
+                    const fullName = [row.firstName, row.lastName].filter(Boolean).join(' ').trim() || row.email || row.id;
+                    return `<div class="capacity-text"><strong>${fullName}</strong> · ${row.rejectionReason || 'No rejection reason recorded.'}</div>`;
+                }).join('') : '<div class="capacity-text">No rejected registrations are stored yet.</div>';
+            }
+
+            const allUsersList = document.getElementById('all-users-list');
+            if (allUsersList) {
+                allUsersList.innerHTML = rows.length ? rows.map(function(row) {
+                    const fullName = [row.firstName, row.lastName].filter(Boolean).join(' ').trim() || row.email || row.id;
+                    return `<div class="capacity-text"><strong>${fullName}</strong> · ${row.status || 'pending'} · ${trackLabelFromCode(row.approvedTrack || row.trackChoice1)}</div>`;
+                }).join('') : '<div class="capacity-text">No registrations are stored in the current workflow state.</div>';
+            }
+
+            const rosterList = document.getElementById('track-roster-list');
+            if (rosterList) {
+                const roster = workflowStore() ? workflowStore().trackRoster() : {};
+                const labels = Object.keys(roster);
+                rosterList.innerHTML = labels.length ? labels.map(function(label) {
+                    return `<div class="capacity-text"><strong>${label}</strong> · ${(roster[label] || []).length} approved contributor(s)</div>`;
+                }).join('') : '<div class="capacity-text">Track roster remains empty until approvals are recorded.</div>';
+            }
+
+            const capacityGrid = document.getElementById('track-capacity-grid');
+            if (capacityGrid && workflowStore()) {
+                capacityGrid.innerHTML = workflowStore().trackCapacity().map(function(row) {
+                    return `
+                        <div class="capacity-card">
+                            <div class="capacity-card-title">${row.label}</div>
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" style="width: ${row.pct}%;"></div>
+                            </div>
+                            <div class="capacity-text">${row.approved} approved / ${row.target || 'TBD'} target</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.querySelectorAll('.btn-small').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const userId = this.getAttribute('data-user-id');
+                    const row = registrationById(userId);
+                    const studentName = row ? ([row.firstName, row.lastName].filter(Boolean).join(' ').trim() || row.email || row.id) : 'Unknown applicant';
+                    if (this.classList.contains('btn-reject')) {
+                        openRejectModal(studentName, userId);
+                    } else {
+                        openApproveModal(studentName, userId, this.getAttribute('data-track'));
+                    }
+                });
+            });
+        }
 
         // ── APPROVE MODAL ──
-        function openApproveModal(name) {
+        function openApproveModal(name, userId, preferredTrack) {
             _pendingApprovalName = name;
-            const d = STUDENT_DATA[name] || { inst:'—', email:'—', date:'—', t1:'—', t2:'—' };
+            _pendingApprovalId = userId || '';
+            const row = registrationById(userId) || {};
+            const d = {
+                inst: row.institution || '—',
+                email: row.email || '—',
+                date: row.timestamp ? new Date(row.timestamp).toLocaleDateString() : '—',
+                t1: preferredTrack || trackLabelFromCode(row.trackChoice1),
+                t2: trackLabelFromCode(row.trackChoice2)
+            };
             document.getElementById('approve-name').textContent  = name;
             document.getElementById('approve-inst').textContent  = d.inst;
             document.getElementById('approve-email').textContent = d.email;
@@ -1175,15 +1324,21 @@
         function confirmApprove() {
             const trackEl = document.querySelector('#approve-track-btns .ar-track-badge:not(.inactive)');
             const track = trackEl ? trackEl.textContent : 'Primary Track';
+            if (workflowStore() && _pendingApprovalId) {
+                workflowStore().approveRegistration(_pendingApprovalId, track);
+                renderApprovalQueue();
+            }
             closeApproveModal();
             showARToast(`✅ ${_pendingApprovalName} approved for ${track}`, 'approve');
         }
 
         // ── REJECT MODAL ──
-        function openRejectModal(name) {
+        function openRejectModal(name, userId) {
             _pendingRejectName = name;
+            _pendingRejectId = userId || '';
             document.getElementById('reject-name').textContent = name;
-            const d = STUDENT_DATA[name] || { inst:'—' };
+            const row = registrationById(userId) || {};
+            const d = { inst: row.institution || '—' };
             document.getElementById('reject-inst').textContent = d.inst;
             document.getElementById('reject-note').value = '';
             ['rr-capacity','rr-skills','rr-incomplete','rr-timing'].forEach(id => {
@@ -1199,6 +1354,11 @@
             document.body.style.overflow = '';
         }
         function confirmReject() {
+            const reason = document.getElementById('reject-note').value.trim();
+            if (workflowStore() && _pendingRejectId) {
+                workflowStore().rejectRegistration(_pendingRejectId, reason);
+                renderApprovalQueue();
+            }
             closeRejectModal();
             showARToast(`Decline notice sent to ${_pendingRejectName}`, 'reject');
         }
@@ -1212,19 +1372,7 @@
             t._timer = setTimeout(() => { t.style.display = 'none'; }, 3200);
         }
 
-        // ── WIRE UP BUTTONS ──
-        document.querySelectorAll('.btn-small').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const row = this.closest('tr');
-                const studentName = row.querySelector('.name-cell').textContent.trim();
-                if (this.classList.contains('btn-reject')) {
-                    openRejectModal(studentName);
-                } else {
-                    openApproveModal(studentName);
-                }
-            });
-        });
+        renderApprovalQueue();
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {

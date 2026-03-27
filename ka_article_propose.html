@@ -352,6 +352,7 @@
   </div>
 </div>
 
+<script src="ka_workflow_store.js"></script>
 <script>
 const EXISTING_ARTICLES = [
   {
@@ -410,27 +411,26 @@ let currentTab = 'pending';
 let selectedFileId = null;
 
 function getIdentityContext() {
-  try {
-    const raw = localStorage.getItem('ka_current_user');
-    if (!raw) return { identityType: 'anonymous', label: 'public / unclaimed', userId: null, track: null };
-    const user = JSON.parse(raw);
-    return {
-      identityType: 'student',
-      label: `student${user.trackChoice1 ? ' · ' + user.trackChoice1 : ''}`,
-      userId: user.id || null,
-      track: user.trackChoice1 || null
-    };
-  } catch (_err) {
-    return { identityType: 'anonymous', label: 'public / unclaimed', userId: null, track: null };
-  }
+  const user = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.currentUser() : null;
+  if (!user) return { identityType: 'anonymous', label: 'public / unclaimed', userId: null, track: null };
+  return {
+    identityType: 'student',
+    label: `student${user.trackChoice1 ? ' · ' + user.trackChoice1 : ''}`,
+    userId: user.id || null,
+    track: user.trackChoice1 || null
+  };
 }
 
 function getContributionStore() {
-  return JSON.parse(localStorage.getItem('ka_intake_submissions') || '[]');
+  return window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.intakeSubmissions() : JSON.parse(localStorage.getItem('ka_intake_submissions') || '[]');
 }
 
 function saveContributionStore(rows) {
-  localStorage.setItem('ka_intake_submissions', JSON.stringify(rows));
+  if (window.KA_WORKFLOW_STORE) {
+    window.KA_WORKFLOW_STORE.saveIntakeSubmissions(rows);
+  } else {
+    localStorage.setItem('ka_intake_submissions', JSON.stringify(rows));
+  }
 }
 
 function syncIdentityCard() {

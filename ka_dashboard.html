@@ -1010,6 +1010,7 @@
     <!-- Version Badge -->
     <div class="version-badge">KA UI · v0.4</div>
 
+<script src="ka_workflow_store.js"></script>
 <script>
 window.KA_PAGE_FUNCTION = {
   pageId: 'ka_dashboard',
@@ -1097,11 +1098,8 @@ window.KA_PAGE_FUNCTION = {
     (layersPayload.layers || []).forEach(function(layer) {
       layerMap[layer.id] = layer;
     });
-    let currentUser = null;
-    try {
-      currentUser = JSON.parse(localStorage.getItem('ka_current_user') || 'null');
-    } catch (_err) {}
-    const contributionStore = JSON.parse(localStorage.getItem('ka_intake_submissions') || '[]');
+    const currentUser = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.currentUser() : null;
+    const contributionStore = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.intakeSubmissions() : [];
     const myRows = currentUser && currentUser.id
       ? contributionStore.filter(function(row) { return row.userId === currentUser.id; })
       : [];

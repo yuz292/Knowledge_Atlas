@@ -1204,6 +1204,7 @@
     <!-- Version Badge -->
     <div class="version-badge">KA UI · v0.4</div>
 
+    <script src="ka_workflow_store.js"></script>
     <script>
         let contributorArticles = [];
         let filteredContributorArticles = [];
@@ -1211,19 +1212,11 @@
         let articleAbstractExpanded = false;
 
         function getContributorIdentity() {
-            try {
-                return JSON.parse(localStorage.getItem('ka_current_user') || 'null');
-            } catch (_err) {
-                return null;
-            }
+            return window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.currentUser() : null;
         }
 
         function getContributorStore() {
-            try {
-                return JSON.parse(localStorage.getItem('ka_intake_submissions') || '[]');
-            } catch (_err) {
-                return [];
-            }
+            return window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.intakeSubmissions() : [];
         }
 
         function selectContributorArticle(paperId) {

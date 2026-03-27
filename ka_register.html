@@ -867,7 +867,7 @@
           showErr('email','Please enter a valid email address.');
         } else {
           // Check duplicate in localStorage
-          const regs = JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
+          const regs = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.pendingRegistrations() : JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
           const dup = regs.find(r => r.email.toLowerCase() === this.value.toLowerCase());
           if (dup) showErr('email', 'An account with this email already exists. Try logging in.');
           else clearErr('email');
@@ -903,7 +903,7 @@
         if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
           showErr('email','Please enter a valid email address.'); ok = false;
         } else {
-          const regs = JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
+          const regs = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.pendingRegistrations() : JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
           if (regs.find(r => r.email.toLowerCase() === email.toLowerCase())) {
             showErr('email','An account with this email already exists.'); ok = false;
           } else clearErr('email');
@@ -949,14 +949,23 @@
         };
 
         // Save to pending registrations list
-        const regs = JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
-        regs.push(userData);
-        localStorage.setItem('ka_pending_registrations', JSON.stringify(regs));
+        if (window.KA_WORKFLOW_STORE) {
+          window.KA_WORKFLOW_STORE.addPendingRegistration(userData);
+        } else {
+          const regs = JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
+          regs.push(userData);
+          localStorage.setItem('ka_pending_registrations', JSON.stringify(regs));
+        }
 
         // Set current user session
-        localStorage.setItem('ka_current_user', JSON.stringify(userData));
-        localStorage.setItem('ka_logged_in', '1');
-        sessionStorage.setItem('ka_logged_in', '1');
+        if (window.KA_WORKFLOW_STORE) {
+          window.KA_WORKFLOW_STORE.setCurrentUser(userData);
+          window.KA_WORKFLOW_STORE.setLoggedIn(true);
+        } else {
+          localStorage.setItem('ka_current_user', JSON.stringify(userData));
+          localStorage.setItem('ka_logged_in', '1');
+          sessionStorage.setItem('ka_logged_in', '1');
+        }
         localStorage.setItem('ka_user_type', userData.userType);
         sessionStorage.setItem('ka_active_mode', userData.userType);
 
@@ -977,6 +986,7 @@
 <script src="ka_mode_switch.js"></script>
 <script src="ka_site_shell.js"></script>
 <script src="ka_data_adapter.js"></script>
+<script src="ka_workflow_store.js"></script>
 <script src="ka_live_context.js"></script>
 <script>
     (function() {

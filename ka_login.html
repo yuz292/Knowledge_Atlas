@@ -447,19 +447,28 @@
     <!-- Version badge -->
     <div class="version-badge">KA UI · v0.4</div>
 
+    <script src="ka_workflow_store.js"></script>
     <script>
         // Demo login: set logged-in flag so page function spec button becomes visible on all pages
         document.querySelectorAll('button[type=submit], .btn-login, .demo-login').forEach(btn => {
           btn.addEventListener('click', function() {
-            localStorage.setItem('ka_logged_in', '1');
-            sessionStorage.setItem('ka_logged_in', '1');
+            if (window.KA_WORKFLOW_STORE) {
+              window.KA_WORKFLOW_STORE.setLoggedIn(true);
+            } else {
+              localStorage.setItem('ka_logged_in', '1');
+              sessionStorage.setItem('ka_logged_in', '1');
+            }
           });
         });
         // Also handle any form submit
         document.querySelectorAll('form').forEach(form => {
           form.addEventListener('submit', function() {
-            localStorage.setItem('ka_logged_in', '1');
-            sessionStorage.setItem('ka_logged_in', '1');
+            if (window.KA_WORKFLOW_STORE) {
+              window.KA_WORKFLOW_STORE.setLoggedIn(true);
+            } else {
+              localStorage.setItem('ka_logged_in', '1');
+              sessionStorage.setItem('ka_logged_in', '1');
+            }
           });
         });
 
