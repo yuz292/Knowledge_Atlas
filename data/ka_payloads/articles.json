@@ -34,6 +34,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -79,6 +81,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -124,6 +128,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -168,6 +174,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -213,6 +221,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -264,6 +274,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -307,6 +319,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -353,6 +367,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -402,6 +418,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -449,6 +467,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -500,6 +520,8 @@
       "repair_source": "crossref",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -548,6 +570,33 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 3,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0064/PDF-0064_p3_img1.png",
+          "atlas_title": "Stimulus or figure, page 3",
+          "atlas_caption": "figure surface: Fig. 1 The original model of construct of cognitive load. Adapted from Paas and Van Merri\u00ebnboer (1994a), Educational Psychology Review, 6, p. 3\u2026; figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 5,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0064/PDF-0064_p5_img2.png",
+          "atlas_title": "Stimulus or figure, page 5",
+          "atlas_caption": "figure surface: Fig. 2 The construct of cognitive load. \\(E\\) the physical learning environment, \\(T\\) learning task, \\(L\\) learner. Adapted and revised from P\u2026; figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Stimulus or figure, page 3",
+        "page": 3,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0064/PDF-0064_p3_img1.png",
+        "caption": "figure surface: Fig. 1 The original model of construct of cognitive load. Adapted from Paas and Van Merri\u00ebnboer (1994a), Educational Psychology Review, 6, p. 3\u2026; figure mention in page text",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -594,6 +643,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -642,6 +693,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -691,6 +744,8 @@
       "repair_source": "crossref",
       "abstract_source": "crossref",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -743,6 +798,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 16,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p16_img10.jpeg",
+          "atlas_title": "Stimulus or figure, page 16",
+          "atlas_caption": "figure surface: Image Source: https://www.bangkoktreehouse.com/; figure surface: Image Source: https://www.som.com/projects/pearl-river-tower",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 16,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p16_img11.jpeg",
+          "atlas_title": "Stimulus or figure, page 16",
+          "atlas_caption": "figure surface: Image Source: https://www.bangkoktreehouse.com/; figure surface: Image Source: https://www.som.com/projects/pearl-river-tower",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 16,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p16_img12.jpeg",
+          "atlas_title": "Stimulus or figure, page 16",
+          "atlas_caption": "figure surface: Image Source: https://www.bangkoktreehouse.com/; figure surface: Image Source: https://www.som.com/projects/pearl-river-tower",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 16,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p16_img9.jpeg",
+          "atlas_title": "Stimulus or figure, page 16",
+          "atlas_caption": "figure surface: Image Source: https://www.bangkoktreehouse.com/; figure surface: Image Source: https://www.som.com/projects/pearl-river-tower",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 7,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p7_img1.jpeg",
+          "atlas_title": "Experimental context, page 7",
+          "atlas_caption": "result-language surface in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 10,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p10_img2.jpeg",
+          "atlas_title": "Stimulus or figure, page 10",
+          "atlas_caption": "figure surface: Fig: Elements of Biomimicry (AI Generated); figure surface: Fig. Honeycomb (left) and the sandwich structure's schematic view (right) (Source: https://en.wiki edia.org/wiki/Sandwich-structured_composite).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 13,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p13_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 13",
+          "atlas_caption": "figure surface: Fig. Honeycomb (left) and the sandwich structure's schematic view (right) (Source: https://en.wiki edia.org/wiki/Sandwich-structured_composite).; figure surface: Fig. Honeycomb (left) and the sandwich structure's schematic view (right) (Source: https://en.wiki edia.org/wiki/Sandwich-structured_composite).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 13,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p13_img4.jpeg",
+          "atlas_title": "Stimulus or figure, page 13",
+          "atlas_caption": "figure surface: Fig. Honeycomb (left) and the sandwich structure's schematic view (right) (Source: https://en.wiki edia.org/wiki/Sandwich-structured_composite).; figure surface: Fig. Honeycomb (left) and the sandwich structure's schematic view (right) (Source: https://en.wiki edia.org/wiki/Sandwich-structured_composite).",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 16",
+        "page": 16,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0048/PDF-0048_p16_img10.jpeg",
+        "caption": "figure surface: Image Source: https://www.bangkoktreehouse.com/; figure surface: Image Source: https://www.som.com/projects/pearl-river-tower",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -793,6 +929,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p6_img1.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "figure surface: Figure 11-1. Binaural hearing threshold of hearing in a free field (frontal incidence) and in a diffuse field as a function of frequency (adapt\u2026; figure surface: Figure 11-2. Comparison of the MAF (ISO, 2003) and MAP (Killion, 1978) threshold of hearings. The reference points for both measurements are th\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p6_img2.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "figure surface: Figure 11-1. Binaural hearing threshold of hearing in a free field (frontal incidence) and in a diffuse field as a function of frequency (adapt\u2026; figure surface: Figure 11-2. Comparison of the MAF (ISO, 2003) and MAP (Killion, 1978) threshold of hearings. The reference points for both measurements are th\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p6_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "figure surface: Figure 11-1. Binaural hearing threshold of hearing in a free field (frontal incidence) and in a diffuse field as a function of frequency (adapt\u2026; figure surface: Figure 11-2. Comparison of the MAF (ISO, 2003) and MAP (Killion, 1978) threshold of hearings. The reference points for both measurements are th\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p6_img4.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "figure surface: Figure 11-1. Binaural hearing threshold of hearing in a free field (frontal incidence) and in a diffuse field as a function of frequency (adapt\u2026; figure surface: Figure 11-2. Comparison of the MAF (ISO, 2003) and MAP (Killion, 1978) threshold of hearings. The reference points for both measurements are th\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 34,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p34_img18.png",
+          "atlas_title": "Stimulus or figure, page 34",
+          "atlas_caption": "figure surface: Figure 11-16. Critical bandwidth as a function of frequency (adapted from Zwicker and Fastl, 1999).; figure surface: Figure 11-17. Critical band rate or barks as a function of frequency (adapted from Zwicker and Terhardt, 1980).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 10,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p10_img5.png",
+          "atlas_title": "Experimental context, page 10",
+          "atlas_caption": "sample/demographic surface in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 58,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p58_img30.png",
+          "atlas_title": "Experimental context, page 58",
+          "atlas_caption": "Recovered visual support from page 58.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 14,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p14_img6.png",
+          "atlas_title": "Stimulus or figure, page 14",
+          "atlas_caption": "Recovered visual support from page 14.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Stimulus or figure, page 6",
+        "page": 6,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0066/PDF-0066_p6_img1.jpeg",
+        "caption": "figure surface: Figure 11-1. Binaural hearing threshold of hearing in a free field (frontal incidence) and in a diffuse field as a function of frequency (adapt\u2026; figure surface: Figure 11-2. Comparison of the MAF (ISO, 2003) and MAP (Killion, 1978) threshold of hearings. The reference points for both measurements are th\u2026",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -841,6 +1058,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -893,6 +1112,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -938,6 +1159,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0659/PDF-0659.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -993,6 +1216,8 @@
       "repair_source": "openalex",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1037,6 +1262,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1083,6 +1310,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-1190/PDF-1190.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1133,6 +1362,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1178,6 +1409,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1221,6 +1454,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0828/PDF-0828.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1268,6 +1503,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1317,6 +1554,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -1361,6 +1600,8 @@
       "repair_source": "crossref",
       "abstract_source": "crossref",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1412,6 +1653,42 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0061/PDF-0061_p4_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 4",
+          "atlas_caption": "figure mention in page text; sample cues inside section: 2.1. Participants",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "results_surface",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0061/PDF-0061_p1_img1.jpeg",
+          "atlas_title": "Result surface, page 1",
+          "atlas_caption": "table surface: Table 1 Mean transfer scores.; table surface: Table 2 Mean cognitive load scores.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "results_surface",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0061/PDF-0061_p1_img2.jpeg",
+          "atlas_title": "Result surface, page 1",
+          "atlas_caption": "table surface: Table 1 Mean transfer scores.; table surface: Table 2 Mean cognitive load scores.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 1",
+        "page": 1,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0061/PDF-0061_p1_img1.jpeg",
+        "caption": "table surface: Table 1 Mean transfer scores.; table surface: Table 2 Mean cognitive load scores.",
+        "summary": "Kruskal-Wallis test for prior knowledge"
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1458,6 +1735,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -1503,6 +1782,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1548,6 +1829,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1590,6 +1873,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1633,6 +1918,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1682,6 +1969,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1727,6 +2016,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1771,6 +2062,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1818,6 +2111,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1865,6 +2160,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1905,6 +2202,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -1951,6 +2250,8 @@
       "repair_source": "crossref",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -1999,6 +2300,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -2052,6 +2355,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2098,6 +2403,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -2145,6 +2452,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -2190,6 +2499,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -2233,6 +2544,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "blocked",
         "doi": "missing",
@@ -2276,6 +2589,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -2322,6 +2637,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0820/PDF-0820.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2366,6 +2683,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -2412,6 +2731,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0870/PDF-0870.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2461,6 +2782,8 @@
       "repair_source": "openalex",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2507,6 +2830,87 @@
       "repair_source": "crossref",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img1.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img2.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img4.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img5.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img6.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 32,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p32_img7.jpeg",
+          "atlas_title": "Stimulus or figure, page 32",
+          "atlas_caption": "Recovered visual support from page 32.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 74,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p74_img8.jpeg",
+          "atlas_title": "Stimulus or figure, page 74",
+          "atlas_caption": "Recovered visual support from page 74.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Stimulus or figure, page 1",
+        "page": 1,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0090/PDF-0090_p1_img1.jpeg",
+        "caption": "Recovered visual support from page 1.",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2554,6 +2958,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2603,6 +3009,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -2654,6 +3062,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2702,6 +3112,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2747,6 +3159,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -2791,6 +3205,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0836/PDF-0836.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -2837,6 +3253,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -2884,6 +3302,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2935,6 +3355,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -2976,6 +3398,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3023,6 +3447,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3067,6 +3493,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3110,6 +3538,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p4_img17.jpeg",
+          "atlas_title": "Stimulus or figure, page 4",
+          "atlas_caption": "figure surface: Figure 1. Keyword co-occurrence network related to spatial cognition research (1999-2019).; figure surface: Figure 2. Keyword co-occurrence network timeline related to spatial cognition research (1999-2019).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 5,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p5_img18.jpeg",
+          "atlas_title": "Stimulus or figure, page 5",
+          "atlas_caption": "figure mention in page text; table mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p1_img10.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p1_img11.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p1_img12.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p1_img13.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p1_img14.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p1_img15.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 4",
+        "page": 4,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0093/PDF-0093_p4_img17.jpeg",
+        "caption": "figure surface: Figure 1. Keyword co-occurrence network related to spatial cognition research (1999-2019).; figure surface: Figure 2. Keyword co-occurrence network timeline related to spatial cognition research (1999-2019).",
+        "summary": ""
+      },
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -3157,6 +3666,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3204,6 +3715,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "experimental_context",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p4_img4.png",
+          "atlas_title": "Experimental context, page 4",
+          "atlas_caption": "sample cues inside section: Method; sample cues inside section: Measures of Crowding",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p1_img1.png",
+          "atlas_title": "Experimental context, page 1",
+          "atlas_caption": "sample cues inside section: Method; sample/demographic surface in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 2,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p2_img2.png",
+          "atlas_title": "Experimental context, page 2",
+          "atlas_caption": "sample cues inside section: Measures of Crowding; sample/demographic surface in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 3,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p3_img3.png",
+          "atlas_title": "Experimental context, page 3",
+          "atlas_caption": "sample cues inside section: Method; sample/demographic surface in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "results_surface",
+          "page": 5,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p5_img5.png",
+          "atlas_title": "Result surface, page 5",
+          "atlas_caption": "table surface: TABLE 1 Means for Crowding Indices; table surface: TABLE 2 Analysis of Variance for Crowding Indices",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "results_surface",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p6_img6.png",
+          "atlas_title": "Result surface, page 6",
+          "atlas_caption": "table surface: TABLE 5 Performance on Word Task: Number of Words Formed by Group; table surface: TABLE 6 Analysis of Variance for Word Task Performance",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "results_surface",
+          "page": 7,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p7_img7.png",
+          "atlas_title": "Result surface, page 7",
+          "atlas_caption": "table surface: TABLE 5 Performance on Word Task: Number of Words Formed by Group; table surface: TABLE 7 Individual and Group Punitiveness Scores",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 8,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p8_img8.png",
+          "atlas_title": "Stimulus or figure, page 8",
+          "atlas_caption": "Recovered visual support from page 8.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 4",
+        "page": 4,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0091/PDF-0091_p4_img4.png",
+        "caption": "sample cues inside section: Method; sample cues inside section: Measures of Crowding",
+        "summary": "F(1, 32) = 99.00"
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -3252,6 +3844,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -3294,6 +3888,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3335,6 +3931,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0978/PDF-0978.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -3383,6 +3981,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -3432,6 +4032,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -3479,6 +4081,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3526,6 +4130,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3575,6 +4181,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -3618,6 +4226,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3665,6 +4275,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "abstract_surface",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0652/PDF-0652.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -3711,6 +4323,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -3752,6 +4366,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0938/PDF-0938.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3797,6 +4413,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3841,6 +4459,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3888,6 +4508,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -3937,6 +4559,87 @@
       "repair_source": "crossref",
       "abstract_source": "semantic_scholar.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p1_img1.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p1_img2.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 2,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p2_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 2",
+          "atlas_caption": "Recovered visual support from page 2.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 3,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p3_img4.jpeg",
+          "atlas_title": "Stimulus or figure, page 3",
+          "atlas_caption": "Recovered visual support from page 3.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p4_img5.png",
+          "atlas_title": "Stimulus or figure, page 4",
+          "atlas_caption": "Recovered visual support from page 4.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 5,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p5_img6.jpeg",
+          "atlas_title": "Stimulus or figure, page 5",
+          "atlas_caption": "Recovered visual support from page 5.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p6_img7.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "Recovered visual support from page 6.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p6_img8.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "Recovered visual support from page 6.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Stimulus or figure, page 1",
+        "page": 1,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0067/PDF-0067_p1_img1.jpeg",
+        "caption": "Recovered visual support from page 1.",
+        "summary": "F = 39.4"
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -3984,6 +4687,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4035,6 +4740,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4083,6 +4790,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4127,6 +4836,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -4167,6 +4878,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -4207,6 +4920,8 @@
       "repair_source": "page_image_reread",
       "abstract_source": "page_image_reread",
       "abstract_surface_path": "/Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/data/verification_runs/abstract_surfaces/PDF-0988/PDF-0988.abstract.txt",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4255,6 +4970,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -4306,6 +5023,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4356,6 +5075,8 @@
       "repair_source": "crossref",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4398,6 +5119,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -4446,6 +5169,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4496,6 +5221,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p6_img6.jpeg",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "figure surface: FIGURE 1 | A computer-generated image that conveys the impression of a smooth, pebble-shaped, transparent blob inside a textured box. Transpare\u2026; figure surface: FIGURE 6 | Schematic illustration of the experimental set-up to study visuo-tactile interactions in healthy adults. In the transparent barrier\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 7,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p7_img7.jpeg",
+          "atlas_title": "Stimulus or figure, page 7",
+          "atlas_caption": "figure surface: FIGURE 7 | Schematic illustration of the experimental set-up to study distance-to-target judgments in healthy adults.; figure surface: FIGURE 8 | Experimental set-up to study infants' toy retrieval in the presence of a transparent barrier. The arrows signal the required reachin\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 7,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p7_img8.jpeg",
+          "atlas_title": "Stimulus or figure, page 7",
+          "atlas_caption": "figure surface: FIGURE 7 | Schematic illustration of the experimental set-up to study distance-to-target judgments in healthy adults.; figure surface: FIGURE 8 | Experimental set-up to study infants' toy retrieval in the presence of a transparent barrier. The arrows signal the required reachin\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p4_img2.png",
+          "atlas_title": "Stimulus or figure, page 4",
+          "atlas_caption": "figure surface: FIGURE 1 | A computer-generated image that conveys the impression of a smooth, pebble-shaped, transparent blob inside a textured box. Transpare\u2026; figure surface: FIGURE 2 | Illustration of the role of photometric cues in transparency detection. (A) A set of luminance relations (depicted as light > dark)\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p4_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 4",
+          "atlas_caption": "figure surface: FIGURE 1 | A computer-generated image that conveys the impression of a smooth, pebble-shaped, transparent blob inside a textured box. Transpare\u2026; figure surface: FIGURE 2 | Illustration of the role of photometric cues in transparency detection. (A) A set of luminance relations (depicted as light > dark)\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 8,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p8_img9.jpeg",
+          "atlas_title": "Stimulus or figure, page 8",
+          "atlas_caption": "figure surface: FIGURE 3 | Illustration of the role of geometric cues in transparency detection. (A) Opaque square and circle, with T-junctions marked by dashe\u2026; figure surface: FIGURE 8 | Experimental set-up to study infants' toy retrieval in the presence of a transparent barrier. The arrows signal the required reachin\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "results_surface",
+          "page": 10,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p10_img11.jpeg",
+          "atlas_title": "Result surface, page 10",
+          "atlas_caption": "table mention in page text; heading hint only: results_pages",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p1_img1.png",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 6",
+        "page": 6,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0070/PDF-0070_p6_img6.jpeg",
+        "caption": "figure surface: FIGURE 1 | A computer-generated image that conveys the impression of a smooth, pebble-shaped, transparent blob inside a textured box. Transpare\u2026; figure surface: FIGURE 6 | Schematic illustration of the experimental set-up to study visuo-tactile interactions in healthy adults. In the transparent barrier\u2026",
+        "summary": ""
+      },
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -4543,6 +5349,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 3,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p3_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 3",
+          "atlas_caption": "figure surface: Fig. 1. (Color online) The 2D FEM prediction model (in m).; figure surface: Fig. 3. (Color online) The 2D FEM validation model (in m).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 3,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p3_img4.jpeg",
+          "atlas_title": "Stimulus or figure, page 3",
+          "atlas_caption": "figure surface: Fig. 1. (Color online) The 2D FEM prediction model (in m).; figure surface: Fig. 3. (Color online) The 2D FEM validation model (in m).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 3,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p3_img5.jpeg",
+          "atlas_title": "Stimulus or figure, page 3",
+          "atlas_caption": "figure surface: Fig. 1. (Color online) The 2D FEM prediction model (in m).; figure surface: Fig. 3. (Color online) The 2D FEM validation model (in m).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 5,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p5_img7.jpeg",
+          "atlas_title": "Stimulus or figure, page 5",
+          "atlas_caption": "figure surface: Fig. 6. (Color online) SPL distributions of the initial model at a range of frequencies: (a) \\(a b=0.01\\) and (b) \\(a b=0.5\\).; figure surface: Fig. 7. (Color online) The average SPL in a room for \\(d_ op",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 5,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p5_img8.jpeg",
+          "atlas_title": "Stimulus or figure, page 5",
+          "atlas_caption": "figure surface: Fig. 6. (Color online) SPL distributions of the initial model at a range of frequencies: (a) \\(a b=0.01\\) and (b) \\(a b=0.5\\).; figure surface: Fig. 7. (Color online) The average SPL in a room for \\(d_ op",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 4,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p4_img6.jpeg",
+          "atlas_title": "Stimulus or figure, page 4",
+          "atlas_caption": "figure surface: Fig. 1. (Color online) The 2D FEM prediction model (in m).; figure surface: Fig. 3. (Color online) The 2D FEM validation model (in m).",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p1_img1.jpeg",
+          "atlas_title": "Experimental context, page 1",
+          "atlas_caption": "table surface: Table 1 Three parametrizations of the contextual, acoustic and source factors) and the simulation input used in COMSOL.; table surface: Table 2 Results of each scheme showing the assumptions that should be considered, as well as the applications and guidelines that should be used\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p1_img2.jpeg",
+          "atlas_title": "Experimental context, page 1",
+          "atlas_caption": "table surface: Table 1 Three parametrizations of the contextual, acoustic and source factors) and the simulation input used in COMSOL.; table surface: Table 2 Results of each scheme showing the assumptions that should be considered, as well as the applications and guidelines that should be used\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 4",
+        "page": 4,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0086/PDF-0086_p4_img6.jpeg",
+        "caption": "figure surface: Fig. 1. (Color online) The 2D FEM prediction model (in m).; figure surface: Fig. 3. (Color online) The 2D FEM validation model (in m).",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4594,6 +5481,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4639,6 +5528,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -4683,6 +5574,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -4730,6 +5623,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -4778,6 +5673,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4828,6 +5725,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -4874,6 +5773,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -4919,6 +5820,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -4963,6 +5866,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5013,6 +5918,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5063,6 +5970,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5107,6 +6016,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5153,6 +6064,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5204,6 +6117,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5250,6 +6165,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -5299,6 +6216,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5343,6 +6262,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5390,6 +6311,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5438,6 +6361,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5483,6 +6408,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5527,6 +6454,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5584,6 +6513,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -5626,6 +6557,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5670,6 +6603,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5712,6 +6647,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5755,6 +6692,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5796,6 +6735,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5838,6 +6779,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5879,6 +6822,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5920,6 +6865,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -5966,6 +6913,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -6014,6 +6963,8 @@
       "repair_source": "crossref",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -6060,6 +7011,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6105,6 +7058,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6152,6 +7107,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6192,6 +7149,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6242,6 +7201,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -6287,6 +7248,60 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 20,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0087/PDF-0087_p20_img5.jpeg",
+          "atlas_title": "Stimulus or figure, page 20",
+          "atlas_caption": "figure surface: Figure I. 1 \u00c9mile Jaques-Dalcroze. From M. E. Sadler (ed.), The Eurhythmics of JaquesDalcroze. Boston: Small Maynard and Company, 1913.; figure surface: Figure 1.3 \"Beating 5/4 in canon with expression.\" From M. E. Sadler (ed.), The Eurhythmics of Jaques-Dalcroze. Boston: Small Maynard and Compa\u2026",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 16,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0087/PDF-0087_p16_img2.jpeg",
+          "atlas_title": "Stimulus or figure, page 16",
+          "atlas_caption": "figure surface: Figure 1.2 Heinrich; figure surface: Figure 1.4 \"A Plastic",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 18,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0087/PDF-0087_p18_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 18",
+          "atlas_caption": "figure surface: Figure I. 1 \u00c9mile Jaques-Dalcroze. From M. E. Sadler (ed.), The Eurhythmics of JaquesDalcroze. Boston: Small Maynard and Company, 1913.; figure surface: Figure 1.2 Heinrich",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 19,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0087/PDF-0087_p19_img4.png",
+          "atlas_title": "Stimulus or figure, page 19",
+          "atlas_caption": "figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0087/PDF-0087_p1_img1.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 20",
+        "page": 20,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0087/PDF-0087_p20_img5.jpeg",
+        "caption": "figure surface: Figure I. 1 \u00c9mile Jaques-Dalcroze. From M. E. Sadler (ed.), The Eurhythmics of JaquesDalcroze. Boston: Small Maynard and Company, 1913.; figure surface: Figure 1.3 \"Beating 5/4 in canon with expression.\" From M. E. Sadler (ed.), The Eurhythmics of Jaques-Dalcroze. Boston: Small Maynard and Compa\u2026",
+        "summary": ""
+      },
       "json_status": {
         "title": "provisional",
         "doi": "good",
@@ -6333,6 +7348,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -6383,6 +7400,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6429,6 +7448,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -6471,6 +7492,8 @@
       "repair_source": "crossref",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -6514,6 +7537,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6554,6 +7579,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6602,6 +7629,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "bibliographic_repairs.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -6645,6 +7674,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -6688,6 +7719,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6733,6 +7766,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6779,6 +7814,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6822,6 +7859,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6862,6 +7901,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6905,6 +7946,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6948,6 +7991,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -6991,6 +8036,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7032,6 +8079,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7072,6 +8121,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7118,6 +8169,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7167,6 +8220,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7210,6 +8265,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7253,6 +8310,87 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 6,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p6_img6.png",
+          "atlas_title": "Stimulus or figure, page 6",
+          "atlas_caption": "figure mention in page text; sample/demographic surface in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 11,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p11_img11.png",
+          "atlas_title": "Stimulus or figure, page 11",
+          "atlas_caption": "figure surface: Figure 2. One subject's transcript and image-schematic representation of slide 6, the duty-free area after passport control at Vienna Internati\u2026; figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 13,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p13_img13.png",
+          "atlas_title": "Stimulus or figure, page 13",
+          "atlas_caption": "figure surface: Figure 2. One subject's transcript and image-schematic representation of slide 6, the duty-free area after passport control at Vienna Internati\u2026; figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 15,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p15_img15.png",
+          "atlas_title": "Stimulus or figure, page 15",
+          "atlas_caption": "figure surface: Figure 2. One subject's transcript and image-schematic representation of slide 6, the duty-free area after passport control at Vienna Internati\u2026; figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 10,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p10_img10.png",
+          "atlas_title": "Experimental context, page 10",
+          "atlas_caption": "sample/demographic surface in page text; mathpix section: 5 Comparing the complexity of a wayfinding task at two airports",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 7,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p7_img7.png",
+          "atlas_title": "Stimulus or figure, page 7",
+          "atlas_caption": "figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "stimulus_or_result_figure",
+          "page": 12,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p12_img12.png",
+          "atlas_title": "Stimulus or figure, page 12",
+          "atlas_caption": "figure mention in page text",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "experimental_context",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p1_img1.png",
+          "atlas_title": "Experimental context, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Technical results surface, page 13",
+        "page": 13,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0073/PDF-0073_p13_img13.png",
+        "caption": "figure surface: Figure 2. One subject's transcript and image-schematic representation of slide 6, the duty-free area after passport control at Vienna Internati\u2026; figure mention in page text",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7296,6 +8434,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7340,6 +8480,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7382,6 +8524,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7426,6 +8570,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7472,6 +8618,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7520,6 +8668,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7567,6 +8717,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7615,6 +8767,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7661,6 +8815,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7703,6 +8859,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7749,6 +8907,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7792,6 +8952,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7836,6 +8998,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7883,6 +9047,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7926,6 +9092,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -7968,6 +9136,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -8010,6 +9180,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8053,6 +9225,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8096,6 +9270,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8140,6 +9316,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8180,6 +9358,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8228,6 +9408,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8272,6 +9454,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8320,6 +9504,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8364,6 +9550,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "blocked",
         "doi": "missing",
@@ -8407,6 +9595,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8451,6 +9641,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8496,6 +9688,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8541,6 +9735,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8586,6 +9782,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8629,6 +9827,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8672,6 +9872,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8720,6 +9922,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8765,6 +9969,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8807,6 +10013,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8858,6 +10066,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8898,6 +10108,60 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 1,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0092/PDF-0092_p1_img1.jpeg",
+          "atlas_title": "Stimulus or figure, page 1",
+          "atlas_caption": "Recovered visual support from page 1.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 16,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0092/PDF-0092_p16_img2.jpeg",
+          "atlas_title": "Stimulus or figure, page 16",
+          "atlas_caption": "Recovered visual support from page 16.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 18,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0092/PDF-0092_p18_img3.jpeg",
+          "atlas_title": "Stimulus or figure, page 18",
+          "atlas_caption": "Recovered visual support from page 18.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 19,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0092/PDF-0092_p19_img4.png",
+          "atlas_title": "Stimulus or figure, page 19",
+          "atlas_caption": "Recovered visual support from page 19.",
+          "render_type": "embedded",
+          "dpi": null
+        },
+        {
+          "surface_kind": "supplemental_visual",
+          "page": 20,
+          "image_url": "data/ka_payloads/article_visuals/PDF-0092/PDF-0092_p20_img5.jpeg",
+          "atlas_title": "Stimulus or figure, page 20",
+          "atlas_caption": "Recovered visual support from page 20.",
+          "render_type": "embedded",
+          "dpi": null
+        }
+      ],
+      "technical_results_table": {
+        "title": "Stimulus or figure, page 1",
+        "page": 1,
+        "image_url": "data/ka_payloads/article_visuals/PDF-0092/PDF-0092_p1_img1.jpeg",
+        "caption": "Recovered visual support from page 1.",
+        "summary": ""
+      },
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8941,6 +10205,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "ag.report_csv",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -8986,6 +10252,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9032,6 +10300,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9075,6 +10345,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9120,6 +10392,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9162,6 +10436,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9206,6 +10482,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -9250,6 +10528,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9294,6 +10574,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9336,6 +10618,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9377,6 +10661,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9418,6 +10704,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9460,6 +10748,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9505,6 +10795,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9553,6 +10845,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -9596,6 +10890,8 @@
       "repair_source": "",
       "abstract_source": "pdf_cache_ocr",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9644,6 +10940,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9689,6 +10987,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9733,6 +11033,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9776,6 +11078,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9821,6 +11125,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9863,6 +11169,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9905,6 +11213,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9949,6 +11259,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -9993,6 +11305,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10035,6 +11349,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10076,6 +11392,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "provisional",
         "doi": "missing",
@@ -10124,6 +11442,8 @@
       "repair_source": "openalex",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "good",
@@ -10174,6 +11494,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10222,6 +11544,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10265,6 +11589,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10308,6 +11634,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10354,6 +11682,8 @@
       "repair_source": "",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10398,6 +11728,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10438,6 +11770,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10481,6 +11815,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10524,6 +11860,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10568,6 +11906,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10614,6 +11954,8 @@
       "repair_source": "",
       "abstract_source": "semantic_scholar.fetch_by_doi",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10657,6 +11999,8 @@
       "repair_source": "",
       "abstract_source": "openalex.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10702,6 +12046,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10745,6 +12091,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10788,6 +12136,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10831,6 +12181,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10875,6 +12227,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10919,6 +12273,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -10962,6 +12318,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11010,6 +12368,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11056,6 +12416,8 @@
       "repair_source": "ag.report_csv",
       "abstract_source": "mathpix.normalized.abstract",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11099,6 +12461,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11142,6 +12506,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11186,6 +12552,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11228,6 +12596,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11271,6 +12641,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",
@@ -11314,6 +12686,8 @@
       "repair_source": "",
       "abstract_source": "",
       "abstract_surface_path": "",
+      "visual_support_gallery": [],
+      "technical_results_table": {},
       "json_status": {
         "title": "good",
         "doi": "missing",

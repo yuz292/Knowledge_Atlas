@@ -2,6 +2,7 @@
 import json
 import re
 import sqlite3
+import shutil
 from collections import defaultdict, Counter
 from pathlib import Path
 from datetime import datetime, timezone
@@ -19,6 +20,8 @@ ROOT = Path('/Users/davidusa/REPOS')
 AE = ROOT / 'Article_Eater_PostQuinean_v1_recovery'
 OUT = ROOT / 'Knowledge_Atlas' / 'data' / 'ka_payloads'
 OUT.mkdir(parents=True, exist_ok=True)
+VISUALS_OUT = OUT / 'article_visuals'
+VISUALS_OUT.mkdir(parents=True, exist_ok=True)
 WORKFLOW_DB_PATH = ROOT / 'Knowledge_Atlas' / 'data' / 'ka_workflow.db'
 
 FRONTS_PATH = AE / 'data' / 'rebuild' / 'research_fronts_v5.json'
@@ -30,6 +33,8 @@ ABSTRACT_ADJUDICATION_DIR = AE / 'data' / 'verification_runs' / 'v6_abstract_adj
 MAIN_CONCLUSION_DIR = AE / 'data' / 'verification_runs' / 'v6_main_conclusion_adjudication'
 POPULATION_ADJUDICATION_DIR = AE / 'data' / 'verification_runs' / 'v6_population_count_adjudication'
 RESULT_RELATION_DIR = AE / 'data' / 'verification_runs' / 'v6_result_relation_adjudication'
+PAGE_IMAGE_SCAN_DIR = AE / 'data' / 'verification_runs' / 'page_image_first_section_scan'
+STIMULUS_IMAGE_DIR = AE / 'data' / 'gold_standard' / 'stimulus_images'
 FIELD_COVERAGE_BY_TYPE_PATH = AE / 'data' / 'verification_runs' / 'field_coverage_by_article_type' / 'field_coverage_by_article_type.json'
 ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'argumentation_graph_v5.json'
 CLAIM_ARG_GRAPH_PATH = AE / 'data' / 'rebuild' / 'claim_argument_graph_v1.json'
@@ -291,6 +296,20 @@ def load_result_relation_adjudications():
     return payload
 
 
+def load_page_image_scans():
+    payload = {}
+    if not PAGE_IMAGE_SCAN_DIR.exists():
+        return payload
+    for path in PAGE_IMAGE_SCAN_DIR.glob('PDF-*/*.page_image_first_section_scan.json'):
+        try:
+            obj = json.loads(path.read_text())
+        except Exception:
+            continue
+        paper_id = obj.get('paper_id') or path.name.split('.')[0]
+        payload[paper_id] = obj
+    return payload
+
+
 def load_json(path, default):
     if not path.exists():
         return default
@@ -298,6 +317,207 @@ def load_json(path, default):
         return json.loads(path.read_text())
     except Exception:
         return default
+
+
+def parse_page_number(value):
+    if value in (None, ''):
+        return None
+    if isinstance(value, int):
+        return value
+    match = re.search(r'page[_ ]?(\d+)', str(value), re.I)
+    if match:
+        try:
+            return int(match.group(1))
+        except Exception:
+            return None
+    return None
+
+
+def top_pages(scan, key, limit):
+    ranked = (scan or {}).get('ranked') or {}
+    rows = ranked.get(key) or []
+    return [int(row.get('page')) for row in rows[:limit] if row.get('page')]
+
+
+def page_reason_map(scan, key, limit=6):
+    ranked = (scan or {}).get('ranked') or {}
+    rows = ranked.get(key) or []
+    out = {}
+    for row in rows[:limit]:
+        page = row.get('page')
+        if page:
+            out[int(page)] = row.get('reasons') or []
+    return out
+
+
+def compact_reason_list(reasons, limit=2):
+    values = []
+    for reason in reasons[:limit]:
+        values.append(compact_text(reason, 160))
+    return '; '.join(values)
+
+
+def copy_visual_asset(src_path, paper_id):
+    src = Path(src_path)
+    if not src.exists():
+        return ''
+    target_dir = VISUALS_OUT / paper_id
+    target_dir.mkdir(parents=True, exist_ok=True)
+    dst = target_dir / src.name
+    if not dst.exists() or src.stat().st_mtime > dst.stat().st_mtime:
+        shutil.copy2(src, dst)
+    return f"data/ka_payloads/article_visuals/{paper_id}/{src.name}"
+
+
+def build_visual_support_for_paper(paper_id, article_type, representative_claim):
+    manifest_path = STIMULUS_IMAGE_DIR / paper_id / 'manifest.json'
+    scan = load_page_image_scans.cache.get(paper_id) if hasattr(load_page_image_scans, 'cache') else None
+    if not manifest_path.exists():
+        return [], {}
+    try:
+        manifest = json.loads(manifest_path.read_text())
+    except Exception:
+        return [], {}
+
+    figure_pages = set(top_pages(scan, 'figure_pages', 6))
+    sample_pages = set(top_pages(scan, 'sample_pages', 4))
+    methods_pages = set(top_pages(scan, 'methods_pages', 4))
+    results_pages = set(top_pages(scan, 'results_pages', 4))
+    table_pages = set(top_pages(scan, 'table_pages', 4))
+    figure_reasons = page_reason_map(scan, 'figure_pages')
+    sample_reasons = page_reason_map(scan, 'sample_pages')
+    table_reasons = page_reason_map(scan, 'table_pages')
+    results_reasons = page_reason_map(scan, 'results_pages')
+
+    candidate_rows = []
+    for row in manifest.get('embedded_images') or []:
+        page = int(row.get('page') or 0)
+        width = int(row.get('width') or 0)
+        height = int(row.get('height') or 0)
+        if width < 220 or height < 160:
+            continue
+        score = 1
+        kind = 'supplemental_visual'
+        reasons = []
+        if page in figure_pages:
+            score += 6
+            kind = 'stimulus_or_result_figure'
+            reasons.extend(figure_reasons.get(page) or [])
+        if page in sample_pages or page in methods_pages:
+            score += 5
+            if kind == 'supplemental_visual':
+                kind = 'experimental_context'
+            reasons.extend(sample_reasons.get(page) or [])
+        if page in table_pages or page in results_pages:
+            score += 3
+            if kind == 'supplemental_visual':
+                kind = 'results_surface'
+            reasons.extend(table_reasons.get(page) or [])
+            reasons.extend(results_reasons.get(page) or [])
+        candidate_rows.append({
+            'page': page,
+            'src_path': row.get('path'),
+            'filename': row.get('filename'),
+            'score': score,
+            'kind': kind,
+            'reasons': reasons,
+            'render_type': 'embedded',
+        })
+
+    for row in manifest.get('rendered_pages') or []:
+        page = int(row.get('page') or 0)
+        score = 0
+        reasons = []
+        if page in table_pages:
+            score += 8
+            reasons.extend(table_reasons.get(page) or [])
+        if page in results_pages:
+            score += 6
+            reasons.extend(results_reasons.get(page) or [])
+        if page in figure_pages:
+            score += 4
+            reasons.extend(figure_reasons.get(page) or [])
+        if page in sample_pages or page in methods_pages:
+            score += 2
+            reasons.extend(sample_reasons.get(page) or [])
+        if score <= 0:
+            continue
+        candidate_rows.append({
+            'page': page,
+            'src_path': row.get('path'),
+            'filename': row.get('filename'),
+            'score': score,
+            'kind': 'results_surface' if page in (table_pages | results_pages) else 'experimental_context',
+            'reasons': reasons,
+            'render_type': row.get('render_type') or 'full_page',
+            'dpi': row.get('dpi'),
+        })
+
+    candidate_rows.sort(key=lambda row: (-row['score'], row['page'], row.get('filename') or ''))
+    gallery = []
+    seen_targets = set()
+    for row in candidate_rows:
+        rel_path = copy_visual_asset(row.get('src_path'), paper_id)
+        if not rel_path or rel_path in seen_targets:
+            continue
+        seen_targets.add(rel_path)
+        if row['kind'] == 'experimental_context':
+            title = f"Experimental context, page {row['page']}"
+        elif row['kind'] == 'results_surface':
+            title = f"Result surface, page {row['page']}"
+        else:
+            title = f"Stimulus or figure, page {row['page']}"
+        caption = compact_reason_list(row.get('reasons') or []) or f"Recovered visual support from page {row['page']}."
+        gallery.append({
+            'surface_kind': row['kind'],
+            'page': row['page'],
+            'image_url': rel_path,
+            'atlas_title': title,
+            'atlas_caption': caption,
+            'render_type': row.get('render_type') or 'embedded',
+            'dpi': row.get('dpi'),
+        })
+        if len(gallery) >= 8:
+            break
+
+    technical = {}
+    for row in candidate_rows:
+        if row['page'] in table_pages or row['page'] in results_pages:
+            rel_path = copy_visual_asset(row.get('src_path'), paper_id)
+            if not rel_path:
+                continue
+            technical = {
+                'title': f"Technical results surface, page {row['page']}",
+                'page': row['page'],
+                'image_url': rel_path,
+                'caption': compact_reason_list(row.get('reasons') or []) or f"Results-bearing page {row['page']}.",
+                'summary': compact_text(
+                    representative_claim.get('test_statistic')
+                    or representative_claim.get('statement')
+                    or representative_claim.get('claim')
+                    or '',
+                    360,
+                ),
+            }
+            break
+
+    if not technical and gallery:
+        first = next((item for item in gallery if item.get('surface_kind') == 'results_surface'), gallery[0])
+        technical = {
+            'title': first.get('atlas_title') or 'Technical results surface',
+            'page': first.get('page'),
+            'image_url': first.get('image_url'),
+            'caption': first.get('atlas_caption') or '',
+            'summary': compact_text(
+                representative_claim.get('test_statistic')
+                or representative_claim.get('statement')
+                or representative_claim.get('claim')
+                or '',
+                360,
+            ),
+        }
+
+    return gallery, technical
 
 
 def ensure_workflow_db():
@@ -582,6 +802,8 @@ def parse_claims():
     main_conclusions = load_main_conclusion_adjudications()
     population_adjudications = load_population_adjudications()
     result_relations = load_result_relation_adjudications()
+    page_image_scans = load_page_image_scans()
+    load_page_image_scans.cache = page_image_scans
     with CLAIMS_PATH.open() as f:
         for line in f:
             if not line.strip():
@@ -711,6 +933,11 @@ def parse_claims():
         top_measures = [humanize(t) for t, _ in measure_counter.most_common(3) if t]
         representative = claims[0] if claims else {}
         representative_result = representative.get('structured_result_row') or {}
+        visual_support_gallery, technical_results_table = build_visual_support_for_paper(
+            pid,
+            meta.get('article_type') or representative.get('article_type') or '',
+            representative,
+        )
         title = publishable_title(meta.get('title')) or publishable_title(representative.get('paper_title')) or publishable_title(representative.get('title'))
         if not title:
             title = compact_text(
@@ -743,8 +970,10 @@ def parse_claims():
             'venue': meta.get('venue') or '',
                 'main_conclusion': meta.get('main_conclusion') or '',
                 'repair_source': meta.get('repair_source') or '',
-                'abstract_source': meta.get('abstract_source') or '',
-                'abstract_surface_path': meta.get('abstract_surface_path') or '',
+            'abstract_source': meta.get('abstract_source') or '',
+            'abstract_surface_path': meta.get('abstract_surface_path') or '',
+            'visual_support_gallery': visual_support_gallery,
+            'technical_results_table': technical_results_table,
                 'json_status': {
                 'title': title_status(title),
                 'doi': doi_status(meta.get('doi')),

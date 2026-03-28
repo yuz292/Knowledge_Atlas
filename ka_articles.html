@@ -621,6 +621,178 @@
             overflow-y: auto;
         }
 
+        .visual-gallery-panel {
+            margin-top: 14px;
+            padding: 12px;
+            background: #FBF8F2;
+            border: 1px solid #E7DDD0;
+            border-radius: 8px;
+        }
+
+        .visual-gallery-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #6B5D4D;
+            margin-bottom: 10px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .visual-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+            gap: 12px;
+        }
+
+        .visual-thumb {
+            background: #FFFFFF;
+            border: 1px solid #E3D8CA;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .visual-thumb img {
+            display: block;
+            width: 100%;
+            height: 118px;
+            object-fit: cover;
+            background: #EDE6DA;
+        }
+
+        .visual-thumb-copy {
+            padding: 9px 10px;
+        }
+
+        .visual-thumb-title {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #2C2C2C;
+            margin-bottom: 4px;
+            line-height: 1.35;
+        }
+
+        .visual-thumb-caption {
+            font-size: 0.73rem;
+            color: #6A635A;
+            line-height: 1.45;
+        }
+
+        .tech-results-panel {
+            margin-top: 12px;
+            padding: 12px;
+            background: #F3EFE7;
+            border: 1px solid #DFD4C5;
+            border-radius: 8px;
+        }
+
+        .tech-results-head {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .tech-results-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #5A4E41;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .tech-results-button {
+            appearance: none;
+            border: 1px solid #C29A63;
+            background: #FFF8EE;
+            color: #8A4E16;
+            border-radius: 999px;
+            padding: 7px 11px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .tech-results-summary,
+        .tech-results-caption {
+            font-size: 0.8rem;
+            color: #5D554C;
+            line-height: 1.55;
+        }
+
+        .tech-results-caption {
+            margin-top: 8px;
+        }
+
+        .visual-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 18, 20, 0.72);
+            z-index: 2200;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .visual-modal-overlay.open {
+            display: flex;
+        }
+
+        .visual-modal-box {
+            width: min(1040px, 96vw);
+            max-height: 92vh;
+            overflow: auto;
+            background: #FFFDF9;
+            border-radius: 12px;
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .visual-modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #E7DDD0;
+        }
+
+        .visual-modal-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #2C2C2C;
+        }
+
+        .visual-modal-close {
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-size: 1.3rem;
+            color: #7B7064;
+            cursor: pointer;
+        }
+
+        .visual-modal-body {
+            padding: 18px;
+        }
+
+        .visual-modal-body img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background: #EDE6DA;
+        }
+
+        .visual-modal-caption {
+            margin-top: 12px;
+            font-size: 0.86rem;
+            color: #5A534B;
+            line-height: 1.65;
+        }
+
         .form-section {
             margin-bottom: 24px;
             padding-bottom: 24px;
@@ -1204,6 +1376,19 @@
     <!-- Version Badge -->
     <div class="version-badge">KA UI · v0.4</div>
 
+    <div class="visual-modal-overlay" id="visual-modal-overlay" onclick="closeVisualModal(event)">
+        <div class="visual-modal-box" onclick="event.stopPropagation()">
+            <div class="visual-modal-head">
+                <div class="visual-modal-title" id="visual-modal-title">Visual support</div>
+                <button class="visual-modal-close" onclick="closeVisualModal()">×</button>
+            </div>
+            <div class="visual-modal-body">
+                <img id="visual-modal-image" src="" alt="Visual support">
+                <div class="visual-modal-caption" id="visual-modal-caption"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="data/ka_payloads/workflow.js"></script>
     <script src="ka_workflow_store.js"></script>
     <script>
@@ -1242,6 +1427,7 @@
                             <span class="badge">${(article.article_type || 'Unknown').replace(/_/g, ' ')}</span>
                             <span class="badge">${article.claim_count} claims</span>
                             ${article.sample_n ? `<span class="badge">N=${article.sample_n}</span>` : ''}
+                            ${article.direction ? `<span class="badge">Direction: ${String(article.direction).replace(/_/g, ' ')}</span>` : ''}
                         </div>
                         <div class="result-actions">
                             <button class="button-small button-evaluate" onclick="event.stopPropagation();selectContributorArticle('${article.paper_id}')">Evaluate →</button>
@@ -1257,6 +1443,78 @@
             });
         }
 
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderVisualSupportGallery(article) {
+            const gallery = Array.isArray(article.visual_support_gallery) ? article.visual_support_gallery : [];
+            if (!gallery.length) return '';
+            const tiles = gallery.map((item, index) => `
+                <div class="visual-thumb" onclick="openVisualModal('${article.paper_id}', ${index})">
+                    <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.atlas_title || `Visual support ${index + 1}`)}">
+                    <div class="visual-thumb-copy">
+                        <div class="visual-thumb-title">${escapeHtml(item.atlas_title || `Visual support ${index + 1}`)}</div>
+                        <div class="visual-thumb-caption">${escapeHtml(item.atlas_caption || '')}</div>
+                    </div>
+                </div>
+            `).join('');
+            return `
+                <div class="visual-gallery-panel">
+                    <div class="visual-gallery-title">Visual Support Gallery</div>
+                    <div class="visual-gallery-grid">${tiles}</div>
+                </div>
+            `;
+        }
+
+        function renderTechnicalResultsTable(article) {
+            const tech = article.technical_results_table || {};
+            if (!tech.image_url && !tech.summary && !tech.caption) return '';
+            return `
+                <div class="tech-results-panel">
+                    <div class="tech-results-head">
+                        <div class="tech-results-title">Technical Results Surface</div>
+                        ${tech.image_url ? `<button class="tech-results-button" onclick="openTechnicalResultsTable('${article.paper_id}')">Open results table</button>` : ''}
+                    </div>
+                    ${tech.summary ? `<div class="tech-results-summary">${escapeHtml(tech.summary)}</div>` : ''}
+                    ${tech.caption ? `<div class="tech-results-caption">${escapeHtml(tech.caption)}</div>` : ''}
+                </div>
+            `;
+        }
+
+        function openVisualModal(paperId, index) {
+            const article = contributorArticles.find(row => row.paper_id === paperId);
+            const item = article && Array.isArray(article.visual_support_gallery) ? article.visual_support_gallery[index] : null;
+            if (!item) return;
+            document.getElementById('visual-modal-title').textContent = item.atlas_title || `${paperId} visual`;
+            document.getElementById('visual-modal-image').src = item.image_url || '';
+            document.getElementById('visual-modal-image').alt = item.atlas_title || `${paperId} visual`;
+            document.getElementById('visual-modal-caption').textContent = item.atlas_caption || '';
+            document.getElementById('visual-modal-overlay').classList.add('open');
+        }
+
+        function openTechnicalResultsTable(paperId) {
+            const article = contributorArticles.find(row => row.paper_id === paperId);
+            const item = article ? (article.technical_results_table || {}) : null;
+            if (!item || !item.image_url) return;
+            document.getElementById('visual-modal-title').textContent = item.title || `${paperId} technical results surface`;
+            document.getElementById('visual-modal-image').src = item.image_url || '';
+            document.getElementById('visual-modal-image').alt = item.title || `${paperId} technical results surface`;
+            document.getElementById('visual-modal-caption').textContent = item.caption || item.summary || '';
+            document.getElementById('visual-modal-overlay').classList.add('open');
+        }
+
+        function closeVisualModal(event) {
+            const overlay = document.getElementById('visual-modal-overlay');
+            if (event && event.target !== overlay) return;
+            overlay.classList.remove('open');
+        }
+
         function renderContributorDetail() {
             const article = selectedContributorArticle || filteredContributorArticles[0];
             if (!article) return;
@@ -1268,6 +1526,15 @@
             const abstractText = article.abstract || 'Abstract not yet recovered from the current rebuild.';
             const abstractVisible = articleAbstractExpanded ? abstractText : abstractText.slice(0, 260) + (abstractText.length > 260 ? '…' : '');
             const mainConclusion = article.main_conclusion ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F7F4EF; border-left: 3px solid #E8872A; color: #4E453C; line-height: 1.6;"><strong>Working conclusion:</strong> ${article.main_conclusion}</div>` : '';
+            const constructPair = article.construct_pair || {};
+            const constructPairHtml = (constructPair.comparison || constructPair.outcome)
+                ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F4F0E8; border-left: 3px solid #6E8B63; color: #3E4239; line-height: 1.6;"><strong>Working construct pair:</strong> ${constructPair.comparison || 'Unknown comparison'} -> ${constructPair.outcome || 'Unknown outcome'}</div>`
+                : '';
+            const directionHtml = article.direction
+                ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F6F1EA; border-left: 3px solid #7A5C3E; color: #4E453C; line-height: 1.6;"><strong>Working direction:</strong> ${String(article.direction).replace(/_/g, ' ')}</div>`
+                : '';
+            const galleryHtml = renderVisualSupportGallery(article);
+            const technicalResultsHtml = renderTechnicalResultsTable(article);
             const jsonStatus = article.json_status || {};
             const repairSource = jsonStatus.repair_source || article.repair_source || 'rebuild';
             const encodedPaperId = encodeURIComponent(article.paper_id);
@@ -1277,12 +1544,16 @@
                 <div style="margin-top: 8px;">DOI: ${article.doi ? `<a class="reference-doi" href="https://doi.org/${article.doi}" target="_blank" rel="noopener noreferrer">${article.doi}</a>` : 'Not yet recovered'}</div>
                 <div style="margin-top: 10px; color: #666; line-height: 1.6;">${abstractVisible}</div>
                 ${mainConclusion}
+                ${constructPairHtml}
+                ${directionHtml}
                 <div class="layer-link-row">
                     <a class="layer-link" href="ka_argumentation.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Argumentation view</a>
                     <a class="layer-link" href="ka_annotations.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Annotation view</a>
                     <a class="layer-link" href="ka_interpretation.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Interpretation view</a>
                 </div>
                 <a class="abstract-toggle" id="articles-abstract-toggle">${articleAbstractExpanded ? 'Collapse abstract' : 'Expand abstract'}</a>
+                ${galleryHtml}
+                ${technicalResultsHtml}
                 <div class="json-status-panel">
                     <div class="json-status-title">JSON Repair Status</div>
                     <div class="json-status-badges">
@@ -1291,6 +1562,8 @@
                         <span class="json-status-badge"><strong>Abstract</strong> ${jsonStatus.abstract || 'unknown'}</span>
                         <span class="json-status-badge"><strong>Conclusion</strong> ${jsonStatus.main_conclusion || 'unknown'}</span>
                         <span class="json-status-badge"><strong>Subjects</strong> ${jsonStatus.subject_count_total || 'unknown'}</span>
+                        <span class="json-status-badge"><strong>Construct Pair</strong> ${jsonStatus.construct_pair || 'unknown'}</span>
+                        <span class="json-status-badge"><strong>Direction</strong> ${jsonStatus.direction || 'unknown'}</span>
                     </div>
                     <div class="json-status-note">Repair source: ${repairSource}. This record stays visibly provisional until all weak JSON fields are repaired.</div>
                 </div>
