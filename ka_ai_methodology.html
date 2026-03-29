@@ -1011,6 +1011,64 @@ DO NOT have panelists agree prematurely. Dissent is informative. Preserve it.</p
 
   </div>
 
+  <!-- METHOD 8 -->
+  <div class="method-card" id="master-doc">
+    <div class="method-header">
+      <span class="sec-num">METHOD 8</span>
+      <div class="method-icon">📗</div>
+        <h2>Keep a master document — the canonical memory that outlives every session</h2>
+    </div>
+
+    <p>Every AI session starts cold. The model you are talking to has no memory of the reasoning behind last week's decisions, no record of which theory you consulted when you chose one implementation over another, no account of how a subsystem evolved from its first draft to its current form. If that reasoning lives only in chat logs, it is lost in practice — chat logs are not re-read, not indexed, and not available to the next AI worker you bring in.</p>
+
+    <p>A <strong>master document</strong> is the solution to this problem. It is not a journal, not a progress report, and not a chat export. It is a living architecture document — the canonical source of truth for everything the system knows, how it works, and why it was built the way it was. At its best, it functions as a substrate from which publishable papers, grant proposals, course materials, and design manuals can be extracted, rather than written from scratch.</p>
+
+    <h3 style="color:#2A7868; margin-top:1.4rem; margin-bottom:0.5rem;">What belongs in a master document</h3>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">
+      <div style="background:#E0F2EC; border-left:4px solid #2A7868; padding:0.9rem 1rem; border-radius:4px;">
+        <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2A7868; margin-bottom:0.4rem;">Design Decisions</div>
+        <p style="margin:0; font-size:0.92rem; color:#1C3D3A; line-height:1.55;">Every significant architectural choice, with the rationale and the alternatives rejected. Not just what was decided — why this, and not that, and what would have to change for you to revisit it.</p>
+      </div>
+      <div style="background:#E0F2EC; border-left:4px solid #2A7868; padding:0.9rem 1rem; border-radius:4px;">
+        <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2A7868; margin-bottom:0.4rem;">Supporting Theories</div>
+        <p style="margin:0; font-size:0.92rem; color:#1C3D3A; line-height:1.55;">The scientific and scholarly foundations behind each choice. If you consulted Quinean coherentism to justify a pipeline design, that connection belongs here — with references — so a future reader can evaluate the reasoning, not merely observe the result.</p>
+      </div>
+      <div style="background:#E0F2EC; border-left:4px solid #2A7868; padding:0.9rem 1rem; border-radius:4px;">
+        <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2A7868; margin-bottom:0.4rem;">Pipeline Revisions</div>
+        <p style="margin:0; font-size:0.92rem; color:#1C3D3A; line-height:1.55;">How each subsystem evolved from its first version to its current form, and what triggered each revision. Systems that do not record their revision history are opaque to audit and resistant to principled improvement.</p>
+      </div>
+      <div style="background:#E0F2EC; border-left:4px solid #2A7868; padding:0.9rem 1rem; border-radius:4px;">
+        <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2A7868; margin-bottom:0.4rem;">Essay and Paper Summaries</div>
+        <p style="margin:0; font-size:0.92rem; color:#1C3D3A; line-height:1.55;">Précis of documents being written about the system — arguments, findings, open questions. When a paper is in progress across many sessions, the master doc is what prevents it from being reconstructed from scratch each time.</p>
+      </div>
+      <div style="background:#E0F2EC; border-left:4px solid #2A7868; padding:0.9rem 1rem; border-radius:4px;">
+        <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#2A7868; margin-bottom:0.4rem;">Cross-Reference Index</div>
+        <p style="margin:0; font-size:0.92rem; color:#1C3D3A; line-height:1.55;">Traceability from concept → code file → test → contract → panel deliberation. Without this web of references, the relationship between theory and implementation is invisible to anyone who was not present when it was built.</p>
+      </div>
+      <div style="background:#FFF0CC; border-left:4px solid #E8872A; padding:0.9rem 1rem; border-radius:4px;">
+        <div style="font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#B8621A; margin-bottom:0.4rem;">What Does Not Belong</div>
+        <p style="margin:0; font-size:0.92rem; color:#5A3A10; line-height:1.55;">Progress updates, task lists, session logs, raw chat exports, or anything ephemeral. Those belong in TASKS.md, session notes, or the coordination system. The master doc contains only what will still matter in six months.</p>
+      </div>
+    </div>
+
+    <h3 style="color:#2A7868; margin-top:1.4rem; margin-bottom:0.5rem;">How to maintain it</h3>
+
+    <p>The critical discipline is writing to the master document <em>immediately after significant work</em> — not at the end of the week, not in a future cleanup session that never happens. The operative test: if a decision or insight would matter to a future AI worker trying to understand why the system is the way it is, it belongs in the master doc now.</p>
+
+    <p>When writing a major new section is impractical mid-session, write a <strong>Master Doc Brief</strong> instead — a structured note (a page or two) recording the decision, its rationale, its theoretical grounding, and a pointer to the relevant code. Briefs can be integrated into the main document in a later session without loss of information. What cannot be recovered is the reasoning that was never written down at all.</p>
+
+    <div style="background:#1C3D3A; border-radius:6px; padding:1rem 1.2rem; margin:1.2rem 0; color:#E0F2EC; font-size:0.93rem; line-height:1.6;">
+      <strong style="color:#E8872A; display:block; margin-bottom:0.5rem;">The operational test for whether something belongs in the master doc:</strong>
+      "Would a skilled researcher reading this document six months from now — with no access to our chat logs — be able to reconstruct not just what was built, but why it was built that way, and what the alternatives were?" If the answer is no, the master doc is incomplete.
+    </div>
+
+    <h3 style="color:#2A7868; margin-top:1.4rem; margin-bottom:0.5rem;">For COGS 160 students</h3>
+
+    <p>You are working on a project, not just completing assignments. That distinction matters. A project has a history that accumulates across weeks. At minimum, each team should maintain a short design log recording: what was decided this session, why, what alternatives were considered, and what open questions remain. This log is your team's master doc in miniature — and it is what allows you, your AI collaborator, and your instructor to evaluate whether you have actually understood what you built, or merely produced output.</p>
+
+  </div>
+
 </div><!-- /outer -->
 
 <div class="version-badge">KA UI · v0.4</div>
@@ -1032,7 +1090,7 @@ window.KA_PAGE_FUNCTION = {
   pageId: 'ka_ai_methodology',
   title: 'AI-Directed Development: The KA Methodology',
   audience: 'All COGS 160 contributors; anyone writing prompts for KA pipeline tasks',
-  purpose: 'The definitive reference for KA\'s AI-directed development methodology: 5-component prompt structure, the 5 failure modes and DO NOT pattern, contracts and success conditions, trust calibration framework, ruthless prompts and the escalation ladder, the expert panel pattern, and the cross-check protocol (never trust a single AI). Includes track-specific worked examples for Tracks 1, 2, and 4.',
+  purpose: 'The definitive reference for KA\'s AI-directed development methodology: 5-component prompt structure, the 5 failure modes and DO NOT pattern, contracts and success conditions, trust calibration framework, ruthless prompts and the escalation ladder, the expert panel pattern, the cross-check protocol (never trust a single AI), and the master document as long-term epistemic memory. Includes track-specific worked examples for Tracks 1, 2, and 4.',
   workflowPos: 'Read after ka_student_setup.html and before writing any prompts for track-specific tasks. Referenced from all track assignment pages.',
   notFor: 'General AI usage guidance unrelated to KA pipeline tasks; Python or JavaScript coding tutorials; setup and environment configuration (those are in ka_student_setup.html).',
   phase: 'Phase 1 — Student onboarding infrastructure',
