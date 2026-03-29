@@ -729,6 +729,19 @@
                 <div class="progress-meta" id="dashboard-progress-meta">Keep up the momentum — you're on track with submissions.</div>
             </div>
 
+            <!-- Research Question Assignment (populated by JWT auth server) -->
+            <div id="rq-assignment-card" class="card" style="display:none;border-left:4px solid #2A7868;background:#f0fff4">
+              <h2 style="color:#1C3D3A;font-size:1.1rem;margin-bottom:8px">Your Research Question</h2>
+              <div id="rq-assignment-body">
+                <div id="rq-id" style="font-size:.78rem;font-weight:700;color:#2A7868;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px"></div>
+                <div id="rq-title" style="font-size:1rem;font-weight:700;color:#1C3D3A;margin-bottom:6px"></div>
+                <div id="rq-desc" style="font-size:.88rem;color:#3d5a4e;line-height:1.5"></div>
+              </div>
+              <div id="rq-unassigned" style="display:none;font-size:.88rem;color:#6A5E50">
+                No research question assigned yet — your instructor will assign one when they approve your registration.
+              </div>
+            </div>
+
             <div class="card json-status-card">
                 <h2>JSON Repair Status</h2>
                 <p class="json-status-copy" id="dashboard-json-status-copy">This card tracks how much of the current article payload is still provisional so we can keep improving the JSONs while you review the site.</p>
@@ -1277,6 +1290,38 @@ window.KA_ABOUT_PAGE = {
 };
 </script>
 <script src="ka_about_page.js"></script>
+
+<script>
+// JWT-aware research question widget
+// Calls GET /api/assignments on ka_auth_server.py (port 8765) if a token is present.
+// Gracefully no-ops if server is unreachable or user is not authenticated.
+(function() {
+  const KA_AUTH_API = 'http://localhost:8765';
+  const token = localStorage.getItem('ka_access_token');
+  if (!token) return;  // not logged in via JWT — skip silently
+
+  fetch(KA_AUTH_API + '/api/assignments', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(res) { return res.ok ? res.json() : Promise.reject(res.status); })
+  .then(function(data) {
+    const card = document.getElementById('rq-assignment-card');
+    if (!card) return;
+    card.style.display = '';
+    if (data && data.question_id) {
+      document.getElementById('rq-id').textContent = data.question_id;
+      document.getElementById('rq-title').textContent = data.title || '';
+      document.getElementById('rq-desc').textContent = data.description || '';
+    } else {
+      document.getElementById('rq-assignment-body').style.display = 'none';
+      document.getElementById('rq-unassigned').style.display = '';
+    }
+  })
+  .catch(function() {
+    // Auth server not running — do not show the card at all
+  });
+})();
+</script>
 
 </body>
 </html>
