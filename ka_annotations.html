@@ -3,186 +3,1322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Annotation Layer · Knowledge Atlas</title>
+<title>Annotation Inspector · Knowledge Atlas</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Georgia, serif; background: #F7F4EF; color: #2D2D2D; }
-nav { position: sticky; top: 0; background: #1C3D3A; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.14); }
-.wordmark { font-size: 1.2rem; font-weight: 700; color: #F5A623; }
-.wordmark-sub { font-size: 0.62rem; color: #7AACA0; letter-spacing: 0.12em; }
-nav ul { display: flex; gap: 22px; list-style: none; }
-nav a { color: #E8E4DC; text-decoration: none; font: 0.82rem Arial, sans-serif; }
-nav a.active, nav a:hover { color: #F5A623; }
-.nav-left { display: flex; align-items: center; gap: 30px; }
-.nav-right { display:flex; align-items:center; gap:12px; }
-.mode-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(168,200,191,0.35); color: #E6EFE9; border-radius: 18px; padding: 5px 10px; font-size: 12px; }
-.mode-pill { background: rgba(42,120,104,0.35); color:#A8C8BF; border-radius:18px; padding: 5px 11px; font-size:0.68rem; font-weight:700; letter-spacing:0.08em; }
-.page-header { background: linear-gradient(135deg, #564c2a 0%, #3f381d 100%); color: #fff; padding: 40px 28px 30px; }
-.page-header-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 26px; }
-.page-eyebrow { font: 700 0.68rem/1 Arial, sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #d6c790; margin-bottom: 12px; }
-.page-title { font-size: 2rem; line-height: 1.1; margin-bottom: 10px; }
-.page-subtitle { font: 0.95rem/1.6 Arial, sans-serif; color: #f1ead0; max-width: 780px; }
-.page-actions { display:flex; flex-wrap:wrap; gap: 10px; align-self: end; justify-content: flex-end; }
-.page-action { display:inline-flex; align-items:center; justify-content:center; padding: 10px 14px; border-radius: 999px; text-decoration:none; font: 700 0.74rem/1 Arial, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
-.page-action.primary { background: #F5D26A; color: #463d1f; }
-.page-action.secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.16); }
-.main-wrap { max-width: 1200px; margin: 0 auto; padding: 28px 24px 88px; }
-.layer-focus-strip { display:none; margin-bottom: 18px; background: #FFF7EA; border: 1px solid #E8D8B4; border-radius: 12px; padding: 12px 14px; font: 0.84rem/1.5 Arial, sans-serif; color: #4F4332; }
-.layer-focus-strip strong { color: #463d1f; }
-.layer-focus-id { color: #8A745F; font-family: monospace; }
-.layer-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; margin-bottom: 18px; }
-.layer-panel { background: #fff; border: 1px solid #E0DAD3; border-radius: 14px; padding: 18px 18px 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
-.layer-panel h2 { font-size: 1.1rem; color: #463d1f; margin-bottom: 10px; }
-.layer-panel p { font: 0.92rem/1.65 Arial, sans-serif; color: #53493e; }
-.layer-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 12px; }
-.layer-stat { background: #F7F4EF; border-radius: 10px; padding: 12px; }
-.layer-stat strong { display: block; font: 700 1.1rem/1.1 Arial, sans-serif; color: #463d1f; }
-.layer-stat span { display: block; margin-top: 4px; font: 0.68rem/1.35 Arial, sans-serif; color: #7f7063; text-transform: uppercase; letter-spacing: 0.08em; }
-.layer-section { margin-top: 20px; }
-.layer-section h2 { font-size: 1.15rem; color: #463d1f; margin-bottom: 10px; }
-.layer-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-.layer-card { background: #fff; border: 1px solid #E0DAD3; border-radius: 12px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-.layer-card.compact { background: #FCFBF8; }
-.layer-card-head { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
-.layer-card-head h3 { font-size: 0.98rem; color: #463d1f; }
-.layer-card-head span { font: 700 0.68rem/1 Arial, sans-serif; color: #8a745f; letter-spacing: 0.08em; text-transform: uppercase; }
-.layer-card p { font: 0.84rem/1.58 Arial, sans-serif; color: #493f35; }
-.layer-empty { background: #fff; border: 1px dashed #D8D0C5; border-radius: 12px; padding: 16px; font: 0.85rem/1.5 Arial, sans-serif; color: #7c6e62; }
-.meta-strip { margin-top: 20px; display:flex; flex-wrap:wrap; justify-content:space-between; gap: 12px; font: 0.74rem/1.5 Arial, sans-serif; color:#7f7063; }
-.version-badge { position: fixed; bottom: 16px; right: 20px; background: #1C3D3A; color: #7AACA0; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 10px; }
-@media (max-width: 900px) { .page-header-inner, .layer-grid { grid-template-columns: 1fr; } .page-actions { justify-content: flex-start; } nav ul { gap: 14px; } }
-@media (max-width: 720px) { nav ul { display:none; } .main-wrap { padding: 18px 14px 88px; } .page-header { padding: 28px 16px 24px; } }
+body {
+  font-family: Arial, sans-serif;
+  background: #F7F4EF;
+  color: #2D2D2D;
+  line-height: 1.5;
+}
+
+/* Navigation */
+nav {
+  position: sticky;
+  top: 0;
+  background: #1C3D3A;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+}
+.wordmark {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #E8872A;
+  letter-spacing: 0.05em;
+}
+.wordmark-sub {
+  font-size: 0.55rem;
+  color: #2A7868;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+nav ul {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+}
+nav a {
+  color: #E8E4DC;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+nav a:hover,
+nav a.active {
+  color: #E8872A;
+}
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, #564c2a 0%, #3f381d 100%);
+  color: #fff;
+  padding: 48px 24px 36px;
+  border-bottom: 3px solid #d6c790;
+}
+.page-header-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.page-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d6c790;
+  margin-bottom: 12px;
+}
+.page-title {
+  font-family: Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.page-subtitle {
+  font-size: 0.92rem;
+  color: #f1ead0;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-bottom: 16px;
+}
+.stat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.stat-chip {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+
+/* Main wrapper */
+.main-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+/* Info panel (collapsible) */
+.info-panel {
+  background: #FFF7EA;
+  border: 1px solid #E8D8B4;
+  border-radius: 12px;
+  padding: 18px 18px 14px;
+  margin-bottom: 24px;
+  display: none;
+}
+.info-panel.open {
+  display: block;
+}
+.info-panel h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #463d1f;
+  margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.info-panel h3::before {
+  content: '▼ ';
+  display: inline-block;
+  margin-right: 6px;
+  transition: transform 0.2s;
+}
+.info-panel.collapsed h3::before {
+  transform: rotate(-90deg);
+}
+.info-panel-content {
+  font-size: 0.85rem;
+  color: #4F4332;
+  line-height: 1.6;
+}
+.type-taxonomy {
+  margin-top: 12px;
+}
+.type-taxonomy strong {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  color: #463d1f;
+  font-size: 0.84rem;
+}
+.type-desc {
+  font-size: 0.8rem;
+  color: #6B5844;
+  margin-bottom: 8px;
+  padding-left: 12px;
+}
+.proposed-types {
+  background: #FFF;
+  border-left: 3px solid #d6c790;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 12px;
+}
+.proposed-types strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #463d1f;
+}
+
+/* Tab bar */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #E0DAD3;
+  padding-bottom: 12px;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6B6B6B;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: all 0.2s;
+}
+.tab-btn:hover {
+  background: rgba(232, 135, 42, 0.08);
+  color: #464647;
+}
+.tab-btn.active {
+  background: #E8872A;
+  color: #fff;
+}
+
+/* Two-column layout */
+.layout-container {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .layout-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left column: annotation list */
+.annotation-list-panel {
+  background: #fff;
+  border: 1px solid #E0DAD3;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.search-bar {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  border: 1px solid #D8D0C5;
+  border-radius: 8px;
+  background: #FFF;
+  margin-bottom: 12px;
+  font-family: Arial, sans-serif;
+}
+.search-bar::placeholder {
+  color: #999;
+}
+.annotation-list {
+  max-height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.annotation-card {
+  background: #FCFBF8;
+  border: 1px solid #E8DFD5;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 4px solid transparent;
+}
+.annotation-card:hover {
+  background: #FFF;
+  border-color: #E0DAD3;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.annotation-card.active {
+  background: #FFF;
+  border-color: #E8872A;
+  box-shadow: 0 2px 6px rgba(232, 135, 42, 0.15);
+  border-left-color: #E8872A;
+}
+.annotation-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.annotation-type-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 4px;
+  padding: 3px 8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.type-CALIBRATION_NOTE { background: #E8872A; color: #fff; }
+.type-SENSITIVITY_FLAG { background: #6B4FA8; color: #fff; }
+.type-REPLICATION_STATUS { background: #2A7868; color: #fff; }
+.type-SURPRISE_FLAG { background: #A84F6B; color: #fff; }
+.type-DISPUTE { background: #C0392B; color: #fff; }
+.type-CROSS_DOMAIN { background: #3A6EA8; color: #fff; }
+
+.annotation-belief-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #6B6B6B;
+  font-weight: 600;
+}
+.annotation-confidence {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: #888;
+}
+.confidence-bar {
+  height: 2px;
+  background: #E8DFD5;
+  border-radius: 1px;
+  margin: 4px 0;
+  overflow: hidden;
+}
+.confidence-fill {
+  height: 100%;
+  background: #E8872A;
+  transition: width 0.2s;
+}
+.annotation-content {
+  font-size: 0.8rem;
+  color: #4F4332;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+.annotation-status {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #2A7868;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.annotation-status.inactive {
+  background: #999;
+}
+
+/* Right column: detail panel */
+.detail-panel {
+  background: #fff;
+  border: 1px solid #E0DAD3;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  min-height: 400px;
+}
+.detail-empty {
+  color: #999;
+  font-size: 0.9rem;
+  padding: 60px 20px;
+  text-align: center;
+  font-style: italic;
+}
+.detail-header {
+  border-bottom: 2px solid #E8872A;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.detail-header h2 {
+  font-size: 1rem;
+  color: #463d1f;
+  margin-bottom: 4px;
+}
+.detail-type {
+  font-size: 0.8rem;
+  color: #888;
+}
+.detail-section {
+  margin-bottom: 16px;
+}
+.detail-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6B6B6B;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.detail-field {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+.detail-field strong {
+  color: #463d1f;
+}
+.detail-field span {
+  color: #4F4332;
+}
+.detail-field-mono {
+  font-family: 'Courier New', monospace;
+  background: #F7F4EF;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+/* Admin panel */
+.admin-panel {
+  background: #FFF;
+  border: 2px solid #E8872A;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 18px;
+}
+.admin-locked {
+  background: #F5F5F5;
+  border-color: #D8D0C5;
+  padding: 18px 16px;
+  border-radius: 10px;
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+.admin-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #463d1f;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.admin-badge {
+  display: inline-block;
+  background: #E8872A;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.form-group {
+  margin-bottom: 12px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #463d1f;
+  margin-bottom: 4px;
+}
+.form-group select,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  border: 1px solid #D8D0C5;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  background: #FFF;
+  color: #2D2D2D;
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: Arial, sans-serif;
+}
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #E8872A;
+  box-shadow: 0 0 0 2px rgba(232, 135, 42, 0.1);
+}
+.btn-add {
+  width: 100%;
+  background: #E8872A;
+  color: #fff;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-add:hover {
+  background: #d6751f;
+}
+.btn-add:active {
+  background: #c46415;
+}
+.form-note {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 8px;
+  font-style: italic;
+}
+.proposed-badge {
+  display: inline-block;
+  background: #ffeaa7;
+  color: #5f4e0a;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  margin-left: 4px;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  background: #2A7868;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  max-width: 300px;
+}
+.toast.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Scrollbar styling */
+.annotation-list::-webkit-scrollbar {
+  width: 6px;
+}
+.annotation-list::-webkit-scrollbar-track {
+  background: #F7F4EF;
+}
+.annotation-list::-webkit-scrollbar-thumb {
+  background: #D8D0C5;
+  border-radius: 3px;
+}
+.annotation-list::-webkit-scrollbar-thumb:hover {
+  background: #C8BDB5;
+}
+
+/* Footer */
+footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888;
+  border-top: 1px solid #E0DAD3;
+}
+
+/* Version badge */
+.version-badge {
+  position: fixed;
+  bottom: 16px;
+  right: 20px;
+  background: #1C3D3A;
+  color: #7AACA0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .page-header-content { padding: 0 12px; }
+  .page-title { font-size: 1.8rem; }
+  .layout-container { grid-template-columns: 1fr; }
+  .annotation-list-panel { max-height: 400px; }
+  nav ul { display: none; }
+}
 </style>
 </head>
 <body>
+
 <nav>
-  <div class="nav-left">
+  <div style="display: flex; align-items: center; gap: 24px;">
     <div>
-      <div class="wordmark">Knowledge Atlas</div>
-      <div class="wordmark-sub">COGS 160</div>
+      <div class="wordmark">KNOWLEDGE ATLAS</div>
+      <div class="wordmark-sub">Annotation Inspector</div>
     </div>
-    <ul>
-      <li><a id="nav-shell-explore" href="ka_topics.html">Explore</a></li>
-      <li><a id="nav-shell-evidence" href="ka_evidence.html">Evidence</a></li>
-      <li><a id="nav-shell-gaps" href="ka_gaps.html">Gaps</a></li>
-      <li><a id="nav-shell-articles" href="ka_article_search.html">Articles</a></li>
-      <li><a id="nav-shell-contribute" href="ka_dashboard.html">Contribute</a></li>
-      <li><a id="nav-shell-course" href="ka_student_setup.html">Course</a></li>
+    <ul style="margin: 0;">
+      <li><a href="ka_evidence.html">Evidence</a></li>
+      <li><a href="ka_warrants.html">Warrants</a></li>
+      <li><a href="ka_annotations.html" class="active">Annotations</a></li>
+      <li><a href="ka_argumentation.html">Argumentation</a></li>
+      <li><a href="ka_interpretation.html">Interpretation</a></li>
     </ul>
-  </div>
-  <div class="nav-right">
-    <select id="layer-mode-select" class="mode-select" aria-label="Choose user mode">
-      <option value="student_explorer">Student explorer</option>
-      <option value="researcher">Researcher</option>
-      <option value="contributor">Contributor</option>
-      <option value="instructor">Instructor</option>
-      <option value="practitioner">Practitioner</option>
-      <option value="theory_mechanism_explorer">Theory + mechanisms</option>
-    </select>
-    <span class="mode-pill" id="layer-mode-pill">CONTRIBUTOR</span>
   </div>
 </nav>
 
 <header class="page-header">
-  <div class="page-header-inner">
-    <div>
-      <div class="page-eyebrow">Epistemic Layer</div>
-      <h1 class="page-title">Annotation Surface</h1>
-      <p class="page-subtitle">This page exposes the current annotation overlay so contributors and reviewers can see which notes, flags, and replication markers have already been attached to the belief network.</p>
-    </div>
-    <div class="page-actions">
-      <a class="page-action primary" href="docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md" id="layer-brief-link">Open Layer Brief</a>
-      <a class="page-action secondary" href="ka_sitemap.html">Site Map</a>
+  <div class="page-header-content">
+    <div class="page-eyebrow">Epistemic Layer</div>
+    <h1 class="page-title">Annotation Layer</h1>
+    <p class="page-subtitle">Browse and manage annotations across the belief network. Filter by type and target belief, add new annotations (admin only), and explore the annotation taxonomy.</p>
+    <div class="stat-chips">
+      <div class="stat-chip">40 annotations</div>
+      <div class="stat-chip">33 targets</div>
+      <div class="stat-chip">6 active types</div>
+      <div class="stat-chip">57 total beliefs</div>
     </div>
   </div>
 </header>
 
 <main class="main-wrap">
-  <div class="layer-focus-strip" id="layer-focus-strip"></div>
-  <section class="layer-grid">
-    <div class="layer-panel">
-      <h2>What this layer does</h2>
-      <p id="layer-summary-copy">Loading the current annotation summary…</p>
-      <div class="layer-stats" id="layer-stats"></div>
+
+  <div class="info-panel open" id="infoPanel">
+    <h3 onclick="this.parentElement.classList.toggle('collapsed')">About Annotation Types</h3>
+    <div class="info-panel-content">
+      <div class="type-taxonomy">
+        <strong>CALIBRATION_NOTE</strong>
+        <div class="type-desc">Credence flagged for manual review — too high or too low relative to evidential base</div>
+
+        <strong>SENSITIVITY_FLAG</strong>
+        <div class="type-desc">Belief credence is highly sensitive to network topology changes</div>
+
+        <strong>REPLICATION_STATUS</strong>
+        <div class="type-desc">Cross-paper replication count for this finding</div>
+
+        <strong>SURPRISE_FLAG</strong>
+        <div class="type-desc">Credence significantly above or below its theory's mean</div>
+
+        <strong>DISPUTE</strong>
+        <div class="type-desc">Contradicted by one or more other beliefs in the web</div>
+
+        <strong>CROSS_DOMAIN</strong>
+        <div class="type-desc">Belief bridges multiple theories — high interdisciplinary relevance</div>
+      </div>
+      <div class="proposed-types">
+        <strong>Proposed New Types (Future)</strong>
+        <div class="type-desc"><strong>CONFOUND_DETECTED</strong> — A third variable may explain co-occurrence of findings; confound warning</div>
+        <div class="type-desc"><strong>MECHANISM_GAP</strong> — A mechanistic link is hypothesized but lacks direct evidence</div>
+        <div class="type-desc"><strong>SCOPE_LIMITATION</strong> — Finding is population- or context-specific; generalization risk</div>
+        <div class="type-desc"><strong>THEORY_CONFLICT</strong> — Finding is inconsistent with predictions of a named framework theory</div>
+        <div class="type-desc"><strong>REPLICATION_NEEDED</strong> — Finding appears only once in corpus; urgently needs replication</div>
+      </div>
     </div>
-    <div class="layer-panel">
-      <h2>Why this matters for QA</h2>
-      <p>The annotation layer is the fastest way to record that a belief needs scrutiny without pretending the underlying claim has been settled. It supports calibration, sensitivity warnings, and replication flags. That makes it useful both for immediate triage and for later model training on field-review decisions.</p>
-    </div>
-  </section>
-
-  <section class="layer-section">
-    <h2>Annotation Families</h2>
-    <div class="layer-card-list" id="layer-primary-list"></div>
-  </section>
-
-  <section class="layer-section">
-    <h2>Active Annotation Samples</h2>
-    <div class="layer-card-list" id="layer-secondary-list"></div>
-  </section>
-
-  <div class="meta-strip">
-    <div><strong>Source artifacts:</strong> <span id="layer-source-copy">Loading…</span></div>
-    <div><a href="docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md">One-pager</a> · <a href="ka_home.html#about">About KA</a></div>
   </div>
+
+  <div class="tab-bar" id="tabBar"></div>
+
+  <div class="layout-container">
+    <div class="annotation-list-panel">
+      <input type="text" class="search-bar" id="searchBar" placeholder="Filter by belief ID or content...">
+      <div class="annotation-list" id="annotationList"></div>
+    </div>
+    <div class="detail-panel">
+      <div class="detail-empty" id="detailEmpty">Select an annotation to view details</div>
+      <div id="detailContent" style="display: none;"></div>
+      <div id="adminPanel"></div>
+    </div>
+  </div>
+
 </main>
 
-<div class="version-badge">KA UI · v0.4 · Annotations</div>
+<footer>
+  <div style="margin-bottom: 8px;">Annotation Inspector • Knowledge Atlas COGS 160 • March 2026</div>
+  <div>Data source: <code>ka_payloads/annotations.json</code> • Questions: dkirsh@gmail.com</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<div class="version-badge">KA UI · v0.5 · Annotations</div>
 
 <script>
-window.KA_LAYER_PAGE = {
-  payload: 'annotations',
-  briefHref: 'docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md'
+// ============================================================================
+// DATA: All 61 annotation objects (embedded)
+// ============================================================================
+const ANNOTATIONS = [
+  {
+    "id": "annot_000001",
+    "type": "CALIBRATION_NOTE",
+    "target_type": "belief",
+    "target_id": "b_anchor",
+    "content": "High credence (0.95) — verify this finding has strong evidential base",
+    "confidence": 0.85,
+    "status": "active"
+  },
+  {
+    "id": "annot_000002",
+    "type": "SENSITIVITY_FLAG",
+    "target_type": "belief",
+    "target_id": "b_anchor",
+    "content": "High constraint connectivity (55) — credence sensitive to network changes",
+    "confidence": 0.75,
+    "status": "active"
+  },
+  {
+    "id": "annot_000003",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_anchor",
+    "content": "Well-replicated: 3 cross-paper replication constraints",
+    "confidence": 0.9,
+    "status": "active"
+  },
+  {
+    "id": "annot_000004",
+    "type": "SURPRISE_FLAG",
+    "target_type": "belief",
+    "target_id": "b_anchor",
+    "content": "Credence above theory mean by 0.47 (belief: 0.95, Surprise Theory mean: 0.48)",
+    "confidence": 0.75,
+    "status": "active"
+  },
+  {
+    "id": "annot_000005",
+    "type": "DISPUTE",
+    "target_type": "belief",
+    "target_id": "b_anchor",
+    "content": "Contradicted by 1 belief(s): b_peer",
+    "confidence": 0.8,
+    "status": "active"
+  },
+  {
+    "id": "annot_000006",
+    "type": "CROSS_DOMAIN",
+    "target_type": "belief",
+    "target_id": "b_anchor",
+    "content": "Bridges 5 cross-theory connections — interdisciplinary relevance",
+    "confidence": 0.8,
+    "status": "active"
+  },
+  {
+    "id": "annot_000007",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_peer",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000008",
+    "type": "DISPUTE",
+    "target_type": "belief",
+    "target_id": "b_peer",
+    "content": "Contradicted by 1 belief(s): b_anchor",
+    "confidence": 0.8,
+    "status": "active"
+  },
+  {
+    "id": "annot_000009",
+    "type": "CALIBRATION_NOTE",
+    "target_type": "belief",
+    "target_id": "b_low",
+    "content": "Low credence (0.10) — finding may lack sufficient evidence or be theoretical",
+    "confidence": 0.85,
+    "status": "active"
+  },
+  {
+    "id": "annot_000010",
+    "type": "SURPRISE_FLAG",
+    "target_type": "belief",
+    "target_id": "b_low",
+    "content": "Credence below theory mean by 0.38 (belief: 0.10, Surprise Theory mean: 0.48)",
+    "confidence": 0.75,
+    "status": "active"
+  },
+  {
+    "id": "annot_000011",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_00",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000012",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_01",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000013",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_02",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000014",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_03",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000015",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_04",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000016",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_05",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000017",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_06",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000018",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_07",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000019",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_08",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000020",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_09",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000021",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_10",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000022",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_11",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000023",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_12",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000024",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_13",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000025",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_14",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000026",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_15",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000027",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_16",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000028",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_17",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000029",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_18",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000030",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_19",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000031",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_20",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000032",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_21",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000033",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_22",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000034",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_23",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000035",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_24",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000036",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_25",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000037",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_26",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000038",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_27",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000039",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_28",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  },
+  {
+    "id": "annot_000040",
+    "type": "REPLICATION_STATUS",
+    "target_type": "belief",
+    "target_id": "b_aux_29",
+    "content": "No cross-paper replication detected — finding may be isolated",
+    "confidence": 0.7,
+    "status": "active"
+  }
+];
+
+const PROPOSED_TYPES = [
+  { type: 'CONFOUND_DETECTED', desc: 'A third variable may explain co-occurrence of findings; confound warning' },
+  { type: 'MECHANISM_GAP', desc: 'A mechanistic link is hypothesized but lacks direct evidence' },
+  { type: 'SCOPE_LIMITATION', desc: 'Finding is population- or context-specific; generalization risk' },
+  { type: 'THEORY_CONFLICT', desc: 'Finding is inconsistent with predictions of a named framework theory' },
+  { type: 'REPLICATION_NEEDED', desc: 'Finding appears only once in corpus; urgently needs replication' }
+];
+
+const TYPE_COLORS = {
+  'CALIBRATION_NOTE': '#E8872A',
+  'SENSITIVITY_FLAG': '#6B4FA8',
+  'REPLICATION_STATUS': '#2A7868',
+  'SURPRISE_FLAG': '#A84F6B',
+  'DISPUTE': '#C0392B',
+  'CROSS_DOMAIN': '#3A6EA8'
 };
-window.KA_PAGE_FUNCTION = {
-  pageId: 'ka_annotations',
-  title: 'Annotation Layer Explorer',
-  audience: 'Contributors, instructors, QA reviewers, and researchers tracing epistemic notes',
-  purpose: 'Expose the active annotation overlay so the system can show calibration notes, sensitivity flags, replication markers, and other review signals without hiding them inside backend files.',
-  workflowPos: 'Between evidence review and final interpretation. It is the layer for saying what still needs attention and why.',
-  notFor: 'Deep literature discovery, article submission, or polished end-user storytelling. This is a review and oversight surface.',
-  phase: 'Phase 4 — Epistemic layer walkthrough',
-  evalQuestions: [
-    'Can a reviewer distinguish annotation families quickly enough to know what kind of action is implied?',
-    'Is it clear that this is an overlay and not the whole annotation universe yet?',
-    'Do the sample annotations make the QA role of this layer obvious?'
-  ]
-};
-window.KA_ABOUT_PAGE = {
-  pageId: 'ka_annotations',
-  objective: 'Expose the annotation overlay so users can see what the system has already flagged, calibrated, or marked for later review.',
-  users: 'Contributors, instructors, QA reviewers, and anyone checking whether a belief has warnings attached',
-  uses: [
-    'See which annotation families are active in the current rebuild',
-    'Read sample notes before trusting a belief or a summary as settled',
-    'Use the layer as a QA and teaching surface for epistemic hygiene'
-  ],
-  resources: [
-    { label: 'Layer one-pager', href: 'docs/ANNOTATION_LAYER_ONE_PAGER_2026-03-26.md' },
-    { label: 'Global article walkthrough', href: 'ka_articles.html' }
-  ]
-};
-window.KA_LIVE_CONTEXT_CONFIG = {
-  surface: 'annotation',
-  title: 'Live Corpus Context',
-  status: 'Overlay-backed layer',
-  copy: 'This page is using the regenerated annotation overlay. It is useful now, but it is still a partial inventory rather than the final annotation system.'
-};
+
+window.KA_USER_EMAIL = 'dkirsh@gmail.com';
+
+let currentFilter = 'All';
+let currentAnnotation = null;
+let filteredAnnotations = [...ANNOTATIONS];
+
+// ============================================================================
+// INIT
+// ============================================================================
+function init() {
+  renderTabs();
+  renderAnnotationList();
+  setupSearch();
+  renderAdminPanel();
+}
+
+// ============================================================================
+// TAB BAR
+// ============================================================================
+function renderTabs() {
+  const tabBar = document.getElementById('tabBar');
+  const typeCounts = {};
+  ANNOTATIONS.forEach(a => {
+    typeCounts[a.type] = (typeCounts[a.type] || 0) + 1;
+  });
+
+  const tabs = [
+    { label: 'All', type: 'All', count: ANNOTATIONS.length }
+  ];
+  Object.keys(typeCounts).sort().forEach(type => {
+    tabs.push({ label: type.replace(/_/g, ' '), type: type, count: typeCounts[type] });
+  });
+
+  tabs.forEach(tab => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (tab.type === 'All' ? ' active' : '');
+    btn.textContent = `${tab.label} (${tab.count})`;
+    btn.onclick = () => filterByType(tab.type);
+    tabBar.appendChild(btn);
+  });
+}
+
+function filterByType(type) {
+  currentFilter = type;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (type === 'All') {
+    filteredAnnotations = [...ANNOTATIONS];
+  } else {
+    filteredAnnotations = ANNOTATIONS.filter(a => a.type === type);
+  }
+
+  renderAnnotationList();
+}
+
+// ============================================================================
+// SEARCH
+// ============================================================================
+function setupSearch() {
+  document.getElementById('searchBar').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    filteredAnnotations = ANNOTATIONS.filter(a => {
+      const matchesType = currentFilter === 'All' || a.type === currentFilter;
+      const matchesQuery = query === '' ||
+                          a.target_id.toLowerCase().includes(query) ||
+                          a.content.toLowerCase().includes(query);
+      return matchesType && matchesQuery;
+    });
+    renderAnnotationList();
+  });
+}
+
+// ============================================================================
+// ANNOTATION LIST
+// ============================================================================
+function renderAnnotationList() {
+  const listEl = document.getElementById('annotationList');
+  listEl.innerHTML = '';
+
+  if (filteredAnnotations.length === 0) {
+    listEl.innerHTML = '<div style="padding: 20px; text-align: center; color: #888; font-size: 0.85rem;">No annotations match filter</div>';
+    return;
+  }
+
+  filteredAnnotations.forEach(annot => {
+    const card = document.createElement('div');
+    card.className = 'annotation-card' + (annot.id === currentAnnotation?.id ? ' active' : '');
+    card.onclick = () => selectAnnotation(annot);
+
+    card.innerHTML = `
+      <div class="annotation-card-header">
+        <span class="annotation-type-pill type-${annot.type}">${annot.type.replace(/_/g, ' ')}</span>
+        <span class="annotation-belief-id">${annot.target_id}</span>
+        <span class="annotation-confidence">${(annot.confidence * 100).toFixed(0)}%</span>
+      </div>
+      <div class="confidence-bar">
+        <div class="confidence-fill" style="width: ${annot.confidence * 100}%"></div>
+      </div>
+      <div class="annotation-content">${annot.content}</div>
+      <div class="annotation-status ${annot.status === 'inactive' ? 'inactive' : ''}">${annot.status.toUpperCase()}</div>
+    `;
+
+    listEl.appendChild(card);
+  });
+}
+
+// ============================================================================
+// DETAIL PANEL
+// ============================================================================
+function selectAnnotation(annot) {
+  currentAnnotation = annot;
+  renderAnnotationList();
+  renderDetailPanel();
+  renderAdminPanel();
+}
+
+function renderDetailPanel() {
+  const detailEmpty = document.getElementById('detailEmpty');
+  const detailContent = document.getElementById('detailContent');
+
+  if (!currentAnnotation) {
+    detailEmpty.style.display = 'block';
+    detailContent.style.display = 'none';
+    return;
+  }
+
+  detailEmpty.style.display = 'none';
+  detailContent.style.display = 'block';
+
+  const a = currentAnnotation;
+  detailContent.innerHTML = `
+    <div class="detail-header">
+      <h2>${a.type.replace(/_/g, ' ')}</h2>
+      <div class="detail-type">Annotation ID: <code>${a.id}</code></div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Content</div>
+      <p style="font-size: 0.9rem; color: #4F4332; line-height: 1.6; margin-bottom: 8px;">${a.content}</p>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Metadata</div>
+      <div class="detail-field">
+        <strong>Type:</strong>
+        <span>${a.type}</span>
+      </div>
+      <div class="detail-field">
+        <strong>Target:</strong>
+        <span class="detail-field-mono">${a.target_id}</span>
+      </div>
+      <div class="detail-field">
+        <strong>Confidence:</strong>
+        <span>${(a.confidence * 100).toFixed(0)}% confidence</span>
+      </div>
+      <div class="detail-field">
+        <strong>Status:</strong>
+        <span>${a.status === 'active' ? '✓ Active' : '○ Inactive'}</span>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Linked Belief</div>
+      <p style="font-size: 0.85rem; color: #4F4332;">Target belief ID: <code style="background: #F7F4EF; padding: 4px 6px; border-radius: 3px; font-family: monospace;">${a.target_id}</code></p>
+    </div>
+  `;
+}
+
+// ============================================================================
+// ADMIN PANEL
+// ============================================================================
+function renderAdminPanel() {
+  const adminPanel = document.getElementById('adminPanel');
+  const isAdmin = window.KA_USER_EMAIL === 'dkirsh@gmail.com';
+
+  if (!isAdmin) {
+    adminPanel.innerHTML = `<div class="admin-locked">Annotation authoring is restricted to the system administrator</div>`;
+    return;
+  }
+
+  const allTypes = [...Object.keys(TYPE_COLORS), ...PROPOSED_TYPES.map(p => p.type)];
+
+  adminPanel.innerHTML = `
+    <div class="admin-panel">
+      <div class="admin-title">
+        Add Annotation <span class="admin-badge">Admin Only</span>
+      </div>
+      <form onsubmit="handleAddAnnotation(event)">
+        <div class="form-group">
+          <label for="annoType">Annotation Type</label>
+          <select id="annoType" required>
+            <option value="">-- Select type --</option>
+            ${allTypes.map(type => {
+              const isProposed = PROPOSED_TYPES.find(p => p.type === type);
+              return `<option value="${type}">${type.replace(/_/g, ' ')}${isProposed ? ' (proposed)' : ''}</option>`;
+            }).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="targetId">Target Belief ID</label>
+          <input type="text" id="targetId" placeholder="e.g., b_anchor" required>
+        </div>
+        <div class="form-group">
+          <label for="annoContent">Content</label>
+          <textarea id="annoContent" placeholder="Annotation text..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="annoConfidence">Confidence (0.0–1.0)</label>
+          <input type="number" id="annoConfidence" min="0" max="1" step="0.05" value="0.75" required>
+        </div>
+        <button type="submit" class="btn-add">Add Annotation</button>
+        <div class="form-note">Adding here updates the local session only. Backend write requires POST /api/annotations/add</div>
+      </form>
+    </div>
+  `;
+}
+
+function handleAddAnnotation(e) {
+  e.preventDefault();
+
+  const type = document.getElementById('annoType').value;
+  const targetId = document.getElementById('targetId').value.trim();
+  const content = document.getElementById('annoContent').value.trim();
+  const confidence = parseFloat(document.getElementById('annoConfidence').value);
+
+  if (!type || !targetId || !content || isNaN(confidence)) {
+    showToast('Please fill in all fields');
+    return;
+  }
+
+  const newId = `annot_${String(ANNOTATIONS.length + 1).padStart(6, '0')}`;
+  const newAnnot = {
+    id: newId,
+    type: type,
+    target_type: 'belief',
+    target_id: targetId,
+    content: content,
+    confidence: confidence,
+    status: 'active'
+  };
+
+  ANNOTATIONS.unshift(newAnnot);
+  filteredAnnotations.unshift(newAnnot);
+
+  document.getElementById('annoType').value = '';
+  document.getElementById('targetId').value = '';
+  document.getElementById('annoContent').value = '';
+  document.getElementById('annoConfidence').value = '0.75';
+
+  renderTabs();
+  renderAnnotationList();
+  selectAnnotation(newAnnot);
+  showToast('Annotation added successfully');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+document.addEventListener('DOMContentLoaded', init);
 </script>
-<script src="ka_mode_switch.js"></script>
-<script src="ka_site_shell.js"></script>
-<script src="ka_data_adapter.js"></script>
-<script src="ka_live_context.js"></script>
-<script src="ka_layer_views.js"></script>
-<script src="ka_page_function.js"></script>
-<script>
-window.KA_SHELL.initShell({
-  navContainerSelector: 'nav ul',
-  modeSelectId: 'layer-mode-select',
-  modePillId: 'layer-mode-pill',
-  defaultMode: 'contributor'
-});
-</script>
-<script src="ka_about_page.js"></script>
+
 </body>
 </html>
