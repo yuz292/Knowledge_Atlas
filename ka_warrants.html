@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KA Warrants Inspector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1C3D3A;
+            --amber: #E8872A;
+            --cream: #F7F4EF;
+            --teal: #2A7868;
+            --muted: #6B6B6B;
+            --border-light: #E0DAD3;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        html, body {
+            height: 100%;
+            background-color: var(--cream);
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 56px;
+            background-color: var(--navy);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-brand {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--amber);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--amber);
+        }
+
+        .nav-links a.active {
+            color: var(--amber);
+            font-weight: bold;
+        }
+
+        /* Page header */
+        .page-header {
+            background: linear-gradient(135deg, #4a3220 0%, #362515 100%);
+            color: white;
+            padding: 32px 24px;
+            border-bottom: 3px solid var(--amber);
+        }
+
+        .page-header h1 {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Main content */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left column: Warrant Type Browser */
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            border-right: 1px solid var(--border-light);
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .sidebar h2 {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .warrant-pills {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .warrant-pill {
+            padding: 10px 12px;
+            border: 1px solid var(--border-light);
+            background-color: var(--cream);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .warrant-pill:hover {
+            background-color: #ece8e0;
+            border-color: var(--amber);
+        }
+
+        .warrant-pill.active {
+            background-color: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .warrant-pill-label {
+            font-weight: 500;
+        }
+
+        .warrant-pill-badge {
+            background-color: var(--amber);
+            color: white;
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .warrant-pill.active .warrant-pill-badge {
+            background-color: var(--amber);
+        }
+
+        /* Distribution chart */
+        .distribution-section {
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .distribution-section h3 {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .distribution-bar {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .distribution-bar-label {
+            font-size: 11px;
+            color: var(--muted);
+            width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .distribution-bar-fill {
+            flex: 1;
+            height: 6px;
+            background: linear-gradient(90deg, var(--teal), var(--navy));
+            border-radius: 3px;
+        }
+
+        .distribution-bar-count {
+            font-size: 11px;
+            color: var(--muted);
+            min-width: 20px;
+            text-align: right;
+        }
+
+        /* Center column: Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Sensitivity Simulator */
+        .simulator-section {
+            background-color: white;
+            border-bottom: 1px solid var(--border-light);
+            padding: 24px;
+            border-radius: 0;
+        }
+
+        .simulator-section h2 {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .simulator-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .control-group select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider-value {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--amber);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--teal), var(--navy));
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--amber);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--amber);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .simulator-summary {
+            background-color: #fffbf7;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--amber);
+            font-size: 13px;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .simulator-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .simulator-table thead {
+            background-color: #f9f7f4;
+        }
+
+        .simulator-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--navy);
+            border-bottom: 1px solid var(--border-light);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .simulator-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .simulator-table tbody tr:hover {
+            background-color: #fafaf8;
+            cursor: pointer;
+        }
+
+        .delta-positive {
+            color: #2d7a3d;
+            font-weight: 600;
+        }
+
+        .delta-negative {
+            color: #c94444;
+            font-weight: 600;
+        }
+
+        .delta-neutral {
+            color: var(--muted);
+        }
+
+        .citation-chip {
+            background-color: #e8f4f1;
+            color: var(--navy);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .warrant-badge {
+            background-color: #fff0e6;
+            color: #c65d00;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .truncated-finding {
+            color: #555;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Evidence Browser */
+        .evidence-section {
+            background-color: white;
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .evidence-section h2 {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .evidence-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .evidence-table thead {
+            background-color: #f9f7f4;
+            position: sticky;
+            top: 0;
+        }
+
+        .evidence-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--navy);
+            border-bottom: 1px solid var(--border-light);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .evidence-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .evidence-table tbody tr:hover {
+            background-color: #fafaf8;
+            cursor: pointer;
+        }
+
+        .claim-role {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Right column: Inspector */
+        .inspector-panel {
+            width: 300px;
+            background-color: #f9f7f4;
+            border-left: 1px solid var(--border-light);
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .inspector-panel h2 {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .inspector-placeholder {
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+            padding: 32px 0;
+        }
+
+        .inspector-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .inspector-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .inspector-field-label {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .inspector-field-value {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .inspector-field-value.mono {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background-color: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-light);
+        }
+
+        .inspector-note {
+            background-color: #fffbf7;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--teal);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .commit-button {
+            background-color: var(--amber);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+
+        .commit-button:hover:not(:disabled) {
+            background-color: #d97d1e;
+            box-shadow: 0 4px 12px rgba(232, 135, 42, 0.3);
+        }
+
+        .commit-button:disabled {
+            background-color: var(--muted);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        .version-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--navy);
+            color: var(--amber);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 32px;
+            border-radius: 12px;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-content h3 {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .modal-details {
+            background-color: #f9f7f4;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn-cancel {
+            background-color: var(--border-light);
+            color: #333;
+        }
+
+        .modal-btn-cancel:hover {
+            background-color: #d0ccc4;
+        }
+
+        .modal-btn-confirm {
+            background-color: var(--amber);
+            color: white;
+        }
+
+        .modal-btn-confirm:hover {
+            background-color: #d97d1e;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
+                padding: 16px;
+            }
+
+            .inspector-panel {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--border-light);
+                padding: 16px;
+            }
+
+            .simulator-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .warrant-pills {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .simulator-table,
+            .evidence-table {
+                font-size: 11px;
+            }
+
+            .simulator-table th,
+            .evidence-table th {
+                font-size: 10px;
+                padding: 8px;
+            }
+
+            .simulator-table td,
+            .evidence-table td {
+                padding: 8px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-brand">KNOWLEDGE ATLAS</div>
+        <div class="nav-links">
+            <a href="ka_dashboard.html">Home</a>
+            <a href="ka_evidence.html">Evidence</a>
+            <a href="ka_warrants.html" class="active">Warrants</a>
+            <a href="ka_annotations.html">Annotations</a>
+            <a href="ka_argumentation.html">Argumentation</a>
+            <a href="ka_interpretation.html">Interpretation</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Warrant Inspector &amp; Sensitivity Simulator</h1>
+        <p>Adjust discount multipliers by warrant type and observe how evidence credence shifts</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Left Sidebar: Warrant Type Browser -->
+        <aside class="sidebar">
+            <h2>Warrant Types</h2>
+            <div class="warrant-pills">
+                <div class="warrant-pill active" data-filter="all">
+                    <span class="warrant-pill-label">All Types</span>
+                </div>
+                <div class="warrant-pill" data-filter="constitutive">
+                    <span class="warrant-pill-label">Constitutive</span>
+                    <span class="warrant-pill-badge">1</span>
+                </div>
+                <div class="warrant-pill" data-filter="mechanism">
+                    <span class="warrant-pill-label">Mechanism</span>
+                    <span class="warrant-pill-badge">34</span>
+                </div>
+                <div class="warrant-pill" data-filter="empirical_association">
+                    <span class="warrant-pill-label">Empirical Association</span>
+                    <span class="warrant-pill-badge">123</span>
+                </div>
+                <div class="warrant-pill" data-filter="functional">
+                    <span class="warrant-pill-label">Functional</span>
+                    <span class="warrant-pill-badge">26</span>
+                </div>
+                <div class="warrant-pill" data-filter="capacity">
+                    <span class="warrant-pill-label">Capacity</span>
+                    <span class="warrant-pill-badge">13</span>
+                </div>
+                <div class="warrant-pill" data-filter="analogical">
+                    <span class="warrant-pill-label">Analogical</span>
+                    <span class="warrant-pill-badge">0</span>
+                </div>
+                <div class="warrant-pill" data-filter="theory_derived">
+                    <span class="warrant-pill-label">Theory-Derived</span>
+                    <span class="warrant-pill-badge">3</span>
+                </div>
+            </div>
+
+            <!-- Distribution Chart -->
+            <div class="distribution-section">
+                <h3>Distribution</h3>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Empirical Assoc.</div>
+                    <div class="distribution-bar-fill" style="width: 60%;"></div>
+                    <div class="distribution-bar-count">123</div>
+                </div>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Mechanism</div>
+                    <div class="distribution-bar-fill" style="width: 17%;"></div>
+                    <div class="distribution-bar-count">34</div>
+                </div>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Functional</div>
+                    <div class="distribution-bar-fill" style="width: 13%;"></div>
+                    <div class="distribution-bar-count">26</div>
+                </div>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Capacity</div>
+                    <div class="distribution-bar-fill" style="width: 7%;"></div>
+                    <div class="distribution-bar-count">13</div>
+                </div>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Constitutive</div>
+                    <div class="distribution-bar-fill" style="width: 0.5%;"></div>
+                    <div class="distribution-bar-count">1</div>
+                </div>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Theory-Derived</div>
+                    <div class="distribution-bar-fill" style="width: 1.5%;"></div>
+                    <div class="distribution-bar-count">3</div>
+                </div>
+                <div class="distribution-bar">
+                    <div class="distribution-bar-label">Analogical</div>
+                    <div class="distribution-bar-fill" style="width: 0%;"></div>
+                    <div class="distribution-bar-count">0</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center: Main Content Area -->
+        <div class="main-content">
+            <!-- Sensitivity Simulator -->
+            <div class="simulator-section">
+                <h2>Sensitivity Simulator</h2>
+                <div class="simulator-controls">
+                    <div class="control-group">
+                        <label for="warrant-select">Select Warrant Type to Study</label>
+                        <select id="warrant-select">
+                            <option value="">Choose a type...</option>
+                            <option value="constitutive">Constitutive (d = 1.0)</option>
+                            <option value="mechanism">Mechanism (d = 0.8)</option>
+                            <option value="empirical_association">Empirical Association (d = 0.8)</option>
+                            <option value="functional">Functional (d = 0.65)</option>
+                            <option value="capacity">Capacity (d = 0.55)</option>
+                            <option value="analogical">Analogical (d = 0.4)</option>
+                            <option value="theory_derived">Theory-Derived (d = 0.25)</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <div class="slider-header">
+                                <label for="discount-slider">Adjust Discount Multiplier</label>
+                                <div class="slider-value" id="slider-display">—</div>
+                            </div>
+                            <input type="range" id="discount-slider" min="0" max="1" step="0.01" value="0.5" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulator-summary" id="simulator-summary">
+                    Select a warrant type to begin sensitivity analysis
+                </div>
+
+                <table class="simulator-table" id="simulator-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Citation</th>
+                            <th>Finding</th>
+                            <th>Type</th>
+                            <th>Old d</th>
+                            <th>New d</th>
+                            <th>Δ Credence</th>
+                            <th>Δ%</th>
+                        </tr>
+                    </thead>
+                    <tbody id="simulator-tbody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Evidence Browser -->
+            <div class="evidence-section">
+                <h2>Evidence Browser</h2>
+                <table class="evidence-table" id="evidence-table">
+                    <thead>
+                        <tr>
+                            <th>Citation</th>
+                            <th>Warrant Type</th>
+                            <th>Claim Role</th>
+                            <th>Finding (Preview)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="evidence-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Right Panel: Inspector -->
+        <aside class="inspector-panel">
+            <h2>Inspector</h2>
+            <div id="inspector-placeholder" class="inspector-placeholder">
+                Click any row to view details
+            </div>
+            <div id="inspector-content" style="display: none;">
+                <div class="inspector-content">
+                    <div class="inspector-field">
+                        <div class="inspector-field-label">Finding</div>
+                        <div class="inspector-field-value" id="inspector-finding"></div>
+                    </div>
+                    <div class="inspector-field">
+                        <div class="inspector-field-label">Citation</div>
+                        <div class="inspector-field-value" id="inspector-citation"></div>
+                    </div>
+                    <div class="inspector-field">
+                        <div class="inspector-field-label">Warrant Chain</div>
+                        <div class="inspector-field-value mono" id="inspector-chain"></div>
+                    </div>
+                    <div class="inspector-field">
+                        <div class="inspector-field-label">Paper ID</div>
+                        <div class="inspector-field-value" id="inspector-paper-id"></div>
+                    </div>
+                    <div class="inspector-field">
+                        <div class="inspector-field-label">Credence</div>
+                        <div class="inspector-field-value" id="inspector-credence"></div>
+                    </div>
+                    <div class="inspector-field">
+                        <div class="inspector-field-label">Discount Applied</div>
+                        <div class="inspector-field-value" id="inspector-discount"></div>
+                    </div>
+                    <div class="inspector-note">
+                        <strong>Backend integration:</strong> This panel would enable a <code>/api/warrants/sensitivity</code> endpoint, accepting a JSON payload with selected warrant type and new discount multiplier, returning affected evidence items ranked by credence delta.
+                    </div>
+                    <button class="commit-button" id="commit-button" style="display: none;">
+                        Commit Weight Change
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <h3>Confirm Weight Change</h3>
+            <p>You are about to commit a change to the warrant discount weights. This will affect how credence is calculated across all evidence items with the affected warrant type.</p>
+            <div class="modal-details" id="modal-details"></div>
+            <p><strong>This change would be logged and auditable.</strong> Continue?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="document.getElementById('confirmation-modal').classList.remove('show')">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" id="confirm-commit">Confirm Commit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Version Badge -->
+    <div class="version-badge">KA UI · v0.4</div>
+
+    <script>
+        // ============================================================================
+        // DATA
+        // ============================================================================
+
+        const WARRANT_TAXONOMY = {
+            constitutive: {
+                label: "Constitutive",
+                discount: 1.0,
+                count: 1,
+                description: "Definitional or identity claims — the strongest warrant type. Treated as d=1.0."
+            },
+            mechanism: {
+                label: "Mechanism",
+                discount: 0.8,
+                count: 34,
+                description: "Causal pathway claims linking architectural feature to outcome through a named neural or physiological route."
+            },
+            empirical_association: {
+                label: "Empirical Association",
+                discount: 0.8,
+                count: 123,
+                description: "Measured statistical relationships between variables. Largest category in current corpus."
+            },
+            functional: {
+                label: "Functional",
+                discount: 0.65,
+                count: 26,
+                description: "Capacity or role claims (X functions to do Y) without specifying the mechanism."
+            },
+            capacity: {
+                label: "Capacity",
+                discount: 0.55,
+                count: 13,
+                description: "Dispositional claims about potential or ability under certain conditions."
+            },
+            analogical: {
+                label: "Analogical",
+                discount: 0.4,
+                count: 0,
+                description: "Transfer from a structurally similar domain. Lower epistemic weight due to domain gap risk."
+            },
+            theory_derived: {
+                label: "Theory-Derived",
+                discount: 0.25,
+                count: 3,
+                description: "Claims derived from theoretical framework alone, without direct empirical support. Lowest warrant strength."
+            }
+        };
+
+        const EVIDENCE_SAMPLE = [
+ {
+  "id": 1,
+  "finding": "These two types of sound sources increased the respondents' reaction time and reduced the memory accuracy of the location.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0001",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0001"
+ },
+ {
+  "id": 2,
+  "finding": "Mean contrasts indicated that there were no differences among the three residential groups during the 3rd through 9th weeks, but that the number of social behaviors observed on the long-corridor floor was significantly…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0002",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0002"
+ },
+ {
+  "id": 3,
+  "finding": "variate analyses indicated that long-corridor residents showed stronger disagreement with the statement, \"In your dormitory it is worthwhile to try to structure your interaction with others\" than did residents of interv…",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0002",
+  "claim_role": "mechanism_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: pathway_or_interaction_text_to_mechanism_field · claim role: Mechanism Claim",
+  "paper_id": "PDF-0002"
+ },
+ {
+  "id": 4,
+  "finding": "It is therefore conceivable that factors other than social density influenced our findings (see, for example, Baron & Mandel, 1978).",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0002",
+  "claim_role": "synthesis_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: multi_result_integration_to_synthesis_field · claim role: Synthesis Claim",
+  "paper_id": "PDF-0002"
+ },
+ {
+  "id": 5,
+  "finding": "\"Assessing the Mechanism of Response in the Retrosplenial Cortex of Good and Poor Navigators.\" Cortex 49 (10): 2904-2913.",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0003",
+  "claim_role": "mechanism_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: pathway_or_interaction_text_to_mechanism_field · claim role: Mechanism Claim",
+  "paper_id": "PDF-0003"
+ },
+ {
+  "id": 6,
+  "finding": "Physical density, a built environment attribute, has always been a widely discussed and controversial topic in the literature. Debates about physical density are particularly relevant given the renewed interest in commu…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0004",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0004"
+ },
+ {
+  "id": 7,
+  "finding": "Poor acoustics can hinder students' ability to hear and understand teachers, leading to decreased academic performance and increased distraction (Long, 2021).",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0005",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0005"
+ },
+ {
+  "id": 8,
+  "finding": "In the laboratory studies, discriminant analysis was conducted following the MANOVA test to group the environmental factors by their effect on different emotions and the factorial ANOVA with post hoc to establish one-to…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0006",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0006"
+ },
+ {
+  "id": 9,
+  "finding": "Onset and persistence of responses for all dependent variables were tested.",
+  "warrant_class": "capacity",
+  "warrant_discount": 0.55,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "validation_claim",
+  "warrant_chain": "Capacity bridge (d=0.55) · extraction warrant: manipulation_or_reliability_text_to_validation_field · claim role: Validation Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 10,
+  "finding": "Outcome parameters were subjective experiences (alertness, comfort and mood) and objective measures of vigilance (PVT performance), arousal (HR, HRV, and skin conductance level) and thermoregulation (skin temperature an…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 11,
+  "finding": "Participants' mean skin temperature or DPG were not significantly affected by the lighting transitions.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 12,
+  "finding": "Participants' visual comfort \\( ^ 2 \\) showed a significant decrease right after the transition from WD to CB lighting.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 13,
+  "finding": "Fig. 8. Trajectories of vigilance and arousal parameters with WD light (left) and CB light (right) during baseline for: a) Reaction Time on PVT, b) Skin Conductance, c) Heart Rate, and d) Heart Rate Variability. Error b…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 14,
+  "finding": "Fig. 8. Trajectories of vigilance and arousal parameters with WD light (left) and CB light (right) during baseline for: a) Reaction Time on PVT, b) Skin Conductance, c) Heart Rate, and d) Heart Rate Variability. Error b…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 15,
+  "finding": "In the constant CB condition, fewer participants accepted the light compared to the constant WD condition (Acceptance \\( _ V,Block1 =95 \\%\\), Acceptance \\(_ , Block2 =92 \\%\\) and Acceptance \\( _ , Block3 =89 \\%\\) ).",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 16,
+  "finding": "Therefore, the persistent responses of subjective alertness and vitality and the late onset response of SCL are more suggestive of a contribution of the NIF pathway through which effects slowly build up, although this c…",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "mechanism_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: pathway_or_interaction_text_to_mechanism_field · claim role: Mechanism Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 17,
+  "finding": "We examined temporal trajectories in measures of alertness, arousal and comfort after abrupt lighting transitions that were created using two strongly contrasting light conditions (warm, dim lighting vs.",
+  "warrant_class": "functional",
+  "warrant_discount": 0.65,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "construct_inference_claim",
+  "warrant_chain": "Functional bridge (d=0.65) · extraction warrant: indicator_pattern_plus_author_interpretation_to_construct_field · claim role: Construct Inference Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 18,
+  "finding": "Despite the absence of significant differences in the other measurement blocks, comfort with the light was, on average, lower after the transition to CB lighting compared to the constant WD condition",
+  "warrant_class": "functional",
+  "warrant_discount": 0.65,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "construct_inference_claim",
+  "warrant_chain": "Functional bridge (d=0.65) · extraction warrant: indicator_pattern_plus_author_interpretation_to_construct_field · claim role: Construct Inference Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 19,
+  "finding": "However, none of the other physiological indicators (HR, HRV, ST, DPG) responded to the abrupt light transition, nor did PVT performance.",
+  "warrant_class": "functional",
+  "warrant_discount": 0.65,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "construct_inference_claim",
+  "warrant_chain": "Functional bridge (d=0.65) · extraction warrant: indicator_pattern_plus_author_interpretation_to_construct_field · claim role: Construct Inference Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 20,
+  "finding": "Therefore, participants' interpretation of the response scale may have depended on the setting in Phase I, resulting in these polarized responses.",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0007",
+  "claim_role": "synthesis_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: multi_result_integration_to_synthesis_field · claim role: Synthesis Claim",
+  "paper_id": "PDF-0007"
+ },
+ {
+  "id": 21,
+  "finding": "Comprehensive sociological review of human spatial behavior including density, crowding, personal space, and territorial behavior; foundational review for environmental psychology",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0008",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0008"
+ },
+ {
+  "id": 22,
+  "finding": "As soon as you have pressed the switch, the intensity of the speech signal will again be reduced to an inaudible level and then slowly increased until you can hear it.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0009",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0009"
+ },
+ {
+  "id": 23,
+  "finding": "Book on the architecture of the mind — psychological foundation for the science of everyday life; Routledge Focus; discusses cognitive architecture as framework for understanding experience and behavior",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0010",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0010"
+ },
+ {
+  "id": 24,
+  "finding": "Figure 6 shows the expected circadian pattern of decreased core body temperature and increased plasma melatonin at night.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0011",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0011"
+ },
+ {
+  "id": 25,
+  "finding": "Many approaches to improving architecture focus on functional issues, like improved ecological design, the creation of improved workplaces, better climate control, lighting conditions, or social meeting areas.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0014",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0014"
+ },
+ {
+  "id": 26,
+  "finding": "Visible signs of weathering include cracks, stains, discolouration, and structural changes.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0015",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0015"
+ },
+ {
+  "id": 27,
+  "finding": "Fig. 7-3-way factorial ANOVA results and plots of principal component scores as a function of architectural variables. Error bars represent \\(95 \\%\\) confidence intervals of PC scores for each condition. Visualizations…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0016",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0016"
+ },
+ {
+  "id": 28,
+  "finding": "Physiological stress was determined by skin conductance, because research indicates that increased conductance correlates with higher levels of stress.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0017",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0017"
+ },
+ {
+  "id": 29,
+  "finding": "For whom, in what circumstances, and through which mechanisms positive psychology interventions work are largely person, activity, and context dependent.",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0019",
+  "claim_role": "mechanism_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: pathway_or_interaction_text_to_mechanism_field · claim role: Mechanism Claim",
+  "paper_id": "PDF-0019"
+ },
+ {
+  "id": 30,
+  "finding": "Mareno and Labarca (2015) [72] have suggested that the traditional daylight analysis methods provide very limited information compared to the new dynamic methods that integrate factors such as sky type and local light c…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0020",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0020"
+ },
+ {
+  "id": 31,
+  "finding": "Behavioral changes were analyzed by two-way ANOVA using (pre-test vs post-test) and group membership (treatment vs.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0021",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0021"
+ },
+ {
+  "id": 32,
+  "finding": "Daylighting has been associated with improved mood, with an enhancement of morale, lower fatigue, and reduced eyestrain.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0023",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0023"
+ },
+ {
+  "id": 33,
+  "finding": "Subjects estimated the low compared to the high illuminance conditions as significantly more dim, and females estimated the room light across all conditions as significantly less dim than males.",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0024",
+  "claim_role": "comparative_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: condition_or_group_contrast_to_comparative_field · claim role: Comparative Claim",
+  "paper_id": "PDF-0024"
+ },
+ {
+  "id": 34,
+  "finding": "An interaction between colour temperature and gender \\(F(1,88)=8.74, p<0.01\\) showed that females estimated the 'warm' white light source as significantly cooler than the 'cool' one, regardless of the illuminance levels.",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0024",
+  "claim_role": "mechanism_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: pathway_or_interaction_text_to_mechanism_field · claim role: Mechanism Claim",
+  "paper_id": "PDF-0024"
+ },
+ {
+  "id": 35,
+  "finding": "Thus, it changed mood in subjects.",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0024",
+  "claim_role": "synthesis_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: multi_result_integration_to_synthesis_field · claim role: Synthesis Claim",
+  "paper_id": "PDF-0024"
+ },
+ {
+  "id": 36,
+  "finding": "Three potential pathways are suggested for a daylight mechanism that improves human performance: increased visibility, enhanced mood and improved health.",
+  "warrant_class": "mechanism",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0025",
+  "claim_role": "mechanism_claim",
+  "warrant_chain": "Mechanism bridge (d=0.80) · extraction warrant: pathway_or_interaction_text_to_mechanism_field · claim role: Mechanism Claim",
+  "paper_id": "PDF-0025"
+ },
+ {
+  "id": 37,
+  "finding": "One of the expected contributions of this study is the development of an integrated model that calculates the potential LEED credits the materials and components can accumulate if used in the design, in an attempt to he…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0027",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0027"
+ },
+ {
+  "id": 38,
+  "finding": "This was especially evident in the EEG measurements, in which both symmetric (protrusion \\((P)=0\\) ) and non-symmetric ( \\(P=4\\) ) showed a significantly higher \\( _ ratio \\) among NDs, compared to Ds ( \\( =4.53413\\); d…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0029",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0029"
+ },
+ {
+  "id": 39,
+  "finding": "Review and research program proposal for neuroscience of architecture; applies neuroaesthetics to built environment; argues neuroarchitecture can mature into experimental science; reviews extant literature and offers in…",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0030",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0030"
+ },
+ {
+  "id": 40,
+  "finding": "Material, Condition, and Education all showed significant main effects ( \\(p 0.05\\) ).",
+  "warrant_class": "empirical_association",
+  "warrant_discount": 0.8,
+  "credence": 0.5,
+  "citation": "PDF-0032",
+  "claim_role": "indicator_claim",
+  "warrant_chain": "Empirical Association bridge (d=0.80) · extraction warrant: measured_result_to_indicator_field · claim role: Indicator Claim",
+  "paper_id": "PDF-0032"
+ }
+];
+
+        // ============================================================================
+        // STATE & UI REFERENCES
+        // ============================================================================
+
+        let currentFilter = 'all';
+        let selectedWarrantType = null;
+        let currentDiscount = null;
+        let selectedEvidenceItem = null;
+
+        const warrantsSelect = document.getElementById('warrant-select');
+        const discountSlider = document.getElementById('discount-slider');
+        const sliderDisplay = document.getElementById('slider-display');
+        const simulatorSummary = document.getElementById('simulator-summary');
+        const simulatorTable = document.getElementById('simulator-table');
+        const simulatorTbody = document.getElementById('simulator-tbody');
+        const evidenceTbody = document.getElementById('evidence-tbody');
+        const inspectorPlaceholder = document.getElementById('inspector-placeholder');
+        const inspectorContent = document.getElementById('inspector-content');
+        const commitButton = document.getElementById('commit-button');
+        const confirmModal = document.getElementById('confirmation-modal');
+
+        // ============================================================================
+        // EVENT LISTENERS
+        // ============================================================================
+
+        // Warrant filter pills
+        document.querySelectorAll('.warrant-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.warrant-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.getAttribute('data-filter');
+                renderEvidenceBrowser();
+            });
+        });
+
+        // Warrant type selector for simulator
+        warrantsSelect.addEventListener('change', function() {
+            if (this.value) {
+                selectedWarrantType = this.value;
+                currentDiscount = WARRANT_TAXONOMY[this.value].discount;
+                discountSlider.disabled = false;
+                discountSlider.value = currentDiscount;
+                updateSliderDisplay();
+                renderSimulatorTable();
+            } else {
+                selectedWarrantType = null;
+                currentDiscount = null;
+                discountSlider.disabled = true;
+                sliderDisplay.textContent = '—';
+                simulatorTable.style.display = 'none';
+                simulatorSummary.innerHTML = 'Select a warrant type to begin sensitivity analysis';
+            }
+        });
+
+        // Discount slider
+        discountSlider.addEventListener('input', function() {
+            currentDiscount = parseFloat(this.value);
+            updateSliderDisplay();
+            renderSimulatorTable();
+        });
+
+        // Commit button
+        commitButton.addEventListener('click', function() {
+            if (selectedWarrantType && window.KA_USER_EMAIL === 'dkirsh@gmail.com') {
+                showConfirmationModal();
+            }
+        });
+
+        document.getElementById('confirm-commit').addEventListener('click', function() {
+            confirmModal.classList.remove('show');
+            console.log(`Weight change committed: ${selectedWarrantType} → d=${currentDiscount.toFixed(2)}`);
+            // In production: POST to /api/warrants/weights
+        });
+
+        // ============================================================================
+        // RENDERING FUNCTIONS
+        // ============================================================================
+
+        function renderSimulatorTable() {
+            const affectedItems = EVIDENCE_SAMPLE.filter(item => item.warrant_class === selectedWarrantType);
+
+            if (affectedItems.length === 0) {
+                simulatorSummary.innerHTML = `No claims with warrant type "${WARRANT_TAXONOMY[selectedWarrantType].label}"`;
+                simulatorTable.style.display = 'none';
+                return;
+            }
+
+            // Calculate deltas
+            const withDeltas = affectedItems.map(item => {
+                const oldEffective = item.credence;
+                const oldDiscount = WARRANT_TAXONOMY[selectedWarrantType].discount;
+                const newEffective = Math.min(1.0, oldEffective * (currentDiscount / oldDiscount));
+                const delta = newEffective - oldEffective;
+                const pctChange = oldEffective > 0 ? (delta / oldEffective * 100).toFixed(1) : 0;
+
+                return {
+                    ...item,
+                    oldDiscount: oldDiscount,
+                    newDiscount: currentDiscount,
+                    newEffective: newEffective,
+                    delta: delta,
+                    pctChange: pctChange
+                };
+            });
+
+            // Sort by |delta| descending
+            withDeltas.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+
+            // Update summary
+            const maxDelta = Math.max(...withDeltas.map(i => i.delta));
+            const minDelta = Math.min(...withDeltas.map(i => i.delta));
+            simulatorSummary.innerHTML = `
+                <strong>${affectedItems.length} claims affected</strong> · max delta +${maxDelta.toFixed(3)} · min delta ${minDelta.toFixed(3)}
+            `;
+
+            // Render table
+            simulatorTbody.innerHTML = withDeltas.map(item => {
+                const deltaClass = item.delta > 0 ? 'delta-positive' : (item.delta < 0 ? 'delta-negative' : 'delta-neutral');
+                const deltaSign = item.delta > 0 ? '+' : '';
+                return `
+                    <tr onclick="selectEvidenceFromSimulator(${item.id})">
+                        <td><span class="citation-chip">${item.citation}</span></td>
+                        <td><div class="truncated-finding">${item.finding}</div></td>
+                        <td><span class="warrant-badge">${WARRANT_TAXONOMY[item.warrant_class].label}</span></td>
+                        <td>${item.oldDiscount.toFixed(2)}</td>
+                        <td>${item.newDiscount.toFixed(2)}</td>
+                        <td class="${deltaClass}">${deltaSign}${item.delta.toFixed(4)}</td>
+                        <td class="${deltaClass}">${deltaSign}${item.pctChange}%</td>
+                    </tr>
+                `;
+            }).join('');
+
+            simulatorTable.style.display = 'table';
+        }
+
+        function renderEvidenceBrowser() {
+            let filtered = EVIDENCE_SAMPLE;
+            if (currentFilter !== 'all') {
+                filtered = EVIDENCE_SAMPLE.filter(item => item.warrant_class === currentFilter);
+            }
+
+            evidenceTbody.innerHTML = filtered.map(item => {
+                return `
+                    <tr onclick="selectEvidenceItem(${item.id})">
+                        <td><span class="citation-chip">${item.citation}</span></td>
+                        <td><span class="warrant-badge">${WARRANT_TAXONOMY[item.warrant_class].label}</span></td>
+                        <td><span class="claim-role">${item.claim_role}</span></td>
+                        <td><div class="truncated-finding">${item.finding}</div></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function selectEvidenceItem(itemId) {
+            selectedEvidenceItem = EVIDENCE_SAMPLE.find(e => e.id === itemId);
+            if (selectedEvidenceItem) {
+                displayInspector(selectedEvidenceItem);
+            }
+        }
+
+        function selectEvidenceFromSimulator(itemId) {
+            selectEvidenceItem(itemId);
+        }
+
+        function displayInspector(item) {
+            inspectorPlaceholder.style.display = 'none';
+            inspectorContent.style.display = 'block';
+
+            document.getElementById('inspector-finding').textContent = item.finding;
+            document.getElementById('inspector-citation').textContent = item.citation;
+            document.getElementById('inspector-chain').textContent = item.warrant_chain;
+            document.getElementById('inspector-paper-id').textContent = item.paper_id;
+            document.getElementById('inspector-credence').textContent = (item.credence * 100).toFixed(1) + '%';
+            document.getElementById('inspector-discount').textContent = 'd = ' + item.warrant_discount.toFixed(2);
+
+            // Show commit button only if admin and a warrant type is selected
+            if (window.KA_USER_EMAIL === 'dkirsh@gmail.com' && selectedWarrantType) {
+                commitButton.style.display = 'block';
+                commitButton.disabled = false;
+            } else {
+                commitButton.style.display = 'none';
+            }
+        }
+
+        function updateSliderDisplay() {
+            sliderDisplay.textContent = currentDiscount.toFixed(2);
+        }
+
+        function showConfirmationModal() {
+            const warrantLabel = WARRANT_TAXONOMY[selectedWarrantType].label;
+            document.getElementById('modal-details').innerHTML = `
+                <strong>Warrant Type:</strong> ${warrantLabel}<br>
+                <strong>New Discount Multiplier:</strong> ${currentDiscount.toFixed(2)}<br>
+                <strong>Affected Claims:</strong> ${EVIDENCE_SAMPLE.filter(e => e.warrant_class === selectedWarrantType).length}
+            `;
+            confirmModal.classList.add('show');
+        }
+
+        // ============================================================================
+        // INITIALIZATION
+        // ============================================================================
+
+        window.KA_PAGE_FUNCTION = {
+            name: 'Warrant Inspector & Sensitivity Simulator',
+            version: '0.4',
+            features: ['warrant-type-browser', 'sensitivity-simulator', 'evidence-inspector', 'admin-commit'],
+            lastUpdated: '2026-03-29'
+        };
+
+        // Set admin status (in production: from auth backend)
+        window.KA_USER_EMAIL = 'dkirsh@gmail.com';
+
+        // Initial render
+        renderEvidenceBrowser();
+    </script>
+</body>
+</html>

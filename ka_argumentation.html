@@ -1,61 +1,589 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Argumentation Layer · Knowledge Atlas</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Argumentation Layer · Knowledge Atlas</title>
+  <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Georgia, serif; background: #F7F4EF; color: #2D2D2D; }
-nav { position: sticky; top: 0; background: #1C3D3A; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.14); }
-.wordmark { font-size: 1.2rem; font-weight: 700; color: #F5A623; }
-.wordmark-sub { font-size: 0.62rem; color: #7AACA0; letter-spacing: 0.12em; }
-nav ul { display: flex; gap: 22px; list-style: none; }
-nav a { color: #E8E4DC; text-decoration: none; font: 0.82rem Arial, sans-serif; }
-nav a.active, nav a:hover { color: #F5A623; }
-.nav-left { display: flex; align-items: center; gap: 30px; }
-.nav-right { display:flex; align-items:center; gap:12px; }
-.mode-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(168,200,191,0.35); color: #E6EFE9; border-radius: 18px; padding: 5px 10px; font-size: 12px; }
-.mode-pill { background: rgba(42,120,104,0.35); color:#A8C8BF; border-radius:18px; padding: 5px 11px; font-size:0.68rem; font-weight:700; letter-spacing:0.08em; }
-.page-header { background: linear-gradient(135deg, #193c39 0%, #13302d 100%); color: #fff; padding: 40px 28px 30px; }
-.page-header-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 26px; }
-.page-eyebrow { font: 700 0.68rem/1 Arial, sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #8db7ae; margin-bottom: 12px; }
-.page-title { font-size: 2rem; line-height: 1.1; margin-bottom: 10px; }
-.page-subtitle { font: 0.95rem/1.6 Arial, sans-serif; color: #d4e6e0; max-width: 780px; }
-.page-actions { display:flex; flex-wrap:wrap; gap: 10px; align-self: end; justify-content: flex-end; }
-.page-action { display:inline-flex; align-items:center; justify-content:center; padding: 10px 14px; border-radius: 999px; text-decoration:none; font: 700 0.74rem/1 Arial, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
-.page-action.primary { background: #F5A623; color: #17322f; }
-.page-action.secondary { background: rgba(255,255,255,0.08); color: #E6EFE9; border: 1px solid rgba(255,255,255,0.16); }
-.main-wrap { max-width: 1200px; margin: 0 auto; padding: 28px 24px 88px; }
-.layer-focus-strip { display:none; margin-bottom: 18px; background: #FFF7EA; border: 1px solid #E8D8B4; border-radius: 12px; padding: 12px 14px; font: 0.84rem/1.5 Arial, sans-serif; color: #4F4332; }
-.layer-focus-strip strong { color: #1C3D3A; }
-.layer-focus-id { color: #8A745F; font-family: monospace; }
-.layer-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; margin-bottom: 18px; }
-.layer-panel { background: #fff; border: 1px solid #E0DAD3; border-radius: 14px; padding: 18px 18px 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
-.layer-panel h2 { font-size: 1.1rem; color: #1C3D3A; margin-bottom: 10px; }
-.layer-panel p { font: 0.92rem/1.65 Arial, sans-serif; color: #53493e; }
-.layer-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 12px; }
-.layer-stat { background: #F7F4EF; border-radius: 10px; padding: 12px; }
-.layer-stat strong { display: block; font: 700 1.1rem/1.1 Arial, sans-serif; color: #1C3D3A; }
-.layer-stat span { display: block; margin-top: 4px; font: 0.68rem/1.35 Arial, sans-serif; color: #7f7063; text-transform: uppercase; letter-spacing: 0.08em; }
-.layer-section { margin-top: 20px; }
-.layer-section h2 { font-size: 1.15rem; color: #1C3D3A; margin-bottom: 10px; }
-.layer-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-.layer-card { background: #fff; border: 1px solid #E0DAD3; border-radius: 12px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-.layer-card.compact { background: #FCFBF8; }
-.layer-card-head { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
-.layer-card-head h3 { font-size: 0.98rem; color: #1C3D3A; }
-.layer-card-head span { font: 700 0.68rem/1 Arial, sans-serif; color: #8a745f; letter-spacing: 0.08em; text-transform: uppercase; }
-.layer-card p, .layer-bullets li { font: 0.84rem/1.58 Arial, sans-serif; color: #493f35; }
-.layer-bullets { margin-left: 18px; }
-.layer-empty { background: #fff; border: 1px dashed #D8D0C5; border-radius: 12px; padding: 16px; font: 0.85rem/1.5 Arial, sans-serif; color: #7c6e62; }
-.meta-strip { margin-top: 20px; display:flex; flex-wrap:wrap; justify-content:space-between; gap: 12px; font: 0.74rem/1.5 Arial, sans-serif; color:#7f7063; }
-.version-badge { position: fixed; bottom: 16px; right: 20px; background: #1C3D3A; color: #7AACA0; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 10px; }
-@media (max-width: 900px) { .page-header-inner, .layer-grid { grid-template-columns: 1fr; } .page-actions { justify-content: flex-start; } nav ul { gap: 14px; } }
-@media (max-width: 720px) { nav ul { display:none; } .main-wrap { padding: 18px 14px 88px; } .page-header { padding: 28px 16px 24px; } }
-</style>
+body {
+  font-family: Georgia, serif;
+  background: #F7F4EF;
+  color: #2D2D2D;
+}
+
+/* Navigation */
+nav {
+  position: sticky;
+  top: 0;
+  background: #1C3D3A;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+}
+.wordmark {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #E8872A;
+}
+.wordmark-sub {
+  font-size: 0.62rem;
+  color: #7AACA0;
+  letter-spacing: 0.12em;
+}
+nav ul {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+}
+nav a {
+  color: #E8E4DC;
+  text-decoration: none;
+  font: 0.82rem Arial, sans-serif;
+}
+nav a.active, nav a:hover {
+  color: #E8872A;
+}
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.version-badge {
+  position: fixed;
+  bottom: 16px;
+  right: 20px;
+  background: #1C3D3A;
+  color: #2A7868;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, #193c39 0%, #13302d 100%);
+  color: #fff;
+  padding: 40px 28px 30px;
+}
+.page-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 26px;
+}
+.page-eyebrow {
+  font: 700 0.68rem/1 Arial, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8db7ae;
+  margin-bottom: 12px;
+}
+.page-title {
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.page-subtitle {
+  font: 0.95rem/1.6 Arial, sans-serif;
+  color: #d4e6e0;
+  max-width: 780px;
+}
+
+/* Three-column main layout */
+.main-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 24px 88px;
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  gap: 18px;
+}
+
+/* Left Sidebar: Debate Clusters */
+.sidebar-left {
+  background: #fff;
+  border: 1px solid #E0DAD3;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.sidebar-left h3 {
+  font-size: 1rem;
+  color: #1C3D3A;
+  margin-bottom: 14px;
+}
+.cluster-browser {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cluster-row {
+  background: #FCFBF8;
+  border: 1px solid #E8E0D5;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font: 0.82rem/1.4 Arial, sans-serif;
+}
+.cluster-row:hover {
+  background: #F5EFE8;
+  border-color: #D8CCC0;
+}
+.cluster-row.active {
+  background: #2A7868;
+  color: #F7F4EF;
+  border-color: #2A7868;
+}
+.cluster-id {
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 0.8rem;
+  display: block;
+}
+.cluster-counts {
+  font-size: 0.74rem;
+  opacity: 0.75;
+  display: block;
+  margin-top: 3px;
+}
+.cluster-expand {
+  display: none;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(42,120,104,0.2);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+.cluster-expand.open {
+  display: block;
+}
+.cluster-expand-heading {
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: block;
+}
+.cluster-expand-list {
+  margin: 0;
+  padding-left: 14px;
+  font-size: 0.74rem;
+}
+.cluster-expand-list li {
+  margin-bottom: 2px;
+  word-break: break-word;
+}
+
+.stats-panel {
+  background: #F7F4EF;
+  border: 1px solid #E0DAD3;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 16px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.stats-panel-title {
+  font-weight: 700;
+  color: #1C3D3A;
+  margin-bottom: 6px;
+  display: block;
+}
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+.stats-label {
+  color: #6F6357;
+}
+.stats-value {
+  color: #1C3D3A;
+  font-weight: 600;
+}
+
+/* Center Content */
+.content-center {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Belief Lookup Section */
+.lookup-section {
+  background: #fff;
+  border: 1px solid #E0DAD3;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.lookup-section h2 {
+  font-size: 1.1rem;
+  color: #1C3D3A;
+  margin-bottom: 14px;
+}
+
+.search-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.search-box input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #D8CCC0;
+  border-radius: 6px;
+  font: 0.85rem Arial, sans-serif;
+}
+.search-box input::placeholder {
+  color: #9C8F7E;
+}
+
+.sort-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.sort-btn {
+  padding: 6px 10px;
+  background: #F7F4EF;
+  border: 1px solid #D8CCC0;
+  border-radius: 6px;
+  cursor: pointer;
+  font: 0.8rem Arial, sans-serif;
+  color: #493f35;
+}
+.sort-btn:hover, .sort-btn.active {
+  background: #2A7868;
+  color: #F7F4EF;
+  border-color: #2A7868;
+}
+
+.claim-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.claim-row {
+  background: #FCFBF8;
+  border: 1px solid #E8E0D5;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.claim-row:hover {
+  background: #F5EFE8;
+  border-color: #D8CCC0;
+}
+.claim-row.selected {
+  background: #E8872A;
+  color: #fff;
+  border-color: #E8872A;
+}
+.claim-row.selected .claim-id,
+.claim-row.selected .claim-paper,
+.claim-row.selected .claim-preview {
+  color: #fff;
+}
+.claim-id {
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1C3D3A;
+  margin-bottom: 3px;
+}
+.claim-header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.claim-paper {
+  display: inline-block;
+  background: #2A7868;
+  color: #F7F4EF;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font: 700 0.7rem/1 Arial, sans-serif;
+}
+.claim-row.selected .claim-paper {
+  background: rgba(255,255,255,0.3);
+}
+.claim-qualifier {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font: 700 0.7rem/1 Arial, sans-serif;
+}
+.qualifier-stable {
+  background: #D4EDDA;
+  color: #1B5E20;
+}
+.qualifier-contested {
+  background: #FFF3CD;
+  color: #664D03;
+}
+.claim-preview {
+  font: 0.82rem/1.4 Arial, sans-serif;
+  color: #493f35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.claim-badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font: 700 0.7rem/1 Arial, sans-serif;
+}
+.badge-support {
+  background: #D4EDDA;
+  color: #1B5E20;
+}
+.badge-attack {
+  background: #F8D7DA;
+  color: #721C24;
+}
+
+/* Confound Scanner Section */
+.confound-section {
+  background: #fff;
+  border: 1px solid #E0DAD3;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.confound-section h2 {
+  font-size: 1.1rem;
+  color: #1C3D3A;
+  margin-bottom: 10px;
+}
+.confound-explanation {
+  font: 0.85rem/1.6 Arial, sans-serif;
+  color: #53493e;
+  margin-bottom: 12px;
+}
+.confound-card {
+  background: #FFFAF3;
+  border: 1px solid #E8D8B4;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+.confound-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.confound-cluster-id {
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #1C3D3A;
+}
+.confound-risk {
+  display: inline-block;
+  background: #FFC107;
+  color: #663C00;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font: 700 0.7rem/1 Arial, sans-serif;
+}
+.confound-theories {
+  font: 0.78rem/1.4 Arial, sans-serif;
+  color: #493f35;
+  margin: 4px 0 0 0;
+  padding-left: 14px;
+}
+.confound-theories li {
+  margin-bottom: 1px;
+  word-break: break-word;
+}
+.confound-note {
+  background: #FFF7EA;
+  border-left: 3px solid #E8872A;
+  padding: 8px 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  font: 0.78rem/1.4 Arial, sans-serif;
+  color: #4F4332;
+}
+
+/* Right Sidebar: Inspector */
+.sidebar-right {
+  background: #fff;
+  border: 1px solid #E0DAD3;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.sidebar-right h3 {
+  font-size: 1rem;
+  color: #1C3D3A;
+  margin-bottom: 12px;
+}
+.inspector-empty {
+  background: #F7F4EF;
+  border: 1px dashed #D8D0C5;
+  border-radius: 8px;
+  padding: 16px;
+  font: 0.85rem/1.5 Arial, sans-serif;
+  color: #7c6e62;
+  text-align: center;
+}
+.inspector-content {
+  display: none;
+}
+.inspector-content.active {
+  display: block;
+}
+.inspector-item {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E8E0D5;
+}
+.inspector-item:last-child {
+  border-bottom: none;
+}
+.inspector-label {
+  font: 700 0.75rem/1 Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a745f;
+  display: block;
+  margin-bottom: 4px;
+}
+.inspector-value {
+  font: 0.85rem/1.5 Arial, sans-serif;
+  color: #493f35;
+  word-break: break-word;
+}
+.inspector-monospace {
+  font-family: monospace;
+  font-size: 0.8rem;
+  background: #F7F4EF;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.bar-container {
+  background: #F0F0F0;
+  border-radius: 4px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font: 700 0.7rem/1 Arial, sans-serif;
+}
+.bar-support {
+  background: #4CAF50;
+}
+.bar-attack {
+  background: #F44336;
+}
+
+.expandable-section {
+  margin-bottom: 10px;
+}
+.expandable-title {
+  cursor: pointer;
+  font: 700 0.85rem/1.4 Arial, sans-serif;
+  color: #2A7868;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+.expandable-title:hover {
+  color: #1C3D3A;
+}
+.expand-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.expandable-title.expanded .expand-arrow {
+  transform: rotate(90deg);
+}
+.expandable-content {
+  display: none;
+  padding-left: 14px;
+  margin-top: 6px;
+}
+.expandable-content.open {
+  display: block;
+}
+.element-item {
+  font: 0.8rem/1.4 Arial, sans-serif;
+  color: #493f35;
+  margin-bottom: 4px;
+  padding: 4px 0;
+}
+.element-label {
+  font-weight: 700;
+  color: #1C3D3A;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .main-wrap {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-left, .sidebar-right {
+    max-height: none;
+  }
+}
+@media (max-width: 720px) {
+  nav ul {
+    display: none;
+  }
+  .main-wrap {
+    padding: 18px 14px 88px;
+  }
+  .page-header {
+    padding: 28px 16px 24px;
+  }
+  .page-header-inner {
+    grid-template-columns: 1fr;
+  }
+}
+  </style>
 </head>
 <body>
+
 <nav>
   <div class="nav-left">
     <div>
@@ -63,24 +591,15 @@ nav a.active, nav a:hover { color: #F5A623; }
       <div class="wordmark-sub">COGS 160</div>
     </div>
     <ul>
-      <li><a id="nav-shell-explore" href="ka_topics.html">Explore</a></li>
-      <li><a id="nav-shell-evidence" href="ka_evidence.html">Evidence</a></li>
-      <li><a id="nav-shell-gaps" href="ka_gaps.html">Gaps</a></li>
-      <li><a id="nav-shell-articles" href="ka_article_search.html">Articles</a></li>
-      <li><a id="nav-shell-contribute" href="ka_dashboard.html">Contribute</a></li>
-      <li><a id="nav-shell-course" href="ka_student_setup.html">Course</a></li>
+      <li><a href="ka_topics.html">Topics</a></li>
+      <li><a href="ka_evidence.html">Evidence</a></li>
+      <li><a href="ka_gaps.html">Gaps</a></li>
+      <li><a href="ka_article_search.html">Search</a></li>
+      <li><a href="ka_warrants.html">Warrants</a></li>
+      <li><a href="ka_annotations.html">Annotations</a></li>
+      <li><a class="active" href="ka_argumentation.html">Argumentation</a></li>
+      <li><a href="ka_interpretation.html">Interpretation</a></li>
     </ul>
-  </div>
-  <div class="nav-right">
-    <select id="layer-mode-select" class="mode-select" aria-label="Choose user mode">
-      <option value="student_explorer">Student explorer</option>
-      <option value="researcher">Researcher</option>
-      <option value="contributor">Contributor</option>
-      <option value="instructor">Instructor</option>
-      <option value="practitioner">Practitioner</option>
-      <option value="theory_mechanism_explorer">Theory + mechanisms</option>
-    </select>
-    <span class="mode-pill" id="layer-mode-pill">RESEARCHER</span>
   </div>
 </nav>
 
@@ -88,102 +607,717 @@ nav a.active, nav a:hover { color: #F5A623; }
   <div class="page-header-inner">
     <div>
       <div class="page-eyebrow">Epistemic Layer</div>
-      <h1 class="page-title">Argumentation Structure</h1>
-      <p class="page-subtitle">This page exposes the live argumentation products from the rebuild: paper-level debate clusters, claim-level support structure, and the current limits of stance coverage. It is a real bridge into the corpus, not a mockup.</p>
-    </div>
-    <div class="page-actions">
-      <a class="page-action primary" href="docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md" id="layer-brief-link">Open Layer Brief</a>
-      <a class="page-action secondary" href="ka_sitemap.html">Site Map</a>
+      <h1 class="page-title">Argumentation Browser</h1>
+      <p class="page-subtitle">Explore how claims support or contest each other. See debate clusters where papers directly reference or challenge each other's findings, and surface potential confounds where unmeasured variables may co-cause both claims.</p>
     </div>
   </div>
 </header>
 
 <main class="main-wrap">
-  <div class="layer-focus-strip" id="layer-focus-strip"></div>
-  <section class="layer-grid">
-    <div class="layer-panel">
-      <h2>What this layer does</h2>
-      <p id="layer-summary-copy">Loading the current argumentation summary…</p>
-      <div class="layer-stats" id="layer-stats"></div>
+
+  <!-- Left Sidebar: Debate Clusters -->
+  <aside class="sidebar-left">
+    <h3 id="cluster-count-heading">27 Debate Clusters</h3>
+    <div class="cluster-browser" id="cluster-browser"></div>
+
+    <div class="stats-panel">
+      <span class="stats-panel-title">Coverage Summary</span>
+      <div class="stats-row">
+        <span class="stats-label">Papers</span>
+        <span class="stats-value" id="stat-papers">714</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Claims</span>
+        <span class="stats-value" id="stat-claims">1794</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Support edges</span>
+        <span class="stats-value" id="stat-support">4513</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Contest edges</span>
+        <span class="stats-value" id="stat-contest">250</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Alignment edges</span>
+        <span class="stats-value" id="stat-align">1779</span>
+      </div>
     </div>
-    <div class="layer-panel">
-      <h2>Why this matters for QA</h2>
-      <p>The argumentation layer is where support, conflict, and undercutting become inspectable. It lets us see when the corpus only looks coherent because the defeat structure is underspecified. The current payload therefore helps QA in two ways: it shows what the graph already knows, and it reveals what still has not been typed or surfaced.</p>
+  </aside>
+
+  <!-- Center Content -->
+  <section class="content-center">
+
+    <!-- Belief Lookup -->
+    <div class="lookup-section">
+      <h2>Claim Lookup</h2>
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Enter claim ID or keyword...">
+      </div>
+      <div class="sort-controls">
+        <button class="sort-btn active" data-sort="support">By Support Count ↓</button>
+        <button class="sort-btn" data-sort="attack">By Attack Count ↓</button>
+        <button class="sort-btn" data-sort="qualifier">By Qualifier</button>
+      </div>
+      <div class="claim-list" id="claim-list"></div>
     </div>
+
+    <!-- Confound Scanner -->
+    <div class="confound-section">
+      <h2>Potential Confounds</h2>
+      <p class="confound-explanation">A confound occurs when two claims appear to support each other but may both be caused by a shared unmeasured variable. In architectural neuroscience, common confounds include occupant self-selection bias, building quality co-variation, measurement overlap between stimuli, and population heterogeneity.</p>
+      <div id="confound-list"></div>
+      <div class="confound-note">
+        <strong>Note:</strong> Full confound detection requires graph path analysis. This view shows structural proxies based on theory co-occurrence in debate clusters.
+      </div>
+    </div>
+
   </section>
 
-  <section class="layer-section">
-    <h2>Debate Clusters</h2>
-    <div class="layer-card-list" id="layer-primary-list"></div>
-  </section>
+  <!-- Right Sidebar: Inspector -->
+  <aside class="sidebar-right">
+    <h3>Argument Inspector</h3>
+    <div class="inspector-empty" id="inspector-placeholder">
+      Select a claim to inspect its support and attack structure
+    </div>
+    <div class="inspector-content" id="inspector-content">
+      <div class="inspector-item">
+        <span class="inspector-label">Claim ID</span>
+        <span class="inspector-value inspector-monospace" id="insp-belief-id"></span>
+      </div>
+      <div class="inspector-item">
+        <span class="inspector-label">Paper</span>
+        <span class="inspector-value inspector-monospace" id="insp-paper-id"></span>
+      </div>
+      <div class="inspector-item">
+        <span class="inspector-label">Full Content</span>
+        <span class="inspector-value" id="insp-content"></span>
+      </div>
+      <div class="inspector-item">
+        <span class="inspector-label">Qualifier</span>
+        <span class="inspector-value" id="insp-qualifier"></span>
+      </div>
+      <div class="inspector-item">
+        <span class="inspector-label">Incoming Support</span>
+        <div style="margin-top: 4px;">
+          <div class="bar-container">
+            <div class="bar-fill bar-support" id="insp-support-bar"></div>
+          </div>
+        </div>
+      </div>
+      <div class="inspector-item">
+        <span class="inspector-label">Incoming Attack</span>
+        <div style="margin-top: 4px;">
+          <div class="bar-container">
+            <div class="bar-fill bar-attack" id="insp-attack-bar"></div>
+          </div>
+        </div>
+      </div>
 
-  <section class="layer-section">
-    <h2>Claim-Level Surface</h2>
-    <div class="layer-card-list" id="layer-secondary-list"></div>
-  </section>
+      <div class="inspector-item">
+        <div class="expandable-section">
+          <div class="expandable-title" onclick="toggleExpandable(this)">
+            <span class="expand-arrow">▶</span>
+            Argumentation Concepts
+          </div>
+          <div class="expandable-content">
+            <div class="element-item"><span class="element-label">Supports:</span> Claim A provides direct evidential support for claim B (same phenomenon, convergent methodology)</div>
+            <div class="element-item"><span class="element-label">Contradicts:</span> Claim A and Claim B assert incompatible propositions about the same target</div>
+            <div class="element-item"><span class="element-label">Undercuts:</span> A methodological or design issue undermines the warrant for a claim (not the claim itself, but the reasoning used)</div>
+            <div class="element-item"><span class="element-label">Confound:</span> A third variable C could independently cause both A and B, making A→B inference unreliable</div>
+          </div>
+        </div>
+      </div>
 
-  <div class="meta-strip">
-    <div><strong>Source artifacts:</strong> <span id="layer-source-copy">Loading…</span></div>
-    <div><a href="docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md">One-pager</a> · <a href="ka_home.html#about">About KA</a></div>
-  </div>
+      <div class="inspector-item">
+        <div class="expandable-section">
+          <div class="expandable-title" onclick="toggleExpandable(this)">
+            <span class="expand-arrow">▶</span>
+            Applicable Annotations
+          </div>
+          <div class="expandable-content" id="insp-annotations"></div>
+        </div>
+      </div>
+
+      <div class="inspector-item">
+        <div class="expandable-section">
+          <div class="expandable-title" onclick="toggleExpandable(this)">
+            <span class="expand-arrow">▶</span>
+            Dispute Annotations
+          </div>
+          <div class="expandable-content" id="insp-disputes"></div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
 </main>
 
-<div class="version-badge">KA UI · v0.4 · Argumentation</div>
+<div class="version-badge">KA · v0.5 · Argumentation</div>
 
 <script>
-window.KA_LAYER_PAGE = {
-  payload: 'argumentation',
-  briefHref: 'docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md'
-};
-window.KA_PAGE_FUNCTION = {
-  pageId: 'ka_argumentation',
-  title: 'Argumentation Layer Explorer',
-  audience: 'Researchers, theory/mechanism users, advanced students, and QA reviewers',
-  purpose: 'Expose the live argumentation products so users can inspect support structure, emerging debate clusters, and the current limits of the graph rather than inferring that structure indirectly from article pages.',
-  workflowPos: 'After evidence browsing and before interpretation or hypothesis refinement. This is the layer that asks how evidence supports or contests a position, not merely whether a paper exists.',
-  notFor: 'Student onboarding, article intake, or final polished conclusions. It is an inspection and reasoning surface, not a contributor form.',
-  phase: 'Phase 4 — Epistemic layer walkthrough',
-  evalQuestions: [
-    'Can a user see immediately that this is support/conflict structure rather than just another article list?',
-    'Does the page expose the current limitations, such as low stance coverage, honestly?',
-    'Do the cluster and claim cards give enough context to decide where to inspect next?'
-  ]
-};
-window.KA_ABOUT_PAGE = {
-  pageId: 'ka_argumentation',
-  objective: 'Give direct access to the current argumentation graph so the support and conflict structure of the field is visible instead of hidden behind article summaries.',
-  users: 'Researchers, theory/mechanism explorers, instructors explaining the epistemic stack, and QA reviewers checking graph maturity',
-  uses: [
-    'Inspect paper-level debate clusters and the theories anchoring them',
-    'Read claim-level support or attack context before trusting a summary',
-    'See exactly where the argumentation layer is still incomplete and needs more typing'
+// Embedded data payloads
+const ARGUMENTATION_DATA = {
+  "summary": {
+    "paper_node_count": 714,
+    "paper_edge_count": 2029,
+    "claim_node_count": 1794,
+    "claim_edge_count": 4513,
+    "cluster_count": 27,
+    "total_claims": 1794,
+    "stance_coverage_rate": 0.4376,
+    "unique_theories": 999,
+    "critical_question_payload_present": true
+  },
+  "coverage_report": {
+    "total_papers": 714,
+    "total_claims": 1794,
+    "papers_with_theories": 632,
+    "theory_coverage_rate": 0.8852,
+    "claims_with_explicit_stance": 785,
+    "stance_coverage_rate": 0.4376,
+    "unique_theories": 999,
+    "debate_clusters": 27,
+    "contestation_edges": 250,
+    "alignment_edges": 1779
+  },
+  "debate_clusters": [
+    {
+      "cluster_id": "C6",
+      "paper_count": 9,
+      "theory_count": 2,
+      "papers": ["PDF-0285", "PDF-0355", "PDF-0537", "PDF-0545", "PDF-0654", "PDF-0688", "PDF-0702", "PDF-0880", "PDF-1025"],
+      "theories": ["Attention Restoration Theory", "Stress Reduction Theory"]
+    },
+    {
+      "cluster_id": "C20",
+      "paper_count": 6,
+      "theory_count": 9,
+      "papers": ["PDF-0780", "PDF-0783", "PDF-0863", "PDF-0870", "PDF-0876", "PDF-0881"],
+      "theories": ["Attention Restoration Theory", "Biophilic Design", "EEG Alpha", "Environmental Restorativeness", "Fractal Fluency", "Material Perception", "Stress Recovery Theory", "Virtual Reality Research", "Visual Processing"]
+    },
+    {
+      "cluster_id": "C23",
+      "paper_count": 6,
+      "theory_count": 9,
+      "papers": ["PDF-0852", "PDF-0853", "PDF-0872", "PDF-0874", "PDF-0888", "PDF-0889"],
+      "theories": ["Biophilic Design", "Environmental Preference", "Evidence-Based Design", "Healthcare Architecture", "Material Perception", "Physiological Relaxation", "Shinrin-yoku", "Visual Attention", "Workplace Design"]
+    },
+    {
+      "cluster_id": "C24",
+      "paper_count": 6,
+      "theory_count": 12,
+      "papers": ["PDF-0858", "PDF-0859", "PDF-0883", "PDF-0896", "PDF-0902", "PDF-0903"],
+      "theories": ["Alertness", "CCT Effects", "Circadian Lighting", "Daylighting", "Evidence-Based Design", "Melanopsin", "Non-Image-Forming Pathway", "Non-visual Light Effects", "Sleep Homeostasis", "Sleep-Cognition"]
+    },
+    {
+      "cluster_id": "C17",
+      "paper_count": 5,
+      "theory_count": 3,
+      "papers": ["PDF-0752", "PDF-0759", "PDF-0765", "PDF-0767", "PDF-0769"],
+      "theories": ["Chronobiology", "Circadian Lighting", "Non-Visual Effects of Light"]
+    },
+    {
+      "cluster_id": "C2",
+      "paper_count": 4,
+      "theory_count": 3,
+      "papers": ["PDF-0045", "PDF-0186", "PDF-0676", "PDF-0682"],
+      "theories": ["Attention Restoration Theory", "Biophilia Hypothesis", "Stress Reduction Theory"]
+    },
+    {
+      "cluster_id": "C18",
+      "paper_count": 3,
+      "theory_count": 4,
+      "papers": ["PDF-0766", "PDF-0768", "PDF-0850"],
+      "theories": ["Chronobiology", "Circadian Lighting", "Confined Space Psychology", "Light and Health"]
+    },
+    {
+      "cluster_id": "C0",
+      "paper_count": 2,
+      "theory_count": 3,
+      "papers": ["PDF-0027", "PDF-0803"],
+      "theories": ["Haptic Perception", "Reference Frame Theory", "Spatial Cognition"]
+    },
+    {
+      "cluster_id": "C1",
+      "paper_count": 2,
+      "theory_count": 4,
+      "papers": ["PDF-0030", "PDF-0893"],
+      "theories": ["Evidence-Based Design", "Neuroaesthetics", "Neuroarchitecture", "Vitruvian Triad"]
+    },
+    {
+      "cluster_id": "C10",
+      "paper_count": 2,
+      "theory_count": 2,
+      "papers": ["PDF-0471", "PDF-0633"],
+      "theories": ["Biophilia Hypothesis", "Stress Reduction Theory"]
+    },
+    {
+      "cluster_id": "C11",
+      "paper_count": 2,
+      "theory_count": 2,
+      "papers": ["PDF-0584", "PDF-0648"],
+      "theories": ["Healthcare Design Evidence", "Hospital Safety Outcomes"]
+    },
+    {
+      "cluster_id": "C12",
+      "paper_count": 2,
+      "theory_count": 3,
+      "papers": ["PDF-0591", "PDF-1396"],
+      "theories": ["Academic Stress Management", "Emotional Well-Being Design", "Learning Environment Psychology"]
+    }
   ],
-  resources: [
-    { label: 'Layer one-pager', href: 'docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md' },
-    { label: 'Global article walkthrough', href: 'ka_articles.html' }
+  "claim_nodes": [
+    {
+      "belief_id": "PDF-0832_MPX_004",
+      "paper_id": "PDF-0832",
+      "content_preview": "nonADHD groups) and within-subjects (six different conditions) factors, a Mixed-Design Analysis of Variance (ANOVA) was deemed appropriate.",
+      "incoming_support_count": 17,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0846_MPX_002",
+      "paper_id": "PDF-0846",
+      "content_preview": "It concerns the evaluation of the sound conditions in Swedish buildings, specifically for impact sound insulation.",
+      "incoming_support_count": 16,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0846_MPX_001",
+      "paper_id": "PDF-0846",
+      "content_preview": "In this case, the regression model for the average suggested index was I_s = 86.3 - 5.53 S and offered the best regression of 87%, with r=0.87 (R² = 0.76).",
+      "incoming_support_count": 15,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0839_MPX_007",
+      "paper_id": "PDF-0839",
+      "content_preview": "The methods of soundscape research usually involve Soundscape Measurements, Soundwalk, Questionnaires, Interviews, and other approaches.",
+      "incoming_support_count": 13,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0811_MPX_001",
+      "paper_id": "PDF-0811",
+      "content_preview": "They mostly worked in air-conditioned buildings with no LEED rating, situated in the US.",
+      "incoming_support_count": 12,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0839_MPX_008",
+      "paper_id": "PDF-0839",
+      "content_preview": "Our research aims to validate the feasibility of soundscape combined with music therapy methods for workspace applications.",
+      "incoming_support_count": 12,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0007_MPX_012",
+      "paper_id": "PDF-0007",
+      "content_preview": "Participants' interpretation of the response scale may have depended on the setting in Phase I, resulting in polarized responses.",
+      "incoming_support_count": 11,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0181_MPX_011",
+      "paper_id": "PDF-0181",
+      "content_preview": "It is important to take account of occupant-related indicators while optimizing the acoustical quality of educational buildings.",
+      "incoming_support_count": 11,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0773_MPX_002",
+      "paper_id": "PDF-0773",
+      "content_preview": "Responses were grouped by the number of hours participants reported spending working in the office every day.",
+      "incoming_support_count": 11,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0779_MPX_001",
+      "paper_id": "PDF-0779",
+      "content_preview": "Reverberation times RT ranging from 2 to 1.4, according to the Sabine equation.",
+      "incoming_support_count": 11,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0844_MPX_009",
+      "paper_id": "PDF-0844",
+      "content_preview": "Evaluation methods were mainly qualitative and subjective, including observations, self-reports, questionnaires and structured interviews.",
+      "incoming_support_count": 11,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0879_MPX_005",
+      "paper_id": "PDF-0879",
+      "content_preview": "Bird song and leaf sound have a more significant positive effect on mental stress relief.",
+      "incoming_support_count": 11,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0007_MPX_011",
+      "paper_id": "PDF-0007",
+      "content_preview": "None of the other physiological indicators (HR, HRV, ST, DPG) responded to the abrupt light transition.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0181_MPX_010",
+      "paper_id": "PDF-0181",
+      "content_preview": "Semi-structured interviews with patients and nurses to understand subjective responses to soundscapes.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0578_MPX_007",
+      "paper_id": "PDF-0578",
+      "content_preview": "Urban and social noise causes disruption to working memory and verbal learning.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0773_MPX_001",
+      "paper_id": "PDF-0773",
+      "content_preview": "The overall comfort was overwhelmingly voted as satisfactory.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0823_MPX_002",
+      "paper_id": "PDF-0823",
+      "content_preview": "Doorbell button designed by Tom Gordon and Ted Pierson (1995).",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0839_MPX_004",
+      "paper_id": "PDF-0839",
+      "content_preview": "Authors should use the forms shown in Table 3 in the final reference list.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0879_MPX_007",
+      "paper_id": "PDF-0879",
+      "content_preview": "Daily and seasonal climatic conditions of green urban open spaces and their impact on human comfort.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-1025_MPX_009",
+      "paper_id": "PDF-1025",
+      "content_preview": "No significant differences in selective attention, short-term working memory, and creativity between real and virtual environments.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-1025_MPX_010",
+      "paper_id": "PDF-1025",
+      "content_preview": "Visual comfort affects working memory through self-reported performance and mood.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-1025_MPX_011",
+      "paper_id": "PDF-1025",
+      "content_preview": "Previous studies found no significant differences in physiological responses such as heart rate.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-1183_MPX_002",
+      "paper_id": "PDF-1183",
+      "content_preview": "Some indices, although well evaluated by university students, were not well understood by the interviewees.",
+      "incoming_support_count": 10,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    },
+    {
+      "belief_id": "PDF-0007_MPX_010",
+      "paper_id": "PDF-0007",
+      "content_preview": "Comfort with the light was lower after transition to circadian-based lighting compared to conventional.",
+      "incoming_support_count": 9,
+      "incoming_attack_count": 0,
+      "qualifier": "stable"
+    }
   ]
 };
-window.KA_LIVE_CONTEXT_CONFIG = {
-  surface: 'argumentation',
-  title: 'Live Corpus Context',
-  status: 'Payload-backed layer',
-  copy: 'This page is pointed at live rebuild artifacts. The graph is usable now, but its stance and contestation coverage still need repair and expansion.'
+
+const ANNOTATIONS_DATA = {
+  "annotations": [
+    {
+      "id": "annot_000001",
+      "type": "CALIBRATION_NOTE",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "High credence (0.95) — verify this finding has strong evidential base",
+      "confidence": 0.85,
+      "status": "active"
+    },
+    {
+      "id": "annot_000005",
+      "type": "DISPUTE",
+      "target_type": "belief",
+      "target_id": "b_anchor",
+      "content": "Contradicted by 1 belief(s): b_peer",
+      "confidence": 0.8,
+      "status": "active"
+    },
+    {
+      "id": "annot_000008",
+      "type": "DISPUTE",
+      "target_type": "belief",
+      "target_id": "b_peer",
+      "content": "Contradicted by 1 belief(s): b_anchor",
+      "confidence": 0.8,
+      "status": "active"
+    }
+  ]
 };
-</script>
-<script src="ka_mode_switch.js"></script>
-<script src="ka_site_shell.js"></script>
-<script src="ka_data_adapter.js"></script>
-<script src="ka_live_context.js"></script>
-<script src="ka_layer_views.js"></script>
-<script src="ka_page_function.js"></script>
-<script>
-window.KA_SHELL.initShell({
-  navContainerSelector: 'nav ul',
-  modeSelectId: 'layer-mode-select',
-  modePillId: 'layer-mode-pill',
-  defaultMode: 'researcher'
+
+// Global state
+let currentSelectedClaimId = null;
+let currentSortBy = 'support';
+let claimsData = [];
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  populateStats();
+  populateClusters();
+  populateClaims(ARGUMENTATION_DATA.claim_nodes);
+  populateConfounds();
+  setupEventListeners();
 });
+
+function populateStats() {
+  document.getElementById('stat-papers').textContent = ARGUMENTATION_DATA.coverage_report.total_papers.toLocaleString();
+  document.getElementById('stat-claims').textContent = ARGUMENTATION_DATA.coverage_report.total_claims.toLocaleString();
+  document.getElementById('stat-support').textContent = ARGUMENTATION_DATA.coverage_report.alignment_edges.toLocaleString();
+  document.getElementById('stat-contest').textContent = ARGUMENTATION_DATA.coverage_report.contestation_edges.toLocaleString();
+  document.getElementById('stat-align').textContent = (ARGUMENTATION_DATA.coverage_report.alignment_edges).toLocaleString();
+}
+
+function populateClusters() {
+  const browser = document.getElementById('cluster-browser');
+  const clusters = ARGUMENTATION_DATA.debate_clusters.sort((a, b) => b.paper_count - a.paper_count);
+
+  clusters.forEach((cluster) => {
+    const row = document.createElement('div');
+    row.className = 'cluster-row';
+    row.onclick = () => toggleClusterExpand(row);
+
+    row.innerHTML = `
+      <span class="cluster-id">${cluster.cluster_id}</span>
+      <span class="cluster-counts">${cluster.paper_count} papers · ${cluster.theory_count} theories</span>
+      <div class="cluster-expand">
+        <span class="cluster-expand-heading">Papers:</span>
+        <ul class="cluster-expand-list">
+          ${cluster.papers.map(p => `<li>${p}</li>`).join('')}
+        </ul>
+        <span class="cluster-expand-heading" style="margin-top: 6px;">Theories:</span>
+        <ul class="cluster-expand-list">
+          ${cluster.theories.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+
+    browser.appendChild(row);
+  });
+}
+
+function toggleClusterExpand(row) {
+  const expand = row.querySelector('.cluster-expand');
+  expand.classList.toggle('open');
+}
+
+function populateClaims(claims) {
+  claimsData = [...claims];
+  renderClaimList();
+}
+
+function renderClaimList() {
+  const list = document.getElementById('claim-list');
+  list.innerHTML = '';
+
+  let sorted = [...claimsData];
+
+  // Apply search filter
+  const searchTerm = document.getElementById('search-input').value.toLowerCase();
+  if (searchTerm) {
+    sorted = sorted.filter(c =>
+      c.belief_id.toLowerCase().includes(searchTerm) ||
+      c.content_preview.toLowerCase().includes(searchTerm) ||
+      c.paper_id.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  // Apply sort
+  if (currentSortBy === 'support') {
+    sorted.sort((a, b) => b.incoming_support_count - a.incoming_support_count);
+  } else if (currentSortBy === 'attack') {
+    sorted.sort((a, b) => b.incoming_attack_count - a.incoming_attack_count);
+  } else if (currentSortBy === 'qualifier') {
+    sorted.sort((a, b) => (a.qualifier || '').localeCompare(b.qualifier || ''));
+  }
+
+  sorted.forEach(claim => {
+    const row = document.createElement('div');
+    row.className = 'claim-row';
+    if (currentSelectedClaimId === claim.belief_id) {
+      row.classList.add('selected');
+    }
+
+    row.onclick = () => selectClaim(claim);
+
+    const qualifierClass = claim.qualifier === 'stable' ? 'qualifier-stable' : 'qualifier-contested';
+
+    row.innerHTML = `
+      <div class="claim-id">${claim.belief_id}</div>
+      <div class="claim-header">
+        <span class="claim-paper">${claim.paper_id}</span>
+        <span class="claim-qualifier ${qualifierClass}">${claim.qualifier || 'unqualified'}</span>
+      </div>
+      <div class="claim-preview">${claim.content_preview}</div>
+      <div class="claim-badges">
+        <span class="badge badge-support">Support ${claim.incoming_support_count}</span>
+        <span class="badge badge-attack">Attack ${claim.incoming_attack_count}</span>
+      </div>
+    `;
+
+    list.appendChild(row);
+  });
+}
+
+function selectClaim(claim) {
+  currentSelectedClaimId = claim.belief_id;
+  renderClaimList();
+  updateInspector(claim);
+}
+
+function updateInspector(claim) {
+  const placeholder = document.getElementById('inspector-placeholder');
+  const content = document.getElementById('inspector-content');
+
+  placeholder.style.display = 'none';
+  content.classList.add('active');
+
+  document.getElementById('insp-belief-id').textContent = claim.belief_id;
+  document.getElementById('insp-paper-id').textContent = claim.paper_id;
+  document.getElementById('insp-content').textContent = claim.content_preview;
+  document.getElementById('insp-qualifier').textContent = claim.qualifier || 'unqualified';
+
+  const maxCount = Math.max(claim.incoming_support_count, claim.incoming_attack_count, 20);
+  const supportPercent = (claim.incoming_support_count / maxCount) * 100;
+  const attackPercent = (claim.incoming_attack_count / maxCount) * 100;
+
+  const supportBar = document.getElementById('insp-support-bar');
+  supportBar.style.width = supportPercent + '%';
+  supportBar.textContent = claim.incoming_support_count;
+
+  const attackBar = document.getElementById('insp-attack-bar');
+  attackBar.style.width = attackPercent + '%';
+  attackBar.textContent = claim.incoming_attack_count;
+
+  // Populate annotations
+  const annotDiv = document.getElementById('insp-annotations');
+  const relevantAnnotations = ANNOTATIONS_DATA.annotations.filter(a =>
+    a.target_id === claim.belief_id || a.target_id === 'b_anchor'
+  );
+
+  if (relevantAnnotations.length > 0) {
+    annotDiv.innerHTML = relevantAnnotations.map(a => `
+      <div class="element-item">
+        <span class="element-label">${a.type}:</span> ${a.content}
+      </div>
+    `).join('');
+  } else {
+    annotDiv.innerHTML = '<div class="element-item">No annotations for this claim.</div>';
+  }
+
+  // Populate disputes
+  const disputeDiv = document.getElementById('insp-disputes');
+  const disputes = ANNOTATIONS_DATA.annotations.filter(a => a.type === 'DISPUTE');
+
+  if (disputes.length > 0) {
+    disputeDiv.innerHTML = disputes.map(d => `
+      <div class="element-item">${d.content}</div>
+    `).join('');
+  } else {
+    disputeDiv.innerHTML = '<div class="element-item">No disputes recorded for this claim.</div>';
+  }
+}
+
+function populateConfounds() {
+  const list = document.getElementById('confound-list');
+
+  // Filter clusters with high theory count (confound risk)
+  const highConfounds = ARGUMENTATION_DATA.debate_clusters
+    .filter(c => c.theory_count >= 6)
+    .sort((a, b) => b.theory_count - a.theory_count);
+
+  highConfounds.slice(0, 8).forEach(cluster => {
+    const card = document.createElement('div');
+    card.className = 'confound-card';
+
+    const riskLevel = cluster.theory_count >= 9 ? 'HIGH' : 'MEDIUM';
+    const riskColor = cluster.theory_count >= 9 ? '#D32F2F' : '#F57C00';
+
+    card.innerHTML = `
+      <div class="confound-header">
+        <span class="confound-cluster-id">${cluster.cluster_id}</span>
+        <span class="confound-risk" style="background-color: ${riskColor};">${riskLevel} (${cluster.theory_count} theories)</span>
+      </div>
+      <div style="font-weight: 600; font-size: 0.8rem; color: #1C3D3A; margin-top: 4px;">${cluster.paper_count} papers sharing ${cluster.theory_count} theories</div>
+      <ul class="confound-theories">
+        ${cluster.theories.slice(0, 5).map(t => `<li>${t}</li>`).join('')}
+        ${cluster.theories.length > 5 ? `<li style="color: #8a745f;">+${cluster.theories.length - 5} more</li>` : ''}
+      </ul>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+function setupEventListeners() {
+  document.getElementById('search-input').addEventListener('input', renderClaimList);
+
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentSortBy = this.dataset.sort;
+      renderClaimList();
+    });
+  });
+}
+
+function toggleExpandable(titleEl) {
+  titleEl.classList.toggle('expanded');
+  const content = titleEl.nextElementSibling;
+  content.classList.toggle('open');
+}
 </script>
-<script src="ka_about_page.js"></script>
+
 </body>
 </html>

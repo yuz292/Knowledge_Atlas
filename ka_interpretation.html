@@ -1,189 +1,1310 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=”en”>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interpretation Layer · Knowledge Atlas</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Georgia, serif; background: #F7F4EF; color: #2D2D2D; }
-nav { position: sticky; top: 0; background: #1C3D3A; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.14); }
-.wordmark { font-size: 1.2rem; font-weight: 700; color: #F5A623; }
-.wordmark-sub { font-size: 0.62rem; color: #7AACA0; letter-spacing: 0.12em; }
-nav ul { display: flex; gap: 22px; list-style: none; }
-nav a { color: #E8E4DC; text-decoration: none; font: 0.82rem Arial, sans-serif; }
-nav a.active, nav a:hover { color: #F5A623; }
-.nav-left { display: flex; align-items: center; gap: 30px; }
-.nav-right { display:flex; align-items:center; gap:12px; }
-.mode-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(168,200,191,0.35); color: #E6EFE9; border-radius: 18px; padding: 5px 10px; font-size: 12px; }
-.mode-pill { background: rgba(42,120,104,0.35); color:#A8C8BF; border-radius:18px; padding: 5px 11px; font-size:0.68rem; font-weight:700; letter-spacing:0.08em; }
-.page-header { background: linear-gradient(135deg, #3d2339 0%, #24131f 100%); color: #fff; padding: 40px 28px 30px; }
-.page-header-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 26px; }
-.page-eyebrow { font: 700 0.68rem/1 Arial, sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #cc9ac6; margin-bottom: 12px; }
-.page-title { font-size: 2rem; line-height: 1.1; margin-bottom: 10px; }
-.page-subtitle { font: 0.95rem/1.6 Arial, sans-serif; color: #efd7eb; max-width: 780px; }
-.page-actions { display:flex; flex-wrap:wrap; gap: 10px; align-self: end; justify-content: flex-end; }
-.page-action { display:inline-flex; align-items:center; justify-content:center; padding: 10px 14px; border-radius: 999px; text-decoration:none; font: 700 0.74rem/1 Arial, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
-.page-action.primary { background: #E4B2DC; color: #2d1828; }
-.page-action.secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.16); }
-.main-wrap { max-width: 1200px; margin: 0 auto; padding: 28px 24px 88px; }
-.layer-focus-strip { display:none; margin-bottom: 18px; background: #FFF7EA; border: 1px solid #E8D8B4; border-radius: 12px; padding: 12px 14px; font: 0.84rem/1.5 Arial, sans-serif; color: #4F4332; }
-.layer-focus-strip strong { color: #3d2339; }
-.layer-focus-id { color: #8A745F; font-family: monospace; }
-.layer-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; margin-bottom: 18px; }
-.layer-panel { background: #fff; border: 1px solid #E0DAD3; border-radius: 14px; padding: 18px 18px 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
-.layer-panel h2 { font-size: 1.1rem; color: #3d2339; margin-bottom: 10px; }
-.layer-panel p { font: 0.92rem/1.65 Arial, sans-serif; color: #53493e; }
-.layer-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 12px; }
-.layer-stat { background: #F7F4EF; border-radius: 10px; padding: 12px; }
-.layer-stat strong { display: block; font: 700 1.1rem/1.1 Arial, sans-serif; color: #3d2339; }
-.layer-stat span { display: block; margin-top: 4px; font: 0.68rem/1.35 Arial, sans-serif; color: #7f7063; text-transform: uppercase; letter-spacing: 0.08em; }
-.layer-section { margin-top: 20px; }
-.layer-section h2 { font-size: 1.15rem; color: #3d2339; margin-bottom: 10px; }
-.layer-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-.layer-card { background: #fff; border: 1px solid #E0DAD3; border-radius: 12px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-.layer-card.compact { background: #FCFBF8; }
-.layer-card-head { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
-.layer-card-head h3 { font-size: 0.98rem; color: #3d2339; }
-.layer-card-head span { font: 700 0.68rem/1 Arial, sans-serif; color: #8a745f; letter-spacing: 0.08em; text-transform: uppercase; }
-.layer-card p, .layer-bullets li { font: 0.84rem/1.58 Arial, sans-serif; color: #493f35; }
-.layer-bullets { margin-left: 18px; }
-.layer-empty { background: #fff; border: 1px dashed #D8D0C5; border-radius: 12px; padding: 16px; font: 0.85rem/1.5 Arial, sans-serif; color: #7c6e62; }
-.meta-strip { margin-top: 20px; display:flex; flex-wrap:wrap; justify-content:space-between; gap: 12px; font: 0.74rem/1.5 Arial, sans-serif; color:#7f7063; }
-.version-badge { position: fixed; bottom: 16px; right: 20px; background: #1C3D3A; color: #7AACA0; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 10px; }
-@media (max-width: 900px) { .page-header-inner, .layer-grid { grid-template-columns: 1fr; } .page-actions { justify-content: flex-start; } nav ul { gap: 14px; } }
-@media (max-width: 720px) { nav ul { display:none; } .main-wrap { padding: 18px 14px 88px; } .page-header { padding: 28px 16px 24px; } }
-</style>
+    <meta charset=”UTF-8”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0”>
+    <title>Interpretation Layer — Epistemic Terrain | Knowledge Atlas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1C3D3A;
+            --amber: #E8872A;
+            --cream: #F7F4EF;
+            --teal: #2A7868;
+            --muted: #6B6B6B;
+            --light-gray: #F0F0F0;
+            --border-light: #E8E8E8;
+            --voi-high: #C0392B;
+            --voi-medium: #E8872A;
+            --voi-low: #2A7868;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --error: #E74C3C;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, “Roboto”, “Oxygen”, “Ubuntu”, sans-serif;
+            background: #FFFFFF;
+            color: var(--navy);
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--navy);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .wordmark {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--amber);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #FFF;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--amber);
+        }
+
+        .nav-links a.active {
+            color: var(--amber);
+            font-weight: 600;
+            border-bottom: 2px solid var(--amber);
+            padding-bottom: 0.25rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #0d2f2c 0%, #1a4a44 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stat Chips */
+        .stat-chips {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding: 0 2rem;
+        }
+
+        .stat-chip {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .stat-chip.amber {
+            border-left: 4px solid var(--amber);
+        }
+
+        .stat-chip.teal {
+            border-left: 4px solid var(--teal);
+        }
+
+        .stat-chip.gray {
+            border-left: 4px solid var(--muted);
+        }
+
+        .stat-chip.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .stat-chip.amber .stat-number {
+            color: var(--amber);
+        }
+
+        .stat-chip.teal .stat-number {
+            color: var(--teal);
+        }
+
+        .stat-chip.gray .stat-number {
+            color: var(--muted);
+        }
+
+        .stat-chip.warning .stat-number {
+            color: var(--warning);
+        }
+
+        .stat-label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-label-main {
+            font-weight: 700;
+        }
+
+        .stat-label-sub {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        .warning-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-left: 0.5rem;
+            color: var(--warning);
+        }
+
+        /* Zone Map */
+        .zone-map-container {
+            width: 100%;
+            padding: 2rem;
+            background: var(--cream);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .zone-map-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .zone-map {
+            display: flex;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .zone {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+            position: relative;
+            transition: opacity 0.2s;
+        }
+
+        .zone:hover {
+            opacity: 0.9;
+        }
+
+        .zone.known-interior {
+            background: linear-gradient(135deg, #1a6b63 0%, #0d4440 100%);
+            flex: 0;
+            min-width: 20px;
+            padding: 0 0.5rem;
+        }
+
+        .zone.active-boundary {
+            background: linear-gradient(135deg, #E8872A 0%, #D97219 100%);
+            flex: 1;
+            padding: 0 1rem;
+        }
+
+        .zone.identified-periphery {
+            background: linear-gradient(135deg, #8B8B8B 0%, #6B6B6B 100%);
+            flex: 0.35;
+            padding: 0 1rem;
+        }
+
+        .zone-label-main {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .zone-label-count {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .zone-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.85;
+            margin-top: 0.35rem;
+            text-align: center;
+            line-height: 1.3;
+            max-width: 120px;
+            display: none;
+        }
+
+        .zone.known-interior .zone-subtitle {
+            display: block;
+        }
+
+        .zone.active-boundary .zone-subtitle {
+            display: block;
+        }
+
+        .zone.identified-periphery .zone-subtitle {
+            display: block;
+        }
+
+        .key-insight {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%);
+            border-left: 4px solid var(--amber);
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--navy);
+        }
+
+        .key-insight strong {
+            color: var(--amber);
+        }
+
+        /* Main Content */
+        .container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Left Column: VOI List */
+        .voi-list-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+            max-height: calc(100vh - 100px);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: white;
+            border: 2px solid var(--border-light);
+            color: var(--navy);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--teal);
+            background: #F9F9F9;
+        }
+
+        .filter-tab.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .filter-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .filter-dot.high {
+            background: var(--voi-high);
+        }
+
+        .filter-dot.medium {
+            background: var(--voi-medium);
+        }
+
+        .filter-dot.low {
+            background: var(--voi-low);
+        }
+
+        .voi-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .voi-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .voi-list::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+
+        .voi-list::-webkit-scrollbar-thumb {
+            background: var(--muted);
+            border-radius: 4px;
+        }
+
+        .frontier-card {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .frontier-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-color: var(--teal);
+        }
+
+        .frontier-card.active {
+            background: #F9F9F9;
+            border-color: var(--navy);
+            box-shadow: 0 2px 8px rgba(28, 61, 58, 0.15);
+        }
+
+        .frontier-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .frontier-card-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+            flex: 1;
+        }
+
+        .frontier-card-score {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            background: var(--light-gray);
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        .frontier-card-meta {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: var(--light-gray);
+            padding: 0.35rem 0.5rem;
+            border-radius: 3px;
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .chip.zone {
+            background: #E8F5F3;
+            color: var(--teal);
+        }
+
+        .chip.papers {
+            background: #FEF3E8;
+            color: #B8860B;
+        }
+
+        .voi-bar {
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .voi-bar-fill {
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .voi-bar-fill.high {
+            background: var(--voi-high);
+        }
+
+        .voi-bar-fill.medium {
+            background: var(--voi-medium);
+        }
+
+        .voi-bar-fill.low {
+            background: var(--voi-low);
+        }
+
+        /* Right Column: Inspector */
+        .frontier-inspector {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 600px;
+        }
+
+        .inspector-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .inspector-framework-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .inspector-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .voi-display {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .voi-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .voi-number.high {
+            color: var(--voi-high);
+        }
+
+        .voi-number.medium {
+            color: var(--voi-medium);
+        }
+
+        .voi-number.low {
+            color: var(--voi-low);
+        }
+
+        .voi-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.zone-ab {
+            background: #FFE8CC;
+            color: #B8860B;
+        }
+
+        .badge.zone-periphery {
+            background: #E8E8E8;
+            color: var(--muted);
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 1.1rem;
+            background: var(--amber);
+            border-radius: 1px;
+        }
+
+        .question-card {
+            background: var(--cream);
+            border-left: 3px solid var(--teal);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+
+        .question-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #E8F5F3;
+            color: var(--teal);
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .resolution-panel {
+            background: #FEF3E8;
+            border: 1px solid var(--warning);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resolution-title {
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .resolution-steps {
+            list-style: none;
+            padding: 0;
+        }
+
+        .resolution-steps li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--navy);
+            line-height: 1.4;
+        }
+
+        .resolution-steps li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--warning);
+            font-weight: 700;
+        }
+
+        .relationships {
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .relationships strong {
+            color: var(--navy);
+        }
+
+        .frontier-ids {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .frontier-id-badge {
+            background: white;
+            border: 1px solid var(--border-light);
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--teal);
+        }
+
+        .completeness-section {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%);
+            border: 1px solid #FFE8CC;
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+
+        .completeness-stat {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .completeness-stat-label {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 0.95rem;
+            min-width: 180px;
+        }
+
+        .completeness-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--warning);
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: white;
+            border: 1px solid #FFE8CC;
+            border-radius: 6px;
+            overflow: hidden;
+            flex: 1;
+            max-width: 200px;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--warning) 0%, var(--amber) 100%);
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .baseline-marker {
+            position: absolute;
+            right: 0;
+            top: -2px;
+            width: 2px;
+            height: 16px;
+            background: var(--navy);
+            opacity: 0.4;
+        }
+
+        .baseline-label {
+            font-size: 0.7rem;
+            position: absolute;
+            right: 0;
+            bottom: -18px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            color: var(--error);
+            margin-top: 0.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .warning-icon-small {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+        }
+
+        .backend-note {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .backend-note-header {
+            background: var(--light-gray);
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+            user-select: none;
+        }
+
+        .backend-note-header:hover {
+            background: #E8E8E8;
+        }
+
+        .backend-note-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .backend-note-content {
+            padding: 1rem;
+            font-size: 0.85rem;
+            color: var(--navy);
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .backend-note.open .backend-note-toggle {
+            transform: rotate(180deg);
+        }
+
+        .backend-note.open .backend-note-content {
+            max-height: 500px;
+        }
+
+        .code-note {
+            background: var(--light-gray);
+            padding: 0.5rem 0.75rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .version-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .voi-list-panel {
+                position: relative;
+                top: 0;
+                max-height: none;
+                height: auto;
+            }
+
+            .zone-subtitle {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-left {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .stat-chips {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stat-chip {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .filter-tabs {
+                justify-content: center;
+            }
+
+            .inspector-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+        }
+    </style>
 </head>
 <body>
-<nav>
-  <div class="nav-left">
-    <div>
-      <div class="wordmark">Knowledge Atlas</div>
-      <div class="wordmark-sub">COGS 160</div>
+    <!-- Navigation -->
+    <nav>
+        <div class=”nav-left”>
+            <div class=”wordmark”>KA</div>
+            <ul class=”nav-links”>
+                <li><a href=”ka_warrants.html”>Warrants</a></li>
+                <li><a href=”ka_annotations.html”>Annotations</a></li>
+                <li><a href=”ka_argumentation.html”>Argumentation</a></li>
+                <li><a href=”ka_interpretation.html” class=”active”>Interpretation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class=”page-header”>
+        <h1>Interpretation Layer — Epistemic Terrain</h1>
+        <p>Visualizing the knowledge landscape: where beliefs are solid, where frontiers are active, and where high-value research would move credence most.</p>
     </div>
-    <ul>
-      <li><a id="nav-shell-explore" href="ka_topics.html">Explore</a></li>
-      <li><a id="nav-shell-evidence" href="ka_evidence.html">Evidence</a></li>
-      <li><a id="nav-shell-gaps" href="ka_gaps.html">Gaps</a></li>
-      <li><a id="nav-shell-articles" href="ka_article_search.html">Articles</a></li>
-      <li><a id="nav-shell-contribute" href="ka_dashboard.html">Contribute</a></li>
-      <li><a id="nav-shell-course" href="ka_student_setup.html">Course</a></li>
-    </ul>
-  </div>
-  <div class="nav-right">
-    <select id="layer-mode-select" class="mode-select" aria-label="Choose user mode">
-      <option value="student_explorer">Student explorer</option>
-      <option value="researcher">Researcher</option>
-      <option value="contributor">Contributor</option>
-      <option value="instructor">Instructor</option>
-      <option value="practitioner">Practitioner</option>
-      <option value="theory_mechanism_explorer">Theory + mechanisms</option>
-    </select>
-    <span class="mode-pill" id="layer-mode-pill">THEORY + MECHANISMS</span>
-  </div>
-</nav>
 
-<header class="page-header">
-  <div class="page-header-inner">
-    <div>
-      <div class="page-eyebrow">Epistemic Layer</div>
-      <h1 class="page-title">Interpretation & Frontier Questions</h1>
-      <p class="page-subtitle">This page exposes the interpretation-space outputs: which beliefs still sit on the active boundary, which questions have the highest value of information, and how complete the current validation surface really is.</p>
+    <!-- Stat Chips -->
+    <div style=”padding: 2rem 2rem 0; max-width: 1600px; margin: 0 auto;”>
+        <div class=”stat-chips”>
+            <div class=”stat-chip amber”>
+                <div class=”stat-number”>37</div>
+                <div class=”stat-label”>
+                    <div class=”stat-label-main”>Active Boundary</div>
+                    <div class=”stat-label-sub”>Well-studied</div>
+                </div>
+            </div>
+            <div class=”stat-chip teal”>
+                <div class=”stat-number”>13</div>
+                <div class=”stat-label”>
+                    <div class=”stat-label-main”>Identified Periphery</div>
+                    <div class=”stat-label-sub”>Understudied</div>
+                </div>
+            </div>
+            <div class=”stat-chip gray”>
+                <div class=”stat-number”>0</div>
+                <div class=”stat-label”>
+                    <div class=”stat-label-main”>Known Interior</div>
+                    <div class=”stat-label-sub”>Fully resolved</div>
+                </div>
+            </div>
+            <div class=”stat-chip warning”>
+                <div class=”stat-number”>59.1%</div>
+                <div class=”stat-label”>
+                    <div class=”stat-label-main”>Mean Completeness</div>
+                    <div class=”stat-label-sub”>Below baseline</div>
+                </div>
+                <svg class=”warning-icon” viewBox=”0 0 24 24” fill=”currentColor”>
+                    <path d=”M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z”/>
+                </svg>
+            </div>
+        </div>
     </div>
-    <div class="page-actions">
-      <a class="page-action primary" href="docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md" id="layer-brief-link">Open Layer Brief</a>
-      <a class="page-action secondary" href="ka_sitemap.html">Site Map</a>
+
+    <!-- Zone Map -->
+    <div class=”zone-map-container”>
+        <div style=”max-width: 1600px; margin: 0 auto;”>
+            <div class=”zone-map-title”>Epistemic Zones</div>
+            <div class=”zone-map”>
+                <div class=”zone known-interior”>
+                    <div class=”zone-label-main”>Known Interior</div>
+                    <div class=”zone-label-count”>0</div>
+                    <div class=”zone-subtitle”>Fully validated, replicated, mechanism-confirmed</div>
+                </div>
+                <div class=”zone active-boundary”>
+                    <div class=”zone-label-main”>Active Boundary</div>
+                    <div class=”zone-label-count”>37 beliefs</div>
+                    <div class=”zone-subtitle”>Well-studied but open on scope, population, mechanism</div>
+                </div>
+                <div class=”zone identified-periphery”>
+                    <div class=”zone-label-main”>Identified Periphery</div>
+                    <div class=”zone-label-count”>13 beliefs</div>
+                    <div class=”zone-subtitle”>Identified but understudied</div>
+                </div>
+            </div>
+            <div class=”key-insight”>
+                <strong>Zone Transition Dynamics:</strong> Beliefs transition between zones through replication, scope specification, and mechanism discovery. The goal is to move beliefs from the Active Boundary toward the Known Interior through targeted research addressing open questions.
+            </div>
+        </div>
     </div>
-  </div>
-</header>
 
-<main class="main-wrap">
-  <div class="layer-focus-strip" id="layer-focus-strip"></div>
-  <section class="layer-grid">
-    <div class="layer-panel">
-      <h2>What this layer does</h2>
-      <p id="layer-summary-copy">Loading the current interpretation summary…</p>
-      <div class="layer-stats" id="layer-stats"></div>
+    <!-- Main Content -->
+    <div class=”container”>
+        <!-- Left Column: VOI-Ranked Frontier List -->
+        <div class=”voi-list-panel”>
+            <div class=”filter-tabs”>
+                <button class=”filter-tab active” data-filter=”all”>
+                    <span class=”filter-dot” style=”background: transparent;”></span>All (20)
+                </button>
+                <button class=”filter-tab” data-filter=”high”>
+                    <span class=”filter-dot high”></span>High (3)
+                </button>
+                <button class=”filter-tab” data-filter=”medium”>
+                    <span class=”filter-dot medium”></span>Medium (9)
+                </button>
+                <button class=”filter-tab” data-filter=”low”>
+                    <span class=”filter-dot low”></span>Low (8)
+                </button>
+            </div>
+            <div class=”voi-list” id=”voiList”></div>
+        </div>
+
+        <!-- Right Column: Frontier Inspector -->
+        <div class=”frontier-inspector” id=”inspector”>
+            <div class=”empty-state”>
+                <p>Select a frontier to view details</p>
+            </div>
+        </div>
     </div>
-    <div class="layer-panel">
-      <h2>Why this matters for QA</h2>
-      <p>The interpretation layer turns a pile of evidence into research decisions. It tracks which beliefs remain active-boundary problems, which questions are worth new studies, and how complete the current validation story is. That makes it a QA layer for prioritization, not just for display.</p>
+
+    <!-- Backend Note -->
+    <div style=”padding: 0 2rem; max-width: 1600px; margin: 0 auto;”>
+        <div class=”backend-note” id=”backendNote”>
+            <div class=”backend-note-header”>
+                <span>Backend Requirements & Data Source</span>
+                <span class=”backend-note-toggle”>▼</span>
+            </div>
+            <div class=”backend-note-content”>
+                <p><strong>Full terrain visualization requires:</strong></p>
+                <ul style=”margin-left: 1rem; margin-top: 0.5rem;”>
+                    <li><code>/api/interpretation/zones</code> — Live zone assignments with belief-to-zone mappings</li>
+                    <li><code>/api/interpretation/transitions</code> — Historical zone movement tracking</li>
+                    <li><code>/api/qa/voi</code> — Live VOI recomputation from current credence states</li>
+                </ul>
+                <p style=”margin-top: 0.75rem;”><strong>Current view:</strong> Phase 4 analysis snapshot (2026-03-17)</p>
+                <div class=”code-note”>
+                    Source: Article_Eater_PostQuinean_v1_recovery/data/interpretation_space/phase4/
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <section class="layer-section">
-    <h2>Top Frontier Questions</h2>
-    <div class="layer-card-list" id="layer-primary-list"></div>
-  </section>
+    <!-- Footer -->
+    <footer>
+        <div class=”footer-content”>
+            <span>Knowledge Atlas UI</span>
+            <div class=”version-badge”>v0.4</div>
+        </div>
+    </footer>
 
-  <section class="layer-section">
-    <h2>Validation Surface</h2>
-    <div class="layer-card-list" id="layer-secondary-list"></div>
-  </section>
+    <!-- Frontier Data (Embedded) -->
+    <script>
+        const frontierData = [
+            {“frontier_id”:”PP”,”belief_id”:”PP”,”framework_name”:”Predictive Processing”,”voi_score”:0.802,”voi_bucket”:”high”,”zone”:”active_boundary”,”question_set”:[“For which populations does PP apply?”,”In which settings does PP hold?”,”Is PP culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”NM”,”belief_id”:”NM”,”framework_name”:”Neuromodulatory Systems”,”voi_score”:0.72,”voi_bucket”:”high”,”zone”:”active_boundary”,”question_set”:[“For which populations does NM apply?”,”In which settings does NM hold?”,”Is NM culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”IC”,”belief_id”:”IC”,”framework_name”:”Interoceptive / Constructionist Affect”,”voi_score”:0.651,”voi_bucket”:”high”,”zone”:”active_boundary”,”question_set”:[“For which populations does IC apply?”,”In which settings does IC hold?”,”Is IC culturally universal or specific?”],”matching_paper_count”:0},
+            {“frontier_id”:”DT”,”belief_id”:”DT”,”framework_name”:”DMN/TPN Dynamics”,”voi_score”:0.591,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does DT apply?”,”In which settings does DT hold?”,”Is DT culturally universal or specific?”],”matching_paper_count”:5},
+            {“frontier_id”:”SN”,”belief_id”:”SN”,”framework_name”:”Spatial Navigation / Cognitive Mapping”,”voi_score”:0.54,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does SN apply?”,”In which settings does SN hold?”,”Is SN culturally universal or specific?”],”matching_paper_count”:0},
+            {“frontier_id”:”DP”,”belief_id”:”DP”,”framework_name”:”Dual-Process Evaluation”,”voi_score”:0.495,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does DP apply?”,”In which settings does DP hold?”,”Is DP culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”MSI”,”belief_id”:”MSI”,”framework_name”:”Multisensory Integration”,”voi_score”:0.455,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does MSI apply?”,”In which settings does MSI hold?”,”Is MSI culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”MS”,”belief_id”:”MS”,”framework_name”:”Memory Systems”,”voi_score”:0.42,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does MS apply?”,”In which settings does MS hold?”,”Is MS culturally universal or specific?”],”matching_paper_count”:2},
+            {“frontier_id”:”SRT”,”belief_id”:”SRT”,”framework_name”:”Stress Recovery Theory”,”voi_score”:0.388,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does SRT apply?”,”In which settings does SRT hold?”,”Is SRT culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”CB”,”belief_id”:”CB”,”framework_name”:”Chronobiological Regulation”,”voi_score”:0.36,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does CB apply?”,”In which settings does CB hold?”,”Is CB culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”EC”,”belief_id”:”EC”,”framework_name”:”Embodied Cognition”,”voi_score”:0.334,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does EC apply?”,”In which settings does EC hold?”,”Is EC culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”Biophilia”,”belief_id”:”Biophilia”,”framework_name”:”Biophilia Hypothesis”,”voi_score”:0.311,”voi_bucket”:”medium”,”zone”:”active_boundary”,”question_set”:[“For which populations does Biophilia apply?”,”In which settings does Biophilia hold?”,”Is Biophilia culturally universal or specific?”],”matching_paper_count”:25},
+            {“frontier_id”:”COL2”,”belief_id”:”COL2”,”framework_name”:”COL2”,”voi_score”:0.29,”voi_bucket”:”low”,”zone”:”identified_periphery”,”question_set”:[“What explains variation across studies of COL2?”,”For which populations does COL2 apply?”,”In which settings does COL2 hold?”],”matching_paper_count”:0},
+            {“frontier_id”:”ART”,”belief_id”:”ART”,”framework_name”:”Attention Restoration Theory”,”voi_score”:0.27,”voi_bucket”:”low”,”zone”:”active_boundary”,”question_set”:[“What explains variation across studies of ART?”,”For which populations does ART apply?”,”In which settings does ART hold?”],”matching_paper_count”:25},
+            {“frontier_id”:”COL1”,”belief_id”:”COL1”,”framework_name”:”COL1”,”voi_score”:0.252,”voi_bucket”:”low”,”zone”:”identified_periphery”,”question_set”:[“What explains variation across studies of COL1?”,”For which populations does COL1 apply?”,”In which settings does COL1 hold?”],”matching_paper_count”:0},
+            {“frontier_id”:”A9_Task_Cognition”,”belief_id”:”A9_Task_Cognition”,”framework_name”:”A9_Task_Cognition”,”voi_score”:0.235,”voi_bucket”:”low”,”zone”:”identified_periphery”,”question_set”:[“What explains variation across studies of A9_Task_Cognition?”,”For which populations does A9_Task_Cognition apply?”,”In which settings does A9_Task_Cognition hold?”],”matching_paper_count”:0},
+            {“frontier_id”:”A6_Visual_Form”,”belief_id”:”A6_Visual_Form”,”framework_name”:”A6_Visual_Form”,”voi_score”:0.22,”voi_bucket”:”low”,”zone”:”identified_periphery”,”question_set”:[“What explains variation across studies of A6_Visual_Form?”,”For which populations does A6_Visual_Form apply?”,”In which settings does A6_Visual_Form hold?”],”matching_paper_count”:0},
+            {“frontier_id”:”AX8”,”belief_id”:”AX8”,”framework_name”:”AX8”,”voi_score”:0.206,”voi_bucket”:”low”,”zone”:”identified_periphery”,”question_set”:[“What explains variation across studies of AX8?”,”For which populations does AX8 apply?”,”In which settings does AX8 hold?”],”matching_paper_count”:0},
+            {“frontier_id”:”Privacy Regulation”,”belief_id”:”Privacy Regulation”,”framework_name”:”Privacy Regulation”,”voi_score”:0.192,”voi_bucket”:”low”,”zone”:”active_boundary”,”question_set”:[“What explains variation across studies of Privacy Regulation?”,”For which populations does Privacy Regulation apply?”,”In which settings does Privacy Regulation hold?”],”matching_paper_count”:0},
+            {“frontier_id”:”doi:10.24382/5191:TBL-20260216233549-038:C001”,”belief_id”:”doi:10.24382/5191:TBL-20260216233549-038:C001”,”framework_name”:”doi:10.24382/5191:TBL-20260216233549-038:C001”,”voi_score”:0.18,”voi_bucket”:”low”,”zone”:”active_boundary”,”question_set”:[“What explains variation across studies of doi:10.24382/5191:TBL-20260216233549-038:C001?”,”For which populations does doi:10.24382/5191:TBL-20260216233549-038:C001 apply?”,”In which settings does doi:10.24382/5191:TBL-20260216233549-038:C001 hold?”],”matching_paper_count”:0}
+        ];
 
-  <div class="meta-strip">
-    <div><strong>Source artifacts:</strong> <span id="layer-source-copy">Loading…</span></div>
-    <div><a href="docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md">One-pager</a> · <a href="ka_home.html#about">About KA</a></div>
-  </div>
-</main>
+        const summaryData = {
+            average_completeness: 0.591,
+            phase3_baseline: 0.62,
+            boundary_mapping: {
+                known_interior: 0,
+                active_boundary: 37,
+                identified_periphery: 13,
+                uncharted_exterior: 0
+            }
+        };
 
-<div class="version-badge">KA UI · v0.4 · Interpretation</div>
+        let currentFilter = 'all';
+        let selectedFrontier = null;
 
-<script>
-window.KA_LAYER_PAGE = {
-  payload: 'interpretation',
-  briefHref: 'docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md'
-};
-window.KA_PAGE_FUNCTION = {
-  pageId: 'ka_interpretation',
-  title: 'Interpretation Layer Explorer',
-  audience: 'Researchers, theory/mechanism users, instructors, and anyone deciding what the field still most needs to learn',
-  purpose: 'Expose the interpretation-space outputs so users can inspect frontier questions, boundary beliefs, and validation completeness rather than receiving a flattened summary of “what the literature says.”',
-  workflowPos: 'After evidence and argumentation review. This is where the system pivots from what is supported to what remains worth asking and testing.',
-  notFor: 'Article submission, annotation entry, or beginner onboarding. It is a strategic reasoning surface.',
-  phase: 'Phase 4 — Epistemic layer walkthrough',
-  evalQuestions: [
-    'Can a user see which frontier questions are highest-VOI without reading backend files?',
-    'Does the page make the boundary/periphery distinction intelligible enough for planning?',
-    'Does it communicate that interpretation is a layer above evidence, not a replacement for it?'
-  ]
-};
-window.KA_ABOUT_PAGE = {
-  pageId: 'ka_interpretation',
-  objective: 'Show how the current field is interpreted: where validation is incomplete, which beliefs sit on the active boundary, and what questions are worth new work.',
-  users: 'Researchers, theory/mechanism explorers, instructors, and QA reviewers planning the next evidence-collection moves',
-  uses: [
-    'Browse the top frontier questions now prioritized by value of information',
-    'Inspect boundary and completeness signals before deciding what to test next',
-    'Explain to students that interpretation is a distinct layer above evidence and argumentation'
-  ],
-  resources: [
-    { label: 'Layer one-pager', href: 'docs/INTERPRETATION_LAYER_ONE_PAGER_2026-03-26.md' },
-    { label: 'Global article walkthrough', href: 'ka_articles.html' }
-  ]
-};
-window.KA_LIVE_CONTEXT_CONFIG = {
-  surface: 'interpretation',
-  title: 'Live Corpus Context',
-  status: 'Phase-4 payload-backed layer',
-  copy: 'This page is sourced from the current interpretation-space outputs. The questions are live now, but the underlying field evidence and boundary typing will keep getting stronger as V6 improves.'
-};
-</script>
-<script src="ka_mode_switch.js"></script>
-<script src="ka_site_shell.js"></script>
-<script src="ka_data_adapter.js"></script>
-<script src="ka_live_context.js"></script>
-<script src="ka_layer_views.js"></script>
-<script src="ka_page_function.js"></script>
-<script>
-window.KA_SHELL.initShell({
-  navContainerSelector: 'nav ul',
-  modeSelectId: 'layer-mode-select',
-  modePillId: 'layer-mode-pill',
-  defaultMode: 'theory_mechanism_explorer'
-});
-</script>
-<script src="ka_about_page.js"></script>
+        // Populate VOI list
+        function renderVoiList(filter) {
+            const list = document.getElementById('voiList');
+            list.innerHTML = '';
+
+            const filtered = filter === 'all'
+                ? frontierData
+                : frontierData.filter(f => f.voi_bucket === filter);
+
+            filtered.forEach((frontier, idx) => {
+                const card = document.createElement('div');
+                card.className = 'frontier-card';
+                card.dataset.frontierid = frontier.frontier_id;
+
+                if (!selectedFrontier && idx === 0) {
+                    card.classList.add('active');
+                    selectedFrontier = frontier;
+                    renderInspector(frontier);
+                }
+
+                const voiColor = {
+                    'high': '#C0392B',
+                    'medium': '#E8872A',
+                    'low': '#2A7868'
+                }[frontier.voi_bucket];
+
+                const barWidth = (frontier.voi_score * 100) + '%';
+
+                card.innerHTML = `
+                    <div class=”frontier-card-header”>
+                        <div class=”frontier-card-name”>${frontier.framework_name}</div>
+                        <div class=”frontier-card-score”>${(frontier.voi_score * 100).toFixed(0)}%</div>
+                    </div>
+                    <div class=”frontier-card-meta”>
+                        <span class=”chip”>${frontier.frontier_id}</span>
+                        <span class=”chip zone”>${frontier.zone === 'active_boundary' ? 'Active Boundary' : 'Periphery'}</span>
+                        <span class=”chip papers”>${frontier.matching_paper_count} papers</span>
+                    </div>
+                    <div class=”voi-bar”>
+                        <div class=”voi-bar-fill ${frontier.voi_bucket}” style=”width: ${barWidth}”></div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.frontier-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    selectedFrontier = frontier;
+                    renderInspector(frontier);
+                });
+
+                list.appendChild(card);
+            });
+        }
+
+        // Render inspector panel
+        function renderInspector(frontier) {
+            const inspector = document.getElementById('inspector');
+
+            const voiBucket = frontier.voi_bucket;
+            const voiColor = {
+                'high': '#C0392B',
+                'medium': '#E8872A',
+                'low': '#2A7868'
+            }[voiBucket];
+
+            const voiBucketLabel = {
+                'high': 'HIGH VALUE OF INFORMATION',
+                'medium': 'MEDIUM VALUE OF INFORMATION',
+                'low': 'LOW VALUE OF INFORMATION'
+            }[voiBucket];
+
+            // Determine resolution steps from question types
+            const resolutionSteps = [];
+            frontier.question_set.forEach(q => {
+                if (q.includes('populations') && !resolutionSteps.some(s => s.includes('population'))) {
+                    resolutionSteps.push('Cross-population replication study');
+                }
+                if (q.includes('settings') && !resolutionSteps.some(s => s.includes('setting'))) {
+                    resolutionSteps.push('Multi-setting boundary validation');
+                }
+                if (q.includes('culturally universal') && !resolutionSteps.some(s => s.includes('cultural'))) {
+                    resolutionSteps.push('Cross-cultural universality assessment');
+                }
+                if (q.includes('variation') && !resolutionSteps.some(s => s.includes('meta-analysis'))) {
+                    resolutionSteps.push('Meta-analysis of moderating variables');
+                }
+            });
+
+            // Find related frontiers in same zone
+            const relatedFrontiers = frontierData
+                .filter(f => f.zone === frontier.zone && f.frontier_id !== frontier.frontier_id)
+                .map(f => f.frontier_id);
+
+            const completenessDecline = ((summaryData.average_completeness - summaryData.phase3_baseline) * 100).toFixed(1);
+
+            inspector.innerHTML = `
+                <div class=”inspector-header”>
+                    <div class=”inspector-framework-name”>${frontier.framework_name}</div>
+                    <div class=”inspector-meta”>
+                        <div class=”voi-display”>
+                            <span class=”voi-number ${voiBucket}” style=”color: ${voiColor};”>${(frontier.voi_score * 100).toFixed(1)}%</span>
+                            <span class=”voi-label”>${voiBucketLabel}</span>
+                        </div>
+                        <span class=”badge ${frontier.zone === 'active_boundary' ? 'zone-ab' : 'zone-periphery'}”>
+                            ${frontier.zone === 'active_boundary' ? 'Active Boundary' : 'Identified Periphery'}
+                        </span>
+                        <span style=”color: var(--muted); font-size: 0.9rem;”>
+                            <strong>${frontier.matching_paper_count}</strong> matching papers
+                        </span>
+                    </div>
+                </div>
+
+                <div class=”section”>
+                    <h3 class=”section-title”>Open Questions</h3>
+                    ${frontier.question_set.map(q => {
+                        let qType = 'scope';
+                        if (q.includes('populations')) qType = 'population';
+                        if (q.includes('culturally')) qType = 'cultural_universality';
+                        if (q.includes('variation')) qType = 'variation';
+
+                        const qTypeLabels = {
+                            'scope': 'Scope Boundary',
+                            'population': 'Population Applicability',
+                            'cultural_universality': 'Cultural Universality',
+                            'variation': 'Variation Explanation'
+                        };
+
+                        return `
+                            <div class=”question-card”>
+                                <div class=”question-text”>${q}</div>
+                                <span class=”question-type”>${qTypeLabels[qType]}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class=”resolution-panel”>
+                    <div class=”resolution-title”>What would resolution look like?</div>
+                    <p style=”font-size: 0.9rem; margin-bottom: 0.75rem; line-height: 1.5;”>
+                        Moving <strong>${frontier.frontier_id}</strong> from Active Boundary to Known Interior would require:
+                    </p>
+                    <ul class=”resolution-steps”>
+                        ${resolutionSteps.map(step => `<li>${step}</li>`).join('')}
+                    </ul>
+                </div>
+
+                ${relatedFrontiers.length > 0 ? `
+                    <div class=”section”>
+                        <h3 class=”section-title”>Related Frontiers in Same Zone</h3>
+                        <div class=”relationships”>
+                            <p style=”margin-bottom: 0.5rem;”><strong>${relatedFrontiers.length}</strong> other belief frontiers share the same epistemic zone:</p>
+                            <div class=”frontier-ids”>
+                                ${relatedFrontiers.slice(0, 8).map(id => `<span class=”frontier-id-badge”>${id}</span>`).join('')}
+                                ${relatedFrontiers.length > 8 ? `<span class=”frontier-id-badge”>+${relatedFrontiers.length - 8} more</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div class=”section”>
+                    <h3 class=”section-title”>Validation Completeness</h3>
+                    <div class=”completeness-section”>
+                        <div class=”completeness-stat”>
+                            <div class=”completeness-stat-label”>Current completeness:</div>
+                            <div class=”completeness-stat-value”>${(summaryData.average_completeness * 100).toFixed(1)}%</div>
+                            <div style=”flex: 1; max-width: 250px; position: relative;”>
+                                <div class=”progress-bar”>
+                                    <div class=”progress-fill” style=”width: ${summaryData.average_completeness * 100}%”></div>
+                                    <div class=”baseline-marker” style=”right: ${summaryData.phase3_baseline * 100}%;”></div>
+                                </div>
+                                <div class=”baseline-label” style=”right: ${summaryData.phase3_baseline * 100}%;”>Phase 3: ${(summaryData.phase3_baseline * 100).toFixed(1)}%</div>
+                            </div>
+                        </div>
+                        <div class=”warning-text”>
+                            <svg class=”warning-icon-small” viewBox=”0 0 24 24” fill=”currentColor”>
+                                <path d=”M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z”/>
+                            </svg>
+                            Validation closure decline of ${Math.abs(completenessDecline)}% — requires investigation
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                renderVoiList(currentFilter);
+                // Re-select first item
+                selectedFrontier = null;
+                const firstCard = document.querySelector('.frontier-card');
+                if (firstCard) {
+                    firstCard.classList.add('active');
+                    const frontierIdAttr = firstCard.dataset.frontierid;
+                    selectedFrontier = frontierData.find(f => f.frontier_id === frontierIdAttr);
+                    renderInspector(selectedFrontier);
+                }
+            });
+        });
+
+        // Backend note toggle
+        document.getElementById('backendNote').addEventListener('click', function(e) {
+            if (e.target.closest('.backend-note-header')) {
+                this.classList.toggle('open');
+            }
+        });
+
+        // Initial render
+        renderVoiList('all');
+    </script>
 </body>
 </html>
