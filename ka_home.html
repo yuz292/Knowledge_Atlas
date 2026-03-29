@@ -710,13 +710,17 @@ body { font-family: Arial, sans-serif; color: #2D2D2D; overflow-x: hidden; }
 
       <div class="pillar">
         <div class="pillar-icon">⚖️</div>
-        <div class="pillar-name">Logic of Warrants &amp; Defeasible Belief</div>
-        <div class="pillar-authors">Toulmin · Pollock · Dung</div>
+        <div class="pillar-name">Defeasible Warrant &amp; Entrenchment</div>
+        <div class="pillar-authors">Pollock · Spohn · Cartwright · Mayo</div>
         <div class="pillar-desc">
           Evidence does not entail conclusions — it <em>warrants</em> them, defeasibly.
-          The system represents every evidence-to-belief link as a typed warrant (causal,
-          constitutive, correlational, analogical) with an explicit defeat condition.
-          Undercutting and rebutting defeat are treated asymmetrically.
+          Every evidence-to-belief link carries a typed bridge warrant
+          (constitutive, mechanism, empirical association, functional, capacity,
+          analogical, or theory-derived), a strength score decomposed into severity,
+          replication, confound risk, and source quality, and an explicit defeat
+          condition. Public Atlas pages display the canonical bridge type; extraction-layer
+          claim classes are tracked separately in detailed views rather than being confused
+          with the warrant taxonomy itself.
         </div>
       </div>
 
@@ -790,7 +794,7 @@ body { font-family: Arial, sans-serif; color: #2D2D2D; overflow-x: hidden; }
           </li>
           <li>
             <span class="proof-num">2</span>
-            <span><strong>Warrant–likelihood correspondence:</strong> Each warrant type (causal, constitutive, correlational, analogical) maps to a distinct likelihood ratio profile. The proof characterizes these profiles and shows they are non-overlapping, justifying the type taxonomy as formally distinct rather than merely heuristic.</span>
+            <span><strong>Warrant–likelihood correspondence:</strong> Each bridge-layer warrant type (constitutive, mechanism, empirical association, functional, capacity, analogical, theory-derived) maps to a distinct likelihood-ratio profile. The proof characterizes these profiles and shows they are formally distinct rather than merely heuristic labels.</span>
           </li>
           <li>
             <span class="proof-num">3</span>
@@ -826,18 +830,27 @@ body { font-family: Arial, sans-serif; color: #2D2D2D; overflow-x: hidden; }
         </div>
 
         <div class="section-eyebrow" style="margin-top:34px;">Operational Layers</div>
-        <h2 class="section-title" style="font-size:1.5rem; margin-bottom:10px;">The three epistemic layers now exposed in the site</h2>
+        <h2 class="section-title" style="font-size:1.5rem; margin-bottom:10px;">Four epistemic inspector pages</h2>
         <p class="about-body" style="margin-bottom:22px;">
-          Knowledge Atlas is not just article cards and topic lists. The site now exposes the argumentation, annotation, and interpretation layers directly so you can inspect how claims are supported, what has been flagged, and what frontier questions remain. Each layer also has a one-page brief explaining how we build it and how it helps with QA.
+          Knowledge Atlas is not just article cards and topic lists. The site exposes the warrant, argumentation, annotation, and interpretation layers directly so you can inspect how claims are supported, what has been flagged, what frontier questions remain, and how changing a warrant weight would propagate through the network. Each layer inspector has a Critique and Support explorer for any selected claim.
         </p>
 
         <div class="pillars">
+          <a href="ka_warrants.html" class="pillar" style="text-decoration:none; color:inherit;">
+            <div class="pillar-icon">⚖️</div>
+            <div class="pillar-name">Warrants Inspector</div>
+            <div class="pillar-authors">7 warrant types · sensitivity simulator</div>
+            <div class="pillar-desc">
+              Inspect the seven warrant types (constitutive to theory-derived), adjust discount multipliers with the sensitivity slider, and see which claims are most affected by changing a theory weight.
+            </div>
+          </a>
+
           <a href="ka_argumentation.html" class="pillar" style="text-decoration:none; color:inherit;">
             <div class="pillar-icon">🕸️</div>
             <div class="pillar-name">Argumentation Layer</div>
             <div class="pillar-authors"><span id="home-layer-argumentation">--</span> support edges · <a href="docs/ARGUMENTATION_LAYER_ONE_PAGER_2026-03-26.md">brief</a></div>
             <div class="pillar-desc">
-              The support and conflict structure of the corpus. Use it to inspect debate clusters, claim-level support, and where the graph is still underspecified.
+              The support and conflict structure of the corpus. Use the Critique Explorer to see how any claim has been attacked and where its vulnerabilities lie, or the Support Explorer to see what backs it and what would strengthen it further.
             </div>
           </a>
 

@@ -580,6 +580,70 @@ nav a.active, nav a:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── CTA Banner ─────────────────────────────────────────── */
+.cta-banner {
+  background: #0F2220; border-bottom: 3px solid #E8872A;
+  padding: 16px 28px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+.cta-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 26px; border-radius: 10px; border: 2px solid transparent;
+  cursor: pointer; background: transparent; transition: all 0.14s;
+  min-width: 260px; text-align: left;
+}
+.cta-btn.critique { border-color: #C0392B; background: rgba(192,57,43,0.15); }
+.cta-btn.critique:hover, .cta-btn.critique.active { background: rgba(192,57,43,0.30); }
+.cta-btn.support { border-color: #2A7868; background: rgba(42,120,104,0.15); }
+.cta-btn.support:hover, .cta-btn.support.active { background: rgba(42,120,104,0.30); }
+.cta-btn-icon { font-size: 1.6rem; flex-shrink: 0; }
+.cta-btn-text { display: flex; flex-direction: column; }
+.cta-btn-title { font: 700 0.92rem/1.2 Arial; color: #fff; }
+.cta-btn-sub { font: 0.72rem/1.35 Arial; color: #7AACA0; margin-top: 3px; }
+/* ── CTA Panel ──────────────────────────────────────────── */
+.cta-panel { display: none; background: #FCFBF8; border-bottom: 2px solid #E0DAD3; }
+.cta-panel.open { display: block; animation: slideDown 0.14s ease; }
+@keyframes slideDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+.cta-panel-inner { max-width: 1400px; margin: 0 auto; padding: 18px 24px 22px; }
+.cta-target-row {
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E0DAD3;
+}
+.cta-target-label { font: 700 0.78rem/1 Arial; color: #1C3D3A; white-space: nowrap; }
+.cta-target-select {
+  flex: 1; min-width: 260px; font: 0.84rem Arial;
+  border: 1px solid #C8C0B8; border-radius: 6px; padding: 7px 10px;
+  background: #fff; color: #2D2D2D;
+}
+.cta-mode-tag {
+  font: 700 0.7rem/1 Arial; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 20px; white-space: nowrap;
+}
+.cta-mode-tag.critique { background: rgba(192,57,43,0.1); color: #B71C1C; border: 1px solid #D49090; }
+.cta-mode-tag.support  { background: rgba(42,120,104,0.1); color: #1B6B5A; border: 1px solid #7ABFB0; }
+.cta-results { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cta-col { border-radius: 10px; padding: 16px; }
+.cta-col.has-been    { background: #FFF0EE; border: 1px solid #E8B0A0; }
+.cta-col.could-be    { background: #FFFBEE; border: 1px solid #E8D4A0; }
+.cta-col.does-support   { background: #EDFAF4; border: 1px solid #90CDB8; }
+.cta-col.could-support  { background: #EEF7FF; border: 1px solid #90B8D8; }
+.cta-col-title {
+  font: 700 0.72rem/1 Arial; letter-spacing: 0.13em; text-transform: uppercase;
+  margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.cta-col.has-been .cta-col-title    { color: #B71C1C; }
+.cta-col.could-be .cta-col-title    { color: #8A5A00; }
+.cta-col.does-support .cta-col-title   { color: #1B6B5A; }
+.cta-col.could-support .cta-col-title  { color: #1A4A7A; }
+.cta-item { margin-bottom: 9px; padding: 10px 11px; background: rgba(255,255,255,0.75); border-radius: 7px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.cta-item-label { font: 700 0.74rem/1 Arial; margin-bottom: 4px; }
+.cta-col.has-been .cta-item-label    { color: #B71C1C; }
+.cta-col.could-be .cta-item-label    { color: #8A5A00; }
+.cta-col.does-support .cta-item-label   { color: #1B6B5A; }
+.cta-col.could-support .cta-item-label  { color: #1A4A7A; }
+.cta-item-text { font: 0.82rem/1.56 Arial; color: #2D2D2D; }
+.cta-empty-msg { font: italic 0.84rem/1.5 Arial; color: #8A745F; text-align: center; padding: 18px; grid-column: span 2; }
+@media (max-width: 900px) { .cta-results { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -612,6 +676,40 @@ nav a.active, nav a:hover {
     </div>
   </div>
 </header>
+
+<!-- ── CTA Banner ──────────────────────────────────────── -->
+<div class="cta-banner">
+  <button class="cta-btn critique" id="cta-critique-btn" onclick="toggleCTA('critique')">
+    <span class="cta-btn-icon">⚔️</span>
+    <span class="cta-btn-text">
+      <span class="cta-btn-title">Critique Explorer</span>
+      <span class="cta-btn-sub">How this claim has been attacked — and how it could be</span>
+    </span>
+  </button>
+  <button class="cta-btn support" id="cta-support-btn" onclick="toggleCTA('support')">
+    <span class="cta-btn-icon">🛡️</span>
+    <span class="cta-btn-text">
+      <span class="cta-btn-title">Support Explorer</span>
+      <span class="cta-btn-sub">What backs this claim — and what could do so more</span>
+    </span>
+  </button>
+</div>
+
+<!-- ── CTA Panel ───────────────────────────────────────── -->
+<div class="cta-panel" id="cta-panel">
+  <div class="cta-panel-inner">
+    <div class="cta-target-row">
+      <span class="cta-target-label">Target claim or topic:</span>
+      <select class="cta-target-select" id="cta-target-select" onchange="refreshCTA()">
+        <option value="">— select a claim —</option>
+      </select>
+      <span class="cta-mode-tag" id="cta-mode-tag"></span>
+    </div>
+    <div class="cta-results" id="cta-results">
+      <div class="cta-empty-msg">Select a target claim above to see its argumentation profile.</div>
+    </div>
+  </div>
+</div>
 
 <main class="main-wrap">
 
@@ -1108,6 +1206,7 @@ document.addEventListener('DOMContentLoaded', function() {
   populateClaims(ARGUMENTATION_DATA.claim_nodes);
   populateConfounds();
   setupEventListeners();
+  populateCTATargets();
 });
 
 function populateStats() {
@@ -1316,6 +1415,294 @@ function toggleExpandable(titleEl) {
   titleEl.classList.toggle('expanded');
   const content = titleEl.nextElementSibling;
   content.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────────
+// CTA: Critique Explorer & Support Explorer
+// ─────────────────────────────────────────────────────────
+let currentCTAMode = null;
+
+function populateCTATargets() {
+  const sel = document.getElementById('cta-target-select');
+  ARGUMENTATION_DATA.claim_nodes.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.belief_id;
+    const preview = c.content_preview.length > 65 ? c.content_preview.slice(0, 65) + '…' : c.content_preview;
+    opt.textContent = c.belief_id + ' — ' + preview;
+    sel.appendChild(opt);
+  });
+}
+
+function toggleCTA(mode) {
+  const panel = document.getElementById('cta-panel');
+  const critiqueBtn = document.getElementById('cta-critique-btn');
+  const supportBtn  = document.getElementById('cta-support-btn');
+  const modeTag     = document.getElementById('cta-mode-tag');
+
+  if (currentCTAMode === mode) {
+    // toggle off
+    panel.classList.remove('open');
+    critiqueBtn.classList.remove('active');
+    supportBtn.classList.remove('active');
+    currentCTAMode = null;
+    return;
+  }
+
+  currentCTAMode = mode;
+  panel.classList.add('open');
+  critiqueBtn.classList.toggle('active', mode === 'critique');
+  supportBtn.classList.toggle('active', mode === 'support');
+  modeTag.className = 'cta-mode-tag ' + mode;
+  modeTag.textContent = mode === 'critique' ? '⚔️ Critique mode' : '🛡️ Support mode';
+
+  // Pre-populate selector with currently selected claim, if any
+  if (currentSelectedClaimId) {
+    document.getElementById('cta-target-select').value = currentSelectedClaimId;
+  }
+
+  // Scroll panel into view
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  refreshCTA();
+}
+
+function refreshCTA() {
+  if (!currentCTAMode) return;
+  const claimId = document.getElementById('cta-target-select').value;
+  const resultsDiv = document.getElementById('cta-results');
+
+  if (!claimId) {
+    resultsDiv.innerHTML = '<div class="cta-empty-msg">Select a target claim above to see its argumentation profile.</div>';
+    return;
+  }
+
+  const claim = ARGUMENTATION_DATA.claim_nodes.find(c => c.belief_id === claimId);
+  if (!claim) return;
+
+  if (currentCTAMode === 'critique') {
+    renderCritiquePanel(claim, resultsDiv);
+  } else {
+    renderSupportPanel(claim, resultsDiv);
+  }
+}
+
+// ── Critique Panel ────────────────────────────────────────
+function renderCritiquePanel(claim, container) {
+  const hasBeen = buildHasBeenCritiqued(claim);
+  const couldBe = buildCouldBeCritiqued(claim);
+
+  container.innerHTML =
+    '<div class="cta-col has-been">' +
+      '<div class="cta-col-title">Has Been Critiqued</div>' +
+      (hasBeen.length
+        ? hasBeen.map(item => ctaItem(item)).join('')
+        : '<div class="cta-item"><div class="cta-item-text" style="font-style:italic;color:#8A745F;">No recorded attacks or disputes found for this claim in the current payload. Full edge list requires the live API.</div></div>'
+      ) +
+    '</div>' +
+    '<div class="cta-col could-be">' +
+      '<div class="cta-col-title">Could Be Critiqued</div>' +
+      couldBe.map(item => ctaItem(item)).join('') +
+    '</div>';
+}
+
+// ── Support Panel ─────────────────────────────────────────
+function renderSupportPanel(claim, container) {
+  const doesSupport = buildDoesSupport(claim);
+  const couldSupport = buildCouldSupport(claim);
+
+  container.innerHTML =
+    '<div class="cta-col does-support">' +
+      '<div class="cta-col-title">Does Support It</div>' +
+      (doesSupport.length
+        ? doesSupport.map(item => ctaItem(item)).join('')
+        : '<div class="cta-item"><div class="cta-item-text" style="font-style:italic;color:#8A745F;">No explicit support annotations found. Support count from network edges: ' + claim.incoming_support_count + '.</div></div>'
+      ) +
+    '</div>' +
+    '<div class="cta-col could-support">' +
+      '<div class="cta-col-title">Could Support It</div>' +
+      couldSupport.map(item => ctaItem(item)).join('') +
+    '</div>';
+}
+
+function ctaItem(item) {
+  return '<div class="cta-item"><div class="cta-item-label">' + item.type + '</div><div class="cta-item-text">' + item.text + '</div></div>';
+}
+
+// ── Has Been Critiqued ────────────────────────────────────
+function buildHasBeenCritiqued(claim) {
+  const items = [];
+
+  if (claim.incoming_attack_count > 0) {
+    items.push({
+      type: 'Direct Attack Edges',
+      text: claim.incoming_attack_count + ' incoming attack edge(s) recorded in the epistemic network. Full edge traversal requires /api/argumentation/belief/' + claim.belief_id + '.'
+    });
+  }
+
+  ANNOTATIONS_DATA.annotations
+    .filter(a => a.type === 'DISPUTE' && a.target_id === claim.belief_id)
+    .forEach(d => items.push({ type: 'Recorded Dispute', text: d.content }));
+
+  if (claim.qualifier === 'contested') {
+    items.push({
+      type: 'Contested Qualifier',
+      text: 'This claim is classified as contested — at least one directly opposing claim exists within the same theory cluster in the EN.'
+    });
+  }
+
+  const highConfoundCluster = ARGUMENTATION_DATA.debate_clusters.find(c =>
+    c.papers.includes(claim.paper_id) && c.theory_count >= 6
+  );
+  if (highConfoundCluster) {
+    items.push({
+      type: 'Confound Critique — Cluster ' + highConfoundCluster.cluster_id,
+      text: 'Paper ' + claim.paper_id + ' is co-located with ' + (highConfoundCluster.paper_count - 1) + ' other papers across ' + highConfoundCluster.theory_count + ' theories (' + highConfoundCluster.theories.slice(0, 4).join(', ') + '…). Critics argue that multi-theory overlap makes it impossible to isolate the causally active feature.'
+    });
+  }
+
+  return items;
+}
+
+// ── Could Be Critiqued ────────────────────────────────────
+function buildCouldBeCritiqued(claim) {
+  const items = [];
+  const p = claim.content_preview.toLowerCase();
+
+  if (p.includes('questionnaire') || p.includes('survey') || p.includes('self-report') || p.includes('subjective')) {
+    items.push({
+      type: 'Self-Report Validity',
+      text: 'Subjective ratings introduce demand characteristics, recall bias, and framing effects. A critic could argue that respondents\' reports of comfort or preference reflect social desirability rather than genuine environmental responses — and that physiological or behavioral measures would tell a different story.'
+    });
+  }
+
+  if (p.includes('regression') || p.includes('r²') || p.includes('r=') || p.includes('r =')) {
+    items.push({
+      type: 'Explained Variance',
+      text: 'The regression model accounts for a fraction of total variance; the remainder is attributable to unmeasured variables. A critic would note that unmeasured building quality, occupant personality, or time-of-day factors could produce the same coefficient pattern, making the nominally independent variable neither necessary nor sufficient.'
+    });
+  }
+
+  if (p.includes('anova') || p.includes('analysis of variance') || p.includes('significant')) {
+    items.push({
+      type: 'Effect Size Adequacy',
+      text: 'Statistical significance at p < 0.05 with small n does not guarantee practical significance. By Cohen\'s conventions, many architectural studies achieve significance with d < 0.2, which falls below the threshold relevant for design recommendations. A power analysis and effect size report are needed for the finding to carry design weight.'
+    });
+  }
+
+  if (p.includes('no significant') || p.includes('no differences') || p.includes('not significant')) {
+    items.push({
+      type: 'Null Result — Power Analysis',
+      text: 'Absence of a statistically significant difference is not evidence of equivalence. A critic would ask whether the study was adequately powered (typically requiring n ≥ 80 per cell for medium effects in architectural research) to detect the effect size that would be architecturally meaningful.'
+    });
+  }
+
+  items.push({
+    type: 'Ecological Validity',
+    text: 'Controlled laboratory exposures or virtual environments differ systematically from sustained real-building occupancy. Acute (minutes-long) exposures may not reflect the chronic adaptation patterns that govern day-to-day occupant wellbeing. Critics consistently note this gap as the central limitation of the experimental evidence base.'
+  });
+
+  items.push({
+    type: 'Population Scope',
+    text: 'The great majority of architectural neuroscience findings derive from WEIRD (Western, Educated, Industrialized, Rich, Democratic) convenience samples — typically undergraduates recruited at single institutions. Cross-cultural, age-stratified, and clinical-population generalization is typically untested and constitutes a standing critique of the entire empirical literature.'
+  });
+
+  const replAnnot = ANNOTATIONS_DATA.annotations.find(a => a.type === 'REPLICATION_STATUS' && a.target_id === claim.belief_id);
+  if (!replAnnot || replAnnot.content.toLowerCase().includes('no cross') || replAnnot.content.toLowerCase().includes('isolated')) {
+    items.push({
+      type: 'Replication Gap',
+      text: 'No cross-paper replication has been recorded for this specific claim. A Popperian critic would classify an unreplicated finding as a hypothesis, not a belief. Publication bias further raises the prior probability that null replications exist but remain unpublished.'
+    });
+  }
+
+  items.push({
+    type: 'Confound: Co-occurring Stimuli',
+    text: 'Architectural interventions rarely manipulate a single variable in isolation. Daylighting changes covary with thermal gradients, view quality, and acoustic character; biophilic elements covary with maintenance signals and occupancy density. Critics can attribute any measured effect to a co-varying rather than the nominally manipulated feature.'
+  });
+
+  return items;
+}
+
+// ── Does Support It ───────────────────────────────────────
+function buildDoesSupport(claim) {
+  const items = [];
+
+  if (claim.incoming_support_count > 0) {
+    items.push({
+      type: 'Network Support Edges',
+      text: claim.incoming_support_count + ' incoming support edges recorded — convergent evidence from other claims across the epistemic network. Full edge list available via /api/argumentation/belief/' + claim.belief_id + '.'
+    });
+  }
+
+  ANNOTATIONS_DATA.annotations
+    .filter(a => a.target_id === claim.belief_id)
+    .forEach(a => {
+      if (a.type === 'REPLICATION_STATUS' && a.content.toLowerCase().includes('well-repl')) {
+        items.push({ type: 'Replication Status', text: a.content });
+      }
+      if (a.type === 'CROSS_DOMAIN') {
+        items.push({ type: 'Cross-Domain Relevance', text: a.content });
+      }
+      if (a.type === 'CALIBRATION_NOTE') {
+        items.push({ type: 'Calibration Note', text: a.content });
+      }
+    });
+
+  if (claim.qualifier === 'stable') {
+    items.push({
+      type: 'Stability Qualifier',
+      text: 'Classified as stable in the argumentation layer: no direct attack edges recorded, and convergent support from co-located claims in the same theory cluster exceeds contestation pressure.'
+    });
+  }
+
+  const cluster = ARGUMENTATION_DATA.debate_clusters.find(c => c.papers.includes(claim.paper_id));
+  if (cluster) {
+    items.push({
+      type: 'Cluster ' + cluster.cluster_id + ' Co-Support',
+      text: cluster.paper_count + ' papers are co-located in cluster ' + cluster.cluster_id + ', theoretically aligned around: ' + cluster.theories.slice(0, 4).join(', ') + (cluster.theories.length > 4 ? '…' : '') + '. Methodological diversity across co-located papers strengthens evidential independence.'
+    });
+  }
+
+  return items;
+}
+
+// ── Could Support It ──────────────────────────────────────
+function buildCouldSupport(claim) {
+  const items = [];
+  const p = claim.content_preview.toLowerCase();
+
+  items.push({
+    type: 'Mechanism Study (Highest Leverage)',
+    text: 'If this claim carries an Empirical Association warrant (d = 0.80), a companion study mapping the neurological or physiological causal pathway would upgrade it to a Mechanism warrant — and potentially to Constitutive (d = 1.0) if the mechanism is domain-specific. This is typically the single highest-leverage upgrade available to any architectural neuroscience claim.'
+  });
+
+  items.push({
+    type: 'Preregistered Replication',
+    text: 'A preregistered, prospectively powered independent replication — ideally using a different building, a different institution, and a partially different participant pool — would raise the REPLICATION_STATUS annotation to "well-replicated" and address publication bias directly. Preregistration distinguishes confirmatory evidence from additional exploration.'
+  });
+
+  items.push({
+    type: 'Cross-Cultural Validation',
+    text: 'A conceptual replication using the same environmental manipulation in a non-WEIRD population would allow the Population Transfer Factor (δ) to be updated from its current default (approximately 0.70) toward 1.0 for diverse deployment contexts. Cross-cultural confirmation raises credence for any universal design claim.'
+  });
+
+  if (p.includes('heart rate') || p.includes('hr') || p.includes('physiological') || p.includes('eeg') || p.includes('cortisol') || p.includes('skin conductance')) {
+    items.push({
+      type: 'Multi-Modal Convergence',
+      text: 'Convergence across self-report, behavioral, and physiological measures within a single study eliminates the criticism that effects appear only in one measurement modality. Currently most papers provide one modality. A multi-modal within-subjects design using validated physiological markers (HRV, EEG alpha, salivary cortisol) alongside subjective ratings would provide the strongest single-paper support structure.'
+    });
+  }
+
+  items.push({
+    type: 'Longitudinal Study',
+    text: 'A within-subjects longitudinal design tracking occupants over weeks or months of sustained exposure would establish whether effects persist, habituate, or reverse — the condition architecturally relevant for design decisions. Cross-sectional studies establish that an effect exists at one time point; longitudinal studies establish its ecological relevance over real occupancy duration.'
+  });
+
+  items.push({
+    type: 'Formal Meta-Analysis',
+    text: 'Once 8 or more independent replications exist, a random-effects meta-analysis with publication-bias correction (Egger\'s test, trim-and-fill) and heterogeneity analysis (I² statistic) would consolidate the evidence base into a single authoritative credence estimate that the system could adopt as a calibration anchor.'
+  });
+
+  return items;
 }
 </script>
 
