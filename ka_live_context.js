@@ -98,26 +98,42 @@
       auth:
         'This authentication/setup surface is wired into the shared shell, but account state is still local prototype state rather than a real persistent identity system.'
     };
-    return config.copy || summaries[config.surface] || 'This page is connected to the current Atlas payloads, but parts of the workflow remain prototype-level and should not be mistaken for a full production backend.';
+    const base =
+      config.copy ||
+      summaries[config.surface] ||
+      'This page is connected to the current Atlas payloads, but parts of the workflow remain prototype-level and should not be mistaken for a full production backend.';
+    if (data && data.payloadUnavailable) {
+      return (
+        base +
+        ' Live corpus counts are currently unavailable on this page, usually because the page was opened outside the local web server or the payload files could not be fetched.'
+      );
+    }
+    return base;
   }
 
   async function loadStats() {
     const adapter = window.KA_DATA_ADAPTER || window.KA_PAYLOADS;
     if (!adapter || typeof adapter.loadPayload !== 'function') return null;
-    const [topics, articles, evidence, status] = await Promise.all([
-      adapter.loadPayload('topics'),
-      adapter.loadPayload('articles'),
-      adapter.loadPayload('evidence'),
-      adapter.loadPayload('json_status')
+    const [topicsRes, articlesRes, evidenceRes, statusRes] = await Promise.allSettled([
+      adapter.loadJson(adapter.PATHS.topics),
+      adapter.loadJson(adapter.PATHS.articles),
+      adapter.loadJson(adapter.PATHS.evidence),
+      adapter.loadJson(adapter.PATHS.json_status)
     ]);
+    const topics = topicsRes.status === 'fulfilled' ? topicsRes.value : null;
+    const articles = articlesRes.status === 'fulfilled' ? articlesRes.value : null;
+    const evidence = evidenceRes.status === 'fulfilled' ? evidenceRes.value : null;
+    const status = statusRes.status === 'fulfilled' ? statusRes.value : null;
     const summary = (status && status.summary) || {};
+    const payloadUnavailable = !topics || !articles || !evidence || !status;
     return {
-      topicCount: Array.isArray(topics && topics.topics) ? topics.topics.length : 0,
-      articleCount: Array.isArray(articles && articles.articles) ? articles.articles.length : 0,
-      evidenceCount: Array.isArray(evidence && evidence.evidence) ? evidence.evidence.length : 0,
-      abstractGood: Number(summary.abstract_good || 0),
-      doiGood: Number(summary.doi_good || 0),
-      subjectCountGood: Number(summary.subject_count_good || 0)
+      topicCount: Array.isArray(topics && topics.topics) ? topics.topics.length : null,
+      articleCount: Array.isArray(articles && articles.articles) ? articles.articles.length : null,
+      evidenceCount: Array.isArray(evidence && evidence.evidence) ? evidence.evidence.length : null,
+      abstractGood: status ? Number(summary.abstract_good || 0) : null,
+      doiGood: status ? Number(summary.doi_good || 0) : null,
+      subjectCountGood: status ? Number(summary.subject_count_good || 0) : null,
+      payloadUnavailable
     };
   }
 
@@ -129,7 +145,10 @@
     const card = el('section', 'ka-live-context' + (config.warn ? ' warn' : ''));
     const head = el('div', 'ka-live-context-head');
     head.appendChild(el('div', 'ka-live-context-title', config.title || 'Live Context'));
-    head.appendChild(el('div', 'ka-live-context-status', config.status || 'Partial implementation'));
+    const statusText = stats.payloadUnavailable
+      ? (config.status || 'Partial implementation') + ' · payload counts unavailable'
+      : (config.status || 'Partial implementation');
+    head.appendChild(el('div', 'ka-live-context-status', statusText));
     card.appendChild(head);
     card.appendChild(el('p', 'ka-live-context-copy', buildCopy(config, stats)));
 
@@ -144,7 +163,7 @@
     ];
     for (const [label, value] of statRows) {
       const box = el('div', 'ka-live-context-stat');
-      box.appendChild(el('strong', '', String(value)));
+      box.appendChild(el('strong', '', value == null ? '—' : String(value)));
       box.appendChild(el('span', '', label));
       grid.appendChild(box);
     }

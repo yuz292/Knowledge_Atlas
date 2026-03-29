@@ -226,7 +226,7 @@
   function buildButton() {
     const btn = document.createElement('button');
     btn.id = 'ka-fn-btn';
-    btn.textContent = '⊙ Function';
+    btn.textContent = '⊙ Page Function';
     btn.title = 'Goal, user scenarios, and use cases served by this page';
     btn.addEventListener('mouseenter', openPanel);
     btn.addEventListener('click', openPanel);
