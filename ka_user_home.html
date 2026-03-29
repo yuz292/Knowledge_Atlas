@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My ATLAS — Knowledge Atlas</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f4f5f7;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ──────────────────────────────────────────────────────── */
+    .top-bar {
+      background: #002d5b;
+      color: #fff;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 16px;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .top-bar-brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      text-decoration: none;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .top-bar-brand span { color: #7dd3fc; }
+    .top-bar-spacer { flex: 1; }
+    .top-bar-user {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .88rem;
+    }
+    .top-bar-role-badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.15);
+    }
+    .top-bar-logout {
+      background: none; border: 1px solid rgba(255,255,255,.3);
+      color: #fff; border-radius: 5px;
+      padding: 4px 12px; cursor: pointer;
+      font-size: .82rem;
+      transition: background .15s;
+    }
+    .top-bar-logout:hover { background: rgba(255,255,255,.1); }
+    .top-bar-login {
+      background: #1a56a4; color: #fff;
+      border: none; border-radius: 6px;
+      padding: 6px 14px; cursor: pointer;
+      font-size: .85rem; font-weight: 600;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .top-bar-login:hover { background: #154899; }
+
+    /* ── Layout ────────────────────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 54px);
+    }
+
+    /* ── Left Sidebar ──────────────────────────────────────────────────── */
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: #fff;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 0 16px;
+    }
+
+    .sidebar-section-label {
+      padding: 0 18px 8px;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #9ca3af;
+    }
+
+    .role-block {
+      margin: 0 12px 24px;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1.5px solid #e5e7eb;
+      background: var(--role-bg, #f9fafb);
+    }
+    .role-icon {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+    .role-label {
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--role-color, #374151);
+    }
+    .role-tagline {
+      font-size: .8rem;
+      color: #6b7280;
+      margin-top: 4px;
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    .workflow-nav {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .wf-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #374151;
+      font-size: .88rem;
+      border-left: 3px solid transparent;
+      transition: background .12s, border-color .12s;
+    }
+    .wf-nav-item:hover {
+      background: #f0f7ff;
+      border-left-color: #1a56a4;
+      color: #1a56a4;
+    }
+    .wf-nav-item.active {
+      background: #eff6ff;
+      border-left-color: #1a56a4;
+      color: #1a56a4;
+      font-weight: 600;
+    }
+    .wf-nav-icon { font-size: 1rem; flex-shrink: 0; }
+    .wf-nav-badge {
+      margin-left: auto;
+      font-size: .68rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: #e5e7eb;
+      color: #6b7280;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .sidebar-bottom {
+      padding: 16px 12px 0;
+      border-top: 1px solid #f0f0f0;
+      margin-top: 8px;
+    }
+    .sidebar-link {
+      display: block;
+      padding: 7px 8px;
+      font-size: .83rem;
+      color: #6b7280;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background .12s, color .12s;
+    }
+    .sidebar-link:hover { background: #f3f4f6; color: #374151; }
+
+    /* ── Main Content ─────────────────────────────────────────────────── */
+    .main {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .welcome-header {
+      margin-bottom: 28px;
+    }
+    .welcome-name {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #111827;
+    }
+    .welcome-desc {
+      font-size: .95rem;
+      color: #6b7280;
+      margin-top: 6px;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    /* ── Resume Card ─────────────────────────────────────────────────── */
+    .resume-card {
+      background: linear-gradient(135deg, #002d5b 0%, #1a56a4 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .resume-card-icon { font-size: 2rem; flex-shrink: 0; }
+    .resume-card-body { flex: 1; }
+    .resume-card-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: .8;
+      margin-bottom: 2px;
+    }
+    .resume-card-title { font-size: 1.1rem; font-weight: 700; }
+    .resume-card-step { font-size: .85rem; opacity: .85; margin-top: 2px; }
+    .resume-card-btn {
+      background: rgba(255,255,255,.2);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,.4);
+      border-radius: 8px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s;
+    }
+    .resume-card-btn:hover { background: rgba(255,255,255,.32); }
+
+    /* ── Section Headings ────────────────────────────────────────────── */
+    .section-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid #e5e7eb;
+    }
+
+    /* ── Workflow Cards Grid ─────────────────────────────────────────── */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    .workflow-card {
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .15s, box-shadow .15s, transform .12s;
+    }
+    .workflow-card:hover {
+      border-color: var(--wf-color, #1a56a4);
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+      transform: translateY(-2px);
+    }
+    .wf-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .wf-card-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .wf-card-meta { flex: 1; min-width: 0; }
+    .wf-card-badge {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+    .wf-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #111827;
+    }
+    .wf-card-subtitle {
+      font-size: .82rem;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .wf-card-objective {
+      font-size: .85rem;
+      color: #374151;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+    .wf-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    .wf-card-time {
+      font-size: .78rem;
+      color: #9ca3af;
+    }
+    .wf-card-steps-preview {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .wf-step-pip {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #d1d5db;
+      flex-shrink: 0;
+    }
+    .wf-step-pip.done { background: var(--wf-color, #1a56a4); }
+    .wf-card-cta {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--wf-color, #1a56a4);
+      text-decoration: none;
+      transition: opacity .12s;
+    }
+    .wf-card-cta:hover { opacity: .75; }
+
+    /* ── Role Switcher ────────────────────────────────────────────────── */
+    .role-switcher-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .role-switch-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid #e5e7eb;
+      background: #fff;
+      color: #374151;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .role-switch-btn:hover { border-color: #93c5fd; color: #1a56a4; }
+    .role-switch-btn.active {
+      background: var(--role-color, #1a56a4);
+      border-color: var(--role-color, #1a56a4);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* ── Login overlay ───────────────────────────────────────────────── */
+    #login-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 36px 32px;
+      width: 380px;
+      max-width: 95vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .login-modal h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+    .login-modal p { font-size: .88rem; color: #6b7280; margin-bottom: 20px; }
+    .login-field label { display: block; font-size: .8rem; font-weight: 600; margin-bottom: 4px; color: #374151; }
+    .login-field input {
+      width: 100%; border: 1.5px solid #d1d5db;
+      border-radius: 7px; padding: 9px 12px;
+      font-size: .9rem; outline: none; margin-bottom: 14px;
+    }
+    .login-field input:focus { border-color: #1a56a4; }
+    .login-submit-btn {
+      width: 100%;
+      background: #1a56a4; color: #fff;
+      border: none; border-radius: 8px;
+      padding: 11px; font-size: .95rem; font-weight: 700;
+      cursor: pointer; transition: background .15s;
+    }
+    .login-submit-btn:hover { background: #154899; }
+    .login-error { font-size: .82rem; color: #dc2626; margin-top: 8px; }
+    .login-links { margin-top: 14px; font-size: .82rem; color: #6b7280; display: flex; justify-content: space-between; }
+    .login-links a { color: #1a56a4; text-decoration: none; }
+    .login-links a:hover { text-decoration: underline; }
+    .login-demo-btn {
+      background: none; border: 1px solid #e5e7eb;
+      border-radius: 8px; padding: 8px; font-size: .82rem;
+      color: #6b7280; cursor: pointer; width: 100%;
+      margin-top: 10px; transition: background .12s;
+    }
+    .login-demo-btn:hover { background: #f9fafb; }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 20px 16px; }
+      .workflow-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <a href="ka_home.html" class="top-bar-brand">Knowledge <span>Atlas</span></a>
+  <nav style="display:flex;gap:16px;font-size:.85rem">
+    <a href="ka_demo_v04.html" style="color:rgba(255,255,255,.8);text-decoration:none">Ask</a>
+    <a href="ka_evidence.html" style="color:rgba(255,255,255,.8);text-decoration:none">Evidence</a>
+    <a href="ka_topics.html" style="color:rgba(255,255,255,.8);text-decoration:none">Topics</a>
+    <a href="ka_schedule.html" style="color:rgba(255,255,255,.8);text-decoration:none">Schedule</a>
+  </nav>
+  <div class="top-bar-spacer"></div>
+  <div class="top-bar-user" id="top-bar-user-area">
+    <span id="top-bar-name" style="font-size:.88rem;opacity:.85"></span>
+    <span id="top-bar-role-badge" class="top-bar-role-badge" style="display:none"></span>
+    <button class="top-bar-logout" id="top-bar-logout" style="display:none">Log out</button>
+    <a href="#" class="top-bar-login" id="top-bar-login-btn">Log in →</a>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Role block -->
+    <div class="sidebar-section-label">Your Role</div>
+    <div class="role-block" id="sidebar-role-block">
+      <div class="role-icon" id="sidebar-role-icon">👤</div>
+      <div class="role-label" id="sidebar-role-label">Loading…</div>
+      <div class="role-tagline" id="sidebar-role-tagline"></div>
+    </div>
+
+    <!-- Workflow nav -->
+    <div class="sidebar-section-label">Recommended Workflows</div>
+    <nav class="workflow-nav" id="sidebar-workflow-nav" aria-label="Recommended workflows"></nav>
+
+    <!-- Bottom links -->
+    <div class="sidebar-bottom">
+      <a class="sidebar-link" href="ka_dashboard.html">📊 My Dashboard</a>
+      <a class="sidebar-link" href="ka_schedule.html">📅 Schedule</a>
+      <a class="sidebar-link" href="ka_student_setup.html">🔧 Setup Guide</a>
+      <a class="sidebar-link" href="ka_home.html">🏠 ATLAS Home</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main-content">
+
+    <!-- Welcome -->
+    <div class="welcome-header">
+      <div class="welcome-name" id="welcome-name">Welcome to ATLAS</div>
+      <div class="welcome-desc" id="welcome-desc">
+        Loading your personalised workspace…
+      </div>
+    </div>
+
+    <!-- Role switcher (visible when not logged in / for exploration) -->
+    <div id="role-switcher-section" style="margin-bottom:28px">
+      <div class="section-heading">Explore as a different role</div>
+      <div class="role-switcher-row" id="role-switcher-row"></div>
+    </div>
+
+    <!-- Resume card (only shown if mid-workflow) -->
+    <div id="resume-card-section" style="display:none">
+      <div class="resume-card" id="resume-card">
+        <div class="resume-card-icon" id="resume-icon">▶️</div>
+        <div class="resume-card-body">
+          <div class="resume-card-label">Continue where you left off</div>
+          <div class="resume-card-title" id="resume-title"></div>
+          <div class="resume-card-step" id="resume-step"></div>
+        </div>
+        <a href="#" class="resume-card-btn" id="resume-btn">Resume →</a>
+      </div>
+    </div>
+
+    <!-- Workflow grid -->
+    <div class="section-heading" id="workflow-section-heading">Your Workflows</div>
+    <div class="workflow-grid" id="workflow-grid"></div>
+
+  </main>
+</div>
+
+<!-- LOGIN OVERLAY (shown when not authenticated) -->
+<div id="login-overlay" style="display:none">
+  <div class="login-modal">
+    <h2>Log in to ATLAS</h2>
+    <p>Enter your UCSD email and course password to access your personalised workspace.</p>
+    <div class="login-field">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" placeholder="you@ucsd.edu" autocomplete="email" />
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" placeholder="Your ATLAS password" autocomplete="current-password" />
+    </div>
+    <button class="login-submit-btn" id="login-submit-btn">Log in →</button>
+    <div class="login-error" id="login-error" style="display:none"></div>
+    <div class="login-links">
+      <a href="ka_register.html">Register as a contributor</a>
+      <a href="ka_forgot_password.html">Forgot password?</a>
+    </div>
+    <button class="login-demo-btn" id="login-demo-btn">Continue in demo mode (no login)</button>
+  </div>
+</div>
+
+<script src="ka_workflows.js"></script>
+<script src="ka_article_collector.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const KA_AUTH_API = 'http://localhost:8765';
+
+  /* ── User / Auth State ───────────────────────────────────────────────── */
+
+  let currentUser = null;
+  let currentRole = 'student_explorer';
+  let demoMode = false;
+
+  function loadUser() {
+    const token = localStorage.getItem('ka_access_token');
+    const stored = localStorage.getItem('ka_current_user');
+    if (stored) {
+      try { currentUser = JSON.parse(stored); } catch (e) { currentUser = null; }
+    }
+    if (!token && !stored) {
+      // Check URL param for role (for demo / exploration)
+      const params = new URLSearchParams(window.location.search);
+      const urlRole = params.get('role');
+      if (urlRole && window.KA_WORKFLOWS.roleMeta[urlRole]) {
+        currentRole = urlRole;
+        demoMode = true;
+      } else {
+        // Show login overlay
+        document.getElementById('login-overlay').style.display = 'flex';
+        demoMode = true; // default to demo so overlay can be dismissed
+      }
+    } else {
+      document.getElementById('login-overlay').style.display = 'none';
+    }
+
+    // Derive role from user object or localStorage
+    if (currentUser) {
+      const track = currentUser.track || currentUser.trackChoice1 || '';
+      if (currentUser.role === 'instructor' || currentUser.role === 'admin') {
+        currentRole = 'instructor';
+      } else if (track.toLowerCase().includes('gui')) {
+        currentRole = 'student_explorer'; // GUI track students use student mode
+      } else {
+        currentRole = localStorage.getItem('ka_user_role') || 'student_explorer';
+      }
+    }
+  }
+
+  /* ── Top Bar ─────────────────────────────────────────────────────────── */
+
+  function renderTopBar() {
+    const meta = window.KA_WORKFLOWS.roleMeta[currentRole];
+    if (currentUser || !demoMode) {
+      const name = currentUser ? (currentUser.name || currentUser.email || 'Researcher') : 'Demo User';
+      document.getElementById('top-bar-name').textContent = name;
+      document.getElementById('top-bar-role-badge').textContent = meta ? meta.label : '';
+      document.getElementById('top-bar-role-badge').style.display = 'inline-block';
+      document.getElementById('top-bar-logout').style.display = 'inline-block';
+      document.getElementById('top-bar-login-btn').style.display = 'none';
+    }
+  }
+
+  /* ── Sidebar ─────────────────────────────────────────────────────────── */
+
+  function renderSidebar(role) {
+    const meta = window.KA_WORKFLOWS.roleMeta[role];
+    if (!meta) return;
+
+    // Role block
+    document.getElementById('sidebar-role-icon').textContent = meta.icon;
+    document.getElementById('sidebar-role-label').textContent = meta.label;
+    document.getElementById('sidebar-role-tagline').textContent = meta.tagline;
+    const roleBlock = document.getElementById('sidebar-role-block');
+    roleBlock.style.setProperty('--role-color', meta.color);
+    roleBlock.style.setProperty('--role-bg', meta.bgLight);
+    roleBlock.style.borderColor = meta.color + '55';
+
+    // Workflow nav
+    const nav = document.getElementById('sidebar-workflow-nav');
+    const wfIds = window.KA_WORKFLOWS.byRole[role] || [];
+    nav.innerHTML = wfIds.map(function (id) {
+      const wf = window.KA_WORKFLOWS.workflows[id];
+      if (!wf) return '';
+      const progress = getWorkflowProgress(id);
+      const done = progress ? progress.currentStep : 0;
+      const total = wf.steps.length;
+      return '<a class="wf-nav-item" href="ka_workflow_hub.html?wf=' + id + '">' +
+        '<span class="wf-nav-icon">' + wf.icon + '</span>' +
+        '<span>' + wf.title + '</span>' +
+        (done > 0 ? '<span class="wf-nav-badge">' + done + '/' + total + '</span>' : '') +
+      '</a>';
+    }).join('');
+  }
+
+  /* ── Role Switcher ───────────────────────────────────────────────────── */
+
+  function renderRoleSwitcher() {
+    const row = document.getElementById('role-switcher-row');
+    const roles = Object.keys(window.KA_WORKFLOWS.roleMeta);
+    row.innerHTML = roles.map(function (r) {
+      const meta = window.KA_WORKFLOWS.roleMeta[r];
+      const isActive = r === currentRole;
+      return '<button class="role-switch-btn' + (isActive ? ' active' : '') + '"' +
+        ' data-role="' + r + '"' +
+        ' style="' + (isActive ? '--role-color:' + meta.color : '') + '">' +
+        meta.icon + ' ' + meta.label +
+      '</button>';
+    }).join('');
+
+    row.querySelectorAll('.role-switch-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchRole(btn.dataset.role);
+      });
+    });
+
+    // Hide role switcher if user is logged in with a fixed role
+    if (currentUser && !demoMode) {
+      document.getElementById('role-switcher-section').style.display = 'none';
+    }
+  }
+
+  function switchRole(role) {
+    currentRole = role;
+    localStorage.setItem('ka_user_role', role);
+    render(role);
+    // Update URL without reload
+    const url = new URL(window.location.href);
+    url.searchParams.set('role', role);
+    history.replaceState(null, '', url.toString());
+  }
+
+  /* ── Welcome ─────────────────────────────────────────────────────────── */
+
+  function renderWelcome(role) {
+    const meta = window.KA_WORKFLOWS.roleMeta[role];
+    if (!meta) return;
+    const name = currentUser ? (currentUser.name || currentUser.email).split('@')[0] : null;
+    document.getElementById('welcome-name').textContent =
+      name ? 'Welcome back, ' + name : 'Welcome to ATLAS';
+    document.getElementById('welcome-desc').textContent = meta.description;
+  }
+
+  /* ── Resume Card ─────────────────────────────────────────────────────── */
+
+  function getWorkflowProgress(wfId) {
+    try {
+      return JSON.parse(localStorage.getItem('ka_wf_progress_' + wfId) || 'null');
+    } catch (e) { return null; }
+  }
+
+  function renderResumeCard(role) {
+    const wfIds = window.KA_WORKFLOWS.byRole[role] || [];
+    let latestProgress = null;
+    let latestWfId = null;
+    let latestTime = 0;
+
+    wfIds.forEach(function (id) {
+      const p = getWorkflowProgress(id);
+      if (p && p.lastVisited > latestTime) {
+        latestTime = p.lastVisited;
+        latestProgress = p;
+        latestWfId = id;
+      }
+    });
+
+    const section = document.getElementById('resume-card-section');
+    if (!latestProgress || !latestWfId) { section.style.display = 'none'; return; }
+
+    const wf = window.KA_WORKFLOWS.workflows[latestWfId];
+    if (!wf) { section.style.display = 'none'; return; }
+
+    const stepIdx = Math.min(latestProgress.currentStep, wf.steps.length - 1);
+    const step = wf.steps[stepIdx];
+    section.style.display = 'block';
+    document.getElementById('resume-icon').textContent = wf.icon;
+    document.getElementById('resume-title').textContent = wf.title;
+    document.getElementById('resume-step').textContent =
+      'Step ' + (stepIdx + 1) + ' of ' + wf.steps.length + ': ' + (step ? step.title : '');
+    document.getElementById('resume-btn').href = 'ka_workflow_hub.html?wf=' + latestWfId + '&step=' + stepIdx;
+  }
+
+  /* ── Workflow Grid ───────────────────────────────────────────────────── */
+
+  function renderWorkflowGrid(role) {
+    const grid = document.getElementById('workflow-grid');
+    const meta = window.KA_WORKFLOWS.roleMeta[role];
+    const wfIds = window.KA_WORKFLOWS.byRole[role] || [];
+
+    document.getElementById('workflow-section-heading').textContent =
+      meta ? meta.label + ' Workflows' : 'Your Workflows';
+
+    grid.innerHTML = wfIds.map(function (id) {
+      const wf = window.KA_WORKFLOWS.workflows[id];
+      if (!wf) return '';
+      const progress = getWorkflowProgress(id);
+      const done = progress ? Math.min(progress.currentStep, wf.steps.length) : 0;
+      const totalSteps = wf.steps.length;
+      const isStarted = done > 0;
+      const isComplete = done >= totalSteps;
+
+      const pips = wf.steps.map(function (_, i) {
+        return '<div class="wf-step-pip' + (i < done ? ' done' : '') + '"' +
+          ' style="' + (i < done ? '--wf-color:' + wf.badgeColor : '') + '"></div>';
+      }).join('');
+
+      return '<a href="ka_workflow_hub.html?wf=' + id + '" class="workflow-card" style="--wf-color:' + wf.badgeColor + '">' +
+        '<div class="wf-card-header">' +
+          '<div class="wf-card-icon">' + wf.icon + '</div>' +
+          '<div class="wf-card-meta">' +
+            '<div class="wf-card-badge" style="background:' + wf.badgeColor + '">' + wf.badge + '</div>' +
+            '<div class="wf-card-title">' + wf.title + '</div>' +
+            '<div class="wf-card-subtitle">' + wf.subtitle + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="wf-card-objective">' + wf.objective + '</div>' +
+        '<div class="wf-card-steps-preview">' + pips + '</div>' +
+        '<div class="wf-card-footer">' +
+          '<span class="wf-card-time">⏱ ' + wf.estimatedTime + ' · ' + totalSteps + ' steps</span>' +
+          '<span class="wf-card-cta">' +
+            (isComplete ? '✓ Completed' : isStarted ? 'Continue Step ' + (done + 1) + ' →' : 'Start →') +
+          '</span>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  }
+
+  /* ── Main Render ─────────────────────────────────────────────────────── */
+
+  function render(role) {
+    renderWelcome(role);
+    renderSidebar(role);
+    renderRoleSwitcher();
+    renderResumeCard(role);
+    renderWorkflowGrid(role);
+
+    // Update active state in role switcher
+    document.querySelectorAll('.role-switch-btn').forEach(function (btn) {
+      const meta = window.KA_WORKFLOWS.roleMeta[btn.dataset.role];
+      btn.classList.toggle('active', btn.dataset.role === role);
+      if (btn.dataset.role === role && meta) {
+        btn.style.setProperty('--role-color', meta.color);
+        btn.style.background = meta.color;
+        btn.style.borderColor = meta.color;
+        btn.style.color = '#fff';
+      } else {
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    });
+  }
+
+  /* ── Login ───────────────────────────────────────────────────────────── */
+
+  function initLogin() {
+    const btn = document.getElementById('login-submit-btn');
+    const demoBtn = document.getElementById('login-demo-btn');
+    const errorEl = document.getElementById('login-error');
+
+    btn.addEventListener('click', async function () {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      if (!email || !password) { showError('Please enter both email and password.'); return; }
+
+      btn.textContent = 'Logging in…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(KA_AUTH_API + '/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) { showError(data.detail || 'Login failed.'); btn.textContent = 'Log in →'; btn.disabled = false; return; }
+
+        localStorage.setItem('ka_access_token', data.access_token);
+        localStorage.setItem('ka_refresh_token', data.refresh_token);
+        localStorage.setItem('ka_current_user', JSON.stringify(data.user));
+        localStorage.setItem('ka_logged_in', '1');
+        currentUser = data.user;
+        document.getElementById('login-overlay').style.display = 'none';
+        loadUser();
+        renderTopBar();
+        render(currentRole);
+      } catch (e) {
+        // Auth server not reachable — offer demo mode
+        showError('Auth server not reachable. Use demo mode to continue.');
+        btn.textContent = 'Log in →'; btn.disabled = false;
+      }
+    });
+
+    demoBtn.addEventListener('click', function () {
+      demoMode = true;
+      document.getElementById('login-overlay').style.display = 'none';
+      render(currentRole);
+    });
+
+    document.getElementById('top-bar-login-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('login-overlay').style.display = 'flex';
+    });
+
+    document.getElementById('top-bar-logout').addEventListener('click', function () {
+      localStorage.removeItem('ka_access_token');
+      localStorage.removeItem('ka_refresh_token');
+      localStorage.removeItem('ka_current_user');
+      localStorage.removeItem('ka_logged_in');
+      currentUser = null;
+      demoMode = true;
+      renderTopBar();
+      render(currentRole);
+    });
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+    }
+  }
+
+  /* ── Boot ────────────────────────────────────────────────────────────── */
+
+  function boot() {
+    loadUser();
+    renderTopBar();
+    render(currentRole);
+    initLogin();
+    window.KA_COLLECTOR.init();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
+</script>
+</body>
+</html>
