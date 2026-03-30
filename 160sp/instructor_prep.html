@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instructor Pre-Class Checklist · COGS 160 Spring 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1C3D3A; --teal: #2A7868; --teal-lt: #5AC8AA; --teal-bg: #E6F5F0;
+  --amber: #E8872A; --amber-lt: #FFF3E0; --amber-dk: #9a5010;
+  --cream: #F7F4EF; --ink: #2C2C2C; --muted: #6B6B6B; --border: #D8D0C5;
+  --white: #FFFFFF; --rose: #A84F6B; --green: #1A7A50;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.65; }
+.top-nav { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; height: 52px; gap: 1.2rem; font-size: 0.85rem; position: sticky; top: 0; z-index: 100; }
+.nav-brand { color: var(--amber); font-weight: 800; font-size: 1.05rem; text-decoration: none; }
+.nav-sep { color: rgba(255,255,255,0.2); }
+.nav-link { color: #b2dfdb; text-decoration: none; padding: 4px 10px; border-radius: 5px; transition: background 0.15s; }
+.nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-right { margin-left: auto; color: rgba(255,255,255,0.4); font-size: 0.75rem; }
+
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #152e2b 100%); color: #fff; padding: 2.5rem 2rem 2rem; text-align: center; }
+.hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 0.5rem; }
+.hero h1 { font-family: Georgia, serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.4rem; }
+.hero-sub { font-size: 0.95rem; color: rgba(255,255,255,0.65); max-width: 640px; margin: 0 auto; }
+
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+/* Phase sections */
+.phase { margin-bottom: 2rem; }
+.phase-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--teal); }
+.phase-badge { padding: 0.3rem 0.8rem; border-radius: 5px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.phase-badge-now { background: var(--rose); color: #fff; }
+.phase-badge-soon { background: var(--amber); color: #fff; }
+.phase-badge-later { background: var(--muted); color: #fff; }
+.phase-title { font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); }
+
+/* Checklist items */
+.check-item { display: flex; gap: 0.75rem; padding: 0.9rem 1rem; background: var(--white); border-radius: 8px; margin-bottom: 0.6rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05); align-items: flex-start; }
+.check-box { width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 0.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.check-box:hover { border-color: var(--teal); }
+.check-box.done { background: var(--teal); border-color: var(--teal); }
+.check-box.done::after { content: '✓'; color: #fff; font-size: 0.75rem; font-weight: 700; }
+.check-body { flex: 1; }
+.check-body h3 { font-size: 0.92rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+.check-body p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+.check-body .status { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; margin-left: 0.4rem; }
+.status-done { background: var(--teal-bg); color: var(--teal); }
+.status-todo { background: var(--amber-lt); color: var(--amber-dk); }
+.status-blocked { background: #fdf0ef; color: var(--rose); }
+.check-item.done-item { opacity: 0.6; }
+.check-item.done-item h3 { text-decoration: line-through; }
+
+/* Notes */
+.note { background: var(--teal-bg); border-left: 3px solid var(--teal); border-radius: 0 6px 6px 0; padding: 0.8rem 1rem; margin: 1rem 0; font-size: 0.85rem; }
+.note-label { font-weight: 700; color: var(--teal); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.25rem; }
+
+/* Progress bar */
+.progress-bar { background: var(--border); border-radius: 6px; height: 8px; margin: 1rem 0 2rem; overflow: hidden; }
+.progress-fill { background: var(--teal); height: 100%; border-radius: 6px; transition: width 0.3s; }
+.progress-text { font-size: 0.78rem; color: var(--muted); margin-top: -0.5rem; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
+  <span class="nav-sep">|</span>
+  <a href="ka_schedule.html" class="nav-link">Schedule</a>
+  <a href="week1_agenda.html" class="nav-link">Week 1</a>
+  <a href="ka_student_setup.html" class="nav-link">Setup</a>
+  <span class="nav-right">Instructor View · COGS 160</span>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">COGS 160 · Spring 2026 · Instructor</p>
+  <h1>Pre-Class Preparation Checklist</h1>
+  <p class="hero-sub">Everything that needs to be ready before Day 1 and through the first three weeks.</p>
+</header>
+
+<div class="page-wrap">
+
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="progress-text" id="progressText">0 of 0 items completed</div>
+
+  <!-- ════════════════════════════════════════════
+       BEFORE DAY 1
+  ════════════════════════════════════════════ -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-badge phase-badge-now">Do now</span>
+      <span class="phase-title">Before Day 1 (Tuesday Week 1)</span>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>KA site is live and registration works</h3>
+        <p>Test the full flow: ka_register.html → ka_login.html → ka_user_home.html. Confirm the auth server is running and students can create accounts. Test on a fresh browser with no cached state.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>GitHub repo is public and cloneable</h3>
+        <p>Verify <code>git clone https://github.com/dkirsh/Knowledge_Atlas.git</code> works from a machine that has never accessed the repo. Students need this by Week 3 but you should confirm it now.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Question bank has enough questions for all students</h3>
+        <p>Each student gets 2 questions (A0 assignment). With N students you need at least 2N unique question assignments. The QUERY_BANK has 130 questions across 11 topics. Prepare the assignment sheet mapping student → questions.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>AI subscription recommendation is accurate</h3>
+        <p>Confirm pricing for Claude Desktop ($20/mo), ChatGPT Plus ($20/mo), and alternatives. Verify that free tiers are genuinely insufficient for sustained multi-turn sessions so the recommendation is honest.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Week 1 slides or talking points ready</h3>
+        <p>You need material for: syllabus overview, KA system walkthrough (use ka_explain_system.html live), 7 AI failure modes presentation, and A0 assignment introduction. The failure modes content is in the Designing_Experiments course site and also embedded in the Week 1 agenda page.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>A0 assignment page is complete and linked</h3>
+        <p>Verify ka_collect_articles.html renders correctly, links to the Google search guide, and the contribute page accepts article submissions. Test the upload flow end to end.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>All weekly agenda pages are live</h3>
+        <p>Eight agenda pages (week1–8), the track signup page, and the schedule page with "View Full Agenda" links. Navigate the full chain: Week 1 → 2 → 3 → … → 8 using the next buttons. Verify no broken links.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="before">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Push all local commits to GitHub</h3>
+        <p>You are currently 8+ commits ahead of origin. Run <code>git push origin master</code> from your Mac terminal. Students cannot see the new pages until they are on GitHub.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       BEFORE WEEK 2
+  ════════════════════════════════════════════ -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-badge phase-badge-soon">Week 2 prep</span>
+      <span class="phase-title">Before Week 2 (AI Demo Day)</span>
+    </div>
+
+    <div class="check-item" data-group="week2">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Demo task prepared: PDF Relevance Filter</h3>
+        <p>The Week 2 demo requires a pre-loaded first prompt (role setup + context + spec). Write and test this prompt in advance. Have 3–5 labeled example PDFs ready (known relevant and known irrelevant) for the verification step. The other prompts are named but intentionally unscripted — you will improvise based on the AI's output.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="week2">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Student task bank populated</h3>
+        <p>Students begin their own AI tasks in Week 2. The tasks should be drawn from ka_thursday_tasks.html or equivalent. Each task needs a corresponding context file (in 160sp/context/). Verify that context files exist for all four tracks.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="week2">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Submission mechanism for methodology logs</h3>
+        <p>Students must submit their methodology log and task output at the end of Week 2. Decide: Google Form? Canvas? Git commit? Email? Whatever you choose, test it and include the link on the Week 2 agenda page.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       BEFORE WEEK 3
+  ════════════════════════════════════════════ -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-badge phase-badge-later">Week 3 prep</span>
+      <span class="phase-title">Before Week 3 (Track Formation)</span>
+    </div>
+
+    <div class="check-item" data-group="week3">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Track signup page is functional</h3>
+        <p>Verify ka_track_signup.html renders correctly and the signup form submits data somewhere you can read it. Students finalize track choice this week.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="week3">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>GitHub branch structure ready for teams</h3>
+        <p>Create the four staging branches: <code>track/1-staging</code>, <code>track/2-staging</code>, <code>track/3-staging</code>, <code>track/4-staging</code>. Students will create personal branches off these. Set branch protection rules if desired.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="week3">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Sprint 1 contract template available</h3>
+        <p>Students write Sprint 1 contracts on Thursday. Provide a template or example contract. The format is described in the Week 3 agenda but a downloadable template saves time.</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-group="week3">
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-body">
+        <h3>Track assignment pages reviewed for clarity</h3>
+        <p>Each track assignment page (ka_tag_assignment, ka_article_finder_assignment, ka_vr_assignment, ka_gui_assignment) must be self-explanatory — reading it alone should be enough for a student to understand their Sprint 1 deliverable. Read them fresh, as if you were a student, and fix any ambiguity.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <div class="note-label">Ongoing throughout the quarter</div>
+    <p>Keep the methodology log submission system working. Review and approve Sprint contracts within 48 hours of submission. Monitor the article corpus for quality — spot-check 10% of student-submitted PDFs for relevance. Update weekly agenda pages if plans change.</p>
+  </div>
+
+</div>
+
+<script>
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  el.closest('.check-item').classList.toggle('done-item');
+  updateProgress();
+  saveState();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.check-box').length;
+  const done = document.querySelectorAll('.check-box.done').length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = done + ' of ' + total + ' items completed (' + pct + '%)';
+}
+
+function saveState() {
+  const states = [];
+  document.querySelectorAll('.check-box').forEach((el, i) => {
+    states.push(el.classList.contains('done') ? 1 : 0);
+  });
+  try { sessionStorage.setItem('instrPrep', JSON.stringify(states)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem('instrPrep'));
+    if (saved) {
+      document.querySelectorAll('.check-box').forEach((el, i) => {
+        if (saved[i]) { el.classList.add('done'); el.closest('.check-item').classList.add('done-item'); }
+      });
+    }
+  } catch(e) {}
+  updateProgress();
+}
+
+loadState();
+</script>
+</body>
+</html>
