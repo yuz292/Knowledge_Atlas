@@ -1070,7 +1070,7 @@ async def article_stats(request: Request):
 # QUESTION CLAIMING (A0 Assignment)
 # ════════════════════════════════════════════════
 
-TOTAL_QUESTIONS = 8  # Q01–Q08
+TOTAL_QUESTIONS = 30  # Q01–Q30 (covers all 9 IV domains across the topic ontology)
 
 
 def _current_round(db) -> int:
