@@ -457,7 +457,26 @@ def reject_registration(uid: str, req: RejectRequest, user=Depends(require_instr
 # ── HEALTH CHECK
 @app.get("/health")
 def health():
-    return {"status": "ok", "server": "Knowledge Atlas Auth", "version": "1.0.0"}
+    return {"status": "ok", "server": "Knowledge Atlas Auth", "version": "1.1.0",
+            "modules": ["auth", "articles"]}
+
+# ════════════════════════════════════════════════
+# ARTICLE SUBMISSION MODULE
+# ════════════════════════════════════════════════
+# Import and configure the article submission endpoints (see ka_article_endpoints.py)
+try:
+    import ka_article_endpoints
+    ka_article_endpoints.configure(
+        get_db=get_db,
+        get_current_user=get_current_user,
+        get_current_user_optional=None,  # articles module uses its own optional auth
+        require_instructor=require_instructor,
+    )
+    app.include_router(ka_article_endpoints.router)
+    print("[KA-AUTH] Article submission module loaded ✓")
+except ImportError as e:
+    print(f"[KA-AUTH] Article submission module not available: {e}")
+    print("[KA-AUTH] Server running with auth-only endpoints")
 
 # ── RESET PAGE REDIRECT (convenience link in reset email)
 @app.get("/reset")
@@ -477,6 +496,12 @@ def reset_page_redirect(token: str):
 if __name__ == "__main__":
     import uvicorn
     init_db()
+    # Initialize article tables if module is loaded
+    try:
+        ka_article_endpoints._init_article_tables()
+        print("[KA-AUTH] Article tables initialized ✓")
+    except Exception as e:
+        print(f"[KA-AUTH] Article table init skipped: {e}")
     print("\n" + "═"*60)
     print("  Knowledge Atlas Auth Server")
     print("  http://localhost:8765")

@@ -532,6 +532,7 @@ function handleFiles(fileList) {
     const dup = findDuplicate(meta);
     PENDING_FILES.push({
       id: 'f-' + Date.now() + '-' + Math.random().toString(16).slice(2,6),
+      file: f,  // Keep the actual File object for upload
       fileName: f.name,
       sizeMb: (f.size/(1024*1024)).toFixed(1),
       meta: meta,
@@ -585,8 +586,11 @@ function removePending(id) {
   renderFileTable();
 }
 
+/* ── SERVER CONFIG ── */
+const KA_API = window.__KA_CONFIG__?.apiBase || 'http://localhost:8765';
+
 /* ── SUBMIT ── */
-function submitContribution() {
+async function submitContribution() {
   const citationText = document.getElementById('citationInput').value.trim();
   const doi = document.getElementById('editDOI').value.trim();
   const title = document.getElementById('editTitle').value.trim();
@@ -595,7 +599,8 @@ function submitContribution() {
   const year = document.getElementById('editYear').value.trim();
   const why = document.getElementById('editWhy').value.trim();
 
-  const hasPDFs = PENDING_FILES.filter(f => f.status !== 'duplicate').length > 0;
+  const uploadableFiles = PENDING_FILES.filter(f => f.status !== 'duplicate' && f.file);
+  const hasPDFs = uploadableFiles.length > 0;
   const hasCitation = citationText.length > 0;
   const hasManualMeta = title.length > 0 || doi.length > 0;
 
@@ -604,18 +609,73 @@ function submitContribution() {
     return;
   }
 
-  // Stage non-duplicate PDFs
-  PENDING_FILES.forEach(f => { if (f.status !== 'duplicate') f.status = 'staged'; });
-  renderFileTable();
+  // Build the citation block: explicit text + manual metadata line
+  let citations = citationText;
+  if (hasManualMeta && !hasCitation) {
+    const parts = [title, authors, journal, year, doi].filter(Boolean);
+    citations = parts.join('. ');
+  }
 
-  const submissionCount = (hasPDFs ? PENDING_FILES.filter(f => f.status === 'staged').length : 0) + (hasCitation ? citationText.split(/\n+/).filter(Boolean).length : 0) + (hasManualMeta && !hasCitation && !hasPDFs ? 1 : 0);
+  // Build FormData for server submission
+  const formData = new FormData();
+  uploadableFiles.forEach(f => formData.append('files', f.file, f.fileName));
+  if (citations) formData.append('citations', citations);
+  if (why) formData.append('notes', why);
+  formData.append('source_surface', 'ka_contribute');
 
-  showConfirm(
-    'Submission received — thank you!',
-    `${submissionCount} item(s) staged for review. Duplicates were caught immediately. ` +
-    'Non-duplicates enter the nightly review queue. Accepted papers are processed by the ' +
-    'Atlas extraction pipeline within 24–48 hours. You are making science better.'
-  );
+  // Attach auth token if logged in
+  const headers = {};
+  const token = localStorage.getItem('ka_access_token');
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+
+  // Show loading state
+  const submitBtn = document.querySelector('.btn-primary[onclick*="submitContribution"]') ||
+                    document.querySelector('.btn-primary');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
+
+  try {
+    const resp = await fetch(KA_API + '/api/articles/submit', {
+      method: 'POST', body: formData, headers: headers
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({ detail: 'Server error' }));
+      showConfirm('Submission failed', err.detail || 'An unexpected error occurred. Please try again.');
+      return;
+    }
+
+    const result = await resp.json();
+    const s = result.summary;
+
+    // Update local file statuses based on server response
+    if (result.items) {
+      result.items.forEach(item => {
+        const local = PENDING_FILES.find(f => f.fileName === item.filename);
+        if (local) {
+          local.status = item.status === 'staged_pending_review' ? 'staged'
+                       : item.status === 'duplicate_existing' ? 'duplicate'
+                       : item.status.startsWith('rejected') ? 'rejected' : local.status;
+          local.serverArticleId = item.article_id;
+        }
+      });
+      renderFileTable();
+    }
+
+    showConfirm(
+      'Submission received — thank you!',
+      `${s.total} item(s) processed: ${s.staged} staged for review, ` +
+      `${s.duplicates} duplicate(s) caught, ${s.rejected} rejected. ` +
+      'Non-duplicates enter the review queue. Accepted papers are processed by the ' +
+      'Atlas extraction pipeline within 24–48 hours. ' +
+      `<br><br><strong>Submission ID:</strong> ${result.submission_id}`
+    );
+  } catch (err) {
+    showConfirm('Connection error', 'Could not reach the Knowledge Atlas server. ' +
+      'Please check that the server is running and try again. ' +
+      '<br><br><em>Technical detail: ' + (err.message || err) + '</em>');
+  } finally {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
+  }
 }
 
 function clearForm() {

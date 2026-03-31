@@ -536,6 +536,7 @@ function addPendingFile(file) {
   const duplicate = findExistingMatch(meta);
   PENDING_FILES.push({
     id: 'pending-' + Date.now() + '-' + Math.random().toString(16).slice(2,8),
+    file: file,  // Keep the actual File object for server upload
     fileName: file.name,
     sizeMb: (file.size / (1024*1024)).toFixed(1),
     metadata: meta,
@@ -721,7 +722,10 @@ function resolveSelectedCitation() {
   showConfirm('Citation resolved','The citation metadata was updated from the DOI/title resolver.');
 }
 
-function stagePendingFiles() {
+/* ── SERVER CONFIG ── */
+const KA_API = window.__KA_CONFIG__?.apiBase || 'http://localhost:8765';
+
+async function stagePendingFiles() {
   const stageable = PENDING_FILES.filter(item => item.status !== 'duplicate' && !item.staged);
   if (!stageable.length) {
     showConfirm('Nothing to stage','There are no non-duplicate files ready to stage.');
@@ -736,39 +740,116 @@ function stagePendingFiles() {
     );
     return;
   }
-  const identity = getIdentityContext();
-  const store = getContributionStore();
+
+  // Build FormData for server submission
+  const formData = new FormData();
+  const citationLines = [];
+
   stageable.forEach(function(item) {
-    item.staged = true;
-    item.status = 'staged';
-    const id = 'KA-PROP-' + String(INTAKE_QUEUE.length + 42).padStart(4,'0');
-    INTAKE_QUEUE.unshift({
-      id: id,
-      title: item.metadata.title || item.sourceLabel || item.fileName.replace(/\.pdf$/i,''),
-      authors: item.metadata.authors || 'Metadata pending',
-      year: item.metadata.year || '—',
-      status: 'pending',
-      hasPDF: item.kind !== 'citation',
-      note: item.reviewerNote || 'Queued for nightly review'
-    });
-    store.unshift({
-      submissionId: id,
-      userId: identity.userId,
-      identityType: identity.identityType,
-      track: identity.track,
-      status: 'pending',
-      kind: item.kind || 'pdf',
-      title: item.metadata.title || item.sourceLabel || item.fileName.replace(/\.pdf$/i,''),
-      citation: item.metadata.citation || '',
-      authors: item.metadata.authors || '',
-      abstract: item.metadata.abstract || ''
-    });
+    if (item.file) {
+      formData.append('files', item.file, item.fileName);
+    } else if (item.kind === 'citation' && item.sourceLabel) {
+      citationLines.push(item.sourceLabel);
+    }
   });
-  saveContributionStore(store);
-  renderPendingFiles();
-  renderQueue();
-  syncIdentityCard();
-  showConfirm('Items staged','Non-duplicate PDFs and citations were staged for nightly review. Relevance will be checked later; duplicates were blocked immediately.');
+
+  if (citationLines.length) {
+    formData.append('citations', citationLines.join('\n'));
+  }
+
+  const why = document.getElementById('editWhy') ? document.getElementById('editWhy').value.trim() : '';
+  if (why) formData.append('notes', why);
+  formData.append('source_surface', 'ka_article_propose');
+
+  // Attach auth token if available
+  const headers = {};
+  const token = localStorage.getItem('ka_access_token');
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+
+  // Show loading state on button
+  const stageBtn = document.getElementById('stageBtn');
+  if (stageBtn) { stageBtn.disabled = true; stageBtn.textContent = 'Uploading…'; }
+
+  try {
+    const resp = await fetch(KA_API + '/api/articles/submit', {
+      method: 'POST', body: formData, headers: headers
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({ detail: 'Server error' }));
+      showConfirm('Staging failed', err.detail || 'An unexpected error occurred. Please try again.');
+      return;
+    }
+
+    const result = await resp.json();
+    const s = result.summary;
+
+    // Update local state to reflect server response
+    const identity = getIdentityContext();
+    const store = getContributionStore();
+
+    result.items.forEach(function(serverItem) {
+      // Match back to local pending file
+      const local = stageable.find(f =>
+        (f.fileName && f.fileName === serverItem.filename) ||
+        (f.sourceLabel && serverItem.citation && f.sourceLabel.substring(0, 50) === serverItem.citation.substring(0, 50))
+      );
+      if (local) {
+        local.staged = true;
+        local.status = serverItem.status === 'staged_pending_review' ? 'staged'
+                     : serverItem.status === 'duplicate_existing' ? 'duplicate'
+                     : serverItem.status.startsWith('rejected') ? 'rejected' : 'staged';
+        local.serverArticleId = serverItem.article_id;
+      }
+
+      // Add to local queue display
+      INTAKE_QUEUE.unshift({
+        id: serverItem.article_id,
+        title: (serverItem.metadata && serverItem.metadata.title) ||
+               (local && (local.metadata.title || local.sourceLabel)) || 'Untitled',
+        authors: (local && local.metadata.authors) || 'Metadata pending',
+        year: (local && local.metadata.year) || '—',
+        status: serverItem.status === 'staged_pending_review' ? 'pending'
+              : serverItem.status === 'duplicate_existing' ? 'duplicate' : 'rejected',
+        hasPDF: serverItem.input_mode !== 'citation_text',
+        note: serverItem.status === 'staged_pending_review' ? 'Queued for review'
+            : serverItem.status === 'duplicate_existing' ? 'Duplicate of ' + (serverItem.duplicate_of || 'existing')
+            : serverItem.reason || 'Rejected'
+      });
+
+      store.unshift({
+        submissionId: serverItem.article_id,
+        userId: identity.userId,
+        identityType: identity.identityType,
+        track: identity.track,
+        status: serverItem.status,
+        kind: serverItem.input_mode === 'citation_text' ? 'citation' : 'pdf',
+        title: (serverItem.metadata && serverItem.metadata.title) || '',
+        citation: (local && local.metadata.citation) || '',
+        authors: (local && local.metadata.authors) || '',
+        abstract: (local && local.metadata.abstract) || ''
+      });
+    });
+
+    saveContributionStore(store);
+    renderPendingFiles();
+    renderQueue();
+    syncIdentityCard();
+
+    showConfirm(
+      'Items staged — thank you!',
+      `${s.total} item(s) processed: ${s.staged} staged for review, ` +
+      `${s.duplicates} duplicate(s) caught, ${s.rejected} rejected.` +
+      `<br><br><strong>Submission ID:</strong> ${result.submission_id}`
+    );
+
+  } catch (err) {
+    showConfirm('Connection error', 'Could not reach the Knowledge Atlas server. ' +
+      'Please check that the server is running and try again.' +
+      '<br><br><em>Technical detail: ' + (err.message || err) + '</em>');
+  } finally {
+    if (stageBtn) { stageBtn.disabled = false; stageBtn.textContent = 'Stage non-duplicates for nightly review'; }
+  }
 }
 
 function clearPendingFiles() {

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Review - Knowledge Atlas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #1C3D3A;
+      --amber: #E8872A;
+      --cream: #F7F4EF;
+      --teal: #2A7868;
+      --muted: #6A5E50;
+      --light-bg: #F9F7F3;
+      --border: #E0D9CE;
+      --success: #4CAF50;
+      --error: #D32F2F;
+      --warning: #FFA726;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: var(--cream);
+      color: var(--navy);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: var(--navy);
+      color: var(--cream);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .ka-logo {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--amber);
+    }
+
+    .auth-status {
+      font-size: 0.9rem;
+      color: var(--cream);
+    }
+
+    /* Main container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Page title */
+    h1 {
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* Section styling */
+    .section {
+      background-color: white;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+      color: var(--navy);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--amber);
+    }
+
+    /* Loading and error states */
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+    }
+
+    .spinner {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--amber);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      background-color: #FFEBEE;
+      color: var(--error);
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid var(--error);
+      margin-bottom: 1rem;
+    }
+
+    .success-message {
+      background-color: #E8F5E9;
+      color: var(--success);
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid var(--success);
+      margin-bottom: 1rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background-color: var(--light-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Table styling */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    thead {
+      background-color: var(--light-bg);
+      border-bottom: 2px solid var(--border);
+    }
+
+    th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    tbody tr:hover {
+      background-color: var(--light-bg);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-accept {
+      background-color: var(--success);
+      color: white;
+    }
+
+    .btn-accept:hover {
+      background-color: #45a049;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn-reject {
+      background-color: var(--error);
+      color: white;
+    }
+
+    .btn-reject:hover {
+      background-color: #C62828;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary {
+      background-color: var(--teal);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #1e5d52;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn-secondary {
+      background-color: var(--muted);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #574c40;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .modal-title {
+      color: var(--navy);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--navy);
+    }
+
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(42, 120, 104, 0.1);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Coverage table */
+    .coverage-table {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .coverage-table th,
+    .coverage-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .coverage-table th {
+      background-color: var(--light-bg);
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .coverage-bar {
+      background-color: var(--light-bg);
+      border-radius: 4px;
+      height: 24px;
+      display: inline-block;
+      min-width: 30px;
+      text-align: center;
+      line-height: 24px;
+      color: var(--navy);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* DOI styling */
+    .doi-link {
+      color: var(--teal);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .doi-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 0.75rem 0.5rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="ka-logo">Knowledge Atlas</div>
+    <ul class="nav-links">
+      <li><a href="ka_home.html">Home</a></li>
+      <li><a href="ka_browse.html">Browse</a></li>
+      <li><a href="ka_submit.html">Submit</a></li>
+      <li><a href="ka_instructor_review.html">Review</a></li>
+    </ul>
+    <div class="auth-status" id="authStatus">Loading...</div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Article Review Dashboard</h1>
+    <p class="subtitle">Review and manage staged article submissions for Knowledge Atlas</p>
+
+    <!-- Message containers -->
+    <div id="successMessage"></div>
+    <div id="errorMessage"></div>
+
+    <!-- Stats Section -->
+    <div class="section" id="statsSection">
+      <h2 class="section-title">Review Statistics</h2>
+      <div id="statsContent">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Loading statistics...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Coverage Section -->
+    <div class="section" id="questionsSection">
+      <h2 class="section-title">Question Coverage</h2>
+      <div id="questionsContent">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Loading question coverage...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Review Section -->
+    <div class="section" id="reviewSection">
+      <h2 class="section-title">Pending Articles for Review</h2>
+      <div id="reviewContent">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Loading articles for review...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accept Modal -->
+  <div class="modal" id="acceptModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Accept Article</h3>
+      <p id="acceptArticleInfo" style="color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem;"></p>
+      <form id="acceptForm">
+        <div class="form-group">
+          <label for="topicOverride">Topic Override (Optional)</label>
+          <select id="topicOverride" name="topicOverride">
+            <option value="">None - use default</option>
+            <option value="methodology">Methodology</option>
+            <option value="theory">Theory</option>
+            <option value="empirical">Empirical Evidence</option>
+            <option value="critique">Critique/Rebuttal</option>
+            <option value="meta">Meta-Analysis</option>
+          </select>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="btn-secondary" onclick="closeModal('acceptModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Accept Article</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reject Modal -->
+  <div class="modal" id="rejectModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Reject Article</h3>
+      <p id="rejectArticleInfo" style="color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem;"></p>
+      <form id="rejectForm">
+        <div class="form-group">
+          <label for="rejectReason">Rejection Reason</label>
+          <select id="rejectReason" name="rejectReason" required>
+            <option value="">Select a reason...</option>
+            <option value="not_relevant">Not Relevant</option>
+            <option value="duplicate">Duplicate</option>
+            <option value="poor_quality">Poor Quality</option>
+            <option value="wrong_type">Wrong Article Type</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group" id="otherReasonGroup" style="display: none;">
+          <label for="otherReason">Please Explain</label>
+          <textarea id="otherReason" name="otherReason" rows="4" placeholder="Enter additional details..."></textarea>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="btn-secondary" onclick="closeModal('rejectModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Reject Article</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const KA_API = window.__KA_CONFIG__?.apiBase || 'http://localhost:8765';
+    const TOKEN_KEY = 'ka_access_token';
+
+    let currentArticleId = null;
+    let articles = [];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAuth();
+      loadAllData();
+
+      // Form handlers
+      document.getElementById('acceptForm').addEventListener('submit', handleAccept);
+      document.getElementById('rejectForm').addEventListener('submit', handleReject);
+      document.getElementById('rejectReason').addEventListener('change', function() {
+        const otherGroup = document.getElementById('otherReasonGroup');
+        otherGroup.style.display = this.value === 'other' ? 'block' : 'none';
+      });
+    });
+
+    // Auth check and redirect
+    function checkAuth() {
+      const token = localStorage.getItem(TOKEN_KEY);
+      const authStatus = document.getElementById('authStatus');
+
+      if (!token) {
+        authStatus.textContent = 'No authentication';
+        setTimeout(() => {
+          window.location.href = 'ka_login.html';
+        }, 1000);
+        return;
+      }
+
+      authStatus.textContent = `Logged in`;
+    }
+
+    // Load all data
+    function loadAllData() {
+      loadStats();
+      loadQuestions();
+      loadPendingArticles();
+    }
+
+    // API request helper
+    async function apiRequest(endpoint, options = {}) {
+      const token = localStorage.getItem(TOKEN_KEY);
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        ...options.headers
+      };
+
+      try {
+        const response = await fetch(`${KA_API}${endpoint}`, {
+          ...options,
+          headers
+        });
+
+        if (response.status === 401) {
+          localStorage.removeItem(TOKEN_KEY);
+          window.location.href = 'ka_login.html';
+          return null;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || `API error: ${response.status}`);
+        }
+
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // Load stats
+    async function loadStats() {
+      const container = document.getElementById('statsContent');
+      try {
+        const data = await apiRequest('/articles/stats');
+
+        if (!data) return;
+
+        const byStatus = data.by_status || {};
+        let html = '<div class="stats-grid">';
+
+        const stats = [
+          { label: 'Total Articles', value: data.total_articles || 0 },
+          { label: 'Staged', value: byStatus.staged || 0 },
+          { label: 'Accepted', value: byStatus.accepted || 0 },
+          { label: 'Rejected', value: byStatus.rejected || 0 },
+          { label: 'Duplicates', value: byStatus.duplicate || 0 }
+        ];
+
+        stats.forEach(stat => {
+          html += `
+            <div class="stat-card">
+              <div class="stat-value">${stat.value}</div>
+              <div class="stat-label">${stat.label}</div>
+            </div>
+          `;
+        });
+
+        html += '</div>';
+        container.innerHTML = html;
+      } catch (error) {
+        container.innerHTML = `<div class="error-message">Failed to load statistics: ${error.message}</div>`;
+      }
+    }
+
+    // Load questions coverage
+    async function loadQuestions() {
+      const container = document.getElementById('questionsContent');
+      try {
+        const data = await apiRequest('/articles/questions/available');
+
+        if (!data) return;
+
+        const questions = data.questions || [];
+
+        if (questions.length === 0) {
+          container.innerHTML = '<div class="empty-state"><p class="empty-state-text">No questions found.</p></div>';
+          return;
+        }
+
+        let html = '<table class="coverage-table"><thead><tr>';
+        html += '<th>Question ID</th><th>Title</th><th>Status</th><th>Coverage</th></tr></thead><tbody>';
+
+        questions.forEach(q => {
+          const isClaimed = q.claimed_by ? 'Claimed' : 'Available';
+          const claimedStyle = q.claimed_by ? 'color: var(--amber);' : 'color: var(--success);';
+          html += `
+            <tr>
+              <td>${q.question_id}</td>
+              <td>${escapeHtml(q.title || 'Untitled')}</td>
+              <td style="${claimedStyle}"><strong>${isClaimed}</strong></td>
+              <td>${q.experimental_count || 0} experimental articles</td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table>';
+        container.innerHTML = html;
+      } catch (error) {
+        container.innerHTML = `<div class="error-message">Failed to load question coverage: ${error.message}</div>`;
+      }
+    }
+
+    // Load pending articles
+    async function loadPendingArticles() {
+      const container = document.getElementById('reviewContent');
+      try {
+        const data = await apiRequest('/articles/pending-review');
+
+        if (!data) return;
+
+        articles = data.articles || [];
+
+        if (articles.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">✓</div>
+              <p class="empty-state-text">No articles pending review</p>
+              <p style="font-size: 0.9rem;">All submissions have been reviewed.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = '<div class="table-wrapper"><table><thead><tr>';
+        html += '<th>Article ID</th><th>Title</th><th>DOI</th><th>Submitter</th><th>Question</th><th>Type</th><th>Submitted</th><th>Actions</th>';
+        html += '</tr></thead><tbody>';
+
+        articles.forEach(article => {
+          const submittedDate = new Date(article.submitted_at).toLocaleDateString();
+          html += `
+            <tr>
+              <td><code style="color: var(--muted); font-size: 0.85rem;">${escapeHtml(article.article_id)}</code></td>
+              <td>${escapeHtml(article.title || article.original_filename)}</td>
+              <td>
+                ${article.doi ? `<a href="https://doi.org/${article.doi}" target="_blank" class="doi-link">${escapeHtml(article.doi)}</a>` : 'N/A'}
+              </td>
+              <td><code style="font-size: 0.85rem; color: var(--muted);">${escapeHtml(article.submitter_id)}</code></td>
+              <td>${escapeHtml(article.question_id)}</td>
+              <td>${escapeHtml(article.article_type || 'Unknown')}</td>
+              <td>${submittedDate}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn-accept" onclick="openAcceptModal('${article.article_id}', '${escapeHtml(article.title || article.original_filename)}')">Accept</button>
+                  <button class="btn-reject" onclick="openRejectModal('${article.article_id}', '${escapeHtml(article.title || article.original_filename)}')">Reject</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
+        container.innerHTML = html;
+      } catch (error) {
+        container.innerHTML = `<div class="error-message">Failed to load articles: ${error.message}</div>`;
+      }
+    }
+
+    // Modal functions
+    function openAcceptModal(articleId, title) {
+      currentArticleId = articleId;
+      document.getElementById('acceptArticleInfo').textContent = `Accepting: ${title}`;
+      document.getElementById('topicOverride').value = '';
+      document.getElementById('acceptModal').classList.add('active');
+    }
+
+    function openRejectModal(articleId, title) {
+      currentArticleId = articleId;
+      document.getElementById('rejectArticleInfo').textContent = `Rejecting: ${title}`;
+      document.getElementById('rejectReason').value = '';
+      document.getElementById('otherReason').value = '';
+      document.getElementById('otherReasonGroup').style.display = 'none';
+      document.getElementById('rejectModal').classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      currentArticleId = null;
+    }
+
+    // Handle accept
+    async function handleAccept(e) {
+      e.preventDefault();
+
+      if (!currentArticleId) return;
+
+      const topicOverride = document.getElementById('topicOverride').value || null;
+      const button = e.target.querySelector('button[type="submit"]');
+      button.disabled = true;
+
+      try {
+        const result = await apiRequest(`/articles/${currentArticleId}/review`, {
+          method: 'POST',
+          body: JSON.stringify({
+            decision: 'accept',
+            topic_override: topicOverride
+          })
+        });
+
+        if (result) {
+          showSuccess(`Article accepted${topicOverride ? ` with topic override: ${topicOverride}` : ''}`);
+          closeModal('acceptModal');
+          loadPendingArticles();
+        }
+      } catch (error) {
+        showError(`Failed to accept article: ${error.message}`);
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    // Handle reject
+    async function handleReject(e) {
+      e.preventDefault();
+
+      if (!currentArticleId) return;
+
+      const reason = document.getElementById('rejectReason').value;
+      const otherText = document.getElementById('otherReason').value;
+      const finalReason = reason === 'other' ? otherText : reason;
+
+      if (!finalReason) {
+        showError('Please provide a rejection reason');
+        return;
+      }
+
+      const button = e.target.querySelector('button[type="submit"]');
+      button.disabled = true;
+
+      try {
+        const result = await apiRequest(`/articles/${currentArticleId}/review`, {
+          method: 'POST',
+          body: JSON.stringify({
+            decision: 'reject',
+            reason: finalReason
+          })
+        });
+
+        if (result) {
+          showSuccess('Article rejected');
+          closeModal('rejectModal');
+          loadPendingArticles();
+        }
+      } catch (error) {
+        showError(`Failed to reject article: ${error.message}`);
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    // Message helpers
+    function showSuccess(message) {
+      const container = document.getElementById('successMessage');
+      container.innerHTML = `<div class="success-message">${escapeHtml(message)}</div>`;
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 4000);
+    }
+
+    function showError(message) {
+      const container = document.getElementById('errorMessage');
+      container.innerHTML = `<div class="error-message">${escapeHtml(message)}</div>`;
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 6000);
+    }
+
+    // Utility: escape HTML
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    // Close modals on background click
+    document.addEventListener('click', function(e) {
+      const acceptModal = document.getElementById('acceptModal');
+      const rejectModal = document.getElementById('rejectModal');
+
+      if (e.target === acceptModal) closeModal('acceptModal');
+      if (e.target === rejectModal) closeModal('rejectModal');
+    });
+  </script>
+</body>
+</html>

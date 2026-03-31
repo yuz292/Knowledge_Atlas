@@ -197,6 +197,43 @@
       line-height: 1.6;
     }
 
+    .path-guidance {
+      background: #fff;
+      border: 1.5px solid #dbe6f3;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+    }
+    .path-guidance-title {
+      font-size: .82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #1a56a4;
+      margin-bottom: 8px;
+    }
+    .path-guidance-body {
+      font-size: .88rem;
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      max-width: 860px;
+    }
+    .path-guidance-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .path-guidance-chip {
+      background: #eff6ff;
+      color: #1e3a8a;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
     /* ── Resume Card ─────────────────────────────────────────────────── */
     .resume-card {
       background: linear-gradient(135deg, #002d5b 0%, #1a56a4 100%);
@@ -307,8 +344,31 @@
       font-size: .85rem;
       color: #374151;
       line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .wf-card-journey {
+      display: grid;
+      gap: 8px;
       margin-bottom: 14px;
       flex: 1;
+    }
+    .wf-card-journey-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .wf-journey-pill {
+      background: #F6F4EE;
+      border: 1px solid #E6DED2;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: .74rem;
+      color: #5F564C;
+    }
+    .wf-card-first-step {
+      font-size: .77rem;
+      color: #6b7280;
+      line-height: 1.45;
     }
     .wf-card-footer {
       display: flex;
@@ -410,6 +470,216 @@
     }
     .login-demo-btn:hover { background: #f9fafb; }
 
+    /* ── A0 Assignment Progress ──────────────────────────────────────── */
+    .a0-section { margin-bottom: 28px; }
+    .a0-section-heading { font-size: 1rem; font-weight: 700; color: #002d5b; margin-bottom: 16px; }
+
+    .a0-card {
+      background: #fff;
+      border: 1.5px solid #dbe6f3;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+
+    .a0-selector-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .a0-selector-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .a0-selector-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .a0-selector-dropdown {
+      padding: 10px 12px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: .9rem;
+      background: #fff;
+      color: #1f2937;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+
+    .a0-selector-dropdown:focus {
+      outline: none;
+      border-color: #1a56a4;
+    }
+
+    .a0-selector-dropdown:hover {
+      border-color: #d1d5db;
+    }
+
+    .a0-button-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .a0-claim-btn, .a0-release-btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+
+    .a0-claim-btn {
+      background: #1a56a4;
+      color: #fff;
+    }
+
+    .a0-claim-btn:hover {
+      background: #154899;
+    }
+
+    .a0-claim-btn:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+      opacity: .6;
+    }
+
+    .a0-release-btn {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1.5px solid #e5e7eb;
+    }
+
+    .a0-release-btn:hover {
+      background: #e5e7eb;
+    }
+
+    .a0-release-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .a0-question-display {
+      background: #f9fafb;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      font-size: .9rem;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    .a0-question-title {
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 6px;
+    }
+
+    .a0-progress-section {
+      margin-top: 20px;
+    }
+
+    .a0-progress-title {
+      font-size: .85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #1f2937;
+      margin-bottom: 14px;
+    }
+
+    .a0-task-block {
+      margin-bottom: 18px;
+    }
+
+    .a0-task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .a0-task-label {
+      font-size: .9rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .a0-task-count {
+      font-size: .82rem;
+      color: #6b7280;
+    }
+
+    .a0-progress-bar {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .a0-progress-fill {
+      height: 100%;
+      background: #22c55e;
+      border-radius: 4px;
+      transition: width .3s ease;
+    }
+
+    .a0-progress-fill.in-progress {
+      background: #f59e0b;
+    }
+
+    .a0-status-pills {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .a0-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .a0-status-pill.confirmed {
+      background: #d1fae5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .a0-status-pill.pending {
+      background: #f3f4f6;
+      color: #4b5563;
+      border: 1px solid #d1d5db;
+    }
+
+    .a0-empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #6b7280;
+    }
+
+    .a0-empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .a0-empty-state-text { font-size: .9rem; }
+
     /* ── Responsive ──────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .sidebar { display: none; }
@@ -476,6 +746,18 @@
     </div>
 
     <!-- Role switcher (visible when not logged in / for exploration) -->
+    <div class="path-guidance">
+      <div class="path-guidance-title">How to use Atlas</div>
+      <div class="path-guidance-body" id="path-guidance-body">
+        Choose an objective path if you want a recommended sequence through Atlas. Each path suggests a sensible page order. You may leave the path at any time and browse freely. Atlas will remember your place.
+      </div>
+      <div class="path-guidance-points">
+        <div class="path-guidance-chip">Choose an objective path</div>
+        <div class="path-guidance-chip">Follow Next / Back</div>
+        <div class="path-guidance-chip">Browse freely</div>
+      </div>
+    </div>
+
     <div id="role-switcher-section" style="margin-bottom:28px">
       <div class="section-heading">Explore as a different role</div>
       <div class="role-switcher-row" id="role-switcher-row"></div>
@@ -494,8 +776,42 @@
       </div>
     </div>
 
+    <!-- A0 Assignment Progress (shown only when logged in) -->
+    <div class="a0-section" id="a0-section" style="display:none">
+      <div class="a0-section-heading">A0 Assignment Progress</div>
+      <div class="a0-card">
+        <div class="a0-selector-row">
+          <div class="a0-selector-group">
+            <label class="a0-selector-label">Select a Question</label>
+            <select class="a0-selector-dropdown" id="a0-question-selector">
+              <option value="">Loading questions…</option>
+            </select>
+          </div>
+          <div class="a0-button-group">
+            <button class="a0-claim-btn" id="a0-claim-btn">Claim Question</button>
+            <button class="a0-release-btn" id="a0-release-btn" style="display:none">Release Question</button>
+          </div>
+        </div>
+
+        <div class="a0-question-display" id="a0-question-display" style="display:none">
+          <div class="a0-question-title" id="a0-question-title"></div>
+          <div id="a0-question-text"></div>
+        </div>
+
+        <div class="a0-progress-section" id="a0-progress-section" style="display:none">
+          <div class="a0-progress-title">Your Progress</div>
+          <div id="a0-tasks-container"></div>
+        </div>
+
+        <div class="a0-empty-state" id="a0-empty-state">
+          <div class="a0-empty-state-icon">📋</div>
+          <div class="a0-empty-state-text">No questions available or claimed</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Workflow grid -->
-    <div class="section-heading" id="workflow-section-heading">Your Workflows</div>
+    <div class="section-heading" id="workflow-section-heading">Recommended paths</div>
     <div class="workflow-grid" id="workflow-grid"></div>
 
   </main>
@@ -528,7 +844,7 @@
 (function () {
   'use strict';
 
-  const KA_AUTH_API = 'http://localhost:8765';
+  const KA_AUTH_API = window.__KA_CONFIG__?.apiBase || 'http://localhost:8765';
 
   /* ── User / Auth State ───────────────────────────────────────────────── */
 
@@ -663,6 +979,8 @@
     document.getElementById('welcome-name').textContent =
       name ? 'Welcome back, ' + name : 'Welcome to ATLAS';
     document.getElementById('welcome-desc').textContent = meta.description;
+    document.getElementById('path-guidance-body').textContent =
+      'This home page gives you recommended objective paths for your role. Use them when you want guidance; ignore them when you want to explore directly.';
   }
 
   /* ── Resume Card ─────────────────────────────────────────────────────── */
@@ -712,7 +1030,7 @@
     const wfIds = window.KA_WORKFLOWS.byRole[role] || [];
 
     document.getElementById('workflow-section-heading').textContent =
-      meta ? meta.label + ' Workflows' : 'Your Workflows';
+      meta ? meta.label + ' paths' : 'Recommended paths';
 
     grid.innerHTML = wfIds.map(function (id) {
       const wf = window.KA_WORKFLOWS.workflows[id];
@@ -727,6 +1045,8 @@
         return '<div class="wf-step-pip' + (i < done ? ' done' : '') + '"' +
           ' style="' + (i < done ? '--wf-color:' + wf.badgeColor : '') + '"></div>';
       }).join('');
+      const firstStep = wf.steps[0];
+      const lastStep = wf.steps[wf.steps.length - 1];
 
       return '<a href="ka_workflow_hub.html?wf=' + id + '" class="workflow-card" style="--wf-color:' + wf.badgeColor + '">' +
         '<div class="wf-card-header">' +
@@ -738,15 +1058,283 @@
           '</div>' +
         '</div>' +
         '<div class="wf-card-objective">' + wf.objective + '</div>' +
+        '<div class="wf-card-journey">' +
+          '<div class="wf-card-journey-row">' +
+            '<span class="wf-journey-pill">Starts at: ' + (firstStep ? firstStep.pageName : 'Atlas') + '</span>' +
+            '<span class="wf-journey-pill">Ends at: ' + (lastStep ? lastStep.pageName : 'Atlas') + '</span>' +
+          '</div>' +
+          '<div class="wf-card-first-step">First page: ' + (firstStep ? firstStep.title + ' on ' + firstStep.pageName : 'Atlas') + '.</div>' +
+        '</div>' +
         '<div class="wf-card-steps-preview">' + pips + '</div>' +
         '<div class="wf-card-footer">' +
           '<span class="wf-card-time">⏱ ' + wf.estimatedTime + ' · ' + totalSteps + ' steps</span>' +
           '<span class="wf-card-cta">' +
-            (isComplete ? '✓ Completed' : isStarted ? 'Continue Step ' + (done + 1) + ' →' : 'Start →') +
+            (isComplete ? '✓ Completed' : isStarted ? 'Continue Step ' + (done + 1) + ' →' : 'Start this path →') +
           '</span>' +
         '</div>' +
       '</a>';
     }).join('');
+  }
+
+  /* ── A0 Assignment Progress ──────────────────────────────────────────── */
+
+  let a0Questions = [];
+  let a0ClaimedQuestion = null;
+
+  async function loadA0Questions() {
+    try {
+      const token = localStorage.getItem('ka_access_token');
+      if (!token) return;
+
+      const res = await fetch(KA_AUTH_API + '/api/articles/questions/available', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!res.ok) {
+        console.log('Failed to load A0 questions:', res.status);
+        return;
+      }
+
+      const data = await res.json();
+      a0Questions = data.available || [];
+      updateA0QuestionSelector();
+      loadA0Claim();
+    } catch (e) {
+      console.log('Error loading A0 questions:', e);
+    }
+  }
+
+  function updateA0QuestionSelector() {
+    const selector = document.getElementById('a0-question-selector');
+    if (!selector) return;
+
+    const currentValue = selector.value;
+    selector.innerHTML = a0Questions.map(function (q) {
+      const coverage = q.coverage || {};
+      const label = q.label + ' (' + (a0Questions.length - coverage.times_claimed) + ' left)';
+      return '<option value="' + q.question_id + '">' + label + '</option>';
+    }).join('');
+
+    if (currentValue && a0Questions.find(function (q) { return q.question_id === currentValue; })) {
+      selector.value = currentValue;
+    } else if (a0Questions.length > 0) {
+      selector.value = a0Questions[0].question_id;
+    }
+
+    selector.addEventListener('change', updateA0QuestionDisplay);
+    updateA0QuestionDisplay();
+  }
+
+  function updateA0QuestionDisplay() {
+    const selector = document.getElementById('a0-question-selector');
+    const qId = selector.value;
+    const q = a0Questions.find(function (q) { return q.question_id === qId; });
+
+    const display = document.getElementById('a0-question-display');
+    if (!q || a0ClaimedQuestion) {
+      display.style.display = 'none';
+    } else {
+      display.style.display = 'block';
+      document.getElementById('a0-question-title').textContent = q.label;
+      document.getElementById('a0-question-text').textContent = q.text;
+    }
+  }
+
+  async function loadA0Claim() {
+    try {
+      const token = localStorage.getItem('ka_access_token');
+      if (!token) return;
+
+      const res = await fetch(KA_AUTH_API + '/api/articles/questions/my-claim', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!res.ok) {
+        console.log('Failed to load A0 claim:', res.status);
+        return;
+      }
+
+      const data = await res.json();
+      if (data.has_claim && data.claims && data.claims.length > 0) {
+        a0ClaimedQuestion = data.claims[0];
+        renderA0Progress(a0ClaimedQuestion, data.total_progress);
+      } else {
+        a0ClaimedQuestion = null;
+        document.getElementById('a0-progress-section').style.display = 'none';
+        document.getElementById('a0-empty-state').style.display = 'block';
+      }
+      updateA0UI();
+    } catch (e) {
+      console.log('Error loading A0 claim:', e);
+    }
+  }
+
+  function renderA0Progress(claim, totalProgress) {
+    const container = document.getElementById('a0-tasks-container');
+    const section = document.getElementById('a0-progress-section');
+
+    let html = '';
+
+    // Task 1 (Experimental)
+    if (claim.progress && claim.progress.task1) {
+      const t1 = claim.progress.task1;
+      const pct1 = t1.required > 0 ? Math.round((t1.confirmed_experimental / t1.required) * 100) : 0;
+      const isComplete1 = t1.complete;
+
+      html += '<div class="a0-task-block">' +
+        '<div class="a0-task-header">' +
+          '<span class="a0-task-label">Task 1: Confirm Experimental Articles</span>' +
+          '<span class="a0-task-count">' + t1.confirmed_experimental + '/' + t1.required + ' articles</span>' +
+        '</div>' +
+        '<div class="a0-progress-bar">' +
+          '<div class="a0-progress-fill' + (isComplete1 ? '' : ' in-progress') + '" style="width:' + pct1 + '%"></div>' +
+        '</div>' +
+        '<div class="a0-status-pills">' +
+          '<span class="a0-status-pill ' + (isComplete1 ? 'confirmed' : 'pending') + '">' +
+            (isComplete1 ? '✓ Complete' : '◌ In Progress') +
+          '</span>' +
+          '<span class="a0-status-pill pending">' + t1.submitted + ' submitted</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    // Task 2 (Any Type)
+    if (claim.progress && claim.progress.task2) {
+      const t2 = claim.progress.task2;
+      const pct2 = t2.required > 0 ? Math.round((t2.complete / t2.required) * 100) : 0;
+      const isComplete2 = t2.complete >= t2.required;
+
+      html += '<div class="a0-task-block">' +
+        '<div class="a0-task-header">' +
+          '<span class="a0-task-label">Task 2: Confirm Any-Type Articles</span>' +
+          '<span class="a0-task-count">' + t2.complete + '/' + t2.required + ' articles</span>' +
+        '</div>' +
+        '<div class="a0-progress-bar">' +
+          '<div class="a0-progress-fill' + (isComplete2 ? '' : ' in-progress') + '" style="width:' + pct2 + '%"></div>' +
+        '</div>' +
+        '<div class="a0-status-pills">' +
+          '<span class="a0-status-pill ' + (isComplete2 ? 'confirmed' : 'pending') + '">' +
+            (isComplete2 ? '✓ Complete' : '◌ In Progress') +
+          '</span>' +
+          '<span class="a0-status-pill pending">' + t2.submitted + ' submitted</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    container.innerHTML = html;
+    section.style.display = 'block';
+    document.getElementById('a0-empty-state').style.display = 'none';
+  }
+
+  function updateA0UI() {
+    const selector = document.getElementById('a0-question-selector');
+    const claimBtn = document.getElementById('a0-claim-btn');
+    const releaseBtn = document.getElementById('a0-release-btn');
+    const display = document.getElementById('a0-question-display');
+
+    if (a0ClaimedQuestion) {
+      selector.disabled = true;
+      claimBtn.style.display = 'none';
+      releaseBtn.style.display = 'inline-block';
+      display.style.display = 'block';
+      document.getElementById('a0-question-title').textContent = a0ClaimedQuestion.label;
+      document.getElementById('a0-question-text').textContent = a0ClaimedQuestion.text;
+    } else {
+      selector.disabled = false;
+      claimBtn.style.display = 'inline-block';
+      releaseBtn.style.display = 'none';
+      display.style.display = 'none';
+    }
+  }
+
+  async function claimA0Question() {
+    try {
+      const token = localStorage.getItem('ka_access_token');
+      const selector = document.getElementById('a0-question-selector');
+      const qId = selector.value;
+
+      if (!token || !qId) return;
+
+      const res = await fetch(KA_AUTH_API + '/api/articles/questions/claim', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ question_id: qId })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        console.log('Claim failed:', data);
+        return;
+      }
+
+      loadA0Questions();
+      loadA0Claim();
+    } catch (e) {
+      console.log('Error claiming question:', e);
+    }
+  }
+
+  async function releaseA0Question() {
+    if (!a0ClaimedQuestion) return;
+
+    try {
+      const token = localStorage.getItem('ka_access_token');
+      if (!token) return;
+
+      const res = await fetch(KA_AUTH_API + '/api/articles/questions/release', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ question_id: a0ClaimedQuestion.question_id })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        console.log('Release failed:', data);
+        return;
+      }
+
+      a0ClaimedQuestion = null;
+      loadA0Questions();
+      loadA0Claim();
+    } catch (e) {
+      console.log('Error releasing question:', e);
+    }
+  }
+
+  function initA0() {
+    const claimBtn = document.getElementById('a0-claim-btn');
+    const releaseBtn = document.getElementById('a0-release-btn');
+    const selector = document.getElementById('a0-question-selector');
+
+    if (claimBtn) claimBtn.addEventListener('click', claimA0Question);
+    if (releaseBtn) releaseBtn.addEventListener('click', releaseA0Question);
+    if (selector) selector.addEventListener('change', updateA0QuestionDisplay);
+
+    loadA0Questions();
+  }
+
+  function renderA0Section() {
+    const section = document.getElementById('a0-section');
+    if (currentUser && !demoMode) {
+      section.style.display = 'block';
+      initA0();
+    } else {
+      section.style.display = 'none';
+    }
   }
 
   /* ── Main Render ─────────────────────────────────────────────────────── */
@@ -756,6 +1344,7 @@
     renderSidebar(role);
     renderRoleSwitcher();
     renderResumeCard(role);
+    renderA0Section();
     renderWorkflowGrid(role);
 
     // Update active state in role switcher

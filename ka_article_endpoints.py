@@ -93,6 +93,10 @@ def _init_article_tables():
         quarantine_path     TEXT,
         promoted_path       TEXT,
 
+        article_type        TEXT,          -- experimental | review | theory | mechanism | meta_analysis | other | unknown
+        a0_task             TEXT,          -- task1 (experimental-only) | task2 (any-type) | NULL (non-A0)
+        article_type_valid  INTEGER DEFAULT 0,  -- 1 if type confirmed appropriate for the task
+
         status              TEXT NOT NULL DEFAULT 'received',
         duplicate_of        TEXT,
         validation_notes    TEXT,
@@ -146,6 +150,22 @@ def _init_article_tables():
     );
     CREATE INDEX IF NOT EXISTS idx_audit_article ON audit_log(article_id);
     CREATE INDEX IF NOT EXISTS idx_audit_action ON audit_log(action);
+
+    -- Question claiming: each question can be held by one student per round.
+    -- Once all 8 questions are claimed in a round, a new round opens.
+    CREATE TABLE IF NOT EXISTS question_claims (
+        claim_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+        question_id     TEXT NOT NULL,          -- FK → research_questions.question_id
+        user_id         TEXT NOT NULL,           -- FK → users.user_id
+        round           INTEGER NOT NULL DEFAULT 1,  -- round 1, 2, 3, ...
+        claimed_at      TEXT NOT NULL,
+        released_at     TEXT,                    -- NULL if still held
+        task1_count     INTEGER NOT NULL DEFAULT 0,  -- experimental articles submitted for this claim
+        task2_count     INTEGER NOT NULL DEFAULT 0,  -- any-type articles submitted for this claim
+        UNIQUE(question_id, round)               -- one claim per question per round
+    );
+    CREATE INDEX IF NOT EXISTS idx_claims_user ON question_claims(user_id);
+    CREATE INDEX IF NOT EXISTS idx_claims_question ON question_claims(question_id, round);
     """)
     db.commit()
     db.close()
@@ -507,10 +527,17 @@ async def submit_articles(
     topic_tags: str = Form(default=""),
     notes: str = Form(default=""),
     source_surface: str = Form(default="ka_contribute"),
+    a0_task: str = Form(default=""),          # task1 (experimental-only) | task2 (any-type)
+    article_type: str = Form(default=""),     # experimental | review | theory | mechanism | meta_analysis | other
 ):
     """
     Submit one or more articles (PDFs and/or citation text).
     Auth is optional — anonymous submissions are allowed.
+
+    A0 submissions should include:
+      - a0_task: 'task1' (10 experimental articles) or 'task2' (10 any-type articles)
+      - article_type: classification of the article
+    For task1, only 'experimental' articles count toward the requirement.
     """
     user = _get_optional_user(request)
 
@@ -636,18 +663,24 @@ async def submit_articles(
         if extracted_doi:
             confidence = "medium"
 
+        # Determine article type validity for A0 task
+        art_type = article_type if article_type in VALID_ARTICLE_TYPES else None
+        art_type_valid = 1 if (not a0_task or a0_task != "task1" or art_type == "experimental") else 0
+
         # Insert article record
         db = _get_db()
         db.execute("""INSERT INTO articles
             (article_id, submission_id, submitter_id, submitter_type, track, input_mode,
              doi, pdf_filename, pdf_hash_sha256, pdf_size_bytes, quarantine_path,
+             article_type, a0_task, article_type_valid,
              status, validation_notes,
              assigned_question_id, topic_tags,
              source_surface, course_context, submitter_notes,
              created_at, validated_at, staged_at, metadata_confidence)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (article_id, submission_id, submitter_id, submitter_type, track, "pdf_single",
              extracted_doi, filename, pdf_hash, len(content), str(quarantine_path),
+             art_type, a0_task or None, art_type_valid,
              "staged_pending_review", json.dumps(validation),
              question_id or None, topic_tags or None,
              source_surface, "COGS160-SP26", notes or None,
@@ -665,7 +698,10 @@ async def submit_articles(
             "validation_status": "valid",
             "duplicate_status": "not_duplicate",
             "metadata": {"doi": extracted_doi, "confidence": confidence},
-            "status": "staged_pending_review"
+            "status": "staged_pending_review",
+            "a0_task": a0_task or None,
+            "article_type": art_type,
+            "counts_toward_requirement": bool(art_type_valid)
         })
 
     # ── Process citation text
@@ -1028,3 +1064,346 @@ async def article_stats(request: Request):
 
     db.close()
     return result
+
+
+# ════════════════════════════════════════════════
+# QUESTION CLAIMING (A0 Assignment)
+# ════════════════════════════════════════════════
+
+TOTAL_QUESTIONS = 8  # Q01–Q08
+
+
+def _current_round(db) -> int:
+    """
+    Determine the current round. A round is complete when all 8 questions
+    have been claimed in that round. When round N is full, round N+1 opens.
+    """
+    for r in range(1, 100):  # Practical upper bound
+        claimed_count = db.execute(
+            "SELECT COUNT(DISTINCT question_id) FROM question_claims WHERE round=? AND released_at IS NULL",
+            (r,)).fetchone()[0]
+        if claimed_count < TOTAL_QUESTIONS:
+            return r
+    return 1  # Fallback
+
+
+def _available_questions(db, round_num: int) -> list:
+    """Return question_ids not yet claimed in the given round."""
+    claimed = db.execute(
+        "SELECT question_id FROM question_claims WHERE round=? AND released_at IS NULL",
+        (round_num,)).fetchall()
+    claimed_ids = {r["question_id"] for r in claimed}
+    all_qs = db.execute("SELECT question_id FROM research_questions ORDER BY question_id").fetchall()
+    return [r["question_id"] for r in all_qs if r["question_id"] not in claimed_ids]
+
+
+@router.get("/questions/available")
+async def available_questions(request: Request):
+    """
+    Return the list of questions still available for claiming.
+    Students see only unclaimed questions in the current round.
+    Once all 8 are claimed, a new round opens and all questions
+    become available again (we want more experimental articles per question).
+    """
+    db = _get_db()
+    current_round = _current_round(db)
+    available_ids = _available_questions(db, current_round)
+
+    # Fetch full question details for available ones
+    if not available_ids:
+        db.close()
+        return {"round": current_round, "available": [], "message": "All questions claimed this round"}
+
+    placeholders = ",".join("?" * len(available_ids))
+    questions = db.execute(
+        f"SELECT * FROM research_questions WHERE question_id IN ({placeholders}) ORDER BY question_id",
+        available_ids).fetchall()
+
+    # Also return claim counts per question across all rounds (so students see coverage)
+    coverage = db.execute("""
+        SELECT question_id, COUNT(*) as times_claimed,
+               SUM(task1_count) as total_experimental,
+               SUM(task2_count) as total_any_type
+        FROM question_claims WHERE released_at IS NULL
+        GROUP BY question_id
+    """).fetchall()
+    coverage_map = {r["question_id"]: dict(r) for r in coverage}
+
+    db.close()
+    return {
+        "round": current_round,
+        "total_questions": TOTAL_QUESTIONS,
+        "available_count": len(available_ids),
+        "available": [
+            {**dict(q), "coverage": coverage_map.get(q["question_id"], {
+                "times_claimed": 0, "total_experimental": 0, "total_any_type": 0
+            })}
+            for q in questions
+        ]
+    }
+
+
+class ClaimQuestionRequest(BaseModel):
+    question_id: str
+
+
+@router.post("/questions/claim")
+async def claim_question(req: ClaimQuestionRequest, request: Request):
+    """
+    Claim a question for A0. Each question can only be held by one student
+    per round. When all 8 are claimed, a new round opens.
+    Requires authentication.
+    """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be logged in to claim a question")
+
+    db = _get_db()
+
+    # Check the question exists
+    q = db.execute("SELECT * FROM research_questions WHERE question_id=?",
+                   (req.question_id,)).fetchone()
+    if not q:
+        db.close()
+        raise HTTPException(404, f"Question {req.question_id} not found")
+
+    current_round = _current_round(db)
+
+    # Check if this question is already claimed in the current round
+    existing = db.execute(
+        "SELECT * FROM question_claims WHERE question_id=? AND round=? AND released_at IS NULL",
+        (req.question_id, current_round)).fetchone()
+    if existing:
+        db.close()
+        raise HTTPException(409, f"Question {req.question_id} is already claimed in round {current_round}. "
+                                 f"Choose a different question.")
+
+    # Check if this student already has a claim in the current round
+    student_claim = db.execute(
+        "SELECT * FROM question_claims WHERE user_id=? AND round=? AND released_at IS NULL",
+        (user["user_id"], current_round)).fetchone()
+    if student_claim:
+        db.close()
+        raise HTTPException(409, f"You already claimed question {student_claim['question_id']} in round {current_round}. "
+                                 f"Release it first if you want to switch.")
+
+    # Claim it
+    now = _now()
+    db.execute(
+        "INSERT INTO question_claims (question_id, user_id, round, claimed_at) VALUES (?,?,?,?)",
+        (req.question_id, user["user_id"], current_round, now))
+
+    # Also update the user's question_id in the users table for backward compatibility
+    db.execute("UPDATE users SET question_id=? WHERE user_id=?",
+               (req.question_id, user["user_id"]))
+    db.commit()
+
+    # Check if this claim completed the round
+    remaining = _available_questions(db, current_round)
+    db.close()
+
+    return {
+        "claimed": True,
+        "question_id": req.question_id,
+        "round": current_round,
+        "remaining_in_round": len(remaining),
+        "message": f"You claimed {q['label']} (round {current_round}). "
+                   f"{len(remaining)} question(s) still available this round."
+                   + (" All questions claimed — next round now open!" if len(remaining) == 0 else "")
+    }
+
+
+@router.post("/questions/release")
+async def release_question(req: ClaimQuestionRequest, request: Request):
+    """Release a claimed question (e.g., student wants to switch)."""
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be logged in")
+
+    db = _get_db()
+    claim = db.execute(
+        "SELECT * FROM question_claims WHERE question_id=? AND user_id=? AND released_at IS NULL",
+        (req.question_id, user["user_id"])).fetchone()
+    if not claim:
+        db.close()
+        raise HTTPException(404, "You don't have an active claim on this question")
+
+    db.execute("UPDATE question_claims SET released_at=? WHERE claim_id=?",
+               (_now(), claim["claim_id"]))
+    db.execute("UPDATE users SET question_id=NULL WHERE user_id=?", (user["user_id"],))
+    db.commit()
+    db.close()
+    return {"released": True, "question_id": req.question_id}
+
+
+@router.get("/questions/my-claim")
+async def my_claim(request: Request):
+    """
+    Return ALL of the current student's active question claims and A0 progress.
+    A student may have claims across multiple rounds (e.g., Q01 in round 1, Q03 in round 2).
+    Each claim tracks task1 (experimental) and task2 (any-type) progress independently.
+    """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be logged in")
+
+    db = _get_db()
+    claims = db.execute("""
+        SELECT qc.*, rq.label, rq.domain, rq.text, rq.atlas_topic, rq.notes
+        FROM question_claims qc
+        JOIN research_questions rq ON qc.question_id = rq.question_id
+        WHERE qc.user_id=? AND qc.released_at IS NULL
+        ORDER BY qc.round ASC, qc.claimed_at ASC
+    """, (user["user_id"],)).fetchall()
+
+    if not claims:
+        db.close()
+        return {"has_claim": False, "claims": [], "message": "You haven't claimed a question yet"}
+
+    claim_list = []
+    total_task1_exp = 0
+    total_task2 = 0
+
+    for claim in claims:
+        qid = claim["question_id"]
+
+        task1_articles = db.execute("""
+            SELECT COUNT(*) FROM articles
+            WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task1'
+            AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+        """, (user["user_id"], qid)).fetchone()[0]
+
+        task2_articles = db.execute("""
+            SELECT COUNT(*) FROM articles
+            WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task2'
+            AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+        """, (user["user_id"], qid)).fetchone()[0]
+
+        task1_experimental = db.execute("""
+            SELECT COUNT(*) FROM articles
+            WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task1'
+            AND article_type='experimental' AND article_type_valid=1
+            AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+        """, (user["user_id"], qid)).fetchone()[0]
+
+        total_task1_exp += task1_experimental
+        total_task2 += task2_articles
+
+        claim_list.append({
+            "question_id": qid,
+            "label": claim["label"],
+            "domain": claim["domain"],
+            "text": claim["text"],
+            "round": claim["round"],
+            "progress": {
+                "task1": {
+                    "submitted": task1_articles,
+                    "confirmed_experimental": task1_experimental,
+                    "required": 10,
+                    "requirement": "All 10 must be experimental articles",
+                    "complete": task1_experimental >= 10
+                },
+                "task2": {
+                    "submitted": task2_articles,
+                    "required": 10,
+                    "requirement": "Any article type accepted",
+                    "complete": task2_articles >= 10
+                },
+                "a0_complete": task1_experimental >= 10 and task2_articles >= 10
+            }
+        })
+
+    db.close()
+
+    return {
+        "has_claim": True,
+        "claims": claim_list,
+        "total_progress": {
+            "total_experimental": total_task1_exp,
+            "total_any_type": total_task2,
+            "total_articles": total_task1_exp + total_task2,
+            "target": 20
+        }
+    }
+
+
+# ════════════════════════════════════════════════
+# A0 ARTICLE TYPE VALIDATION
+# ════════════════════════════════════════════════
+
+VALID_ARTICLE_TYPES = {"experimental", "review", "theory", "mechanism", "meta_analysis", "other", "unknown"}
+
+
+class SetArticleTypeRequest(BaseModel):
+    article_type: str  # experimental | review | theory | mechanism | meta_analysis | other
+    a0_task: str = ""  # task1 | task2 (optional, set at submission time)
+
+
+@router.post("/{article_id}/set-type")
+async def set_article_type(article_id: str, req: SetArticleTypeRequest, request: Request):
+    """
+    Set or update the article type classification. Used by:
+    - Students self-classifying during upload
+    - Instructors correcting classifications during review
+
+    For Task 1 submissions, article_type MUST be 'experimental' to count toward
+    the 10-article requirement. Non-experimental articles submitted to Task 1 are
+    stored but flagged as not counting.
+    """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "Authentication required")
+
+    if req.article_type not in VALID_ARTICLE_TYPES:
+        raise HTTPException(400, f"Invalid article_type. Must be one of: {', '.join(sorted(VALID_ARTICLE_TYPES))}")
+
+    db = _get_db()
+    row = db.execute("SELECT * FROM articles WHERE article_id=?", (article_id,)).fetchone()
+    if not row:
+        db.close()
+        raise HTTPException(404, "Article not found")
+
+    a0_task = req.a0_task or row["a0_task"]
+    # For task1: only 'experimental' is valid (counts toward requirement)
+    type_valid = 1
+    message = f"Article classified as {req.article_type}"
+    if a0_task == "task1" and req.article_type != "experimental":
+        type_valid = 0
+        message = (f"Article classified as {req.article_type}. Note: Task 1 requires experimental "
+                   f"articles — this paper is stored but does not count toward your 10-article requirement.")
+
+    db.execute("""UPDATE articles SET article_type=?, a0_task=?, article_type_valid=?
+                  WHERE article_id=?""",
+               (req.article_type, a0_task, type_valid, article_id))
+    db.commit()
+
+    # Update the claim's task counts
+    if a0_task and row["submitter_id"] and row["assigned_question_id"]:
+        _update_claim_counts(db, row["submitter_id"], row["assigned_question_id"])
+
+    db.close()
+
+    return {"article_id": article_id, "article_type": req.article_type,
+            "a0_task": a0_task, "counts_toward_requirement": bool(type_valid),
+            "message": message}
+
+
+def _update_claim_counts(db, user_id: str, question_id: str):
+    """Recalculate task1/task2 counts on the user's active claim."""
+    task1 = db.execute("""
+        SELECT COUNT(*) FROM articles
+        WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task1'
+        AND article_type='experimental' AND article_type_valid=1
+        AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+    """, (user_id, question_id)).fetchone()[0]
+
+    task2 = db.execute("""
+        SELECT COUNT(*) FROM articles
+        WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task2'
+        AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+    """, (user_id, question_id)).fetchone()[0]
+
+    db.execute("""UPDATE question_claims SET task1_count=?, task2_count=?
+                  WHERE user_id=? AND question_id=? AND released_at IS NULL""",
+               (task1, task2, user_id, question_id))
+    db.commit()

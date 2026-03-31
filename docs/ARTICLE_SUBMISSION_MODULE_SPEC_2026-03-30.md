@@ -1,9 +1,9 @@
 # Article Submission Module — Specification & Contract
 
-**Date**: 2026-03-30
+**Date**: 2026-03-30 (updated 2026-03-30 — A0 spec additions)
 **Author**: CW (Claude Code) for Prof. David Kirsh
 **Status**: Draft for review
-**Scope**: Backend endpoints, database schema, storage layout, and integration points for article intake in the Knowledge Atlas platform
+**Scope**: Backend endpoints, database schema, storage layout, A0 assignment rules (question claiming, article type enforcement), and integration points for article intake in the Knowledge Atlas platform
 
 ---
 
@@ -97,6 +97,11 @@ CREATE TABLE IF NOT EXISTS articles (
     course_context   TEXT,                      -- e.g., 'COGS160-SP26'
     submitter_notes  TEXT,                      -- "Why this paper matters" free text
 
+    -- A0 Assignment tracking
+    article_type     TEXT,                      -- experimental | review | theory | mechanism | meta_analysis | other | unknown
+    a0_task          TEXT,                      -- task1 (experimental-only) | task2 (any-type) | NULL (non-A0)
+    article_type_valid INTEGER DEFAULT 0,       -- 1 if type is appropriate for the task (task1 requires experimental)
+
     -- Timestamps
     created_at       TEXT NOT NULL,             -- ISO 8601
     validated_at     TEXT,
@@ -161,6 +166,40 @@ CREATE INDEX idx_audit_article ON audit_log(article_id);
 CREATE INDEX idx_audit_action ON audit_log(action);
 ```
 
+### 3.4 `question_claims` table (A0 Assignment)
+
+Tracks which student holds which question in which round. Each question can be held by one student per round; when all 8 are claimed, a new round opens.
+
+```sql
+CREATE TABLE IF NOT EXISTS question_claims (
+    claim_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    question_id     TEXT NOT NULL,          -- FK → research_questions.question_id
+    user_id         TEXT NOT NULL,           -- FK → users.user_id
+    round           INTEGER NOT NULL DEFAULT 1,  -- round 1, 2, 3, ...
+    claimed_at      TEXT NOT NULL,
+    released_at     TEXT,                    -- NULL if still held
+    task1_count     INTEGER NOT NULL DEFAULT 0,  -- experimental articles for this claim
+    task2_count     INTEGER NOT NULL DEFAULT 0,  -- any-type articles for this claim
+    UNIQUE(question_id, round)               -- one claim per question per round
+);
+```
+
+### 3.5 A0 Assignment Rules
+
+**20 articles per student, split into two tasks:**
+
+1. **Task 1** (assigned question): 10 articles, **all must be experimental**. Review, theory, mechanism, and meta-analysis articles are stored but do not count toward the 10-article requirement. The `article_type_valid` flag tracks this.
+
+2. **Task 2** (Google Scholar/AI question): 10 articles, **any type accepted**. Experimental, review, theory, mechanism, meta-analysis — all count.
+
+**Question assignment:**
+- 8 research questions (Q01–Q08), one student per question per round
+- When all 8 are claimed → new round opens → all 8 available again
+- Round recycling ensures every question accumulates more experimental coverage over time
+- Students may hold claims across multiple rounds
+
+**Valid article types:** `experimental`, `review`, `theory`, `mechanism`, `meta_analysis`, `other`, `unknown`
+
 ---
 
 ## 4. PDF Storage Layout
@@ -193,6 +232,23 @@ $STORAGE_ROOT/
 
 All new endpoints live under `/api/articles/`. Authentication is optional for submission (anonymous allowed) but required for review actions.
 
+### Endpoint summary
+
+| Endpoint | Method | Auth | Purpose |
+|----------|--------|------|---------|
+| `/api/articles/submit` | POST | Optional | Upload PDFs and/or citations |
+| `/api/articles/status/{id}` | GET | None | Check article status |
+| `/api/articles/my-submissions` | GET | Required | Student's submissions |
+| `/api/articles/pending-review` | GET | Instructor | Articles awaiting review |
+| `/api/articles/{id}/review` | POST | Instructor | Accept or reject |
+| `/api/articles/check-duplicate` | POST | None | Fuzzy duplicate probe (title ≤1 word, authors ≤1 word) |
+| `/api/articles/stats` | GET | Optional | Corpus + personal stats |
+| `/api/articles/{id}/set-type` | POST | Required | Set/update article type classification |
+| `/api/articles/questions/available` | GET | None | Questions available for claiming (shrinks per round) |
+| `/api/articles/questions/claim` | POST | Required | Claim a question for A0 |
+| `/api/articles/questions/release` | POST | Required | Release a claimed question |
+| `/api/articles/questions/my-claim` | GET | Required | Student's claims + A0 progress |
+
 ### 5.1 `POST /api/articles/submit`
 
 **Purpose**: Receive one or more articles (PDF files and/or citation text).
@@ -212,6 +268,8 @@ All new endpoints live under `/api/articles/`. Authentication is optional for su
 | `topic_tags` | string | No | JSON array of topic labels |
 | `notes` | string | No | "Why this paper matters" free text |
 | `source_surface` | string | No | Which page submitted from (default: `ka_contribute`) |
+| `a0_task` | string | No | `task1` (experimental-only) or `task2` (any-type) |
+| `article_type` | string | No | `experimental`, `review`, `theory`, `mechanism`, `meta_analysis`, `other` |
 
 **At least one of** `files`, `citations`, or `citation_file` must be provided.
 
