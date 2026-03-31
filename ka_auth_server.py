@@ -124,113 +124,121 @@ def init_db():
     count = db.execute("SELECT COUNT(*) FROM research_questions").fetchone()[0]
     if count == 0:
         questions = [
-            # ── Lighting / Luminous Environment (4 questions) ──
-            ("Q01", "Daylighting & Cognition",     "Luminous Environment",
+            # ── 1. Lighting (3 questions) ──
+            ("Q01", "Daylighting & Sustained Attention",  "Lighting",
              "Does access to natural daylight during working hours improve sustained attention? How large is the effect compared to equivalent artificial lighting, and does it depend on circadian timing?",
              "luminous__cog_attention", "High-VOI gap; Boubekri et al. 2014 gives one anchor."),
-            ("Q08", "Colour Temperature & Alertness", "Luminous Environment",
+            ("Q02", "Colour Temperature & Alertness",     "Lighting",
              "Does correlated colour temperature of artificial lighting affect alertness independently of illuminance level? Is the effect robust across different tasks and times of day?",
              "luminous__cog_performance", "Direction unclear in older studies; recent LED research needed."),
-            ("Q09", "Circadian Lighting & Sleep Quality", "Luminous Environment",
+            ("Q03", "Circadian Lighting & Sleep Quality",  "Lighting",
              "How does daytime exposure to circadian-effective light (melanopic EDI > 250 lux) in offices and classrooms affect nighttime sleep quality, and what minimum daily dose is required?",
              "luminous__health", "Boundary gap; dose-response poorly characterized outside clinical settings."),
-            ("Q10", "Lighting & Spatial Navigation", "Luminous Environment",
-             "Does ambient lighting distribution (uniform vs. non-uniform) affect wayfinding speed and route choice in complex indoor environments, independent of overall illuminance level?",
-             "luminous__behav_navigation", "Mechanism gap; lighting typically treated as confound in wayfinding studies."),
 
-            # ── Nature & Biophilia (4 questions) ──
-            ("Q02", "Fractal Dimension & Stress",  "Nature & Biophilia",
-             "Is fractal dimension of a visual scene causally related to psychophysiological stress recovery, or is the correlation mediated by familiarity with natural environments?",
-             "natural__affect_negative_stress", "Mechanism gap; Taylor fractal work is correlational only."),
-            ("Q06", "Window Views & Stress Recovery", "Nature & Biophilia",
-             "What is the minimum exposure duration to a window view of nature sufficient to produce measurable cortisol reduction? Does view content matter independently of view presence?",
-             "natural__affect_restoration", "Boundary gap; Ulrich 1984 seminal but not replicated with modern measures."),
-            ("Q11", "Indoor Plants & Cognitive Restoration", "Nature & Biophilia",
-             "Do indoor plants in a workspace improve attentional restoration beyond visual preference, and does the effect depend on plant density, species, or visibility from the workstation?",
-             "natural__cog_attention", "Direction gap; Lohr et al. 1996 is widely cited but effect sizes unreplicated."),
-            ("Q12", "Biophilic Design & Neural Reward", "Nature & Biophilia",
-             "Does exposure to biophilic design elements (water features, natural textures, vegetation) activate reward-related neural circuits (ventral striatum, mPFC) more than aesthetically matched non-natural stimuli?",
-             "natural__neural", "Mechanism gap; fMRI evidence almost absent from neuroarchitecture."),
+            # ── 2. Acoustics and Soundscape (3 questions) ──
+            ("Q04", "Soundscape Features & Hedonic Valence", "Acoustics and Soundscape",
+             "What features of an acoustic environment — reverberation time, background noise level, spectral content — most reliably predict hedonic valence ratings from occupants?",
+             "acoustic__affect_soundscape", "Multi-feature gap; almost no VR-based evidence."),
+            ("Q05", "Background Noise & Working Memory",    "Acoustics and Soundscape",
+             "At what sound pressure level does continuous background noise begin to impair working memory performance, and does the impairment threshold differ for speech-spectrum vs. broadband noise?",
+             "acoustic__cog_memory", "Boundary gap; existing thresholds are task-specific and not generalized."),
+            ("Q06", "Designed Soundscapes & Restoration",   "Acoustics and Soundscape",
+             "Can a designed soundscape (birdsong, flowing water, wind) in an indoor environment produce attentional restoration comparable to actual outdoor nature exposure as measured by ANT and PRS?",
+             "acoustic__affect_restoration", "Direction gap; soundscape restoration literature is observational."),
 
-            # ── Spatial Form (4 questions) ──
-            ("Q03", "Ceiling Height & Creativity", "Spatial Form",
+            # ── 3. Spatial Form and Configuration (3 questions) ──
+            ("Q07", "Ceiling Height & Creativity",        "Spatial Form and Configuration",
              "Does ceiling height influence divergent thinking independently of perceived spaciousness? What is the boundary condition at which the effect disappears?",
              "spatial__cog_performance", "Direction + Boundary gap; Meyers-Levy replication contested."),
-            ("Q07", "Spatial Complexity & Wayfinding", "Spatial Form",
-             "How does the visual complexity of a building interior affect wayfinding efficiency and associated stress — and does this interaction depend on the user's spatial ability?",
-             "spatial__behav_navigation", "Mechanism gap; wayfinding literature is separate from neuroarchitecture."),
-            ("Q13", "Enclosure Ratio & Stress Physiology", "Spatial Form",
+            ("Q08", "Enclosure Ratio & Stress Physiology", "Spatial Form and Configuration",
              "What enclosure ratio (wall height to floor area) produces the lowest physiological stress markers (cortisol, EDA) during focused work, and does the optimal ratio shift between individual and collaborative tasks?",
-             "spatial__physio", "Boundary gap; prospect-refuge theory predicts optimum but has not been tested parametrically."),
-            ("Q14", "Spatial Openness & Social Interaction", "Spatial Form",
+             "spatial__physio", "Boundary gap; prospect-refuge theory predicts optimum but not tested parametrically."),
+            ("Q09", "Spatial Openness & Social Interaction", "Spatial Form and Configuration",
              "Does the degree of spatial openness in a shared workspace predict the frequency and quality of spontaneous social interaction, or do acoustic and visual privacy override spatial layout effects?",
              "spatial__social", "Direction gap; open-plan office debate lacks controlled spatial parametric studies."),
 
-            # ── Acoustic Environment (4 questions) ──
-            ("Q04", "Acoustic Environment & Mood", "Acoustic Environment",
-             "What features of an acoustic environment — reverberation time, background noise level, spectral content — most reliably predict hedonic valence ratings from occupants?",
-             "acoustic__affect_soundscape", "Multi-feature gap; almost no VR-based evidence."),
-            ("Q15", "Background Noise & Working Memory", "Acoustic Environment",
-             "At what sound pressure level does continuous background noise begin to impair working memory performance, and does the impairment threshold differ for speech-spectrum vs. broadband noise?",
-             "acoustic__cog_memory", "Boundary gap; existing thresholds are task-specific and not generalized."),
-            ("Q16", "Soundscape & Restorative Potential", "Acoustic Environment",
-             "Can a designed soundscape (birdsong, flowing water, wind) in an indoor environment produce attentional restoration comparable to actual outdoor nature exposure as measured by ANT and PRS?",
-             "acoustic__affect_restoration", "Direction gap; soundscape restoration literature is observational."),
-            ("Q17", "Noise Exposure & Cardiovascular Health", "Acoustic Environment",
-             "What is the dose-response relationship between chronic occupational noise exposure (40–70 dB LAeq) and cardiovascular health markers (blood pressure, resting heart rate) in office-type environments?",
-             "acoustic__health", "Boundary gap; WHO noise guidelines extrapolate from transportation noise studies."),
+            # ── 4. Natural and Biophilic Conditions (3 questions) ──
+            ("Q10", "Fractal Dimension & Stress Recovery", "Natural and Biophilic Conditions",
+             "Is fractal dimension of a visual scene causally related to psychophysiological stress recovery, or is the correlation mediated by familiarity with natural environments?",
+             "natural__affect_negative_stress", "Mechanism gap; Taylor fractal work is correlational only."),
+            ("Q11", "Window Views & Cortisol Reduction",   "Natural and Biophilic Conditions",
+             "What is the minimum exposure duration to a window view of nature sufficient to produce measurable cortisol reduction? Does view content matter independently of view presence?",
+             "natural__affect_restoration", "Boundary gap; Ulrich 1984 seminal but not replicated with modern measures."),
+            ("Q12", "Indoor Plants & Cognitive Restoration", "Natural and Biophilic Conditions",
+             "Do indoor plants in a workspace improve attentional restoration beyond visual preference, and does the effect depend on plant density, species, or visibility from the workstation?",
+             "natural__cog_attention", "Direction gap; Lohr et al. 1996 widely cited but effect sizes unreplicated."),
 
-            # ── Material & Surface (3 questions) ──
-            ("Q05", "Wood Interiors & Wellbeing",  "Material & Surface",
+            # ── 5. Material and Surface Conditions (2 questions) ──
+            ("Q13", "Wood Interiors & Wellbeing",          "Material and Surface Conditions",
              "Do visible wood surfaces in an interior environment predict wellbeing outcomes beyond what is explained by lighting and texture diversity alone?",
              "material__affect_wellbeing", "Low evidence base; Rice et al. 2006 is exploratory only."),
-            ("Q18", "Surface Texture & Haptic Comfort", "Material & Surface",
+            ("Q14", "Surface Texture & Haptic Comfort",    "Material and Surface Conditions",
              "Does the tactile roughness of interior surfaces (desks, walls, flooring) independently affect self-reported comfort and physiological arousal, or is the effect entirely mediated by visual texture perception?",
              "material__affect_comfort", "Mechanism gap; haptic vs. visual texture confounded in most material studies."),
-            ("Q19", "Material Colour & Cognitive Performance", "Material & Surface",
-             "Does the dominant colour of interior surfaces (warm vs. cool hues, saturation level) affect sustained attention or creative output when luminance and illuminance are controlled?",
-             "material__cog_performance", "Direction gap; colour psychology findings rarely control for luminance confounds."),
 
-            # ── Thermal & Air Quality (3 questions) ──
-            ("Q20", "Temperature & Cognitive Performance", "Thermal & Air Quality",
+            # ── 6. Thermal and Air Conditions (2 questions) ──
+            ("Q15", "Temperature & Cognitive Performance",  "Thermal and Air Conditions",
              "What is the optimal indoor air temperature range for maximizing cognitive performance on complex tasks, and does the optimum shift with acclimatization, age, or clothing insulation?",
              "thermal__cog_performance", "Boundary gap; Seppänen et al. 2006 meta-analysis uses coarse categories."),
-            ("Q21", "CO2 Concentration & Decision Quality", "Thermal & Air Quality",
+            ("Q16", "CO2 Concentration & Decision Quality", "Thermal and Air Conditions",
              "At what CO2 concentration does strategic decision-making quality (measured by SMS or comparable instrument) begin to decline, and is the threshold lower for cognitively demanding vs. routine tasks?",
              "thermal__cog_cognitive_load", "Boundary gap; Allen et al. 2016 COGFX study needs replication across task types."),
-            ("Q22", "Ventilation Rate & Subjective Wellbeing", "Thermal & Air Quality",
-             "Does increasing ventilation rate above ASHRAE 62.1 minimums produce measurable gains in self-reported wellbeing and symptom reduction in occupied classrooms, and is the relationship linear or threshold-based?",
-             "thermal__affect_wellbeing", "Direction gap; SBS literature is observational, few interventional classroom studies."),
 
-            # ── Environmental Control (3 questions) ──
-            ("Q23", "Personal Control & Stress Reduction", "Environmental Control",
-             "Does giving occupants personal control over lighting, temperature, or acoustic conditions reduce physiological stress markers more than providing objectively optimal fixed conditions?",
-             "control__affect_negative_stress", "Mechanism gap; perceived control confounded with actual environmental change."),
-            ("Q24", "Autonomy Over Workspace & Task Performance", "Environmental Control",
-             "Does the ability to reconfigure one's own workspace (desk position, partition height, lighting angle) improve task performance, and is the benefit mediated by sense of agency or by physical optimization?",
-             "control__cog_performance", "Mechanism gap; autonomy effects conflated with ergonomic improvement."),
-            ("Q25", "Smart Building Automation vs. Occupant Override", "Environmental Control",
-             "When automated building systems override occupant preferences for energy efficiency, what is the net effect on occupant satisfaction, productivity, and physiological comfort compared to full manual control?",
-             "control__affect_wellbeing", "Direction gap; smart building literature focuses on energy, not occupant outcomes."),
+            # ── 7. Aesthetic Conditions (2 questions) ──
+            ("Q17", "Interior Colour & Cognitive Performance", "Aesthetic Conditions",
+             "Does the dominant colour of interior surfaces (warm vs. cool hues, saturation level) affect sustained attention or creative output when luminance and illuminance are controlled?",
+             "material__cog_performance", "Direction gap; colour psychology findings rarely control for luminance confounds."),
+            ("Q18", "Visual Complexity & Aesthetic Preference", "Aesthetic Conditions",
+             "Is there an optimal level of visual complexity in interior design that maximizes both aesthetic preference and psychological comfort, and does the optimum follow an inverted-U (Berlyne) curve across diverse populations?",
+             "spatial__affect_preference", "Boundary gap; Berlyne arousal-potential model untested in real architectural settings."),
 
-            # ── Social-Spatial (3 questions) ──
-            ("Q26", "Density & Crowding Stress", "Social-Spatial",
+            # ── 8. Wayfinding and Environmental Legibility (2 questions) ──
+            ("Q19", "Spatial Complexity & Wayfinding Stress", "Wayfinding and Environmental Legibility",
+             "How does the visual complexity of a building interior affect wayfinding efficiency and associated stress — and does this interaction depend on the user's spatial ability?",
+             "spatial__behav_navigation", "Mechanism gap; wayfinding literature is separate from neuroarchitecture."),
+            ("Q20", "Signage vs. Spatial Legibility",       "Wayfinding and Environmental Legibility",
+             "Does improving the spatial legibility of a building (sight lines, landmarks, layout regularity) reduce wayfinding errors more effectively than adding signage, and do the two interventions interact?",
+             "spatial__behav_navigation", "Direction gap; signage and architectural legibility studied separately."),
+
+            # ── 9. Social-Spatial Conditions (2 questions) ──
+            ("Q21", "Density & Crowding Stress",              "Social-Spatial Conditions",
              "What spatial density threshold (persons per square metre) triggers subjective crowding and elevated cortisol in shared workspaces, and does visual access to an exit or window moderate the threshold?",
              "social_spatial__affect_negative_stress", "Boundary gap; crowding literature is mostly residential or transportation."),
-            ("Q27", "Privacy Gradient & Collaboration Quality", "Social-Spatial",
+            ("Q22", "Privacy Gradient & Collaboration Quality", "Social-Spatial Conditions",
              "Does a graduated privacy gradient (open → semi-open → enclosed spaces within one floor) improve the quality of collaborative output compared to uniformly open or uniformly enclosed plans?",
              "social_spatial__social", "Direction gap; activity-based working studies are mostly survey-based."),
-            ("Q28", "Shared vs. Assigned Seating & Belonging", "Social-Spatial",
-             "Does hot-desking (unassigned seating) reduce employees' sense of belonging and territorial satisfaction compared to assigned desks, and does this effect persist after an acclimatization period?",
-             "social_spatial__affect_wellbeing", "Direction gap; hot-desking studies confound policy with organisational culture."),
 
-            # ── Multisensory / Cross-Domain (2 questions) ──
-            ("Q29", "Multisensory Congruence & Restoration", "Multisensory",
-             "Does congruence between visual (nature imagery), auditory (natural soundscape), and olfactory (forest scent) stimuli produce greater stress restoration than any single modality alone, and is the effect additive or superadditive?",
-             "natural__affect_restoration", "Mechanism gap; crossmodal environment studies are rare and underpowered."),
-            ("Q30", "Lighting × Acoustics Interaction on Focus", "Multisensory",
-             "How do lighting level and background noise level interact in their effects on sustained attention — is the interaction additive, or does one modality dominate under specific conditions?",
-             "luminous__cog_attention", "Mechanism gap; lighting and acoustics studied independently in most cognition work."),
+            # ── 10. Olfactory Conditions (2 questions) ──
+            ("Q23", "Ambient Scent & Cognitive Performance", "Olfactory Conditions",
+             "Does ambient scent (e.g., peppermint, rosemary, lemon) in a work environment improve sustained attention or memory recall beyond placebo, and does the effect depend on scent-task congruence?",
+             "natural__cog_performance", "Direction gap; aroma studies have small n and rarely control for expectancy."),
+            ("Q24", "Natural Scent & Stress Restoration",    "Olfactory Conditions",
+             "Does exposure to forest-associated volatile organic compounds (phytoncides, terpenes) in an indoor setting reduce cortisol and sympathetic nervous system activation comparably to actual forest bathing?",
+             "natural__affect_restoration", "Mechanism gap; shinrin-yoku literature confounds scent with visual and auditory cues."),
+
+            # ── 11. Temporal and Exposure Conditions (2 questions) ──
+            ("Q25", "Exposure Duration & Habituation",       "Temporal and Exposure Conditions",
+             "How quickly do occupants habituate to environmental interventions (nature views, soundscapes, lighting changes), and does the restorative benefit decay linearly, asymptotically, or show a rebound effect after removal?",
+             "natural__affect_restoration", "Boundary gap; almost no longitudinal studies of environmental intervention persistence."),
+            ("Q26", "Acute vs. Chronic Environmental Effects", "Temporal and Exposure Conditions",
+             "Do environmental design features (biophilic elements, optimal lighting) that show acute benefits in laboratory studies produce sustained improvements over weeks and months of daily exposure in real buildings?",
+             "luminous__health", "Replication gap; most studies are single-session; ecological validity is unknown."),
+
+            # ── 12. Cultural Framing (2 questions) ──
+            ("Q27", "Cultural Background & Spatial Preference", "Cultural Framing",
+             "Do preferences for enclosure, prospect, and spatial openness vary systematically across cultural backgrounds (collectivist vs. individualist societies), and does cultural background moderate the stress-reduction effects of architectural form?",
+             "spatial__affect_preference", "Direction gap; prospect-refuge theory tested almost exclusively in Western samples."),
+            ("Q28", "Meaning & Place Attachment in Design",    "Cultural Framing",
+             "Does culturally meaningful architectural symbolism (ornament, material choice, spatial organisation) affect occupant wellbeing and sense of belonging independently of physical comfort and spatial quality?",
+             "social_spatial__affect_wellbeing", "Mechanism gap; environmental psychology rarely separates symbolic from sensory effects."),
+
+            # ── 13. Participant State, Expertise, and Perceived Control (2 questions) ──
+            ("Q29", "Personal Control & Stress Reduction",     "Participant State, Expertise, and Perceived Control",
+             "Does giving occupants personal control over lighting, temperature, or acoustic conditions reduce physiological stress markers more than providing objectively optimal fixed conditions, and is the benefit mediated by perceived agency?",
+             "control__affect_negative_stress", "Mechanism gap; perceived control confounded with actual environmental change."),
+            ("Q30", "Expertise & Environmental Sensitivity",   "Participant State, Expertise, and Perceived Control",
+             "Do architects and design professionals show different physiological and neural responses to spatial quality (proportion, complexity, coherence) compared to non-experts, and does expertise sharpen or blunt environmental stress effects?",
+             "spatial__neural", "Direction gap; expertise effects studied in aesthetic judgment but not in environmental stress."),
         ]
         db.executemany(
             "INSERT INTO research_questions VALUES (?,?,?,?,?,?)", questions)
