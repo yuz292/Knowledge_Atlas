@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2: Programming Exercises · COGS 160</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1C3D3A; --teal: #2A7868; --teal-lt: #5AC8AA; --teal-bg: #E6F5F0;
+  --amber: #E8872A; --amber-lt: #FFF3E0; --amber-dk: #9a5010;
+  --cream: #F7F4EF; --ink: #2C2C2C; --muted: #6B6B6B; --border: #D8D0C5;
+  --white: #FFFFFF; --rose: #A84F6B; --blue: #3A6EA8; --green: #1A7A50;
+  --purple: #7A1A5C; --purple-bg: #FDE8F4;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.65; }
+
+/* ── Top nav ── */
+.top-nav { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; height: 52px; gap: 1.2rem; font-size: 0.85rem; position: sticky; top: 0; z-index: 100; }
+.nav-brand { color: var(--amber); font-weight: 800; font-size: 1.05rem; text-decoration: none; }
+.nav-sep { color: rgba(255,255,255,0.2); }
+.nav-link { color: #b2dfdb; text-decoration: none; padding: 4px 10px; border-radius: 5px; transition: background 0.15s; }
+.nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-link.active { background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; }
+.nav-right { margin-left: auto; color: rgba(255,255,255,0.4); font-size: 0.75rem; }
+
+/* ── Hero ── */
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #152e2b 100%); color: #fff; padding: 3rem 2rem 2.5rem; text-align: center; }
+.hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 0.5rem; }
+.hero h1 { font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 0.5rem; }
+.hero-sub { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 680px; margin: 0 auto 1.2rem; }
+.hero-pills { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
+.hero-pill { display: inline-block; padding: 0.28rem 0.85rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.pill-teal { background: var(--teal); color: #fff; }
+.pill-amber { background: var(--amber); color: #fff; }
+.pill-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+
+/* ── Layout ── */
+.page-wrap { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+/* ── Section blocks ── */
+.section-block { background: var(--white); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.section-label { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 4px; margin-bottom: 0.75rem; }
+.label-teal { background: var(--teal-bg); color: var(--teal); }
+.label-amber { background: var(--amber-lt); color: var(--amber-dk); }
+.label-rose { background: #fdf0ef; color: var(--rose); }
+.label-purple { background: var(--purple-bg); color: var(--purple); }
+.label-blue { background: #e8f0fd; color: var(--blue); }
+.section-title { font-family: Georgia, serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+.section-block p { margin-bottom: 0.9rem; font-size: 0.95rem; }
+.section-block p:last-child { margin-bottom: 0; }
+
+/* ── Method table ── */
+.method-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+.method-table th { background: var(--navy); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.method-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.method-table tr:last-child td { border-bottom: none; }
+.method-table .step-num { font-weight: 800; color: var(--amber); white-space: nowrap; }
+
+/* ── Callout boxes ── */
+.callout { border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: 0.9rem; }
+.callout-teal { border-color: var(--teal); background: var(--teal-bg); }
+.callout-amber { border-color: var(--amber); background: var(--amber-lt); }
+.callout-rose { border-color: var(--rose); background: #fdf0ef; }
+.callout-label { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+.callout-teal .callout-label { color: var(--teal); }
+.callout-amber .callout-label { color: var(--amber-dk); }
+.callout-rose .callout-label { color: var(--rose); }
+
+/* ── Exercise cards ── */
+.exercise-card { background: var(--white); border-radius: 12px; padding: 0; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
+.exercise-header { padding: 1.5rem 2rem 1.2rem; }
+.exercise-header.demo { background: linear-gradient(135deg, var(--navy) 0%, #152e2b 100%); color: #fff; }
+.exercise-header.track-trust { border-top: 4px solid var(--teal); }
+.exercise-header.track-theory { border-top: 4px solid var(--purple); }
+.exercise-header.track-explorer { border-top: 4px solid var(--amber); }
+.exercise-tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.exercise-header.demo .exercise-tag { color: var(--amber); }
+.exercise-header.track-trust .exercise-tag { color: var(--teal); }
+.exercise-header.track-theory .exercise-tag { color: var(--purple); }
+.exercise-header.track-explorer .exercise-tag { color: var(--amber); }
+.exercise-name { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+.exercise-header.demo .exercise-name { color: #fff; }
+.exercise-meta { font-size: 0.82rem; opacity: 0.7; }
+.exercise-body { padding: 1.5rem 2rem 2rem; }
+.exercise-body h3 { font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin: 1.2rem 0 0.5rem; }
+.exercise-body h3:first-child { margin-top: 0; }
+.exercise-body p { font-size: 0.92rem; margin-bottom: 0.8rem; }
+
+/* ── Code / prompt blocks ── */
+.prompt-block { background: #1a1a2e; color: #e0e0e0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0; font-family: "SF Mono", "Fira Code", Consolas, monospace; font-size: 0.82rem; line-height: 1.55; white-space: pre-wrap; word-break: break-word; overflow-x: auto; }
+.prompt-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); margin-bottom: 0.3rem; }
+
+/* ── Spec block ── */
+.spec-block { background: #f8f6f2; border: 1.5px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0; font-family: "SF Mono", "Fira Code", Consolas, monospace; font-size: 0.82rem; line-height: 1.55; white-space: pre-wrap; }
+
+/* ── Data table ── */
+.data-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem; }
+.data-table th { background: var(--cream); color: var(--navy); text-align: left; padding: 0.5rem 0.7rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid var(--border); }
+.data-table td { padding: 0.45rem 0.7rem; border-bottom: 1px solid #eae6df; vertical-align: top; }
+.data-table code { font-size: 0.82rem; background: #f0ede7; padding: 1px 5px; border-radius: 3px; }
+
+/* ── Context file link ── */
+.context-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1rem; border-radius: 6px; background: var(--navy); color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin: 0.4rem 0; transition: background 0.15s; }
+.context-link:hover { background: var(--teal); }
+
+/* ── Deliverable box ── */
+.deliverable { background: var(--amber-lt); border: 1.5px solid var(--amber); border-radius: 8px; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+.deliverable-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber-dk); margin-bottom: 0.3rem; }
+.deliverable p { font-size: 0.88rem; color: #5a3800; margin: 0.4rem 0; }
+
+/* ── Rubric ── */
+.rubric-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+.rubric-table th { background: var(--navy); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-weight: 600; font-size: 0.78rem; }
+.rubric-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+.rubric-table .weight { font-weight: 700; color: var(--amber-dk); text-align: center; }
+
+/* ── Week nav ── */
+.week-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; margin-top: 1rem; border-top: 2px solid var(--border); }
+.week-nav a { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: all 0.15s; }
+.week-nav .prev { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+.week-nav .prev:hover { border-color: var(--navy); }
+.week-nav .next { background: var(--navy); color: #fff; }
+.week-nav .next:hover { background: var(--teal); }
+
+@media (max-width: 640px) {
+  .exercise-body, .exercise-header { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .section-block { padding: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="top-nav">
+  <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
+  <span class="nav-sep">|</span>
+  <a href="ka_schedule.html" class="nav-link">Schedule</a>
+  <a href="ka_student_setup.html" class="nav-link">Setup</a>
+  <a href="week2_agenda.html" class="nav-link">Week 2</a>
+  <a href="../ka_evidence.html" class="nav-link">Evidence</a>
+  <a href="../ka_demo_v04.html" class="nav-link">Ask</a>
+  <span class="nav-right">COGS 160 &middot; Spring 2026</span>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <p class="hero-eyebrow">COGS 160 &middot; Spring 2026 &middot; Week 2</p>
+  <h1>AI-Directed Programming Exercises</h1>
+  <p class="hero-sub">Real engineering tasks on the Knowledge Atlas codebase. The AI supplies the domain knowledge. You supply the method.</p>
+  <div class="hero-pills">
+    <span class="hero-pill pill-teal">5 exercises</span>
+    <span class="hero-pill pill-amber">7-step method</span>
+    <span class="hero-pill pill-outline">context files included</span>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+<!-- ══════════════ HOW WEEK 2 WORKS ══════════════ -->
+<div class="section-block">
+  <span class="section-label label-teal">Overview</span>
+  <h2 class="section-title">How Week 2 Works</h2>
+  <p><strong>Tuesday (Day 3):</strong> Prof Kirsh demos Exercise 0 live &mdash; the full seven-step cycle on a real task, start to finish. You watch the method in action: convene panel, write spec, implement with AI, verify, iterate when it fails.</p>
+  <p><strong>Thursday (Day 4):</strong> You do one exercise yourself (assigned by team). Same method, different task. Submit everything: all prompts (including failures), the AI&rsquo;s output at each step, verification results, and a two-paragraph reflection.</p>
+
+  <div class="callout callout-rose">
+    <div class="callout-label">The Rule</div>
+    You must complete steps 1&ndash;3 before touching step 4. If you skip the panel and spec, the AI will produce plausible-looking code that fails in ways you can&rsquo;t diagnose. That&rsquo;s Failure Mode #1.
+  </div>
+</div>
+
+<!-- ══════════════ THE SEVEN-STEP METHOD ══════════════ -->
+<div class="section-block">
+  <span class="section-label label-amber">Quick Reference</span>
+  <h2 class="section-title">The Seven-Step Method</h2>
+  <table class="method-table">
+    <thead><tr><th>Step</th><th>What You Do</th><th>What It Produces</th></tr></thead>
+    <tbody>
+      <tr><td class="step-num">1. Panel</td><td>Ask the AI to simulate 2&ndash;3 domain experts who argue about what the component should do</td><td>Requirements you wouldn&rsquo;t have thought of</td></tr>
+      <tr><td class="step-num">2. Spec</td><td>Define inputs, outputs, success conditions, edge cases</td><td>A testable contract</td></tr>
+      <tr><td class="step-num">3. Tests</td><td>Write 3&ndash;5 concrete test cases before any code</td><td>Verification criteria</td></tr>
+      <tr><td class="step-num">4. Build</td><td>Have the AI build it against the spec</td><td>Working code</td></tr>
+      <tr><td class="step-num">5. Verify</td><td>Run acceptance tests on real data</td><td>Pass/fail on each test</td></tr>
+      <tr><td class="step-num">6. Diagnose</td><td>When something fails, figure out why &mdash; spec wrong, or implementation?</td><td>A correction</td></tr>
+      <tr><td class="step-num">7. Iterate</td><td>Fix and re-verify until all tests pass</td><td>Finished component</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════ STEP 0: INITIALIZE YOUR AI ══════════════ -->
+<div class="section-block" style="border: 2px solid var(--amber);">
+  <span class="section-label label-amber">Do This First</span>
+  <h2 class="section-title">Step 0: Initialize Your AI</h2>
+  <p>Each exercise has a <strong>context file</strong> &mdash; a document that tells the AI what part of the Knowledge Atlas codebase this task involves, what the data structures look like, and where the relevant files are. Without this, the AI is flying blind and will hallucinate data structures.</p>
+
+  <h3 style="font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin: 1.2rem 0 0.5rem;">The Procedure</h3>
+
+  <p><strong>1. Find your context file.</strong> They are in <code>160sp/context/</code>:</p>
+  <table class="data-table">
+    <thead><tr><th>Exercise</th><th>Context File</th><th>Download</th></tr></thead>
+    <tbody>
+      <tr><td>Exercise 0 (Demo)</td><td><code>context_ex0_mechanism_pathway.md</code></td><td><a href="context/context_ex0_mechanism_pathway.md" class="context-link">&#8595; Open</a></td></tr>
+      <tr><td>Exercise A</td><td><code>context_exA_trust_panel.md</code></td><td><a href="context/context_exA_trust_panel.md" class="context-link">&#8595; Open</a></td></tr>
+      <tr><td>Exercise B</td><td><code>context_exB_debate_visualizer.md</code></td><td><a href="context/context_exB_debate_visualizer.md" class="context-link">&#8595; Open</a></td></tr>
+      <tr><td>Exercise C</td><td><code>context_exC_warrant_calculator.md</code></td><td><a href="context/context_exC_warrant_calculator.md" class="context-link">&#8595; Open</a></td></tr>
+      <tr><td>Exercise D</td><td><code>context_exD_search_filter.md</code></td><td><a href="context/context_exD_search_filter.md" class="context-link">&#8595; Open</a></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>2. Paste the entire context file into your AI chat as the first message.</strong> This is not optional. The context file contains the actual JSON schemas, field names, file paths, and data distributions your AI needs. Without it, the AI will guess &mdash; and guess wrong.</p>
+
+  <p><strong>3. Then ask the AI to explain the task back to you:</strong></p>
+  <div class="prompt-block"><span class="prompt-label">Prompt</span>
+Before we start building, explain what you think this task is about.
+What are the key data structures? What's the hardest part?
+What could go wrong?</div>
+  <p>If the AI&rsquo;s explanation doesn&rsquo;t match the context file, correct it before proceeding. An AI that misunderstands the data model will produce code that looks right but crashes on real data.</p>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">Failure Mode #2</div>
+    Correct method, wrong mental model. If you don&rsquo;t initialize the AI with the right context, every subsequent step &mdash; the panel discussion, the spec, the implementation &mdash; will be built on a misunderstanding.
+  </div>
+</div>
+
+<!-- ══════════════ EXERCISE 0: DEMO ══════════════ -->
+<div class="exercise-card">
+  <div class="exercise-header demo">
+    <div class="exercise-tag">Live Demo &middot; Prof Kirsh</div>
+    <div class="exercise-name">Exercise 0: Mechanism Pathway Tracer</div>
+    <div class="exercise-meta">Track 4 (Theory/Mechanism) &middot; ~40 min live &middot; D3.js visualization</div>
+  </div>
+  <div class="exercise-body">
+    <a href="context/context_ex0_mechanism_pathway.md" class="context-link">&#128196; Context file: context_ex0_mechanism_pathway.md</a>
+
+    <h3>The Problem</h3>
+    <p>Knowledge Atlas has ~1,900 evidence claims and ~4,810 edges connecting them. Among these, 34 are explicitly tagged as <code>mechanism_claim</code> &mdash; they describe <em>how</em> one thing causes another, not just <em>that</em> it does. But there&rsquo;s no way to visualize the chain. A researcher asking &ldquo;how does natural light affect performance?&rdquo; has to manually click through dozens of evidence cards. We need a component that traces the pathway automatically and shows confidence at each step.</p>
+
+    <h3>Step 1 &mdash; Convene Panel</h3>
+    <div class="prompt-block"><span class="prompt-label">Panel Prompt</span>
+You are running a design panel for a mechanism pathway visualization
+component. The panelists are:
+
+- Judea Pearl (causal inference): What makes a mechanism chain
+  valid vs. merely plausible?
+- Edward Tufte (information design): How should confidence be
+  encoded visually without clutter?
+- A cognitive science graduate student (target user): What would
+  actually help me understand the pathway?
+
+The component takes an IV and DV and displays the mechanistic chain
+connecting them, with confidence ratings per step. The data source is
+argumentation.json (~1,900 claim nodes with typed support/attack edges
+and strength scores 0-1).
+
+Each panelist: state your top 3 requirements and one thing that would
+make it misleading or useless.</div>
+
+    <h3>Step 2 &mdash; Write Spec (Example)</h3>
+    <div class="spec-block">COMPONENT: MechanismPathwayTracer
+INPUT: iv_term (string), dv_term (string)
+OUTPUT: SVG/HTML showing directed graph from IV to DV
+
+DATA SOURCE: argumentation.json
+  - claim nodes with belief_id, content_preview, warrant_status
+  - edges with source, target, scheme_hint, strength (0-1), defeat_type
+
+REQUIREMENTS:
+1. Find mechanism_claim nodes matching IV and DV terms
+2. Trace shortest path via support edges
+3. Display each node with: claim text, confidence, warrant type
+4. Color edges by strength: green (&gt;0.7), amber (0.4-0.7), red (&lt;0.4)
+5. Show attack edges as dashed red lines with defeat_type label
+6. If no path exists, show "No mechanism chain found" + closest partial
+
+EDGE CASES:
+- Multiple paths &rarr; show highest-confidence, note alternatives
+- Circular references &rarr; detect and break cycles
+- IV or DV not found &rarr; suggest closest matches</div>
+
+    <h3>Step 3 &mdash; Acceptance Tests</h3>
+    <div class="spec-block">TEST 1: Input "natural light", "task performance"
+  EXPECT: Directed graph with &ge;2 intermediate nodes
+  VERIFY: Each node's content_preview mentions plausible mechanism
+
+TEST 2: Input "noise", "stress"
+  EXPECT: Pathway through at least one mechanism_claim
+  VERIFY: Edge strengths match argumentation.json exactly
+
+TEST 3: Input "unicorns", "happiness"
+  EXPECT: "No mechanism chain found" message
+  VERIFY: No graph rendered, no crash
+
+TEST 4: Visual verification
+  EXPECT: High-strength edges visibly different from low-strength
+  VERIFY: Screenshot comparison</div>
+
+    <h3>Steps 4&ndash;7: Implementation, Verification, Iteration</h3>
+    <p>This is where the live demo happens. The audience watches the AI build the D3.js visualization, Prof Kirsh runs the acceptance tests, something fails (it always does), the diagnosis happens, and the fix is applied.</p>
+
+    <div class="callout callout-teal">
+      <div class="callout-label">What to Notice</div>
+      The spec did most of the intellectual work. The AI wrote the code in minutes. The debugging required going back to the spec, not staring at code.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ EXERCISE A ══════════════ -->
+<div class="exercise-card">
+  <div class="exercise-header track-trust">
+    <div class="exercise-tag">Track 5: QA/Trust &middot; Teams 1&ndash;2</div>
+    <div class="exercise-name">Exercise A: &ldquo;Why Trust This?&rdquo; Evidence Panel</div>
+    <div class="exercise-meta">60&ndash;80 min &middot; UI panel component</div>
+  </div>
+  <div class="exercise-body">
+    <a href="context/context_exA_trust_panel.md" class="context-link">&#128196; Context file: context_exA_trust_panel.md</a>
+
+    <h3>The Problem</h3>
+    <p>Every evidence card shows a credence score (0&ndash;1) and a warrant type. But a student looking at &ldquo;credence: 0.68, warrant: empirical_association&rdquo; has no idea whether to trust it. Is 0.68 good? Is empirical association strong evidence? How many studies support it? The numbers are in the data but not assembled into a readable trust judgment.</p>
+
+    <h3>Your Data</h3>
+    <table class="data-table">
+      <thead><tr><th>Field</th><th>What It Tells You</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><code>credence</code></td><td>Overall confidence (0&ndash;1)</td><td>0.68</td></tr>
+        <tr><td><code>warrant_class</code></td><td>Type of evidence</td><td>empirical_association</td></tr>
+        <tr><td><code>warrant_discount</code></td><td>How much to trust this type (0.25&ndash;1.0)</td><td>0.80</td></tr>
+        <tr><td><code>support_count</code></td><td>Claims backing this one up</td><td>3</td></tr>
+        <tr><td><code>attack_count</code></td><td>Claims contradicting it</td><td>1</td></tr>
+        <tr><td><code>warrant_status</code></td><td>WARRANTED or UNGROUNDED</td><td>WARRANTED</td></tr>
+        <tr><td><code>defeat_type</code></td><td>rebutting / undercutting / BOTH / empty</td><td>rebutting</td></tr>
+        <tr><td><code>qualifier</code></td><td>stable / supported_but_contested / underspecified</td><td>stable</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Step 1 &mdash; Convene Panel</h3>
+    <div class="prompt-block"><span class="prompt-label">Panel Prompt</span>
+You are running a design panel for a "Why Trust This?" evidence panel.
+The panelists are:
+
+- Deborah Mayo (philosophy of science, severe testing): When is
+  evidence actually strong vs. merely present?
+- A first-year graduate student (target user): What would help me
+  decide whether to cite this claim in my thesis?
+- Ben Shneiderman (information visualization): How do you present
+  trust information without overwhelming the user?
+
+The panel appears alongside evidence cards. It must answer two
+questions: "Why trust this?" and "What could be wrong?" using only
+the fields available in the data.
+
+Each panelist: state your top 3 requirements and one design mistake
+that would make the panel misleading.</div>
+
+    <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
+    <p>Follow the same structure as the demo. Write your spec from the panel discussion. Define at least 4 acceptance tests (two starters are in the full exercise doc). Implement, test on real claims from evidence.json, diagnose failures, iterate.</p>
+  </div>
+</div>
+
+<!-- ══════════════ EXERCISE B ══════════════ -->
+<div class="exercise-card">
+  <div class="exercise-header track-theory">
+    <div class="exercise-tag">Track 4: Theory/Mechanism &middot; Teams 3&ndash;4</div>
+    <div class="exercise-name">Exercise B: Debate Cluster Visualizer</div>
+    <div class="exercise-meta">60&ndash;80 min &middot; D3.js argument map</div>
+  </div>
+  <div class="exercise-body">
+    <a href="context/context_exB_debate_visualizer.md" class="context-link">&#128196; Context file: context_exB_debate_visualizer.md</a>
+
+    <h3>The Problem</h3>
+    <p><code>argumentation.json</code> contains 38 debate clusters. Each represents a real scientific disagreement &mdash; e.g., Attention Restoration Theory vs. Stress Reduction Theory, with 9 papers and multiple claims on each side with support/attack edges. This is extraordinary data, but there&rsquo;s no way to see it. We need a component that renders one debate cluster as a visual argument map.</p>
+
+    <h3>Sample Data</h3>
+    <div class="spec-block">{
+  "cluster_id": "C8",
+  "paper_count": 9,
+  "theories": ["Attention Restoration Theory", "Stress Reduction Theory"]
+}
+
+// claim nodes reference these via paper_id
+// edges carry: scheme_hint, defeat_type, strength (0-1)
+// scheme_hints: mechanistic_support, empirical_support,
+//   theoretical_rebuttal, methodological_undercut</div>
+
+    <h3>Step 1 &mdash; Convene Panel</h3>
+    <div class="prompt-block"><span class="prompt-label">Panel Prompt</span>
+You are running a design panel for a scientific debate visualizer.
+The panelists are:
+
+- Stephen Toulmin (argumentation theory): What makes an argument map
+  truthful vs. decorative?
+- Mike Bostock (D3.js creator): What graph layout makes
+  support/attack structure readable at 20-50 nodes?
+- An undergraduate who has never seen an argument map (target user):
+  What would help me understand which side is winning and why?
+
+The component renders one debate cluster: two competing theories,
+claims on each side, and support/attack edges between them. Data
+includes edge strength (0-1), defeat type, and scheme hints.
+
+Each panelist: state your top 3 requirements and one thing that
+would make the visualization misleading.</div>
+
+    <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
+    <p>Write your spec from the panel discussion. Key decisions: two-column layout? Force-directed? How to show which side is &ldquo;winning&rdquo;? Define tests, build, verify against real clusters from the data.</p>
+  </div>
+</div>
+
+<!-- ══════════════ EXERCISE C ══════════════ -->
+<div class="exercise-card">
+  <div class="exercise-header track-trust">
+    <div class="exercise-tag">Track 5: QA/Trust &middot; Teams 5&ndash;6</div>
+    <div class="exercise-name">Exercise C: Warrant Strength Calculator</div>
+    <div class="exercise-meta">60&ndash;80 min &middot; JavaScript function + receipt UI</div>
+  </div>
+  <div class="exercise-body">
+    <a href="context/context_exC_warrant_calculator.md" class="context-link">&#128196; Context file: context_exC_warrant_calculator.md</a>
+
+    <h3>The Problem</h3>
+    <p>The <code>credence</code> field is a single number (e.g., 0.68). Nobody knows how it was computed. The underlying components exist &mdash; warrant_discount, support_count, attack_count, studyType, signal &mdash; but they aren&rsquo;t combined transparently. We need a function that recomputes trust from first principles and shows its work, like a receipt where every step is visible.</p>
+
+    <h3>What the Output Looks Like</h3>
+    <div class="spec-block">Trust Score: 0.68
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  Warrant type (mechanism):        0.80  &larr; causal pathway evidence
+  Replication (3 supporting):     +0.12  &larr; multiple confirmations
+  Contestation (1 attack):        -0.08  &larr; one rebutting defeat
+  Study type (Empirical):         +0.05  &larr; controlled measurement
+  Signal (Direct Measured):       +0.03  &larr; not speculative
+  Defeat adjustment (rebutting):  -0.04  &larr; direct contradiction
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  Computed trust:                  0.68</div>
+
+    <h3>Step 1 &mdash; Convene Panel</h3>
+    <div class="prompt-block"><span class="prompt-label">Panel Prompt</span>
+You are running a design panel for a transparent trust score
+calculator. The panelists are:
+
+- Wolfgang Spohn (ranking theory): How should warrant discount and
+  support/attack counts combine mathematically?
+- Susan Haack (foundherentism): When is a claim well-grounded vs.
+  merely coherent? How should the score reflect it?
+- A data scientist (implementation): What's the simplest formula
+  that captures key distinctions without overfitting?
+
+The calculator takes one evidence claim and produces a trust score
+(0-1) with step-by-step breakdown. Available fields: warrant_discount,
+support_count, attack_count, studyType, signal, warrant_status,
+defeat_type, qualifier.
+
+Each panelist: propose a formula, justify it, and identify when it
+would give a misleading result.</div>
+
+    <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
+    <p>Your panel will argue about the formula. The key question: multiplicative (like conditional probabilities) or additive (like weighted scoring)? Define tests with real claims from evidence.json &mdash; pick high-trust, low-trust, and edge cases.</p>
+  </div>
+</div>
+
+<!-- ══════════════ EXERCISE D ══════════════ -->
+<div class="exercise-card">
+  <div class="exercise-header track-explorer">
+    <div class="exercise-tag">Track 1: Evidence Explorer &middot; Teams 7&ndash;8</div>
+    <div class="exercise-name">Exercise D: Evidence Search Filter</div>
+    <div class="exercise-meta">60&ndash;80 min &middot; Filter bar UI component</div>
+  </div>
+  <div class="exercise-body">
+    <a href="context/context_exD_search_filter.md" class="context-link">&#128196; Context file: context_exD_search_filter.md</a>
+
+    <h3>The Problem</h3>
+    <p><code>ka_evidence.html</code> currently shows all ~1,900 claims in a scrollable list. There&rsquo;s no way to say &ldquo;show me only mechanism claims about lighting with credence above 0.6 that haven&rsquo;t been defeated.&rdquo; The data fields for filtering exist, but no UI exposes them.</p>
+
+    <h3>Available Filter Fields</h3>
+    <table class="data-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Values</th></tr></thead>
+      <tbody>
+        <tr><td><code>warrant_class</code></td><td>enum (7)</td><td>constitutive, mechanism, empirical_association, functional, capacity, analogical, theory_derived</td></tr>
+        <tr><td><code>credence</code></td><td>float</td><td>0.0&ndash;1.0</td></tr>
+        <tr><td><code>construct</code></td><td>text</td><td>~200 unique (Lighting, Biophilia, Acoustics, etc.)</td></tr>
+        <tr><td><code>qualifier</code></td><td>enum (3)</td><td>stable, supported_but_contested, underspecified</td></tr>
+        <tr><td><code>warrant_status</code></td><td>enum (2)</td><td>WARRANTED, UNGROUNDED</td></tr>
+        <tr><td><code>studyType</code></td><td>enum (4)</td><td>Empirical Research, Review Article, Theoretical, Policy/Opinion</td></tr>
+        <tr><td><code>finding</code></td><td>text</td><td>Keyword search in claim text</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Step 1 &mdash; Convene Panel</h3>
+    <div class="prompt-block"><span class="prompt-label">Panel Prompt</span>
+You are running a design panel for a search and filter bar on the
+Evidence Explorer page. The panelists are:
+
+- Jakob Nielsen (usability): What are the most common filtering
+  mistakes? Which filters visible by default vs. "advanced"?
+- A practitioner (architect) trying to answer: "What does the
+  evidence say about biophilic design and stress reduction?"
+- A philosophy student trying to find: "All contested claims with
+  undercutting defeaters."
+
+The data has ~1,900 claims. Available filter fields: warrant_class
+(7 types), credence (0-1), construct (text), qualifier (3 values),
+warrant_status (2 values), studyType (4 values), signal (4 values),
+support_count and attack_count (integers).
+
+Each panelist: which 3 filters matter most? What filter would be
+misleading or useless?</div>
+
+    <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
+    <p>Your panel will argue about which filters to show by default. A filter bar with 10 dropdowns is overwhelming. Think about progressive disclosure: primary filters visible, advanced behind a toggle. Test with real queries against the 1,900 claims.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SUBMISSION & GRADING ══════════════ -->
+<div class="section-block">
+  <span class="section-label label-amber">Submission</span>
+  <h2 class="section-title">What You Submit</h2>
+  <div class="deliverable">
+    <div class="deliverable-label">Required Deliverable</div>
+    <p>A single document containing: (1) your panel transcript, (2) your spec with acceptance tests, (3) all prompts including failures, (4) the AI&rsquo;s code output, (5) verification results, and (6) a two-paragraph reflection.</p>
+  </div>
+  <p><strong>Paragraph 1 of your reflection:</strong> Where did the panel surface a requirement you wouldn&rsquo;t have thought of?</p>
+  <p><strong>Paragraph 2:</strong> Where did the AI produce something that looked right but failed a test? How did you diagnose it?</p>
+</div>
+
+<div class="section-block">
+  <span class="section-label label-teal">Grading</span>
+  <h2 class="section-title">Rubric</h2>
+  <table class="rubric-table">
+    <thead><tr><th>Component</th><th>Weight</th><th>What We Look For</th></tr></thead>
+    <tbody>
+      <tr><td>Panel quality</td><td class="weight">25%</td><td>Did you get a real argument between panelists, or just a feature list?</td></tr>
+      <tr><td>Spec completeness</td><td class="weight">25%</td><td>Are inputs, outputs, edge cases, and success conditions all defined before implementation?</td></tr>
+      <tr><td>Verification rigor</td><td class="weight">25%</td><td>Did you run the tests? Catch failures? Fix them?</td></tr>
+      <tr><td>Reflection honesty</td><td class="weight">25%</td><td>A real surprise and a real failure &mdash; not generic praise for the AI.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-teal">
+    <div class="callout-label">Important</div>
+    We do not grade on whether the final code is perfect. We grade on whether you followed the method. A component that fails one test but has a clear diagnosis of why is worth more than a component that &ldquo;works&rdquo; but was never tested.
+  </div>
+</div>
+
+<!-- ── Navigation ── -->
+<nav class="week-nav">
+  <a href="week2_agenda.html" class="prev">&larr; Week 2 Agenda</a>
+  <a href="ka_schedule.html" class="next">Full Schedule &rarr;</a>
+</nav>
+
+</div><!-- /page-wrap -->
+</body>
+</html>

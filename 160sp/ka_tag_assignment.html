@@ -314,6 +314,33 @@
     <p>Each assignment bundle defines five image-analysis computations you will implement as code, run over a batch of workspace images, and submit for review. Select one or more bundles, then click <strong>Submit Claim</strong>. You will receive a confirmation email and the assignment will appear in your contributor profile.</p>
   </div>
 
+  <!-- ── Pick Your Track Overview ── -->
+  <div style="margin:24px 0 28px; padding:20px 24px; background:#fff; border:1px solid #D8D0C5; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+    <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1C3D3A; margin-bottom:14px;">Pick Your Track</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <a href="ka_tag_assignment.html" style="background:#FFF0CC; color:#7A4F00; border-radius:10px; padding:16px 18px; text-decoration:none; display:flex; flex-direction:column; gap:6px; box-shadow:inset 0 0 0 2px #E8872A;">
+        <strong style="font-family:Georgia,serif; font-size:0.95rem;">Track 1: Image Tagging &amp; CNFA Annotation</strong>
+        <span style="font-size:0.82rem; line-height:1.5; opacity:0.9;">Develop a Python annotation tool that labels images with Evidence-Based Tags and aligns them with Coherence-NF Authority propositions.</span>
+        <span style="font-size:0.78rem; font-weight:700; margin-top:4px;">You are here</span>
+      </a>
+      <a href="ka_article_finder_assignment.html" style="background:#E3F4EC; color:#1A5C30; border-radius:10px; padding:16px 18px; text-decoration:none; display:flex; flex-direction:column; gap:6px; transition:transform 0.15s;">
+        <strong style="font-family:Georgia,serif; font-size:0.95rem;">Track 2: Article Finder Pipeline</strong>
+        <span style="font-size:0.82rem; line-height:1.5; opacity:0.9;">Build a query engine and batch retrieval system to find relevant papers from open-access databases.</span>
+        <span style="font-size:0.78rem; font-weight:700; margin-top:4px;">Go to Track 2 &rarr;</span>
+      </a>
+      <a href="ka_vr_assignment.html" style="background:#E8F0FD; color:#1A3A7A; border-radius:10px; padding:16px 18px; text-decoration:none; display:flex; flex-direction:column; gap:6px; transition:transform 0.15s;">
+        <strong style="font-family:Georgia,serif; font-size:0.95rem;">Track 3: VR Environment Production</strong>
+        <span style="font-size:0.82rem; line-height:1.5; opacity:0.9;">Design 3D scenarios in Unreal Engine that visualize epistemological concepts and warrant structures.</span>
+        <span style="font-size:0.78rem; font-weight:700; margin-top:4px;">Go to Track 3 &rarr;</span>
+      </a>
+      <a href="ka_gui_assignment.html" style="background:#FDE8F4; color:#7A1A5C; border-radius:10px; padding:16px 18px; text-decoration:none; display:flex; flex-direction:column; gap:6px; transition:transform 0.15s;">
+        <strong style="font-family:Georgia,serif; font-size:0.95rem;">Track 4: GUI &amp; Use-Case Evaluation</strong>
+        <span style="font-size:0.82rem; line-height:1.5; opacity:0.9;">Build web interfaces for researchers to explore the KA evidence graph and evaluate performance on real use cases.</span>
+        <span style="font-size:0.78rem; font-weight:700; margin-top:4px;">Go to Track 4 &rarr;</span>
+      </a>
+    </div>
+  </div>
+
   <!-- STEP 0: Environment Setup -->
   <div class="step0-section">
     <div class="step0-toggle" onclick="toggleStep0()">
@@ -969,12 +996,13 @@ window.KA_SHELL.initShell({
 window.KA_SHELL_USER.applyUser({ avatarId: 'tag-assignment-avatar', avatarFallback: 'JL' });
 </script>
 <script>
-window.KA_LIVE_CONTEXT_CONFIG = {
+/* LIVE CORPUS CONTEXT banner suppressed — replaced by Pick Your Track section */
+/* window.KA_LIVE_CONTEXT_CONFIG = {
   surface: 'tag_assignment',
   title: 'Live Corpus Context',
   status: 'Claim flow partial',
   warn: true
-};
+}; */
 </script>
 <script src="../ka_page_function.js"></script>
 <script src="../ka_demo_wiring.js"></script>
@@ -992,6 +1020,7 @@ window.KA_ABOUT_PAGE = {
 };
 </script>
 <script src="../ka_about_page.js"></script>
+<script src="../ka_ui_fixes.js"></script>
 
 </body>
 </html>

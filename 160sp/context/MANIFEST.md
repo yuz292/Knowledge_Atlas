@@ -130,9 +130,24 @@ Each context file has been verified for:
 | context_article_finder.md | Markdown | 7.6 KB | ✓ Complete |
 | context_vr_production.md | Markdown | 9.5 KB | ✓ Complete |
 | context_gui_evaluation.md | Markdown | 12 KB | ✓ Complete |
+| context_ex0_mechanism_pathway.md | Markdown | ~4 KB | ✓ Complete |
+| context_exA_trust_panel.md | Markdown | ~5 KB | ✓ Complete |
+| context_exB_debate_visualizer.md | Markdown | ~4 KB | ✓ Complete |
+| context_exC_warrant_calculator.md | Markdown | ~5 KB | ✓ Complete |
+| context_exD_search_filter.md | Markdown | ~5 KB | ✓ Complete |
 | index.html | HTML | 9.9 KB | ✓ Complete |
 | MANIFEST.md | Markdown | This file | ✓ Complete |
 
-**Total deliverable**: 5 context files + 1 index page + 1 manifest
-**Total size**: ~56 KB
+### Week 2 Programming Exercise Context Files (NEW — 2026-03-30)
+
+Five additional context files were created for the Week 2 AI-directed programming exercises. These are more focused than the track context files: each targets one specific coding task, includes the exact JSON schemas the student will need, and ends with the instruction to ask the AI to explain the task before starting.
+
+- **context_ex0_mechanism_pathway.md** — Demo exercise: D3.js mechanism pathway tracer using argumentation.json
+- **context_exA_trust_panel.md** — Exercise A: "Why Trust This?" panel using evidence.json trust fields
+- **context_exB_debate_visualizer.md** — Exercise B: debate cluster argument map using argumentation.json
+- **context_exC_warrant_calculator.md** — Exercise C: transparent trust score calculator with receipt-style display
+- **context_exD_search_filter.md** — Exercise D: filter bar for 1,900 evidence claims
+
+**Total deliverable**: 10 context files + 1 index page + 1 manifest
+**Total size**: ~79 KB
 **Location**: `/sessions/keen-busy-turing/mnt/REPOS/Knowledge_Atlas/160sp/context/`

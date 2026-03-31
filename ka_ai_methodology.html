@@ -1147,6 +1147,7 @@ DO NOT have panelists agree prematurely. Dissent is informative. Preserve it.</p
 
   </div>
 
+  <div class="doc-section">
   <!-- METHOD 8 -->
   <div class="method-card" id="master-doc">
     <div class="method-header">
@@ -1205,6 +1206,8 @@ DO NOT have panelists agree prematurely. Dissent is informative. Preserve it.</p
 
   </div>
 
+  </div><!-- /doc-section for METHOD 8 -->
+
 </div><!-- /outer -->
 
 <div class="version-badge">KA UI · v0.4</div>
@@ -1218,6 +1221,20 @@ document.querySelectorAll('.ex-tab').forEach(function(tab) {
     this.classList.add('active');
     document.getElementById(this.dataset.panel).classList.add('active');
   });
+});
+</script>
+
+<script>
+// Class intro CTA — placed after pagination nav, renamed per David's request
+window.addEventListener('load', function() {
+  var pagNav = document.querySelector('.pagination-nav');
+  if (pagNav && !document.getElementById('class-intro-cta')) {
+    var cta = document.createElement('div');
+    cta.id = 'class-intro-cta';
+    cta.style.cssText = 'text-align:center; padding:24px 20px 10px;';
+    cta.innerHTML = '<a href="160sp/ka_student_setup.html" style="display:inline-block; background:#E8872A; color:#fff; font-size:1.0rem; font-weight:700; padding:12px 30px; border-radius:8px; text-decoration:none; letter-spacing:0.3px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">Show the 4 Tracks →</a>';
+    pagNav.parentNode.insertBefore(cta, pagNav.nextSibling);
+  }
 });
 </script>
 
@@ -1259,6 +1276,7 @@ window.KA_ABOUT_PAGE = {
 };
 </script>
 <script src="ka_about_page.js"></script>
+<script src="ka_ui_fixes.js"></script>
 <script>
 window.KA_SHELL.initShell({
   navContainerSelector: '.nav-center',
@@ -1277,7 +1295,7 @@ window.KA_SHELL_USER.applyUser({
   <div class="pagination-nav">
     <button id="nav-prev" class="nav-button prev" onclick="prevStep()">← Previous</button>
     <div style="text-align:center;font-size:0.8rem;color:var(--muted);font-weight:700;">
-      <span id="step-counter">1</span> / <span id="step-total">9</span>
+      <span id="step-counter">1</span> / <span id="step-total">10</span>
     </div>
     <button id="nav-next" class="nav-button next" onclick="nextStep()">Next →</button>
   </div>
@@ -1293,7 +1311,7 @@ window.KA_SHELL_USER.applyUser({
 
   
 <script>
-  const TOTAL_STEPS = 9;
+  const TOTAL_STEPS = 10;
   const STEP_NAMES = [
     'CORE: Chatbot vs. Directed Instrument',
     'METHOD 1: Five Components',
@@ -1303,7 +1321,8 @@ window.KA_SHELL_USER.applyUser({
     'METHOD 4: Verification & Trust',
     'METHOD 5: Ruthless Prompts',
     'METHOD 6: Expert Panel Pattern',
-    'METHOD 7: Cross-Check Second AI'
+    'METHOD 7: Cross-Check Second AI',
+    'METHOD 8: Master Document'
   ];
 
   let currentStep = parseInt(localStorage.getItem('ka-methodology-step') || '0');
@@ -1408,6 +1427,7 @@ window.KA_SHELL_USER.applyUser({
 
   document.addEventListener('DOMContentLoaded', initPagination);
 </script>
+
 
 </body>
 </html>
