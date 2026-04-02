@@ -1,0 +1,202 @@
+KNOWLEDGE ATLAS USER JOURNEY AUDIT
+Completed: 2026-04-01
+Delivered to: docs/ directory
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DELIVERABLES (4 files, 36KB, ~917 lines of analysis)
+
+✓ docs/USER_JOURNEY_AUDIT_2026-04-01.md
+  - 278 lines, 12KB
+  - PRIMARY AUDIT REPORT
+  - Contains: executive summary, journey maps (5 user types, 9 journeys),
+    detailed CTA assessment, 10 critical issues, orphan pages inventory
+  - Audience: Product managers, designers, developers, QA
+
+✓ docs/JOURNEY_QUICK_REFERENCE.md
+  - 110 lines, 4KB
+  - EXECUTIVE CHEAT SHEET
+  - Contains: visual journey summaries, critical breaks, problems by page,
+    working journeys (don't change), next steps
+  - Audience: Anyone needing quick status update
+
+✓ docs/JOURNEY_FIX_ROADMAP.md
+  - 333 lines, 12KB
+  - IMPLEMENTATION GUIDE FOR DEVELOPERS
+  - Contains: all 10 broken CTAs with exact locations, HTML code snippets
+    ready to copy/paste, severity levels, 4-phase implementation plan,
+    testing checklist, timeline estimates
+  - Audience: Developers implementing fixes, QA writing test plans
+
+✓ docs/AUDIT_README.md
+  - 196 lines, 8KB
+  - DOCUMENTATION INDEX & NAVIGATION GUIDE
+  - Contains: guide to using all 4 documents, quick statistics,
+    implementation timeline, week-by-week next steps, maintenance plan
+  - Audience: Everyone (helps route to right document)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+AUDIT SCOPE
+═══════════════════════════════════════════════════════════════════════════════
+
+Pages Analyzed: 112 HTML files
+User Types Identified: 5
+  - Student Explorer
+  - Researcher
+  - Contributor
+  - Instructor
+  - Theory/Mechanism Explorer (unmapped)
+
+User Journeys Mapped: 9 major workflows
+  - Student Explorer: 3 journeys
+  - Researcher: 2 journeys
+  - Contributor: 2 journeys
+  - Instructor: 2 journeys
+
+Journeys Status:
+  - Complete: 2 (22%)
+    ✓ Student Entry (home → register → login → workspace)
+    ✓ Instructor Approval (approve dashboard → review)
+  
+  - Broken: 7 (78%)
+    ✗ 5 journeys with 1-2 missing CTAs
+    ✗ 2 journeys with 2-3 missing CTAs
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY FINDINGS
+
+Critical Issues (Must Fix):
+  1. Article Finder Track broken at 2 steps
+     - Students complete assignment but can't reach collection page
+     - Collection page has no submission CTA
+     - BLOCKS: Student workflow, prevents submissions
+  
+  2. Hypothesis Building missing warrant reference
+     - No link from hypothesis builder to warrant theory page
+     - BLOCKS: Learning path, students can't understand evidence types
+  
+  3. Instructor Setup disconnected from schedule
+     - Instructors can't navigate: setup → schedule → prep checklist
+     - BLOCKS: Course management workflow
+
+High Priority Issues (Should Fix):
+  4. Evidence page has no warrant link
+  5. Data capture form has no methodology reference
+  6. Article proposal has weak data entry CTA
+  7. Topics page has ambiguous article discovery path
+
+Other Findings:
+  - All 112 pages exist (no 404 errors)
+  - All cross-page links are valid
+  - Pages rely on header navigation instead of workflow CTAs
+  - 20+ orphan pages not integrated into primary journeys
+  - Theory Explorer and Practitioner user types defined but unmapped
+
+═══════════════════════════════════════════════════════════════════════════════
+
+IMPLEMENTATION ROADMAP
+
+Total Effort: 11-19 hours (1-2 developer weeks)
+
+Phase 1: Critical Path (2-4 hours)
+  - Fix Article Finder track (2 broken CTAs)
+  - Unblock student submissions
+  - Priority: HIGHEST
+
+Phase 2: Learning Workflows (3-5 hours)
+  - Add researcher navigation CTAs (4 CTAs)
+  - Connect hypothesis building to warrants
+  - Link evidence exploration
+  - Priority: HIGH
+
+Phase 3: Course Infrastructure (1-2 hours)
+  - Connect instructor setup to schedule
+  - Connect schedule to prep checklist
+  - Priority: MEDIUM
+
+Phase 4: Polish & Clarification (1-2 hours)
+  - Clarify article discovery path (topics → articles)
+  - Add secondary workflow CTAs
+  - Priority: LOW
+
+Testing & Validation (4-6 hours)
+  - End-to-end journey testing
+  - Responsive design verification
+  - Accessibility validation
+  - User feedback collection
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS
+
+Immediate (This Week):
+  1. Read JOURNEY_QUICK_REFERENCE.md (3 min)
+  2. Review critical issues in this manifest
+  3. Decision: Approve Phase 1 implementation?
+
+Short Term (Week 1-2):
+  1. Implement Phase 1 fixes (2-4 hours)
+  2. Test with students
+  3. Deploy to staging
+
+Medium Term (Week 2-3):
+  1. Implement Phases 2-3
+  2. Comprehensive testing
+  3. Deploy to production
+
+Long Term (Week 3+):
+  1. Monitor user feedback
+  2. Audit orphan pages for integration
+  3. Update documentation
+  4. Consider Theory Explorer and Practitioner workflows
+
+═══════════════════════════════════════════════════════════════════════════════
+
+HOW TO USE THIS AUDIT
+
+For Quick Overview (5 minutes):
+  → Read JOURNEY_QUICK_REFERENCE.md
+
+For Detailed Findings (15 minutes):
+  → Read USER_JOURNEY_AUDIT_2026-04-01.md sections:
+    - Executive Summary
+    - Critical Findings: Top 10 Broken CTAs
+    - Summary Table
+
+For Implementation Planning (20 minutes):
+  → Read AUDIT_README.md
+  → Then skim JOURNEY_FIX_ROADMAP.md Phase 1
+
+For Developer Implementation (per issue):
+  → Use JOURNEY_FIX_ROADMAP.md
+  → Find issue number
+  → Copy HTML code snippet
+  → Follow testing checklist
+
+For QA/Testing:
+  → Use JOURNEY_QUICK_REFERENCE.md to understand journeys
+  → Use JOURNEY_FIX_ROADMAP.md testing checklist
+  → Test each fixed journey end-to-end
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DOCUMENT MAINTENANCE
+
+Update these documents:
+  - After each Phase implementation (mark as FIXED)
+  - When new user types are added
+  - When new pages are added to the site
+  - After user testing reveals new issues
+  - When orphan pages are integrated
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Questions? Refer to:
+  - "What's broken?" → USER_JOURNEY_AUDIT_2026-04-01.md
+  - "How do I fix it?" → JOURNEY_FIX_ROADMAP.md
+  - "Quick overview?" → JOURNEY_QUICK_REFERENCE.md
+  - "How to use these?" → AUDIT_README.md
+
+═══════════════════════════════════════════════════════════════════════════════
