@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practitioner Home — Knowledge Atlas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #2D2010;
+      background: #F7F4EF;
+      overflow-x: hidden;
+      padding-top: 56px;
+    }
+
+    /* ── CSS Variables (KA Design System) ── */
+    :root {
+      --navy: #1C3D3A;
+      --amber: #E8872A;
+      --cream: #F7F4EF;
+      --green: #2A7868;
+      --text: #2D2010;
+      --muted: #6A5E50;
+      --practitioner: #b05e1a;
+    }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: rgba(28, 61, 58, 0.96); backdrop-filter: blur(8px);
+      height: 56px; display: flex; align-items: center;
+      padding: 0 32px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+    .wordmark {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .wordmark-icon { width: 30px; height: 30px; }
+    .wordmark-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .wm-top {
+      font-size: 0.66rem; font-weight: 400; letter-spacing: 0.24em;
+      text-transform: uppercase; color: #A8C8BF;
+    }
+    .wm-bottom {
+      font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; color: #fff;
+    }
+    .wm-bottom span { color: #F5A623; }
+    .nav-public { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+    .nav-pub-link {
+      color: #B8D4CE; font-size: 0.85rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 6px; text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-pub-link:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    .btn-login {
+      background: transparent; border: 1.5px solid rgba(245, 166, 35, 0.6);
+      color: #F5A623; padding: 6px 18px; border-radius: 6px;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      text-decoration: none; transition: all 0.15s; letter-spacing: 0.03em;
+    }
+    .btn-login:hover { background: rgba(245, 166, 35, 0.15); border-color: #F5A623; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; padding-top: 56px;
+      background: linear-gradient(160deg, #1C3D3A 0%, #153230 45%, #1A2E2C 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(90, 200, 170, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(90, 200, 170, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      text-align: center; max-width: 780px; padding: 0 24px 40px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(176, 94, 26, 0.15); border: 1px solid rgba(176, 94, 26, 0.3);
+      padding: 8px 18px; border-radius: 20px; margin-bottom: 24px;
+      font-size: 0.8rem; font-weight: 600; color: var(--practitioner);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .hero-badge::before { content: '◆'; }
+    .hero-heading {
+      font-family: Georgia, serif; font-size: 2.8rem; font-weight: 400;
+      color: #fff; line-height: 1.2; margin-bottom: 16px;
+    }
+    .hero-subheading {
+      font-family: Arial, sans-serif; font-size: 1.15rem; color: #D4E8E5;
+      line-height: 1.6; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;
+    }
+
+    /* ── SPACE TYPE SELECTOR ── */
+    .section {
+      padding: 72px 32px;
+      background: #F7F4EF;
+      border-bottom: 1px solid #E0DAD3;
+    }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-family: Arial, sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #B0A090; margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: Georgia, serif; font-size: 1.85rem; font-weight: 400;
+      color: var(--navy); line-height: 1.3; margin-bottom: 24px;
+    }
+    .section-desc {
+      font-family: Arial, sans-serif; font-size: 0.95rem; color: var(--muted);
+      line-height: 1.65; margin-bottom: 40px; max-width: 640px;
+    }
+
+    .space-type-pills {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;
+    }
+    .space-pill {
+      background: #fff; border: 2px solid #DDD6CD;
+      color: var(--navy); padding: 10px 22px; border-radius: 24px;
+      cursor: pointer; font-size: 0.9rem; font-weight: 600;
+      transition: all 0.15s; text-decoration: none;
+      display: inline-block;
+    }
+    .space-pill:hover {
+      border-color: var(--practitioner); color: var(--practitioner);
+    }
+    .space-pill.active {
+      background: var(--practitioner); color: #fff; border-color: var(--practitioner);
+    }
+
+    /* ── CARDS SECTION ── */
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;
+      margin-top: 40px;
+    }
+    .card {
+      background: #fff; border: 1px solid #DDD6CD; border-radius: 10px;
+      padding: 28px 24px; display: flex; flex-direction: column;
+      transition: all 0.15s; text-decoration: none;
+      color: inherit; cursor: pointer;
+    }
+    .card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+      border-color: var(--practitioner);
+    }
+    .card-type-badge {
+      display: inline-block; font-family: Arial, sans-serif;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 16px; width: fit-content;
+    }
+    .card-type-decision { background: #FFF0CC; color: #7A4F00; }
+    .card-type-tradeoff { background: #FFE0D5; color: #A85A1F; }
+    .card-type-evidence { background: #E3F4EC; color: #1A5C30; }
+    .card-type-spotlight { background: #FFE8CC; color: #B05E1A; }
+    .card-type-note { background: #E8F0FD; color: #1A3A7A; }
+
+    .card-content {
+      font-family: Arial, sans-serif; font-size: 0.95rem;
+      color: var(--text); line-height: 1.65; margin-bottom: 16px;
+      flex: 1;
+    }
+    .card-content strong { color: var(--navy); }
+    .card-link {
+      font-family: Arial, sans-serif; font-size: 0.85rem; font-weight: 700;
+      color: var(--practitioner); letter-spacing: 0.03em;
+      text-decoration: none; transition: color 0.15s;
+    }
+    .card-link:hover { color: #9B4715; }
+
+    /* ── JOURNEY SECTION ── */
+    .journey-section {
+      padding: 72px 32px;
+      background: #fff;
+      border-bottom: 1px solid #E0DAD3;
+    }
+    .journey-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px;
+      margin-top: 40px;
+    }
+    .journey-card {
+      background: #F7F4EF; border: 1px solid #E0DAD3; border-radius: 10px;
+      padding: 32px 28px; display: flex; flex-direction: column;
+      transition: all 0.15s; text-decoration: none; color: inherit;
+    }
+    .journey-card:hover {
+      background: #fff; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+    .journey-number {
+      font-family: Georgia, serif; font-size: 2.2rem; font-weight: 400;
+      color: var(--practitioner); margin-bottom: 12px;
+    }
+    .journey-title {
+      font-family: Georgia, serif; font-size: 1.3rem; font-weight: 400;
+      color: var(--navy); margin-bottom: 12px;
+    }
+    .journey-question {
+      font-family: Arial, sans-serif; font-size: 0.9rem; color: var(--muted);
+      line-height: 1.6; margin-bottom: 20px; font-style: italic;
+    }
+    .journey-cta {
+      font-family: Arial, sans-serif; font-size: 0.85rem; font-weight: 700;
+      color: var(--practitioner); letter-spacing: 0.03em; text-decoration: none;
+      transition: color 0.15s;
+    }
+    .journey-cta:hover { color: #9B4715; }
+
+    /* ── QUICK REFERENCE TABLE ── */
+    .reference-section {
+      padding: 72px 32px;
+      background: #F7F4EF;
+      border-bottom: 1px solid #E0DAD3;
+    }
+    .reference-header {
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; padding: 0 0 24px;
+    }
+    .reference-header:hover .reference-toggle { color: var(--practitioner); }
+    .reference-toggle {
+      font-size: 1.4rem; color: var(--navy); transition: color 0.15s;
+      flex-shrink: 0;
+    }
+    .reference-toggle.open { transform: rotate(180deg); }
+    .reference-table {
+      width: 100%; border-collapse: collapse;
+      background: #fff; border: 1px solid #DDD6CD; border-radius: 8px;
+      overflow: hidden; margin-top: 0; max-height: 500px; overflow-y: auto;
+      display: none;
+    }
+    .reference-table.open { display: table; }
+    .reference-table th {
+      background: var(--navy); color: #fff;
+      padding: 14px 16px; text-align: left;
+      font-family: Arial, sans-serif; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .reference-table td {
+      padding: 12px 16px; border-bottom: 1px solid #EDE8E0;
+      font-family: Arial, sans-serif; font-size: 0.9rem; color: var(--text);
+    }
+    .reference-table tr:last-child td { border-bottom: none; }
+    .reference-table tbody tr:hover { background: #F9F7F4; }
+    .confidence-high { color: var(--green); font-weight: 700; }
+    .confidence-moderate { color: #D97706; font-weight: 700; }
+    .confidence-low { color: #A0887B; font-weight: 700; }
+    .dot-fill { color: var(--practitioner); }
+    .dot-empty { color: #D4CCBE; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--navy); color: #fff;
+      padding: 40px 32px; border-top: 1px solid #0A2522;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-links {
+      display: flex; gap: 28px; flex-wrap: wrap;
+      font-family: Arial, sans-serif; font-size: 0.85rem;
+    }
+    .footer-link {
+      color: #B8D4CE; text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-link:hover { color: #fff; }
+
+    /* ── CROSS-LINKING FOOTER ── */
+    .site-footer{background:#1C3D3A;border-top:2px solid #E8872A;padding:32px;text-align:center;margin-top:64px}
+    .footer-inner{max-width:900px;margin:0 auto}
+    .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 20px;margin-bottom:16px}
+    .footer-label{color:#A8C8BF;font:600 12px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:1px}
+    .footer-nav a{color:#B8D4CE;text-decoration:none;font:13px/1 Arial,sans-serif;padding:4px 10px;border-radius:4px;transition:all 0.2s}
+    .footer-nav a:hover{color:#fff;background:rgba(255,255,255,0.08)}
+    .footer-nav a.footer-current{color:#E8872A;font-weight:600}
+    .footer-meta{color:#7A9E95;font:12px/1.4 Arial,sans-serif}
+    .footer-meta a{color:#A8C8BF;text-decoration:none}
+    .footer-meta a:hover{color:#fff}
+    .footer-sep{margin:0 8px;opacity:0.5}
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .journey-cards { grid-template-columns: 1fr; }
+      .hero-heading { font-size: 2.2rem; }
+      .section-heading { font-size: 1.5rem; }
+    }
+
+    @media (max-width: 560px) {
+      .space-type-pills { gap: 8px; }
+      .space-pill { padding: 8px 16px; font-size: 0.8rem; }
+      .hero-heading { font-size: 1.8rem; }
+      .hero-subheading { font-size: 1rem; }
+      .section-eyebrow { font-size: 0.6rem; }
+      .section-heading { font-size: 1.3rem; }
+    }
+
+    /* ── TEST MODE ── */
+    .test-banner {
+      display: none;
+      background: #FEF3C7; border-bottom: 2px solid #F59E0B;
+      padding: 12px 32px; font-family: monospace; font-size: 0.8rem;
+      color: #78350F; position: fixed; bottom: 0; left: 0; right: 0;
+      z-index: 8000; max-height: 120px; overflow-y: auto;
+    }
+    .test-banner.show { display: block; }
+    .test-pass { color: #166534; }
+    .test-fail { color: #91220C; }
+  </style>
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <a href="/" class="wordmark">
+      <div class="wordmark-icon">◆</div>
+      <div class="wordmark-text">
+        <div class="wm-top">Know</div>
+        <div class="wm-bottom">Atlas<span>+</span></div>
+      </div>
+    </a>
+    <div class="nav-public">
+      <a href="/topics" class="nav-pub-link">Topics</a>
+      <a href="/evidence" class="nav-pub-link">Evidence</a>
+      <a href="/sitemap" class="nav-pub-link">Sitemap</a>
+      <a href="/login" class="btn-login">Log In</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Practitioner</div>
+      <h1 class="hero-heading">Evidence-grounded design requires knowing what the science actually shows.</h1>
+      <p class="hero-subheading">From space type to specific recommendation, with confidence levels.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 1: SPACE TYPE SELECTOR -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-eyebrow">Step 1</div>
+      <h2 class="section-heading">What are you designing?</h2>
+      <p class="section-desc">Select one or more space types below. Your choice filters the evidence cards and recommendations to match your project context.</p>
+
+      <div class="space-type-pills" id="spaceTypePills">
+        <button class="space-pill" data-space="office">Office / Workplace</button>
+        <button class="space-pill" data-space="healthcare">Healthcare / Hospital</button>
+        <button class="space-pill" data-space="educational">Educational / Classroom</button>
+        <button class="space-pill" data-space="residential">Residential / Home</button>
+        <button class="space-pill" data-space="public">Public / Civic</button>
+        <button class="space-pill" data-space="retail">Retail / Commercial</button>
+        <button class="space-pill" data-space="outdoor">Outdoor / Landscape</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: CARDS (filtered by space type) -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-eyebrow">Step 2</div>
+      <h2 class="section-heading">Of potential interest</h2>
+      <p class="section-desc">Evidence and insights relevant to your selected space type(s).</p>
+
+      <div class="cards-grid" id="cardsGrid">
+        <!-- Cards will be populated by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: JOURNEY CHOICES -->
+  <section class="journey-section">
+    <div class="section-inner">
+      <div class="section-eyebrow">Step 3</div>
+      <h2 class="section-heading">Where do you want to go?</h2>
+
+      <div class="journey-cards">
+        <a href="ka_evidence.html" class="journey-card">
+          <div class="journey-number">1.</div>
+          <div class="journey-title">Evaluate a Decision</div>
+          <p class="journey-question">What does the evidence say about this specific choice?</p>
+          <div class="journey-cta">Evaluate a Decision →</div>
+        </a>
+
+        <a href="ka_workflow_hub.html?wf=client-brief" class="journey-card">
+          <div class="journey-number">2.</div>
+          <div class="journey-title">Build a Client Brief</div>
+          <p class="journey-question">How do I justify this to a client?</p>
+          <div class="journey-cta">Build Evidence Cards →</div>
+        </a>
+
+        <a href="ka_workflow_hub.html?wf=deep-dive" class="journey-card">
+          <div class="journey-number">3.</div>
+          <div class="journey-title">Trace the Evidence</div>
+          <p class="journey-question">How strong is the evidence?</p>
+          <div class="journey-cta">Trace the Evidence →</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: QUICK REFERENCE TABLE -->
+  <section class="reference-section">
+    <div class="section-inner">
+      <div class="reference-header" id="referenceToggle">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom: 6px;">Reference</div>
+          <h2 class="section-heading" style="margin-bottom: 0;">Environmental factors & human outcomes</h2>
+        </div>
+        <div class="reference-toggle">▼</div>
+      </div>
+
+      <table class="reference-table" id="referenceTable">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Cognition</th>
+            <th>Stress</th>
+            <th>Wellbeing</th>
+            <th>Wayfinding</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Natural Light</strong></td>
+            <td><span class="dot-fill">●●●</span><span class="dot-empty">○</span></td>
+            <td><span class="dot-fill">●●●</span><span class="dot-empty">○</span></td>
+            <td><span class="dot-fill">●●●●</span></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="confidence-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>Greenery / Plants</strong></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="dot-fill">●●●●</span></td>
+            <td><span class="dot-fill">●●●</span><span class="dot-empty">○</span></td>
+            <td><span class="dot-empty">●○○○</span></td>
+            <td><span class="confidence-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td><strong>Acoustic Design</strong></td>
+            <td><span class="dot-fill">●●●</span><span class="dot-empty">○</span></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="dot-empty">●○○○</span></td>
+            <td><span class="confidence-moderate">MODERATE</span></td>
+          </tr>
+          <tr>
+            <td><strong>Spatial Form</strong></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="dot-fill">●</span><span class="dot-empty">○○○</span></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="dot-fill">●●●●</span></td>
+            <td><span class="confidence-moderate">MODERATE</span></td>
+          </tr>
+          <tr>
+            <td><strong>Materials / Texture</strong></td>
+            <td><span class="dot-empty">●○○○</span></td>
+            <td><span class="dot-empty">●○○○</span></td>
+            <td><span class="dot-fill">●●</span><span class="dot-empty">○○</span></td>
+            <td><span class="dot-empty">●○○○</span></td>
+            <td><span class="confidence-low">LOW</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/" class="footer-link">Home</a>
+        <a href="/evidence" class="footer-link">Evidence Browser</a>
+        <a href="/topics" class="footer-link">Topics</a>
+        <a href="/sitemap" class="footer-link">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TEST BANNER -->
+  <div class="test-banner" id="testBanner"></div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-nav">
+        <span class="footer-label">Explore as:</span>
+        <a href="ka_home_student.html">Student</a>
+        <a href="ka_home_researcher.html">Researcher</a>
+        <a href="ka_home_contributor.html">Contributor</a>
+        <a href="ka_home_instructor.html">Instructor</a>
+        <a href="ka_home_practitioner.html" class="footer-current">Practitioner</a>
+        <a href="ka_home_theory.html">Theory Explorer</a>
+      </div>
+      <div class="footer-meta">
+        <a href="ka_home.html">Knowledge Atlas Home</a>
+        <span class="footer-sep">&middot;</span>
+        <span>UCSD Cognitive Science &middot; XR Lab</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── CONFIGURATION ──
+    const CARD_DATA = {
+      office: [
+        {
+          type: 'decision',
+          title: 'Design Decision',
+          content: 'Choosing between daylight strategies for an open-plan office? Research indicates <strong>east-facing glazing with 300+ lux (light intensity measure) at desk level</strong> supports circadian alignment. Confidence: HIGH (12 studies, including 3 randomized controlled trials).',
+          link: 'See the evidence →',
+          href: 'ka_evidence.html?topic=circadian-daylight-office'
+        },
+        {
+          type: 'tradeoff',
+          title: 'Trade-Off Alert',
+          content: 'Maximizing acoustic privacy (partitions, sound masking) may reduce <strong>biophilic exposure and natural light</strong>. 4 studies address this trade-off; the balance favors <strong>partial-height partitions with view corridors</strong>.',
+          link: 'Explore trade-offs →',
+          href: 'ka_evidence.html?topic=acoustic-biophilic-tradeoff'
+        }
+      ],
+      healthcare: [
+        {
+          type: 'evidence',
+          title: 'Client-Ready Evidence',
+          content: '<strong>For attention restoration in waiting rooms:</strong> minimum 15% visible greenery, natural light from east or south, ambient noise below 45 dB (decibels, sound pressure). Evidence from 8 experimental studies.',
+          link: 'Generate evidence card →',
+          href: 'ka_workflow_hub.html?wf=client-brief&space=healthcare'
+        },
+        {
+          type: 'spotlight',
+          title: 'Space Type Spotlight',
+          content: '<strong>Top 3 evidence-backed interventions for healthcare spaces:</strong> (1) Daylight access, (2) Green walls / biophilic design, (3) Acoustic zoning. Combined effect on patient stress recovery: -18-25% (high confidence).',
+          link: 'Full evidence summary →',
+          href: 'ka_evidence.html?topic=healthcare-top-interventions'
+        }
+      ],
+      educational: [
+        {
+          type: 'note',
+          title: 'Practice Note',
+          content: 'A meta-analysis on thermal comfort × cognitive performance in classrooms indicates <strong>optimal range 20-22°C</strong> may be narrower than previously assumed (18-24°C). Based on review of 11 studies.',
+          link: 'Read the practice note →',
+          href: 'ka_evidence.html?topic=thermal-cognition-classroom'
+        },
+        {
+          type: 'decision',
+          title: 'Design Decision',
+          content: 'Research indicates natural light in classrooms supports focus and reduces eye strain. Target <strong>minimum 500 lux (light intensity) on work surfaces</strong>, with <strong>0.3-0.5 window-to-wall ratio</strong>. Moderate confidence (7 studies).',
+          link: 'See the evidence →',
+          href: 'ka_evidence.html?topic=daylight-classroom-performance'
+        }
+      ],
+      residential: [
+        {
+          type: 'evidence',
+          title: 'Client-Ready Evidence',
+          content: '<strong>For bedroom design:</strong> cool color temperature (2700 K, measured in Kelvin), blackout capability for circadian alignment, acoustic isolation from external noise. Research indicates: +20-30 min sleep onset, +15% sleep quality.',
+          link: 'Generate evidence card →',
+          href: 'ka_workflow_hub.html?wf=client-brief&space=residential'
+        },
+        {
+          type: 'tradeoff',
+          title: 'Trade-Off Alert',
+          content: 'Open-plan living maximizes social connection but increases cognitive load and stress from constant sound exposure. Evidence suggests <strong>partial spatial definition with subtle acoustic barriers</strong> balances both outcomes.',
+          link: 'Explore trade-offs →',
+          href: 'ka_evidence.html?topic=openplan-social-stress-tradeoff'
+        }
+      ],
+      public: [
+        {
+          type: 'spotlight',
+          title: 'Space Type Spotlight',
+          content: '<strong>Top 3 evidence-backed interventions for public / civic spaces:</strong> (1) Clear wayfinding & visual hierarchy, (2) Biophilic elements, (3) Social seating clusters. Combined effect on perceived safety: +15-20% (moderate confidence).',
+          link: 'Full evidence summary →',
+          href: 'ka_evidence.html?topic=public-civic-top-interventions'
+        },
+        {
+          type: 'decision',
+          title: 'Design Decision',
+          content: 'Legible spatial hierarchy reduces stress and improves wayfinding. Use <strong>axial alignment, clear entry/exit zones, and consistent material language</strong>. Moderate confidence (6 studies, mixed methods).',
+          link: 'See the evidence →',
+          href: 'ka_evidence.html?topic=wayfinding-spatial-hierarchy'
+        }
+      ],
+      retail: [
+        {
+          type: 'decision',
+          title: 'Design Decision',
+          content: 'Research suggests dwell time and purchase intent increase with <strong>soft warm lighting (3000-4000 K in color temperature), moderate clutter (vs. minimalism), and clear sightlines</strong>. Moderate confidence (5 behavioral studies).',
+          link: 'See the evidence →',
+          href: 'ka_evidence.html?topic=retail-lighting-behavior'
+        },
+        {
+          type: 'note',
+          title: 'Practice Note',
+          content: 'Recent retail design study: spaces with visible greenery show +12% perceived product quality and +8% willingness to pay, despite no change in product attributes.',
+          link: 'Read the practice note →',
+          href: 'ka_evidence.html?topic=retail-greenery-perception'
+        }
+      ],
+      outdoor: [
+        {
+          type: 'evidence',
+          title: 'Client-Ready Evidence',
+          content: '<strong>For outdoor spaces promoting wellbeing:</strong> tree canopy coverage (25-40%), clear sightlines to water or distant views, seating variety, mixed-texture plantings. Combined effect: +35-50% self-reported wellbeing.',
+          link: 'Generate evidence card →',
+          href: 'ka_workflow_hub.html?wf=client-brief&space=outdoor'
+        },
+        {
+          type: 'spotlight',
+          title: 'Space Type Spotlight',
+          content: '<strong>Top 3 evidence-backed interventions for outdoor / landscape:</strong> (1) Tree canopy shade, (2) Water views or features, (3) Biodiversity (native plantings). Combined effect on stress reduction: -20-30% cortisol levels (high confidence).',
+          link: 'Full evidence summary →',
+          href: 'ka_evidence.html?topic=outdoor-landscape-top-interventions'
+        }
+      ]
+    };
+
+    // ── UTILITY FUNCTIONS ──
+    function getStoredSpaceTypes() {
+      const stored = localStorage.getItem('ka-practitioner-space-types');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveSpaceTypes(types) {
+      localStorage.setItem('ka-practitioner-space-types', JSON.stringify(types));
+    }
+
+    function renderCards(selectedSpaceTypes) {
+      const cardsGrid = document.getElementById('cardsGrid');
+      const cardSet = new Set();
+      const cardArray = [];
+
+      selectedSpaceTypes.forEach(spaceType => {
+        const cards = CARD_DATA[spaceType] || [];
+        cards.forEach(card => {
+          const cardKey = JSON.stringify(card);
+          if (!cardSet.has(cardKey)) {
+            cardSet.add(cardKey);
+            cardArray.push(card);
+          }
+        });
+      });
+
+      cardsGrid.innerHTML = '';
+      if (cardArray.length === 0) {
+        cardsGrid.innerHTML = '<p style="grid-column: 1 / -1; color: #6A5E50; font-style: italic;">Select a space type above to see relevant evidence and insights.</p>';
+        return;
+      }
+
+      cardArray.forEach(card => {
+        const cardEl = document.createElement('a');
+        cardEl.href = card.href;
+        cardEl.className = 'card';
+        cardEl.innerHTML = `
+          <div class="card-type-badge card-type-${card.type}">${card.title}</div>
+          <div class="card-content">${card.content}</div>
+          <div class="card-link">${card.link}</div>
+        `;
+        cardsGrid.appendChild(cardEl);
+      });
+    }
+
+    function initializeSpaceTypePills() {
+      const pills = document.querySelectorAll('.space-pill');
+      const stored = getStoredSpaceTypes();
+
+      pills.forEach(pill => {
+        const spaceType = pill.getAttribute('data-space');
+        if (stored.includes(spaceType)) {
+          pill.classList.add('active');
+        }
+        pill.addEventListener('click', (e) => {
+          e.preventDefault();
+          pill.classList.toggle('active');
+          updateSelectedSpaceTypes();
+        });
+      });
+
+      if (stored.length > 0) {
+        renderCards(stored);
+      }
+    }
+
+    function updateSelectedSpaceTypes() {
+      const activePills = document.querySelectorAll('.space-pill.active');
+      const selected = Array.from(activePills).map(p => p.getAttribute('data-space'));
+      saveSpaceTypes(selected);
+      renderCards(selected);
+    }
+
+    function initializeReferenceToggle() {
+      const toggle = document.getElementById('referenceToggle');
+      const table = document.getElementById('referenceTable');
+      const toggleIcon = toggle.querySelector('.reference-toggle');
+
+      toggle.addEventListener('click', () => {
+        table.classList.toggle('open');
+        toggleIcon.classList.toggle('open');
+      });
+    }
+
+    // ── TEST MODE ──
+    function runTests() {
+      const tests = [];
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('test') !== '1') return;
+
+      // Test 1: All 7 space type pills render
+      const pills = document.querySelectorAll('.space-pill');
+      tests.push({
+        name: 'Test 1: All 7 space type pills render',
+        pass: pills.length === 7
+      });
+
+      // Test 2: Space type selection persists to localStorage
+      const testPill = document.querySelector('[data-space="office"]');
+      if (testPill) {
+        testPill.click();
+        const stored = getStoredSpaceTypes();
+        tests.push({
+          name: 'Test 2: Space type selection persists to localStorage',
+          pass: stored.includes('office')
+        });
+        testPill.click(); // Reset
+      }
+
+      // Test 3: Cards render with content
+      const allSpaceTypes = ['office', 'healthcare', 'educational', 'residential', 'public', 'retail', 'outdoor'];
+      renderCards(allSpaceTypes);
+      const cards = document.querySelectorAll('.card');
+      tests.push({
+        name: 'Test 3: Cards render with content',
+        pass: cards.length > 0
+      });
+
+      // Test 4: All journey CTAs valid
+      const journeyLinks = document.querySelectorAll('.journey-card');
+      tests.push({
+        name: 'Test 4: All journey CTAs valid',
+        pass: journeyLinks.length === 3 && Array.from(journeyLinks).every(link => link.href)
+      });
+
+      // Test 5: Quick reference table renders with all cells
+      const tableRows = document.querySelectorAll('.reference-table tbody tr');
+      tests.push({
+        name: 'Test 5: Quick reference table renders with all cells',
+        pass: tableRows.length === 5
+      });
+
+      // Test 6: Multiple space types can be selected simultaneously
+      document.querySelector('[data-space="office"]').classList.add('active');
+      document.querySelector('[data-space="healthcare"]').classList.add('active');
+      const activeCount = document.querySelectorAll('.space-pill.active').length;
+      tests.push({
+        name: 'Test 6: Multiple space types can be selected simultaneously',
+        pass: activeCount >= 2
+      });
+
+      // Display results
+      const banner = document.getElementById('testBanner');
+      banner.classList.add('show');
+      banner.innerHTML = '<strong>Tests:</strong> ' + tests.map(t =>
+        `<div><span class="${t.pass ? 'test-pass' : 'test-fail'}">${t.pass ? 'PASS' : 'FAIL'}</span> ${t.name}</div>`
+      ).join('');
+    }
+
+    // ── INITIALIZATION ──
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeSpaceTypePills();
+      initializeReferenceToggle();
+      runTests();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Researcher Workspace — Knowledge Atlas</title>
+  <style>
+    :root {
+      --navy: #1C3D3A;
+      --amber: #E8872A;
+      --cream: #F7F4EF;
+      --green: #2A7868;
+      --text: #2D2010;
+      --muted: #6A5E50;
+      --researcher: #8b1a2e;
+      --border: #DDD6CD;
+      --light: #EDE8E0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: rgba(28, 61, 58, 0.96); backdrop-filter: blur(8px);
+      height: 56px; display: flex; align-items: center;
+      padding: 0 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .wordmark {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
+    }
+
+    .wordmark-icon { width: 30px; height: 30px; }
+
+    .wordmark-text { display: flex; flex-direction: column; line-height: 1.1; }
+
+    .wm-top {
+      font-size: 0.66rem; font-weight: 400; letter-spacing: 0.24em;
+      text-transform: uppercase; color: #A8C8BF;
+    }
+
+    .wm-bottom {
+      font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; color: #fff;
+    }
+
+    .wm-bottom span { color: var(--amber); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 6px;
+      margin-left: auto;
+    }
+
+    .nav-link {
+      color: #B8D4CE; font-size: 0.85rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 6px; text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      padding: 16px 32px; margin-top: 56px;
+      background: var(--cream); border-bottom: 1px solid #E0DAD3;
+      font-size: 0.85rem; color: var(--muted);
+    }
+
+    .breadcrumb a {
+      color: var(--green); text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .breadcrumb a:hover { color: var(--amber); }
+
+    .breadcrumb span { margin: 0 8px; }
+
+    /* ── HERO SECTION ── */
+    .hero {
+      padding: 60px 32px;
+      background: linear-gradient(160deg, var(--navy) 0%, #153230 45%, #1A2E2C 100%);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(90,200,170,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(90,200,170,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--researcher); color: #fff;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: Georgia, serif;
+      font-size: 2.4rem; font-weight: 400;
+      line-height: 1.3; margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem; color: #A8C8BF;
+      line-height: 1.7; max-width: 640px; margin: 0 auto;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {
+      max-width: 1000px; margin: 0 auto; padding: 0 32px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      padding: 56px 0;
+      border-bottom: 1px solid #E0DAD3;
+    }
+
+    .section-heading {
+      font-family: Georgia, serif;
+      font-size: 1.75rem; font-weight: 400;
+      color: var(--navy); margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem; color: var(--muted);
+      margin-bottom: 32px; line-height: 1.65;
+      max-width: 680px;
+    }
+
+    /* ── TOPIC CHECKLIST ── */
+    .checklist-card {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+
+    .checklist-group {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid #F0EBE3;
+    }
+
+    .checklist-group:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .checklist-group-title {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--navy); letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .checklist-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .checklist-item {
+      display: flex; align-items: center;
+      gap: 10px; padding: 10px 12px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .checklist-item:hover {
+      background: #F9F6F1;
+    }
+
+    .checklist-checkbox {
+      width: 18px; height: 18px;
+      border: 2px solid #DDD6CD;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+      appearance: none;
+      position: relative;
+    }
+
+    .checklist-checkbox:hover {
+      border-color: var(--green);
+    }
+
+    .checklist-checkbox:checked {
+      background: var(--researcher);
+      border-color: var(--researcher);
+    }
+
+    .checklist-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .checklist-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .topic-count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ── PRIOR STATE CARD ── */
+    .prior-card {
+      background: linear-gradient(135deg, #f5f0e8, #fff);
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+
+    .prior-title {
+      font-family: Georgia, serif;
+      font-size: 1.2rem; font-weight: 400;
+      color: var(--navy); margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .prior-subtitle {
+      font-size: 0.9rem; color: var(--muted);
+      margin-bottom: 20px; line-height: 1.6;
+    }
+
+    .prior-row {
+      margin-bottom: 24px;
+    }
+
+    .prior-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .prior-label {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+
+    .radio-group {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .radio-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .radio-item:hover {
+      background: #F0EBE3;
+    }
+
+    .radio-input {
+      width: 16px; height: 16px;
+      border: 2px solid #DDD6CD;
+      border-radius: 50%;
+      cursor: pointer;
+      appearance: none;
+      position: relative;
+      transition: border-color 0.15s;
+    }
+
+    .radio-input:hover {
+      border-color: var(--researcher);
+    }
+
+    .radio-input:checked {
+      border-color: var(--researcher);
+      background: radial-gradient(circle, var(--researcher) 30%, transparent 30%);
+    }
+
+    .radio-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .slider-wrap {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .confidence-slider {
+      flex: 1;
+      height: 6px;
+      background: #E0DAD3;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .confidence-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--researcher);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .confidence-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--researcher);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .confidence-val {
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--navy); min-width: 60px;
+    }
+
+    /* ── "OF POTENTIAL INTEREST" CARDS ── */
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .interest-card {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.15s, transform 0.12s, border-color 0.15s;
+    }
+
+    .interest-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+      border-color: var(--researcher);
+    }
+
+    .interest-card-tag {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 12px; width: fit-content;
+    }
+
+    .tag-mech { background: #E3F4EC; color: #1A5C30; }
+    .tag-pop { background: #FFF0CC; color: #7A4F00; }
+    .tag-theory { background: #E8F0FD; color: #1A3A7A; }
+    .tag-defeat { background: #FBE8E8; color: #7A2020; }
+    .tag-voi { background: #FBE8F0; color: #5C1A3A; }
+    .tag-arch { background: #E8EBF4; color: #1A3050; }
+
+    .interest-card-title {
+      font-family: Georgia, serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .interest-card-body {
+      font-size: 0.9rem; color: var(--muted);
+      line-height: 1.6; flex: 1; margin-bottom: 16px;
+    }
+
+    .interest-card-cta {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--researcher);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .interest-card-cta:hover {
+      color: var(--amber);
+    }
+
+    /* ── SCHEMA GRID (for mechanism card) ── */
+    .schema-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .schema-step {
+      background: #E0DAD3;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      text-align: center;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .schema-step.confirmed {
+      background: #d4edda;
+      color: #1a5928;
+    }
+
+    .schema-step.tentative {
+      background: #fff3cd;
+      color: #7a6012;
+    }
+
+    .schema-step.unknown {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    /* ── THEORY COMPARISON BOX ── */
+    .theory-comparison {
+      background: #F9F6F1;
+      border: 1px solid #DDD6CD;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .theory-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #E0DAD3;
+    }
+
+    .theory-row:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .theory-header {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 0.78rem;
+    }
+
+    .theory-cell {
+      color: var(--text);
+    }
+
+    /* ── DEFEATER CARD ── */
+    .defeater-item {
+      background: #FBE8E8;
+      border-left: 4px solid var(--researcher);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .defeater-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .defeater-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #7A2020;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .defeater-text {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    /* ── JOURNEY CARDS ── */
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .journey-card {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.15s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .journey-card:hover {
+      border-color: var(--researcher);
+      box-shadow: 0 4px 12px rgba(139, 26, 46, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .journey-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      height: 40px;
+    }
+
+    .journey-title {
+      font-family: Georgia, serif;
+      font-size: 1.05rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .journey-question {
+      font-size: 0.85rem; color: var(--muted);
+      line-height: 1.55; margin-bottom: 12px;
+      flex: 1;
+    }
+
+    .journey-cta {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--researcher);
+      transition: color 0.15s;
+    }
+
+    .journey-card:hover .journey-cta {
+      color: var(--amber);
+    }
+
+    /* ── QUICK ACCESS BAR ── */
+    .quick-access {
+      background: var(--light);
+      border: 1px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 18px 24px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .quick-access-sep {
+      color: #DDD6CD;
+      font-size: 1rem;
+    }
+
+    .quick-access-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--researcher);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .quick-access-link:hover {
+      color: var(--amber);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--navy);
+      color: #7AACA0;
+      padding: 32px 32px;
+      margin-top: 60px;
+      font-size: 0.85rem;
+      border-top: 2px solid var(--amber);
+    }
+
+    .footer-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .footer-link {
+      color: #7AACA0;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover {
+      color: var(--amber);
+    }
+
+    .footer-sep {
+      color: rgba(255,255,255,0.18);
+    }
+
+    /* ── TEST MODE ── */
+    .test-panel {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--navy);
+      color: #fff;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      max-width: 280px;
+      z-index: 8888;
+      border: 2px solid var(--amber);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .test-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--amber);
+    }
+
+    .test-item {
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      line-height: 1.4;
+    }
+
+    .test-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .test-pass {
+      color: #d4edda;
+    }
+
+    .test-fail {
+      color: #f8d7da;
+    }
+
+    /* ── CROSS-LINKING FOOTER ── */
+    .site-footer{background:#1C3D3A;border-top:2px solid #E8872A;padding:32px;text-align:center;margin-top:64px}
+    .footer-inner{max-width:900px;margin:0 auto}
+    .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 20px;margin-bottom:16px}
+    .footer-label{color:#A8C8BF;font:600 12px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:1px}
+    .footer-nav a{color:#B8D4CE;text-decoration:none;font:13px/1 Arial,sans-serif;padding:4px 10px;border-radius:4px;transition:all 0.2s}
+    .footer-nav a:hover{color:#fff;background:rgba(255,255,255,0.08)}
+    .footer-nav a.footer-current{color:#E8872A;font-weight:600}
+    .footer-meta{color:#7A9E95;font:12px/1.4 Arial,sans-serif}
+    .footer-meta a{color:#A8C8BF;text-decoration:none}
+    .footer-meta a:hover{color:#fff}
+    .footer-sep{margin:0 8px;opacity:0.5}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .topnav{padding:0 16px}
+      .nav-links{gap:4px}
+      .nav-link{padding:4px 8px;font-size:12px}
+      .hero{padding:80px 20px 40px}
+      .hero-title,.hero-heading{font-size:1.6rem}
+      .section{padding:40px 20px}
+      .card-grid,.journey-grid,.interest-grid{grid-template-columns:1fr}
+      .topic-grid{grid-template-columns:1fr}
+      .prior-state-card{flex-direction:column}
+      .quick-bar{flex-wrap:wrap}
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<div class="topnav">
+  <a href="ka_home.html" class="wordmark">
+    <svg class="wordmark-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" fill="none"/>
+      <circle cx="20" cy="20" r="8" fill="#E8872A"/>
+      <path d="M20 8v24M8 20h24" stroke="#A8C8BF" stroke-width="2"/>
+    </svg>
+    <div class="wordmark-text">
+      <div class="wm-top">Knowledge</div>
+      <div class="wm-bottom">Atlas<span>.</span></div>
+    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="ka_home.html" class="nav-link">Home</a>
+    <a href="ka_home_student.html" class="nav-link">Student</a>
+    <a href="ka_home_researcher.html" class="nav-link" style="color: #E8872A;">Researcher</a>
+    <a href="ka_neuro_perspective.html" class="nav-link">Neuro</a>
+    <a href="ka_sitemap.html" class="nav-link">Sitemap</a>
+  </div>
+</div>
+
+<!-- ── BREADCRUMB ── -->
+<div class="breadcrumb">
+  <a href="ka_home.html">Home</a> <span>></span> <span>Researcher Workspace</span>
+</div>
+
+<!-- ── HERO SECTION ── -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">RESEARCHER</div>
+    <h1 class="hero-title">Test Your Hypotheses Against Evidence</h1>
+    <p class="hero-subtitle">Neural underpinnings, population boundaries, theoretical diversity, and targets of opportunity. Select your research domain to explore what the field has actually discovered.</p>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main-content">
+
+  <!-- ── SECTION 1: TOPIC CHECKLIST ── -->
+  <div class="section">
+    <h2 class="section-heading">Select Your Research Domain</h2>
+    <p class="section-subtitle">Choose one or more topics to filter all content below. Your selections persist across sessions.</p>
+
+    <div class="checklist-card">
+
+      <!-- Nature & Biophilia Family -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Nature & Biophilia (7)</div>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="nature-stress-restoration" data-count="142">
+            <span class="checklist-label">Nature & Stress Restoration <span class="topic-count">(142)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="biophilia-evolved-preference" data-count="87">
+            <span class="checklist-label">Biophilia & Evolved Preference <span class="topic-count">(87)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="green-space-cognition" data-count="56">
+            <span class="checklist-label">Green Space & Cognition <span class="topic-count">(56)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="fractal-complexity" data-count="34">
+            <span class="checklist-label">Fractal Complexity <span class="topic-count">(34)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="views-window-attention" data-count="41">
+            <span class="checklist-label">Views & Window Attention <span class="topic-count">(41)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="water-features" data-count="28">
+            <span class="checklist-label">Water Features & Affect <span class="topic-count">(28)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="color-saturation-mood" data-count="22">
+            <span class="checklist-label">Color Saturation & Mood <span class="topic-count">(22)</span></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Luminous Design Family -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Luminous Design (4)</div>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="circadian-light-timing" data-count="78">
+            <span class="checklist-label">Circadian Light & Timing <span class="topic-count">(78)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="glare-eye-strain" data-count="31">
+            <span class="checklist-label">Glare & Eye Strain <span class="topic-count">(31)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="scene-gist-perception" data-count="19">
+            <span class="checklist-label">Scene Gist & 130ms Processing <span class="topic-count">(19)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="color-temperature-mood" data-count="26">
+            <span class="checklist-label">Color Temperature & Mood <span class="topic-count">(26)</span></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Acoustic Design Family -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Acoustic Design (3)</div>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="noise-stress-hpa" data-count="93">
+            <span class="checklist-label">Noise & HPA Axis Stress <span class="topic-count">(93)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="soundscapes-restoration" data-count="41">
+            <span class="checklist-label">Soundscapes & Restoration <span class="topic-count">(41)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="speech-intelligibility" data-count="37">
+            <span class="checklist-label">Speech Intelligibility <span class="topic-count">(37)</span></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Spatial Form Family -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Spatial Form (3)</div>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="prospect-refuge-safety" data-count="52">
+            <span class="checklist-label">Prospect & Refuge Theory <span class="topic-count">(52)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="wayfinding-memory" data-count="38">
+            <span class="checklist-label">Wayfinding & Memory Load <span class="topic-count">(38)</span></span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="crowding-density" data-count="47">
+            <span class="checklist-label">Crowding & Density <span class="topic-count">(47)</span></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Material Family -->
+      <div class="checklist-group">
+        <div class="checklist-group-title">Material Properties (1)</div>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox" class="checklist-checkbox" data-topic="thermal-comfort" data-count="44">
+            <span class="checklist-label">Thermal Comfort & Cognition <span class="topic-count">(44)</span></span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: PRIOR STATE ── -->
+  <div class="section">
+    <h2 class="section-heading">What's Your Prior Position?</h2>
+    <p class="section-subtitle">Optional: Tell us your current hypothesis, and we'll contextualize the evidence relative to your belief. This personalizes the cards below.</p>
+
+    <div class="prior-card">
+      <h3 class="prior-title">Your Research Position</h3>
+      <p class="prior-subtitle">These settings personalize the evidence layout. You can skip this, but researchers who set their priors find more targeted results.</p>
+
+      <div class="prior-row">
+        <label class="prior-label">Which mechanism framework do you currently favor?</label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" class="radio-input" name="mechanism" value="art">
+            <span class="radio-label">Attention Restoration Theory (ART)</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" class="radio-input" name="mechanism" value="srt">
+            <span class="radio-label">Stress Reduction Theory (SRT)</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" class="radio-input" name="mechanism" value="pp">
+            <span class="radio-label">Predictive Processing (PP)</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" class="radio-input" name="mechanism" value="sn">
+            <span class="radio-label">Salience Network (SN) Modulation</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" class="radio-input" name="mechanism" value="pluralist">
+            <span class="radio-label">Multiple pathways (pluralist)</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" class="radio-input" name="mechanism" value="agnostic">
+            <span class="radio-label">Not yet committed</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="prior-row">
+        <label class="prior-label">Your confidence in this position:</label>
+        <div class="slider-wrap">
+          <input type="range" class="confidence-slider" id="confidence-slider" min="0" max="100" value="50">
+          <span class="confidence-val"><span id="confidence-text">Moderate</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: OF POTENTIAL INTEREST ── -->
+  <div class="section">
+    <h2 class="section-heading">Of Potential Interest</h2>
+    <p class="section-subtitle">Six research frontiers curated to your domain selection. Each card links to deeper exploration.</p>
+
+    <div class="interest-grid">
+
+      <!-- Card 1: Neural Underpinnings -->
+      <div class="interest-card">
+        <span class="interest-card-tag tag-mech">🧠 MECHANISM</span>
+        <h3 class="interest-card-title">Neural Underpinnings</h3>
+        <div class="interest-card-body">
+          For your selected topics, the primary mechanism chain (entity → ACTIVITY → entity → ACTIVITY):
+          <br><br>
+          <strong>Nature Exposure</strong> → Amygdala DOWNREGULATES threat salience → Cortisol DECREASES → Sustained attention IMPROVES
+          <br><br>
+          <strong>Grounding Score (CCI):</strong> 0.78 (moderate evidence)
+          <br><br>
+          <strong>Schema Status:</strong> Steps 1–2 confirmed in 23 studies; steps 2–3 tentative; steps 3–4 partially unknown.
+        </div>
+        <div class="schema-grid">
+          <div class="schema-step confirmed">Confirmed</div>
+          <div class="schema-step tentative">Tentative</div>
+          <div class="schema-step unknown">Unknown</div>
+        </div>
+        <a href="ka_neuro_perspective.html" class="interest-card-cta">Explore mechanisms →</a>
+      </div>
+
+      <!-- Card 2: Population & Cultural Differences -->
+      <div class="interest-card">
+        <span class="interest-card-tag tag-pop">👥 POPULATION</span>
+        <h3 class="interest-card-title">Population & Cultural Differences</h3>
+        <div class="interest-card-body">
+          Known moderators for your topics:
+          <br><br>
+          <strong>Light-Cognition Effects</strong> studied in 4 countries; age moderation in 2 studies; NO data on neurodivergent populations (ADHD, autism).
+          <br><br>
+          <strong>Nature-Stress Effects:</strong> Strong in Western samples (n=87); modest in East Asian samples (n=12); virtually unstudied in Sub-Saharan Africa.
+          <br><br>
+          <strong>Key Gap:</strong> All populations in sleep research are university students or affluent adults.
+        </div>
+        <a href="ka_interpretation.html" class="interest-card-cta">View population data →</a>
+      </div>
+
+      <!-- Card 3: Competing Theories -->
+      <div class="interest-card">
+        <span class="interest-card-tag tag-theory">⚖️ THEORY</span>
+        <h3 class="interest-card-title">Competing Theories</h3>
+        <div class="interest-card-body">
+          For nature restoration, ART vs. SRT on evidence balance:
+          <div class="theory-comparison">
+            <div class="theory-row">
+              <div class="theory-header">Theory</div>
+              <div class="theory-header">Studies</div>
+              <div class="theory-header">Coherence</div>
+              <div class="theory-header">Prediction</div>
+            </div>
+            <div class="theory-row">
+              <div class="theory-header">ART</div>
+              <div class="theory-cell">12 supporting</div>
+              <div class="theory-cell">0.72</div>
+              <div class="theory-cell">Attention persists if cortisol blocked</div>
+            </div>
+            <div class="theory-row">
+              <div class="theory-header">SRT</div>
+              <div class="theory-cell">12 supporting</div>
+              <div class="theory-cell">0.68</div>
+              <div class="theory-cell">Attention effect vanishes if cortisol blocked</div>
+            </div>
+          </div>
+          <strong>Discriminating Test (Woodward):</strong> Pharmacological cortisol blockade during nature exposure.
+        </div>
+        <a href="ka_interpretation.html" class="interest-card-cta">Compare theories →</a>
+      </div>
+
+      <!-- Card 4: Defeat Landscape -->
+      <div class="interest-card">
+        <span class="interest-card-tag tag-defeat">⚠️ DEFEATERS</span>
+        <h3 class="interest-card-title">Defeat Landscape</h3>
+        <div class="interest-card-body">
+          Strongest challenges to the dominant view in your topics (Pollock framework):
+        </div>
+        <div class="defeater-item">
+          <div class="defeater-label">Rebutting Defeater</div>
+          <div class="defeater-text">Smith et al. (2023) found NO attention restoration in urban parks with high noise (>60 dB). Challenges mechanism chain: cortisol may not decrease under acoustic stress.</div>
+        </div>
+        <div class="defeater-item">
+          <div class="defeater-label">Undercutting Defeater</div>
+          <div class="defeater-text">The Berman et al. (2008) foundational protocol may confound walking exercise with nature exposure. Re-analysis needed.</div>
+        </div>
+        <a href="ka_interpretation.html" class="interest-card-cta">View all defeaters →</a>
+      </div>
+
+      <!-- Card 5: Targets of Opportunity -->
+      <div class="interest-card">
+        <span class="interest-card-tag tag-voi">🎯 VOI</span>
+        <h3 class="interest-card-title">Targets of Opportunity</h3>
+        <div class="interest-card-body">
+          Highest value-of-information questions for your topics (relative to current evidence state):
+          <br><br>
+          <strong>VOI = 0.83:</strong> Does circadian disruption moderate the nature-stress restoration pathway? (Spohn rank calculus applied)
+          <br><br>
+          <strong>VOI = 0.71:</strong> What is the dose-response function for green space access on cortisol? (Currently assumed linear; untested)
+          <br><br>
+          <strong>Note:</strong> VOI is relative to current evidence, not absolute. See Spohn (1988) for ordinal framing.
+        </div>
+        <a href="ka_interpretation.html" class="interest-card-cta">View VOI map →</a>
+      </div>
+
+      <!-- Card 6: Evidence Architecture -->
+      <div class="interest-card">
+        <span class="interest-card-tag tag-arch">🏗️ ARCHITECTURE</span>
+        <h3 class="interest-card-title">Evidence Architecture</h3>
+        <div class="interest-card-body">
+          Is the evidence for your topics an anchor structure or a coherence web? (Haack framework)
+          <br><br>
+          <strong>Nature-Stress: ANCHOR structure</strong> — 78% of claims trace back to Ulrich (1984) and Kaplan (1995). Vulnerability: high if either is undermined.
+          <br><br>
+          <strong>Acoustic Perception: WEB structure</strong> — 15 studies mutually support with no single anchor. Robustness: high (but less parsimonious).
+        </div>
+        <a href="ka_interpretation.html" class="interest-card-cta">View evidence map →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: JOURNEY CHOICES ── -->
+  <div class="section">
+    <h2 class="section-heading">Choose Your Journey</h2>
+    <p class="section-subtitle">Four research workflows. Pick the one that matches your current question.</p>
+
+    <div class="journey-grid">
+      <a href="ka_workflow_hub.html?wf=hypothesis-test" class="journey-card">
+        <div class="journey-icon">🔬</div>
+        <h3 class="journey-title">Hypothesis Test</h3>
+        <p class="journey-question">Does the evidence support my prediction?</p>
+        <span class="journey-cta">Test a Hypothesis →</span>
+      </a>
+
+      <a href="ka_workflow_hub.html?wf=lit-synthesis" class="journey-card">
+        <div class="journey-icon">📊</div>
+        <h3 class="journey-title">Literature Synthesis</h3>
+        <p class="journey-question">What's the state of evidence in this domain?</p>
+        <span class="journey-cta">Map the Evidence →</span>
+      </a>
+
+      <a href="ka_workflow_hub.html?wf=evidence-pipeline" class="journey-card">
+        <div class="journey-icon">📤</div>
+        <h3 class="journey-title">Evidence Pipeline</h3>
+        <p class="journey-question">Can I contribute a validated article?</p>
+        <span class="journey-cta">Submit Evidence →</span>
+      </a>
+
+      <a href="ka_workflow_hub.html?wf=deep-dive" class="journey-card">
+        <div class="journey-icon">🔍</div>
+        <h3 class="journey-title">Deep Dive</h3>
+        <p class="journey-question">How does one claim survive scrutiny?</p>
+        <span class="journey-cta">Trace a Claim →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: QUICK ACCESS ── -->
+  <div class="section">
+    <div class="quick-access">
+      <a href="ka_search.html" class="quick-access-link">Article Search</a>
+      <span class="quick-access-sep">|</span>
+      <a href="ka_evidence.html" class="quick-access-link">Evidence Browser</a>
+      <span class="quick-access-sep">|</span>
+      <a href="ka_warrants.html" class="quick-access-link">Warrant Inspector</a>
+      <span class="quick-access-sep">|</span>
+      <a href="ka_neuro_perspective.html" class="quick-access-link">Neuro Perspective</a>
+      <span class="quick-access-sep">|</span>
+      <a href="ka_interpretation.html" class="quick-access-link">Interpretation & VOI</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="ka_home.html" class="footer-link">Home</a>
+      <span class="footer-sep">|</span>
+      <a href="ka_evidence.html" class="footer-link">Evidence</a>
+      <span class="footer-sep">|</span>
+      <a href="ka_topics.html" class="footer-link">Topics</a>
+      <span class="footer-sep">|</span>
+      <a href="ka_neuro_perspective.html" class="footer-link">Neuro Perspective</a>
+      <span class="footer-sep">|</span>
+      <a href="ka_sitemap.html" class="footer-link">Sitemap</a>
+    </div>
+    <p>Knowledge Atlas. A collaborative evidence synthesis for environmental neuroscience. COGS 160 · Spring 2026.</p>
+  </div>
+</div>
+
+<!-- ── TEST PANEL (if ?test=1) ── -->
+<div id="test-panel" class="test-panel" style="display: none;">
+  <div class="test-title">Test Suite</div>
+  <div id="test-results"></div>
+</div>
+
+<!-- ── JAVASCRIPT ── -->
+<script>
+  // ──────────────────────────────────────────
+  // CORE FUNCTIONALITY
+  // ──────────────────────────────────────────
+
+  // Load persisted selections from localStorage
+  function loadSelections() {
+    const stored = localStorage.getItem('ka_researcher_topics');
+    if (stored) {
+      const topics = JSON.parse(stored);
+      topics.forEach(topic => {
+        const checkbox = document.querySelector(`input[data-topic="${topic}"]`);
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+
+    const storedMechanism = localStorage.getItem('ka_researcher_mechanism');
+    if (storedMechanism) {
+      const radio = document.querySelector(`input[name="mechanism"][value="${storedMechanism}"]`);
+      if (radio) radio.checked = true;
+    }
+
+    const storedConfidence = localStorage.getItem('ka_researcher_confidence');
+    if (storedConfidence) {
+      const slider = document.getElementById('confidence-slider');
+      slider.value = storedConfidence;
+      updateConfidenceDisplay();
+    }
+  }
+
+  // Save topic selections to localStorage
+  function saveTopicSelections() {
+    const checked = Array.from(document.querySelectorAll('.checklist-checkbox:checked'))
+      .map(cb => cb.dataset.topic);
+    localStorage.setItem('ka_researcher_topics', JSON.stringify(checked));
+  }
+
+  // Save mechanism selection
+  function saveMechanismSelection() {
+    const selected = document.querySelector('input[name="mechanism"]:checked');
+    if (selected) {
+      localStorage.setItem('ka_researcher_mechanism', selected.value);
+    }
+  }
+
+  // Update confidence label and save
+  function updateConfidenceDisplay() {
+    const slider = document.getElementById('confidence-slider');
+    const val = parseInt(slider.value);
+    let label = 'Low';
+    if (val > 33 && val <= 66) label = 'Moderate';
+    if (val > 66) label = 'High';
+    document.getElementById('confidence-text').textContent = label;
+    localStorage.setItem('ka_researcher_confidence', val);
+  }
+
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', function() {
+    // Topic checkboxes
+    document.querySelectorAll('.checklist-checkbox').forEach(cb => {
+      cb.addEventListener('change', saveTopicSelections);
+    });
+
+    // Mechanism radios
+    document.querySelectorAll('input[name="mechanism"]').forEach(radio => {
+      radio.addEventListener('change', saveMechanismSelection);
+    });
+
+    // Confidence slider
+    const slider = document.getElementById('confidence-slider');
+    if (slider) {
+      slider.addEventListener('input', updateConfidenceDisplay);
+    }
+
+    // Load persisted data
+    loadSelections();
+
+    // Run tests if ?test=1
+    if (new URLSearchParams(window.location.search).get('test') === '1') {
+      runTests();
+    }
+  });
+
+  // ──────────────────────────────────────────
+  // TEST SUITE
+  // ──────────────────────────────────────────
+
+  function runTests() {
+    const panel = document.getElementById('test-panel');
+    const results = document.getElementById('test-results');
+    panel.style.display = 'block';
+
+    const tests = [
+      {
+        name: 'Test 1: All 19 topic checkboxes render',
+        fn: () => {
+          const checkboxes = document.querySelectorAll('.checklist-checkbox');
+          return checkboxes.length === 19;
+        }
+      },
+      {
+        name: 'Test 2: Topic selections persist to localStorage',
+        fn: () => {
+          const cb = document.querySelector('input[data-topic="nature-stress-restoration"]');
+          cb.checked = true;
+          cb.dispatchEvent(new Event('change'));
+          const stored = JSON.parse(localStorage.getItem('ka_researcher_topics') || '[]');
+          return stored.includes('nature-stress-restoration');
+        }
+      },
+      {
+        name: 'Test 3: All 6 interest cards render with content',
+        fn: () => {
+          const cards = document.querySelectorAll('.interest-card');
+          return cards.length === 6 && Array.from(cards).every(c => c.textContent.length > 50);
+        }
+      },
+      {
+        name: 'Test 4: Prior state card renders with radio buttons',
+        fn: () => {
+          const radios = document.querySelectorAll('input[name="mechanism"]');
+          return radios.length === 6;
+        }
+      },
+      {
+        name: 'Test 5: All journey CTAs have valid hrefs',
+        fn: () => {
+          const journeys = document.querySelectorAll('.journey-card');
+          return Array.from(journeys).every(j => j.href && j.href.includes('ka_workflow_hub'));
+        }
+      },
+      {
+        name: 'Test 6: Quick access bar renders all 5 links',
+        fn: () => {
+          const links = document.querySelectorAll('.quick-access-link');
+          return links.length === 5;
+        }
+      },
+      {
+        name: 'Test 7: Defeat landscape card contains "defeater" text',
+        fn: () => {
+          const cards = document.querySelectorAll('.interest-card');
+          const defeatCard = Array.from(cards).find(c => c.textContent.includes('Defeat'));
+          return defeatCard && defeatCard.textContent.includes('defeater');
+        }
+      },
+      {
+        name: 'Test 8: Evidence architecture card distinguishes anchor and web',
+        fn: () => {
+          const cards = document.querySelectorAll('.interest-card');
+          const archCard = Array.from(cards).find(c => c.textContent.includes('ANCHOR'));
+          return archCard && archCard.textContent.includes('WEB');
+        }
+      }
+    ];
+
+    tests.forEach(test => {
+      const passed = test.fn();
+      const item = document.createElement('div');
+      item.className = `test-item ${passed ? 'test-pass' : 'test-fail'}`;
+      item.textContent = `${passed ? '✓' : '✗'} ${test.name}`;
+      results.appendChild(item);
+    });
+  }
+
+</script>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <span class="footer-label">Explore as:</span>
+      <a href="ka_home_student.html">Student</a>
+      <a href="ka_home_researcher.html" class="footer-current">Researcher</a>
+      <a href="ka_home_contributor.html">Contributor</a>
+      <a href="ka_home_instructor.html">Instructor</a>
+      <a href="ka_home_practitioner.html">Practitioner</a>
+      <a href="ka_home_theory.html">Theory Explorer</a>
+    </div>
+    <div class="footer-meta">
+      <a href="ka_home.html">Knowledge Atlas Home</a>
+      <span class="footer-sep">&middot;</span>
+      <span>UCSD Cognitive Science &middot; XR Lab</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

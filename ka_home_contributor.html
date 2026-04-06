@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contributor Home — Knowledge Atlas</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1C3D3A;
+      --amber: #E8872A;
+      --cream: #F7F4EF;
+      --green: #2A7868;
+      --text: #2D2010;
+      --muted: #6A5E50;
+      --border: #DDD6CD;
+      --light: #EDE8E0;
+      --blue: #1a56a4;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.65;
+      padding-top: 56px;
+    }
+
+    /* ── TOPNAV ── */
+    .topnav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(28,61,58,0.96);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+    .wordmark{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .wordmark-icon{width:28px;height:28px;flex-shrink:0}
+    .wordmark-text{display:flex;flex-direction:column;line-height:1.1}
+    .wm-top{font:600 11px/1 Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#A8C8BF}
+    .wm-bottom{font:700 16px/1 Georgia,serif;color:#fff}
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-link{color:#B8D4CE;text-decoration:none;font:500 13px/1 Arial,sans-serif;padding:6px 14px;border-radius:6px;transition:all 0.2s}
+    .nav-link:hover{color:#fff;background:rgba(255,255,255,0.08)}
+
+    /* ── HERO ── */
+    .page-hero {
+      position: relative;
+      background: linear-gradient(160deg, #1C3D3A 0%, #153230 45%, #1A2E2C 100%);
+      padding: 56px 40px 48px;
+      border-bottom: 3px solid var(--amber);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(90,200,170,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(90,200,170,0.04) 1px,transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      position: relative;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #7AACA0; margin-bottom: 12px;
+    }
+    .hero-title {
+      position: relative;
+      font-family: Georgia, 'Times New Roman', serif; font-size: 2rem; font-weight: 400;
+      color: #F5F0E8; line-height: 1.25; margin-bottom: 14px;
+    }
+    .hero-sub {
+      position: relative;
+      font-size: 1rem; color: #A8C8BF; line-height: 1.7;
+      max-width: 640px; margin-bottom: 20px;
+    }
+    .contributor-badge {
+      position: relative;
+      display: inline-block;
+      background: var(--blue); color: #fff; padding: 6px 14px;
+      border-radius: 6px; font-family: Arial, Helvetica, sans-serif; font-size: 0.72rem;
+      font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* ── LAYOUT ── */
+    .outer {
+      max-width: 1000px; margin: 0 auto; padding: 0 32px 72px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-top: 48px;
+    }
+    .section-header {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 28px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-num {
+      background: var(--navy); color: #A8C8BF;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 5px 10px; border-radius: 4px; flex-shrink: 0; margin-top: 4px;
+    }
+    .section-header h2 {
+      font-family: Georgia, 'Times New Roman', serif; font-size: 1.4rem; font-weight: 400;
+      color: var(--navy); line-height: 1.3;
+    }
+    .section-header .sh-sub {
+      font-size: 0.85rem; color: var(--muted); margin-top: 4px; line-height: 1.5;
+    }
+
+    /* ── TRACK PROGRESS CARD ── */
+    .track-progress-card {
+      background: #fff; border: 2px solid var(--border);
+      border-radius: 12px; padding: 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .tpc-header {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+    }
+    .tpc-icon {
+      font-size: 2.2rem; line-height: 1;
+    }
+    .tpc-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    }
+    .tpc-track-name {
+      font-family: Georgia, 'Times New Roman', serif; font-size: 1.3rem; font-weight: 400;
+      color: var(--navy); line-height: 1.2;
+    }
+    .tpc-progress-group {
+      margin-bottom: 24px;
+    }
+    .tpc-progress-label {
+      font-size: 0.9rem; font-weight: 600; color: var(--text);
+      margin-bottom: 8px; display: flex; justify-content: space-between;
+    }
+    .tpc-progress-bar-container {
+      background: #f0f0f0; border-radius: 8px; height: 12px;
+      overflow: hidden; margin-bottom: 8px;
+    }
+    .tpc-progress-bar {
+      background: var(--blue); height: 100%; border-radius: 8px;
+      transition: width 0.4s ease;
+    }
+    .tpc-progress-percent {
+      font-size: 0.85rem; color: var(--muted); font-weight: 600;
+    }
+    .tpc-deliverable {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px; margin-bottom: 16px;
+    }
+    .tpc-deliverable-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+    }
+    .tpc-deliverable-title {
+      font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px;
+    }
+    .tpc-deadline {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+    }
+    .tpc-actions {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; border-radius: 6px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: all 0.15s; cursor: pointer; border: none;
+      background: var(--navy); color: #fff;
+    }
+    .cta-btn:hover {
+      background: #0f2a27; transform: translateY(-1px);
+    }
+    .cta-btn-secondary {
+      background: transparent; color: var(--blue);
+      border: 1.5px solid var(--blue);
+    }
+    .cta-btn-secondary:hover {
+      background: rgba(26, 86, 164, 0.08);
+    }
+
+    /* ── INTEREST CARDS GRID ── */
+    .interest-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 28px;
+    }
+    @media (max-width: 768px) {
+      .interest-grid { grid-template-columns: 1fr; }
+    }
+
+    .interest-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: box-shadow 0.15s, transform 0.15s;
+      text-decoration: none; color: inherit;
+    }
+    .interest-card:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .ic-eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    .ic-title {
+      font-family: Georgia, 'Times New Roman', serif; font-size: 1.1rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 12px; line-height: 1.3;
+    }
+    .ic-body {
+      font-size: 0.92rem; color: #555; line-height: 1.6; margin-bottom: 16px;
+    }
+    .ic-stat {
+      background: var(--light); border-radius: 6px; padding: 12px;
+      margin: 12px 0; font-size: 0.88rem; font-weight: 600;
+      color: var(--navy);
+    }
+    .ic-cta {
+      color: var(--blue); font-size: 0.88rem; font-weight: 700;
+      text-decoration: none;
+    }
+    .ic-cta:hover { text-decoration: underline; }
+
+    /* ── JOURNEY CHOICES ── */
+    .journey-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin-top: 28px;
+    }
+    @media (max-width: 768px) {
+      .journey-grid { grid-template-columns: 1fr; }
+    }
+
+    .journey-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      text-decoration: none; color: inherit;
+      transition: all 0.15s;
+      display: flex; flex-direction: column;
+    }
+    .journey-card:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .jc-icon {
+      font-size: 2rem; margin-bottom: 12px; line-height: 1;
+    }
+    .jc-title {
+      font-family: Georgia, 'Times New Roman', serif; font-size: 1.05rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 8px; line-height: 1.3;
+    }
+    .jc-question {
+      font-size: 0.88rem; color: #666; line-height: 1.5; margin-bottom: 14px;
+      flex: 1;
+    }
+    .jc-cta {
+      color: var(--blue); font-size: 0.85rem; font-weight: 700;
+      text-decoration: none; display: inline-flex; gap: 4px;
+    }
+    .jc-cta:hover { text-decoration: underline; }
+
+    /* ── TOPIC CHECKLIST ── */
+    .topic-checklist {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 10px; padding: 28px;
+      margin-top: 28px;
+    }
+    .tc-intro {
+      font-size: 0.95rem; color: #666; margin-bottom: 20px; line-height: 1.6;
+    }
+    .topic-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .topic-grid { grid-template-columns: 1fr; }
+    }
+
+    .topic-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px; background: var(--light);
+      border-radius: 6px; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .topic-item:hover {
+      background: #f7f0e8;
+    }
+    .topic-item input[type="checkbox"] {
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--blue);
+    }
+    .topic-label {
+      font-size: 0.92rem; color: var(--text); cursor: pointer;
+      flex: 1;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer{background:#1C3D3A;border-top:2px solid #E8872A;padding:32px;text-align:center;margin-top:64px}
+    .footer-inner{max-width:900px;margin:0 auto}
+    .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 20px;margin-bottom:16px}
+    .footer-label{color:#A8C8BF;font:600 12px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:1px}
+    .footer-nav a{color:#B8D4CE;text-decoration:none;font:13px/1 Arial,sans-serif;padding:4px 10px;border-radius:4px;transition:all 0.2s}
+    .footer-nav a:hover{color:#fff;background:rgba(255,255,255,0.08)}
+    .footer-nav a.footer-current{color:#E8872A;font-weight:600}
+    .footer-meta{color:#7A9E95;font:12px/1.4 Arial,sans-serif}
+    .footer-meta a{color:#A8C8BF;text-decoration:none}
+    .footer-meta a:hover{color:#fff}
+    .footer-sep{margin:0 8px;opacity:0.5}
+
+    /* ── UTILITIES ── */
+    .demo-badge {
+      background: rgba(232, 135, 42, 0.15); color: var(--amber);
+      padding: 4px 10px; border-radius: 4px; font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      display: inline-block;
+    }
+
+    /* ── TESTING HELPERS ── */
+    .test-result {
+      position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+      background: #fff; border: 2px solid #ccc; border-radius: 8px;
+      padding: 16px; max-width: 300px; font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .test-result.pass {
+      border-color: #4caf50; background: #f1f8f4;
+    }
+    .test-result.fail {
+      border-color: #f44336; background: #fde8e8;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="ka_home.html" class="wordmark">
+    <svg class="wordmark-icon" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#E8872A" stroke-width="1.5" opacity="0.7"/><path d="M8 20 L14 8 L20 20 M10.5 16 H17.5" stroke="#E8872A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+    <div class="wordmark-text"><span class="wm-top">Knowledge</span><span class="wm-bottom">Atlas<span style="color:#E8872A">.</span></span></div>
+  </a>
+  <div class="nav-links">
+    <a href="ka_home.html" class="nav-link">Home</a>
+    <a href="ka_home_contributor.html" class="nav-link" style="color:#fff">Contributor</a>
+    <a href="ka_user_home.html" class="nav-link">Switch Role</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-eyebrow">Contributor Home</div>
+  <h1 class="hero-title">Build the evidence base one verified claim at a time.</h1>
+  <p class="hero-sub">Your track, your progress, your next task.</p>
+  <div class="contributor-badge">Active Contributor</div>
+</div>
+
+<div class="outer">
+
+  <!-- ── SECTION 1: My Track & Progress ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">1</span>
+      <div>
+        <h2>My Track & Progress</h2>
+        <div class="sh-sub">Track 2 · AI Article Pipeline</div>
+      </div>
+    </div>
+
+    <div class="track-progress-card" id="track-card">
+      <div class="tpc-header">
+        <div class="tpc-icon">📄</div>
+        <div>
+          <div class="tpc-label">Current Track</div>
+          <div class="tpc-track-name" id="track-name">Track 2: AI Article Pipeline</div>
+        </div>
+      </div>
+
+      <div class="tpc-progress-group">
+        <div class="tpc-progress-label">
+          <span id="progress-label">Articles Accepted</span>
+          <span class="tpc-progress-percent"><span id="articles-count">4</span>/10</span>
+        </div>
+        <div class="tpc-progress-bar-container">
+          <div class="tpc-progress-bar" id="progress-bar" style="width: 40%;"></div>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--muted); margin-top: 4px;">
+          <span id="articles-remaining">6 articles needed</span> to complete this track.
+        </p>
+      </div>
+
+      <div style="background: #f0f7f5; border-left: 4px solid var(--green); padding: 14px;
+                   border-radius: 4px; margin: 20px 0;">
+        <div class="tpc-deliverable-label">Next Milestone</div>
+        <div class="tpc-deliverable-title">Complete First Round Submissions</div>
+        <div class="tpc-deadline">Due in 8 days. Your team has 3 submissions pending review.</div>
+      </div>
+
+      <div class="tpc-actions">
+        <a href="160sp/collect-articles-upload.html" class="cta-btn">Upload Articles →</a>
+        <a href="ka_article_search.html" class="cta-btn cta-btn-secondary">View My Submissions →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: Of Potential Interest ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">2</span>
+      <div>
+        <h2>Of Potential Interest</h2>
+        <div class="sh-sub">Curated for your current track</div>
+      </div>
+    </div>
+
+    <div class="interest-grid">
+      <!-- Card 1: My Question -->
+      <a href="ka_tagger.html" class="interest-card">
+        <div class="ic-eyebrow">My Research Question</div>
+        <div class="ic-title">Spatial Navigation & Attention</div>
+        <div class="ic-body">
+          SQ-037: What neuroimaging evidence demonstrates that default mode network deactivation
+          during spatial navigation tasks is modulated by the visual complexity...
+        </div>
+        <div class="ic-stat">4/10 articles uploaded</div>
+        <div class="ic-stat" style="background: #fff8e6; color: #7A4F00;">6 gaps remaining</div>
+        <div style="font-size: 0.85rem; color: var(--muted); margin-top: 12px; line-height: 1.5;">
+          <div class="ic-cta">Upload more articles →</div>
+        </div>
+      </a>
+
+      <!-- Card 2: High-Impact Contributions -->
+      <a href="ka_article_search.html" class="interest-card">
+        <div class="ic-eyebrow">High-Impact Need</div>
+        <div class="ic-title">Underrepresented Topics</div>
+        <div class="ic-body">
+          Material & Surface × Physiological Response has only 12 articles — the thinnest
+          cluster in the Atlas. Evidence suggests experimental papers here are especially valuable for closing evidence gaps.
+        </div>
+        <div class="ic-stat">12 articles in cluster</div>
+        <div style="font-size: 0.85rem; color: var(--muted); margin-top: 12px; line-height: 1.5;">
+          <div class="ic-cta">Search this topic →</div>
+        </div>
+      </a>
+
+      <!-- Card 3: Recent Accepts -->
+      <a href="ka_topics.html" class="interest-card">
+        <div class="ic-eyebrow">Recent Acceptances</div>
+        <div class="ic-title">Community Contributions</div>
+        <div class="ic-body">
+          3 articles accepted this week across all contributors. Latest: "Natural environments
+          restore attention in workplace settings" (Experimental, CCI <span title="Claim Confidence Index">0.72</span>).
+        </div>
+        <div class="ic-stat">This week: 3 acceptances</div>
+        <div style="font-size: 0.85rem; color: var(--muted); margin-top: 12px; line-height: 1.5;">
+          <div class="ic-cta">View accepted articles →</div>
+        </div>
+      </a>
+
+      <!-- Card 4: Track Peers -->
+      <a href="ka_article_search.html" class="interest-card">
+        <div class="ic-eyebrow">Your Peers</div>
+        <div class="ic-title">Track 2 Contributors</div>
+        <div class="ic-body">
+          8 active contributors on Track 2. Average articles submitted: 6.2. Your current rank
+          among Track 2 peers: #4.
+        </div>
+        <div class="ic-stat">Your rank: #4 of 8</div>
+        <div style="font-size: 0.85rem; color: var(--muted); margin-top: 12px; line-height: 1.5;">
+          <div class="ic-cta">View track dashboard →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: Journey Choices ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">3</span>
+      <div>
+        <h2>Your Next Step</h2>
+        <div class="sh-sub">Four paths forward</div>
+      </div>
+    </div>
+
+    <div class="journey-grid">
+      <a href="160sp/collect-articles-upload.html" class="journey-card">
+        <div class="jc-icon">📤</div>
+        <div class="jc-title">Upload Articles</div>
+        <div class="jc-question">Do I have 10 experimental articles ready?</div>
+        <div class="jc-cta">Upload Now →</div>
+      </a>
+
+      <a href="ka_article_search.html" class="journey-card">
+        <div class="jc-icon">🔍</div>
+        <div class="jc-title">Find Articles</div>
+        <div class="jc-question">Where do I find good experimental papers?</div>
+        <div class="jc-cta">Search Literature →</div>
+      </a>
+
+      <a href="ka_tagger.html" class="journey-card">
+        <div class="jc-icon">🏷️</div>
+        <div class="jc-title">Tag Claims</div>
+        <div class="jc-question">Can I identify and tag the key claims?</div>
+        <div class="jc-cta">Start Tagging →</div>
+      </a>
+
+      <a href="ka_ai_methodology.html" class="journey-card">
+        <div class="jc-icon">📖</div>
+        <div class="jc-title">Evidence Standards</div>
+        <div class="jc-question">What makes an article good enough?</div>
+        <div class="jc-cta">Read Standards →</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: Topic Checklist ── -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">4</span>
+      <div>
+        <h2>Topics You Can Contribute To</h2>
+        <div class="sh-sub">Check topics as you complete them</div>
+      </div>
+    </div>
+
+    <div class="topic-checklist">
+      <p class="tc-intro">
+        The Knowledge Atlas covers 19 core topics. Track your progress by checking topics
+        as you complete submissions for each. Your progress is saved locally.
+      </p>
+      <div class="topic-grid" id="topic-grid">
+        <!-- Topics will be inserted here by JS -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <span class="footer-label">Explore as:</span>
+      <a href="ka_home_student.html">Student</a>
+      <a href="ka_home_researcher.html">Researcher</a>
+      <a href="ka_home_contributor.html" class="footer-current">Contributor</a>
+      <a href="ka_home_instructor.html">Instructor</a>
+      <a href="ka_home_practitioner.html">Practitioner</a>
+      <a href="ka_home_theory.html">Theory Explorer</a>
+    </div>
+    <div class="footer-meta">
+      <a href="ka_home.html">Knowledge Atlas Home</a>
+      <span class="footer-sep">·</span>
+      <span>UCSD Cognitive Science · XR Lab</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// Contributor Home Page · Main Script
+// ══════════════════════════════════════════════════════════════════
+
+// Test mode detection
+const testMode = new URLSearchParams(window.location.search).has('test');
+
+// ── TOPICS DATA ──
+const TOPICS = [
+  'Attention & Distraction',
+  'Color & Visual Form',
+  'Complexity & Information Density',
+  'Daylight & Circadian Rhythm',
+  'Enclosure & Prospect',
+  'Fractals & Nature',
+  'Legibility & Navigation',
+  'Material & Surface Texture',
+  'Noise & Acoustic Environment',
+  'Opacity & Transparency',
+  'Order & Randomness',
+  'Prospect & Refuge',
+  'Rhythm & Pattern',
+  'Scale & Proportion',
+  'Softness & Hardness',
+  'Spatial Configuration',
+  'Symmetry & Asymmetry',
+  'Temperature & Thermal Comfort',
+  'Visual Coherence & Complexity'
+];
+
+// ── DEMO DATA ──
+const DEMO_DATA = {
+  trackNumber: 2,
+  trackName: 'AI Article Pipeline',
+  trackIcon: '📄',
+  articlesAccepted: 4,
+  articlesTotal: 10
+};
+
+// ── TRACK PROGRESS ──
+function updateTrackProgress() {
+  const data = DEMO_DATA;
+  const percentage = (data.articlesAccepted / data.articlesTotal) * 100;
+  const remaining = data.articlesTotal - data.articlesAccepted;
+
+  document.getElementById('track-name').textContent =
+    `Track ${data.trackNumber}: ${data.trackName}`;
+  document.getElementById('articles-count').textContent = data.articlesAccepted;
+  document.getElementById('articles-remaining').textContent =
+    `${remaining} article${remaining !== 1 ? 's' : ''} needed`;
+  document.getElementById('progress-bar').style.width = percentage + '%';
+
+  // Test 5: Progress bar percentage
+  if (testMode) {
+    const actualWidth = parseFloat(
+      document.getElementById('progress-bar').style.width
+    );
+    console.log(`[TEST 5] Progress bar: ${actualWidth}% (expected: ${percentage}%)`);
+  }
+}
+
+// ── RENDER TOPICS ──
+function renderTopics() {
+  const container = document.getElementById('topic-grid');
+  container.innerHTML = '';
+
+  TOPICS.forEach((topic, index) => {
+    const itemId = `topic-${index}`;
+    const isChecked = localStorage.getItem(`ka_contributor_topics_${index}`) === 'true';
+
+    const item = document.createElement('label');
+    item.className = 'topic-item';
+    item.innerHTML = `
+      <input type="checkbox" id="${itemId}" ${isChecked ? 'checked' : ''}>
+      <span class="topic-label">${topic}</span>
+    `;
+
+    item.querySelector('input').addEventListener('change', (e) => {
+      localStorage.setItem(`ka_contributor_topics_${index}`, e.target.checked);
+    });
+
+    container.appendChild(item);
+  });
+}
+
+// ── TESTS ──
+function runTests() {
+  const results = [];
+
+  // Test 1: Track progress card renders
+  const trackCard = document.getElementById('track-card');
+  if (trackCard) {
+    results.push({ name: 'Test 1: Track progress card renders', pass: true });
+  } else {
+    results.push({ name: 'Test 1: Track progress card renders', pass: false });
+  }
+
+  // Test 2: All 4 interest cards render
+  const interestCards = document.querySelectorAll('.interest-card');
+  if (interestCards.length === 4) {
+    results.push({ name: 'Test 2: All 4 interest cards render', pass: true });
+  } else {
+    results.push({
+      name: `Test 2: All 4 interest cards render (found ${interestCards.length})`,
+      pass: false
+    });
+  }
+
+  // Test 3: All journey CTAs have valid hrefs
+  const journeyCtAs = document.querySelectorAll('.journey-card');
+  let allHrefsValid = true;
+  journeyCtAs.forEach(card => {
+    const href = card.getAttribute('href');
+    if (!href || href === '#') {
+      allHrefsValid = false;
+    }
+  });
+  results.push({ name: 'Test 3: All journey CTAs have valid hrefs', pass: allHrefsValid });
+
+  // Test 4: Topic checkboxes persist to localStorage
+  const checkbox = document.querySelector('#topic-0');
+  if (checkbox) {
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change'));
+    const stored = localStorage.getItem('ka_contributor_topics_0');
+    checkbox.checked = false;
+    checkbox.dispatchEvent(new Event('change'));
+    results.push({
+      name: 'Test 4: Topic checkboxes persist to localStorage',
+      pass: stored === 'true'
+    });
+  } else {
+    results.push({ name: 'Test 4: Topic checkboxes persist', pass: false });
+  }
+
+  // Test 5: Progress bar percentage matches article count
+  const expected = (DEMO_DATA.articlesAccepted / DEMO_DATA.articlesTotal) * 100;
+  const actual = parseFloat(document.getElementById('progress-bar').style.width);
+  results.push({
+    name: `Test 5: Progress bar (${actual}% vs ${expected}%)`,
+    pass: Math.abs(actual - expected) < 0.1
+  });
+
+  // Test 6: Demo data loads when not authenticated
+  const trackName = document.getElementById('track-name').textContent;
+  results.push({
+    name: `Test 6: Demo data loads (Track 2)`,
+    pass: trackName.includes('Track 2')
+  });
+
+  // Display results
+  console.log('\n=== TEST RESULTS ===');
+  let passCount = 0;
+  results.forEach(r => {
+    console.log(`${r.pass ? '✓' : '✗'} ${r.name}`);
+    if (r.pass) passCount++;
+  });
+  console.log(`\nPassed: ${passCount}/${results.length}\n`);
+
+  // Show summary in corner
+  if (testMode) {
+    const summary = document.createElement('div');
+    summary.className = `test-result ${passCount === results.length ? 'pass' : 'fail'}`;
+    summary.innerHTML = `
+      <strong>Test Results</strong><br>
+      Passed: ${passCount}/${results.length}<br>
+      <small>${results.map(r => r.name).join('<br>')}</small>
+    `;
+    document.body.appendChild(summary);
+  }
+}
+
+// ── INITIALIZATION ──
+document.addEventListener('DOMContentLoaded', () => {
+  updateTrackProgress();
+  renderTopics();
+  if (testMode) {
+    runTests();
+  }
+});
+</script>
+
+</body>
+</html>

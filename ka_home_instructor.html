@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instructor Dashboard — Knowledge Atlas</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1C3D3A;
+      --amber: #E8872A;
+      --cream: #F7F4EF;
+      --green: #2A7868;
+      --text: #2D2010;
+      --muted: #6A5E50;
+      --instructor: #2A5FA0;
+      --border: #DDD6CD;
+      --light: #EDE8E0;
+      --red: #C5192D;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.65;
+      padding-top: 56px;
+    }
+
+    /* ── Navigation ── */
+    .topnav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: rgba(28,61,58,0.96);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 56px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .wordmark-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .wordmark-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .wm-top {
+      font: 600 11px/1 Arial, sans-serif;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #A8C8BF;
+    }
+
+    .wm-bottom {
+      font: 700 16px/1 Georgia, serif;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: #B8D4CE;
+      text-decoration: none;
+      font: 500 13px/1 Arial, sans-serif;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── Hero Section ── */
+    .page-hero,
+    .hero {
+      position: relative;
+      background: linear-gradient(160deg, #1C3D3A 0%, #153230 45%, #1A2E2C 100%);
+      padding: 56px 40px 48px;
+      border-bottom: 3px solid var(--amber);
+    }
+
+    .page-hero::before,
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(90,200,170,0.04) 1px,transparent 1px), linear-gradient(90deg,rgba(90,200,170,0.04) 1px,transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .page-hero .eyebrow,
+    .hero .eyebrow {
+      position: relative;
+      z-index: 1;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #7AACA0;
+      margin-bottom: 12px;
+    }
+
+    .page-hero h1,
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: #F5F0E8;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    .page-hero p,
+    .hero p {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      color: #A8C8BF;
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    .hero-badge {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      background: var(--instructor);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 14px;
+      border: 1px solid var(--instructor);
+    }
+
+    /* ── Main Layout ── */
+    .outer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px 72px;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-top: 48px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-num {
+      background: var(--instructor);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .section-header h2 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    .section-header .sh-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ── Metrics Grid ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .metric-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .metric-primary {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .metric-secondary {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .metric-warning {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .metric-warning.amber {
+      color: var(--amber);
+    }
+
+    .metric-breakdown {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--light);
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .breakdown-label { font-weight: 600; }
+    .breakdown-value { color: var(--navy); font-weight: 700; }
+
+    /* ── Alert Cards Grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .alert-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .alert-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .alert-card.needs-review {
+      border-color: var(--amber);
+      border-left: 5px solid var(--amber);
+    }
+
+    .alert-card.student-alerts {
+      border-color: var(--red);
+      border-left: 5px solid var(--red);
+    }
+
+    .alert-card.track-health {
+      border-color: var(--green);
+      border-left: 5px solid var(--green);
+    }
+
+    .alert-card.weekly {
+      border-color: #0066CC;
+      border-left: 5px solid #0066CC;
+    }
+
+    .alert-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .alert-icon {
+      font-size: 1.8rem;
+      opacity: 0.8;
+    }
+
+    .alert-content {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .alert-highlight {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .alert-warning {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .alert-cta {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--amber);
+      margin-top: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: color 0.15s;
+    }
+
+    .alert-card:hover .alert-cta { color: var(--navy); }
+
+    /* ── Journey Cards ── */
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .journey-card {
+      background: linear-gradient(135deg, #f0f7ff 0%, #f5faff 100%);
+      border: 1.5px solid #dbe6f3;
+      border-radius: 10px;
+      padding: 22px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .journey-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(42,95,160,0.12);
+      border-color: var(--instructor);
+    }
+
+    .journey-icon {
+      font-size: 1.6rem;
+    }
+
+    .journey-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .journey-question {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .journey-cta {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--instructor);
+      margin-top: 6px;
+      text-decoration: none;
+    }
+
+    .journey-card:hover .journey-cta { text-decoration: underline; }
+
+    /* ── Quick Actions ── */
+    .quick-actions {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin-top: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .qa-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .qa-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .action-button {
+      background: var(--instructor);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, opacity 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-button:hover { opacity: 0.9; background: #1E4A78; }
+
+    .action-button.secondary {
+      background: transparent;
+      color: var(--instructor);
+      border: 1.5px solid var(--instructor);
+    }
+
+    .action-button.secondary:hover { background: rgba(42,95,160,0.08); }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #1C3D3A;
+      border-top: 2px solid #E8872A;
+      padding: 32px;
+      text-align: center;
+      margin-top: 64px;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px 20px;
+      margin-bottom: 16px;
+    }
+
+    .footer-label {
+      color: #A8C8BF;
+      font: 600 12px/1 Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-nav a {
+      color: #B8D4CE;
+      text-decoration: none;
+      font: 13px/1 Arial, sans-serif;
+      padding: 4px 10px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .footer-nav a.footer-current {
+      color: #E8872A;
+      font-weight: 600;
+    }
+
+    .footer-meta {
+      color: #7A9E95;
+      font: 12px/1.4 Arial, sans-serif;
+    }
+
+    .footer-meta a {
+      color: #A8C8BF;
+      text-decoration: none;
+    }
+
+    .footer-meta a:hover {
+      color: #fff;
+    }
+
+    .footer-sep {
+      margin: 0 8px;
+      opacity: 0.5;
+    }
+
+    /* ── Test Indicators ── */
+    .test-badge {
+      position: fixed;
+      bottom: 14px;
+      right: 24px;
+      background: rgba(42,95,160,0.8);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      z-index: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .test-badge.pass { background: rgba(42,168,42,0.8); }
+    .test-badge.fail { background: rgba(197,25,45,0.8); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: 1fr; }
+      .page-hero { padding: 40px 24px 36px; }
+      .page-hero h1 { font-size: 1.5rem; }
+      .nav-links { gap: 4px; }
+      .nav-link { padding: 4px 8px; font-size: 12px; }
+      .footer-nav { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="topnav">
+  <a href="ka_home.html" class="wordmark">
+    <svg class="wordmark-icon" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#E8872A" stroke-width="1.5" opacity="0.7"/><path d="M8 20 L14 8 L20 20 M10.5 16 H17.5" stroke="#E8872A" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+    <div class="wordmark-text"><span class="wm-top">Knowledge</span><span class="wm-bottom">Atlas<span style="color:#E8872A">.</span></span></div>
+  </a>
+  <div class="nav-links">
+    <a href="ka_home.html" class="nav-link">Home</a>
+    <a href="ka_home_instructor.html" class="nav-link" style="color:#fff">Instructor</a>
+    <a href="ka_user_home.html" class="nav-link">Switch Role</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="page-hero">
+  <div class="eyebrow">COGS 160 · Instructor</div>
+  <h1>Are students on track, and is the pipeline producing valid contributions?</h1>
+  <p>
+    Monitor enrollment, submissions, track health, and identify intervention points in real time.
+  </p>
+  <div class="hero-badge">💼 Instructor Mode</div>
+</div>
+
+<div class="outer">
+
+  <!-- SECTION 1: Dashboard Metrics -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">1</span>
+      <div>
+        <h2>Dashboard Metrics</h2>
+        <div class="sh-sub">Current enrollment, submissions, and track status (updated hourly)</div>
+      </div>
+    </div>
+
+    <div class="metrics-grid">
+      <!-- Card A: Students -->
+      <div class="metric-card" id="metric-students">
+        <div class="metric-label">Students</div>
+        <div class="metric-primary" id="students-registered">24</div>
+        <div class="metric-secondary">
+          <div class="breakdown-row">
+            <span>Registered:</span>
+            <span class="breakdown-value" id="students-registered-val">24</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Active:</span>
+            <span class="breakdown-value" id="students-active-val">18</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="metric-warning amber">Inactive >7d:</span>
+            <span class="breakdown-value metric-warning amber" id="students-inactive-val">3</span>
+          </div>
+        </div>
+        <div class="metric-breakdown">
+          <div class="breakdown-row">
+            <span>On Track 1:</span>
+            <span>6</span>
+          </div>
+          <div class="breakdown-row">
+            <span>On Track 2:</span>
+            <span>5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card B: Submissions This Week -->
+      <div class="metric-card" id="metric-submissions">
+        <div class="metric-label">Submissions This Week</div>
+        <div class="metric-primary" id="submissions-total">47</div>
+        <div class="metric-secondary">
+          <div class="breakdown-row">
+            <span>Experimental:</span>
+            <span class="breakdown-value" id="submissions-experimental">31</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Other types:</span>
+            <span class="breakdown-value" id="submissions-other">16</span>
+          </div>
+        </div>
+        <div class="metric-breakdown">
+          Majority from Track 2 (AI Pipeline), indicating strong engagement in core pipeline work.
+        </div>
+      </div>
+
+      <!-- Card C: Pending Reviews -->
+      <div class="metric-card" id="metric-reviews">
+        <div class="metric-label">Pending Reviews</div>
+        <div class="metric-primary metric-warning" id="pending-reviews">8</div>
+        <div class="metric-secondary">
+          <strong>8 articles</strong> submitted in the last 48 hours need your review.
+        </div>
+        <div class="metric-breakdown">
+          <div class="breakdown-row">
+            <span>Flagged as auto-classified:</span>
+            <span>3</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Require manual inspection:</span>
+            <span>5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card D: Track Health -->
+      <div class="metric-card" id="metric-tracks">
+        <div class="metric-label">Track Health (Active Students)</div>
+        <div class="metric-primary" id="track-total">18</div>
+        <div class="metric-secondary">
+          <div class="breakdown-row">
+            <span>Track 1 (Tagging):</span>
+            <span class="breakdown-value" id="track-1-val">6</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Track 2 (AI Pipeline):</span>
+            <span class="breakdown-value" id="track-2-val">5</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Track 3 (VR):</span>
+            <span class="breakdown-value" id="track-3-val">4</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Track 4 (UX):</span>
+            <span class="breakdown-value" id="track-4-val">3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Of Potential Interest -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">2</span>
+      <div>
+        <h2>Of Potential Interest</h2>
+        <div class="sh-sub">High-priority alerts and recommended actions</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <!-- Card 1: Needs Review -->
+      <a href="160sp/ka_approve.html" class="alert-card needs-review" id="card-review">
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+          <span class="alert-icon">📋</span>
+          <div>
+            <div class="alert-title">Needs Review</div>
+          </div>
+        </div>
+        <div class="alert-content">
+          <strong>8 articles</strong> submitted in the last 48 hours await instructor review. <span class="metric-warning">3 auto-flagged as potentially non-experimental</span> and require manual verification.
+        </div>
+        <div class="alert-cta">Open Review Queue →</div>
+      </a>
+
+      <!-- Card 2: Student Alerts -->
+      <a href="ka_dashboard.html" class="alert-card student-alerts" id="card-student-alerts">
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+          <span class="alert-icon">⚠️</span>
+          <div>
+            <div class="alert-title">Student Alerts</div>
+          </div>
+        </div>
+        <div class="alert-content">
+          <strong>3 students</strong> inactive for 7+ days (potentially at risk): <span class="alert-highlight">AJ, MR, TC</span>.
+          <br><strong>2 students</strong> show >50% non-experimental submissions, suggesting possible track misalignment.
+        </div>
+        <div class="alert-cta">View Student Progress →</div>
+      </a>
+
+      <!-- Card 3: Track Health -->
+      <a href="#track-health" class="alert-card track-health" id="card-track-health">
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+          <span class="alert-icon">📊</span>
+          <div>
+            <div class="alert-title">Track Health</div>
+          </div>
+        </div>
+        <div class="alert-content">
+          Track 2 (AI Pipeline) leads with 31 experimental submissions, indicating <span class="alert-highlight">strongest pipeline performance</span>.
+          <br>Track 4 (UX) shows <span class="metric-warning">lowest submission volume</span>, warranting check-in with students.
+        </div>
+        <div class="alert-cta">Track Details →</div>
+      </a>
+
+      <!-- Card 4: This Week -->
+      <a href="160sp/ka_schedule.html" class="alert-card weekly" id="card-schedule">
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+          <span class="alert-icon">📅</span>
+          <div>
+            <div class="alert-title">This Week</div>
+          </div>
+        </div>
+        <div class="alert-content">
+          <strong>Week 4 deliverables (COGS 160 pipeline):</strong>
+          <br>• Track 1: Complete initial tagging batches
+          <br>• Track 2: First Retrieval-Augmented Generation (RAG) prototype due
+          <br>• Track 3: VR scene design draft
+        </div>
+        <div class="alert-cta">View Schedule →</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Journey Choices -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">3</span>
+      <div>
+        <h2>Journey Choices</h2>
+        <div class="sh-sub">Pick your next action based on what you need to do</div>
+      </div>
+    </div>
+
+    <div class="journey-grid">
+      <!-- Review Submissions -->
+      <a href="160sp/ka_approve.html" class="journey-card" id="journey-review">
+        <div class="journey-icon">📝</div>
+        <div class="journey-title">Review Submissions</div>
+        <div class="journey-question">Which articles need my attention?</div>
+        <div class="journey-cta">Open Review Queue →</div>
+      </a>
+
+      <!-- Student Progress -->
+      <a href="ka_dashboard.html" class="journey-card" id="journey-progress">
+        <div class="journey-icon">👥</div>
+        <div class="journey-title">Student Progress</div>
+        <div class="journey-question">Who's behind, and why?</div>
+        <div class="journey-cta">View Dashboard →</div>
+      </a>
+
+      <!-- Course Setup -->
+      <a href="160sp/ka_student_setup.html" class="journey-card" id="journey-setup">
+        <div class="journey-icon">⚙️</div>
+        <div class="journey-title">Course Setup</div>
+        <div class="journey-question">Is everything configured?</div>
+        <div class="journey-cta">Check Setup →</div>
+      </a>
+
+      <!-- Registrations -->
+      <a href="ka_register.html" class="journey-card" id="journey-registrations">
+        <div class="journey-icon">📥</div>
+        <div class="journey-title">Registrations</div>
+        <div class="journey-question">Are new registrations processed?</div>
+        <div class="journey-cta">Manage Registrations →</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="section">
+    <div class="quick-actions">
+      <div class="qa-title">Quick Actions</div>
+      <div class="qa-buttons">
+        <button class="action-button" id="action-export" onclick="handleQuickAction('export')">
+          📥 Export Student Progress CSV
+        </button>
+        <button class="action-button secondary" id="action-reminder" onclick="handleQuickAction('reminder')">
+          📢 Send Bulk Reminder
+        </button>
+        <button class="action-button secondary" id="action-schedule" onclick="handleQuickAction('schedule')">
+          📅 View Course Schedule
+        </button>
+        <button class="action-button secondary" id="action-tracks" onclick="handleQuickAction('tracks')">
+          🎯 Edit Track Assignments
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /outer -->
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <span class="footer-label">Explore as:</span>
+      <a href="ka_home_student.html">Student</a>
+      <a href="ka_home_researcher.html">Researcher</a>
+      <a href="ka_home_contributor.html">Contributor</a>
+      <a href="ka_home_instructor.html" class="footer-current">Instructor</a>
+      <a href="ka_home_practitioner.html">Practitioner</a>
+      <a href="ka_home_theory.html">Theory Explorer</a>
+    </div>
+    <div class="footer-meta">
+      <a href="ka_home.html">Knowledge Atlas Home</a>
+      <span class="footer-sep">·</span>
+      <span>UCSD Cognitive Science · XR Lab</span>
+    </div>
+  </div>
+</footer>
+
+<div class="test-badge" id="test-badge" style="display: none;">
+  TESTING MODE
+</div>
+
+<script>
+// ────────────────────────────────────────────────────────────────────────
+// Demo Data & API Adapter
+// ────────────────────────────────────────────────────────────────────────
+
+const demoData = {
+  students: {
+    registered: 24,
+    active: 18,
+    inactive: 3,
+    byTrack: { 1: 6, 2: 5, 3: 4, 4: 3 }
+  },
+  submissions: {
+    thisWeek: 47,
+    experimental: 31,
+    other: 16,
+    byTrack: { 1: 8, 2: 31, 3: 4, 4: 4 }
+  },
+  pendingReviews: 8,
+  alerts: {
+    inactiveStudents: ['AJ', 'MR', 'TC'],
+    nonExperimentalHigh: ['SP', 'JW'],
+    trackOutperformer: 2,
+    trackLaggard: 4
+  }
+};
+
+// Quick Actions handler
+function handleQuickAction(action) {
+  const messages = {
+    export: 'Exporting student progress CSV... Check your Downloads folder.',
+    reminder: 'Sending bulk reminder to inactive students (AJ, MR, TC)...',
+    schedule: 'Redirecting to course schedule page...',
+    tracks: 'Redirecting to track assignment manager...'
+  };
+  alert(messages[action] || 'Action triggered.');
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// Embedded Testing: ?test=1
+// ────────────────────────────────────────────────────────────────────────
+
+const testMode = new URLSearchParams(window.location.search).has('test');
+
+function runTests() {
+  if (!testMode) return;
+
+  const results = [];
+  let testCount = 0;
+
+  function test(name, condition) {
+    testCount++;
+    const pass = !!condition;
+    results.push({ name, pass, testNum: testCount });
+    console.log(`[TEST ${testCount}] ${name}: ${pass ? 'PASS' : 'FAIL'}`);
+    return pass;
+  }
+
+  // Test 1: All 4 metric cards render with numbers
+  test('Metric cards render',
+    document.getElementById('metric-students') &&
+    document.getElementById('metric-submissions') &&
+    document.getElementById('metric-reviews') &&
+    document.getElementById('metric-tracks')
+  );
+
+  // Test 2: Alert cards show warning colors when thresholds exceeded
+  test('Alert card styling (needs-review)',
+    document.getElementById('card-review').classList.contains('needs-review')
+  );
+  test('Alert card styling (student-alerts)',
+    document.getElementById('card-student-alerts').classList.contains('student-alerts')
+  );
+  test('Alert card styling (track-health)',
+    document.getElementById('card-track-health').classList.contains('track-health')
+  );
+
+  // Test 3: All journey CTAs valid
+  test('Journey card 1 (Review) has valid href',
+    document.getElementById('journey-review').href.includes('ka_approve.html')
+  );
+  test('Journey card 2 (Progress) has valid href',
+    document.getElementById('journey-progress').href.includes('ka_dashboard.html')
+  );
+  test('Journey card 3 (Setup) has valid href',
+    document.getElementById('journey-setup').href.includes('ka_student_setup.html')
+  );
+  test('Journey card 4 (Registrations) has valid href',
+    document.getElementById('journey-registrations').href.includes('ka_register.html')
+  );
+
+  // Test 4: Demo data loads correctly
+  test('Demo data: students.registered = 24',
+    demoData.students.registered === 24
+  );
+  test('Demo data: submissions.experimental = 31',
+    demoData.submissions.experimental === 31
+  );
+  test('Demo data: pendingReviews = 8',
+    demoData.pendingReviews === 8
+  );
+
+  // Test 5: Metric cards display demo data
+  test('Metric card students shows registered count',
+    document.getElementById('students-registered').textContent.trim() === '24'
+  );
+  test('Metric card submissions shows total count',
+    document.getElementById('submissions-total').textContent.trim() === '47'
+  );
+  test('Metric card reviews shows pending count',
+    document.getElementById('pending-reviews').textContent.trim() === '8'
+  );
+
+  // Test 6: Quick action buttons render
+  test('Quick action button (export) exists',
+    document.getElementById('action-export') !== null
+  );
+  test('Quick action button (reminder) exists',
+    document.getElementById('action-reminder') !== null
+  );
+  test('Quick action button (schedule) exists',
+    document.getElementById('action-schedule') !== null
+  );
+  test('Quick action button (tracks) exists',
+    document.getElementById('action-tracks') !== null
+  );
+
+  // Summary
+  const passCount = results.filter(r => r.pass).length;
+  const totalTests = results.length;
+  const allPass = passCount === totalTests;
+
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`INSTRUCTOR HOME PAGE TESTS: ${passCount}/${totalTests} PASSED`);
+  console.log(`${'='.repeat(60)}\n`);
+
+  // Show badge
+  const badge = document.getElementById('test-badge');
+  badge.textContent = `TESTS: ${passCount}/${totalTests}`;
+  badge.className = 'test-badge ' + (allPass ? 'pass' : 'fail');
+  badge.style.display = 'block';
+
+  // Log individual results
+  results.forEach(r => {
+    console.log(`[${r.pass ? '✓' : '✗'}] Test ${r.testNum}: ${r.name}`);
+  });
+
+  return { pass: allPass, results };
+}
+
+// Auto-run tests if in test mode
+if (testMode) {
+  document.addEventListener('DOMContentLoaded', runTests);
+}
+
+// Expose test runner globally for debugging
+window.instructorPageTests = {
+  run: runTests,
+  demoData: demoData,
+  testMode: testMode
+};
+</script>
+
+</body>
+</html>

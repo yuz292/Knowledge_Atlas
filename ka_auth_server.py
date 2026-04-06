@@ -31,9 +31,11 @@ Notes
 - HTTPS: not used in local dev; do not deploy this as-is to a public server
 """
 
-import os, sys, sqlite3, secrets, hashlib, time, json, re
+import os, sys, sqlite3, secrets, hashlib, time, json, re, smtplib
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # ── Third-party (install: pip3 install fastapi uvicorn python-jose[cryptography] passlib[bcrypt])
 from fastapi import FastAPI, HTTPException, Depends, status, Request
@@ -69,6 +71,61 @@ def _get_secret() -> str:
 SECRET_KEY = _get_secret()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 bearer_scheme = HTTPBearer(auto_error=False)
+
+# ════════════════════════════════════════════════
+# EMAIL CONFIG
+# ════════════════════════════════════════════════
+# Environment variables (all optional when on UCSD network):
+#   KA_SMTP_HOST     - SMTP server (default: smtp.ucsd.edu)
+#   KA_SMTP_PORT     - SMTP port (default: 25 for relay, 587 for authenticated)
+#   KA_SMTP_USER     - SMTP username (optional - skip auth if not set)
+#   KA_SMTP_PASS     - SMTP password (optional - skip auth if not set)
+#   KA_EMAIL_FROM    - From address (default: noreply@xrlab.ucsd.edu)
+#   KA_BASE_URL      - Base URL for links (default: https://xrlab.ucsd.edu/ka)
+#
+# On xrlabvm (UCSD network), the defaults should work without any configuration.
+# UCSD's smtp.ucsd.edu accepts relay from campus IPs on port 25 without auth.
+
+SMTP_HOST = os.environ.get("KA_SMTP_HOST", "smtp.ucsd.edu")
+SMTP_PORT = int(os.environ.get("KA_SMTP_PORT", "25"))
+SMTP_USER = os.environ.get("KA_SMTP_USER", "")
+SMTP_PASS = os.environ.get("KA_SMTP_PASS", "")
+EMAIL_FROM = os.environ.get("KA_EMAIL_FROM", "noreply@xrlab.ucsd.edu")
+KA_BASE_URL = os.environ.get("KA_BASE_URL", "https://xrlab.ucsd.edu/ka")
+
+def send_email(to_email: str, subject: str, body_html: str, body_text: str = None) -> bool:
+    """
+    Send an email via SMTP. Returns True on success, False on failure.
+
+    Works in two modes:
+    1. Authenticated (if SMTP_USER and SMTP_PASS set): Uses STARTTLS + login
+    2. Relay (default on UCSD network): Direct send on port 25, no auth needed
+    """
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = EMAIL_FROM
+        msg["To"] = to_email
+
+        # Plain text fallback
+        if body_text:
+            msg.attach(MIMEText(body_text, "plain"))
+
+        # HTML version
+        msg.attach(MIMEText(body_html, "html"))
+
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+            # Only use TLS and auth if credentials are provided
+            if SMTP_USER and SMTP_PASS:
+                server.starttls()
+                server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(EMAIL_FROM, to_email, msg.as_string())
+
+        print(f"[KA-AUTH] Email sent to {to_email}: {subject}")
+        return True
+    except Exception as e:
+        print(f"[KA-AUTH] Email failed to {to_email}: {e}")
+        return False
 
 # ════════════════════════════════════════════════
 # DATABASE
@@ -440,18 +497,46 @@ def forgot_password(req: ForgotPasswordRequest):
     exp   = (datetime.now(timezone.utc) + timedelta(minutes=RESET_TOKEN_EXPIRE_MINUTES)).isoformat()
     db.execute("INSERT INTO reset_tokens VALUES (?,?,?,0)", (token, row["user_id"], exp))
     db.commit(); db.close()
-    # In local dev: print the link to console instead of sending email
-    reset_url = f"http://localhost:8765/reset?token={token}"
+    # Build reset URL
+    reset_url = f"{KA_BASE_URL}/ka_reset_password.html?token={token}"
+    first_name = row['first_name']
+
+    # Try to send email
+    email_html = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #1C3D3A;">Password Reset Request</h2>
+        <p>Hi {first_name},</p>
+        <p>We received a request to reset your Knowledge Atlas password. Click the button below to set a new password:</p>
+        <p style="text-align: center; margin: 30px 0;">
+            <a href="{reset_url}" style="background: #E8872A; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Reset Password</a>
+        </p>
+        <p style="font-size: 0.9em; color: #666;">Or copy this link: <a href="{reset_url}">{reset_url}</a></p>
+        <p style="font-size: 0.9em; color: #666;">This link expires in {RESET_TOKEN_EXPIRE_MINUTES} minutes.</p>
+        <p style="font-size: 0.9em; color: #666;">If you didn't request this, you can ignore this email.</p>
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+        <p style="font-size: 0.8em; color: #999;">Knowledge Atlas — COGS 160</p>
+    </body>
+    </html>
+    """
+    email_text = f"Hi {first_name},\n\nReset your password here: {reset_url}\n\nThis link expires in {RESET_TOKEN_EXPIRE_MINUTES} minutes."
+
+    email_sent = send_email(email, "Reset your Knowledge Atlas password", email_html, email_text)
+
+    # Always log to console
     print(f"\n[KA-AUTH] PASSWORD RESET REQUEST")
     print(f"  Email:     {email}")
     print(f"  Name:      {row['first_name']} {row['last_name']}")
     print(f"  Reset URL: {reset_url}")
-    print(f"  Expires:   {exp}\n")
-    return {
-        "message": "If that email is registered, a reset link has been sent.",
-        "_dev_note": "Running in local mode — reset link printed to server console.",
-        "_dev_reset_url": reset_url  # Only exposed in local/dev mode
-    }
+    print(f"  Expires:   {exp}")
+    print(f"  Email sent: {email_sent}\n")
+
+    response = {"message": "If that email is registered, a reset link has been sent."}
+    if not email_sent:
+        # Include URL in response if email not configured (dev mode)
+        response["_dev_note"] = "Email not configured — reset link included below."
+        response["_dev_reset_url"] = reset_url
+    return response
 
 # ── RESET PASSWORD
 @app.post("/auth/reset-password")

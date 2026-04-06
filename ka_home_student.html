@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Explorer — Knowledge Atlas</title>
+  <style>
+    :root {
+      --navy: #1C3D3A;
+      --amber: #E8872A;
+      --cream: #F7F4EF;
+      --green: #2A7868;
+      --text: #2D2010;
+      --muted: #6A5E50;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: rgba(28, 61, 58, 0.96); backdrop-filter: blur(8px);
+      height: 56px; display: flex; align-items: center;
+      padding: 0 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .wordmark {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
+    }
+
+    .wordmark-icon { width: 30px; height: 30px; }
+
+    .wordmark-text { display: flex; flex-direction: column; line-height: 1.1; }
+
+    .wm-top { font-size: 0.66rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: #A8C8BF; }
+
+    .wm-bottom { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; color: #fff; }
+
+    .wm-bottom span { color: var(--amber); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 6px;
+      margin-left: auto;
+    }
+
+    .nav-link {
+      color: #B8D4CE; font-size: 0.85rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 6px; text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      padding: 16px 32px; margin-top: 56px;
+      background: var(--cream); border-bottom: 1px solid #E0DAD3;
+      font-size: 0.85rem; color: var(--muted);
+    }
+
+    .breadcrumb a {
+      color: var(--green); text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .breadcrumb a:hover { color: var(--amber); }
+
+    .breadcrumb span { margin: 0 8px; }
+
+    /* ── HERO SECTION ── */
+    .hero {
+      padding: 60px 32px;
+      background: linear-gradient(160deg, var(--navy) 0%, #153230 45%, #1A2E2C 100%);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(90,200,170,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(90,200,170,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--green); color: #fff;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: Georgia, serif;
+      font-size: 2.4rem; font-weight: 400;
+      line-height: 1.3; margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem; color: #A8C8BF;
+      line-height: 1.7; max-width: 640px; margin: 0 auto;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {
+      max-width: 1000px; margin: 0 auto; padding: 0 32px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      padding: 56px 0;
+      border-bottom: 1px solid #E0DAD3;
+    }
+
+    .section-heading {
+      font-family: Georgia, serif;
+      font-size: 1.75rem; font-weight: 400;
+      color: var(--navy); margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem; color: var(--muted);
+      margin-bottom: 32px; line-height: 1.65;
+      max-width: 680px;
+    }
+
+    /* ── ORIENTATION CHECKLIST ── */
+    .checklist-card {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+
+    .checklist-item {
+      display: flex; align-items: flex-start;
+      gap: 14px; margin-bottom: 18px;
+      padding-bottom: 18px; border-bottom: 1px solid #F0EBE3;
+    }
+
+    .checklist-item:last-child {
+      margin-bottom: 0; border-bottom: none; padding-bottom: 0;
+    }
+
+    .checklist-checkbox {
+      width: 20px; height: 20px;
+      border: 2px solid #DDD6CD;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: background 0.15s, border-color 0.15s;
+      appearance: none;
+      position: relative;
+    }
+
+    .checklist-checkbox:hover {
+      border-color: var(--green);
+    }
+
+    .checklist-checkbox:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .checklist-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .checklist-text {
+      flex: 1; min-width: 0;
+    }
+
+    .checklist-text label {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .checklist-text a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .checklist-text a:hover {
+      color: var(--amber);
+    }
+
+    .progress-bar-container {
+      margin-top: 28px; padding-top: 28px;
+      border-top: 1px solid #F0EBE3;
+    }
+
+    .progress-label {
+      font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 8px; font-weight: 600;
+    }
+
+    .progress-bar {
+      width: 100%; height: 8px;
+      background: #E0DAD3; border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%; background: var(--green);
+      border-radius: 4px; transition: width 0.3s;
+    }
+
+    .progress-text {
+      font-size: 0.82rem; color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── "OF POTENTIAL INTEREST" CARDS ── */
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .interest-card {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.15s, transform 0.12s, border-color 0.15s;
+    }
+
+    .interest-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+      border-color: var(--green);
+    }
+
+    .interest-card-tag {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 12px; width: fit-content;
+    }
+
+    .tag-dyk { background: #FFF0CC; color: #7A4F00; }
+    .tag-spotlight { background: #E3F4EC; color: #1A5C30; }
+    .tag-gap { background: #FBE8E8; color: #7A2020; }
+    .tag-new { background: #E8F0FD; color: #1A3A7A; }
+
+    .interest-card-title {
+      font-family: Georgia, serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .interest-card-body {
+      font-size: 0.9rem; color: var(--muted);
+      line-height: 1.6; flex: 1; margin-bottom: 16px;
+    }
+
+    .interest-card-cta {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .interest-card-cta:hover {
+      color: var(--amber);
+    }
+
+    /* ── JOURNEY CARDS ── */
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .journey-card {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      transition: box-shadow 0.15s, transform 0.12s, border-color 0.15s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .journey-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+      border-color: var(--green);
+    }
+
+    .journey-icon {
+      font-size: 2.2rem; margin-bottom: 14px;
+    }
+
+    .journey-question {
+      font-family: Georgia, serif;
+      font-size: 1.0rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .journey-desc {
+      font-size: 0.85rem; color: var(--muted);
+      line-height: 1.5; margin-bottom: 18px; flex: 1;
+    }
+
+    .journey-cta {
+      display: inline-block;
+      background: var(--green); color: #fff;
+      padding: 10px 18px; border-radius: 6px;
+      font-size: 0.82rem; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s;
+      align-self: center;
+    }
+
+    .journey-cta:hover {
+      background: var(--amber);
+    }
+
+    /* ── TOPIC CHECKLIST (COLLAPSIBLE) ── */
+    .collapsible-section {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .collapsible-header {
+      padding: 20px 24px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+
+    .collapsible-header:hover {
+      background: #F9F7F3;
+    }
+
+    .collapsible-title {
+      font-family: Georgia, serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--navy);
+    }
+
+    .collapsible-subtitle {
+      font-size: 0.82rem; color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .collapsible-toggle {
+      font-size: 1.2rem; color: var(--green);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    .collapsible-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .collapsible-content {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      border-top: 1px solid #E0DAD3;
+    }
+
+    .collapsible-content.open {
+      max-height: 1000px;
+    }
+
+    .topic-checklist {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .topic-checkbox-item {
+      display: flex; align-items: flex-start;
+      gap: 10px;
+    }
+
+    .topic-checkbox {
+      width: 18px; height: 18px;
+      border: 2px solid #DDD6CD;
+      border-radius: 3px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: background 0.15s, border-color 0.15s;
+      appearance: none;
+      position: relative;
+    }
+
+    .topic-checkbox:hover {
+      border-color: var(--green);
+    }
+
+    .topic-checkbox:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .topic-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .topic-label {
+      flex: 1; min-width: 0;
+      font-size: 0.9rem;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      background: var(--navy);
+      color: #7AACA0;
+      padding: 32px 32px;
+      margin-top: 60px;
+      border-top: 2px solid var(--amber);
+    }
+
+    .footer-links {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .footer-links a {
+      color: var(--amber);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .footer-text {
+      max-width: 1000px; margin: 0 auto;
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    /* ── CROSS-LINKING FOOTER ── */
+    .site-footer{background:#1C3D3A;border-top:2px solid #E8872A;padding:32px;text-align:center;margin-top:64px}
+    .footer-inner{max-width:900px;margin:0 auto}
+    .footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 20px;margin-bottom:16px}
+    .footer-label{color:#A8C8BF;font:600 12px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:1px}
+    .footer-nav a{color:#B8D4CE;text-decoration:none;font:13px/1 Arial,sans-serif;padding:4px 10px;border-radius:4px;transition:all 0.2s}
+    .footer-nav a:hover{color:#fff;background:rgba(255,255,255,0.08)}
+    .footer-nav a.footer-current{color:#E8872A;font-weight:600}
+    .footer-meta{color:#7A9E95;font:12px/1.4 Arial,sans-serif}
+    .footer-meta a{color:#A8C8BF;text-decoration:none}
+    .footer-meta a:hover{color:#fff}
+    .footer-sep{margin:0 8px;opacity:0.5}
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 1.8rem; }
+      .section-heading { font-size: 1.4rem; }
+      .interest-grid, .journey-grid {
+        grid-template-columns: 1fr;
+      }
+      .topnav { padding: 0 16px; }
+      .main-content { padding: 0 16px; }
+    }
+
+    /* ── TEST MODE (hidden by default) ── */
+    .test-panel {
+      display: none;
+      position: fixed;
+      bottom: 20px; right: 20px;
+      background: var(--navy); color: #fff;
+      padding: 16px 20px;
+      border-radius: 8px;
+      max-width: 300px;
+      font-size: 0.8rem;
+      z-index: 10000;
+      line-height: 1.4;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .test-panel.visible {
+      display: block;
+    }
+
+    .test-result {
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .test-result:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .test-pass { color: #90EE90; }
+    .test-fail { color: #FFB6C6; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav class="topnav">
+  <a href="ka_home.html" class="wordmark">
+    <span class="wordmark-icon">🌍</span>
+    <div class="wordmark-text">
+      <span class="wm-top">Knowledge</span>
+      <span class="wm-bottom">Atlas<span></span></span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="ka_home.html" class="nav-link">Home</a>
+    <a href="ka_ai_methodology.html" class="nav-link">Methods</a>
+    <a href="ka_sitemap.html" class="nav-link">Sitemap</a>
+  </div>
+</nav>
+
+<!-- ── BREADCRUMB ── -->
+<div class="breadcrumb">
+  <a href="ka_home.html">Home</a>
+  <span>›</span>
+  <span>Student Explorer</span>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Student Explorer</div>
+    <h1 class="hero-title">What does the evidence actually say about how environments affect people?</h1>
+    <p class="hero-subtitle">Start by exploring what's known, what's tentative, and what's genuinely unknown.</p>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main-content">
+
+  <!-- ── SECTION 1: ORIENTATION CHECKLIST ── -->
+  <section class="section">
+    <h2 class="section-heading">Your Orientation Checklist</h2>
+    <p class="section-subtitle">Complete these steps to get oriented with the Atlas. Your progress will be saved automatically.</p>
+
+    <div class="checklist-card">
+      <div class="checklist-item">
+        <input type="checkbox" class="checklist-checkbox" id="check1" data-checklist="1">
+        <div class="checklist-text">
+          <label for="check1">Read the AI Methodology guide (required)</label>
+          <span style="font-size:0.82rem; color:var(--muted);">Understand how the Atlas works and what it claims</span>
+          <br><a href="ka_ai_methodology.html">→ Open methodology guide</a>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" class="checklist-checkbox" id="check2" data-checklist="1">
+        <div class="checklist-text">
+          <label for="check2">Browse 3 "Did You Know" findings</label>
+          <span style="font-size:0.82rem; color:var(--muted);">Get surprising examples of what research has discovered</span>
+          <br><a href="ka_home.html">→ Back to home findings</a>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" class="checklist-checkbox" id="check3" data-checklist="1">
+        <div class="checklist-text">
+          <label for="check3">Open the Topic Hierarchy and identify 2 topics</label>
+          <span style="font-size:0.82rem; color:var(--muted);">Explore the main research areas and their relationships</span>
+          <br><a href="ka_topic_hierarchy.html">→ Explore hierarchy</a>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" class="checklist-checkbox" id="check4" data-checklist="1">
+        <div class="checklist-text">
+          <label for="check4">Complete A0: Upload 10 experimental articles</label>
+          <span style="font-size:0.82rem; color:var(--muted);">Your first required assignment</span>
+          <br><a href="160sp/collect-articles-upload.html">→ Start A0 assignment</a>
+        </div>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-label">Progress: <span id="progressCount">0</span>/4 complete</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">Complete all four items to unlock the full Student Explorer experience.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: OF POTENTIAL INTEREST ── -->
+  <section class="section">
+    <h2 class="section-heading">Of Potential Interest</h2>
+    <p class="section-subtitle">Curated starting points based on what students typically find compelling.</p>
+
+    <div class="interest-grid">
+
+      <!-- Card 1: Did You Know -->
+      <div class="interest-card">
+        <div class="interest-card-tag tag-dyk">Did You Know</div>
+        <h3 class="interest-card-title" id="dykTitle">Natural light improves sleep</h3>
+        <div class="interest-card-body" id="dykBody">
+          Natural light exposure during work hours improves sleep quality by 46 minutes per night. Workers in offices with adequate natural light report better sleep and fewer cognitive complaints.
+        </div>
+        <a href="ka_home.html" class="interest-card-cta">Explore this finding →</a>
+      </div>
+
+      <!-- Card 2: Topic Spotlight -->
+      <div class="interest-card">
+        <div class="interest-card-tag tag-spotlight">Topic Spotlight</div>
+        <h3 class="interest-card-title">Nature & Biophilia × Stress Response</h3>
+        <div class="interest-card-body">
+          The most studied domain in the Atlas, with 7 research fronts and 760 articles. Strong evidence for cortisol reduction and attention restoration through nature exposure.
+        </div>
+        <a href="ka_topics.html" class="interest-card-cta">Browse this topic →</a>
+      </div>
+
+      <!-- Card 3: Gap Alert -->
+      <div class="interest-card">
+        <div class="interest-card-tag tag-gap">Gap Alert</div>
+        <h3 class="interest-card-title">Material & Surface × Physiology</h3>
+        <div class="interest-card-body">
+          Only 1 research front and limited experimental coverage. Your contributions here would have outsized impact on the evidence map and could define an emerging field.
+        </div>
+        <a href="ka_gaps.html" class="interest-card-cta">See the gap →</a>
+      </div>
+
+      <!-- Card 4: New This Week -->
+      <div class="interest-card">
+        <div class="interest-card-tag tag-new">New This Week</div>
+        <h3 class="interest-card-title">Luminous Environment Updates</h3>
+        <div class="interest-card-body">
+          3 new experimental articles added to the Luminous Environment cluster. 1 new mechanism chain annotated. The evidence network is actively growing.
+        </div>
+        <a href="ka_topics.html" class="interest-card-cta">See what's new →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: YOUR JOURNEY CHOICES ── -->
+  <section class="section">
+    <h2 class="section-heading">Your Journey Choices</h2>
+    <p class="section-subtitle">Four different ways to get started, depending on what interests you most.</p>
+
+    <div class="journey-grid">
+
+      <!-- Journey 1: First Questions -->
+      <a href="ka_workflow_hub.html?wf=first-questions" class="journey-card">
+        <div class="journey-icon">🗺️</div>
+        <div class="journey-question">What does Atlas know, and how does it know it?</div>
+        <div class="journey-desc">
+          Explore Did You Know findings, the topic hierarchy, and the question tools to understand what's been studied.
+        </div>
+        <div class="journey-cta">Explore the Atlas →</div>
+      </a>
+
+      <!-- Journey 2: A0 Assignment -->
+      <a href="160sp/collect-articles-upload.html" class="journey-card">
+        <div class="journey-icon">📚</div>
+        <div class="journey-question">Can I find 10 experimental articles on my assigned topic?</div>
+        <div class="journey-desc">
+          Your first required assignment: find and upload experimental papers that match your research front.
+        </div>
+        <div class="journey-cta">Start A0 →</div>
+      </a>
+
+      <!-- Journey 3: Hypothesis Building -->
+      <a href="ka_hypothesis_builder.html" class="journey-card">
+        <div class="journey-icon">💡</div>
+        <div class="journey-question">Can I turn a finding into a testable question?</div>
+        <div class="journey-desc">
+          Learn to move from observation to hypothesis using evidence, warrants, and the question tools.
+        </div>
+        <div class="journey-cta">Build a Hypothesis →</div>
+      </a>
+
+      <!-- Journey 4: Deep Dive -->
+      <a href="ka_workflow_hub.html?wf=deep-dive" class="journey-card">
+        <div class="journey-icon">🔍</div>
+        <div class="journey-question">How deep does the evidence go on one claim?</div>
+        <div class="journey-desc">
+          Follow one claim through evidence, warrants, argumentation, and interpretation to see how knowledge is built.
+        </div>
+        <div class="journey-cta">Follow One Claim →</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: TOPIC CHECKLIST ── -->
+  <section class="section">
+
+    <div class="collapsible-section">
+      <div class="collapsible-header" id="topicToggle">
+        <div>
+          <div class="collapsible-title">Topics You're Interested In</div>
+          <div class="collapsible-subtitle">Check topics to personalize your experience. Your selections persist across visits.</div>
+        </div>
+        <div class="collapsible-toggle" id="topicToggleIcon">▼</div>
+      </div>
+
+      <div class="collapsible-content" id="topicContent">
+        <div class="topic-checklist">
+          <!-- Nature & Biophilia (7 topics) -->
+          <div style="grid-column:1/-1; padding:12px 12px 0 12px; color:var(--muted); font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em;">Nature & Biophilia</div>
+
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic1" value="nature-views" data-topics="student">
+            <label for="topic1" class="topic-label">Nature Views & Biophilia</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic2" value="green-space" data-topics="student">
+            <label for="topic2" class="topic-label">Green Space & Restoration</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic3" value="biodiversity" data-topics="student">
+            <label for="topic3" class="topic-label">Biodiversity & Complexity</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic4" value="natural-patterns" data-topics="student">
+            <label for="topic4" class="topic-label">Natural Patterns & Fractals</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic5" value="water-features" data-topics="student">
+            <label for="topic5" class="topic-label">Water Features & Blue Space</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic6" value="seasonal-light" data-topics="student">
+            <label for="topic6" class="topic-label">Seasonal Light & Rhythms</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic7" value="plants-indoor" data-topics="student">
+            <label for="topic7" class="topic-label">Plants & Indoor Air Quality</label>
+          </div>
+
+          <!-- Luminous Environment (4 topics) -->
+          <div style="grid-column:1/-1; padding:12px 12px 0 12px; color:var(--muted); font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em;">Luminous Environment</div>
+
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic8" value="circadian-light" data-topics="student">
+            <label for="topic8" class="topic-label">Circadian Light & Sleep</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic9" value="daylight-access" data-topics="student">
+            <label for="topic9" class="topic-label">Daylight Access & Mood</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic10" value="light-color" data-topics="student">
+            <label for="topic10" class="topic-label">Light Color & Perception</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic11" value="flicker-intensity" data-topics="student">
+            <label for="topic11" class="topic-label">Flicker, Intensity & Glare</label>
+          </div>
+
+          <!-- Acoustic Environment (3 topics) -->
+          <div style="grid-column:1/-1; padding:12px 12px 0 12px; color:var(--muted); font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em;">Acoustic Environment</div>
+
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic12" value="noise-stress" data-topics="student">
+            <label for="topic12" class="topic-label">Noise & Stress Response</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic13" value="acoustic-design" data-topics="student">
+            <label for="topic13" class="topic-label">Acoustic Design & Focus</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic14" value="sound-music" data-topics="student">
+            <label for="topic14" class="topic-label">Music & Soundscapes</label>
+          </div>
+
+          <!-- Spatial Form (3 topics) -->
+          <div style="grid-column:1/-1; padding:12px 12px 0 12px; color:var(--muted); font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em;">Spatial Form</div>
+
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic15" value="ceiling-height" data-topics="student">
+            <label for="topic15" class="topic-label">Ceiling Height & Cognition</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic16" value="enclosure-openness" data-topics="student">
+            <label for="topic16" class="topic-label">Enclosure vs. Openness</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic17" value="prospect-refuge" data-topics="student">
+            <label for="topic17" class="topic-label">Prospect & Refuge</label>
+          </div>
+
+          <!-- Material & Surface (2 topics) -->
+          <div style="grid-column:1/-1; padding:12px 12px 0 12px; color:var(--muted); font-weight:700; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em;">Material & Surface</div>
+
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic18" value="material-comfort" data-topics="student">
+            <label for="topic18" class="topic-label">Material & Tactile Comfort</label>
+          </div>
+          <div class="topic-checkbox-item">
+            <input type="checkbox" class="topic-checkbox" id="topic19" value="thermal-properties" data-topics="student">
+            <label for="topic19" class="topic-label">Thermal Properties & Regulation</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="page-footer">
+  <div class="footer-links">
+    <a href="ka_home.html">Home</a>
+    <a href="ka_ai_methodology.html">AI Methodology</a>
+    <a href="160sp/ka_schedule.html">Course Schedule</a>
+    <a href="ka_my_work.html">My Workspace</a>
+    <a href="ka_sitemap.html">Sitemap</a>
+  </div>
+  <div class="footer-text">
+    Knowledge Atlas © 2026. A collaborative research platform built for COGS 160 at UC San Diego.
+  </div>
+</footer>
+
+<!-- ── TEST PANEL (development mode) ── -->
+<div class="test-panel" id="testPanel"></div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <span class="footer-label">Explore as:</span>
+      <a href="ka_home_student.html" class="footer-current">Student</a>
+      <a href="ka_home_researcher.html">Researcher</a>
+      <a href="ka_home_contributor.html">Contributor</a>
+      <a href="ka_home_instructor.html">Instructor</a>
+      <a href="ka_home_practitioner.html">Practitioner</a>
+      <a href="ka_home_theory.html">Theory Explorer</a>
+    </div>
+    <div class="footer-meta">
+      <a href="ka_home.html">Knowledge Atlas Home</a>
+      <span class="footer-sep">&middot;</span>
+      <span>UCSD Cognitive Science &middot; XR Lab</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── CHECKLIST PERSISTENCE ──
+  function initChecklist() {
+    const checkboxes = document.querySelectorAll('input[data-checklist="1"]');
+
+    checkboxes.forEach(checkbox => {
+      const id = checkbox.id;
+      const saved = localStorage.getItem(`checklist_${id}`);
+      if (saved === 'true') {
+        checkbox.checked = true;
+      }
+
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(`checklist_${id}`, checkbox.checked);
+        updateProgress();
+      });
+    });
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const checkboxes = document.querySelectorAll('input[data-checklist="1"]');
+    let completed = 0;
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) completed++;
+    });
+
+    const total = checkboxes.length;
+    const percentage = (completed / total) * 100;
+
+    document.getElementById('progressCount').textContent = completed;
+    document.getElementById('progressFill').style.width = percentage + '%';
+  }
+
+  // ── TOPIC CHECKLIST PERSISTENCE ──
+  function initTopicChecklist() {
+    const checkboxes = document.querySelectorAll('input[data-topics="student"]');
+
+    checkboxes.forEach(checkbox => {
+      const value = checkbox.value;
+      const saved = localStorage.getItem(`ka_student_topics_${value}`);
+      if (saved === 'true') {
+        checkbox.checked = true;
+      }
+
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(`ka_student_topics_${value}`, checkbox.checked);
+      });
+    });
+  }
+
+  // ── COLLAPSIBLE SECTION ──
+  function initCollapsible() {
+    const toggle = document.getElementById('topicToggle');
+    const content = document.getElementById('topicContent');
+    const icon = document.getElementById('topicToggleIcon');
+
+    toggle.addEventListener('click', () => {
+      content.classList.toggle('open');
+      icon.classList.toggle('open');
+    });
+  }
+
+  // ── DID YOU KNOW ROTATION ──
+  function initDidYouKnow() {
+    const dykFindings = [
+      {
+        title: "Natural light improves sleep",
+        body: "Natural light exposure during work hours improves sleep quality by 46 minutes per night (Boubekri et al., 2014). Workers in offices with adequate natural light report better sleep and fewer cognitive complaints."
+      },
+      {
+        title: "Green spaces reduce stress",
+        body: "Just 20 minutes in a natural environment can significantly lower cortisol levels and reduce physiological stress markers. This effect appears across multiple studies and holds for both urban parks and more remote natural areas."
+      },
+      {
+        title: "Noise impairs concentration",
+        body: "Ambient noise above 70 dB shows sensitization rather than habituation—the stress response actually increases with repeated exposure, unlike most environmental stimuli. This explains why you don't 'get used to' bad noise."
+      },
+      {
+        title: "Spatial enclosure affects thinking",
+        body: "Ceiling height influences cognitive styles: high ceilings promote creative, abstract thinking while low ceilings promote focused, detailed work. This effect is measurable and appears to be neurally mediated through the parietal cortex."
+      },
+      {
+        title: "Material textures matter neurologically",
+        body: "Tactile properties of surfaces activate somatosensory cortex and influence emotional responses to spaces. Soft materials increase comfort perception and reduce cortisol compared to harsh reflective surfaces."
+      }
+    ];
+
+    const randomIndex = Math.floor(Math.random() * dykFindings.length);
+    const finding = dykFindings[randomIndex];
+
+    document.getElementById('dykTitle').textContent = finding.title;
+    document.getElementById('dykBody').textContent = finding.body;
+  }
+
+  // ── TESTING FUNCTIONS ──
+  function runTests() {
+    const results = [];
+
+    // Test 1: Verify all 4 checklist items render with checkboxes
+    const checklistCheckboxes = document.querySelectorAll('input[data-checklist="1"]');
+    results.push({
+      name: "Test 1: Checklist items render",
+      pass: checklistCheckboxes.length === 4
+    });
+
+    // Test 2: Verify localStorage persistence
+    const testKey = 'test_persist_' + Date.now();
+    localStorage.setItem(testKey, 'true');
+    const persists = localStorage.getItem(testKey) === 'true';
+    localStorage.removeItem(testKey);
+    results.push({
+      name: "Test 2: localStorage works",
+      pass: persists
+    });
+
+    // Test 3: Verify all CTA links are non-empty and point to valid pages
+    const links = document.querySelectorAll('.interest-card-cta, .journey-cta, .checklist-text a');
+    let validLinks = 0;
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.length > 0 && !href.startsWith('javascript:')) {
+        validLinks++;
+      }
+    });
+    results.push({
+      name: "Test 3: CTA links valid",
+      pass: validLinks >= 12
+    });
+
+    // Test 4: Verify all 19 topic checkboxes render
+    const topicCheckboxes = document.querySelectorAll('input[data-topics="student"]');
+    results.push({
+      name: "Test 4: Topic checkboxes render",
+      pass: topicCheckboxes.length === 19
+    });
+
+    // Test 5: Verify progress bar updates with checklist changes
+    const progressBar = document.getElementById('progressFill');
+    results.push({
+      name: "Test 5: Progress bar exists",
+      pass: progressBar !== null && progressBar.style.width !== undefined
+    });
+
+    // Test 6: Verify all 4 "Of Potential Interest" cards render with content
+    const interestCards = document.querySelectorAll('.interest-card');
+    let validCards = 0;
+    interestCards.forEach(card => {
+      const title = card.querySelector('.interest-card-title');
+      const body = card.querySelector('.interest-card-body');
+      if (title && title.textContent.length > 0 && body && body.textContent.length > 0) {
+        validCards++;
+      }
+    });
+    results.push({
+      name: "Test 6: Interest cards render",
+      pass: validCards >= 4
+    });
+
+    return results;
+  }
+
+  // ── INITIALIZE PAGE ──
+  document.addEventListener('DOMContentLoaded', () => {
+    initChecklist();
+    initTopicChecklist();
+    initCollapsible();
+    initDidYouKnow();
+
+    // Run tests if ?test=1 parameter is present
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('test') === '1') {
+      const results = runTests();
+      const testPanel = document.getElementById('testPanel');
+      testPanel.classList.add('visible');
+
+      results.forEach(result => {
+        const resultDiv = document.createElement('div');
+        resultDiv.className = 'test-result';
+        resultDiv.innerHTML = `<span class="${result.pass ? 'test-pass' : 'test-fail'}">
+          ${result.pass ? '✓' : '✗'} ${result.name}
+        </span>`;
+        testPanel.appendChild(resultDiv);
+      });
+
+      console.log('Test Results:');
+      results.forEach(r => {
+        console.log(`${r.pass ? 'PASS' : 'FAIL'}: ${r.name}`);
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

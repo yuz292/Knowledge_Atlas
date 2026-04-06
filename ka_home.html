@@ -919,42 +919,52 @@ window.KA_PAGE_FUNCTION = {
 <script src="ka_data_adapter.js"></script>
 <script>
 (function() {
+  // Mode-specific home pages — each user type gets a dedicated landing page
+  const MODE_HOME_PAGES = {
+    student_explorer: 'ka_home_student.html',
+    researcher: 'ka_home_researcher.html',
+    contributor: 'ka_home_contributor.html',
+    instructor: 'ka_home_instructor.html',
+    practitioner: 'ka_home_practitioner.html',
+    theory_mechanism_explorer: 'ka_home_theory.html'
+  };
+
   const HOME_MODE_COPY = {
     student_explorer: {
       navOrder: ['nav-home-explore', 'nav-home-about', 'nav-home-theory', 'nav-home-docs'],
-      primary: { text: 'Explore Topics →', href: 'ka_topics.html' },
-      secondary: { text: 'Get Started as a Student', href: '160sp/ka_student_setup.html' },
+      primary: { text: 'Enter Student Home →', href: 'ka_home_student.html' },
+      secondary: { text: 'Or explore topics directly', href: 'ka_topics.html' },
       note: 'Student mode foregrounds topics, evidence, and course entry points so the literature becomes the first thing to explore.'
     },
     researcher: {
       navOrder: ['nav-home-explore', 'nav-home-theory', 'nav-home-docs', 'nav-home-about'],
-      primary: { text: 'Search the Literature →', href: 'ka_topics.html' },
-      secondary: { text: 'Inspect Evidence', href: 'ka_evidence.html' },
-      note: 'Researcher mode foregrounds literature exploration, evidence, and theory-linked routes.'
+      primary: { text: 'Enter Researcher Home →', href: 'ka_home_researcher.html' },
+      secondary: { text: 'Or search the literature directly', href: 'ka_topics.html' },
+      note: 'Researcher mode foregrounds hypothesis testing, evidence inspection, neural underpinnings, and targets of opportunity.'
     },
     contributor: {
       navOrder: ['nav-home-docs', 'nav-home-explore', 'nav-home-about', 'nav-home-theory'],
-      primary: { text: 'Open Contributor Setup →', href: '160sp/ka_student_setup.html' },
-      secondary: { text: 'Register as a Contributor', href: 'ka_register.html' },
-      note: 'Contributor mode foregrounds onboarding, setup, and the paths that lead into track work.'
+      primary: { text: 'Enter Contributor Home →', href: 'ka_home_contributor.html' },
+      secondary: { text: 'Or register as a contributor', href: 'ka_register.html' },
+      note: 'Contributor mode foregrounds your track, your progress, and your next task.'
     },
     instructor: {
       navOrder: ['nav-home-docs', 'nav-home-about', 'nav-home-explore', 'nav-home-theory'],
-      primary: { text: 'Open Course Hub →', href: '160sp/ka_student_setup.html' },
-      secondary: { text: 'Spring Schedule', href: '160sp/ka_schedule.html' },
-      note: 'Instructor mode foregrounds course, onboarding, and shared documentation before deep literature tools.'
+      primary: { text: 'Enter Instructor Dashboard →', href: 'ka_home_instructor.html' },
+      secondary: { text: 'Or view the course schedule', href: '160sp/ka_schedule.html' },
+      note: 'Instructor mode foregrounds enrollment health, submission pipeline, and intervention points.'
     },
     practitioner: {
       navOrder: ['nav-home-explore', 'nav-home-about', 'nav-home-docs', 'nav-home-theory'],
-      primary: { text: 'Browse Practical Topics →', href: 'ka_topics.html' },
-      secondary: { text: 'See Evidence Summaries', href: 'ka_evidence.html' },
-      note: 'Practitioner mode foregrounds applied topic browsing and readable evidence, not theory first.'
+      primary: { text: 'Enter Practitioner Home →', href: 'ka_home_practitioner.html' },
+      secondary: { text: 'Or browse evidence summaries', href: 'ka_evidence.html' },
+      note: 'Practitioner mode organizes evidence by space type and design decision, not academic taxonomy.'
     },
     theory_mechanism_explorer: {
       navOrder: ['nav-home-theory', 'nav-home-explore', 'nav-home-docs', 'nav-home-about'],
-      primary: { text: 'Open Theory Guides →', href: '../theory_guides/index.html' },
-      secondary: { text: 'Explore Topics', href: 'ka_topics.html' },
-      note: 'Theory Explorer foregrounds explanatory frameworks while keeping literature exploration one click away.'
+      primary: { text: 'Enter Theory Explorer →', href: 'ka_home_theory.html' },
+      secondary: { text: 'Or explore the neuro perspective', href: 'ka_neuro_perspective.html' },
+      note: 'Theory Explorer foregrounds competing mechanisms, multi-level neural pathways, critical tests, and the formal warrant structure.'
     }
   };
 

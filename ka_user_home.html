@@ -963,6 +963,16 @@
     }
   }
 
+  // Map roles to dedicated home pages
+  const ROLE_HOME_PAGES = {
+    student_explorer: 'ka_home_student.html',
+    researcher: 'ka_home_researcher.html',
+    contributor: 'ka_home_contributor.html',
+    instructor: 'ka_home_instructor.html',
+    practitioner: 'ka_home_practitioner.html',
+    theory_mechanism_explorer: 'ka_home_theory.html'
+  };
+
   function switchRole(role) {
     currentRole = role;
     localStorage.setItem('ka_user_role', role);
@@ -971,6 +981,27 @@
     const url = new URL(window.location.href);
     url.searchParams.set('role', role);
     history.replaceState(null, '', url.toString());
+    // Show link to dedicated home page
+    updateHomePageLink(role);
+  }
+
+  function updateHomePageLink(role) {
+    const homePage = ROLE_HOME_PAGES[role];
+    let banner = document.getElementById('role-home-banner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'role-home-banner';
+      banner.style.cssText = 'background:linear-gradient(135deg,#1C3D3A,#163230);padding:12px 24px;text-align:center;border-radius:8px;margin-bottom:1.5rem;';
+      const main = document.querySelector('.main-content') || document.querySelector('main') || document.body.firstElementChild;
+      if (main) main.insertBefore(banner, main.firstChild);
+    }
+    if (homePage) {
+      const roleNames = {student_explorer:'Student Explorer',researcher:'Researcher',contributor:'Contributor',instructor:'Instructor',practitioner:'Practitioner',theory_mechanism_explorer:'Theory Explorer'};
+      banner.innerHTML = '<a href="' + homePage + '" style="color:#E8872A;font-weight:700;font-size:0.95rem;text-decoration:none;">Go to your ' + (roleNames[role]||role) + ' home page →</a>';
+      banner.style.display = 'block';
+    } else {
+      banner.style.display = 'none';
+    }
   }
 
   /* ── Welcome ─────────────────────────────────────────────────────────── */
@@ -1355,6 +1386,7 @@
     renderResumeCard(role);
     renderA0Section();
     renderWorkflowGrid(role);
+    updateHomePageLink(role);
 
     // Update active state in role switcher
     document.querySelectorAll('.role-switch-btn').forEach(function (btn) {
