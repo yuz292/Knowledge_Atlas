@@ -81,9 +81,14 @@ Your panel (Step 1 of the method) will argue about the right formula. The key qu
 ## Technical Environment
 
 - Static HTML/CSS/JS (no build system)
-- Data loaded via `fetch('data/ka_payloads/evidence.json')`
+- **Data is loaded via fetch() using the full URL:**
+  - `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json')`
 - Site style: cream background (#FAF6F0), Georgia headings, system-ui body text
 - Your output is a JavaScript function + an HTML renderer
+- **Data loading strategy — choose one:**
+  1. **Fetch from server** (works in AI preview environments and when running a local server): `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json')`
+  2. **Embed sample data inline** (works everywhere, no server needed): Ask the AI to create a `const SAMPLE_DATA = [...]` variable with 20–30 representative records based on the schema above, then use that for development and testing. This avoids all cross-origin issues.
+  3. **Local files** (if you downloaded the JSON): `fetch('data/ka_payloads/evidence.json')` — requires running `python3 -m http.server` in the parent directory
 
 ## What To Do First
 

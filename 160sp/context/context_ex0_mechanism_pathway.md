@@ -88,8 +88,14 @@ Secondary source. Each of the ~1,900 evidence records has:
 
 - The site is static HTML/CSS/JS (no build system, no React)
 - D3.js is available via CDN: `https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js`
-- Data payloads are loaded via `fetch()` from `data/ka_payloads/`
+- **Data payloads are loaded via `fetch()` using full URLs:**
+  - `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/argumentation.json')`
+  - `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json')`
 - Pages use a consistent style: cream background (#FAF6F0), Georgia headings, system-ui body text
+- **Data loading strategy — choose one:**
+  1. **Fetch from server** (works in AI preview environments and when running a local server): `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/argumentation.json')`
+  2. **Embed sample data inline** (works everywhere, no server needed): Ask the AI to create a `const SAMPLE_DATA = [...]` variable with 20–30 representative records based on the schema above, then use that for development and testing. This avoids all cross-origin issues.
+  3. **Local files** (if you downloaded the JSON): `fetch('data/ka_payloads/argumentation.json')` — requires running `python3 -m http.server` in the parent directory
 
 ## What To Do First
 

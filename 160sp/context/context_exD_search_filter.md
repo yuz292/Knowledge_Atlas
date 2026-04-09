@@ -57,14 +57,19 @@ Build a search and filter bar for the Evidence Explorer page. A user should be a
 ## Existing Page You'll Modify
 
 - **`ka_evidence.html`** (~79 KB) — This is the Evidence Explorer. It currently shows all ~1,900 claims in a scrollable list with no filtering. Your filter bar sits at the top of this page and narrows what's displayed.
-- The page loads `data/ka_payloads/evidence.json` via `fetch()` and renders cards dynamically.
+- The page loads evidence.json via `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json')` and renders cards dynamically.
 
 ## Technical Environment
 
 - Static HTML/CSS/JS (no build system, no React)
-- Data loaded via `fetch('data/ka_payloads/evidence.json')`
+- **Data is loaded via fetch() using the full URL:**
+  - `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json')`
 - Site style: cream background (#FAF6F0), Georgia headings, system-ui body text, cards with 1px #D8D0C5 borders and 10px border-radius
 - Your filter should work client-side — all 1,900 records are loaded into memory
+- **Data loading strategy — choose one:**
+  1. **Fetch from server** (works in AI preview environments and when running a local server): `fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json')`
+  2. **Embed sample data inline** (works everywhere, no server needed): Ask the AI to create a `const SAMPLE_DATA = [...]` variable with 20–30 representative records based on the schema above, then use that for development and testing. This avoids all cross-origin issues.
+  3. **Local files** (if you downloaded the JSON): `fetch('data/ka_payloads/evidence.json')` — requires running `python3 -m http.server` in the parent directory
 
 ## Design Considerations
 
