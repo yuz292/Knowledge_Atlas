@@ -730,10 +730,10 @@
                                 <label for="trackChoice1">First choice track</label>
                                 <select id="trackChoice1" name="trackChoice1" required>
                                     <option value="">Select a track</option>
-                                    <option value="track1">Track 1 — Image Tagging (CNFA Tags)</option>
-                                    <option value="track2">Track 2 — Article Finding Pipeline</option>
-                                    <option value="track3">Track 3 — VR Environment Production</option>
-                                    <option value="track4">Track 4 — GUI Evaluation &amp; Experiment Design</option>
+                                    <option value="track1">Track 1 — Image Tagger</option>
+                                    <option value="track2">Track 2 — Article Finder</option>
+                                    <option value="track3">Track 3 — AI & VR</option>
+                                    <option value="track4">Track 4 — Interaction Design</option>
                                 </select>
                                 <span class="field-error" id="err-trackChoice1">Please select a first-choice track.</span>
                             </div>
@@ -745,10 +745,10 @@
                                 <label for="trackChoice2">Second choice track <span style="font-weight:400;color:#8A7A68">(optional)</span></label>
                                 <select id="trackChoice2" name="trackChoice2">
                                     <option value="">No second choice</option>
-                                    <option value="track1">Track 1 — Image Tagging (CNFA Tags)</option>
-                                    <option value="track2">Track 2 — Article Finding Pipeline</option>
-                                    <option value="track3">Track 3 — VR Environment Production</option>
-                                    <option value="track4">Track 4 — GUI Evaluation &amp; Experiment Design</option>
+                                    <option value="track1">Track 1 — Image Tagger</option>
+                                    <option value="track2">Track 2 — Article Finder</option>
+                                    <option value="track3">Track 3 — AI & VR</option>
+                                    <option value="track4">Track 4 — Interaction Design</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -798,10 +798,10 @@
 
       // ── Track label names ────────────────────────────────────────────
       const TRACK_NAMES = {
-        track1: 'Track 1 — Image Tagging',
-        track2: 'Track 2 — Article Finding',
-        track3: 'Track 3 — VR Production',
-        track4: 'Track 4 — GUI Evaluation & Experiment Design'
+        track1: 'Track 1 — Image Tagger',
+        track2: 'Track 2 — Article Finder',
+        track3: 'Track 3 — AI & VR',
+        track4: 'Track 4 — Interaction Design'
       };
 
       const storedMode = sessionStorage.getItem('ka_active_mode') || localStorage.getItem('ka_user_type');
@@ -887,7 +887,7 @@
       });
 
       // ── Form submission ──────────────────────────────────────────────
-      document.getElementById('registerForm').addEventListener('submit', function(e) {
+      document.getElementById('registerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         let ok = true;
 
@@ -902,12 +902,7 @@
         const email = document.getElementById('email').value.trim();
         if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
           showErr('email','Please enter a valid email address.'); ok = false;
-        } else {
-          const regs = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.pendingRegistrations() : JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
-          if (regs.find(r => r.email.toLowerCase() === email.toLowerCase())) {
-            showErr('email','An account with this email already exists.'); ok = false;
-          } else clearErr('email');
-        }
+        } else clearErr('email');
 
         // Password
         const pw = document.getElementById('password').value;
@@ -931,59 +926,76 @@
           return;
         }
 
-        // ── All valid: persist to localStorage ──────────────────────────
-        const userData = {
-          id: 'student_' + Date.now(),
-          firstName: document.getElementById('firstName').value.trim(),
-          lastName:  document.getElementById('lastName').value.trim(),
-          email:     email,
-          role:      document.querySelector('input[name="role"]:checked')?.value || 'undergrad',
-          institution: document.getElementById('institution').value.trim(),
-          department:  document.getElementById('department').value.trim(),
-          userType: document.getElementById('userTypeChoice').value,
-          navPreference: NAV_PREFERENCE_BY_TYPE[document.getElementById('userTypeChoice').value] || 'explore_literature',
-          trackChoice1: track1,
-          trackChoice2: document.getElementById('trackChoice2').value,
-          timestamp: new Date().toISOString(),
-          status: 'approved'
+        // ── Submit to backend ────────────────────────────────────────────
+        const KA_AUTH_API = window.__KA_CONFIG__?.apiBase ?? '';
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const department = document.getElementById('department').value.trim();
+
+        const registerPayload = {
+          email: email,
+          password: pw,
+          first_name: firstName,
+          last_name: lastName,
+          department: department,
+          track: track1,
+          question_id: ''
         };
 
-        // Auto-approve: save directly to approved registrations
-        // (Instructor can review/revoke later via ka_approve.html)
-        if (window.KA_WORKFLOW_STORE) {
-          window.KA_WORKFLOW_STORE.addPendingRegistration(userData);
-          // Also immediately approve in the store
-          if (window.KA_WORKFLOW_STORE.approveRegistration) {
-            window.KA_WORKFLOW_STORE.approveRegistration(userData.id, userData.trackChoice1);
+        const btn = this.querySelector('button[type=submit]');
+        btn.disabled = true;
+        const originalText = btn.textContent;
+        btn.textContent = 'Registering…';
+
+        try {
+          const res = await fetch(`${KA_AUTH_API}/auth/register`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(registerPayload)
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            // Show error from server
+            showErr('email', data.detail || 'Registration failed. Please try again.');
+            btn.disabled = false;
+            btn.textContent = originalText;
+            const firstErr = document.getElementById('err-email');
+            if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
           }
-        } else {
-          const regs = JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
-          regs.push(userData);
-          localStorage.setItem('ka_pending_registrations', JSON.stringify(regs));
-        }
 
-        // Set current user session
-        if (window.KA_WORKFLOW_STORE) {
-          window.KA_WORKFLOW_STORE.setCurrentUser(userData);
-          window.KA_WORKFLOW_STORE.setLoggedIn(true);
-        } else {
-          localStorage.setItem('ka_current_user', JSON.stringify(userData));
-          localStorage.setItem('ka_logged_in', '1');
-          sessionStorage.setItem('ka_logged_in', '1');
-        }
-        localStorage.setItem('ka_user_type', userData.userType);
-        sessionStorage.setItem('ka_active_mode', userData.userType);
+          // Success: show pending approval message
+          document.getElementById('registerForm').style.display = 'none';
+          const screen = document.getElementById('successScreen');
+          screen.classList.add('visible');
+          document.getElementById('successDetail').innerHTML =
+            '<strong>Name:</strong> ' + firstName + ' ' + lastName + '<br>' +
+            '<strong>Email:</strong> ' + email + '<br>' +
+            '<strong>Track requested:</strong> ' + (TRACK_NAMES[track1] || track1);
 
-        // ── Show success screen ──────────────────────────────────────────
-        document.getElementById('registerForm').style.display = 'none';
-        const screen = document.getElementById('successScreen');
-        screen.classList.add('visible');
-        document.getElementById('successDetail').innerHTML =
-          '<strong>Name:</strong> ' + userData.firstName + ' ' + userData.lastName + '<br>' +
-          '<strong>Email:</strong> ' + userData.email + '<br>' +
-          '<strong>Track requested:</strong> ' + (TRACK_NAMES[track1] || track1) + '<br>' +
-          '<strong>Status:</strong> Active — ready to sign in';
-        screen.scrollIntoView({ behavior: 'smooth' });
+          // Update the main message
+          screen.querySelector('h2').textContent = 'Registration submitted!';
+          screen.querySelector('p').textContent = 'Your account is pending approval by Prof Kirsh. You\'ll receive an email when your account is activated.';
+
+          // Update the button to redirect to login
+          const loginBtn = screen.querySelector('.btn');
+          loginBtn.textContent = 'Back to Login →';
+
+          // Redirect to login after 5 seconds
+          setTimeout(() => {
+            window.location.href = 'ka_login.html';
+          }, 5000);
+
+          screen.scrollIntoView({ behavior: 'smooth' });
+        } catch (err) {
+          showErr('email', 'Network error. Please try again.');
+          btn.disabled = false;
+          btn.textContent = originalText;
+          const firstErr = document.getElementById('err-email');
+          if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       });
     })();
     </script>
@@ -1024,14 +1036,6 @@
     })();
 </script>
 <script>
-window.KA_LIVE_CONTEXT_CONFIG = {
-  surface: 'auth',
-  title: 'System State',
-  status: 'Local identity prototype',
-  warn: true
-};
-</script>
-<script>
 window.KA_PAGE_FUNCTION = {
   pageId: 'ka_register',
   title: 'Contributor Registration',
@@ -1050,7 +1054,6 @@ window.KA_PAGE_FUNCTION = {
 };
 </script>
 <script src="ka_page_function.js"></script>
-<script src="ka_demo_wiring.js"></script>
 <script>
 window.KA_ABOUT_PAGE = {
   pageId: 'ka_register',
@@ -1059,7 +1062,7 @@ window.KA_ABOUT_PAGE = {
   uses: [
     "Submit a registration request with track preference and skills statement",
     "Receive immediate confirmation and await instructor approval",
-    "Choose between Track 1 (Image Tagging), Track 2 (Article Finding), Track 3 (VR Production), and Track 4 (GUI Evaluation)"
+    "Choose between Track 1 (Image Tagger), Track 2 (Article Finder), Track 3 (AI & VR), and Track 4 (Interaction Design)"
   ]
 };
 </script>
