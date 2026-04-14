@@ -11,31 +11,49 @@
       background: #f4f6f8; color: #1a1a1a; font-size: 15px; line-height: 1.6;
     }
 
-    /* ── Top bar ─────────────────────────────────────────── */
-    .topbar {
-      background: #182B49; color: #fff; display: flex; align-items: center;
-      justify-content: space-between; padding: 0.75rem 1.5rem;
-      position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    /* ── Top bar (legacy, hidden — replaced by ka-nav) ──── */
+    .topbar { display: none; }
+
+    /* ── KA standard nav ─────────────────────────────────── */
+    .ka-nav {
+      background: #1C3D3A; display: flex; align-items: center;
+      gap: 24px; padding: 0 28px; min-height: 52px;
+      position: sticky; top: 0; z-index: 500;
+      border-bottom: 2px solid #E8872A;
     }
-    .topbar-logo {
-      font-weight: 900; font-size: 1.15rem; color: #C69214; letter-spacing: 0.04em;
+    .ka-nav .nav-brand { color: #A8C8BF; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+    .ka-nav .nav-brand:hover { color: #E8872A; }
+    .ka-nav .nav-center { display: flex; align-items: center; gap: 14px; flex: 1; }
+    .ka-nav a.nav-link { color: #7AACA0; font-size: 0.8rem; text-decoration: none;
+      padding: 6px 10px; border-radius: 6px; transition: color 0.15s; }
+    .ka-nav a.nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .ka-nav a.nav-link.active { color: #F5A623; background: rgba(232,135,42,0.12); }
+    .ka-breadcrumb {
+      background: #EDE8E0; padding: 8px 28px; font-size: 0.78rem;
+      color: #6A5E50; display: flex; align-items: center; gap: 6px;
     }
-    .topbar-logo span { color: #fff; font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
-    .topbar-user { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; }
-    .topbar-user .username { color: #C69214; font-weight: 700; }
-    .topbar-user .logout {
-      color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem;
-    }
-    .topbar-user .logout:hover { color: #fff; }
+    .ka-breadcrumb a { color: #1C3D3A; text-decoration: none; font-weight: 600; }
+    .ka-breadcrumb a:hover { text-decoration: underline; }
+    .ka-breadcrumb .sep { color: #B0A898; }
 
     /* ── Student hero ─────────────────────────────────────── */
     .student-hero {
       background: linear-gradient(135deg, #1a3a60, #182B49);
       padding: 1.5rem 2rem; color: #fff; border-bottom: 3px solid #C69214;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
     }
     .student-hero h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.2rem; }
     .student-hero h1 span { color: #C69214; }
     .student-hero p { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+    .hero-ctas { display: flex; gap: 10px; flex-shrink: 0; }
+    .hero-cta-btn {
+      display: inline-block; padding: 8px 16px; border-radius: 6px;
+      font-size: 0.78rem; font-weight: 700; text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.25); color: #fff;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .hero-cta-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.5); }
 
     /* ── Progress overview ───────────────────────────────── */
     .progress-overview {
@@ -260,6 +278,12 @@
     .login-back a { font-size: 0.82rem; color: #888; text-decoration: none; }
     .login-back a:hover { color: #182B49; }
     .login-error { color: #c0392b; font-size: 0.82rem; margin-top: 0.4rem; display: none; }
+    .login-recovery-note {
+      margin-top: 0.9rem; padding: 0.75rem 0.85rem; border-radius: 8px;
+      background: #fff8e8; border: 1px solid #f1d08a; color: #5a3800;
+      font-size: 0.78rem; line-height: 1.45; text-align: left;
+    }
+    .login-recovery-note a { color: #1C3D3A; font-weight: 700; }
 
     /* ── Manifest upload ──────────────────────────────── */
     .manifest-toggle {
@@ -296,6 +320,9 @@
     }
     .manifest-status {
       font-size: 0.8rem; color: #27ae60; font-weight: 600;
+    }
+    .manifest-toggle:disabled, .title-only-toggle:disabled {
+      color: #a8a8a8; cursor: not-allowed;
     }
 
     /* ── Title-only section ────────────────────────────── */
@@ -336,36 +363,172 @@
     }
     .title-only-add-btn:hover { background: #0d1e35; }
 
-    /* ── Breadcrumb ─────────────────────────────────────── */
-    .breadcrumb-bar {
-      background: #e8edf2;
-      padding: 10px 2rem;
-      border-bottom: 1px solid #d0d8e4;
-      font-size: 0.82rem;
+    .upload-recovery-notice {
+      margin: 1rem 2rem 0; padding: 1rem 1.1rem; border-radius: 10px;
+      background: #fff8e8; border: 1.5px solid #f1d08a; color: #4f3300;
+      font-size: 0.88rem; line-height: 1.55;
     }
-    .breadcrumb-bar a {
-      color: #2A7868;
-      text-decoration: none;
-      font-weight: 600;
+    .upload-recovery-notice strong { color: #182B49; }
+    .upload-recovery-notice a { color: #1C3D3A; font-weight: 700; }
+
+    .q1-recovery-card, .q2-lock-notice {
+      display: none; margin-bottom: 1rem; border-radius: 12px; padding: 1rem 1.1rem;
+      border: 1.5px solid #f1d08a; background: #fff8e8; color: #4f3300;
     }
-    .breadcrumb-bar a:hover {
+    .q1-recovery-card.visible, .q2-lock-notice.visible { display: block; }
+    .q1-recovery-actions, .q2-selected-actions, .q2-preview-actions, .q2-search-row {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
+    }
+    .repair-link-row {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-top: 0.9rem;
+    }
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(10,18,35,0.68);
+      display: none; align-items: center; justify-content: center; z-index: 1200; padding: 1.5rem;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal-card {
+      width: min(1040px, 100%); max-height: 90vh; overflow: auto;
+      background: #fff; border-radius: 18px; padding: 1.35rem;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.32);
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;
+    }
+    .modal-close {
+      border: 1px solid #d2dce6; background: #fff; color: #182B49; border-radius: 999px;
+      width: 36px; height: 36px; font-size: 1.1rem; cursor: pointer; flex-shrink: 0;
+    }
+    .modal-close:hover { border-color: #182B49; }
+    .q1-repair-grid {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr); gap: 1rem;
+    }
+    .q1-repair-note {
+      background: #f7faf8; border: 1px solid #dde9e1; border-radius: 12px; padding: 0.9rem;
+      font-size: 0.84rem; color: #5a6b65; line-height: 1.6; margin-bottom: 1rem;
+    }
+    .q1-repair-note strong { color: #1C3D3A; }
+    .q2-workflow-card {
+      background: linear-gradient(180deg, #f5fbf8 0%, #edf7f1 100%);
+      border: 2px solid #27ae60; border-radius: 16px; padding: 1.4rem; margin-bottom: 1.25rem;
+    }
+    .q2-workflow-header {
+      display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;
+    }
+    .q2-kicker {
+      display: inline-block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #1C3D3A; background: rgba(39,174,96,0.14);
+      padding: 0.2rem 0.55rem; border-radius: 999px; margin-bottom: 0.45rem;
+    }
+    .q2-status-pill {
+      background: #fff3cd; color: #8a5a00; font-size: 0.78rem; font-weight: 800;
+      border-radius: 999px; padding: 0.35rem 0.7rem; white-space: nowrap;
+    }
+    .q2-status-pill.ready { background: #d4edda; color: #155724; }
+    .q2-step-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .q2-step-card {
+      background: rgba(255,255,255,0.82); border: 1px solid rgba(39,174,96,0.22);
+      border-radius: 12px; padding: 0.9rem;
+    }
+    .q2-step-card strong {
+      display: block; font-size: 0.79rem; font-weight: 800; color: #1C3D3A; margin-bottom: 0.2rem;
+    }
+    .q2-step-card span { font-size: 0.81rem; color: #5b6d67; line-height: 1.5; }
+    .q2-picker-grid {
+      display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr); gap: 1rem;
+    }
+    .q2-picker-panel, .q2-preview-panel, .q2-selected-card {
+      background: #fff; border: 1px solid #d8e6dc; border-radius: 14px; padding: 1rem 1.1rem;
+      box-shadow: 0 8px 22px rgba(24,43,73,0.05);
+    }
+    .q2-selected-card { display: none; margin-bottom: 1rem; }
+    .q2-selected-card.visible { display: block; }
+    .q2-filter-row {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.9rem;
+    }
+    .q2-filter-row input, .q2-filter-row select, .q2-search-helper input, #q2-topic-select {
+      width: 100%; border: 1px solid #c7d7cd; border-radius: 8px; padding: 0.65rem 0.75rem;
+      font: inherit; color: #1a1a1a; background: #fff;
+    }
+    .q2-filter-row input, .q2-filter-row select { flex: 1 1 200px; }
+    #q2-topic-select { min-height: 290px; }
+    .q2-picker-meta {
+      margin-top: 0.55rem; font-size: 0.8rem; color: #667570;
+    }
+    .q2-preview-empty {
+      min-height: 100%; display: flex; flex-direction: column; justify-content: center;
+      gap: 0.35rem; color: #6a7a74; font-size: 0.86rem;
+    }
+    .q2-preview-id {
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #1C3D3A;
+      margin-bottom: 0.25rem;
+    }
+    .q2-preview-title { font-size: 1.05rem; font-weight: 800; color: #182B49; margin-bottom: 0.5rem; }
+    .q2-preview-text, .q2-selected-text {
+      font-size: 0.9rem; color: #47525f; line-height: 1.65; margin-bottom: 0.9rem;
+    }
+    .q2-topic-meta {
+      display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 0.75rem;
+    }
+    .q2-chip {
+      display: inline-flex; align-items: center; border-radius: 999px; padding: 0.28rem 0.65rem;
+      font-size: 0.75rem; font-weight: 800;
+    }
+    .q2-chip-high { background: #f8d7da; color: #721c24; }
+    .q2-chip-medium { background: #fff3cd; color: #8a5a00; }
+    .q2-chip-good { background: #d4edda; color: #155724; }
+    .q2-chip-outline { background: #eef3f0; color: #52635d; }
+    .q2-search-helper {
+      background: #f7faf8; border: 1px solid #dde9e1; border-radius: 12px; padding: 0.9rem;
+    }
+    .q2-search-helper label {
+      display: block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #5a6b65; margin-bottom: 0.45rem;
+    }
+    .q2-search-helper p {
+      margin-top: 0.45rem; font-size: 0.79rem; color: #6a7a74;
+    }
+    .q2-search-helper a { color: #1C3D3A; font-weight: 700; }
+    .q2-primary-btn, .q2-secondary-btn, .q2-link-btn {
+      border-radius: 8px; font: inherit; cursor: pointer; transition: all 0.15s ease;
+    }
+    .q2-primary-btn {
+      border: none; background: #1C3D3A; color: #fff; font-weight: 800; padding: 0.72rem 1.05rem;
+    }
+    .q2-primary-btn:hover { background: #132a28; }
+    .q2-primary-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .q2-secondary-btn {
+      border: 1px solid #c9d7cf; background: #fff; color: #1C3D3A; font-weight: 700; padding: 0.68rem 0.95rem;
+    }
+    .q2-secondary-btn:hover { border-color: #1C3D3A; }
+    .q2-link-btn {
+      border: none; background: transparent; color: #1C3D3A; font-weight: 700; padding: 0;
       text-decoration: underline;
     }
-    .breadcrumb-bar .sep {
-      color: #999;
-      margin: 0 6px;
-    }
-    .breadcrumb-bar .current {
-      color: #182B49;
-      font-weight: 700;
+    .upload-zone.locked {
+      cursor: not-allowed; opacity: 0.6; border-style: solid; background: #f1f4f3;
     }
 
     /* ── Responsive ─────────────────────────────────────── */
-    @media (max-width: 720px) {
+@media (max-width: 720px) {
       .progress-overview { grid-template-columns: 1fr; }
       .paper-fields { grid-template-columns: 1fr; }
+      .q2-step-grid, .q2-picker-grid, .q1-repair-grid { grid-template-columns: 1fr; }
+      .q2-workflow-header { flex-direction: column; }
     }
-  </style>
+  
+.wordmark {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.wordmark-icon { width: 30px; height: 30px; }
+.wordmark-text { display: flex; flex-direction: column; line-height: 1.1; }
+.wm-top { font-size: 0.66rem; font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; color: #A8C8BF; }
+.wm-bottom { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; color: #fff; }
+.wm-bottom span { color: #F5A623; }
+</style>
 </head>
 <body>
 
@@ -380,36 +543,153 @@
     </div>
     <div class="login-field">
       <label>Password</label>
-      <input type="password" id="login-pass" placeholder="Your K-ATLAS password" autocomplete="current-password">
+      <div style="position:relative;">
+        <input type="password" id="login-pass" placeholder="Your K-ATLAS password" autocomplete="current-password" style="padding-right:2.5rem;">
+        <button type="button" onclick="togglePwdVis(this)" aria-label="Show password" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.1rem;color:#888;padding:4px;" tabindex="-1">&#128065;</button>
+      </div>
     </div>
     <p class="login-error" id="login-error">Invalid username or password.</p>
     <button class="btn-sign-in" onclick="handleLogin()">Sign In</button>
+    <div class="login-recovery-note">
+      <strong>Upload page recovery note:</strong>
+      if you already registered, do not register again. Sign in with your existing account.
+      If your password does not work, contact the instructor with the email address you registered with.
+    </div>
     <div class="login-back"><a href="ka_collect_articles.html">← Back to assignment page</a></div>
   </div>
 </div>
 
-<!-- ── Top bar ───────────────────────────────────────────── -->
+<!-- ── KA standard nav ───────────────────────────────────── -->
+<nav class="ka-nav">
+  <a class="wordmark" href="../ka_home.html">
+    <svg class="wordmark-icon" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="3.5" fill="#F5A623"/>
+      <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
+      <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
+      <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
+      <line x1="16"   y1="7.5"  x2="16"   y2="12.5" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="24.8" y1="20.2" x2="19.0" y2="17.3"  stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="7.2"  y1="20.2" x2="13.0" y2="17.3"  stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="16" y1="7.5"  x2="25.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      <line x1="25.5" y1="20" x2="6.5"   y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      <line x1="6.5"  y1="20" x2="16"    y2="7.5" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+    </svg>
+    <div class="wordmark-text">
+      <span class="wm-top">Knowledge</span>
+      <span class="wm-bottom">At<span>las</span></span>
+    </div>
+  </a>
+  <div class="nav-center">
+    <a href="../ka_topics.html" class="nav-link">Explore</a>
+    <a href="../ka_evidence.html" class="nav-link">Evidence</a>
+    <a href="../ka_gaps.html" class="nav-link">Gaps</a>
+    <a href="../ka_article_search.html" class="nav-link">Articles</a>
+    <a href="../ka_contribute.html" class="nav-link">Contribute</a>
+    <a href="ka_student_setup.html" class="nav-link active">Course</a>
+    <a href="ka_schedule.html" class="nav-link">160 Syllabus</a>
+  </div>
+</nav>
+<div class="ka-breadcrumb">
+  <a href="../ka_home.html">Home</a> <span class="sep">/</span>
+  <a href="ka_student_setup.html">COGS 160 Start</a> <span class="sep">/</span>
+  <a href="ka_collect_articles.html">A0: Collect Articles</a> <span class="sep">/</span>
+  <span>Upload</span>
+</div>
+
+<!-- ── Legacy top bar (hidden, kept for JS references) ──── -->
 <div class="topbar">
-  <span class="topbar-logo">K-ATLAS <span>/ Collect Articles</span></span>
+  <a href="../ka_home.html" class="topbar-logo" style="text-decoration:none;color:#C69214;">K-ATLAS <span>/ Collect Articles</span></a>
   <div class="topbar-user">
     <span>Signed in as <span class="username" id="display-name">—</span></span>
     <a href="#" class="logout" onclick="handleLogout()">Sign out</a>
   </div>
 </div>
 
-<!-- ── Breadcrumb ────────────────────────────────────────── -->
-<div class="breadcrumb-bar">
-  <a href="ka_student_setup.html">COGS160 Start</a>
-  <span class="sep">></span>
-  <a href="../ka_ai_methodology.html">AI Methodology</a>
-  <span class="sep">></span>
-  <span class="current">Collect Articles</span>
-</div>
-
 <!-- ── Student hero ──────────────────────────────────────── -->
 <div class="student-hero">
-  <h1>My Article Collection — <span id="hero-name">Loading…</span></h1>
-  <p id="hero-status">Loading your assigned questions…</p>
+  <div>
+    <h1>My Article Collection — <span id="hero-name">Loading…</span></h1>
+    <p id="hero-status">Loading your assigned questions…</p>
+  </div>
+  <div class="hero-ctas">
+    <a href="../ka_ai_methodology.html" class="hero-cta-btn">AI Methodology</a>
+    <a href="ka_student_setup.html" class="hero-cta-btn">The Four Tracks</a>
+  </div>
+</div>
+
+<div class="upload-recovery-notice" id="upload-recovery-notice">
+  <strong>Upload recovery note:</strong>
+  if you tried to work on the A0 assignment early and saw sample/demo article rows,
+  those sample rows were not saved to K-ATLAS. Your saved progress, if any, is loaded above from the server.
+  If your progress did not change, please re-upload those papers here.
+  If the Question 1 shown here is missing, or it is not the same Question 1 you originally had before login trouble,
+  use the repair flow below to choose a valid Question 1 for this account. If you still need human help after that,
+  contact the instructor from your registered email.
+  You do not need to re-register; use your existing account, or contact the instructor with your registered email if login fails.
+  <div class="repair-link-row">
+    <button type="button" class="q2-primary-btn" onclick="openQ1RecoveryModal()">Question 1 wrong or missing? Repair it here</button>
+    <a id="q1-recovery-link-inline" class="q2-secondary-btn" href="mailto:dkirsh@ucsd.edu?subject=COGS%20160%20Question%201%20recovery">Need instructor help instead</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="q1-recovery-modal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <span class="q2-kicker">Question 1 Repair</span>
+        <h3 style="font-size:1.2rem;color:#1C3D3A;margin-bottom:0.35rem;">Repair or replace your Question 1 assignment</h3>
+        <p id="q1-recovery-current" style="font-size:0.9rem;color:#5a6b65;line-height:1.6;max-width:760px;">
+          Search the available Question 1 prompts below, preview the full text, and claim one for this account.
+        </p>
+      </div>
+      <button type="button" class="modal-close" aria-label="Close repair dialog" onclick="closeQ1RecoveryModal()">×</button>
+    </div>
+    <div class="q1-repair-note">
+      <strong>How to use this:</strong> if you remember part of your old Question 1, search for those keywords.
+      If that exact question is not available in the current round, choose the closest available replacement and continue.
+      Review any earlier Question 1 uploads afterwards to make sure they still match the repaired prompt.
+    </div>
+    <div class="q1-repair-grid">
+      <div class="q2-picker-panel">
+        <label style="display:block;font-size:0.72rem;font-weight:800;color:#5a6b65;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Search Available Question 1 Choices</label>
+        <div class="q2-filter-row">
+          <input id="q1-recovery-search" type="text" placeholder="Search by keyword or question ID" oninput="renderQ1RecoveryOptions()">
+        </div>
+        <label for="q1-recovery-select" style="display:block;font-size:0.72rem;font-weight:800;color:#5a6b65;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Available Question 1 choices</label>
+        <select id="q1-recovery-select" size="10" onchange="handleQ1RecoverySelect(this.value)"></select>
+        <div class="q2-picker-meta" id="q1-recovery-results-meta">Loading available Question 1 choices…</div>
+      </div>
+      <div class="q2-preview-panel">
+        <div class="q2-preview-empty" id="q1-recovery-empty">
+          <strong>Choose a Question 1 from the list.</strong>
+          <p>The full prompt and a starter search query will appear here before you confirm the repair.</p>
+        </div>
+        <div id="q1-recovery-content" style="display:none;">
+          <div class="q2-topic-meta">
+            <span class="q2-chip q2-chip-outline" id="q1-recovery-domain">Domain</span>
+            <span class="q2-chip q2-chip-outline" id="q1-recovery-coverage">Coverage</span>
+            <span class="q2-chip q2-chip-outline" id="q1-recovery-round">Round</span>
+          </div>
+          <div class="q2-preview-id" id="q1-recovery-id">SQ-000</div>
+          <div class="q2-preview-title" id="q1-recovery-title">Question 1 preview</div>
+          <p class="q2-preview-text" id="q1-recovery-text"></p>
+          <div class="q2-search-helper">
+            <label for="q1-recovery-query">Google Scholar starter query</label>
+            <div class="q2-search-row">
+              <input id="q1-recovery-query" type="text" readonly>
+              <button type="button" class="q2-secondary-btn" onclick="copyInputValue('q1-recovery-query')">Copy</button>
+            </div>
+            <p>This is a starting point only. Add method or population terms after you repair the assignment.</p>
+          </div>
+          <div class="q2-preview-actions" style="margin-top:0.9rem;">
+            <button type="button" class="q2-primary-btn" id="q1-recovery-confirm-btn" onclick="repairQ1Assignment()" disabled>Use this as my Question 1</button>
+            <a id="q1-recovery-link-modal" class="q2-secondary-btn" href="mailto:dkirsh@ucsd.edu?subject=COGS%20160%20Question%201%20recovery">Need human help instead</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="q1-recovery-msg" style="display:none;padding:0.85rem 1rem;border-radius:10px;font-weight:700;margin-top:1rem;"></div>
+  </div>
 </div>
 
 <!-- ── Progress overview ─────────────────────────────────── -->
@@ -420,17 +700,17 @@
     <div class="prog-q-id" id="prog-q1-id">—</div>
     <div class="prog-q-text" id="prog-q1-text">Loading…</div>
     <div class="prog-bar-wrap"><div class="prog-bar" id="prog-bar-q1" style="width:0%"></div></div>
-    <div class="prog-count" id="prog-count-q1">0 / 10 experimental papers</div>
-    <div class="prog-note">⚠ Only papers classified as Experimental count toward your 10</div>
+    <div class="prog-count" id="prog-count-q1">0 / 10 papers</div>
+    <div class="prog-note">All article types count toward your 10</div>
   </div>
   <!-- Q2 card -->
   <div class="prog-card prog-card-mixed" id="prog-q2">
-    <span class="prog-label">Question 2 — Mixed</span>
+    <span class="prog-label">Question 2 — You Choose</span>
     <div class="prog-q-id" id="prog-q2-id">—</div>
-    <div class="prog-q-text" id="prog-q2-text">Loading…</div>
+    <div class="prog-q-text" id="prog-q2-text">Choose your own topic below</div>
     <div class="prog-bar-wrap"><div class="prog-bar" id="prog-bar-q2" style="width:0%"></div></div>
     <div class="prog-count" id="prog-count-q2">0 / 10 papers</div>
-    <div class="prog-note">All article types count toward your 10</div>
+    <div class="prog-note">All article types count — you pick the topic</div>
   </div>
   <!-- Brownie card (hidden until Q2 complete) -->
   <div class="prog-card prog-card-brownie" id="prog-brownie">
@@ -444,10 +724,10 @@
 <div class="tabs-wrap">
   <div class="tabs">
     <button class="tab active" onclick="switchTab('q1', this)">
-      Q1 — Experimental <span class="tab-badge tab-badge-exp">10-EXP</span>
+      Q1 — Papers <span class="tab-badge tab-badge-exp">10</span>
     </button>
-    <button class="tab" onclick="switchTab('q2', this)">
-      Q2 — Open Corpus <span class="tab-badge tab-badge-mixed">MIXED</span>
+    <button class="tab" id="tab-q2" onclick="switchTab('q2', this)">
+      Part 2: Q2 — Open Corpus <span class="tab-badge tab-badge-mixed" id="tab-badge-q2-status">Choose topic</span>
     </button>
     <button class="tab locked" id="tab-brownie" onclick="switchTab('brownie', this)">
       Brownie Questions <span class="tab-badge tab-badge-brownie">⭐</span>
@@ -467,11 +747,13 @@
     <ol style="margin:0;padding-left:1.5rem;font-size:0.93rem;line-height:1.8;">
       <li style="margin-bottom:0.5rem;"><strong>Upload ten APA citations</strong> for <span style="background:#fff3cd;padding:0.1rem 0.4rem;border-radius:3px;font-weight:800;">EXPERIMENT ARTICLES</span> — either one at a time copied into the text box, or upload a file with all 10.</li>
       <li style="margin-bottom:0.5rem;"><strong>Upload the PDFs</strong> that correspond to those citations. Each PDF is classified in real time — you'll see ✓ or ✗ immediately.</li>
-      <li style="margin-bottom:1rem;"><strong>We automatically verify</strong> that they are articles about experiments (not theory, reviews, or meta-analyses) and that they are on the topic we assigned you.</li>
+      <li style="margin-bottom:1rem;"><strong>We automatically verify</strong> that they are articles about experiments (not theory, reviews, or meta-analyses), that they are on the topic we assigned you and that <strong>we do not already have them</strong>.</li>
     </ol>
-    <p style="font-size:0.93rem;line-height:1.7;margin:1rem 0 0;border-top:2px solid #e8e8e8;padding-top:1rem;color:#1a1a1a;">Then:</p>
-    <ol style="margin:1rem 0 0;padding-left:1.5rem;font-size:0.93rem;line-height:1.8;">
-      <li><strong>Create a question</strong> for Google AI Scholar on one of our CNFA Topics and repeat the same APA + PDF upload process — but this time you can upload the 10 articles you think are the best, regardless of article type.</li>
+    <p style="font-size:0.93rem;line-height:1.7;margin:1rem 0 0;border-top:2px solid #e8e8e8;padding-top:1rem;color:#1a1a1a;"><strong>Then, for Q2 — you choose your own topic:</strong></p>
+    <ol style="margin:0.5rem 0 0;padding-left:1.5rem;font-size:0.93rem;line-height:1.8;">
+      <li style="margin-bottom:0.5rem;"><strong>Pick a topic</strong> from the Q2 tab — we'll show you which topics the corpus needs most.</li>
+      <li style="margin-bottom:0.5rem;"><strong>Craft a Google AI Scholar query</strong> from the question text. See the <a href="ka_google_search_guide.html" style="color:#1C3D3A;font-weight:700;">Search Guide</a> for tips.</li>
+      <li><strong>Upload 10 papers</strong> of <em>any type</em> (experimental, review, theoretical, etc.) — all count toward your 10.</li>
     </ol>
   </div>
 
@@ -503,23 +785,44 @@
     </p>
   </div>
 
-  <!-- Brownie offer (appears after Q2 complete) -->
+  <!-- A0 complete: track selection + brownie offer (appears after Q1+Q2 complete) -->
   <div class="brownie-offer" id="brownie-offer">
-    <h3>🎉 Both questions complete! Want a brownie point?</h3>
-    <p>You have met the full requirement. Accept an additional question to earn extra credit — brownie points are taken into account when final grades are assigned. No cap on how many you can earn.</p>
-    <button class="btn-brownie" onclick="acceptBrownie()">Yes, give me a brownie question!</button>
+    <div style="background:linear-gradient(135deg,#1C3D3A,#2A5C58);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;color:#fff;">
+      <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:0.5rem;">Assignment 0 complete!</h3>
+      <p style="font-size:0.92rem;color:#A8C8BF;line-height:1.6;margin-bottom:1rem;">You have met the A0 requirement. Your next step is to <strong style="color:#F5A623;">choose a track</strong> for the rest of the quarter. Each track has different assignments and skills.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="ka_student_setup.html" style="display:inline-block;padding:10px 20px;background:#E8872A;color:#fff;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.9rem;">Choose Your Track</a>
+        <a href="ka_track1_tagging.html" style="padding:10px 14px;border:1.5px solid rgba(255,255,255,0.3);color:#fff;border-radius:6px;text-decoration:none;font-size:0.82rem;">Track 1: Tagging</a>
+        <a href="ka_track2_pipeline.html" style="padding:10px 14px;border:1.5px solid rgba(255,255,255,0.3);color:#fff;border-radius:6px;text-decoration:none;font-size:0.82rem;">Track 2: Articles</a>
+        <a href="ka_track3_vr.html" style="padding:10px 14px;border:1.5px solid rgba(255,255,255,0.3);color:#fff;border-radius:6px;text-decoration:none;font-size:0.82rem;">Track 3: VR</a>
+        <a href="ka_track4_ux.html" style="padding:10px 14px;border:1.5px solid rgba(255,255,255,0.3);color:#fff;border-radius:6px;text-decoration:none;font-size:0.82rem;">Track 4: Interaction</a>
+      </div>
+    </div>
+    <div style="background:#fff;border:2px solid #C69214;border-radius:10px;padding:1.25rem;">
+      <h3 style="font-size:1rem;font-weight:800;color:#182B49;margin-bottom:0.4rem;">Want a brownie point?</h3>
+      <p style="font-size:0.88rem;color:#555;margin-bottom:0.75rem;">Accept an additional question to earn extra credit. Brownie points are taken into account when final grades are assigned. No cap on how many you can earn.</p>
+      <button class="btn-brownie" onclick="acceptBrownie()">Yes, give me a brownie question!</button>
+    </div>
   </div>
 
   <!-- Q1 Tab Panel -->
   <div class="tab-panel active" id="panel-q1">
+    <div class="q1-recovery-card" id="q1-recovery-card">
+      <strong>Question 1 needs repair.</strong> This account does not currently show a valid Question 1 assignment.
+      Open the repair flow to search the available Question 1 prompts and claim one for this account before you upload or classify anything for Part 1.
+      <div class="q1-recovery-actions" style="margin-top:0.8rem;">
+        <button type="button" class="q2-primary-btn" onclick="openQ1RecoveryModal()">Repair Question 1 now</button>
+        <a id="q1-recovery-link" class="q2-secondary-btn" href="mailto:dkirsh@ucsd.edu?subject=COGS%20160%20Question%201%20recovery">Ask instructor for help</a>
+      </div>
+    </div>
     <div class="alert alert-warn" id="alert-q1">
-      <strong>Note for Q1:</strong> You must collect <strong>10 papers classified as Experimental</strong>.
+      <strong>Note for Q1:</strong> You must collect <strong>10 papers</strong> (any type).
       Papers of other types (reviews, theoretical, case studies) are stored and count toward the K-ATLAS
       corpus, but they do not count toward your personal requirement of 10.
     </div>
 
     <!-- Manifest Upload Toggle & Form -->
-    <button class="manifest-toggle collapsed" onclick="toggleManifest('q1', this)">
+    <button class="manifest-toggle collapsed" id="manifest-toggle-q1" onclick="toggleManifest('q1', this)">
       <span class="manifest-toggle-icon">▶</span> Use CSV Manifest ↓
     </button>
     <div class="manifest-upload-area" id="manifest-area-q1">
@@ -534,7 +837,7 @@
       <div class="manifest-status" id="manifest-status-q1"></div>
     </div>
 
-    <div class="upload-zone" id="dropzone-q1" onclick="document.getElementById('file-input-q1').click()">
+    <div class="upload-zone" id="dropzone-q1" onclick="triggerUploadPicker('q1')">
       <div class="upload-icon">📂</div>
       <p><strong>Drop PDFs here</strong> or click to browse</p>
       <p style="margin-top:0.3rem; font-size:0.8rem;">Multiple files accepted · PDF only</p>
@@ -547,7 +850,7 @@
 
     <div class="fetch-bar">
       <button class="btn-fetch" id="btn-fetch-q1" onclick="fetchAbstracts('q1')" disabled>
-        <span>Fetch Abstracts &amp; Classify</span>
+        <span>Fetch Abstracts, Check Duplicates &amp; Classify</span>
         <div class="spinner" id="spinner-q1"></div>
       </button>
       <span class="fetch-note" id="fetch-note-q1">Upload PDFs above to activate this button</span>
@@ -574,12 +877,12 @@
 
     <div class="empty-state" id="empty-q1">
       <div class="empty-icon">🔍</div>
-      <p>Upload PDFs and click "Fetch Abstracts &amp; Classify" to see your papers here.</p>
+      <p>Upload PDFs and click "Fetch Abstracts, Check Duplicates &amp; Classify" to see your papers here. Duplicate articles already in the corpus will not count toward your total.</p>
     </div>
 
     <!-- Title-Only Papers Section -->
     <div class="title-only-section">
-      <button class="title-only-toggle collapsed" onclick="toggleTitleOnly('q1', this)">
+      <button class="title-only-toggle collapsed" id="title-toggle-q1" onclick="toggleTitleOnly('q1', this)">
         <span class="title-only-toggle-icon">▶</span> Can't find the PDF? Record the title anyway
       </button>
       <div class="title-only-form" id="title-only-form-q1">
@@ -593,13 +896,122 @@
 
   <!-- Q2 Tab Panel -->
   <div class="tab-panel" id="panel-q2">
+    <div class="q2-workflow-card" id="q2-chooser">
+      <div class="q2-workflow-header">
+        <div>
+          <span class="q2-kicker">Part 2 Workflow</span>
+          <h3 style="font-size:1.18rem;color:#1C3D3A;margin-bottom:0.4rem;">Step 1: Choose your Question 2 topic before you upload anything</h3>
+          <p style="font-size:0.9rem;color:#495a55;line-height:1.65;max-width:760px;">
+            Question 2 is not preassigned. You must first choose one K-ATLAS topic, confirm it, and then collect 10 papers for that topic.
+            All article types count for Part 2.
+          </p>
+        </div>
+        <div class="q2-status-pill" id="q2-status-pill">Topic required</div>
+      </div>
+      <div class="q2-step-grid">
+        <div class="q2-step-card">
+          <strong>1. Choose a topic</strong>
+          <span>Filter the topic list, preview the full question, then confirm it for Part 2.</span>
+        </div>
+        <div class="q2-step-card">
+          <strong>2. Search for papers</strong>
+          <span>Use the Google Scholar starter query below, then refine it with population or method terms.</span>
+        </div>
+        <div class="q2-step-card">
+          <strong>3. Upload PDFs or citations</strong>
+          <span>The Part 2 upload tools unlock only after your topic is confirmed.</span>
+        </div>
+        <div class="q2-step-card">
+          <strong>4. Fetch abstracts and classify</strong>
+          <span>We check the papers and add them to your Question 2 progress.</span>
+        </div>
+      </div>
+      <div class="q2-picker-grid">
+        <div class="q2-picker-panel">
+          <label style="display:block;font-size:0.72rem;font-weight:800;color:#5a6b65;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Filter Question Choices</label>
+          <div class="q2-filter-row">
+            <input id="q2-topic-search" type="text" placeholder="Search by keyword or question ID" oninput="renderQ2TopicPicker()">
+            <select id="q2-need-filter" onchange="renderQ2TopicPicker()">
+              <option value="all">All need levels</option>
+              <option value="high">High need only</option>
+              <option value="high-medium">High + medium need</option>
+            </select>
+          </div>
+          <label for="q2-topic-select" style="display:block;font-size:0.72rem;font-weight:800;color:#5a6b65;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;">Question 2 choices</label>
+          <select id="q2-topic-select" size="10" onchange="handleQ2TopicSelect(this.value)"></select>
+          <div class="q2-picker-meta" id="q2-topic-results-meta">Loading available Question 2 topics…</div>
+        </div>
+        <div class="q2-preview-panel" id="q2-topic-preview">
+          <div class="q2-preview-empty" id="q2-preview-empty">
+            <strong>Choose a topic from the dropdown.</strong>
+            <p>We will show the full question here before you confirm it for Part 2.</p>
+          </div>
+          <div id="q2-preview-content" style="display:none;">
+            <div class="q2-topic-meta">
+              <span class="q2-chip q2-chip-outline" id="q2-preview-need">Need level</span>
+              <span class="q2-chip q2-chip-outline" id="q2-preview-domain">Domain</span>
+              <span class="q2-chip q2-chip-outline" id="q2-preview-papers">Corpus count</span>
+            </div>
+            <div class="q2-preview-id" id="q2-preview-id">SQ-000</div>
+            <div class="q2-preview-title" id="q2-preview-title">Topic preview</div>
+            <p class="q2-preview-text" id="q2-preview-text"></p>
+            <div class="q2-search-helper">
+              <label for="q2-preview-query">Google Scholar starter query</label>
+              <div class="q2-search-row">
+                <input id="q2-preview-query" type="text" readonly>
+                <button type="button" class="q2-secondary-btn" onclick="copyQ2PreviewQuery()">Copy</button>
+              </div>
+              <p>Use this as a starting point, then add method or population terms. <a href="ka_google_search_guide.html">Open Search Guide</a></p>
+            </div>
+            <div class="q2-preview-actions" style="margin-top:0.9rem;">
+              <button type="button" class="q2-primary-btn" id="q2-confirm-btn" onclick="confirmSelectedQ2()" disabled>Use this for Question 2</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="q2-chosen-msg" style="display:none;padding:0.85rem 1rem;border-radius:10px;font-weight:700;margin-top:1rem;"></div>
+    </div>
+    <div class="q2-selected-card" id="q2-selected-card">
+      <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-start;">
+        <div>
+          <span class="q2-kicker">Selected Topic</span>
+          <h3 style="font-size:1.08rem;color:#182B49;margin-bottom:0.35rem;">Step 1 complete: Part 2 uploads are unlocked</h3>
+          <p style="font-size:0.88rem;color:#667570;line-height:1.55;">All Part 2 uploads below will be matched to this Question 2 topic.</p>
+        </div>
+        <div class="q2-selected-actions">
+          <button type="button" class="q2-secondary-btn" onclick="openQ2Chooser()">Choose a different topic</button>
+          <button type="button" class="q2-primary-btn" onclick="searchQ2InScholar()">Search in Google Scholar</button>
+        </div>
+      </div>
+      <div class="q2-topic-meta" style="margin-top:0.85rem;">
+        <span class="q2-chip q2-chip-outline" id="q2-selected-need">Need level</span>
+        <span class="q2-chip q2-chip-outline" id="q2-selected-domain">Domain</span>
+        <span class="q2-chip q2-chip-outline" id="q2-selected-papers">Corpus count</span>
+      </div>
+      <div class="q2-preview-id" id="q2-selected-id">SQ-000</div>
+      <div class="q2-preview-title" id="q2-selected-title">Chosen Question 2</div>
+      <p class="q2-selected-text" id="q2-selected-text"></p>
+      <div class="q2-search-helper">
+        <label for="q2-search-query">Google Scholar starter query</label>
+        <div class="q2-search-row">
+          <input id="q2-search-query" type="text" readonly>
+          <button type="button" class="q2-secondary-btn" onclick="copyQ2SearchQuery()">Copy</button>
+        </div>
+        <p>This gives students a concrete place to begin. They can then refine the query using the <a href="ka_google_search_guide.html">Search Guide</a>.</p>
+      </div>
+    </div>
+    <div class="q2-lock-notice visible" id="q2-lock-notice">
+      <strong>Part 2 is locked until you choose a Question 2 topic.</strong> Pick and confirm your topic above first.
+    </div>
+
     <div class="alert alert-info" id="alert-q2" style="display:block">
-      <strong>Q2 — Open Corpus:</strong> All article types count toward your 10. Experimental, review,
-      theoretical, and other types are all welcome.
+      <strong>Q2 — Open Corpus:</strong> once you confirm your topic, all article types count toward your 10.
+      Experimental, review, theoretical, and other types are all welcome.
+      <strong>But only articles we do not already have count toward your 10.</strong>
     </div>
 
     <!-- Manifest Upload Toggle & Form -->
-    <button class="manifest-toggle collapsed" onclick="toggleManifest('q2', this)">
+    <button class="manifest-toggle collapsed" id="manifest-toggle-q2" onclick="toggleManifest('q2', this)">
       <span class="manifest-toggle-icon">▶</span> Use CSV Manifest ↓
     </button>
     <div class="manifest-upload-area" id="manifest-area-q2">
@@ -614,7 +1026,7 @@
       <div class="manifest-status" id="manifest-status-q2"></div>
     </div>
 
-    <div class="upload-zone" id="dropzone-q2" onclick="document.getElementById('file-input-q2').click()">
+    <div class="upload-zone locked" id="dropzone-q2" onclick="triggerUploadPicker('q2')">
       <div class="upload-icon">📂</div>
       <p><strong>Drop PDFs here</strong> or click to browse</p>
       <p style="margin-top:0.3rem; font-size:0.8rem;">Multiple files accepted · PDF only</p>
@@ -625,10 +1037,10 @@
 
     <div class="fetch-bar">
       <button class="btn-fetch" id="btn-fetch-q2" onclick="fetchAbstracts('q2')" disabled>
-        <span>Fetch Abstracts &amp; Classify</span>
+        <span>Fetch Abstracts, Check Duplicates &amp; Classify</span>
         <div class="spinner" id="spinner-q2"></div>
       </button>
-      <span class="fetch-note" id="fetch-note-q2">Upload PDFs above to activate this button</span>
+      <span class="fetch-note" id="fetch-note-q2">Choose your Question 2 topic first to unlock uploads.</span>
     </div>
 
     <div class="results-wrap" id="results-q2-wrap" style="display:none">
@@ -650,12 +1062,12 @@
 
     <div class="empty-state" id="empty-q2">
       <div class="empty-icon">🔍</div>
-      <p>Upload PDFs and click "Fetch Abstracts &amp; Classify" to see your papers here.</p>
+      <p>Upload PDFs and click "Fetch Abstracts, Check Duplicates &amp; Classify" to see your papers here. Duplicate articles already in the corpus will not count toward your total.</p>
     </div>
 
     <!-- Title-Only Papers Section -->
     <div class="title-only-section">
-      <button class="title-only-toggle collapsed" onclick="toggleTitleOnly('q2', this)">
+      <button class="title-only-toggle collapsed" id="title-toggle-q2" onclick="toggleTitleOnly('q2', this)">
         <span class="title-only-toggle-icon">▶</span> Can't find the PDF? Record the title anyway
       </button>
       <div class="title-only-form" id="title-only-form-q2">
@@ -679,15 +1091,24 @@
 
 <script>
 // ── State ─────────────────────────────────────────────────
-const API = '/api';
+const API = '';  // Auth server serves at root: /auth/login, /api/student/*, /api/articles/*
 let studentId = null;
 let assignments = { q1: null, q2: null, brownie: [] };
 let pendingFiles = { q1: [], q2: [] };
 let results = { q1: [], q2: [] };
 let manifests = { q1: new Map(), q2: new Map() };  // filename -> {apa_citation, doi}
 let titleOnlyEntries = { q1: [], q2: [] };  // array of {title, doi, apa_citation}
+let q2Topics = [];
+let selectedQ2TopicId = '';
+let q1RecoveryOptions = [];
+let selectedQ1RecoveryId = '';
 
 // ── Auth ──────────────────────────────────────────────────
+function clearLegacyAuthState() {
+  localStorage.removeItem('katlas_token');
+  localStorage.removeItem('katlas_user');
+}
+
 async function handleLogin() {
   const email = document.getElementById('login-user').value.trim();
   const pass = document.getElementById('login-pass').value;
@@ -701,10 +1122,14 @@ async function handleLogin() {
     });
     if (!resp.ok) throw new Error('Invalid credentials');
     const data = await resp.json();
-    localStorage.setItem('katlas_token', data.access_token);
-    localStorage.setItem('katlas_user', email);
+    clearLegacyAuthState();
+    localStorage.setItem('ka_access_token', data.access_token);
+    localStorage.setItem('ka_refresh_token', data.refresh_token || '');
+    localStorage.setItem('ka_logged_in', '1');
+    sessionStorage.setItem('ka_logged_in', '1');
+    localStorage.setItem('ka_current_user', JSON.stringify(data.user || { email: email }));
     document.getElementById('login-overlay').style.display = 'none';
-    studentId = email;
+    studentId = data.user?.email || email;
     initPage();
   } catch (e) {
     document.getElementById('login-error').style.display = 'block';
@@ -712,21 +1137,521 @@ async function handleLogin() {
 }
 
 function handleLogout() {
-  localStorage.removeItem('katlas_token');
-  localStorage.removeItem('katlas_user');
+  clearLegacyAuthState();
+  localStorage.removeItem('ka_access_token');
+  localStorage.removeItem('ka_refresh_token');
+  localStorage.removeItem('ka_current_user');
+  localStorage.removeItem('ka_logged_in');
+  sessionStorage.removeItem('ka_logged_in');
   window.location.reload();
+}
+
+// ── Password visibility toggle (universal)
+function togglePwdVis(btn) {
+  const inp = btn.parentElement.querySelector('input');
+  if (inp.type === 'password') { inp.type = 'text'; btn.innerHTML = '&#128064;'; btn.setAttribute('aria-label','Hide password'); }
+  else { inp.type = 'password'; btn.innerHTML = '&#128065;'; btn.setAttribute('aria-label','Show password'); }
+}
+
+// ── Resolve token and user from the canonical KA auth session
+function getToken() {
+  return localStorage.getItem('ka_access_token') || '';
+}
+function getUser() {
+  try {
+    const obj = JSON.parse(localStorage.getItem('ka_current_user') || 'null');
+    return obj ? (obj.email || obj.user_id || '') : '';
+  } catch(e) { return ''; }
+}
+function getUserDisplayName() {
+  try {
+    const obj = JSON.parse(localStorage.getItem('ka_current_user') || 'null');
+    if (obj && (obj.first_name || obj.firstName)) return (obj.first_name || obj.firstName) + ' ' + (obj.last_name || obj.lastName || '');
+    if (obj && obj.email) return obj.email;
+  } catch(e) {}
+  return '';
+}
+
+function getDefaultFetchNote(which) {
+  if (which === 'q2' && !assignments.q2) return 'Choose your Question 2 topic first to unlock uploads.';
+  if (which === 'q1' && !assignments.q1) return 'Question 1 is missing from this account. Use the recovery instructions above.';
+  return 'Upload PDFs above to activate this button';
+}
+
+function setFetchNote(which, text, color) {
+  const note = document.getElementById(`fetch-note-${which}`);
+  if (!note) return;
+  note.textContent = text;
+  note.style.color = color || '';
+}
+
+function setWorkspaceLocked(which, locked, noteText) {
+  const zone = document.getElementById(`dropzone-${which}`);
+  const input = document.getElementById(`file-input-${which}`);
+  const manifestInput = document.getElementById(`manifest-input-${which}`);
+  const manifestToggle = document.getElementById(`manifest-toggle-${which}`);
+  const titleToggle = document.getElementById(`title-toggle-${which}`);
+  const fetchBtn = document.getElementById(`btn-fetch-${which}`);
+  if (zone) zone.classList.toggle('locked', locked);
+  if (input) input.disabled = locked;
+  if (manifestInput) manifestInput.disabled = locked;
+  if (manifestToggle) manifestToggle.disabled = locked;
+  if (titleToggle) titleToggle.disabled = locked;
+  if (locked) {
+    const manifestArea = document.getElementById(`manifest-area-${which}`);
+    const titleForm = document.getElementById(`title-only-form-${which}`);
+    if (manifestArea) manifestArea.classList.remove('open');
+    if (titleForm) titleForm.classList.remove('open');
+    if (manifestToggle) manifestToggle.classList.add('collapsed');
+    if (titleToggle) titleToggle.classList.add('collapsed');
+  }
+  if (fetchBtn) fetchBtn.disabled = locked || pendingFiles[which].filter(Boolean).length === 0;
+  if (locked) {
+    setFetchNote(which, noteText || getDefaultFetchNote(which), '#8a4000');
+  } else {
+    const total = pendingFiles[which].filter(Boolean).length;
+    if (total > 0) {
+      setFetchNote(which, `${total} PDF${total > 1 ? 's' : ''} ready — click to fetch abstracts`);
+    } else {
+      setFetchNote(which, getDefaultFetchNote(which));
+    }
+  }
+  if (which === 'q2') {
+    const lockNotice = document.getElementById('q2-lock-notice');
+    if (lockNotice) lockNotice.classList.toggle('visible', locked);
+  }
+}
+
+function buildQ1RecoveryHref() {
+  const currentEmail = studentId || getUser() || '';
+  const body = [
+    `Registered email: ${currentEmail}`,
+    '',
+    'What happened:',
+    'My Question 1 is missing, or it is not the same Question 1 I had before the login problems.',
+    '',
+    'Previous Question 1 ID or text (if known):',
+    '',
+    'Any old screenshot, citation list, or PDF filenames:'
+  ].join('\n');
+  return `mailto:dkirsh@ucsd.edu?subject=${encodeURIComponent('COGS 160 Question 1 recovery')}&body=${encodeURIComponent(body)}`;
+}
+
+function setQ1RecoveryLinks() {
+  const href = buildQ1RecoveryHref();
+  ['q1-recovery-link', 'q1-recovery-link-inline', 'q1-recovery-link-modal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = href;
+  });
+}
+
+function showQ1RecoveryState() {
+  const card = document.getElementById('q1-recovery-card');
+  if (card) card.classList.add('visible');
+  setQ1RecoveryLinks();
+  document.getElementById('prog-q1-id').textContent = 'Assignment missing';
+  document.getElementById('prog-q1-text').textContent = 'Question 1 is missing from this account, or it does not match the student’s original assignment.';
+  setWorkspaceLocked('q1', true, 'Question 1 is missing from this account. Stop here and use the recovery instructions above.');
+}
+
+function hideQ1RecoveryState() {
+  const card = document.getElementById('q1-recovery-card');
+  if (card) card.classList.remove('visible');
+  setWorkspaceLocked('q1', false);
+}
+
+function showQ1RecoveryMessage(message, kind) {
+  const msg = document.getElementById('q1-recovery-msg');
+  if (!msg) return;
+  msg.style.display = 'block';
+  if (kind === 'error') {
+    msg.style.background = '#f8d7da';
+    msg.style.color = '#721c24';
+  } else {
+    msg.style.background = '#d4edda';
+    msg.style.color = '#155724';
+  }
+  msg.textContent = message;
+}
+
+function closeQ1RecoveryModal() {
+  const modal = document.getElementById('q1-recovery-modal');
+  if (!modal) return;
+  modal.classList.remove('visible');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function openQ1RecoveryModal() {
+  const modal = document.getElementById('q1-recovery-modal');
+  const current = document.getElementById('q1-recovery-current');
+  if (!modal || !current) return;
+  const q1 = assignments.q1;
+  current.textContent = q1
+    ? `Current Question 1: ${q1.question_id} — ${q1.question_text}. If this is wrong, choose a replacement below.`
+    : 'No valid Question 1 is currently attached to this account. Choose one below to unlock Part 1.';
+  setQ1RecoveryLinks();
+  showQ1RecoveryMessage('Search for the closest valid Question 1, then confirm it below.', 'success');
+  modal.classList.add('visible');
+  modal.setAttribute('aria-hidden', 'false');
+  loadQ1RecoveryOptions();
+}
+
+function getNeedMeta(level) {
+  const normalized = String(level || '').toLowerCase();
+  if (normalized === 'high') return { label: 'High need', className: 'q2-chip-high' };
+  if (normalized === 'medium') return { label: 'Medium need', className: 'q2-chip-medium' };
+  return { label: 'Good coverage', className: 'q2-chip-good' };
+}
+
+function setQ2Chip(id, text, className) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = `q2-chip ${className || 'q2-chip-outline'}`;
+}
+
+function getQ2TopicById(questionId) {
+  return q2Topics.find(t => t.question_id === questionId) || null;
+}
+
+function getQ1RecoveryOptionById(questionId) {
+  return q1RecoveryOptions.find(t => t.question_id === questionId) || null;
+}
+
+function buildScholarStarter(topic) {
+  const base = [topic?.label, topic?.question_text, topic?.text, topic?.domain].filter(Boolean).join(' ');
+  const stopWords = new Set(['what', 'which', 'that', 'with', 'from', 'their', 'there', 'into', 'about', 'using', 'used', 'show', 'shows', 'evidence', 'demonstrates', 'demonstrate', 'experimental', 'longitudinal', 'study', 'studies', 'among', 'across', 'predict', 'predicts', 'lower', 'higher', 'jointly']);
+  const tokens = base
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(token => token.length > 3 && !stopWords.has(token));
+  const keywords = [];
+  tokens.forEach(token => {
+    if (!keywords.includes(token)) keywords.push(token);
+  });
+  const label = (topic?.label || '').trim();
+  const core = keywords.slice(0, 6).join(' ');
+  return [label ? `"${label}"` : '', core].filter(Boolean).join(' ').trim() || topic?.question_id || '';
+}
+
+function updateQ1RecoveryPreview(topic) {
+  const empty = document.getElementById('q1-recovery-empty');
+  const content = document.getElementById('q1-recovery-content');
+  const confirmBtn = document.getElementById('q1-recovery-confirm-btn');
+  if (!topic) {
+    selectedQ1RecoveryId = '';
+    if (empty) empty.style.display = 'flex';
+    if (content) content.style.display = 'none';
+    if (confirmBtn) confirmBtn.disabled = true;
+    return;
+  }
+  selectedQ1RecoveryId = topic.question_id;
+  if (empty) empty.style.display = 'none';
+  if (content) content.style.display = 'block';
+  const totalArticles = Number(topic.total_articles ?? ((topic.total_experimental || 0) + (topic.total_any_type || 0)));
+  document.getElementById('q1-recovery-id').textContent = topic.question_id || 'Question 1';
+  document.getElementById('q1-recovery-title').textContent = topic.label || 'Selected Question 1';
+  document.getElementById('q1-recovery-text').textContent = topic.question_text || topic.text || '';
+  document.getElementById('q1-recovery-query').value = buildScholarStarter(topic);
+  setQ2Chip('q1-recovery-domain', topic.domain ? `Domain: ${topic.domain}` : 'Domain pending');
+  setQ2Chip('q1-recovery-coverage', `${totalArticles} papers currently linked`, 'q2-chip-outline');
+  setQ2Chip('q1-recovery-round', `Round ${topic.round || 'current'}`, 'q2-chip-outline');
+  if (confirmBtn) confirmBtn.disabled = false;
+}
+
+function renderQ1RecoveryOptions() {
+  const select = document.getElementById('q1-recovery-select');
+  const meta = document.getElementById('q1-recovery-results-meta');
+  if (!select || !meta) return;
+  const search = (document.getElementById('q1-recovery-search')?.value || '').trim().toLowerCase();
+  const filtered = q1RecoveryOptions.filter(topic => {
+    if (!search) return true;
+    const haystack = [topic.question_id, topic.label, topic.text, topic.domain].filter(Boolean).join(' ').toLowerCase();
+    return haystack.includes(search);
+  });
+  select.innerHTML = '';
+  if (!filtered.length) {
+    meta.textContent = 'No Question 1 choices match that search.';
+    updateQ1RecoveryPreview(null);
+    return;
+  }
+  filtered.forEach(topic => {
+    const option = document.createElement('option');
+    option.value = topic.question_id;
+    option.textContent = `${topic.question_id} · ${topic.label || (topic.text || '').slice(0, 90)}`;
+    if (topic.question_id === selectedQ1RecoveryId) option.selected = true;
+    select.appendChild(option);
+  });
+  meta.textContent = `Showing ${filtered.length} available Question 1 choice${filtered.length === 1 ? '' : 's'} in the current round.`;
+  const active = filtered.find(topic => topic.question_id === selectedQ1RecoveryId) || filtered[0];
+  select.value = active.question_id;
+  updateQ1RecoveryPreview(active);
+}
+
+function handleQ1RecoverySelect(questionId) {
+  updateQ1RecoveryPreview(getQ1RecoveryOptionById(questionId));
+}
+
+async function loadQ1RecoveryOptions(forceRefresh) {
+  if (q1RecoveryOptions.length > 0 && !forceRefresh) {
+    renderQ1RecoveryOptions();
+    return;
+  }
+  const token = getToken();
+  const meta = document.getElementById('q1-recovery-results-meta');
+  const select = document.getElementById('q1-recovery-select');
+  if (select) select.innerHTML = '';
+  if (meta) meta.textContent = 'Loading available Question 1 choices…';
+  try {
+    const resp = await fetch('/api/student/q1-options', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await resp.json();
+    if (resp.status === 401) { handleLogout(); return; }
+    if (!resp.ok) throw new Error(data.detail || 'Could not load Question 1 choices.');
+    q1RecoveryOptions = data.options || [];
+    q1RecoveryOptions.forEach(option => {
+      option.total_articles = Number(option.total_articles ?? ((option.total_experimental || 0) + (option.total_any_type || 0)));
+    });
+    renderQ1RecoveryOptions();
+  } catch (e) {
+    if (meta) meta.textContent = 'Could not load Question 1 choices. Please refresh or ask the instructor.';
+    showQ1RecoveryMessage('Could not load Question 1 repair choices right now. Please refresh or ask the instructor.', 'error');
+  }
+}
+
+async function repairQ1Assignment() {
+  if (!selectedQ1RecoveryId) {
+    showQ1RecoveryMessage('Choose a Question 1 from the list first.', 'error');
+    return;
+  }
+  const token = getToken();
+  const btn = document.getElementById('q1-recovery-confirm-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Repairing…';
+  }
+  try {
+    const resp = await fetch('/api/student/repair-q1', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ question_id: selectedQ1RecoveryId })
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      showQ1RecoveryMessage(data.detail || 'Could not repair Question 1.', 'error');
+      return;
+    }
+    showQ1RecoveryMessage(data.message || `Question 1 repaired: ${data.question_id}.`, 'success');
+    await initPage();
+    if (assignments.q1) {
+      document.getElementById('q1-recovery-current').textContent =
+        `Current Question 1: ${assignments.q1.question_id} — ${assignments.q1.question_text}. Part 1 is unlocked again.`;
+    }
+  } catch (e) {
+    showQ1RecoveryMessage('Server error while repairing Question 1. Please try again.', 'error');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Use this as my Question 1';
+    }
+  }
+}
+
+function updateQ2TabStatus(isChosen) {
+  const badge = document.getElementById('tab-badge-q2-status');
+  const pill = document.getElementById('q2-status-pill');
+  if (badge) badge.textContent = isChosen ? 'Chosen' : 'Choose topic';
+  if (pill) {
+    pill.textContent = isChosen ? 'Topic chosen' : 'Topic required';
+    pill.classList.toggle('ready', isChosen);
+  }
+}
+
+function showQ2Message(message, kind) {
+  const msg = document.getElementById('q2-chosen-msg');
+  if (!msg) return;
+  msg.style.display = 'block';
+  if (kind === 'error') {
+    msg.style.background = '#f8d7da';
+    msg.style.color = '#721c24';
+  } else {
+    msg.style.background = '#d4edda';
+    msg.style.color = '#155724';
+  }
+  msg.textContent = message;
+}
+
+function updateQ2Preview(topic) {
+  const empty = document.getElementById('q2-preview-empty');
+  const content = document.getElementById('q2-preview-content');
+  const confirmBtn = document.getElementById('q2-confirm-btn');
+  if (!topic) {
+    selectedQ2TopicId = '';
+    if (empty) empty.style.display = 'flex';
+    if (content) content.style.display = 'none';
+    if (confirmBtn) confirmBtn.disabled = true;
+    return;
+  }
+  selectedQ2TopicId = topic.question_id;
+  if (empty) empty.style.display = 'none';
+  if (content) content.style.display = 'block';
+  const need = getNeedMeta(topic.need_level);
+  const questionText = topic.question_text || topic.text || '';
+  document.getElementById('q2-preview-id').textContent = topic.question_id || 'Question 2';
+  document.getElementById('q2-preview-title').textContent = topic.label || 'Selected topic';
+  document.getElementById('q2-preview-text').textContent = questionText;
+  document.getElementById('q2-preview-query').value = buildScholarStarter({ ...topic, question_text: questionText });
+  setQ2Chip('q2-preview-need', need.label, need.className);
+  setQ2Chip('q2-preview-domain', topic.domain ? `Domain: ${topic.domain}` : 'Domain pending');
+  setQ2Chip('q2-preview-papers', Number.isFinite(topic.total_articles) ? `${topic.total_articles} papers in corpus` : 'Corpus count pending');
+  if (confirmBtn) confirmBtn.disabled = false;
+}
+
+function updateQ2SelectedCard(data) {
+  const card = document.getElementById('q2-selected-card');
+  if (!card) return;
+  if (!data) {
+    card.classList.remove('visible');
+    return;
+  }
+  const enriched = { ...(getQ2TopicById(data.question_id) || {}), ...data };
+  const questionText = enriched.question_text || enriched.text || '';
+  const need = getNeedMeta(enriched.need_level);
+  card.classList.add('visible');
+  document.getElementById('q2-selected-id').textContent = enriched.question_id || 'Question 2';
+  document.getElementById('q2-selected-title').textContent = enriched.label || 'Chosen Question 2';
+  document.getElementById('q2-selected-text').textContent = questionText;
+  document.getElementById('q2-search-query').value = buildScholarStarter({ ...enriched, question_text: questionText });
+  setQ2Chip('q2-selected-need', need.label, need.className);
+  setQ2Chip('q2-selected-domain', enriched.domain ? `Domain: ${enriched.domain}` : 'Domain pending');
+  setQ2Chip('q2-selected-papers', Number.isFinite(enriched.total_articles) ? `${enriched.total_articles} papers in corpus` : 'Corpus count pending');
+}
+
+function renderQ2TopicPicker() {
+  const select = document.getElementById('q2-topic-select');
+  const meta = document.getElementById('q2-topic-results-meta');
+  if (!select || !meta) return;
+  const search = (document.getElementById('q2-topic-search')?.value || '').trim().toLowerCase();
+  const needFilter = document.getElementById('q2-need-filter')?.value || 'all';
+  const order = { high: 0, medium: 1, low: 2 };
+  const filtered = q2Topics
+    .filter(topic => {
+      if (needFilter === 'high' && topic.need_level !== 'high') return false;
+      if (needFilter === 'high-medium' && !['high', 'medium'].includes(topic.need_level)) return false;
+      if (!search) return true;
+      const haystack = [topic.question_id, topic.label, topic.text, topic.domain].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(search);
+    })
+    .sort((a, b) => {
+      const orderDiff = (order[a.need_level] ?? 9) - (order[b.need_level] ?? 9);
+      if (orderDiff !== 0) return orderDiff;
+      return (a.total_articles ?? 9999) - (b.total_articles ?? 9999);
+    });
+
+  select.innerHTML = '';
+  if (!filtered.length) {
+    meta.textContent = 'No topics match the current search filters.';
+    updateQ2Preview(null);
+    return;
+  }
+
+  filtered.forEach(topic => {
+    const option = document.createElement('option');
+    const label = topic.label || (topic.text || '').slice(0, 90);
+    option.value = topic.question_id;
+    option.textContent = `${topic.question_id} · ${label}`;
+    if (topic.question_id === selectedQ2TopicId) option.selected = true;
+    select.appendChild(option);
+  });
+
+  meta.textContent = `Showing ${filtered.length} topic${filtered.length === 1 ? '' : 's'}. High-need topics appear first.`;
+  const activeTopic = filtered.find(topic => topic.question_id === selectedQ2TopicId) || filtered[0];
+  select.value = activeTopic.question_id;
+  updateQ2Preview(activeTopic);
+}
+
+function handleQ2TopicSelect(questionId) {
+  updateQ2Preview(getQ2TopicById(questionId));
+}
+
+function hasQ2WorkInProgress() {
+  return pendingFiles.q2.some(Boolean) || results.q2.length > 0 || titleOnlyEntries.q2.some(entry => entry.title || entry.apa || entry.doi);
+}
+
+function openQ2Chooser() {
+  if (assignments.q2 && hasQ2WorkInProgress()) {
+    const proceed = window.confirm('You already have Part 2 uploads or results on screen. Change the topic only if the instructor told you to do so.');
+    if (!proceed) return;
+  }
+  document.getElementById('q2-chooser').style.display = 'block';
+  showQ2Message('Choose a Question 2 topic, review the full prompt, and then confirm it to unlock Part 2.', 'success');
+  loadTopicsNeeded();
+  document.getElementById('q2-chooser').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyInputValue(inputId) {
+  const input = document.getElementById(inputId);
+  if (!input || !input.value) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(input.value).catch(() => {
+      input.select();
+      document.execCommand('copy');
+    });
+  } else {
+    input.select();
+    document.execCommand('copy');
+  }
+}
+
+function copyQ2PreviewQuery() { copyInputValue('q2-preview-query'); }
+function copyQ2SearchQuery() { copyInputValue('q2-search-query'); }
+
+function searchQ2InScholar() {
+  const query = document.getElementById('q2-search-query')?.value || document.getElementById('q2-preview-query')?.value || '';
+  if (!query) return;
+  window.open(`https://scholar.google.com/scholar?q=${encodeURIComponent(query)}`, '_blank', 'noopener');
+}
+
+function confirmSelectedQ2() {
+  if (!selectedQ2TopicId) {
+    showQ2Message('Choose a topic from the Question 2 dropdown first.', 'error');
+    return;
+  }
+  chooseQ2(selectedQ2TopicId);
+}
+
+function ensureQuestionReady(which) {
+  if (which === 'q1' && assignments.q1) return true;
+  if (which === 'q2' && assignments.q2) return true;
+  if (which === 'q1') {
+    showQ1RecoveryState();
+    openQ1RecoveryModal();
+  } else {
+    document.getElementById('q2-lock-notice').classList.add('visible');
+    openQ2Chooser();
+  }
+  return false;
+}
+
+function triggerUploadPicker(which) {
+  if (!ensureQuestionReady(which)) return;
+  document.getElementById(`file-input-${which}`).click();
 }
 
 // ── Page init ─────────────────────────────────────────────
 async function initPage() {
-  const token = localStorage.getItem('katlas_token');
-  const user = localStorage.getItem('katlas_user');
+  const token = getToken();
+  const user = getUser();
   if (!token || !user) return;
 
   studentId = user;
+  setQ1RecoveryLinks();
   document.getElementById('login-overlay').style.display = 'none';
-  document.getElementById('display-name').textContent = user;
-  document.getElementById('hero-name').textContent = user;
+  const displayName = getUserDisplayName();
+  const dn = document.getElementById('display-name'); if (dn) dn.textContent = displayName;
+  document.getElementById('hero-name').textContent = displayName;
 
   // Load assignments from API
   try {
@@ -743,39 +1668,100 @@ async function initPage() {
     if (data.both_complete) showBrownieOffer();
     document.getElementById('hero-status').textContent = 'Your questions are assigned — start searching!';
   } catch (e) {
-    document.getElementById('hero-status').textContent = 'Unable to load assignments — please refresh.';
-    // Demo mode: show sample data when server is unreachable
-    loadDemoData();
+    document.getElementById('hero-status').textContent = 'Authenticated, but your assignments could not be loaded. Please refresh or contact the instructor.';
   }
-}
-
-function loadDemoData() {
-  // Demo mode for development / screenshots
-  const demo = {
-    q1: { question_id: 'SQ-037', question_text: 'What neuroimaging evidence demonstrates that default mode network deactivation during spatial navigation tasks is modulated by the visual complexity and wayfinding legibility of indoor architectural environments?', question_type: '10-exp', qualifying_count: 3 },
-    q2: { question_id: 'SQ-052', question_text: 'What experimental or longitudinal evidence shows that residential greenery exposure and neighbourhood walkability jointly predict lower depression symptom severity in urban adults?', question_type: 'mixed', qualifying_count: 7 },
-    brownie: []
-  };
-  renderAssignments(demo);
-  updateProgress('q1', 3, 10);
-  updateProgress('q2', 7, 10);
-  document.getElementById('alert-q1').style.display = 'block';
-  document.getElementById('hero-status').textContent = 'Demo mode — connect to K-ATLAS server to submit papers.';
 }
 
 function renderAssignments(data) {
   if (data.q1) {
     document.getElementById('prog-q1-id').textContent = data.q1.question_id;
     document.getElementById('prog-q1-text').textContent = data.q1.question_text;
+    hideQ1RecoveryState();
+  } else {
+    showQ1RecoveryState();
   }
   if (data.q2) {
     document.getElementById('prog-q2-id').textContent = data.q2.question_id;
     document.getElementById('prog-q2-text').textContent = data.q2.question_text;
+    document.getElementById('q2-chooser').style.display = 'none';
+    updateQ2SelectedCard(data.q2);
+    setWorkspaceLocked('q2', false);
+    updateQ2TabStatus(true);
+    selectedQ2TopicId = data.q2.question_id || selectedQ2TopicId;
+    loadTopicsNeeded();
+  } else {
+    document.getElementById('q2-chooser').style.display = 'block';
+    document.getElementById('prog-q2-text').textContent = 'Not yet chosen — select your topic in the Q2 tab';
+    updateQ2SelectedCard(null);
+    setWorkspaceLocked('q2', true, 'Choose your Question 2 topic first to unlock uploads.');
+    updateQ2TabStatus(false);
+    loadTopicsNeeded();
+  }
+}
+
+async function loadTopicsNeeded(forceRefresh) {
+  if (q2Topics.length > 0 && !forceRefresh) {
+    if (assignments.q2?.question_id) selectedQ2TopicId = assignments.q2.question_id;
+    renderQ2TopicPicker();
+    if (assignments.q2) updateQ2SelectedCard(assignments.q2);
+    return;
+  }
+  const token = getToken();
+  const select = document.getElementById('q2-topic-select');
+  const meta = document.getElementById('q2-topic-results-meta');
+  if (select) select.innerHTML = '';
+  if (meta) meta.textContent = 'Loading available Question 2 topics…';
+  try {
+    const resp = await fetch('/api/student/topics-needed', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (resp.status === 401) { handleLogout(); return; }
+    const data = await resp.json();
+    if (!data.topics || data.topics.length === 0) {
+      if (meta) meta.textContent = 'No Question 2 topics are available right now.';
+      updateQ2Preview(null);
+      return;
+    }
+    q2Topics = data.topics;
+    if (assignments.q2?.question_id) selectedQ2TopicId = assignments.q2.question_id;
+    renderQ2TopicPicker();
+    if (assignments.q2) updateQ2SelectedCard(assignments.q2);
+  } catch (e) {
+    if (meta) meta.textContent = 'Could not load Question 2 topics. Please refresh or contact the instructor.';
+    showQ2Message('Could not load Question 2 topics right now. Please refresh or contact the instructor.', 'error');
+  }
+}
+
+async function chooseQ2(questionId) {
+  const token = getToken();
+  const topic = getQ2TopicById(questionId);
+  try {
+    const resp = await fetch('/api/student/choose-q2', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ question_id: questionId })
+    });
+    const data = await resp.json();
+    if (resp.ok) {
+      const merged = { ...(topic || {}), ...data, question_text: data.question_text || topic?.text || '' };
+      assignments.q2 = merged;
+      document.getElementById('prog-q2-id').textContent = merged.question_id;
+      document.getElementById('prog-q2-text').textContent = merged.question_text;
+      document.getElementById('q2-chooser').style.display = 'none';
+      updateQ2SelectedCard(merged);
+      setWorkspaceLocked('q2', false);
+      updateQ2TabStatus(true);
+      showQ2Message(`Question 2 confirmed: ${merged.question_id}. Part 2 upload tools are now unlocked below.`, 'success');
+    } else {
+      showQ2Message(data.detail || 'Could not assign Question 2.', 'error');
+    }
+  } catch(e) {
+    showQ2Message('Server error while assigning Question 2. Please try again.', 'error');
   }
 }
 
 async function loadProgress() {
-  const token = localStorage.getItem('katlas_token');
+  const token = getToken();
   try {
     const resp = await fetch(`${API}/api/student/progress`, {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -789,7 +1775,7 @@ async function loadProgress() {
     renderResultsTable('q1', data.q1_papers || []);
     renderResultsTable('q2', data.q2_papers || []);
   } catch (e) {
-    // Demo progress shown by loadDemoData()
+    // Leave the current progress state unchanged when progress cannot be loaded.
   }
 }
 
@@ -797,7 +1783,7 @@ async function loadProgress() {
 function updateProgress(which, count, total) {
   const pct = Math.min(100, (count / total) * 100);
   document.getElementById(`prog-bar-${which}`).style.width = pct + '%';
-  const label = which === 'q1' ? `${count} / ${total} experimental papers` : `${count} / ${total} papers`;
+  const label = `${count} / ${total} papers`;
   document.getElementById(`prog-count-${which}`).textContent = label;
 }
 
@@ -825,6 +1811,7 @@ function switchTab(which, el) {
 
 // ── File upload ────────────────────────────────────────────
 function handleFiles(which, files) {
+  if (!ensureQuestionReady(which)) return;
   const form = document.getElementById(`papers-form-${which}`);
   Array.from(files).forEach(file => {
     if (!file.name.endsWith('.pdf')) return;
@@ -867,8 +1854,7 @@ function handleFiles(which, files) {
 
   if (pendingFiles[which].length > 0) {
     document.getElementById(`btn-fetch-${which}`).disabled = false;
-    document.getElementById(`fetch-note-${which}`).textContent =
-      `${pendingFiles[which].length} PDF${pendingFiles[which].length > 1 ? 's' : ''} ready — click to fetch abstracts`;
+    setFetchNote(which, `${pendingFiles[which].length} PDF${pendingFiles[which].length > 1 ? 's' : ''} ready — click to fetch abstracts`);
   }
 
   // Drag-and-drop styling reset
@@ -882,7 +1868,7 @@ function removeFile(which, idx) {
   const remaining = pendingFiles[which].filter(f => f !== null).length;
   if (remaining === 0) {
     document.getElementById(`btn-fetch-${which}`).disabled = true;
-    document.getElementById(`fetch-note-${which}`).textContent = 'Upload PDFs above to activate this button';
+    setFetchNote(which, getDefaultFetchNote(which), (which === 'q1' && !assignments.q1) || (which === 'q2' && !assignments.q2) ? '#8a4000' : '');
   }
 }
 
@@ -891,7 +1877,7 @@ async function classifyOneFile(which, idx, file) {
   const badge = document.getElementById(`classify-badge-${which}-${idx}`);
   if (!badge) return;
 
-  const token = localStorage.getItem('katlas_token');
+  const token = getToken();
   try {
     const formData = new FormData();
     formData.append('pdf', file, file.name);
@@ -906,21 +1892,14 @@ async function classifyOneFile(which, idx, file) {
     const result = await resp.json();
 
     badge.classList.remove('classify-pending');
-    if (result.is_experimental) {
+    if (result.article_type === 'unknown') {
       badge.className = 'classify-badge classify-pass';
-      badge.textContent = `✓ Experimental (${Math.round(result.confidence * 100)}%)`;
-      // Update running count for immediate feedback
-      updateExpCountPreview(which);
-    } else if (result.article_type === 'unknown') {
-      badge.className = 'classify-badge classify-warn';
-      badge.textContent = '⚠ Type unclear — will check on submit';
+      badge.textContent = '✓ Accepted — type undetermined';
     } else {
-      badge.className = 'classify-badge classify-fail';
-      badge.textContent = `✗ ${result.article_type} — not experimental`;
-      if (which === 'q1') {
-        badge.title = 'Task 1 requires experimental articles. This paper will be stored but won\'t count toward your 10.';
-      }
+      badge.className = 'classify-badge classify-pass';
+      badge.textContent = `✓ ${result.article_type} (${Math.round(result.confidence * 100)}%)`;
     }
+    updateExpCountPreview(which);
   } catch (e) {
     // Server unavailable — show neutral state
     badge.classList.remove('classify-pending');
@@ -930,13 +1909,22 @@ async function classifyOneFile(which, idx, file) {
 }
 
 function updateExpCountPreview(which) {
-  // Count how many uploaded PDFs have been classified as experimental
+  // Count how many uploaded PDFs have been classified
   const badges = document.querySelectorAll(`[id^="classify-badge-${which}-"].classify-pass`);
   const note = document.getElementById(`fetch-note-${which}`);
   if (note && badges.length > 0) {
     const total = pendingFiles[which].filter(f => f !== null).length;
-    note.textContent = `${total} PDF${total > 1 ? 's' : ''} ready — ${badges.length} classified as experimental so far`;
+    note.textContent = `${total} PDF${total > 1 ? 's' : ''} ready — ${badges.length} classified so far`;
   }
+}
+
+function showUploadError(which, message) {
+  const note = document.getElementById(`fetch-note-${which}`);
+  if (note) {
+    note.textContent = message;
+    note.style.color = '#c0392b';
+  }
+  window.alert(message);
 }
 
 // ── Drag and drop ──────────────────────────────────────────
@@ -953,13 +1941,20 @@ function updateExpCountPreview(which) {
 
 // ── Fetch abstracts ────────────────────────────────────────
 async function fetchAbstracts(which) {
+  if (!ensureQuestionReady(which)) return;
   const btn = document.getElementById(`btn-fetch-${which}`);
   const spinner = document.getElementById(`spinner-${which}`);
   btn.disabled = true;
   spinner.style.display = 'block';
 
-  const token = localStorage.getItem('katlas_token');
+  const token = getToken();
   const questionId = which === 'q1' ? assignments.q1?.question_id : assignments.q2?.question_id;
+  if (!token) {
+    showUploadError(which, 'Your login session is missing. Please log in again before uploading papers.');
+    btn.disabled = false;
+    spinner.style.display = 'none';
+    return;
+  }
 
   // Build submission payload
   const papers = pendingFiles[which]
@@ -995,7 +1990,15 @@ async function fetchAbstracts(which) {
       body: formData
     });
 
-    if (!resp.ok) throw new Error('Server error');
+    if (resp.status === 401) { handleLogout(); return; }
+    if (!resp.ok) {
+      let detail = 'Upload failed. Please try again, or tell the instructor if it keeps happening.';
+      try {
+        const err = await resp.json();
+        detail = err.detail || err.error || detail;
+      } catch (_) {}
+      throw new Error(detail);
+    }
     const data = await resp.json();
 
     renderResultsTable(which, data.papers);
@@ -1047,11 +2050,12 @@ async function fetchAbstracts(which) {
     pendingFiles[which] = [];
     document.getElementById(`papers-form-${which}`).innerHTML = '';
     const totalCount = (data.papers.length || 0) + (titleOnlyEntries[which] ? titleOnlyEntries[which].filter(e => e.title).length : 0);
-    document.getElementById(`fetch-note-${which}`).textContent = `✓ ${totalCount} papers processed`;
+    const note = document.getElementById(`fetch-note-${which}`);
+    note.textContent = `✓ ${totalCount} papers processed`;
+    note.style.color = '#27ae60';
 
   } catch (e) {
-    // Demo: render mock results
-    renderDemoResults(which);
+    showUploadError(which, e.message || 'Upload failed. Please try again, or tell the instructor if it keeps happening.');
   }
 
   spinner.style.display = 'none';
@@ -1079,10 +2083,10 @@ function renderResultsTable(which, papers) {
       typeHtml = `<span class="type-pill ${typeClass}">${p.article_type || 'Other'}</span>`;
     }
 
-    const qualifies = which === 'q1' ? p.article_type === 'Experimental' : true;
-    const qualHtml = qualifies
-      ? '<span class="qualifies-yes">✓ Yes</span>'
-      : `<span class="qualifies-no">✗ Not experimental</span>`;
+    const qualifies = !p.in_corpus;
+    const qualHtml = p.in_corpus
+      ? '<span class="qualifies-no">✗ Duplicate — already in corpus, does not count</span>'
+      : '<span class="qualifies-yes">✓ Yes</span>';
 
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -1171,6 +2175,7 @@ function toggleTitleOnly(which, btn) {
 }
 
 function addTitleOnlyEntry(which) {
+  if (!ensureQuestionReady(which)) return;
   const id = Date.now() + Math.random();
   const entry = { id, title: '', doi: '', apa: '' };
   titleOnlyEntries[which].push(entry);
@@ -1222,13 +2227,13 @@ function renderDemoResults(which) {
     { title: 'Attention Restoration Theory: 30 years of evidence', article_type: 'Theoretical', abstract: 'We review the theoretical foundations of ART and its empirical record across three decades of research on restorative environments...', pdf_present: false, in_corpus: false }
   ];
   renderResultsTable(which, demo);
-  const demoCount = which === 'q1' ? 1 : 3; // only experimental counts for q1
+  const demoCount = 3; // all types count
   updateProgress(which, demoCount, 10);
 }
 
 // ── Brownie ────────────────────────────────────────────────
 async function acceptBrownie() {
-  const token = localStorage.getItem('katlas_token');
+  const token = getToken();
   try {
     const resp = await fetch(`${API}/api/student/accept-brownie`, {
       method: 'POST',
@@ -1264,11 +2269,12 @@ function addQuickCitation() {
   // Determine active tab
   const activePanel = document.querySelector('.tab-panel.active');
   const which = activePanel ? activePanel.id.replace('panel-', '') : 'q1';
+  if (!ensureQuestionReady(which)) return;
 
   // Add as title-only entry (no PDF)
   const id = Date.now();
   titleOnlyEntries[which].push({ id, title: apa.substring(0, 80), doi, apa });
-  addTitleOnlyRow(which, { id, title: '', doi, apa });
+  renderTitleOnlyEntry(which, { id, title: '', doi, apa });
 
   // Clear inputs
   document.getElementById('quick-apa-input').value = '';
@@ -1290,6 +2296,7 @@ function handleCitationFile(file) {
     const lines = e.target.result.split('\n').map(l => l.trim()).filter(l => l.length > 10);
     const activePanel = document.querySelector('.tab-panel.active');
     const which = activePanel ? activePanel.id.replace('panel-', '') : 'q1';
+    if (!ensureQuestionReady(which)) return;
 
     lines.forEach(line => {
       const id = Date.now() + Math.random();
@@ -1297,7 +2304,7 @@ function handleCitationFile(file) {
       const doiMatch = line.match(/10\.\d{4,}\/[^\s]+/);
       const doi = doiMatch ? doiMatch[0] : '';
       titleOnlyEntries[which].push({ id, title: line.substring(0, 80), doi, apa: line });
-      addTitleOnlyRow(which, { id, title: '', doi, apa: line });
+      renderTitleOnlyEntry(which, { id, title: '', doi, apa: line });
     });
 
     // Open the title-only section
@@ -1313,25 +2320,37 @@ function handleCitationFile(file) {
 }
 
 // ── On load ────────────────────────────────────────────────
-const token = localStorage.getItem('katlas_token');
-const savedUser = localStorage.getItem('katlas_user');
-if (token && savedUser) {
-  studentId = savedUser;
+const _initToken = getToken();
+const _initUser = getUser();
+setWorkspaceLocked('q1', true, 'Loading your Question 1 assignment…');
+setWorkspaceLocked('q2', true, 'Choose your Question 2 topic first to unlock uploads.');
+updateQ2TabStatus(false);
+setQ1RecoveryLinks();
+document.getElementById('q1-recovery-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeQ1RecoveryModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeQ1RecoveryModal();
+});
+if (_initToken && _initUser) {
+  studentId = _initUser;
   initPage();
 }
+// If not logged in, the login overlay remains visible (display:flex in CSS)
 </script>
 
 <!-- ── Footer CTA ── -->
 <div style="background:#182B49;padding:2rem;margin-top:2rem;border-radius:10px 10px 0 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
   <div>
     <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#C69214;margin-bottom:0.3rem;">Next step</div>
-    <div style="font-size:1rem;color:#fff;font-weight:600;">Finished uploading 10 articles? Choose your track for the rest of the quarter.</div>
+    <div style="font-size:1rem;color:#fff;font-weight:600;">Finished uploading? Read the AI Methodology guide before your first track sprint.</div>
   </div>
   <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
     <a href="ka_student_setup.html" style="display:inline-block;padding:0.65rem 1.3rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.88rem;">← Back to Student Home</a>
-    <a href="ka_tracks.html" style="display:inline-block;padding:0.65rem 1.3rem;background:#C69214;color:#fff;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.88rem;">Choose Your Track →</a>
+    <a href="../ka_ai_methodology.html" style="display:inline-block;padding:0.65rem 1.3rem;background:#C69214;color:#fff;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.88rem;">Read AI Methodology* →</a>
   </div>
 </div>
+<script src="../ka_auth_widget.js?v=20260407b"></script>
 
 </body>
 </html>

@@ -190,38 +190,6 @@
       "paper_count": 4
     },
     {
-      "front_id": "RF_A1F1CE00",
-      "title": "Luminous Environment \u00d7 Wellbeing (Circadian)",
-      "description": "Research front: Circadian Photobiology studies investigating Luminous Environment effects on Wellbeing.",
-      "paper_ids": [
-        "PDF-0014",
-        "PDF-0221",
-        "PDF-0518"
-      ],
-      "topic_ids": [
-        "luminous__affect_wellbeing"
-      ],
-      "shared_theories": [
-        "Circadian Photobiology"
-      ],
-      "dominant_iv_families": [
-        "luminous"
-      ],
-      "dominant_dv_families": [
-        "affect.wellbeing"
-      ],
-      "maturity": "emerging",
-      "mean_credence": 0.0,
-      "mean_omega": 0.0,
-      "contradiction_count": 0,
-      "replication_count": 0,
-      "open_questions": [
-        "What spectral quality and dose parameters produce reliable circadian entrainment effects?",
-        "Insufficient replication: needs \u22653 independent labs before causal claim."
-      ],
-      "paper_count": 3
-    },
-    {
       "front_id": "RF_53DA3A44",
       "title": "Spatial Form \u00d7 Aesthetic Preference (Neuroaesthetics)",
       "description": "Research front: Neuroaesthetics studies investigating Spatial Form effects on Aesthetic Preference.",

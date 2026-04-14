@@ -174,8 +174,7 @@
     // Prefer authenticated identity written by ka_login.html (ka_current_user JSON);
     // fall back to legacy per-field keys for older sessions.
     var user = readUser() || {};
-    var fullName = ((user.first_name || '') + ' ' + (user.last_name || '')).trim();
-    var name  = user.name  || user.full_name || user.display_name || fullName || read('ka_student_name','');
+    var name  = user.name  || user.full_name || user.display_name || read('ka_student_name','');
     var email = user.email || read('ka_student_email','');
     var pid   = user.pid   || user.student_id || read('ka_student_pid','');
     document.getElementById('k-name').textContent = name || '—';

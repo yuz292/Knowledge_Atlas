@@ -9,7 +9,7 @@
   };
 
   const MODE_NOTES = {
-    student_explorer: 'Student mode foregrounds literature exploration and tractable entry points.',
+    student_explorer: '',
     researcher: 'Researcher mode foregrounds evidence, gaps, and article discovery.',
     contributor: 'Contributor mode foregrounds intake, review, and progress-tracking workflows.',
     instructor: 'Instructor mode foregrounds course coordination, setup, and assignment oversight.',

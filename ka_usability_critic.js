@@ -690,8 +690,10 @@
         '<div class="ka-action-row">' +
           '<button class="ka-action-btn ka-copy-btn" id="ka-copy-btn">⎘ Copy critique</button>' +
           '<button class="ka-action-btn ka-save-btn" id="ka-save-btn">💾 Save session</button>' +
+          '<button class="ka-action-btn ka-ai-btn" id="ka-ai-btn" style="background:#fef3c7;border-color:#f59e0b;color:#78350f">✨ Get AI suggestions</button>' +
           '<button class="ka-action-btn ka-reset-btn" id="ka-reset-btn">✕ New critique</button>' +
         '</div>' +
+        '<div id="ka-ai-suggestions" style="margin-top:12px"></div>' +
       '</div>';
 
     container.querySelector('#ka-copy-btn').addEventListener('click', function () {
@@ -715,6 +717,123 @@
         document.querySelectorAll('.ka-critic-tab').forEach(function (t) { t.classList.remove('active'); });
         document.querySelectorAll('.ka-critic-tab')[0].classList.add('active');
       }
+    });
+
+    container.querySelector('#ka-ai-btn').addEventListener('click', function () {
+      requestAiSuggestions(container);
+    });
+  }
+
+  /* ── AI suggestions (KA-T22) ─────────────────────────────────────────── */
+  /*  POSTs the current ratings to /api/critique/suggest.  The server calls
+      Claude (if ANTHROPIC_API_KEY is set) and returns one concrete suggestion
+      per flagged heuristic.  Falls back to rule-based suggestions in local
+      dev, so the UI is always responsive. */
+
+  function buildCritiquePayload() {
+    const ratings = currentSession.ratings || {};
+    const notes = currentSession.notes || {};
+    const all = NIELSEN.concat(SHNEIDERMAN).concat(VIZ_HEURISTICS);
+    const items = all.map(function (h) {
+      const frameworkFromId =
+        h.id.charAt(0) === 'n' ? 'Nielsen'
+        : h.id.charAt(0) === 's' ? 'Shneiderman'
+        : h.id.charAt(0) === 'v' ? 'Viz' : 'Other';
+      return {
+        heuristicId: h.id,
+        heuristicCode: h.code,
+        heuristicLabel: h.label,
+        framework: frameworkFromId,
+        rating: ratings[h.id] || 'unrated',
+        note: notes[h.id] || ''
+      };
+    });
+    const ctx = currentSession.context || {};
+    return {
+      pageUrl: location.href,
+      pageTitle: document.title || '',
+      ratings: items,
+      context: {
+        h1: ctx.h1 || null,
+        title: ctx.title || document.title || null,
+        vizElements: ctx.vizElements || []
+      }
+    };
+  }
+
+  function renderSuggestionsInto(containerEl, data) {
+    const list = (data && data.suggestions) || [];
+    if (list.length === 0) {
+      containerEl.innerHTML =
+        '<div style="padding:10px;border:1px dashed #d1d5db;border-radius:6px;color:#6b7280;font-size:.82rem">' +
+        escHtml((data && data.note) || 'No suggestions — no issues flagged.') +
+        '</div>';
+      return;
+    }
+    const sourcePill = (data.source === 'llm')
+      ? '<span style="background:#ecfeff;color:#155e75;border:1px solid #a5f3fc;border-radius:10px;padding:1px 8px;font-size:.68rem;font-weight:700">LLM</span>'
+      : '<span style="background:#fef3c7;color:#78350f;border:1px solid #fcd34d;border-radius:10px;padding:1px 8px;font-size:.68rem;font-weight:700">FALLBACK</span>';
+    const priColors = {
+      High:   { bg:'#fee2e2', fg:'#991b1b', br:'#fca5a5' },
+      Medium: { bg:'#fef3c7', fg:'#92400e', br:'#fcd34d' },
+      Low:    { bg:'#d1fae5', fg:'#065f46', br:'#a7f3d0' }
+    };
+    const items = list.map(function (s) {
+      const p = priColors[s.priority] || priColors.Medium;
+      return '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;margin-bottom:8px;background:#fff">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:8px;flex-wrap:wrap">' +
+          '<div style="font-weight:700;font-size:.82rem;color:#1f2937">' + escHtml(s.heuristicLabel || s.heuristicId) + '</div>' +
+          '<div style="display:flex;gap:4px;align-items:center">' +
+            '<span style="background:' + p.bg + ';color:' + p.fg + ';border:1px solid ' + p.br + ';border-radius:10px;padding:1px 8px;font-size:.68rem;font-weight:700">' + escHtml(s.priority || '') + '</span>' +
+            '<span style="background:#f3f4f6;color:#374151;border:1px solid #d1d5db;border-radius:10px;padding:1px 8px;font-size:.68rem">' + escHtml(s.estimatedEffort || '') + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div style="font-size:.82rem;color:#111827;line-height:1.5">' + escHtml(s.suggestion || '') + '</div>' +
+      '</div>';
+    }).join('');
+    const note = data.note
+      ? '<div style="font-size:.72rem;color:#6b7280;margin-top:4px">' + escHtml(data.note) + '</div>'
+      : '';
+    containerEl.innerHTML =
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+        '<div style="font-size:.78rem;font-weight:700;color:#6b3fa0">AI Suggestions</div>' +
+        sourcePill +
+      '</div>' +
+      items +
+      note;
+  }
+
+  function requestAiSuggestions(container) {
+    const btn  = container.querySelector('#ka-ai-btn');
+    const slot = container.querySelector('#ka-ai-suggestions');
+    if (!btn || !slot) return;
+    const prevLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '… thinking …';
+    slot.innerHTML =
+      '<div style="padding:10px;border:1px dashed #d1d5db;border-radius:6px;color:#6b7280;font-size:.82rem">' +
+      'Contacting the usability reviewer…</div>';
+
+    const payload = buildCritiquePayload();
+    fetch('/api/critique/suggest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (resp) {
+      if (!resp.ok) {
+        return resp.text().then(function (t) { throw new Error('HTTP ' + resp.status + ': ' + t.slice(0, 240)); });
+      }
+      return resp.json();
+    }).then(function (data) {
+      renderSuggestionsInto(slot, data);
+    }).catch(function (err) {
+      slot.innerHTML =
+        '<div style="padding:10px;border:1px solid #fca5a5;border-radius:6px;color:#991b1b;background:#fee2e2;font-size:.82rem">' +
+        '<strong>Could not reach suggestion service.</strong><br>' +
+        escHtml(String(err && err.message ? err.message : err)) + '</div>';
+    }).finally(function () {
+      btn.disabled = false;
+      btn.textContent = prevLabel;
     });
   }
 

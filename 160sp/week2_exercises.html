@@ -136,7 +136,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
   <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
   <span class="nav-sep">|</span>
   <a href="week2_exercises.html" class="nav-link active">Exercises</a>
-  <a href="week2_quickstart.html" class="nav-link">Quickstart</a>
   <a href="../ka_evidence.html" class="nav-link">Evidence Explorer</a>
   <a href="../ka_argumentation.html" class="nav-link">Argumentation Viewer</a>
   <a href="../ka_warrants.html" class="nav-link">Warrant Types</a>
@@ -157,23 +156,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 
 <div class="page-wrap">
 
-<div style="background: #FFF3E0; border: 2px solid #E8872A; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-  <span style="font-size: 1.5rem;">⚡</span>
-  <div>
-    <strong style="color: #9a5010; font-size: 1rem;">Quickstart helper</strong>
-    <p style="margin: 0.3rem 0 0; font-size: 0.92rem; color: #5a3a10;">If you want the short setup version first, open the helper page. The main assignment brief remains here on Exercises. <a href="week2_quickstart.html" style="color: #E8872A; font-weight: 600;">Open Quickstart →</a></p>
-  </div>
-</div>
-
-<div style="background:#EAF5F1; border:1.5px solid #BCD9D1; border-radius:12px; padding:1rem 1.25rem; margin-bottom:1.5rem;">
-  <strong style="display:block; color:#1C3D3A; font-size:0.98rem; margin-bottom:0.35rem;">Suggested page order</strong>
-  <p style="margin:0 0 0.7rem; font-size:0.92rem; color:#35524D;">Start on this Exercises page. If you want to inspect the live corpus before building, use the optional data pages below. Then come back here and open your assigned context file.</p>
-  <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
-    <a href="../ka_evidence.html" style="display:inline-block; padding:0.55rem 1rem; border-radius:7px; background:#1C3D3A; color:#fff; text-decoration:none; font-size:0.84rem; font-weight:600;">Optional: Evidence Explorer</a>
-    <a href="../ka_argumentation.html" style="display:inline-block; padding:0.55rem 1rem; border-radius:7px; background:#2A7868; color:#fff; text-decoration:none; font-size:0.84rem; font-weight:600;">Optional: Argumentation Viewer</a>
-    <a href="../ka_warrants.html" style="display:inline-block; padding:0.55rem 1rem; border-radius:7px; background:#fff; color:#1C3D3A; border:1.5px solid #BCD9D1; text-decoration:none; font-size:0.84rem; font-weight:600;">Optional: Warrant Types</a>
-  </div>
-</div>
 
 <!-- ══════════════ HOW WEEK 2 WORKS ══════════════ -->
 <div class="section-block">
@@ -420,6 +402,10 @@ that would make the panel misleading.</div>
 
     <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
     <p>Follow the same structure as the demo. Write your spec from the panel discussion. Define at least 4 acceptance tests (two starters are in the full exercise doc). Implement, test on real claims from evidence.json, diagnose failures, iterate.</p>
+
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+      <a href="../ka_evidence.html" class="context-link">🔍 Inspect the live Evidence corpus</a>
+    </div>
   </div>
 </div>
 
@@ -469,6 +455,10 @@ would make the visualization misleading.</div>
 
     <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
     <p>Write your spec from the panel discussion. Key decisions: two-column layout? Force-directed? How to show which side is &ldquo;winning&rdquo;? Define tests, build, verify against real clusters from the data.</p>
+
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+      <a href="../ka_argumentation.html" class="context-link">🔍 Inspect the live Argumentation corpus</a>
+    </div>
   </div>
 </div>
 
@@ -519,6 +509,11 @@ would give a misleading result.</div>
 
     <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
     <p>Your panel will argue about the formula. The key question: multiplicative (like conditional probabilities) or additive (like weighted scoring)? Define tests with real claims from evidence.json &mdash; pick high-trust, low-trust, and edge cases.</p>
+
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+      <a href="../ka_warrants.html" class="context-link" style="margin-right: 0.6rem;">🔍 Inspect Warrant Types</a>
+      <a href="../ka_evidence.html" class="context-link">🔍 Inspect the live Evidence corpus</a>
+    </div>
   </div>
 </div>
 
@@ -571,6 +566,10 @@ misleading or useless?</div>
 
     <h3>Steps 2&ndash;7: Spec, Tests, Build, Verify, Diagnose, Iterate</h3>
     <p>Your panel will argue about which filters to show by default. A filter bar with 10 dropdowns is overwhelming. Think about progressive disclosure: primary filters visible, advanced behind a toggle. Test with real queries against the 1,900 claims.</p>
+
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+      <a href="../ka_evidence.html" class="context-link">🔍 Inspect the live Evidence corpus</a>
+    </div>
   </div>
 </div>
 
@@ -619,7 +618,7 @@ misleading or useless?</div>
   <h2 style="font-family: Georgia, serif; font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem;">Submit Your Work</h2>
   <p style="color: rgba(255,255,255,0.75); font-size: 0.95rem; max-width: 540px; margin: 0 auto 0.5rem;">Upload a single file containing everything on the checklist above. Accepted formats: <strong style="color: #fff;">PDF</strong> or <strong style="color: #fff;">Word (.docx)</strong>.</p>
   <p style="color: rgba(255,255,255,0.55); font-size: 0.82rem; margin-bottom: 1.5rem;">Due: Thursday, April 10 &mdash; end of class</p>
-  <a href="REPLACE_WITH_GOOGLE_FORM_URL" target="_blank" rel="noopener" style="display: inline-block; padding: 0.85rem 2.8rem; background: var(--amber); color: #fff; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; letter-spacing: 0.02em; transition: background 0.15s; box-shadow: 0 4px 12px rgba(232,135,42,0.4);">Submit Here &rarr;</a>
+  <a href="https://forms.gle/XWU55T9fQveuLsX79" target="_blank" rel="noopener" style="display: inline-block; padding: 0.85rem 2.8rem; background: var(--amber); color: #fff; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; letter-spacing: 0.02em; transition: background 0.15s; box-shadow: 0 4px 12px rgba(232,135,42,0.4);">Submit Here &rarr;</a>
   <p style="color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-top: 1rem;">Opens a Google Form. You will need to sign in with your UCSD email.</p>
 </div>
 
@@ -630,9 +629,14 @@ misleading or useless?</div>
   <p>Want to see what the data looks like before starting? These K-ATLAS pages display the actual data your exercises work with.</p>
   <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem;">
     <a href="../ka_evidence.html" class="context-link" style="background: var(--teal);">&#128269; Evidence Explorer</a>
-    <a href="../ka_demo_v04.html" class="context-link" style="background: var(--navy);">&#128172; Argumentation Viewer</a>
-    <a href="../ka_warrant_types.html" class="context-link" style="background: var(--amber);">&#128218; Warrant Types Reference</a>
+    <a href="../ka_argumentation.html" class="context-link" style="background: var(--navy);">&#128172; Argumentation Viewer</a>
+    <a href="../ka_warrants.html" class="context-link" style="background: var(--amber);">&#128218; Warrant Types Reference</a>
   </div>
+</div>
+
+<!-- ── Quickstart Helper ── -->
+<div style="text-align: center; padding: 1.5rem 0; color: var(--muted); font-size: 0.92rem;">
+  Need a quick reference? See the <a href="week2_quickstart.html" style="color: var(--teal); font-weight: 600; text-decoration: none;">Exercise Quickstart Guide</a>
 </div>
 
 <!-- ── Navigation ── -->

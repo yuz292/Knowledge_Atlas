@@ -19,7 +19,7 @@ APIRouter.  It adds:
 See docs/ARTICLE_SUBMISSION_MODULE_SPEC_2026-03-30.md for the full contract.
 """
 
-import hashlib, json, os, re, secrets, shutil
+import hashlib, json, os, re, secrets, shutil, sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, List
@@ -1075,12 +1075,16 @@ TOTAL_QUESTIONS = 30  # Q01–Q30 (covers all 9 IV domains across the topic onto
 
 def _current_round(db) -> int:
     """
-    Determine the current round. A round is complete when all 8 questions
-    have been claimed in that round. When round N is full, round N+1 opens.
+    Determine the current round. A round is complete once every question has
+    been used in that round, even if some claims were later released.
+
+    This matches the UNIQUE(question_id, round) constraint: once a question has
+    been claimed in round N, that same question cannot be inserted again in
+    round N, so the next round must open when all question IDs are already used.
     """
     for r in range(1, 100):  # Practical upper bound
         claimed_count = db.execute(
-            "SELECT COUNT(DISTINCT question_id) FROM question_claims WHERE round=? AND released_at IS NULL",
+            "SELECT COUNT(DISTINCT question_id) FROM question_claims WHERE round=?",
             (r,)).fetchone()[0]
         if claimed_count < TOTAL_QUESTIONS:
             return r
@@ -1088,13 +1092,30 @@ def _current_round(db) -> int:
 
 
 def _available_questions(db, round_num: int) -> list:
-    """Return question_ids not yet claimed in the given round."""
+    """Return question_ids not yet used in the given round."""
     claimed = db.execute(
-        "SELECT question_id FROM question_claims WHERE round=? AND released_at IS NULL",
+        "SELECT DISTINCT question_id FROM question_claims WHERE round=?",
         (round_num,)).fetchall()
     claimed_ids = {r["question_id"] for r in claimed}
     all_qs = db.execute("SELECT question_id FROM research_questions ORDER BY question_id").fetchall()
     return [r["question_id"] for r in all_qs if r["question_id"] not in claimed_ids]
+
+
+def _repairable_q1_questions(db, user_id: str, round_num: int, current_q1: str = "") -> list:
+    """
+    Return question_ids a student may legitimately use to repair Q1:
+    1. truly unused question IDs in the current round, plus
+    2. that student's own prior Q1 claim(s) in the current round, so a released
+       question can be restored without creating a duplicate row.
+    """
+    repairable = set(_available_questions(db, round_num))
+    prior_rows = db.execute("""
+        SELECT DISTINCT question_id
+        FROM question_claims
+        WHERE user_id=? AND round=? AND (released_at IS NOT NULL OR question_id=?)
+    """, (user_id, round_num, current_q1 or "")).fetchall()
+    repairable.update(r["question_id"] for r in prior_rows if r["question_id"])
+    return sorted(repairable)
 
 
 @router.get("/questions/available")
@@ -1169,39 +1190,67 @@ async def claim_question(req: ClaimQuestionRequest, request: Request):
 
     current_round = _current_round(db)
 
-    # Check if this question is already claimed in the current round
+    # Check if this question is already used in the current round.
     existing = db.execute(
-        "SELECT * FROM question_claims WHERE question_id=? AND round=? AND released_at IS NULL",
+        "SELECT * FROM question_claims WHERE question_id=? AND round=?",
         (req.question_id, current_round)).fetchone()
-    if existing:
+    if existing and existing["user_id"] != user["user_id"]:
         db.close()
         raise HTTPException(409, f"Question {req.question_id} is already claimed in round {current_round}. "
                                  f"Choose a different question.")
 
-    # Check if this student already has a claim in the current round
-    student_claim = db.execute(
-        "SELECT * FROM question_claims WHERE user_id=? AND round=? AND released_at IS NULL",
-        (user["user_id"], current_round)).fetchone()
-    if student_claim:
-        db.close()
-        raise HTTPException(409, f"You already claimed question {student_claim['question_id']} in round {current_round}. "
-                                 f"Release it first if you want to switch.")
-
-    # Claim it
     now = _now()
-    db.execute(
-        "INSERT INTO question_claims (question_id, user_id, round, claimed_at) VALUES (?,?,?,?)",
-        (req.question_id, user["user_id"], current_round, now))
+    try:
+        if existing:
+            if existing["released_at"] is None:
+                remaining = len(_available_questions(db, current_round))
+                db.close()
+                return {
+                    "claimed": True,
+                    "question_id": req.question_id,
+                    "round": current_round,
+                    "remaining_in_round": remaining,
+                    "message": f"You already hold {q['label']} in round {current_round}."
+                }
+            db.execute("""
+                UPDATE question_claims
+                SET released_at=NULL, claimed_at=?
+                WHERE claim_id=?
+            """, (now, existing["claim_id"]))
+        else:
+            # Check if this student already has a claim in the current round
+            student_claim = db.execute(
+                "SELECT * FROM question_claims WHERE user_id=? AND round=? AND released_at IS NULL",
+                (user["user_id"], current_round)).fetchone()
+            if student_claim:
+                db.close()
+                raise HTTPException(409, f"You already claimed question {student_claim['question_id']} in round {current_round}. "
+                                         f"Release it first if you want to switch.")
+            db.execute(
+                "INSERT INTO question_claims (question_id, user_id, round, claimed_at) VALUES (?,?,?,?)",
+                (req.question_id, user["user_id"], current_round, now))
 
-    # Also update the user's question_id in the users table for backward compatibility
-    db.execute("UPDATE users SET question_id=? WHERE user_id=?",
-               (req.question_id, user["user_id"]))
-    db.commit()
+        # Preserve the explicit Q1 assignment. Only set users.question_id if none exists yet.
+        current_q1 = db.execute("SELECT question_id FROM users WHERE user_id=?",
+                                (user["user_id"],)).fetchone()
+        if current_q1 and not current_q1["question_id"]:
+            db.execute("UPDATE users SET question_id=? WHERE user_id=?",
+                       (req.question_id, user["user_id"]))
+        db.commit()
+    except HTTPException:
+        raise
+    except sqlite3.IntegrityError:
+        db.rollback()
+        db.close()
+        raise HTTPException(409, f"Question {req.question_id} is no longer available in round {current_round}. Choose a different question.")
+    except sqlite3.Error as exc:
+        db.rollback()
+        db.close()
+        raise HTTPException(503, f"Could not claim a question right now: {exc}")
 
     # Check if this claim completed the round
     remaining = _available_questions(db, current_round)
     db.close()
-
     return {
         "claimed": True,
         "question_id": req.question_id,
@@ -1230,7 +1279,10 @@ async def release_question(req: ClaimQuestionRequest, request: Request):
 
     db.execute("UPDATE question_claims SET released_at=? WHERE claim_id=?",
                (_now(), claim["claim_id"]))
-    db.execute("UPDATE users SET question_id=NULL WHERE user_id=?", (user["user_id"],))
+    current_q1 = db.execute("SELECT question_id FROM users WHERE user_id=?",
+                            (user["user_id"],)).fetchone()
+    if current_q1 and current_q1["question_id"] == req.question_id:
+        db.execute("UPDATE users SET question_id=NULL WHERE user_id=?", (user["user_id"],))
     db.commit()
     db.close()
     return {"released": True, "question_id": req.question_id}
@@ -1279,10 +1331,13 @@ async def my_claim(request: Request):
             AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
         """, (user["user_id"], qid)).fetchone()[0]
 
+        # NOTE: The experimental-article classification filter was removed from
+        # the upload pipeline, so article_type may be NULL/empty for most task1
+        # submissions. Count ALL non-rejected task1 articles as "experimental"
+        # until the classification filter is reinstated.  — DK 2026-04-12
         task1_experimental = db.execute("""
             SELECT COUNT(*) FROM articles
             WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task1'
-            AND article_type='experimental' AND article_type_valid=1
             AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
         """, (user["user_id"], qid)).fetchone()[0]
 
@@ -1393,7 +1448,6 @@ def _update_claim_counts(db, user_id: str, question_id: str):
     task1 = db.execute("""
         SELECT COUNT(*) FROM articles
         WHERE submitter_id=? AND assigned_question_id=? AND a0_task='task1'
-        AND article_type='experimental' AND article_type_valid=1
         AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
     """, (user_id, question_id)).fetchone()[0]
 
@@ -1636,6 +1690,39 @@ async def fetch_abstracts_and_classify(request: Request):
         # Validate PDF
         validation = _validate_pdf_bytes(content, filename)
         if not validation.get("valid"):
+            db = _get_db()
+            try:
+                db.execute("""INSERT INTO articles
+                    (article_id, submission_id, submitter_id, submitter_type, track, input_mode,
+                     pdf_filename, pdf_hash_sha256, pdf_size_bytes,
+                     status, validation_notes, citation_raw,
+                     assigned_question_id,
+                     source_surface, course_context,
+                     created_at, validated_at, rejected_at, metadata_confidence)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (article_id, submission_id, user["user_id"], user["role"],
+                     user.get("track"), "pdf_single",
+                     filename, pdf_hash, len(content),
+                     "rejected_bad_file", json.dumps(validation), "",
+                     question_id or None,
+                     "collect_articles_upload", "COGS160-SP26",
+                     now, now, now, "low"))
+                db.commit()
+            except Exception as e:
+                db.rollback()
+                print(f"[KA-ARTICLES] DB error storing rejected A0 upload {article_id}: {e}")
+            finally:
+                db.close()
+
+            _write_audit(
+                article_id,
+                "rejected_bad_file",
+                "received",
+                "rejected_bad_file",
+                actor_id=user["user_id"],
+                actor_type=user["role"],
+                details=validation,
+            )
             result_papers.append({
                 "title": filename,
                 "filename": filename,
@@ -1672,19 +1759,38 @@ async def fetch_abstracts_and_classify(request: Request):
 
         # Duplicate check
         dup_result = _check_duplicate(pdf_hash=pdf_hash, doi=extracted_doi)
-
-        # Determine if it qualifies
-        type_valid = 1 if (a0_task != "task1" or art_type == "experimental") else 0
-        if art_type == "experimental" and a0_task == "task1":
-            qualifying_count += 1
+        duplicate_of = (
+            dup_result["matches"][0]["article_id"]
+            if dup_result["is_duplicate"] and dup_result["matches"]
+            else None
+        )
 
         # Determine status
-        if not validation.get("valid"):
-            status = "rejected_bad_file"
-        elif dup_result["is_duplicate"]:
+        if dup_result["is_duplicate"]:
             status = "duplicate_existing"
         else:
             status = "staged_pending_review"
+
+        quarantine_path = None
+        if status == "staged_pending_review":
+            try:
+                month_dir = QUARANTINE_DIR / datetime.now().strftime("%Y-%m")
+                month_dir.mkdir(parents=True, exist_ok=True)
+                quarantine_path = month_dir / f"{article_id}.pdf"
+                quarantine_path.write_bytes(content)
+            except Exception as e:
+                status = "rejected_storage_failure"
+                validation = {
+                    **validation,
+                    "storage_error": str(e),
+                    "rejection_reason": "quarantine write failed",
+                }
+                print(f"[KA-ARTICLES] File storage error for {article_id}: {e}")
+
+        # All article types qualify — only count non-duplicate staged uploads
+        type_valid = 1
+        if status == "staged_pending_review":
+            qualifying_count += 1
 
         # Extract title from text
         title = filename
@@ -1703,16 +1809,16 @@ async def fetch_abstracts_and_classify(request: Request):
                 (article_id, submission_id, submitter_id, submitter_type, track, input_mode,
                  doi, pdf_filename, pdf_hash_sha256, pdf_size_bytes, quarantine_path,
                  article_type, a0_task, article_type_valid,
-                 status, validation_notes, citation_raw,
+                 status, duplicate_of, validation_notes, citation_raw,
                  assigned_question_id,
                  source_surface, course_context,
                  created_at, validated_at, staged_at, metadata_confidence)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (article_id, submission_id, user["user_id"], user["role"],
                  user.get("track"), "pdf_single",
-                 extracted_doi, filename, pdf_hash, len(content), "",
+                 extracted_doi, filename, pdf_hash, len(content), str(quarantine_path) if quarantine_path else None,
                  art_type, a0_task, type_valid,
-                 status, json.dumps(validation), apa_citation,
+                 status, duplicate_of, json.dumps(validation), apa_citation,
                  question_id or None,
                  "collect_articles_upload", "COGS160-SP26",
                  now, now, now if status == "staged_pending_review" else None,
@@ -1724,24 +1830,34 @@ async def fetch_abstracts_and_classify(request: Request):
         finally:
             db.close()
 
-        # Save PDF to quarantine
-        try:
-            month_dir = QUARANTINE_DIR / datetime.now().strftime("%Y-%m")
-            month_dir.mkdir(parents=True, exist_ok=True)
-            (month_dir / f"{article_id}.pdf").write_bytes(content)
-        except Exception as e:
-            print(f"[KA-ARTICLES] File storage error for {article_id}: {e}")
+        audit_action = {
+            "staged_pending_review": "staged",
+            "duplicate_existing": "duplicate_detected",
+            "rejected_storage_failure": "storage_failed",
+        }.get(status, "received")
+        _write_audit(
+            article_id,
+            audit_action,
+            "received",
+            status,
+            actor_id=user["user_id"],
+            actor_type=user["role"],
+            details={
+                "classification": classification,
+                "duplicate_of": duplicate_of,
+                "validation": validation,
+            },
+        )
 
         # Build feedback message
-        if art_type == "experimental":
-            feedback = f"✓ Accepted — experimental article (confidence: {art_confidence:.0%})"
-        elif art_type == "unknown":
-            feedback = "⚠ Could not determine article type — will be reviewed manually"
-        else:
-            feedback = f"✗ Classified as {art_type} (confidence: {art_confidence:.0%}) — not an experiment"
-
         if dup_result["is_duplicate"]:
             feedback = "⚠ Duplicate — this article is already in the system"
+        elif status == "rejected_storage_failure":
+            feedback = "⚠ Upload received but file storage failed — recorded for review"
+        elif art_type == "unknown":
+            feedback = "✓ Accepted — article type could not be determined but that's OK"
+        else:
+            feedback = f"✓ Accepted — classified as {art_type} (confidence: {art_confidence:.0%})"
 
         result_papers.append({
             "title": title,
@@ -1751,7 +1867,7 @@ async def fetch_abstracts_and_classify(request: Request):
             "pdf_present": True,
             "in_corpus": dup_result["is_duplicate"],
             "classification_confidence": art_confidence,
-            "qualifies": bool(type_valid) and art_type == "experimental",
+            "qualifies": status == "staged_pending_review",
             "feedback": feedback,
             "article_id": article_id
         })
@@ -1822,15 +1938,16 @@ async def submit_title_only_papers(request: Request):
             # Citation-only papers are harder to classify; mark for review
             art_type = "unknown"
 
-        type_valid = 1 if (a0_task != "task1" or art_type == "experimental") else 0
-        if art_type == "experimental" and a0_task == "task1":
-            qualifying_count += 1
-
         # Duplicate check by DOI
         dup_result = _check_duplicate(doi=doi if doi else None,
                                        title=title if title else None)
 
         status = "duplicate_existing" if dup_result["is_duplicate"] else "staged_pending_review"
+
+        # All article types qualify — only count non-duplicates
+        type_valid = 1
+        if status == "staged_pending_review":
+            qualifying_count += 1
 
         # Parse citation for structured fields
         parsed = _parse_citation_line(apa) if apa else {"title": title, "authors": "", "year": ""}
@@ -1871,12 +1988,10 @@ async def submit_title_only_papers(request: Request):
         display_title = parsed["title"] or title or apa[:80]
 
         # Feedback
-        if art_type == "experimental":
-            feedback = f"✓ Accepted — likely experimental (confidence: {art_confidence:.0%})"
-        elif art_type == "unknown":
-            feedback = "⚠ Cannot determine type from citation alone — upload PDF for classification"
+        if art_type == "unknown":
+            feedback = "✓ Accepted — article type undetermined from citation alone"
         else:
-            feedback = f"✗ Classified as {art_type} (confidence: {art_confidence:.0%})"
+            feedback = f"✓ Accepted — classified as {art_type} (confidence: {art_confidence:.0%})"
 
         result_papers.append({
             "title": display_title,
@@ -1886,7 +2001,7 @@ async def submit_title_only_papers(request: Request):
             "in_corpus": dup_result["is_duplicate"],
             "title_only": True,
             "classification_confidence": art_confidence,
-            "qualifies": bool(type_valid) and art_type == "experimental",
+            "qualifies": True,
             "feedback": feedback,
             "article_id": article_id
         })
@@ -1960,50 +2075,594 @@ async def classify_single_paper(request: Request):
     }
 
 
-@student_router.get("/progress/{student_id}")
-async def get_student_progress(student_id: str):
+# ════════════════════════════════════════════════
+# STUDENT PROGRESS & ASSIGNMENTS
+# ════════════════════════════════════════════════
+
+
+@student_router.get("/progress")
+async def student_progress(request: Request):
     """
-    Returns the student's A0 completion status.
-    A0 is complete when task1_count >= 10 (10 experimental articles for Q1).
-    Used for client-side redirect logic after login.
+    Return the current student's A0 progress: qualifying article counts
+    per task and paper lists for each question.
+    Called by collect-articles-upload.html to populate progress bars.
     """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
     db = _get_db()
 
-    # Get all claims for this student
-    rows = db.execute("""
-        SELECT question_id, task1_count, task2_count, round
-        FROM question_claims
-        WHERE user_id = ? AND released_at IS NULL
-        ORDER BY round, question_id
-    """, (student_id,)).fetchall()
+    # Count qualifying articles for task1 (all types count)
+    q1_qualifying = db.execute("""
+        SELECT COUNT(*) FROM articles
+        WHERE submitter_id=? AND a0_task='task1'
+        AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+    """, (user["user_id"],)).fetchone()[0]
 
-    q1_experimental = 0
-    q2_any_type = 0
-    brownie_count = 0
+    # Count qualifying articles for task2 (any type)
+    q2_qualifying = db.execute("""
+        SELECT COUNT(*) FROM articles
+        WHERE submitter_id=? AND a0_task='task2'
+        AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+    """, (user["user_id"],)).fetchone()[0]
 
-    for row in rows:
-        qid = row["question_id"]
-        t1 = row["task1_count"] or 0
-        t2 = row["task2_count"] or 0
-        rnd = row["round"] or 1
+    # Get paper details for each task (include duplicates so students can see them)
+    q1_papers = db.execute("""
+        SELECT article_id, title, article_type, abstract, pdf_filename, status,
+               article_type_valid, created_at
+        FROM articles WHERE submitter_id=? AND a0_task='task1'
+        AND status NOT LIKE 'rejected%%'
+        ORDER BY created_at DESC
+    """, (user["user_id"],)).fetchall()
 
-        if rnd == 1:
-            # Round 1: Q1 = experimental, Q2 = mixed
-            if "q1" in qid.lower() or qid.endswith("-1"):
-                q1_experimental = t1
-            else:
-                q2_any_type = t2
-        else:
-            # Round 2+: brownie questions
-            brownie_count += 1 if t2 >= 10 else 0
+    q2_papers = db.execute("""
+        SELECT article_id, title, article_type, abstract, pdf_filename, status,
+               article_type_valid, created_at
+        FROM articles WHERE submitter_id=? AND a0_task='task2'
+        AND status NOT LIKE 'rejected%%'
+        ORDER BY created_at DESC
+    """, (user["user_id"],)).fetchall()
 
-    a0_complete = q1_experimental >= 10
+    db.close()
+
+    def _paper_dict(row):
+        d = dict(row)
+        d["in_corpus"] = d.get("status") == "duplicate_existing"
+        d["pdf_present"] = bool(d.get("pdf_filename"))
+        return d
+
+    both_complete = q1_qualifying >= 10 and q2_qualifying >= 10
 
     return {
-        "student_id": student_id,
-        "a0_complete": a0_complete,
-        "q1_experimental_count": q1_experimental,
-        "q2_any_type_count": q2_any_type,
-        "brownie_questions_complete": brownie_count,
-        "redirect_to": "ka_schedule.html" if a0_complete else "ka_student_setup.html"
+        "q1_qualifying": q1_qualifying,
+        "q2_qualifying": q2_qualifying,
+        "q1_papers": [_paper_dict(r) for r in q1_papers],
+        "q2_papers": [_paper_dict(r) for r in q2_papers],
+        "both_complete": both_complete
+    }
+
+
+def _auto_assign_one_question(db, user_id: str) -> Optional[str]:
+    """
+    Auto-assign ONE question (Q1 / 10-EXP) to a student, prioritising questions
+    with the fewest prior completions so the corpus grows as broadly as possible.
+
+    Q2 (mixed) is NOT auto-assigned — the student chooses their own topic
+    and crafts their own Google AI Scholar query for it.
+
+    Returns the question_id of the newly claimed question, or None.
+    """
+    now = _now()
+    current_round = _current_round(db)
+
+    # Rank all questions by total times completed (ascending = fewest first)
+    all_qs = db.execute("""
+        SELECT rq.question_id,
+               COALESCE(SUM(qc.task1_count + qc.task2_count), 0) AS total_articles
+        FROM research_questions rq
+        LEFT JOIN question_claims qc ON rq.question_id = qc.question_id
+            AND qc.released_at IS NULL
+        GROUP BY rq.question_id
+        ORDER BY total_articles ASC, rq.question_id ASC
+    """).fetchall()
+
+    # Get questions already claimed by anyone in the current round (including released,
+    # because UNIQUE(question_id, round) prevents re-use of released slots)
+    claimed_this_round = db.execute(
+        "SELECT question_id FROM question_claims WHERE round=?",
+        (current_round,)).fetchall()
+    claimed_ids = {r["question_id"] for r in claimed_this_round}
+
+    # Prefer unclaimed in this round, then fewest completions overall
+    available = [q for q in all_qs if q["question_id"] not in claimed_ids]
+
+    if not available:
+        # All questions in this round are taken — move to next round
+        current_round += 1
+        claimed_next = db.execute(
+            "SELECT question_id FROM question_claims WHERE round=?",
+            (current_round,)).fetchall()
+        claimed_next_ids = {r["question_id"] for r in claimed_next}
+        available = [q for q in all_qs if q["question_id"] not in claimed_next_ids]
+
+    pool = available if available else list(all_qs)
+
+    if not pool:
+        return None
+
+    chosen = pool[0]
+    qid = chosen["question_id"]
+    db.execute("""
+        INSERT INTO question_claims (question_id, user_id, round, claimed_at)
+        VALUES (?, ?, ?, ?)
+    """, (qid, user_id, current_round, now))
+    db.commit()
+    return qid
+
+
+@student_router.get("/assignments")
+async def student_assignments(request: Request):
+    """
+    Return the student's assigned questions for A0 (Q1, Q2, and any brownie questions).
+    Called by collect-articles-upload.html on page init.
+
+    If the student has nothing yet, auto-assigns Question 1 only. Question 2 remains
+    student-chosen so the corpus grows broadly while the second task stays flexible.
+    """
+    import traceback as _tb
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
+    try:
+        return await _student_assignments_inner(user)
+    except Exception as e:
+        print(f"[KA-AUTH] /api/student/assignments ERROR: {e}")
+        _tb.print_exc()
+        raise HTTPException(500, f"Assignment error: {e}")
+
+async def _student_assignments_inner(user):
+    db = _get_db()
+
+    # Get all active claims for this student
+    claims = db.execute("""
+        SELECT qc.question_id, qc.round, rq.label, rq.domain, rq.text
+        FROM question_claims qc
+        JOIN research_questions rq ON qc.question_id = rq.question_id
+        WHERE qc.user_id=? AND qc.released_at IS NULL
+        ORDER BY qc.round ASC, qc.claimed_at ASC
+    """, (user["user_id"],)).fetchall()
+
+    q1_id = user.get("question_id")
+
+    # Auto-assign Q1 if the student truly has nothing yet. Q2 remains student-chosen.
+    if len(claims) == 0 and not q1_id:
+        q1_id = _auto_assign_one_question(db, user["user_id"])
+        if q1_id:
+            db.execute("UPDATE users SET question_id=? WHERE user_id=?",
+                       (q1_id, user["user_id"]))
+            db.commit()
+            user["question_id"] = q1_id
+        # Re-fetch after assignment
+        claims = db.execute("""
+            SELECT qc.question_id, qc.round, rq.label, rq.domain, rq.text
+            FROM question_claims qc
+            JOIN research_questions rq ON qc.question_id = rq.question_id
+            WHERE qc.user_id=? AND qc.released_at IS NULL
+            ORDER BY qc.round ASC, qc.claimed_at ASC
+        """, (user["user_id"],)).fetchall()
+
+    # Older accounts may still have claims but no explicit Q1 stored on the user row.
+    if not q1_id and claims:
+        q1_id = claims[0]["question_id"]
+        db.execute("UPDATE users SET question_id=? WHERE user_id=?",
+                   (q1_id, user["user_id"]))
+        db.commit()
+        user["question_id"] = q1_id
+
+    q1 = None
+    q2 = None
+    brownie = []
+
+    if q1_id:
+        q1_claim = next((claim for claim in claims if claim["question_id"] == q1_id), None)
+        if q1_claim:
+            q1 = {
+                "question_id": q1_claim["question_id"],
+                "question_text": q1_claim["text"] or q1_claim["label"] or q1_claim["question_id"],
+                "domain": q1_claim["domain"],
+                "question_type": "10-exp"
+            }
+        else:
+            q1_row = db.execute("""
+                SELECT question_id, label, domain, text
+                FROM research_questions
+                WHERE question_id=?
+            """, (q1_id,)).fetchone()
+            if q1_row:
+                q1 = {
+                    "question_id": q1_row["question_id"],
+                    "question_text": q1_row["text"] or q1_row["label"] or q1_row["question_id"],
+                    "domain": q1_row["domain"],
+                    "question_type": "10-exp"
+                }
+
+    remaining_claims = [claim for claim in claims if claim["question_id"] != q1_id]
+    for i, claim in enumerate(remaining_claims):
+        entry = {
+            "question_id": claim["question_id"],
+            "question_text": claim["text"] or claim["label"] or claim["question_id"],
+            "domain": claim["domain"],
+        }
+        if i == 0:
+            entry["question_type"] = "mixed"
+            q2 = entry
+        else:
+            entry["question_type"] = "brownie"
+            brownie.append(entry)
+
+    db.close()
+
+    # Check if both tasks are complete (for brownie offer)
+    both_complete = False
+    if q1:
+        db = _get_db()
+        q1_count = db.execute("""
+            SELECT COUNT(*) FROM articles
+            WHERE submitter_id=? AND a0_task='task1'
+            AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+        """, (user["user_id"],)).fetchone()[0]
+        q2_count = db.execute("""
+            SELECT COUNT(*) FROM articles
+            WHERE submitter_id=? AND a0_task='task2'
+            AND status NOT LIKE 'rejected%%' AND status != 'duplicate_existing'
+        """, (user["user_id"],)).fetchone()[0]
+        db.close()
+        both_complete = q1_count >= 10 and q2_count >= 10
+
+    return {
+        "q1": q1,
+        "q2": q2,
+        "brownie": brownie,
+        "both_complete": both_complete
+    }
+
+
+@student_router.get("/q1-options")
+async def q1_options(request: Request):
+    """Return currently claimable Question 1 options for self-repair on the upload page."""
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
+    db = _get_db()
+    current_round = _current_round(db)
+    available_ids = _available_questions(db, current_round)
+
+    if not available_ids:
+        db.close()
+        return {"round": current_round, "options": []}
+
+    placeholders = ",".join("?" * len(available_ids))
+    rows = db.execute(f"""
+        SELECT rq.question_id, rq.label, rq.domain, rq.text,
+               COALESCE(SUM(qc.task1_count), 0) AS total_experimental,
+               COALESCE(SUM(qc.task2_count), 0) AS total_any_type,
+               COALESCE(SUM(qc.task1_count + qc.task2_count), 0) AS total_articles
+        FROM research_questions rq
+        LEFT JOIN question_claims qc ON rq.question_id = qc.question_id
+            AND qc.released_at IS NULL
+        WHERE rq.question_id IN ({placeholders})
+        GROUP BY rq.question_id
+        ORDER BY total_articles ASC, rq.question_id ASC
+    """, available_ids).fetchall()
+    db.close()
+
+    return {
+        "round": current_round,
+        "options": [
+            {
+                "question_id": row["question_id"],
+                "label": row["label"],
+                "domain": row["domain"],
+                "text": row["text"],
+                "total_experimental": row["total_experimental"],
+                "total_any_type": row["total_any_type"],
+                "total_articles": row["total_articles"],
+                "round": current_round
+            }
+            for row in rows
+        ]
+    }
+
+
+@student_router.post("/repair-q1")
+async def repair_q1(request: Request):
+    """Replace or restore the student's explicit Question 1 assignment."""
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
+    body = await request.json()
+    question_id = body.get("question_id", "").strip()
+    if not question_id:
+        raise HTTPException(400, "question_id is required")
+
+    db = _get_db()
+    q = db.execute("SELECT * FROM research_questions WHERE question_id=?",
+                   (question_id,)).fetchone()
+    if not q:
+        db.close()
+        raise HTTPException(404, f"Question {question_id} not found")
+
+    current_q1_row = db.execute("SELECT question_id FROM users WHERE user_id=?",
+                                (user["user_id"],)).fetchone()
+    current_q1 = (current_q1_row["question_id"] if current_q1_row else "") or ""
+
+    if current_q1 == question_id:
+        existing_q1_claim = db.execute("""
+            SELECT claim_id FROM question_claims
+            WHERE user_id=? AND question_id=? AND released_at IS NULL
+        """, (user["user_id"], question_id)).fetchone()
+        db.close()
+        if existing_q1_claim:
+            return {
+                "question_id": question_id,
+                "question_text": q["text"] or q["label"],
+                "domain": q["domain"],
+                "message": f"Question 1 is already set to {question_id}."
+            }
+
+    current_round = _current_round(db)
+    round_claim = db.execute("""
+        SELECT claim_id, user_id, released_at
+        FROM question_claims
+        WHERE question_id=? AND round=?
+    """, (question_id, current_round)).fetchone()
+
+    if round_claim and round_claim["user_id"] != user["user_id"]:
+        db.close()
+        raise HTTPException(409, f"Question {question_id} is no longer available in round {current_round}. Choose another.")
+
+    if round_claim and round_claim["released_at"] is None and current_q1 != question_id:
+        db.close()
+        raise HTTPException(409, "You already hold that question in another slot. Choose a different Question 1.")
+
+    now = _now()
+    try:
+        if round_claim and round_claim["released_at"] is not None:
+            db.execute("""
+                UPDATE question_claims
+                SET released_at=NULL, claimed_at=?
+                WHERE claim_id=?
+            """, (now, round_claim["claim_id"]))
+        elif not round_claim:
+            db.execute("""
+                INSERT INTO question_claims (question_id, user_id, round, claimed_at)
+                VALUES (?, ?, ?, ?)
+            """, (question_id, user["user_id"], current_round, now))
+
+        if current_q1 and current_q1 != question_id:
+            db.execute("""
+                UPDATE question_claims
+                SET released_at=?
+                WHERE user_id=? AND question_id=? AND released_at IS NULL
+            """, (now, user["user_id"], current_q1))
+
+        db.execute("UPDATE users SET question_id=? WHERE user_id=?",
+                   (question_id, user["user_id"]))
+        db.commit()
+    except sqlite3.IntegrityError:
+        db.rollback()
+        db.close()
+        raise HTTPException(409, f"Question {question_id} is no longer available in round {current_round}. Choose another.")
+    except sqlite3.Error as exc:
+        db.rollback()
+        db.close()
+        raise HTTPException(503, f"Could not repair Question 1 right now: {exc}")
+
+    db.close()
+    verb = "restored" if round_claim and round_claim["released_at"] is not None else "repaired"
+    return {
+        "question_id": question_id,
+        "question_text": q["text"] or q["label"],
+        "domain": q["domain"],
+        "message": f"Question 1 {verb}: {question_id}. Part 1 is unlocked again."
+    }
+
+
+@student_router.post("/choose-q2")
+async def choose_q2(request: Request):
+    """
+    Student chooses their own Q2 question (mixed / open corpus).
+    They pick from the available research questions — ideally one the corpus
+    needs most. This is separate from the auto-assigned Q1.
+    """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
+    body = await request.json()
+    question_id = body.get("question_id", "").strip()
+    if not question_id:
+        raise HTTPException(400, "question_id is required")
+
+    db = _get_db()
+
+    # Verify question exists
+    q = db.execute("SELECT * FROM research_questions WHERE question_id=?",
+                   (question_id,)).fetchone()
+    if not q:
+        db.close()
+        raise HTTPException(404, f"Question {question_id} not found")
+
+    q1_row = db.execute("SELECT question_id FROM users WHERE user_id=?",
+                        (user["user_id"],)).fetchone()
+    current_q1 = (q1_row["question_id"] if q1_row else "") or ""
+    if current_q1 == question_id:
+        db.close()
+        raise HTTPException(409, "Question 2 must be different from your Question 1 assignment.")
+
+    active_claims = db.execute("""
+        SELECT question_id
+        FROM question_claims
+        WHERE user_id=? AND released_at IS NULL
+        ORDER BY claimed_at ASC
+    """, (user["user_id"],)).fetchall()
+    active_ids = [row["question_id"] for row in active_claims]
+    current_q2 = next((qid for qid in active_ids if qid != current_q1), "")
+
+    if current_q2 == question_id:
+        db.close()
+        return {
+            "question_id": question_id,
+            "question_text": q["text"] or q["label"],
+            "domain": q["domain"],
+            "message": f"Q2 is already assigned: {question_id} — {q['label']}"
+        }
+
+    if current_q2:
+        db.close()
+        raise HTTPException(409, "You already have two questions assigned. Release one first if you want to change.")
+
+    now = _now()
+    current_round = _current_round(db)
+    round_claim = db.execute("""
+        SELECT claim_id, user_id, released_at
+        FROM question_claims
+        WHERE question_id=? AND round=?
+    """, (question_id, current_round)).fetchone()
+
+    if round_claim and round_claim["user_id"] != user["user_id"]:
+        db.close()
+        raise HTTPException(409, f"Question {question_id} is no longer available in round {current_round}. Choose another.")
+
+    try:
+        if round_claim and round_claim["released_at"] is not None:
+            db.execute("""
+                UPDATE question_claims
+                SET released_at=NULL, claimed_at=?
+                WHERE claim_id=?
+            """, (now, round_claim["claim_id"]))
+        elif not round_claim:
+            db.execute("""
+                INSERT INTO question_claims (question_id, user_id, round, claimed_at)
+                VALUES (?, ?, ?, ?)
+            """, (question_id, user["user_id"], current_round, now))
+        db.commit()
+    except sqlite3.IntegrityError:
+        db.rollback()
+        db.close()
+        raise HTTPException(409, f"Question {question_id} is no longer available in round {current_round}. Choose another.")
+    except sqlite3.Error as exc:
+        db.rollback()
+        db.close()
+        raise HTTPException(503, f"Could not assign Question 2 right now: {exc}")
+
+    db.close()
+    verb = "restored" if round_claim and round_claim["released_at"] is not None else "assigned"
+    return {
+        "question_id": question_id,
+        "question_text": q["text"] or q["label"],
+        "domain": q["domain"],
+        "message": f"Q2 {verb}: {question_id} — {q['label']}"
+    }
+
+
+@student_router.get("/topics-needed")
+async def topics_needed(request: Request):
+    """
+    Return all research questions ranked by how much the corpus needs them
+    (fewest completions first). Helps students choose a good Q2 topic.
+    """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
+    db = _get_db()
+    current_round = _current_round(db)
+    available_ids = set(_available_questions(db, current_round))
+    current_q1 = (user.get("question_id") or "").strip()
+
+    rows = db.execute("""
+        SELECT rq.question_id, rq.label, rq.domain, rq.text,
+               COUNT(DISTINCT qc.user_id) AS times_claimed,
+               COALESCE(SUM(qc.task1_count), 0) AS total_experimental,
+               COALESCE(SUM(qc.task2_count), 0) AS total_any_type,
+               COALESCE(SUM(qc.task1_count + qc.task2_count), 0) AS total_articles
+        FROM research_questions rq
+        LEFT JOIN question_claims qc ON rq.question_id = qc.question_id
+            AND qc.released_at IS NULL
+        GROUP BY rq.question_id
+        ORDER BY total_articles ASC, times_claimed ASC, rq.question_id ASC
+    """).fetchall()
+
+    db.close()
+
+    return {
+        "topics": [
+            {
+                "question_id": r["question_id"],
+                "label": r["label"],
+                "domain": r["domain"],
+                "text": r["text"],
+                "times_claimed": r["times_claimed"],
+                "total_articles": r["total_articles"],
+                "total_experimental": r["total_experimental"],
+                "total_any_type": r["total_any_type"],
+                "need_level": "high" if r["total_articles"] < 5 else
+                              "medium" if r["total_articles"] < 15 else "low"
+            }
+            for r in rows
+            if r["question_id"] in available_ids and r["question_id"] != current_q1
+        ]
+    }
+
+
+@student_router.post("/accept-brownie")
+async def accept_brownie(request: Request):
+    """
+    Accept a brownie-point question. Assigns the next available unclaimed question
+    to the student as a bonus round.
+    """
+    user = _get_optional_user(request)
+    if not user:
+        raise HTTPException(401, "You must be signed in")
+
+    db = _get_db()
+
+    # Find the current max round
+    max_round_row = db.execute(
+        "SELECT COALESCE(MAX(round), 1) FROM question_claims").fetchone()
+    current_round = max_round_row[0]
+
+    # Find questions not yet claimed by this student
+    already_claimed = db.execute(
+        "SELECT question_id FROM question_claims WHERE user_id=? AND released_at IS NULL",
+        (user["user_id"],)).fetchall()
+    already_ids = {r["question_id"] for r in already_claimed}
+
+    all_qs = db.execute(
+        "SELECT question_id, label, text FROM research_questions ORDER BY question_id"
+    ).fetchall()
+    available = [q for q in all_qs if q["question_id"] not in already_ids]
+
+    if not available:
+        db.close()
+        raise HTTPException(409, "No additional questions available for brownie points")
+
+    chosen = available[0]
+    now = _now()
+    db.execute("""
+        INSERT INTO question_claims (question_id, user_id, round, claimed_at)
+        VALUES (?, ?, ?, ?)
+    """, (chosen["question_id"], user["user_id"], current_round + 1, now))
+    db.commit()
+    db.close()
+
+    return {
+        "question_id": chosen["question_id"],
+        "question_text": chosen["text"] or chosen["label"] or chosen["question_id"],
+        "message": f"Brownie question assigned: {chosen['question_id']}"
     }

@@ -153,10 +153,10 @@
     const labels = targetRows.length
       ? targetRows.map(function (row) { return row.track_label; })
       : [
-          'Track 1 — Image Tagging',
-          'Track 2 — Article Finding',
-          'Track 3 — VR Production',
-          'Track 4 — GUI Evaluation & Experiment Design'
+          'Track 1 — Image Tagger',
+          'Track 2 — Article Finder',
+          'Track 3 — AI & VR',
+          'Track 4 — Interaction Design'
         ];
     const targets = {};
     targetRows.forEach(function (row) {

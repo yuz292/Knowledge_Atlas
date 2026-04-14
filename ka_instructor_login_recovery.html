@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instructor Login Recovery Guide - Knowledge Atlas</title>
+  <style>
+    :root {
+      --ink: #173634;
+      --ink-soft: #4d615f;
+      --paper: #f5f1ea;
+      --card: #ffffff;
+      --line: #ddd4c8;
+      --accent: #e8872a;
+      --accent-dark: #c86d12;
+      --teal: #245b73;
+      --ok: #2f7d32;
+      --warn: #9a5b00;
+      --bad: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, #efe9df 0%, var(--paper) 100%);
+      color: var(--ink);
+    }
+
+    .topbar {
+      background: var(--ink);
+      color: #fff;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      font-size: 1.05rem;
+    }
+
+    .toplinks {
+      margin-left: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .toplinks a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .toplinks a:hover { color: #fff; }
+
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 34px 20px 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 28px rgba(23, 54, 52, 0.07);
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      line-height: 1.08;
+    }
+
+    .lede,
+    .section-copy,
+    .step-copy,
+    .summary-copy {
+      color: var(--ink-soft);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); }
+
+    .btn-secondary {
+      background: #ece4d8;
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover { background: #e4d8c7; }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-row {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee4d8;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .summary-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 4px;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .decision-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(23, 54, 52, 0.05);
+    }
+
+    .decision-title {
+      margin: 0 0 8px;
+      font-size: 1.06rem;
+    }
+
+    .decision-tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: #eef5fb;
+      color: var(--teal);
+    }
+
+    .steps {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(23, 54, 52, 0.05);
+    }
+
+    .step-num {
+      display: inline-flex;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      background: var(--ink);
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .step h2 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .step ul,
+    .note-list {
+      margin: 12px 0 0 20px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    .step li,
+    .note-list li {
+      margin-bottom: 8px;
+    }
+
+    .callout {
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      border: 1px solid transparent;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .callout.warn {
+      background: #fff5e5;
+      border-color: #f0d6a4;
+      color: var(--warn);
+    }
+
+    .callout.bad {
+      background: #fdecec;
+      border-color: #f5c2c7;
+      color: var(--bad);
+    }
+
+    .callout.ok {
+      background: #edf7ee;
+      border-color: #cce6cf;
+      color: var(--ok);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .link-card {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 8px 24px rgba(23, 54, 52, 0.05);
+    }
+
+    .link-card:hover {
+      border-color: #d6b48b;
+      transform: translateY(-1px);
+    }
+
+    .link-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .link-copy {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .decision-grid,
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toplinks {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="ka_home.html" style="display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.02em;font-size:1.05rem;">
+      <svg viewBox="0 0 32 32" fill="none" style="width:20px;height:20px;">
+        <circle cx="16" cy="16" r="3.5" fill="#e8872a"/>
+        <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
+        <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
+        <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
+        <line x1="16" y1="7.5" x2="16" y2="12.5" stroke="#e8872a" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="24.8" y1="20.2" x2="19.0" y2="17.3" stroke="#e8872a" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="7.2" y1="20.2" x2="13.0" y2="17.3" stroke="#e8872a" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="16" y1="7.5" x2="25.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+        <line x1="25.5" y1="20" x2="6.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+        <line x1="6.5" y1="20" x2="16" y2="7.5" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      </svg>
+      Knowledge Atlas
+    </a>
+    <div class="toplinks">
+      <a href="ka_home_instructor.html">Instructor Home</a>
+      <a href="ka_instructor_review.html">Instructor Review</a>
+      <a href="ka_account_settings.html">Account Settings</a>
+      <a href="ka_home.html">Home</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="panel">
+        <div class="eyebrow">Instructor Support</div>
+        <h1>What to do when a student still cannot sign in</h1>
+        <p class="lede">
+          Use this page as the standard procedure. The point is to stop guessing, avoid duplicate accounts,
+          and apply the smallest fix that restores the student's access.
+        </p>
+        <div class="button-row">
+          <a class="btn btn-primary" href="ka_instructor_review.html">Open Manual Reset Tool</a>
+          <a class="btn btn-secondary" href="ka_login.html">Open Sign-In Page</a>
+          <a class="btn btn-secondary" href="ka_register.html">Open Registration Page</a>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="summary-list">
+          <div class="summary-row">
+            <div class="summary-label">First</div>
+            <div class="summary-copy">Ask for the exact email address and the exact error message or a screenshot.</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Second</div>
+            <div class="summary-copy">Do not create a second account unless you are sure the student never registered.</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Third</div>
+            <div class="summary-copy">If password recovery email is not working, use the manual reset link from the instructor review page.</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">After Access Returns</div>
+            <div class="summary-copy">Send the student to Account Settings to change email or password properly.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="decision-grid">
+      <article class="decision-card">
+        <div class="decision-tag">Most Common</div>
+        <h2 class="decision-title">Student says: “I forgot my password”</h2>
+        <p class="section-copy">
+          Use the manual reset tool. This is the default remedy when mail delivery is unreliable.
+        </p>
+      </article>
+      <article class="decision-card">
+        <div class="decision-tag">Registration</div>
+        <h2 class="decision-title">Student sees: “That email is not registered”</h2>
+        <p class="section-copy">
+          Determine whether the account truly does not exist, or whether the student is using the wrong address.
+        </p>
+      </article>
+      <article class="decision-card">
+        <div class="decision-tag">Duplicate Account Risk</div>
+        <h2 class="decision-title">Student sees: “An account with that email already exists”</h2>
+        <p class="section-copy">
+          Do not register again. Treat this as an existing-account recovery case.
+        </p>
+      </article>
+      <article class="decision-card">
+        <div class="decision-tag">Not Password</div>
+        <h2 class="decision-title">Student can sign in, but Question 1 or Question 2 is wrong or blank</h2>
+        <p class="section-copy">
+          This is an assignment-state problem, not a password problem. Keep the same account and inspect the assignment page.
+        </p>
+      </article>
+    </section>
+
+    <section class="steps">
+      <article class="step">
+        <div class="step-num">1</div>
+        <h2>Before you reset anything</h2>
+        <p class="step-copy">
+          Ask the student for the exact address they entered, the exact message they saw, and whether they still control that email inbox.
+        </p>
+        <ul>
+          <li>Have them copy the address exactly, not from memory.</li>
+          <li>Ask for a screenshot of the message if possible.</li>
+          <li>Confirm whether they ever successfully signed in before.</li>
+        </ul>
+        <div class="callout.warn">
+          Do not guess which email they used. Most login confusion is one of two things: wrong address or existing account with forgotten password.
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-num">2</div>
+        <h2>If the student forgot the password, or reset email is not arriving</h2>
+        <p class="step-copy">
+          Use the manual reset tool on the instructor review page.
+        </p>
+        <ul>
+          <li>Open <a href="ka_instructor_review.html">Instructor Review</a>.</li>
+          <li>In <strong>Manual Password Reset</strong>, enter the student's registered email.</li>
+          <li>Generate the one-time reset link.</li>
+          <li>Verify the student's identity before sending it.</li>
+          <li>Send the link by a trusted channel you already use, such as the verified course email thread or a trusted phone number from course records.</li>
+          <li>After the student signs in again, send them to <a href="ka_account_settings.html">Account Settings</a> if they need to change email or password.</li>
+        </ul>
+        <div class="callout.ok">
+          This is the normal fallback when server email is down. The system itself does not send SMS.
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-num">3</div>
+        <h2>If the student sees “That email is not registered”</h2>
+        <p class="step-copy">
+          Separate the true first-time user from the returning user who is typing the wrong address.
+        </p>
+        <ul>
+          <li>If the student has never registered, send them to <a href="ka_register.html">Register</a>.</li>
+          <li>If the student previously used K-ATLAS, do not create a second account.</li>
+          <li>Ask them which address they used originally. Common mistakes are a personal address instead of UCSD, or a spelling variation.</li>
+          <li>If they remain uncertain, treat it as an existing-account recovery case and use the manual reset workflow on the likely registered address.</li>
+        </ul>
+        <div class="callout.bad">
+          Never solve this by creating duplicate accounts for the same student unless you are certain there was no prior registration.
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-num">4</div>
+        <h2>If the student sees “An account with that email already exists”</h2>
+        <p class="step-copy">
+          The account already exists. The question is no longer registration; it is access recovery.
+        </p>
+        <ul>
+          <li>Send them to <a href="ka_login.html">Sign In</a> if they remember the password.</li>
+          <li>If they do not remember it, use the manual reset link workflow.</li>
+          <li>After access is restored, use <a href="ka_account_settings.html">Account Settings</a> to correct the email if the account is attached to the wrong address.</li>
+        </ul>
+      </article>
+
+      <article class="step">
+        <div class="step-num">5</div>
+        <h2>If the student can sign in but the course assignment is wrong or blank</h2>
+        <p class="step-copy">
+          This is no longer a login failure. Keep the same account and inspect the course-assignment view.
+        </p>
+        <ul>
+          <li>Send the student to <a href="160sp/collect-articles-upload.html">Collect Articles Upload</a>.</li>
+          <li>Have them refresh the page after signing in again.</li>
+          <li>If the assignment is still blank or wrong, collect their exact email and a screenshot.</li>
+          <li>Do not create a new account to fix an assignment problem.</li>
+        </ul>
+        <div class="callout.warn">
+          Wrong Question 1 or Question 2 is an assignment-state problem, not evidence that the password reset failed.
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-num">6</div>
+        <h2>Rules that prevent more damage</h2>
+        <ul class="note-list">
+          <li>Do not ask the student to keep guessing passwords indefinitely.</li>
+          <li>Do not send a manual reset link before you verify identity.</li>
+          <li>Do not create a second account just because login failed once.</li>
+          <li>Do not change the account email until the student has regained access.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="links-grid">
+      <a class="link-card" href="ka_instructor_review.html">
+        <div class="link-title">Instructor Review</div>
+        <div class="link-copy">Use the manual password reset tool when email recovery is not working.</div>
+      </a>
+      <a class="link-card" href="ka_account_settings.html">
+        <div class="link-title">Account Settings</div>
+        <div class="link-copy">Use after access is restored to change the student's email or password properly.</div>
+      </a>
+      <a class="link-card" href="160sp/collect-articles-upload.html">
+        <div class="link-title">Collect Articles Upload</div>
+        <div class="link-copy">Use to inspect whether the problem is really the student's assigned questions, not the login itself.</div>
+      </a>
+    </section>
+  </main>
+</body>
+</html>

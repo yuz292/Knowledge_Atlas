@@ -1,30 +1,6 @@
 {
   "topics": [
     {
-      "id": "RF_A1F1CE00",
-      "cat": "Neuroscience",
-      "n": 3,
-      "voi": 0.624,
-      "name": "Luminous Environment \u00d7 Wellbeing (Circadian)",
-      "desc": "Theories: Circadian Photobiology Constructs: luminous  affect wellbeing Maturity: emerging.",
-      "maturity": "emerging",
-      "mean_credence": 0.784,
-      "mean_omega": 0.624,
-      "shared_theories": [
-        "Circadian Photobiology"
-      ],
-      "shared_constructs": [
-        "luminous  affect wellbeing"
-      ],
-      "contradictions": 0,
-      "replications": 0,
-      "paper_ids": [
-        "PDF-0014",
-        "PDF-0221",
-        "PDF-0518"
-      ]
-    },
-    {
       "id": "RF_53DA3A44",
       "cat": "Neuroscience",
       "n": 3,
@@ -223,7 +199,7 @@
       "name": "Nature & Biophilia \u00d7 Wellbeing (Evidence-Based)",
       "desc": "Theories: Evidence-Based Design, Biophilia Hypothesis, Stress Reduction Theory Constructs: natural  affect wellbeing Maturity: emerging.",
       "maturity": "emerging",
-      "mean_credence": 0.713,
+      "mean_credence": 0.712,
       "mean_omega": 0.596,
       "shared_theories": [
         "Evidence-Based Design",
@@ -523,10 +499,10 @@
     }
   ],
   "summary": {
-    "front_count": 19,
-    "unique_paper_count": 64,
+    "front_count": 18,
+    "unique_paper_count": 61,
     "front_source": "research_fronts_v7",
-    "front_covered_paper_count": 64,
+    "front_covered_paper_count": 61,
     "article_count": 760
   }
 }

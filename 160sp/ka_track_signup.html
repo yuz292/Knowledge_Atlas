@@ -56,10 +56,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 .track-card > p { font-size: 0.9rem; margin-bottom: 0.6rem; }
 .track-desc { font-size: 0.85rem; color: var(--muted); margin: 0.8rem 0 1rem 0; line-height: 1.6; }
 
-/* ── Week-by-week ── */
-.week-by-week { font-size: 0.82rem; color: #555; margin: 1rem 0; }
-.week-by-week strong { color: var(--navy); }
-
 /* ── Card links ── */
 .card-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
 .card-link { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.85rem; border-radius: 5px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: all 0.15s; }
@@ -169,14 +165,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
           <td>Search methodology, database design, batch processing</td>
         </tr>
         <tr>
-          <td><strong>Track 3:<br/>VR Production</strong></td>
+          <td><strong>Track 3:<br/>AI & VR</strong></td>
           <td>3D environment design</td>
           <td>Unreal Engine / A-Frame, 3D modeling</td>
           <td>VR prototype, sensor logging, design specs</td>
           <td>3D design, experimental paradigm implementation, instrumentation</td>
         </tr>
         <tr>
-          <td><strong>Track 4:<br/>GUI Evaluation</strong></td>
+          <td><strong>Track 4:<br/>Interaction Design</strong></td>
           <td>Interface design and testing</td>
           <td>HTML/CSS/JS, user testing frameworks</td>
           <td>Web interface, usability report, spec wall</td>
@@ -225,7 +221,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 
       <!-- Track 3 -->
       <div class="track-card track3">
-        <h3>Track 3: VR Production</h3>
+        <h3>Track 3: AI & VR</h3>
         <p><strong>What you'll build:</strong> Interactive 3D environments that visualize epistemological concepts and warrant structures. Your prototypes will run in Unreal Engine or A-Frame and include sensor logging so users can see how their exploration affects the evidence graph.</p>
         <div class="track-desc">
           <strong>Week-by-week:</strong><br/>
@@ -241,7 +237,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 
       <!-- Track 4 -->
       <div class="track-card track4">
-        <h3>Track 4: GUI Evaluation</h3>
+        <h3>Track 4: Interaction Design</h3>
         <p><strong>What you'll build:</strong> A web interface for researchers to explore the K-ATLAS evidence graph. Your interface will be tested against acceptance criteria you write, documented in a usability report, and accompanied by a spec wall showing the decision history.</p>
         <div class="track-desc">
           <strong>Week-by-week:</strong><br/>
@@ -281,10 +277,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
         <label for="track">Choose Your Track</label>
         <select id="track" name="track" disabled>
           <option value="">-- Select a track --</option>
-          <option value="tagger">Track 1: Image Tagger</option>
-          <option value="finder">Track 2: Article Finder</option>
-          <option value="vr">Track 3: VR Production</option>
-          <option value="gui">Track 4: GUI Evaluation</option>
+          <option value="track1">Track 1: Image Tagger</option>
+          <option value="track2">Track 2: Article Finder</option>
+          <option value="track3">Track 3: AI & VR</option>
+          <option value="track4">Track 4: Interaction Design</option>
         </select>
       </div>
 
@@ -311,7 +307,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 
     <div class="faq-item">
       <div class="faq-q">What if I have no coding experience?</div>
-      <div class="faq-a">Every track involves coding, but the specific skills vary. Track 1 (Image Tagger) and Track 2 (Article Finder) are Python-heavy. Track 3 (VR Production) focuses on 3D design and visual programming. Track 4 (GUI Evaluation) emphasizes frontend development and user testing. Choose based on which skill set interests you most and which gap you think is most important. Your teammates will likely have complementary strengths.</div>
+      <div class="faq-a">Every track involves coding, but the specific skills vary. Track 1 (Image Tagger) and Track 2 (Article Finder) are Python-heavy. Track 3 (AI & VR) focuses on 3D design and visual programming. Track 4 (Interaction Design) emphasizes frontend development and user testing. Choose based on which skill set interests you most and which gap you think is most important. Your teammates will likely have complementary strengths.</div>
     </div>
 
     <div class="faq-item">
@@ -332,10 +328,162 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 
   <!-- ── Navigation ── -->
   <div class="nav-links">
-    <a href="ka_schedule.html" class="nav-back">← Back to Schedule</a>
+    <a href="ka_schedule.html" class="nav-back">&larr; Back to Schedule</a>
     <a href="ka_student_setup.html" class="nav-back">Student Setup</a>
   </div>
 
 </div>
+
+<!-- ── Scripts ── -->
+<script src="../ka_config.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var API = (window.__KA_CONFIG__ && window.__KA_CONFIG__.apiBase) || '';
+  var token = localStorage.getItem('ka_access_token');
+
+  var form       = document.querySelector('#signup form');
+  var nameInput  = document.getElementById('name');
+  var emailInput = document.getElementById('email');
+  var trackSel   = document.getElementById('track');
+  var reasonTxt  = document.getElementById('reason');
+  var submitBtn  = form.querySelector('button[type="submit"]');
+  var callout    = document.querySelector('#signup .callout');
+  var signupNote = form.querySelector('.signup-note');
+
+  var TRACK_NAMES = {
+    track1: 'Track 1: Image Tagger',
+    track2: 'Track 2: Article Finder',
+    track3: 'Track 3: AI & VR',
+    track4: 'Track 4: Interaction Design'
+  };
+
+  function showMessage(type, text) {
+    var box = document.getElementById('signup-message');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'signup-message';
+      box.style.cssText = 'border-radius:8px; padding:1rem 1.2rem; margin:1rem 0; font-size:0.9rem;';
+      form.parentNode.insertBefore(box, form.nextSibling);
+    }
+    if (type === 'success') {
+      box.style.background = '#d4edda';
+      box.style.borderLeft = '4px solid #2A7868';
+      box.style.color = '#155724';
+    } else {
+      box.style.background = '#f8d7da';
+      box.style.borderLeft = '4px solid #c0392b';
+      box.style.color = '#721c24';
+    }
+    box.innerHTML = text;
+    box.style.display = '';
+  }
+
+  function setFormEnabled(enabled) {
+    [nameInput, emailInput, trackSel, reasonTxt, submitBtn].forEach(function (el) {
+      el.disabled = !enabled;
+    });
+  }
+
+  if (!token) {
+    callout.innerHTML =
+      '<div class="callout-label">Login Required</div>' +
+      '<p>You must <a href="../ka_login.html" style="color:#2A7868;font-weight:600;">log in</a> ' +
+      'to sign up for a track. If you don\'t have an account yet, ' +
+      '<a href="../ka_login.html" style="color:#2A7868;font-weight:600;">register first</a>.</p>';
+    return;
+  }
+
+  fetch(API + '/auth/me', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function (res) {
+    if (!res.ok) throw new Error('Auth failed (' + res.status + ')');
+    return res.json();
+  })
+  .then(function (user) {
+    var fullName = ((user.first_name || '') + ' ' + (user.last_name || '')).trim();
+    nameInput.value  = fullName;
+    emailInput.value = user.email || '';
+    nameInput.readOnly  = true;
+    emailInput.readOnly = true;
+
+    if (user.track && TRACK_NAMES[user.track]) {
+      callout.innerHTML =
+        '<div class="callout-label">Current Track</div>' +
+        '<p>You are currently signed up for <strong>' + TRACK_NAMES[user.track] + '</strong>. ' +
+        'You can change your track until the end of Week 3.</p>';
+      trackSel.value = user.track;
+      signupNote.textContent = 'Submitting will update your track selection.';
+    } else {
+      callout.innerHTML =
+        '<div class="callout-label">Ready to Sign Up</div>' +
+        '<p>You are logged in as <strong>' + (fullName || user.email) + '</strong>. ' +
+        'Select a track below and submit your choice.</p>';
+      signupNote.textContent = 'You can change your track until the end of Week 3.';
+    }
+
+    setFormEnabled(true);
+    nameInput.style.background  = '#f0f0f0';
+    emailInput.style.background = '#f0f0f0';
+  })
+  .catch(function (err) {
+    console.warn('[KA Track Signup] Auth check failed:', err);
+    callout.innerHTML =
+      '<div class="callout-label">Connection Issue</div>' +
+      '<p>Could not verify your login. Please make sure you are ' +
+      '<a href="../ka_login.html" style="color:#2A7868;font-weight:600;">logged in</a> ' +
+      'and try again. If the problem persists, the auth server may be unavailable.</p>';
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var selectedTrack = trackSel.value;
+    if (!selectedTrack) {
+      showMessage('error', '<strong>Please select a track</strong> before submitting.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting\u2026';
+
+    fetch(API + '/auth/update-track', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ track: selectedTrack })
+    })
+    .then(function (res) {
+      if (!res.ok) return res.json().then(function (d) { throw new Error(d.detail || 'Server error'); });
+      return res.json();
+    })
+    .then(function (data) {
+      showMessage('success',
+        '<strong>Track confirmed!</strong> ' + data.message +
+        '<br><span style="font-size:0.85rem;color:#555;">You can change your selection until the end of Week 3.</span>');
+
+      callout.innerHTML =
+        '<div class="callout-label">Current Track</div>' +
+        '<p>You are signed up for <strong>' + (data.track_name || TRACK_NAMES[selectedTrack]) + '</strong>. ' +
+        'You can change your track until the end of Week 3.</p>';
+
+      submitBtn.textContent = 'Update Track';
+      submitBtn.disabled = false;
+      signupNote.textContent = 'Submitting will update your track selection.';
+    })
+    .catch(function (err) {
+      showMessage('error',
+        '<strong>Signup failed.</strong> ' + (err.message || 'Please try again.') +
+        '<br><span style="font-size:0.85rem;">If this persists, contact the instructor.</span>');
+      submitBtn.textContent = 'Submit Signup';
+      submitBtn.disabled = false;
+    });
+  });
+})();
+</script>
 </body>
 </html>

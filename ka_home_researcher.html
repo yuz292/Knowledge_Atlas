@@ -709,21 +709,83 @@
       .quick-bar{flex-wrap:wrap}
     }
 
-  </style>
+  
+  /* ---- Portal left sub-nav (injected) ---- */
+  :target { scroll-margin-top: 96px; }
+  h1[id], h2[id], h3[id], h4[id], section[id], div[id], a[id] { scroll-margin-top: 96px; }
+  .portal-subnav {
+    position: fixed; left: 14px; top: 84px;
+    width: 188px; max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid rgba(28,61,58,0.18);
+    border-radius: 10px;
+    padding: 12px 12px 10px 12px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px; line-height: 1.45;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    z-index: 50;
+  }
+  .portal-subnav-title {
+    font-weight: 700; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #1C3D3A;
+    margin-bottom: 6px;
+  }
+  .portal-subnav-group {
+    font-weight: 700; font-size: 10.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #2A7868;
+    margin: 8px 0 4px 0;
+  }
+  .portal-subnav a {
+    display: block; padding: 3px 6px; margin: 1px 0;
+    color: #1C3D3A; text-decoration: none;
+    border-radius: 5px; border-left: 2px solid transparent;
+  }
+  .portal-subnav a:hover {
+    background: #F7F4EF; border-left-color: #E8872A; color: #0B1A19;
+  }
+  .portal-subnav hr {
+    border: 0; border-top: 1px solid rgba(28,61,58,0.14);
+    margin: 8px 0;
+  }
+  @media (max-width: 1280px) { .portal-subnav { display: none; } }
+
+</style>
 </head>
 <body>
+<aside class="portal-subnav" aria-label="On this page">
+  <div class="portal-subnav-title">On this page</div>
+  <a href="#domain">Select a Domain</a>
+  <a href="#position">Your Prior Position</a>
+  <a href="#interest">Of Potential Interest</a>
+  <a href="#journeys">Choose Your Journey</a>
+  <hr>
+  <div class="portal-subnav-group">Journeys</div>
+  <a href="#j-hyp">→ Hypothesis Test</a>
+  <a href="#j-lit">→ Literature Synthesis</a>
+  <a href="#j-pipe">→ Evidence Pipeline</a>
+  <a href="#j-deep">→ Deep Dive</a>
+</aside>
+
 
 <!-- ── NAVIGATION ── -->
 <div class="topnav">
-  <a href="ka_home.html" class="wordmark">
-    <svg class="wordmark-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="none"/>
-      <circle cx="20" cy="20" r="8" fill="#E8872A"/>
-      <path d="M20 8v24M8 20h24" stroke="#A8C8BF" stroke-width="2"/>
+  <a href="ka_home.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg viewBox="0 0 32 32" fill="none" style="width:30px;height:30px;">
+      <circle cx="16" cy="16" r="3.5" fill="#F5A623"/>
+      <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
+      <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
+      <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
+      <line x1="16" y1="7.5" x2="16" y2="12.5" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="24.8" y1="20.2" x2="19.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="7.2" y1="20.2" x2="13.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="16" y1="7.5" x2="25.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      <line x1="25.5" y1="20" x2="6.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      <line x1="6.5" y1="20" x2="16" y2="7.5" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
     </svg>
-    <div class="wordmark-text">
-      <div class="wm-top">Knowledge</div>
-      <div class="wm-bottom">Atlas<span>.</span></div>
+    <div style="display:flex;flex-direction:column;line-height:1.1;">
+      <span style="font-size:0.66rem;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:#A8C8BF;">Knowledge</span>
+      <span style="font-size:1.05rem;font-weight:700;color:#fff;">At<span style="color:#F5A623;">las</span></span>
     </div>
   </a>
 
@@ -755,7 +817,7 @@
 
   <!-- ── SECTION 1: TOPIC CHECKLIST ── -->
   <div class="section">
-    <h2 class="section-heading">Select Your Research Domain</h2>
+    <h2 class="section-heading" id="domain">Select Your Research Domain</h2>
     <p class="section-subtitle">Choose one or more topics to filter all content below. Your selections persist across sessions.</p>
 
     <div class="checklist-card">
@@ -872,7 +934,7 @@
 
   <!-- ── SECTION 2: PRIOR STATE ── -->
   <div class="section">
-    <h2 class="section-heading">What's Your Prior Position?</h2>
+    <h2 class="section-heading" id="position">What's Your Prior Position?</h2>
     <p class="section-subtitle">Optional: Tell us your current hypothesis, and we'll contextualize the evidence relative to your belief. This personalizes the cards below.</p>
 
     <div class="prior-card">
@@ -921,7 +983,7 @@
 
   <!-- ── SECTION 3: OF POTENTIAL INTEREST ── -->
   <div class="section">
-    <h2 class="section-heading">Of Potential Interest</h2>
+    <h2 class="section-heading" id="interest">Of Potential Interest</h2>
     <p class="section-subtitle">Six research frontiers curated to your domain selection. Each card links to deeper exploration.</p>
 
     <div class="interest-grid">
@@ -1047,10 +1109,11 @@
 
   <!-- ── SECTION 4: JOURNEY CHOICES ── -->
   <div class="section">
-    <h2 class="section-heading">Choose Your Journey</h2>
+    <h2 class="section-heading" id="journeys">Choose Your Journey</h2>
     <p class="section-subtitle">Four research workflows. Pick the one that matches your current question.</p>
 
     <div class="journey-grid">
+      <span id="j-hyp" class="journey-anchor" style="position:relative;top:-80px"></span>
       <a href="ka_workflow_hub.html?wf=hypothesis-test" class="journey-card">
         <div class="journey-icon">🔬</div>
         <h3 class="journey-title">Hypothesis Test</h3>
@@ -1058,6 +1121,7 @@
         <span class="journey-cta">Test a Hypothesis →</span>
       </a>
 
+      <span id="j-lit" class="journey-anchor" style="position:relative;top:-80px"></span>
       <a href="ka_workflow_hub.html?wf=lit-synthesis" class="journey-card">
         <div class="journey-icon">📊</div>
         <h3 class="journey-title">Literature Synthesis</h3>
@@ -1065,6 +1129,7 @@
         <span class="journey-cta">Map the Evidence →</span>
       </a>
 
+      <span id="j-pipe" class="journey-anchor" style="position:relative;top:-80px"></span>
       <a href="ka_workflow_hub.html?wf=evidence-pipeline" class="journey-card">
         <div class="journey-icon">📤</div>
         <h3 class="journey-title">Evidence Pipeline</h3>
@@ -1072,6 +1137,7 @@
         <span class="journey-cta">Submit Evidence →</span>
       </a>
 
+      <span id="j-deep" class="journey-anchor" style="position:relative;top:-80px"></span>
       <a href="ka_workflow_hub.html?wf=deep-dive" class="journey-card">
         <div class="journey-icon">🔍</div>
         <h3 class="journey-title">Deep Dive</h3>
@@ -1084,7 +1150,7 @@
   <!-- ── SECTION 5: QUICK ACCESS ── -->
   <div class="section">
     <div class="quick-access">
-      <a href="ka_search.html" class="quick-access-link">Article Search</a>
+      <a href="ka_article_search.html" class="quick-access-link">Article Search</a>
       <span class="quick-access-sep">|</span>
       <a href="ka_evidence.html" class="quick-access-link">Evidence Browser</a>
       <span class="quick-access-sep">|</span>

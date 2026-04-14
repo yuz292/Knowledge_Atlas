@@ -6,16 +6,15 @@ FastAPI + SQLite backend providing real JWT authentication for ATLAS.
 
 Endpoints
 ---------
-POST /auth/register          – create account (status=pending; instructor approves)
+POST /auth/register          – create account (auto-approved for COGS 160)
 POST /auth/login             – returns access + refresh JWT
+POST /auth/refresh           – exchange refresh token for new access token
 POST /auth/forgot-password   – generates reset token (printed to console / stored in DB)
 POST /auth/reset-password    – validates token, sets new password
 GET  /auth/me                – returns current user info (requires Bearer token)
+POST /auth/github-username   – store student's GitHub username (requires Bearer token)
 GET  /api/assignments        – returns student's assigned questions (requires Bearer token)
 GET  /api/questions          – list all available research questions
-GET  /api/registrations      – instructor-only: pending registrations
-POST /api/registrations/{id}/approve   – instructor-only
-POST /api/registrations/{id}/reject    – instructor-only
 
 Running
 -------
@@ -31,11 +30,11 @@ Notes
 - HTTPS: not used in local dev; do not deploy this as-is to a public server
 """
 
-import os, sys, sqlite3, secrets, hashlib, time, json, re, smtplib
+import os, sys, sqlite3, secrets, hashlib, time, json, re, smtplib, ssl
 from datetime import datetime, timedelta, timezone
+from email.message import EmailMessage
 from pathlib import Path
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+from urllib.parse import urlparse
 
 # ── Third-party (install: pip3 install fastapi uvicorn python-jose[cryptography] passlib[bcrypt])
 from fastapi import FastAPI, HTTPException, Depends, status, Request
@@ -51,12 +50,61 @@ from jose import jwt, JWTError
 # CONFIG
 # ════════════════════════════════════════════════
 BASE_DIR   = Path(__file__).parent
-DB_PATH    = BASE_DIR / "data" / "ka_auth.db"
-SECRET_FILE = BASE_DIR / "data" / "ka_auth_secret.txt"
+DB_PATH    = Path(os.getenv("KA_DB_PATH", str(BASE_DIR / "data" / "ka_auth.db")))
+SECRET_FILE = Path(os.getenv("KA_SECRET_FILE", str(BASE_DIR / "data" / "ka_auth_secret.txt")))
 ALGORITHM  = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES  = 60
 REFRESH_TOKEN_EXPIRE_DAYS    = 30
 RESET_TOKEN_EXPIRE_MINUTES   = 60
+PUBLIC_SITE_URL = os.getenv("KA_PUBLIC_SITE_URL", "https://xrlab.ucsd.edu/ka").rstrip("/")
+SMTP_HOST = os.getenv("KA_SMTP_HOST", "")
+SMTP_PORT = int(os.getenv("KA_SMTP_PORT", "465"))
+SMTP_USER = os.getenv("KA_SMTP_USER", "")
+SMTP_PASSWORD = os.getenv("KA_SMTP_PASSWORD", "")
+SMTP_FROM = os.getenv("KA_SMTP_FROM", SMTP_USER or "no-reply@ucsd.edu")
+SMTP_USE_SSL = os.getenv("KA_SMTP_SSL", "1").lower() not in ("0", "false", "no")
+SMTP_USE_STARTTLS = os.getenv("KA_SMTP_STARTTLS", "0").lower() in ("1", "true", "yes")
+
+
+def _origin_from_url(url: str) -> str | None:
+    parsed = urlparse((url or "").strip())
+    if not parsed.scheme or not parsed.netloc:
+        return None
+    return f"{parsed.scheme}://{parsed.netloc}"
+
+
+def _build_allowed_origins() -> list[str]:
+    configured = os.getenv("KA_CORS_ORIGINS", "").strip()
+    if configured:
+        return [origin.strip() for origin in configured.split(",") if origin.strip()]
+
+    origins: list[str] = []
+    public_origin = _origin_from_url(PUBLIC_SITE_URL)
+    if public_origin:
+        origins.append(public_origin)
+
+    origins.extend([
+        "http://localhost",
+        "http://127.0.0.1",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:8765",
+        "http://127.0.0.1:8765",
+        "null",
+    ])
+
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for origin in origins:
+        if origin and origin not in seen:
+            seen.add(origin)
+            deduped.append(origin)
+    return deduped
+
+
+ALLOWED_CORS_ORIGINS = _build_allowed_origins()
 
 # Load or generate JWT secret
 def _get_secret() -> str:
@@ -72,69 +120,113 @@ SECRET_KEY = _get_secret()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 bearer_scheme = HTTPBearer(auto_error=False)
 
-# ════════════════════════════════════════════════
-# EMAIL CONFIG
-# ════════════════════════════════════════════════
-# Environment variables (all optional when on UCSD network):
-#   KA_SMTP_HOST     - SMTP server (default: smtp.ucsd.edu)
-#   KA_SMTP_PORT     - SMTP port (default: 25 for relay, 587 for authenticated)
-#   KA_SMTP_USER     - SMTP username (optional - skip auth if not set)
-#   KA_SMTP_PASS     - SMTP password (optional - skip auth if not set)
-#   KA_EMAIL_FROM    - From address (default: noreply@xrlab.ucsd.edu)
-#   KA_BASE_URL      - Base URL for links (default: https://xrlab.ucsd.edu/ka)
-#
-# On xrlabvm (UCSD network), the defaults should work without any configuration.
-# UCSD's smtp.ucsd.edu accepts relay from campus IPs on port 25 without auth.
 
-SMTP_HOST = os.environ.get("KA_SMTP_HOST", "smtp.ucsd.edu")
-SMTP_PORT = int(os.environ.get("KA_SMTP_PORT", "25"))
-SMTP_USER = os.environ.get("KA_SMTP_USER", "")
-SMTP_PASS = os.environ.get("KA_SMTP_PASS", "")
-EMAIL_FROM = os.environ.get("KA_EMAIL_FROM", "noreply@xrlab.ucsd.edu")
-KA_BASE_URL = os.environ.get("KA_BASE_URL", "https://xrlab.ucsd.edu/ka")
+def _hash_token(token: str) -> str:
+    return "sha256$" + hashlib.sha256(token.encode("utf-8")).hexdigest()
 
-def send_email(to_email: str, subject: str, body_html: str, body_text: str = None) -> bool:
-    """
-    Send an email via SMTP. Returns True on success, False on failure.
 
-    Works in two modes:
-    1. Authenticated (if SMTP_USER and SMTP_PASS set): Uses STARTTLS + login
-    2. Relay (default on UCSD network): Direct send on port 25, no auth needed
-    """
-    try:
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = subject
-        msg["From"] = EMAIL_FROM
-        msg["To"] = to_email
+def _mask_email(email: str) -> str:
+    local, _, domain = (email or "").partition("@")
+    if not domain:
+        return "[redacted]"
+    if len(local) <= 2:
+        masked_local = local[:1] + "*"
+    else:
+        masked_local = local[:1] + "*" * (len(local) - 2) + local[-1:]
+    return f"{masked_local}@{domain}"
 
-        # Plain text fallback
-        if body_text:
-            msg.attach(MIMEText(body_text, "plain"))
 
-        # HTML version
-        msg.attach(MIMEText(body_html, "html"))
+def _find_reset_token_row(db: sqlite3.Connection, presented_token: str):
+    hashed = _hash_token(presented_token)
+    return db.execute(
+        """
+        SELECT * FROM reset_tokens
+        WHERE token IN (?, ?) AND used=0
+        ORDER BY CASE WHEN token=? THEN 0 ELSE 1 END
+        LIMIT 1
+        """,
+        (hashed, presented_token, hashed),
+    ).fetchone()
 
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
-            # Only use TLS and auth if credentials are provided
-            if SMTP_USER and SMTP_PASS:
-                server.starttls()
-                server.login(SMTP_USER, SMTP_PASS)
-            server.sendmail(EMAIL_FROM, to_email, msg.as_string())
 
-        print(f"[KA-AUTH] Email sent to {to_email}: {subject}")
-        return True
-    except Exception as e:
-        print(f"[KA-AUTH] Email failed to {to_email}: {e}")
+def _find_refresh_token_row(db: sqlite3.Connection, presented_token: str):
+    hashed = _hash_token(presented_token)
+    return db.execute(
+        """
+        SELECT * FROM refresh_tokens
+        WHERE token IN (?, ?) AND revoked=0
+        ORDER BY CASE WHEN token=? THEN 0 ELSE 1 END
+        LIMIT 1
+        """,
+        (hashed, presented_token, hashed),
+    ).fetchone()
+
+
+def _revoke_refresh_tokens(db: sqlite3.Connection, user_id: str) -> None:
+    db.execute(
+        "UPDATE refresh_tokens SET revoked=1 WHERE user_id=? AND revoked=0",
+        (user_id,),
+    )
+
+def send_password_reset_email(to_email: str, display_name: str, reset_url: str) -> bool:
+    if not SMTP_HOST:
+        print("[KA-AUTH] SMTP not configured; password-reset email not sent.")
         return False
+
+    msg = EmailMessage()
+    msg["Subject"] = "K-ATLAS password reset"
+    msg["From"] = SMTP_FROM
+    msg["To"] = to_email
+    msg.set_content(
+        f"Hello {display_name or 'K-ATLAS user'},\n\n"
+        "A password reset was requested for your K-ATLAS account.\n\n"
+        f"Reset your password here:\n{reset_url}\n\n"
+        f"This link expires in {RESET_TOKEN_EXPIRE_MINUTES} minutes. "
+        "If you did not request this reset, you can ignore this message.\n\n"
+        "K-ATLAS\n"
+    )
+
+    try:
+        if SMTP_USE_SSL:
+            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=ssl.create_default_context(), timeout=20) as smtp:
+                if SMTP_USER:
+                    smtp.login(SMTP_USER, SMTP_PASSWORD)
+                smtp.send_message(msg)
+        else:
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20) as smtp:
+                smtp.ehlo()
+                if SMTP_USE_STARTTLS:
+                    smtp.starttls(context=ssl.create_default_context())
+                    smtp.ehlo()
+                if SMTP_USER:
+                    smtp.login(SMTP_USER, SMTP_PASSWORD)
+                smtp.send_message(msg)
+        return True
+    except Exception as exc:
+        print(f"[KA-AUTH] Password-reset email failed for {_mask_email(to_email)}: {exc}")
+        return False
+
+
+def issue_reset_token(db: sqlite3.Connection, user_id: str) -> tuple[str, str]:
+    """
+    Invalidate older unused reset tokens for the same user, then issue one fresh
+    token and return `(token, expires_at_iso)`.
+    """
+    token = secrets.token_urlsafe(32)
+    exp = (datetime.now(timezone.utc) + timedelta(minutes=RESET_TOKEN_EXPIRE_MINUTES)).isoformat()
+    db.execute("UPDATE reset_tokens SET used=1 WHERE user_id=? AND used=0", (user_id,))
+    db.execute("INSERT INTO reset_tokens VALUES (?,?,?,0)", (_hash_token(token), user_id, exp))
+    return token, exp
 
 # ════════════════════════════════════════════════
 # DATABASE
 # ════════════════════════════════════════════════
 def get_db() -> sqlite3.Connection:
-    db = sqlite3.connect(str(DB_PATH))
+    db = sqlite3.connect(str(DB_PATH), timeout=5.0)
     db.row_factory = sqlite3.Row
     db.execute("PRAGMA journal_mode=WAL")
     db.execute("PRAGMA foreign_keys=ON")
+    db.execute("PRAGMA busy_timeout=5000")
     return db
 
 
@@ -208,9 +300,6 @@ def init_db():
         notes       TEXT
     );
     """)
-    _ensure_column(db, "users", "github_username", "TEXT")
-    _ensure_column(db, "users", "github_username_source", "TEXT")
-    _ensure_column(db, "users", "github_username_updated_at", "TEXT")
     # Seed research questions if table is empty
     count = db.execute("SELECT COUNT(*) FROM research_questions").fetchone()[0]
     if count == 0:
@@ -334,6 +423,10 @@ def init_db():
         db.executemany(
             "INSERT INTO research_questions VALUES (?,?,?,?,?,?)", questions)
 
+    _ensure_column(db, "users", "github_username", "TEXT")
+    _ensure_column(db, "users", "github_username_source", "TEXT")
+    _ensure_column(db, "users", "github_username_updated_at", "TEXT")
+
     # Seed instructor account if no instructor exists
     instr = db.execute("SELECT user_id FROM users WHERE role='instructor' LIMIT 1").fetchone()
     if not instr:
@@ -345,8 +438,8 @@ def init_db():
             (user_id,email,first_name,last_name,role,password_hash,status,created_at,approved_at)
             VALUES (?,?,?,?,?,?,?,?,?)""",
             (uid, email, "David", "Kirsh", "instructor", ph, "approved", now, now))
-        print("[KA-AUTH] Seeded instructor account: dkirsh@ucsd.edu / atlas2026")
-        print("[KA-AUTH] ← Change this password immediately via POST /auth/change-password")
+        print("[KA-AUTH] Seeded instructor account")
+        print("[KA-AUTH] Change the instructor password immediately via POST /auth/change-password")
 
     db.commit()
     db.close()
@@ -364,7 +457,7 @@ def create_refresh_token(user_id: str) -> str:
     exp = datetime.now(timezone.utc) + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     db = get_db()
     db.execute("INSERT INTO refresh_tokens VALUES (?,?,?,0)",
-               (token, user_id, exp.isoformat()))
+               (_hash_token(token), user_id, exp.isoformat()))
     db.commit(); db.close()
     return token
 
@@ -374,8 +467,8 @@ def decode_access_token(token: str) -> dict:
         if payload.get("type") != "access":
             raise JWTError("wrong token type")
         return payload
-    except JWTError as e:
-        raise HTTPException(status_code=401, detail=f"Invalid token: {e}")
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 def get_current_user(creds: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
     if not creds:
@@ -422,12 +515,17 @@ class ChangePasswordRequest(BaseModel):
     current_password: str
     new_password:     str
 
-class ApproveRequest(BaseModel):
-    track:       str = ""
-    question_id: str = ""
 
-class RejectRequest(BaseModel):
-    reason: str = "Application not approved"
+class ChangeEmailRequest(BaseModel):
+    current_password: str
+    new_email:        EmailStr
+
+
+class ManualResetLinkRequest(BaseModel):
+    email: EmailStr
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str
 
 
 class UpdateGitHubUsernameRequest(BaseModel):
@@ -441,9 +539,9 @@ app = FastAPI(title="Knowledge Atlas Auth API", version="1.0.0",
               description="Lightweight JWT authentication for Knowledge Atlas (local dev)")
 
 app.add_middleware(CORSMiddleware,
-    allow_origins=["*"],   # file:// + localhost during local dev
-    allow_methods=["*"],
-    allow_headers=["*"])
+    allow_origins=ALLOWED_CORS_ORIGINS,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"])
 
 # ── DB INIT ON STARTUP (runs whether invoked via __main__ or uvicorn)
 @app.on_event("startup")
@@ -466,7 +564,6 @@ def register(req: RegisterRequest):
     now = datetime.now(timezone.utc).isoformat()
     db  = get_db()
     # Auto-approve COGS 160 students so they can start working immediately.
-    # Instructor can review/revoke later via ka_approve.html.
     initial_status = "approved"
     approved_at    = now
 
@@ -526,55 +623,35 @@ def login(req: LoginRequest):
 def forgot_password(req: ForgotPasswordRequest):
     email = req.email.strip().lower()
     db = get_db()
-    row = db.execute("SELECT * FROM users WHERE email=?", (email,)).fetchone()
-    # Always return 200 to avoid leaking which emails are registered
-    if not row:
+    try:
+        row = db.execute("SELECT * FROM users WHERE email=?", (email,)).fetchone()
+        if not row:
+            raise HTTPException(404, "That email is not registered in K-ATLAS. Check the address or register a new account.")
+        token, exp = issue_reset_token(db, row["user_id"])
+        db.commit()
+        first_name = row["first_name"]
+        last_name = row["last_name"]
+    except HTTPException:
+        db.rollback()
+        raise
+    except sqlite3.Error as exc:
+        db.rollback()
+        print(f"[KA-AUTH] Password-reset token write failed for {email}: {exc}")
+        raise HTTPException(503, "Password reset is temporarily unavailable. Please try again in a moment.")
+    finally:
         db.close()
-        return {"message": "If that email is registered, a reset link has been sent."}
-    token = secrets.token_urlsafe(32)
-    exp   = (datetime.now(timezone.utc) + timedelta(minutes=RESET_TOKEN_EXPIRE_MINUTES)).isoformat()
-    db.execute("INSERT INTO reset_tokens VALUES (?,?,?,0)", (token, row["user_id"], exp))
-    db.commit(); db.close()
-    # Build reset URL
-    reset_url = f"{KA_BASE_URL}/ka_reset_password.html?token={token}"
-    first_name = row['first_name']
-
-    # Try to send email
-    email_html = f"""
-    <html>
-    <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2 style="color: #1C3D3A;">Password Reset Request</h2>
-        <p>Hi {first_name},</p>
-        <p>We received a request to reset your Knowledge Atlas password. Click the button below to set a new password:</p>
-        <p style="text-align: center; margin: 30px 0;">
-            <a href="{reset_url}" style="background: #E8872A; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Reset Password</a>
-        </p>
-        <p style="font-size: 0.9em; color: #666;">Or copy this link: <a href="{reset_url}">{reset_url}</a></p>
-        <p style="font-size: 0.9em; color: #666;">This link expires in {RESET_TOKEN_EXPIRE_MINUTES} minutes.</p>
-        <p style="font-size: 0.9em; color: #666;">If you didn't request this, you can ignore this email.</p>
-        <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
-        <p style="font-size: 0.8em; color: #999;">Knowledge Atlas — COGS 160</p>
-    </body>
-    </html>
-    """
-    email_text = f"Hi {first_name},\n\nReset your password here: {reset_url}\n\nThis link expires in {RESET_TOKEN_EXPIRE_MINUTES} minutes."
-
-    email_sent = send_email(email, "Reset your Knowledge Atlas password", email_html, email_text)
-
-    # Always log to console
-    print(f"\n[KA-AUTH] PASSWORD RESET REQUEST")
-    print(f"  Email:     {email}")
-    print(f"  Name:      {row['first_name']} {row['last_name']}")
-    print(f"  Reset URL: {reset_url}")
-    print(f"  Expires:   {exp}")
-    print(f"  Email sent: {email_sent}\n")
-
-    response = {"message": "If that email is registered, a reset link has been sent."}
+    reset_url = f"{PUBLIC_SITE_URL}/ka_reset_password.html?token={token}"
+    display_name = f"{first_name} {last_name}".strip()
+    email_sent = send_password_reset_email(email, display_name, reset_url)
+    print(f"[KA-AUTH] Password reset requested for {_mask_email(email)}; email_sent={email_sent}; expires={exp}")
+    message = "Password reset email sent. Check your inbox."
     if not email_sent:
-        # Include URL in response if email not configured (dev mode)
-        response["_dev_note"] = "Email not configured — reset link included below."
-        response["_dev_reset_url"] = reset_url
-    return response
+        message = "That email is registered, but reset email is not working on this server right now. Contact the instructor from that address for a manual reset."
+    return {
+        "message": message,
+        "registered": True,
+        "email_sent": email_sent
+    }
 
 # ── RESET PASSWORD
 @app.post("/auth/reset-password")
@@ -582,37 +659,111 @@ def reset_password(req: ResetPasswordRequest):
     if len(req.new_password) < 8:
         raise HTTPException(400, "Password must be at least 8 characters")
     db = get_db()
-    row = db.execute("""SELECT * FROM reset_tokens
-                        WHERE token=? AND used=0""", (req.token,)).fetchone()
-    if not row:
+    try:
+        row = _find_reset_token_row(db, req.token)
+        if not row:
+            raise HTTPException(400, "Reset token is invalid or has already been used")
+        exp = datetime.fromisoformat(row["expires_at"])
+        if exp < datetime.now(timezone.utc):
+            raise HTTPException(400, "Reset token has expired. Request a new one.")
+        ph = pwd_context.hash(req.new_password)
+        db.execute("UPDATE users SET password_hash=? WHERE user_id=?", (ph, row["user_id"]))
+        db.execute("UPDATE reset_tokens SET used=1 WHERE token=?", (row["token"],))
+        _revoke_refresh_tokens(db, row["user_id"])
+        db.commit()
+    except HTTPException:
+        db.rollback()
+        raise
+    except sqlite3.Error:
+        db.rollback()
+        raise HTTPException(503, "Password reset is temporarily unavailable. Please try again in a moment.")
+    finally:
         db.close()
-        raise HTTPException(400, "Reset token is invalid or has already been used")
-    exp = datetime.fromisoformat(row["expires_at"])
-    if exp < datetime.now(timezone.utc):
-        db.close()
-        raise HTTPException(400, "Reset token has expired. Request a new one.")
-    ph = pwd_context.hash(req.new_password)
-    db.execute("UPDATE users SET password_hash=? WHERE user_id=?", (ph, row["user_id"]))
-    db.execute("UPDATE reset_tokens SET used=1 WHERE token=?", (req.token,))
-    db.commit(); db.close()
     return {"message": "Password updated successfully. You can now log in."}
 
 # ── CHANGE PASSWORD (authenticated)
 @app.post("/auth/change-password")
 def change_password(req: ChangePasswordRequest, user=Depends(get_current_user)):
     db = get_db()
-    row = db.execute("SELECT password_hash FROM users WHERE user_id=?",
-                     (user["user_id"],)).fetchone()
-    if not pwd_context.verify(req.current_password, row["password_hash"]):
+    try:
+        row = db.execute("SELECT password_hash FROM users WHERE user_id=?",
+                         (user["user_id"],)).fetchone()
+        if not pwd_context.verify(req.current_password, row["password_hash"]):
+            raise HTTPException(400, "Current password is incorrect")
+        if len(req.new_password) < 8:
+            raise HTTPException(400, "New password must be at least 8 characters")
+        db.execute("UPDATE users SET password_hash=? WHERE user_id=?",
+                   (pwd_context.hash(req.new_password), user["user_id"]))
+        _revoke_refresh_tokens(db, user["user_id"])
+        db.commit()
+    except HTTPException:
+        db.rollback()
+        raise
+    except sqlite3.Error:
+        db.rollback()
+        raise HTTPException(503, "Password change is temporarily unavailable. Please try again in a moment.")
+    finally:
         db.close()
-        raise HTTPException(400, "Current password is incorrect")
-    if len(req.new_password) < 8:
-        db.close()
-        raise HTTPException(400, "New password must be at least 8 characters")
-    db.execute("UPDATE users SET password_hash=? WHERE user_id=?",
-               (pwd_context.hash(req.new_password), user["user_id"]))
-    db.commit(); db.close()
     return {"message": "Password changed successfully"}
+
+
+@app.post("/auth/change-email")
+def change_email(req: ChangeEmailRequest, user=Depends(get_current_user)):
+    new_email = str(req.new_email).strip().lower()
+    db = get_db()
+    try:
+        row = db.execute("""
+            SELECT user_id, email, first_name, last_name, role, status, track, question_id, last_login, password_hash
+            FROM users
+            WHERE user_id=?
+        """, (user["user_id"],)).fetchone()
+        if not row:
+            raise HTTPException(401, "User not found")
+        if not pwd_context.verify(req.current_password, row["password_hash"]):
+            raise HTTPException(400, "Current password is incorrect")
+        if new_email == row["email"]:
+            return {
+                "message": "That is already the email on this account.",
+                "user": {
+                    "user_id": row["user_id"],
+                    "email": row["email"],
+                    "first_name": row["first_name"],
+                    "last_name": row["last_name"],
+                    "role": row["role"],
+                    "status": row["status"],
+                    "track": row["track"],
+                    "question_id": row["question_id"],
+                    "last_login": row["last_login"],
+                }
+            }
+        db.execute("UPDATE users SET email=? WHERE user_id=?", (new_email, row["user_id"]))
+        _revoke_refresh_tokens(db, row["user_id"])
+        db.commit()
+    except HTTPException:
+        db.rollback()
+        raise
+    except sqlite3.IntegrityError:
+        db.rollback()
+        raise HTTPException(409, "An account with that email already exists")
+    except sqlite3.Error:
+        db.rollback()
+        raise HTTPException(503, "Email change is temporarily unavailable. Please try again in a moment.")
+    finally:
+        db.close()
+    return {
+        "message": "Email changed successfully.",
+        "user": {
+            "user_id": row["user_id"],
+            "email": new_email,
+            "first_name": row["first_name"],
+            "last_name": row["last_name"],
+            "role": row["role"],
+            "status": row["status"],
+            "track": row["track"],
+            "question_id": row["question_id"],
+            "last_login": row["last_login"],
+        }
+    }
 
 # ── ME
 @app.get("/auth/me")
@@ -666,6 +817,30 @@ def update_github_username(req: UpdateGitHubUsernameRequest, user=Depends(get_cu
         "github_username_updated_at": now,
     }
 
+# ── UPDATE TRACK
+class UpdateTrackRequest(BaseModel):
+    track: str
+
+@app.post("/auth/update-track")
+def update_track(req: UpdateTrackRequest, user=Depends(get_current_user)):
+    valid_tracks = {"track1", "track2", "track3", "track4"}
+    if req.track not in valid_tracks:
+        raise HTTPException(400, f"Invalid track. Must be one of: {', '.join(sorted(valid_tracks))}")
+    db = get_db()
+    db.execute("UPDATE users SET track=? WHERE user_id=?", (req.track, user["user_id"]))
+    db.commit(); db.close()
+    track_names = {
+        "track1": "Track 1: Image Tagger",
+        "track2": "Track 2: Article Finder",
+        "track3": "Track 3: AI & VR",
+        "track4": "Track 4: Interaction Design"
+    }
+    return {
+        "message": f"You have joined {track_names.get(req.track, req.track)}!",
+        "track": req.track,
+        "track_name": track_names.get(req.track, req.track)
+    }
+
 # ── ASSIGNMENTS
 @app.get("/api/assignments")
 def get_assignment(user=Depends(get_current_user)):
@@ -696,39 +871,85 @@ def list_questions(user=Depends(require_instructor)):
     db.close()
     return [dict(r) for r in rows]
 
-# ── INSTRUCTOR: list pending registrations
-@app.get("/api/registrations")
-def list_registrations(status_filter: str = "pending", user=Depends(require_instructor)):
+# ── TOKEN REFRESH
+@app.post("/auth/refresh")
+def refresh_access_token(req: RefreshTokenRequest):
     db = get_db()
-    rows = db.execute(
-        "SELECT user_id,email,first_name,last_name,department,track,question_id,status,created_at FROM users WHERE status=? ORDER BY created_at DESC",
-        (status_filter,)).fetchall()
-    db.close()
-    return [dict(r) for r in rows]
-
-# ── INSTRUCTOR: approve registration
-@app.post("/api/registrations/{uid}/approve")
-def approve_registration(uid: str, req: ApproveRequest, user=Depends(require_instructor)):
-    db = get_db()
-    row = db.execute("SELECT * FROM users WHERE user_id=?", (uid,)).fetchone()
+    row = _find_refresh_token_row(db, req.refresh_token)
     if not row:
         db.close()
-        raise HTTPException(404, "User not found")
-    now = datetime.now(timezone.utc).isoformat()
-    db.execute("""UPDATE users SET status='approved', approved_at=?, track=?, question_id=?
-                  WHERE user_id=?""",
-               (now, req.track or row["track"], req.question_id or row["question_id"], uid))
-    db.commit(); db.close()
-    return {"message": f"Approved {row['email']}",
-            "track": req.track, "question_id": req.question_id}
+        raise HTTPException(401, "Invalid or revoked refresh token")
+    if datetime.fromisoformat(row["expires_at"]) < datetime.now(timezone.utc):
+        db.execute("UPDATE refresh_tokens SET revoked=1 WHERE token=?", (row["token"],))
+        db.commit()
+        db.close()
+        raise HTTPException(401, "Refresh token expired — please sign in again")
+    user = db.execute("SELECT * FROM users WHERE user_id=?", (row["user_id"],)).fetchone()
+    if not user:
+        db.close()
+        raise HTTPException(401, "User not found")
+    if user["status"] != "approved":
+        db.close()
+        raise HTTPException(403, "Account not active")
+    db.close()
+    access = create_access_token(user["user_id"], user["role"])
+    return {
+        "access_token": access,
+        "token_type": "bearer",
+        "user": {
+            "user_id":    user["user_id"],
+            "email":      user["email"],
+            "first_name": user["first_name"],
+            "last_name":  user["last_name"],
+            "role":       user["role"],
+            "track":      user["track"],
+            "question_id": user["question_id"],
+        }
+    }
 
-# ── INSTRUCTOR: reject registration
-@app.post("/api/registrations/{uid}/reject")
-def reject_registration(uid: str, req: RejectRequest, user=Depends(require_instructor)):
+
+@app.post("/api/instructor/manual-reset-link")
+@app.post("/auth/manual-reset-link")
+def manual_reset_link(req: ManualResetLinkRequest, user=Depends(require_instructor)):
+    email = str(req.email).strip().lower()
     db = get_db()
-    db.execute("UPDATE users SET status='rejected' WHERE user_id=?", (uid,))
-    db.commit(); db.close()
-    return {"message": f"Rejected registration for {uid}"}
+    try:
+        row = db.execute("""
+            SELECT user_id, email, first_name, last_name, role, status
+            FROM users
+            WHERE email=?
+        """, (email,)).fetchone()
+        if not row:
+            raise HTTPException(404, "That email is not registered in K-ATLAS.")
+        token, exp = issue_reset_token(db, row["user_id"])
+        db.commit()
+    except HTTPException:
+        db.rollback()
+        raise
+    except sqlite3.Error as exc:
+        db.rollback()
+        raise HTTPException(503, f"Could not create a manual reset link right now: {exc}")
+    finally:
+        db.close()
+
+    reset_url = f"{PUBLIC_SITE_URL}/ka_reset_password.html?token={token}"
+    print(
+        f"[KA-AUTH] Manual reset link generated by {_mask_email(user['email'])} "
+        f"for {_mask_email(email)}; expires={exp}"
+    )
+    return {
+        "message": f"Manual reset link generated for {email}.",
+        "user": {
+            "user_id": row["user_id"],
+            "email": row["email"],
+            "first_name": row["first_name"],
+            "last_name": row["last_name"],
+            "role": row["role"],
+            "status": row["status"],
+        },
+        "reset_url": reset_url,
+        "expires_at": exp,
+    }
 
 # ── HEALTH CHECK
 @app.get("/health")
@@ -756,17 +977,25 @@ except ImportError as e:
     print(f"[KA-AUTH] Article submission module not available: {e}")
     print("[KA-AUTH] Server running with auth-only endpoints")
 
+# ── CRITIQUE SUGGESTION MODULE (KA-T22)
+# POST /api/critique/suggest — accepts the usability-critic payload, calls
+# Claude (if ANTHROPIC_API_KEY is set), and returns per-heuristic suggestions.
+# If the key is missing, returns rule-based fallback suggestions so the UI
+# remains functional in local dev.
+try:
+    import ka_critique_endpoints
+    app.include_router(ka_critique_endpoints.router)
+    print("[KA-AUTH] Critique suggest endpoint loaded ✓ (POST /api/critique/suggest)")
+except ImportError as e:
+    print(f"[KA-AUTH] Critique module not available: {e}")
+
 # ── RESET PAGE REDIRECT (convenience link in reset email)
 @app.get("/reset")
 def reset_page_redirect(token: str):
-    from fastapi.responses import HTMLResponse
-    return HTMLResponse(f"""<!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<meta http-equiv="refresh" content="0;url=ka_reset_password.html?token={token}">
-<title>Redirecting…</title></head>
-<body><p>Redirecting to password reset page…
-<a href="ka_reset_password.html?token={token}">Click here if not redirected</a></p>
-</body></html>""")
+    from fastapi.responses import RedirectResponse
+    import urllib.parse
+    safe_token = urllib.parse.quote(token, safe='')
+    return RedirectResponse(f"ka_reset_password.html?token={safe_token}", status_code=302)
 
 # ════════════════════════════════════════════════
 # STATIC FILE SERVING
@@ -800,11 +1029,5 @@ if __name__ == "__main__":
     print("  http://localhost:8765")
     print("  API docs: http://localhost:8765/docs")
     print("  Health:   http://localhost:8765/health")
-    print()
-    print("  Instructor login:")
-    print("    Email:    dkirsh@ucsd.edu")
-    print("    Password: atlas2026")
-    print("    (Change this! POST /auth/change-password)")
     print("═"*60 + "\n")
-    uvicorn.run("ka_auth_server:app", host="127.0.0.1", port=8765,
-                reload=True, reload_dirs=[str(BASE_DIR)])
+    uvicorn.run("ka_auth_server:app", host="127.0.0.1", port=8765, reload=False)

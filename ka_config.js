@@ -8,8 +8,7 @@
  * Production:  Change apiBase to the university VM address
  *
  * Usage in HTML:
- *   <script src="ka_config.js"></script>
- *   <script src="ka_page_specific.js"></script>
+ *   Load ka_config.js before your page-specific script.
  *
  * All KA pages read from window.__KA_CONFIG__.apiBase with a fallback
  * to 'http://localhost:8765' if this file is not loaded.

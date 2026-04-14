@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Week 3 — Choose Your Track · COGS 160</title>
+<title>Week 3 — Track Setup &amp; Orientation · COGS 160</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -14,34 +14,35 @@
 }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.65; }
 
-/* ── Top nav ── */
-.top-nav { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; height: 52px; gap: 1.2rem; font-size: 0.85rem; position: sticky; top: 0; z-index: 100; }
-.nav-brand { color: var(--amber); font-weight: 800; font-size: 1.05rem; text-decoration: none; }
-.nav-sep { color: rgba(255,255,255,0.2); }
-.nav-link { color: #b2dfdb; text-decoration: none; padding: 4px 10px; border-radius: 5px; transition: background 0.15s; }
-.nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
-.nav-link.active { background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; }
-.nav-right { margin-left: auto; color: rgba(255,255,255,0.4); font-size: 0.75rem; }
+/* ── Nav ── */
+nav {
+  position: sticky; top: 0; z-index: 500;
+  background: var(--navy); display: flex; align-items: center;
+  gap: 24px; padding: 0 28px; min-height: 52px;
+  border-bottom: 2px solid var(--amber);
+}
+.nav-center { display:flex; align-items:center; gap:14px; flex:1; }
+nav a.nav-link { color: #7AACA0; font-size: 0.8rem; text-decoration: none;
+  transition: color 0.15s, background 0.15s; padding: 6px 10px; border-radius: 6px; }
+nav a.nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+nav a.nav-link.active { color: #F5A623; background: rgba(232,135,42,0.12); }
+.nav-right { display:flex; align-items:center; gap:12px; }
 
 /* ── Hero ── */
 .hero { background: linear-gradient(135deg, var(--navy) 0%, #152e2b 100%); color: #fff; padding: 3rem 2rem 2.5rem; text-align: center; }
 .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 0.5rem; }
 .hero h1 { font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 0.5rem; }
-.hero-sub { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 680px; margin: 0 auto 1.2rem; }
-.hero-pills { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
-.hero-pill { display: inline-block; padding: 0.28rem 0.85rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-.pill-teal { background: var(--teal); color: #fff; }
-.pill-amber { background: var(--amber); color: #fff; }
-.pill-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+.hero-sub { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 700px; margin: 0 auto; }
 
 /* ── Layout ── */
-.page-wrap { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+.page-wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
 
 /* ── Day blocks ── */
 .day-block { background: var(--white); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 .day-label { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 4px; margin-bottom: 0.75rem; }
 .day-label-tue { background: var(--teal-bg); color: var(--teal); }
 .day-label-thu { background: var(--amber-lt); color: var(--amber-dk); }
+.day-label-all { background: #e8eaf6; color: #3949ab; }
 .day-title { font-family: Georgia, serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
 .day-block p { margin-bottom: 0.9rem; font-size: 0.95rem; }
 .day-block p:last-child { margin-bottom: 0; }
@@ -53,38 +54,61 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 .agenda-body h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
 .agenda-body p { font-size: 0.92rem; color: #444; }
 
-/* ── Track mini-grid ── */
-.track-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.2rem 0; }
-.track-card { border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 1rem 1.2rem; background: var(--white); border: 1px solid var(--border); }
-.track-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
-.track-card p { font-size: 0.82rem; color: var(--muted); margin: 0; line-height: 1.5; }
-.track-card.teal { border-left-color: var(--teal); }
-.track-card.amber { border-left-color: var(--amber); }
-.track-card.blue { border-left-color: var(--blue); }
-.track-card.rose { border-left-color: var(--rose); }
+/* ── Code blocks ── */
+.cmd-block {
+  background: #1e1e1e; color: #d4d4d4; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 0.82rem; line-height: 1.7; padding: 14px 18px; border-radius: 8px; margin: 12px 0;
+  overflow-x: auto;
+}
+.cmd-block .comment { color: #6A9955; }
+.cmd-block .cmd { color: #DCDCAA; }
+
+/* ── Track tabs ── */
+.track-tabs { display: flex; gap: 0; margin: 20px 0 0; border-bottom: 2px solid var(--border); }
+.track-tab {
+  padding: 10px 18px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  border: 1px solid transparent; border-bottom: none; border-radius: 8px 8px 0 0;
+  background: transparent; color: var(--muted); transition: all 0.15s;
+}
+.track-tab:hover { color: var(--navy); background: rgba(0,0,0,0.03); }
+.track-tab.active { background: var(--white); color: var(--navy); border-color: var(--border); border-bottom: 2px solid var(--white); margin-bottom: -2px; }
+.track-tab.t1.active { border-top: 3px solid var(--teal); }
+.track-tab.t2.active { border-top: 3px solid var(--amber); }
+.track-tab.t3.active { border-top: 3px solid var(--blue); }
+.track-tab.t4.active { border-top: 3px solid var(--rose); }
+
+.track-panel { display: none; background: var(--white); border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; padding: 20px 24px; }
+.track-panel.active { display: block; }
+.track-panel h4 { font-family: Georgia, serif; font-size: 1.05rem; color: var(--navy); margin: 18px 0 8px; }
+.track-panel h4:first-child { margin-top: 0; }
+.track-panel p { font-size: 0.92rem; margin-bottom: 10px; }
+.track-panel li { font-size: 0.9rem; margin-bottom: 6px; line-height: 1.6; }
+.track-panel ul { margin: 8px 0 14px 1.4rem; }
 
 /* ── Callout boxes ── */
 .callout { border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 1rem 1.2rem; margin: 1.2rem 0; font-size: 0.9rem; }
 .callout-teal { border-color: var(--teal); background: var(--teal-bg); }
 .callout-amber { border-color: var(--amber); background: var(--amber-lt); }
 .callout-rose { border-color: var(--rose); background: #fdf0ef; }
+.callout-blue { border-color: var(--blue); background: #e8eaf6; }
 .callout-label { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
 .callout-teal .callout-label { color: var(--teal); }
 .callout-amber .callout-label { color: var(--amber-dk); }
-.callout-rose .callout-label { color: var(--rose); }
 
-/* ── Link buttons ── */
-.page-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.2rem 0; }
-.page-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; }
-.link-primary { background: var(--navy); color: #fff; }
-.link-primary:hover { background: var(--teal); }
-.link-secondary { background: var(--teal-bg); color: var(--navy); border: 1.5px solid var(--teal); }
-.link-secondary:hover { background: var(--teal); color: #fff; }
-
-/* ── Deliverable box ── */
+/* ── Deliverables ── */
 .deliverable { background: var(--amber-lt); border: 1.5px solid var(--amber); border-radius: 8px; padding: 1rem 1.2rem; margin: 1.2rem 0; }
 .deliverable-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber-dk); margin-bottom: 0.3rem; }
 .deliverable p { font-size: 0.88rem; color: #5a3800; margin: 0; }
+
+/* ── Tables ── */
+.data-table {
+  width: 100%; border-collapse: collapse; margin: 16px 0;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-size: 0.85rem;
+}
+.data-table th { background: var(--navy); color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+.data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: #f8f6f2; }
 
 /* ── Week nav ── */
 .week-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; margin-top: 1rem; border-top: 2px solid var(--border); }
@@ -93,151 +117,606 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 .week-nav .prev:hover { border-color: var(--navy); }
 .week-nav .next { background: var(--navy); color: #fff; }
 .week-nav .next:hover { background: var(--teal); }
-.week-nav .disabled { opacity: 0.3; pointer-events: none; }
 
 @media (max-width: 640px) {
-  .track-mini-grid { grid-template-columns: 1fr; }
+  .track-tabs { flex-wrap: wrap; }
+  .track-tab { font-size: 0.78rem; padding: 8px 12px; }
 }
 </style>
 </head>
 <body>
 
 <!-- ── Navigation ── -->
-<nav class="top-nav">
-  <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
-  <span class="nav-sep">|</span>
-  <a href="ka_schedule.html" class="nav-link">Schedule</a>
-  <a href="ka_student_setup.html" class="nav-link">Setup</a>
-  <a href="../ka_topics.html" class="nav-link">Topics</a>
-  <a href="../ka_evidence.html" class="nav-link">Evidence</a>
-  <a href="../ka_demo_v04.html" class="nav-link">Ask</a>
-  <span class="nav-right">COGS 160 · Spring 2026</span>
+<nav>
+  <a href="ka_schedule.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg viewBox="0 0 32 32" fill="none" style="width:28px;height:28px;">
+      <circle cx="16" cy="16" r="3.5" fill="#F5A623"/>
+      <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
+      <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
+      <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
+      <line x1="16" y1="7.5" x2="16" y2="12.5" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="24.8" y1="20.2" x2="19.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="7.2" y1="20.2" x2="13.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+      <line x1="16" y1="7.5" x2="25.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      <line x1="25.5" y1="20" x2="6.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      <line x1="6.5" y1="20" x2="16" y2="7.5" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+    </svg>
+    <div style="display:flex;flex-direction:column;line-height:1.1;">
+      <span style="font-size:0.66rem;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:#A8C8BF;">Knowledge</span>
+      <span style="font-size:1.05rem;font-weight:700;color:#fff;">At<span style="color:#F5A623;">las</span> · <span style="font-size:0.85rem;color:#A8C8BF;font-weight:400;">COGS 160</span></span>
+    </div>
+  </a>
+  <div class="nav-center">
+    <a href="ka_schedule.html" class="nav-link">160 Syllabus</a>
+    <a href="week2_exercises.html" class="nav-link">A0</a>
+    <a href="week3_agenda.html" class="nav-link active">A1</a>
+    <a href="ka_track1_tagging.html" class="nav-link">Track 1</a>
+    <a href="ka_track2_pipeline.html" class="nav-link">Track 2</a>
+    <a href="ka_track3_vr.html" class="nav-link">Track 3</a>
+    <a href="ka_track4_ux.html" class="nav-link">Track 4</a>
+  </div>
+  <div class="nav-right">
+    <a href="ka_student_profile.html" class="nav-link">160 Student Profile</a>
+  </div>
 </nav>
 
 <!-- ── Hero ── -->
 <header class="hero">
-  <p class="hero-eyebrow">COGS 160 · Spring 2026 · Week 3 of 8</p>
-  <h1>Choose Your Track</h1>
-  <p class="hero-sub">Finalize your track choice. Meet your team. Review your track syllabus and the chain of deliverables for Weeks 4–7.</p>
-  <div class="hero-pills">
-    <span class="hero-pill pill-teal">Tuesday: Track Selection</span>
-    <span class="hero-pill pill-amber">Thursday: Sprint Planning</span>
-    <span class="hero-pill pill-outline">Teams Form</span>
-  </div>
+  <p class="hero-eyebrow">COGS 160 · Spring 2026 · Week 3 of 10</p>
+  <h1>Track Setup &amp; Orientation</h1>
+  <p class="hero-sub">You've chosen your track. Now set up your tools, clone the repos you need,
+  use AI to understand how they work, and start your first task.</p>
 </header>
 
 <div class="page-wrap">
 
-  <!-- ════════════════════════════════════════════
-       TUESDAY — Day 5
-  ════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════════
+       EVERYONE: Git & GitHub Setup
+  ══════════════════════════════════════════════ -->
   <div class="day-block">
-    <span class="day-label day-label-tue">Tuesday · Day 5 · Seminar</span>
-    <h2 class="day-title">Track Presentations and Final Sign-Up</h2>
+    <span class="day-label day-label-all">Everyone · First 30 Minutes</span>
+    <h2 class="day-title">Step 1: Git &amp; GitHub Setup</h2>
+
+    <p>Every student needs git working on their laptop and access to the project repos before doing anything
+    else. If you did this in Weeks 1–2, verify your setup still works. If not, follow these steps exactly.</p>
 
     <div class="agenda-item">
       <div class="agenda-num">1</div>
       <div class="agenda-body">
-        <h3>Track Overview</h3>
-        <p>Brief presentation of each track's goals, tools, deliverables, and the skills you will develop. Each track addresses a different Knowledge Atlas capability gap. Below are the four tracks with descriptions of what you will build and learn.</p>
-      </div>
-    </div>
-
-    <div class="track-mini-grid">
-      <div class="track-card teal">
-        <h4>Track 1: Image Tagger</h4>
-        <p>Tag architectural images with psychological constructs from the K-ATLAS evidence base. Build annotation tools. Learn data verification and pipeline architecture.</p>
-      </div>
-      <div class="track-card amber">
-        <h4>Track 2: Article Finder</h4>
-        <p>Build a query engine and batch retrieval system to find relevant papers. Implement deduplication, schema validation, and database integrity.</p>
-      </div>
-      <div class="track-card blue">
-        <h4>Track 3: VR Production</h4>
-        <p>Design 3D environments in Unreal Engine that visualize epistemological concepts and warrant structures. Create interactive demonstrations.</p>
-      </div>
-      <div class="track-card rose">
-        <h4>Track 4: GUI Evaluation</h4>
-        <p>Build web interfaces for researchers to explore the evidence graph. Test against acceptance criteria and document usability findings.</p>
+        <h3>Install Git</h3>
+        <p><strong>Mac:</strong> Open Terminal. Type <code>git --version</code>. If it's not installed, macOS will
+        prompt you to install Xcode Command Line Tools — say yes. Alternatively: <code>brew install git</code>.<br>
+        <strong>Windows:</strong> Download from <a href="https://git-scm.com/download/win" style="color:var(--teal);">git-scm.com</a>.
+        Use the defaults during installation. Use Git Bash for all commands below.<br>
+        <strong>Linux:</strong> <code>sudo apt install git</code></p>
       </div>
     </div>
 
     <div class="agenda-item">
       <div class="agenda-num">2</div>
       <div class="agenda-body">
-        <h3>Sign Up</h3>
-        <p>Finalize your track choice. You have had two weeks to browse the track descriptions. If you have not decided yet, today is the day. Teams of three to four students per track. Sign up on the track signup page to indicate your preference and to be matched with teammates.</p>
+        <h3>Create a GitHub Account (if you don't have one)</h3>
+        <p>Go to <a href="https://github.com/join" style="color:var(--teal);">github.com/join</a>.
+        Use your UCSD email — this qualifies you for <a href="https://education.github.com/pack" style="color:var(--teal);">GitHub
+        Education benefits</a> (free Copilot, etc.).</p>
       </div>
     </div>
 
-    <div class="page-links">
-      <a href="ka_track_signup.html" class="page-link link-primary">Sign Up for a Track →</a>
-      <a href="ka_student_setup.html" class="page-link link-secondary">Browse Track Assignments</a>
+    <div class="callout callout-amber">
+      <div class="callout-label">One Required Course Step</div>
+      <p>After you create or verify your GitHub account, open the
+      <a href="ka_github_access.html" style="color:#8E4A10;font-weight:700;">GitHub Access page</a>
+      and save your GitHub username. If your GitHub username is exactly the same as the part of your UCSD email before
+      the <code>@</code>, you can confirm it with one click. If it is different, submit the actual username there.</p>
     </div>
 
     <div class="agenda-item">
       <div class="agenda-num">3</div>
       <div class="agenda-body">
-        <h3>Meet Your Team</h3>
-        <p>Once teams form, introduce yourselves. Exchange contact information. Decide on a communication channel — Slack, Discord, group chat, or email. Review your track's assignment page together. This is your chance to understand the scope of work ahead and to establish working norms with your teammates before the sprint begins.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════════════
-       THURSDAY — Day 6
-  ════════════════════════════════════════════ -->
-  <div class="day-block">
-    <span class="day-label day-label-thu">Thursday · Day 6 · Lab</span>
-    <h2 class="day-title">Sprint 1 Planning: Contracts and Specifications</h2>
-
-    <div class="callout callout-amber">
-      <div class="callout-label">Git setup — required before you begin track work</div>
-      <p>Every student must have a working git setup by the end of today. This means: a GitHub account (you should have created one in Week 1), git installed on your laptop, the Knowledge Atlas repo cloned locally, and a personal branch created. If you are new to git, pair with a teammate who has used it before — this is a 15-minute setup, not a full git tutorial.</p>
-      <p style="margin-top:0.5rem;margin-bottom:0;"><strong>Steps:</strong> (1) Install git if needed — <code>brew install git</code> on Mac, or download from git-scm.com. (2) Clone the repo: <code>git clone https://github.com/dkirsh/Knowledge_Atlas.git</code>. (3) Create your branch: <code>git checkout -b track/N-staging/your-username</code> where N is your track number. (4) Push it: <code>git push -u origin track/N-staging/your-username</code>. (5) Confirm your branch appears on GitHub.</p>
-    </div>
-
-    <div class="agenda-item">
-      <div class="agenda-num">1</div>
-      <div class="agenda-body">
-        <h3>Read Your Track Assignment</h3>
-        <p>Go through the full assignment page for your track. Identify the first sprint's deliverables and acceptance criteria. What does "done" look like? This reading is the foundation for everything that follows. If your track assignment is unclear, ask for clarification now before planning begins.</p>
+        <h3>Configure Git Identity</h3>
+        <p>Open your terminal and run these two commands (replace with your info):</p>
+        <div class="cmd-block">
+<span class="comment"># Tell git who you are (used in commit messages)</span>
+git config --global user.name <span class="cmd">"Your Name"</span>
+git config --global user.email <span class="cmd">"you@ucsd.edu"</span>
+        </div>
       </div>
     </div>
 
     <div class="agenda-item">
-      <div class="agenda-num">2</div>
+      <div class="agenda-num">4</div>
       <div class="agenda-body">
-        <h3>Write Your Sprint 1 Contract</h3>
-        <p>A contract is a one-page document that specifies what you will build, what inputs it requires, what outputs it produces, how you will test it, and what "done" means. This is step 3 (Spec) of the seven-step workflow, applied to your first sprint. A clear contract prevents misunderstandings mid-sprint and gives you a concrete way to know when you are finished.</p>
+        <h3>Clone the Knowledge Atlas Repo</h3>
+        <p>This is the main repo where the website, course pages, and coordination files live. Everyone needs it.</p>
+        <div class="cmd-block">
+<span class="comment"># Navigate to where you want the project (e.g., a COGS160 folder)</span>
+mkdir -p ~/COGS160 && cd ~/COGS160
+
+<span class="comment"># Clone the repo</span>
+git clone <span class="cmd">https://github.com/dkirsh/Knowledge_Atlas.git</span>
+
+<span class="comment"># Enter the repo and verify</span>
+cd Knowledge_Atlas
+git status
+        </div>
+        <p style="margin-top:8px;">You should see: <code>On branch master, nothing to commit, working tree clean.</code></p>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-num">5</div>
+      <div class="agenda-body">
+        <h3>Create Your Personal Branch</h3>
+        <p>Never commit directly to <code>master</code>. Create a branch for your track work:</p>
+        <div class="cmd-block">
+<span class="comment"># Replace N with your track number (1, 2, 3, or 4) and your-name with your name</span>
+git checkout -b <span class="cmd">track/N-staging/your-name</span>
+
+<span class="comment"># Push it to GitHub so it exists remotely</span>
+git push -u origin <span class="cmd">track/N-staging/your-name</span>
+        </div>
+        <p style="margin-top:8px;">Example: <code>git checkout -b track/2-staging/maria-chen</code></p>
       </div>
     </div>
 
     <div class="callout callout-teal">
-      <div class="callout-label">What a contract looks like</div>
-      <p><strong>Title:</strong> [Sprint 1 deliverable name]. <strong>Input:</strong> [what data or files the component receives]. <strong>Output:</strong> [what it produces]. <strong>Acceptance test:</strong> [3–5 concrete conditions that must be true for the deliverable to pass]. <strong>Dependencies:</strong> [what other components or data this relies on]. <strong>Estimated time:</strong> [hours].</p>
+      <div class="callout-label">Verify Your Setup</div>
+      <p>Run <code>git log --oneline -5</code>. You should see recent commits. Run <code>git branch</code> — your
+      branch name should be highlighted. If either fails, ask a teammate or TA for help before proceeding.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TRACK-SPECIFIC SETUP (Tabbed)
+  ══════════════════════════════════════════════ -->
+  <div class="day-block">
+    <span class="day-label day-label-tue">Tuesday · Track Setup</span>
+    <h2 class="day-title">Step 2: Track-Specific Setup</h2>
+
+    <p>Each track needs additional repos, tools, or environments. Click your track tab below and follow every step.</p>
+
+    <div class="track-tabs">
+      <div class="track-tab t1 active" onclick="showTrack(1)">Track 1: Image Tagger</div>
+      <div class="track-tab t2" onclick="showTrack(2)">Track 2: Article Finder</div>
+      <div class="track-tab t3" onclick="showTrack(3)">Track 3: AI &amp; VR</div>
+      <div class="track-tab t4" onclick="showTrack(4)">Track 4: Interaction Design</div>
+    </div>
+
+    <!-- ── Track 1: Image Tagger ── -->
+    <div class="track-panel active" id="panel-1">
+      <h4>Repos You Need</h4>
+      <p>Track 1 works with <strong>three repos</strong>. The Tagging Contractor is the core system; Article Eater
+      has the image pool and student assignment infrastructure; Knowledge Atlas has the course pages.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo</th><th>What It Does</th><th>Clone Command</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Knowledge Atlas</td>
+            <td style="color:var(--muted);">Course pages, track assignments, website</td>
+            <td><code style="font-size:0.8rem;">Already cloned above</code></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Tagging Contractor</td>
+            <td style="color:var(--muted);">Tag registry, semantic contracts, annotation schemas, extraction plans. This is the single source of truth for all tags and what they mean.</td>
+            <td><code style="font-size:0.8rem;">git clone https://github.com/dkirsh/Tagging_Contractor.git</code></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Article Eater</td>
+            <td style="color:var(--muted);">Image pool management, student assignment routes, image feedback schemas, PDF extraction pipeline</td>
+            <td><code style="font-size:0.8rem;">git clone https://github.com/dkirsh/Article_Eater.git</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cmd-block">
+<span class="comment"># Clone the additional repos (from your ~/COGS160 directory)</span>
+cd ~/COGS160
+git clone <span class="cmd">https://github.com/dkirsh/Tagging_Contractor.git</span>
+git clone <span class="cmd">https://github.com/dkirsh/Article_Eater.git</span>
+      </div>
+
+      <h4>Install Python &amp; Dependencies</h4>
+      <p>The Tagging Contractor runs on Python 3.11+ with FastAPI (backend) and Streamlit (frontend).</p>
+      <div class="cmd-block">
+<span class="comment"># Check Python version (need 3.11+)</span>
+python3 --version
+
+<span class="comment"># Install Tagging Contractor dependencies</span>
+cd ~/COGS160/Tagging_Contractor
+pip3 install -r backend/requirements.txt --break-system-packages
+pip3 install -r frontend_streamlit/requirements.txt --break-system-packages
+
+<span class="comment"># Or use Docker (recommended if you have Docker installed):</span>
+docker-compose up trs_api trs_ui
+      </div>
+
+      <h4>Verify It Works</h4>
+      <div class="cmd-block">
+<span class="comment"># Start the backend API (port 8401)</span>
+cd ~/COGS160/Tagging_Contractor
+uvicorn backend.main:app --port 8401 &
+
+<span class="comment"># Start the Streamlit frontend (port 8501)</span>
+streamlit run frontend_streamlit/app.py --server.port 8501
+
+<span class="comment"># Open http://localhost:8501 in your browser</span>
+      </div>
+
+      <h4>Your First AI Task: Understand the Repos</h4>
+      <p>Open your AI assistant (Claude, ChatGPT, or Gemini) and give it this prompt — it will help you
+      build a mental model of how the three repos fit together:</p>
+
+      <div class="callout callout-amber">
+        <div class="callout-label">AI Prompt — Repo Orientation</div>
+        <p style="font-style:italic;font-size:0.88rem;">"I'm a student in COGS 160 working on the Image Tagger track. I have three repos:
+        (1) Tagging_Contractor — the tag registry and semantic contracts,
+        (2) Article_Eater — the image pool and extraction pipeline,
+        (3) Knowledge_Atlas — the course website.
+        Read the README or main documentation file of Tagging_Contractor. Then explain to me:
+        What is a 'tag' in this system? What is a 'semantic contract'? What is the 'registry'?
+        How does the Tagging Contractor connect to Article Eater's image pool?
+        What is the current version (v0.2.8) capable of, and what are the gaps?
+        Give me a one-paragraph summary I could explain to a classmate in 2 minutes."</p>
+      </div>
+
+      <p>Read the key reference document: <code>Tagging_Contractor/Tagging_Contractor_What_it_is_and_How_to_use_it.md</code>.
+      Also read the <a href="Image Tagger Status Report.docx.pdf" style="color:var(--teal);">Image Tagger Status Report</a>
+      for the current state of the tagger pipeline.</p>
+
+      <div class="callout callout-info" style="border-left:4px solid #E8872A;background:#FFF8F0;margin-top:18px;">
+        <strong style="color:#E8872A;">Sprint 1 starts this week — Latent-Variable Tag Integration.</strong>
+        Your first sprint (Weeks 3–5) is to bring the L01–L58 latent variables from the Environment–Cognition
+        Taxonomy V2.6 into the <code>Tagging_Contractor</code> registry with full semantic contracts. This is
+        a three-person panel task — not copy-and-paste. See the
+        <a href="ka_track1_tagging.html#sprint1" style="color:#E8872A;font-weight:700;">Sprint 1 brief on
+        the Track 1 page</a> for role division, the 7-step scaffold, and the Week 5 deliverable.
+      </div>
+    </div>
+
+    <!-- ── Track 2: Article Finder ── -->
+    <div class="track-panel" id="panel-2">
+      <h4>Repos You Need</h4>
+      <p>Track 2 works primarily with <strong>Article Eater</strong> (the extraction and article management system)
+      plus the Knowledge Atlas for course pages and the question bank.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo</th><th>What It Does</th><th>Clone Command</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Knowledge Atlas</td>
+            <td style="color:var(--muted);">Course pages, question bank (130 research questions in <code>data/ka_payloads/question_bank.json</code>)</td>
+            <td><code style="font-size:0.8rem;">Already cloned above</code></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Article Eater</td>
+            <td style="color:var(--muted);">Semantic Scholar API wrapper, PDF ingestion, LLM extraction, SQLite article database, student routes</td>
+            <td><code style="font-size:0.8rem;">git clone https://github.com/dkirsh/Article_Eater.git</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cmd-block">
+<span class="comment"># Clone Article Eater (from your ~/COGS160 directory)</span>
+cd ~/COGS160
+git clone <span class="cmd">https://github.com/dkirsh/Article_Eater.git</span>
+      </div>
+
+      <h4>Install Python &amp; Dependencies</h4>
+      <div class="cmd-block">
+<span class="comment"># Check Python version (need 3.11+)</span>
+python3 --version
+
+<span class="comment"># Install dependencies</span>
+cd ~/COGS160/Article_Eater
+pip3 install -r requirements.txt --break-system-packages
+      </div>
+
+      <h4>Understand the Database</h4>
+      <p>Article Eater uses SQLite. The key table is <code>articles</code> with columns: article_id, title,
+      abstract, doi, corpus_id, authors, year, venue, full_text, sections, citation_count, is_open_access, url_pdf.
+      There is also a <code>processing_queue</code> for job management.</p>
+
+      <div class="cmd-block">
+<span class="comment"># Inspect the database schema</span>
+cd ~/COGS160/Article_Eater
+python3 -c "import sqlite3; conn = sqlite3.connect('data/article_eater.db'); print([r[1] for r in conn.execute('PRAGMA table_info(articles)')])"
+      </div>
+
+      <h4>Your First AI Task: Understand the Pipeline</h4>
+      <div class="callout callout-amber">
+        <div class="callout-label">AI Prompt — Repo Orientation</div>
+        <p style="font-style:italic;font-size:0.88rem;">"I'm a student in COGS 160 working on the Article Finder track. I have the Article_Eater repo.
+        Read <code>app/services/semantic_scholar.py</code>, <code>app/db.py</code>, <code>app/pdf_ingest.py</code>,
+        and <code>app/worker.py</code>. Then explain to me:
+        What is the full pipeline from 'search for a paper' to 'extracted findings in the database'?
+        What does each file do? Where are the gaps — what parts are skeletal or missing?
+        What is a 'VOI query' and how would I build one?
+        Draw me a simple text diagram of the data flow."</p>
+      </div>
+
+      <p>Read the <a href="ka_track2_pipeline.html" style="color:var(--teal);">full Track 2 assignment page</a>,
+      especially the maturity table showing what's built and what's not.</p>
+    </div>
+
+    <!-- ── Track 3: AI & VR ── -->
+    <div class="track-panel" id="panel-3">
+      <h4>Software to Install</h4>
+      <p>Track 3 uses 3D modeling and AI tools. The good news: <strong>everything you need is free</strong> for
+      students. Install these today — some are large downloads (Unreal is ~40 GB).</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Tool</th><th>Cost</th><th>Install</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;"><a href="https://www.unrealengine.com/download" style="color:var(--teal);">Unreal Engine 5</a></td>
+            <td style="color:var(--green);font-weight:600;">FREE for students</td>
+            <td style="color:var(--muted);">Download Epic Games Launcher → Install UE 5.4+. ~40 GB. Start this first.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;"><a href="https://www.blender.org/download/" style="color:var(--teal);">Blender</a></td>
+            <td style="color:var(--green);font-weight:600;">FREE (open source)</td>
+            <td style="color:var(--muted);">Download latest stable (4.x). ~500 MB. The scripting backend for AI-driven modifications.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;"><a href="https://substance3d.adobe.com/education/" style="color:var(--teal);">Adobe Substance 3D</a></td>
+            <td style="color:var(--green);font-weight:600;">FREE (12-month education license)</td>
+            <td style="color:var(--muted);">Sign up with your UCSD email. Gives you Painter, Designer, Sampler for PBR materials.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;"><a href="https://www.meshy.ai/" style="color:var(--teal);">Meshy</a></td>
+            <td style="color:var(--green);font-weight:600;">FREE tier (100 credits/mo)</td>
+            <td style="color:var(--muted);">Web-based. Create account. Has native Unreal plugin. Text/image → 3D objects.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;"><a href="https://www.tripo3d.ai/" style="color:var(--teal);">Tripo3D</a></td>
+            <td style="color:var(--green);font-weight:600;">FREE tier (300 credits/mo)</td>
+            <td style="color:var(--muted);">Web-based. Create account. Clean quad-topology meshes with 4K PBR textures.</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;"><a href="https://lumalabs.ai/" style="color:var(--teal);">Luma AI</a></td>
+            <td style="color:var(--green);font-weight:600;">FREE</td>
+            <td style="color:var(--muted);">Phone app (iOS/Android). Scan real rooms from video → 3D Gaussian splats.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <div class="callout-label">Start Unreal Engine Download NOW</div>
+        <p>Unreal is a ~40 GB download and can take 1–2 hours on campus WiFi. Start the download immediately.
+        While it downloads, install Blender and create your Meshy/Tripo3D accounts. By the end of today's session
+        you should have Unreal installed and have opened a sample ArchViz project.</p>
+      </div>
+
+      <h4>No Paid Tools Required</h4>
+      <p>Every tool in the table above is free for students. If you want the Pro tier of Meshy ($14.50/mo) or
+      Tripo3D ($19.90/mo) for more credits, that's your choice but <strong>not required</strong>. Planner5D
+      offers free institutional licenses — Prof Kirsh can request one for the class if needed.</p>
+
+      <h4>Your First AI Task: Tool Evaluation Table</h4>
+      <p>Before Thursday, use AI to research the landscape of 3D and AI tools for room creation. This exercise
+      teaches you to evaluate tools systematically rather than guessing.</p>
+
+      <div class="callout callout-amber">
+        <div class="callout-label">AI Prompt — Tool Evaluation (Due Thursday)</div>
+        <p style="font-style:italic;font-size:0.88rem;">"I'm building VR rooms for neuroarchitecture research.
+        I need to create architectural spaces (not just objects) that are importable into Unreal Engine 5.
+        The rooms must have modifiable properties: ceiling height, wall curvature, materials, lighting.
+        Research AI-powered 3D tools available in 2026 and create a table with these columns:
+        <strong>Tool Name</strong> (hyperlinked to the tool's website) | <strong>Cost</strong> (free tier? student pricing? monthly cost?) |
+        <strong>What It's Good At</strong> (one sentence) | <strong>Strengths</strong> (2–3 bullets) |
+        <strong>Weaknesses</strong> (2–3 bullets) | <strong>AI Recommendation</strong> (use/skip/explore, with one sentence why).
+        Include at least 10 tools. Include tools for: 3D object generation, room/scene generation, material/texture
+        generation, 3D scanning, floor-plan-to-3D conversion, and in-engine AI assistance.
+        At the end, recommend a minimal toolkit (fewest tools that cover all needs) for a student team."</p>
+      </div>
+
+      <p>Bring your completed table to Thursday's class. We'll compare everyone's tables and converge on
+      the team's official toolkit.</p>
+
+      <h4>Repo Work</h4>
+      <p>Track 3's work lives in the Knowledge Atlas repo under <code>160sp/</code>. You will also contribute
+      rooms and assets to a shared asset library. Clone Knowledge Atlas (done above) and read the
+      <a href="ka_track3_vr.html" style="color:var(--teal);">full Track 3 assignment page</a>.</p>
+    </div>
+
+    <!-- ── Track 4: Interaction Design ── -->
+    <div class="track-panel" id="panel-4">
+      <h4>Repos You Need</h4>
+      <p>Track 4 works primarily with the Knowledge Atlas repo — the website itself is your canvas. You
+      are redesigning and improving the interactive pages that researchers, students, and contributors use.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo</th><th>What It Does</th><th>Clone Command</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Knowledge Atlas</td>
+            <td style="color:var(--muted);">The entire website: ~43 HTML pages, data files, JavaScript modules, CSS</td>
+            <td><code style="font-size:0.8rem;">Already cloned above</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Install a Local Web Server</h4>
+      <p>You need to serve the site locally to see your changes in real time. The simplest way:</p>
+      <div class="cmd-block">
+<span class="comment"># From the Knowledge Atlas root directory</span>
+cd ~/COGS160/Knowledge_Atlas
+
+<span class="comment"># Start a local server on port 8765</span>
+python3 -m http.server 8765
+
+<span class="comment"># Open http://localhost:8765/ka_home.html in your browser</span>
+      </div>
+
+      <h4>Understand the Site Architecture</h4>
+      <p>The site has two navigation regimes: a <strong>global nav</strong> (Explore, Topic Map, Evidence, Gaps,
+      Articles, Contribute) for researchers and contributors, and a <strong>COGS 160 nav</strong> (Syllabus, A0,
+      A1, Tracks 1–4) for course students. There are also user-type-specific home pages (student, researcher,
+      contributor, instructor, practitioner). Your job is to make each user's journey through the site clear
+      and effective.</p>
+
+      <h4>Your First AI Task: Site Audit</h4>
+      <div class="callout callout-amber">
+        <div class="callout-label">AI Prompt — Site Architecture Orientation</div>
+        <p style="font-style:italic;font-size:0.88rem;">"I'm a student in COGS 160 working on Interaction Design (Track 4).
+        I have the Knowledge_Atlas repo cloned locally. List all HTML files in the root directory and in the
+        <code>160sp/</code> subdirectory. For each file, read the first 50 lines and tell me: the page title,
+        what navigation regime it uses (global or COGS 160), what user type it serves, and one sentence about
+        its purpose. Then draw me a sitemap showing how the pages link to each other. Identify any pages that
+        are empty, broken, or orphaned (not linked from anywhere). Finally, list the top 5 usability problems
+        you notice."</p>
+      </div>
+
+      <p>Also install browser dev tools you'll need: the
+      <a href="https://chrome.google.com/webstore/detail/axe-devtools/lhdoppojpmngadmnindnejefpokejbdd" style="color:var(--teal);">axe DevTools</a>
+      Chrome extension for accessibility auditing, and make sure you can open Chrome DevTools (F12) and use
+      the Elements, Console, and Network panels.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       EVERYONE: Understand Your Track Assignment
+  ══════════════════════════════════════════════ -->
+  <div class="day-block">
+    <span class="day-label day-label-thu">Thursday · All Tracks</span>
+    <h2 class="day-title">Step 3: Understand What You're Building</h2>
+
+    <p>By Thursday you should have all tools installed and repos cloned. Now the real work begins: understanding
+    the <em>problem</em> you're solving, not just the tools you'll use.</p>
+
+    <div class="agenda-item">
+      <div class="agenda-num">1</div>
+      <div class="agenda-body">
+        <h3>Read Your Full Track Assignment Page</h3>
+        <p>Not skim — <em>read</em>. Every section. The maturity tables, the task breakdowns, the weekly syllabus,
+        the connection to other tracks. You should be able to answer: What is the end product I'm building?
+        Who will use it? What exists already and what's missing? What does "done" look like?</p>
+        <p style="margin-top:6px;">
+          <a href="ka_track1_tagging.html" style="color:var(--teal);font-weight:600;">Track 1</a> ·
+          <a href="ka_track2_pipeline.html" style="color:var(--amber);font-weight:600;">Track 2</a> ·
+          <a href="ka_track3_vr.html" style="color:var(--blue);font-weight:600;">Track 3</a> ·
+          <a href="ka_track4_ux.html" style="color:var(--rose);font-weight:600;">Track 4</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-num">2</div>
+      <div class="agenda-body">
+        <h3>Use AI to Explain the Codebase You'll Work With</h3>
+        <p>This is a genuine skill. Feed your AI assistant the key files from your repo and ask it to explain
+        the architecture. The prompts in Step 2 above are your starting point. The goal is not to memorize
+        code — it is to build a mental model of how the system works so you can identify where your work fits in.</p>
+      </div>
     </div>
 
     <div class="agenda-item">
       <div class="agenda-num">3</div>
       <div class="agenda-body">
-        <h3>Peer Review of Contracts</h3>
-        <p>Swap contracts with another team. Check: Are the acceptance criteria testable and concrete? Are the inputs and outputs clearly specified? Could you verify this deliverable without reading the code? Use peer feedback to strengthen your contract before submitting it for approval.</p>
+        <h3>Claim Your First Task</h3>
+        <p>Each track assignment page lists specific student tasks. By the end of Thursday, each student should
+        have claimed one task. For Track 2, the tasks are explicitly numbered (A–F). For other tracks, discuss
+        with your team and divide work so that tasks are independent and can proceed in parallel.</p>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-num">4</div>
+      <div class="agenda-body">
+        <h3>Write Your Sprint 1 Contract (7-Step Method, Steps 1–2)</h3>
+        <p>Use the <strong>7-step AI-directed development method</strong> from Week 2. For your claimed task,
+        complete Steps 1 and 2 by end of day Thursday:</p>
+        <p><strong>Step 1 — Panel:</strong> Ask your AI to simulate 2–3 domain experts who argue about what your
+        component should do. Record the panel transcript. What requirements did the panel surface that you
+        hadn't thought of?</p>
+        <p><strong>Step 2 — Spec:</strong> Write a one-page specification: inputs, outputs, success conditions,
+        edge cases, dependencies. This is your contract. Post it to your team's methodology log (a shared doc
+        or a file in the repo).</p>
       </div>
     </div>
 
     <div class="deliverable">
-      <div class="deliverable-label">Due: End of Thursday</div>
-      <p>Sprint 1 contract reviewed and approved by David. Posted to your team's methodology log. If not approved, revise and resubmit by Monday.</p>
+      <div class="deliverable-label">Due: End of Thursday (Week 3)</div>
+      <p><strong>All tracks:</strong> (1) Repos cloned, tools installed, verified working. (2) AI orientation
+      exercise completed — you can explain your codebase to a classmate. (3) Task claimed. (4) Sprint 1
+      contract (Panel transcript + Spec) posted to team methodology log.</p>
+      <p style="margin-top:8px;"><strong>Track 3 additionally:</strong> Tool evaluation table completed and brought to class.</p>
     </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       Quick Reference: What You Need
+  ══════════════════════════════════════════════ -->
+  <div class="day-block">
+    <span class="day-label" style="background:#f3e5f5;color:#7b1fa2;">Reference</span>
+    <h2 class="day-title">Quick Reference: What Each Track Needs</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Track</th>
+          <th>Repos to Clone</th>
+          <th>Languages/Tools</th>
+          <th>Key Files to Read First</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;color:var(--teal);">1 · Image Tagger</td>
+          <td>Knowledge Atlas, Tagging Contractor, Article Eater</td>
+          <td>Python 3.11+, FastAPI, Streamlit, Docker (optional)</td>
+          <td style="font-size:0.82rem;color:var(--muted);">TC: <code>Tagging_Contractor_What_it_is_and_How_to_use_it.md</code>, <code>INSTALL.md</code><br>AE: <code>app/routes/image_pool.py</code></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:var(--amber);">2 · Article Finder</td>
+          <td>Knowledge Atlas, Article Eater</td>
+          <td>Python 3.11+, SQLite, Semantic Scholar API</td>
+          <td style="font-size:0.82rem;color:var(--muted);">AE: <code>app/db.py</code>, <code>app/services/semantic_scholar.py</code>, <code>app/pdf_ingest.py</code>, <code>app/worker.py</code></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:var(--blue);">3 · AI &amp; VR</td>
+          <td>Knowledge Atlas</td>
+          <td>Unreal Engine 5, Blender, Meshy, Tripo3D, Luma AI</td>
+          <td style="font-size:0.82rem;color:var(--muted);">KA: <code>160sp/ka_track3_vr.html</code> (assignment page with factor→latent variable table)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:var(--rose);">4 · Interaction Design</td>
+          <td>Knowledge Atlas</td>
+          <td>HTML/CSS/JS, Python (local server), Chrome DevTools</td>
+          <td style="font-size:0.82rem;color:var(--muted);">KA: all <code>ka_*.html</code> files (root + <code>160sp/</code>), <code>ka_site_shell.js</code>, <code>ka_data_adapter.js</code></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- ── Week Navigation ── -->
   <div class="week-nav">
-    <a href="week2_agenda.html" class="prev">← Week 2: AI Demo</a>
+    <a href="week2_exercises.html" class="prev">← Week 2: A0 Exercises</a>
     <a href="week4_agenda.html" class="next">Week 4: Sprint 1 Begins →</a>
   </div>
 
 </div>
+
+<script>
+function showTrack(n) {
+  document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.track-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('.track-tab.t' + n).classList.add('active');
+  document.getElementById('panel-' + n).classList.add('active');
+}
+</script>
+
+<script src="../ka_site_shell.js"></script>
+<script src="../ka_data_adapter.js"></script>
+
 </body>
 </html>

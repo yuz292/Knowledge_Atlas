@@ -79,19 +79,6 @@
       "evidenceLink": "ka_evidence.html?front=RF_F3410218"
     },
     {
-      "id": "RF_A1F1CE00",
-      "type": "untested",
-      "title": "Luminous Environment \u00d7 Wellbeing (Circadian)",
-      "description": "Theories: Circadian Photobiology Constructs: luminous  affect wellbeing Maturity: emerging.",
-      "construct": "luminous__affect_wellbeing",
-      "context": "multiple",
-      "voi": "medium",
-      "credence": 0.62,
-      "whyMatters": "This front remains strategically important because its current maturity is emerging with corpus size 3.",
-      "hypothesisBuild": "ka_hypothesis_builder.html?front=RF_A1F1CE00",
-      "evidenceLink": "ka_evidence.html?front=RF_A1F1CE00"
-    },
-    {
       "id": "RF_401C04F4",
       "type": "untested",
       "title": "Material & Surface \u00d7 Physiological Response (Biophilic)",

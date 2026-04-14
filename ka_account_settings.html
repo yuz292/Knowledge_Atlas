@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings - Knowledge Atlas</title>
+  <script src="ka_config.js"></script>
+  <style>
+    :root {
+      --ink: #1c3d3a;
+      --accent: #e8872a;
+      --paper: #f7f4ef;
+      --card: #ffffff;
+      --muted: #6a5e50;
+      --line: #e0d9ce;
+      --ok: #2e7d32;
+      --warn: #b45309;
+      --bad: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, #f2eee7 0%, var(--paper) 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--ink);
+      color: #fff;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      font-size: 1.05rem;
+    }
+
+    .toplinks {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-left: auto;
+      align-items: center;
+    }
+
+    .toplinks a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .toplinks a:hover { color: #fff; }
+
+    .shell {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 34px 20px 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 22px 20px;
+      box-shadow: 0 10px 28px rgba(28, 61, 58, 0.07);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      line-height: 1.08;
+    }
+
+    .lede {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
+      max-width: 62ch;
+    }
+
+    .summary-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #efe8de;
+      font-size: 0.92rem;
+    }
+
+    .summary-row:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.76rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid #cfcbbe;
+      border-radius: 10px;
+      padding: 12px 13px;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      background: #fff;
+    }
+
+    input:focus {
+      outline: 2px solid rgba(232, 135, 42, 0.22);
+      border-color: var(--accent);
+    }
+
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrapper input {
+      margin-bottom: 0;
+      padding-right: 40px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6a5e50;
+      transition: color 0.15s;
+    }
+
+    .password-toggle:hover {
+      color: var(--ink);
+    }
+
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .readonly {
+      background: #faf7f2;
+      color: #54483f;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button, .link-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #cf6e12; }
+
+    .btn-secondary {
+      background: #efe8de;
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover { background: #e7ddcf; }
+
+    .message {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      border: 1px solid transparent;
+    }
+
+    .message.ok {
+      display: block;
+      background: #edf7ee;
+      color: var(--ok);
+      border-color: #c7e7cb;
+    }
+
+    .message.warn {
+      display: block;
+      background: #fff6e7;
+      color: var(--warn);
+      border-color: #f2d39b;
+    }
+
+    .message.bad {
+      display: block;
+      background: #fdecec;
+      color: var(--bad);
+      border-color: #f5c2c7;
+    }
+
+    .fineprint {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 860px) {
+      .hero, .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toplinks {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="ka_home.html" style="display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.02em;font-size:1.05rem;">
+      <svg viewBox="0 0 32 32" fill="none" style="width:20px;height:20px;">
+        <circle cx="16" cy="16" r="3.5" fill="#e8872a"/>
+        <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
+        <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
+        <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
+        <line x1="16" y1="7.5" x2="16" y2="12.5" stroke="#e8872a" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="24.8" y1="20.2" x2="19.0" y2="17.3" stroke="#e8872a" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="7.2" y1="20.2" x2="13.0" y2="17.3" stroke="#e8872a" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="16" y1="7.5" x2="25.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+        <line x1="25.5" y1="20" x2="6.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+        <line x1="6.5" y1="20" x2="16" y2="7.5" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
+      </svg>
+      Knowledge Atlas
+    </a>
+    <div class="toplinks">
+      <a href="ka_user_home.html">Workspace</a>
+      <a href="ka_instructor_login_recovery.html" id="toplink-recovery" style="display:none;">Login Recovery</a>
+      <a href="ka_home.html">Home</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="panel">
+        <h1>Account Settings</h1>
+        <p class="lede">
+          Use this page when you can still sign in but need to correct the email on your account or change your password.
+          If you cannot sign in at all, use password help or ask the instructor for a manual reset link.
+        </p>
+      </div>
+      <div class="panel">
+        <div class="summary-grid">
+          <div class="summary-row">
+            <div class="summary-label">Name</div>
+            <div id="summary-name">Loading...</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Email</div>
+            <div id="summary-email">Loading...</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Role</div>
+            <div id="summary-role">Loading...</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Track</div>
+            <div id="summary-track">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2 class="section-title">Change Email</h2>
+        <p class="section-copy">
+          This updates the address attached to your K-ATLAS account. Enter your current password so the change cannot be made by anyone who simply has your browser open.
+        </p>
+        <form id="change-email-form">
+          <label for="current-email">Current email</label>
+          <input class="readonly" id="current-email" type="email" readonly>
+
+          <label for="new-email">New email</label>
+          <input id="new-email" type="email" placeholder="your.new.address@ucsd.edu" required autocomplete="email">
+
+          <label for="email-password">Current password</label>
+          <div class="password-wrapper">
+            <input id="email-password" type="password" placeholder="Enter your current password" required autocomplete="current-password">
+            <button type="button" class="password-toggle" data-target="email-password" aria-label="Show password">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <div class="button-row">
+            <button class="btn-primary" id="change-email-btn" type="submit">Change Email</button>
+            <a class="link-btn btn-secondary" href="ka_login.html">Back to Sign In</a>
+          </div>
+          <div class="message" id="change-email-msg"></div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2 class="section-title">Change Password</h2>
+        <p class="section-copy">
+          Use this when you still know your current password and want to replace it. If you no longer know it, use password help instead of guessing.
+        </p>
+        <form id="change-password-form">
+          <label for="current-password">Current password</label>
+          <div class="password-wrapper">
+            <input id="current-password" type="password" placeholder="Enter your current password" required autocomplete="current-password">
+            <button type="button" class="password-toggle" data-target="current-password" aria-label="Show password">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <label for="new-password">New password</label>
+          <div class="password-wrapper">
+            <input id="new-password" type="password" placeholder="At least 8 characters" required autocomplete="new-password">
+            <button type="button" class="password-toggle" data-target="new-password" aria-label="Show password">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <label for="confirm-password">Confirm new password</label>
+          <div class="password-wrapper">
+            <input id="confirm-password" type="password" placeholder="Re-enter the new password" required autocomplete="new-password">
+            <button type="button" class="password-toggle" data-target="confirm-password" aria-label="Show password">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <div class="button-row">
+            <button class="btn-primary" id="change-password-btn" type="submit">Change Password</button>
+            <a class="link-btn btn-secondary" href="ka_forgot_password.html">Password Help</a>
+          </div>
+          <div class="message" id="change-password-msg"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel" id="instructor-recovery-panel" style="display:none; margin-top:18px;">
+      <h2 class="section-title">Instructor Login Recovery</h2>
+      <p class="section-copy">
+        If students cannot sign in, use the recovery guide rather than improvising. It tells you when to register,
+        when to use manual reset, and when the problem is an assignment-state issue instead of a password issue.
+      </p>
+      <div class="button-row">
+        <a class="link-btn btn-primary" href="ka_instructor_login_recovery.html">Open Recovery Guide</a>
+        <a class="link-btn btn-secondary" href="ka_instructor_review.html">Open Manual Reset Tool</a>
+      </div>
+    </section>
+
+    <div class="fineprint">
+      If email delivery is down and you cannot use password help, ask the instructor for a manual reset link. After you regain access, return here and change the email if the address on the account is no longer the one you use.
+    </div>
+  </main>
+
+  <script>
+    const KA_AUTH_API = window.__KA_CONFIG__?.apiBase ?? '';
+    const TOKEN_KEY = 'ka_access_token';
+    const USER_KEY = 'ka_current_user';
+
+    function getToken() {
+      return localStorage.getItem(TOKEN_KEY) || '';
+    }
+
+    function getStoredUser() {
+      try {
+        return JSON.parse(localStorage.getItem(USER_KEY) || 'null');
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setStoredUser(user) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+
+    function redirectToLogin() {
+      window.location.href = 'ka_login.html';
+    }
+
+    function setMessage(id, text, kind) {
+      const el = document.getElementById(id);
+      el.className = 'message ' + (kind || 'ok');
+      el.textContent = text;
+    }
+
+    function fillSummary(user) {
+      const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ').trim() || 'Unknown user';
+      const role = (user.role || 'student').toLowerCase();
+      const isInstructor = role === 'instructor' || role === 'admin';
+      document.getElementById('summary-name').textContent = fullName;
+      document.getElementById('summary-email').textContent = user.email || 'No email';
+      document.getElementById('summary-role').textContent = user.role || 'student';
+      document.getElementById('summary-track').textContent = user.track || 'Not set';
+      document.getElementById('current-email').value = user.email || '';
+      document.getElementById('toplink-recovery').style.display = isInstructor ? 'inline-flex' : 'none';
+      document.getElementById('instructor-recovery-panel').style.display = isInstructor ? 'block' : 'none';
+    }
+
+    async function apiRequest(path, options = {}) {
+      const token = getToken();
+      if (!token) redirectToLogin();
+      const response = await fetch(KA_AUTH_API + path, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+          ...(options.headers || {})
+        }
+      });
+      if (response.status === 401) {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+        redirectToLogin();
+        return null;
+      }
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || data.message || 'Request failed');
+      return data;
+    }
+
+    async function loadUser() {
+      const stored = getStoredUser();
+      if (stored) fillSummary(stored);
+      try {
+        const data = await apiRequest('/auth/me', { method: 'GET' });
+        if (!data) return;
+        setStoredUser(data);
+        fillSummary(data);
+      } catch (error) {
+        setMessage('change-email-msg', error.message, 'bad');
+      }
+    }
+
+    document.getElementById('change-email-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const button = document.getElementById('change-email-btn');
+      button.disabled = true;
+      button.textContent = 'Changing...';
+      try {
+        const payload = {
+          current_password: document.getElementById('email-password').value,
+          new_email: document.getElementById('new-email').value.trim()
+        };
+        const data = await apiRequest('/auth/change-email', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        if (!data) return;
+        setStoredUser(data.user);
+        fillSummary(data.user);
+        document.getElementById('new-email').value = '';
+        document.getElementById('email-password').value = '';
+        setMessage('change-email-msg', data.message || 'Email changed successfully.', 'ok');
+      } catch (error) {
+        setMessage('change-email-msg', error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Change Email';
+      }
+    });
+
+    document.getElementById('change-password-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('current-password').value;
+      const newPassword = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      if (newPassword.length < 8) {
+        setMessage('change-password-msg', 'New password must be at least 8 characters.', 'bad');
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        setMessage('change-password-msg', 'The new passwords do not match.', 'bad');
+        return;
+      }
+      const button = document.getElementById('change-password-btn');
+      button.disabled = true;
+      button.textContent = 'Changing...';
+      try {
+        const data = await apiRequest('/auth/change-password', {
+          method: 'POST',
+          body: JSON.stringify({
+            current_password: currentPassword,
+            new_password: newPassword
+          })
+        });
+        if (!data) return;
+        document.getElementById('current-password').value = '';
+        document.getElementById('new-password').value = '';
+        document.getElementById('confirm-password').value = '';
+        setMessage('change-password-msg', data.message || 'Password changed successfully.', 'ok');
+      } catch (error) {
+        setMessage('change-password-msg', error.message, 'bad');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Change Password';
+      }
+    });
+
+    // Password toggle functionality
+    document.querySelectorAll('.password-toggle').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        this.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+      });
+    });
+
+    if (!getToken()) redirectToLogin();
+    else loadUser();
+  </script>
+</body>
+</html>

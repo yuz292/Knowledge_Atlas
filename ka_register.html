@@ -221,6 +221,19 @@
         .form-group {
             margin-bottom: 20px;
         }
+        .password-field-wrap {
+            position: relative;
+        }
+        .password-field-wrap input {
+            padding-right: 44px;
+        }
+        .pw-toggle {
+            position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; padding: 4px;
+            color: #888; display: flex; align-items: center;
+        }
+        .pw-toggle:hover { color: #1C3D3A; }
+        .pw-toggle svg { width: 20px; height: 20px; }
 
         .form-group-row {
             display: grid;
@@ -650,14 +663,24 @@
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" id="password" name="password" required autocomplete="new-password">
+                                    <div class="password-field-wrap">
+                                        <input type="password" id="password" name="password" required autocomplete="new-password">
+                                        <button type="button" class="pw-toggle" data-target="password" aria-label="Show password">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        </button>
+                                    </div>
                                     <div class="pw-strength-wrap"><div class="pw-strength-bar" id="pwBar"></div></div>
                                     <div class="pw-hint" id="pwHint">At least 8 characters</div>
                                     <span class="field-error" id="err-password">Password must be at least 8 characters.</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="confirmPassword">Confirm password</label>
-                                    <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
+                                    <div class="password-field-wrap">
+                                        <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
+                                        <button type="button" class="pw-toggle" data-target="confirmPassword" aria-label="Show password">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        </button>
+                                    </div>
                                     <span class="field-error" id="err-confirmPassword">Passwords do not match.</span>
                                 </div>
                             </div>
@@ -809,6 +832,16 @@
         document.getElementById('userTypeChoice').value = storedMode;
       }
 
+      // ── Password show/hide toggles ──────────────────────────────────
+      document.querySelectorAll('.pw-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const input = document.getElementById(this.dataset.target);
+          const isHidden = input.type === 'password';
+          input.type = isHidden ? 'text' : 'password';
+          this.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+        });
+      });
+
       // ── Password strength ────────────────────────────────────────────
       const pwInput = document.getElementById('password');
       const pwBar   = document.getElementById('pwBar');
@@ -866,11 +899,7 @@
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(this.value)) {
           showErr('email','Please enter a valid email address.');
         } else {
-          // Check duplicate in localStorage
-          const regs = window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.pendingRegistrations() : JSON.parse(localStorage.getItem('ka_pending_registrations') || '[]');
-          const dup = regs.find(r => r.email.toLowerCase() === this.value.toLowerCase());
-          if (dup) showErr('email', 'An account with this email already exists. Try logging in.');
-          else clearErr('email');
+          clearErr('email');
         }
       });
 
@@ -1004,9 +1033,7 @@
 <script src="ka_site_shell.js"></script>
 <script src="ka_data_adapter.js"></script>
 <script src="data/ka_payloads/workflow.js"></script>
-<script src="ka_workflow_store.js"></script>
-<script src="ka_live_context.js"></script>
-<script>
+<script src="ka_workflow_store.js"></script><script>
     (function() {
       function syncRegisterMode(mode) {
         const userTypeChoice = document.getElementById('userTypeChoice');

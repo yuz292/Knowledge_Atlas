@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2 Quickstart — COGS 160</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1C3D3A; --teal: #2A7868; --teal-lt: #5AC8AA; --teal-bg: #E6F5F0;
+  --amber: #E8872A; --amber-lt: #FFF3E0; --amber-dk: #9a5010;
+  --cream: #F7F4EF; --ink: #2C2C2C; --muted: #6B6B6B; --border: #D8D0C5;
+  --white: #FFFFFF; --green: #1A7A50; --red: #C0392B;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.65; }
+
+.top-nav { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; height: 52px; gap: 1.2rem; font-size: 0.85rem; position: sticky; top: 0; z-index: 100; }
+.nav-brand { color: var(--amber); font-weight: 800; font-size: 1.05rem; text-decoration: none; }
+.nav-sep { color: rgba(255,255,255,0.2); }
+.nav-link { color: #b2dfdb; text-decoration: none; padding: 4px 10px; border-radius: 5px; transition: background 0.15s; }
+.nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-link.active { background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; }
+
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #152e2b 100%); color: #fff; padding: 2.5rem 2rem 2rem; text-align: center; }
+.hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 0.5rem; }
+.hero h1 { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.hero-sub { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 640px; margin: 0 auto; }
+
+.page-wrap { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+.card { background: var(--white); border-radius: 12px; padding: 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.card h2 { font-family: Georgia, serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.8rem; }
+.card h3 { font-size: 1rem; color: var(--teal); margin: 1.2rem 0 0.5rem; font-weight: 700; }
+.card p { margin-bottom: 0.8rem; font-size: 0.95rem; }
+.card ul, .card ol { margin: 0.5rem 0 1rem 1.5rem; font-size: 0.95rem; }
+.card li { margin-bottom: 0.4rem; }
+
+.step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 700; font-size: 0.85rem; margin-right: 0.5rem; flex-shrink: 0; }
+
+.step-row { display: flex; align-items: flex-start; margin-bottom: 1rem; }
+.step-row p { margin-bottom: 0; }
+
+code { background: #f0ece6; padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; font-family: "SF Mono", "Fira Code", monospace; }
+pre { background: var(--navy); color: #e0e0e0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1rem; font-size: 0.85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; color: inherit; }
+
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: background 0.15s, transform 0.1s; cursor: pointer; border: none; }
+.btn:active { transform: scale(0.97); }
+.btn-teal { background: var(--teal); color: #fff; }
+.btn-teal:hover { background: #1f5e50; }
+.btn-amber { background: var(--amber); color: #fff; }
+.btn-amber:hover { background: #c06e1e; }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--ink); }
+.btn-outline:hover { background: var(--teal-bg); }
+
+.context-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.9rem; }
+.context-table th { text-align: left; padding: 0.5rem 0.8rem; background: var(--teal-bg); color: var(--teal); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.context-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); }
+.context-table a { color: var(--teal); font-weight: 600; }
+
+.warning { background: #FFF8E1; border-left: 4px solid var(--amber); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+.warning strong { color: var(--amber-dk); }
+
+.success { background: #E8F5E9; border-left: 4px solid var(--green); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+.success strong { color: var(--green); }
+
+.checklist { list-style: none; margin-left: 0; padding-left: 0; }
+.checklist li { padding: 0.4rem 0; padding-left: 1.8rem; position: relative; }
+.checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--teal); font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
+  <span class="nav-sep">|</span>
+  <a href="week2_exercises.html" class="nav-link">Exercises</a>
+  <a href="../ka_evidence.html" class="nav-link">Evidence Explorer</a>
+  <a href="../ka_argumentation.html" class="nav-link">Argumentation Viewer</a>
+  <a href="../ka_warrants.html" class="nav-link">Warrant Types</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">COGS 160 · Week 2</div>
+  <h1>Exercise Quickstart Guide</h1>
+  <p class="hero-sub">Everything you need to start your exercise — in 5 minutes.</p>
+</div>
+
+<div class="page-wrap">
+
+  <div class="warning" style="margin-top: 0;">
+    <strong>Use this as a helper page.</strong> The main assignment brief is on <a href="week2_exercises.html" style="color:#9a5010; font-weight:700;">Exercises</a>. The live data pages are optional reference pages if you want to inspect the corpus before building.
+  </div>
+
+  <!-- ========== WHAT YOU NEED ========== -->
+  <div class="card">
+    <h2>What You Need</h2>
+    <p>These exercises require <strong>no software installation, no repository cloning, and no terminal commands</strong>. You work entirely through an AI chat interface (Claude, ChatGPT, or similar) and a web browser.</p>
+
+    <p>You need exactly three things:</p>
+    <ol>
+      <li><strong>An AI assistant</strong> — Claude (claude.ai), ChatGPT, or another LLM chat</li>
+      <li><strong>Your context file</strong> — a markdown document you download and drag into your AI chat (see table below)</li>
+      <li><strong>A way to view HTML</strong> — your browser, or the AI's built-in preview if available</li>
+    </ol>
+
+    <div class="success">
+      <strong>No git clone needed.</strong> The data files are hosted on the web and your AI-generated code will load them directly from the server.
+    </div>
+  </div>
+
+  <!-- ========== STEP BY STEP ========== -->
+  <div class="card">
+    <h2>Setup: 3 Steps (Under 5 Minutes)</h2>
+
+    <div class="step-row">
+      <span class="step-num">1</span>
+      <div>
+        <p><strong>Download your context file.</strong> Click the link for your assigned exercise:</p>
+        <table class="context-table">
+          <thead><tr><th>Exercise</th><th>Teams</th><th>Context File</th></tr></thead>
+          <tbody>
+            <tr><td>Exercise 0 (Demo)</td><td>All</td><td><a href="context/context_ex0_mechanism_pathway.md" download>&#8595; context_ex0_mechanism_pathway.md</a></td></tr>
+            <tr><td>Exercise A — Trust Panel</td><td>1–2</td><td><a href="context/context_exA_trust_panel.md" download>&#8595; context_exA_trust_panel.md</a></td></tr>
+            <tr><td>Exercise B — Debate Visualizer</td><td>3–4</td><td><a href="context/context_exB_debate_visualizer.md" download>&#8595; context_exB_debate_visualizer.md</a></td></tr>
+            <tr><td>Exercise C — Warrant Calculator</td><td>5–6</td><td><a href="context/context_exC_warrant_calculator.md" download>&#8595; context_exC_warrant_calculator.md</a></td></tr>
+            <tr><td>Exercise D — Search Filter</td><td>7–8</td><td><a href="context/context_exD_search_filter.md" download>&#8595; context_exD_search_filter.md</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <span class="step-num">2</span>
+      <div>
+        <p><strong>Give the context file to your AI.</strong> Open a new AI chat (Claude, ChatGPT, etc.) and do one of these:</p>
+        <ul style="margin: 0.5rem 0 0.8rem 1.2rem;">
+          <li><strong>Drag and drop</strong> the downloaded <code>.md</code> file directly into the chat window</li>
+          <li><strong>Use the attachment button</strong> (📎) to upload the file</li>
+          <li>Or if those don't work: open the file, select all, copy, and paste into the chat</li>
+        </ul>
+        <p>Then type this as your first message:</p>
+        <pre><code>"I've attached the context file for my exercise.
+Please read it carefully and explain:
+1. What is this task about?
+2. What are the key data structures I'll work with?
+3. What's the hardest part going to be?"</code></pre>
+        <p>If the AI's explanation doesn't match the context file, correct it <em>before</em> proceeding. An AI that misunderstands the data model will produce code that looks right but crashes on real data.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <span class="step-num">3</span>
+      <div>
+        <p><strong>Follow the 7-step method</strong> from the <a href="week2_exercises.html">exercise page</a>. The context file has already primed your AI. Now proceed through: Panel → Specification → Tests → Implementation → Verification → Diagnosis → Fix.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== RUNNING YOUR CODE ========== -->
+  <div class="card">
+    <h2>Running Your Code</h2>
+
+    <p>Your AI will generate a standalone HTML file for your component. There are three ways to handle the data — pick whichever works for you:</p>
+
+    <h3>Option A: Embedded Sample Data (Recommended — Works Everywhere)</h3>
+    <p>Ask the AI to generate 20–30 representative data records inline in the HTML file, based on the schema in your context file. The AI already knows the data structures, so it can create realistic sample data. Your code will look like:</p>
+    <pre><code>const SAMPLE_DATA = [
+  { "belief_id": "PDF-0844_MPX_007", "content_preview": "Viewing natural landscapes...", ... },
+  { "belief_id": "PDF-0331_MPX_003", "content_preview": "Green spaces reduce cortisol...", ... },
+  // ... 20-30 more records
+];</code></pre>
+    <p>This works in AI previews (Claude artifacts, ChatGPT canvas), in any browser, and needs no server. It's the fastest path to a working component.</p>
+
+    <div class="success">
+      <strong>This is the recommended approach.</strong> The grading rubric evaluates your methodology (panel, spec, tests, reflection), not whether you processed all 1,900 records. A working component on 25 representative records is a complete submission.
+    </div>
+
+    <h3>Option B: AI Preview with Server Fetch</h3>
+    <p>If your AI has a built-in code preview (Claude's artifacts, ChatGPT's canvas), you can try loading the full dataset from the server:</p>
+    <pre><code>const resp = await fetch('https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json');
+const data = await resp.json();</code></pre>
+    <p>This may or may not work depending on your AI tool's sandbox environment. If it fails with a "CORS" or "network" error, switch to Option A — it's not worth debugging.</p>
+
+    <h3>Option C: Local Files + Local Server</h3>
+    <p>If you want to test against the full 1,900-record dataset on your own computer:</p>
+    <ol>
+      <li>Create a folder for your work (e.g., <code>week2/</code>)</li>
+      <li>Save the AI's HTML output as <code>my_exercise.html</code> in that folder</li>
+      <li>Create <code>data/ka_payloads/</code> inside your folder and download:
+        <br><a href="https://xrlab.ucsd.edu/ka/data/ka_payloads/evidence.json" class="btn btn-outline" style="margin-top:0.5rem;" download>&#8595; evidence.json (5.5 MB)</a>
+        <a href="https://xrlab.ucsd.edu/ka/data/ka_payloads/argumentation.json" class="btn btn-outline" style="margin-top:0.5rem;" download>&#8595; argumentation.json (4.5 MB)</a>
+      </li>
+      <li>Open a terminal in your <code>week2/</code> folder and run:
+        <pre><code>python3 -m http.server 8000</code></pre>
+      </li>
+      <li>Open <code>http://localhost:8000/my_exercise.html</code> in your browser</li>
+    </ol>
+    <p>This gives you the full dataset locally. Press Ctrl+C to stop the server when done.</p>
+  </div>
+
+  <!-- ========== WHAT NOT TO DO ========== -->
+  <div class="card">
+    <h2>Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't skip the context file.</strong> Without it, your AI will hallucinate data structures and field names. Everything downstream fails.</li>
+      <li><strong>Don't skip Steps 1–3.</strong> Jumping straight to "write me the code" produces plausible-looking components that fail on real data.</li>
+      <li><strong>Don't get stuck on data loading.</strong> If your code can't fetch from the server, use embedded sample data (Option A above). Don't spend exercise time debugging network issues.</li>
+      <li><strong>Don't worry about the final code being perfect.</strong> Grading is on methodology (panel quality, spec completeness, verification rigor, reflection honesty) — not on whether your component is bug-free.</li>
+    </ul>
+  </div>
+
+  <!-- ========== CHECKLIST ========== -->
+  <div class="card">
+    <h2>Pre-Submission Checklist</h2>
+    <ul class="checklist">
+      <li>Context file was pasted as the first AI message</li>
+      <li>Panel transcript with real disagreement between panelists</li>
+      <li>Specification with inputs, outputs, edge cases, success conditions</li>
+      <li>At least 4 acceptance tests with expected outcomes</li>
+      <li>All AI prompts included (including failed attempts)</li>
+      <li>Verification results for each test (pass/fail with evidence)</li>
+      <li>Reflection paragraph 1: Surprise from the panel discussion</li>
+      <li>Reflection paragraph 2: Specific failure + how you diagnosed it</li>
+    </ul>
+  </div>
+
+  <!-- ========== LIVE DATA EXPLORER ========== -->
+  <div class="card">
+    <h2>Explore the Live Data</h2>
+    <p>Want to see what the data looks like before starting? These K-ATLAS pages display the actual data your exercises work with:</p>
+    <p>
+      <a href="../ka_evidence.html" class="btn btn-teal">Evidence Explorer</a>
+      <a href="../ka_argumentation.html" class="btn btn-teal">Argumentation Viewer</a>
+      <a href="../ka_warrants.html" class="btn btn-outline">Warrant Types Reference</a>
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

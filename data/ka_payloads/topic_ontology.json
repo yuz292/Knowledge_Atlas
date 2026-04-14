@@ -1,6 +1,6 @@
 {
   "schema_version": "v1.0",
-  "generated_at": "2026-03-31T07:24:01.921987+00:00",
+  "generated_at": "2026-03-31T13:45:13.205368+00:00",
   "build_date": "2026-03-30",
   "authority": {
     "iv": "Tagging_Contractor v0.2.8",
@@ -10,8 +10,8 @@
   "summary": {
     "iv_root_count": 9,
     "dv_root_count": 8,
-    "topic_node_count": 119,
-    "cross_relation_count": 1154,
+    "topic_node_count": 121,
+    "cross_relation_count": 1188,
     "provisional_extension_count": 0
   },
   "iv_roots": [
@@ -27,7 +27,7 @@
         "prospect",
         "refuge"
       ],
-      "paper_count": 206,
+      "paper_count": 220,
       "topic_nodes": [
         {
           "topic_id": "spatial__affect_comfort",
@@ -82,14 +82,13 @@
             "PDF-0886",
             "PDF-0888",
             "PDF-1361",
-            "PDF-1395",
             "PDF-1396",
             "PDF-1419",
             "PDF-1423",
             "PDF-1437"
           ],
           "aliases": [],
-          "paper_count": 23
+          "paper_count": 22
         },
         {
           "topic_id": "spatial__affect_preference",
@@ -107,16 +106,18 @@
           "paper_ids": [
             "PDF-0041",
             "PDF-0043",
+            "PDF-0154",
             "PDF-0274",
             "PDF-0280",
             "PDF-0374",
             "PDF-0561",
             "PDF-0684",
+            "PDF-0864",
             "PDF-0865",
             "PDF-1410"
           ],
           "aliases": [],
-          "paper_count": 9
+          "paper_count": 11
         },
         {
           "topic_id": "spatial__affect_restoration",
@@ -220,10 +221,11 @@
             "PDF-0818",
             "PDF-0911",
             "PDF-0997",
-            "PDF-1000"
+            "PDF-1000",
+            "PDF-1359"
           ],
           "aliases": [],
-          "paper_count": 13
+          "paper_count": 14
         },
         {
           "topic_id": "spatial__cog_attention",
@@ -243,7 +245,6 @@
             "PDF-0176",
             "PDF-0360",
             "PDF-0500",
-            "PDF-0528",
             "PDF-0548",
             "PDF-0595",
             "PDF-0638",
@@ -254,7 +255,7 @@
             "PDF-1435"
           ],
           "aliases": [],
-          "paper_count": 13
+          "paper_count": 12
         },
         {
           "topic_id": "spatial__cog_cognitive_load",
@@ -333,6 +334,7 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0133",
             "PDF-0140",
             "PDF-0176",
             "PDF-0210",
@@ -358,10 +360,11 @@
             "PDF-0997",
             "PDF-1087",
             "PDF-1282",
-            "PDF-1291"
+            "PDF-1291",
+            "PDF-1395"
           ],
           "aliases": [],
-          "paper_count": 26
+          "paper_count": 28
         },
         {
           "topic_id": "spatial__health",
@@ -459,21 +462,30 @@
             "PDF-0591",
             "PDF-0593",
             "PDF-0594",
+            "PDF-0595",
             "PDF-0596",
             "PDF-0657",
             "PDF-0886",
             "PDF-0914",
             "PDF-0958",
             "PDF-1025",
+            "PDF-1347",
             "PDF-1355",
             "PDF-1395",
             "PDF-1396",
+            "PDF-1414",
             "PDF-1419",
+            "PDF-1423",
+            "PDF-1428",
+            "PDF-1429",
             "PDF-1432",
-            "PDF-1435"
+            "PDF-1435",
+            "PDF-1437",
+            "PDF-1442",
+            "PDF-1443"
           ],
           "aliases": [],
-          "paper_count": 23
+          "paper_count": 32
         },
         {
           "topic_id": "spatial__physio",
@@ -531,6 +543,8 @@
             "PDF-0054",
             "PDF-0062",
             "PDF-0200",
+            "PDF-0500",
+            "PDF-0528",
             "PDF-0587",
             "PDF-0679",
             "PDF-0728",
@@ -539,7 +553,7 @@
             "PDF-1233"
           ],
           "aliases": [],
-          "paper_count": 10
+          "paper_count": 12
         }
       ]
     },
@@ -554,7 +568,7 @@
         "daylighting",
         "circadian"
       ],
-      "paper_count": 285,
+      "paper_count": 320,
       "topic_nodes": [
         {
           "topic_id": "luminous__affect_comfort",
@@ -570,15 +584,17 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0021",
             "PDF-0216",
             "PDF-0323",
             "PDF-0416",
             "PDF-0418",
             "PDF-0457",
-            "PDF-0626"
+            "PDF-0626",
+            "PDF-0777"
           ],
           "aliases": [],
-          "paper_count": 6
+          "paper_count": 8
         },
         {
           "topic_id": "luminous__affect_negative_stress",
@@ -606,6 +622,7 @@
             "PDF-0544",
             "PDF-0553",
             "PDF-0629",
+            "PDF-0655",
             "PDF-0744",
             "PDF-0768",
             "PDF-0794",
@@ -618,10 +635,12 @@
             "PDF-1015",
             "PDF-1105",
             "PDF-1337",
-            "PDF-1383"
+            "PDF-1383",
+            "PDF-1390",
+            "PDF-1393"
           ],
           "aliases": [],
-          "paper_count": 25
+          "paper_count": 28
         },
         {
           "topic_id": "luminous__affect_preference",
@@ -637,20 +656,24 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0030",
             "PDF-0154",
             "PDF-0189",
             "PDF-0275",
+            "PDF-0290",
             "PDF-0378",
             "PDF-0423",
             "PDF-0524",
             "PDF-0665",
             "PDF-0785",
+            "PDF-0808",
             "PDF-1303",
             "PDF-1325",
-            "PDF-1356"
+            "PDF-1356",
+            "PDF-1375"
           ],
           "aliases": [],
-          "paper_count": 11
+          "paper_count": 15
         },
         {
           "topic_id": "luminous__affect_restoration",
@@ -671,15 +694,12 @@
             "PDF-0285",
             "PDF-0535",
             "PDF-0601",
-            "PDF-0602",
-            "PDF-0629",
             "PDF-0714",
             "PDF-0758",
-            "PDF-0964",
             "PDF-1413"
           ],
           "aliases": [],
-          "paper_count": 11
+          "paper_count": 8
         },
         {
           "topic_id": "luminous__affect_satisfaction",
@@ -731,12 +751,14 @@
             "PDF-0400",
             "PDF-0427",
             "PDF-0435",
+            "PDF-0438",
             "PDF-0518",
             "PDF-0659",
             "PDF-0751",
             "PDF-0755",
             "PDF-0759",
             "PDF-0760",
+            "PDF-0790",
             "PDF-0806",
             "PDF-0808",
             "PDF-0812",
@@ -752,7 +774,7 @@
             "PDF-1444"
           ],
           "aliases": [],
-          "paper_count": 36
+          "paper_count": 38
         },
         {
           "topic_id": "luminous__behav_navigation",
@@ -768,12 +790,16 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0014",
+            "PDF-0117",
             "PDF-0367",
+            "PDF-0544",
             "PDF-0721",
-            "PDF-1045"
+            "PDF-1045",
+            "PDF-1372"
           ],
           "aliases": [],
-          "paper_count": 3
+          "paper_count": 7
         },
         {
           "topic_id": "luminous__cog_attention",
@@ -793,6 +819,8 @@
             "PDF-0052",
             "PDF-0066",
             "PDF-0095",
+            "PDF-0155",
+            "PDF-0158",
             "PDF-0290",
             "PDF-0523",
             "PDF-0542",
@@ -811,13 +839,14 @@
             "PDF-1185",
             "PDF-1375",
             "PDF-1380",
+            "PDF-1383",
             "PDF-1388",
             "PDF-1413",
             "PDF-1420",
             "PDF-1421"
           ],
           "aliases": [],
-          "paper_count": 26
+          "paper_count": 29
         },
         {
           "topic_id": "luminous__cog_cognitive_load",
@@ -854,13 +883,15 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0706",
             "PDF-0904",
+            "PDF-1380",
             "PDF-1412",
             "PDF-1427",
             "PDF-1441"
           ],
           "aliases": [],
-          "paper_count": 4
+          "paper_count": 6
         },
         {
           "topic_id": "luminous__cog_memory",
@@ -876,13 +907,18 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0141",
+            "PDF-0156",
+            "PDF-0187",
             "PDF-0334",
             "PDF-0475",
             "PDF-0529",
-            "PDF-0987"
+            "PDF-0804",
+            "PDF-0987",
+            "PDF-1138"
           ],
           "aliases": [],
-          "paper_count": 4
+          "paper_count": 9
         },
         {
           "topic_id": "luminous__cog_performance",
@@ -898,10 +934,13 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0040",
             "PDF-0046",
+            "PDF-0055",
             "PDF-0058",
             "PDF-0108",
             "PDF-0115",
+            "PDF-0124",
             "PDF-0130",
             "PDF-0166",
             "PDF-0183",
@@ -920,10 +959,14 @@
             "PDF-0617",
             "PDF-0624",
             "PDF-0629",
+            "PDF-0649",
             "PDF-0754",
             "PDF-0758",
             "PDF-0792",
             "PDF-0805",
+            "PDF-0806",
+            "PDF-0823",
+            "PDF-0827",
             "PDF-0866",
             "PDF-0883",
             "PDF-0896",
@@ -935,18 +978,16 @@
             "PDF-1033",
             "PDF-1055",
             "PDF-1208",
-            "PDF-1372",
             "PDF-1373",
-            "PDF-1380",
-            "PDF-1383",
             "PDF-1388",
             "PDF-1413",
+            "PDF-1420",
             "PDF-1424",
             "PDF-1433",
             "PDF-1438"
           ],
           "aliases": [],
-          "paper_count": 46
+          "paper_count": 51
         },
         {
           "topic_id": "luminous__health",
@@ -966,10 +1007,11 @@
             "PDF-0416",
             "PDF-0631",
             "PDF-0752",
-            "PDF-0766"
+            "PDF-0766",
+            "PDF-0964"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 6
         },
         {
           "topic_id": "luminous__mechanism",
@@ -1066,6 +1108,7 @@
             "PDF-0714",
             "PDF-0896",
             "PDF-1208",
+            "PDF-1337",
             "PDF-1349",
             "PDF-1372",
             "PDF-1374",
@@ -1074,7 +1117,7 @@
             "PDF-1421"
           ],
           "aliases": [],
-          "paper_count": 18
+          "paper_count": 19
         },
         {
           "topic_id": "luminous__physio",
@@ -1097,13 +1140,17 @@
             "PDF-0335",
             "PDF-0382",
             "PDF-0427",
+            "PDF-0488",
             "PDF-0537",
             "PDF-0544",
+            "PDF-0602",
             "PDF-0624",
             "PDF-0625",
             "PDF-0628",
+            "PDF-0629",
             "PDF-0714",
             "PDF-0767",
+            "PDF-0817",
             "PDF-0850",
             "PDF-0858",
             "PDF-0859",
@@ -1117,7 +1164,7 @@
             "PDF-1408"
           ],
           "aliases": [],
-          "paper_count": 25
+          "paper_count": 29
         },
         {
           "topic_id": "luminous__social",
@@ -1136,6 +1183,8 @@
             "PDF-0062",
             "PDF-0222",
             "PDF-0286",
+            "PDF-0327",
+            "PDF-0557",
             "PDF-0741",
             "PDF-1122",
             "PDF-1148",
@@ -1145,7 +1194,7 @@
             "PDF-1436"
           ],
           "aliases": [],
-          "paper_count": 10
+          "paper_count": 12
         }
       ]
     },
@@ -1161,7 +1210,7 @@
         "iaq",
         "humidity"
       ],
-      "paper_count": 46,
+      "paper_count": 48,
       "topic_nodes": [
         {
           "topic_id": "thermal__affect_comfort",
@@ -1182,10 +1231,11 @@
             "PDF-0450",
             "PDF-0644",
             "PDF-0648",
+            "PDF-0773",
             "PDF-1072"
           ],
           "aliases": [],
-          "paper_count": 6
+          "paper_count": 7
         },
         {
           "topic_id": "thermal__affect_negative_stress",
@@ -1248,6 +1298,25 @@
           ],
           "aliases": [],
           "paper_count": 4
+        },
+        {
+          "topic_id": "thermal__affect_satisfaction",
+          "label": "Thermal & Air Quality \u2192 Satisfaction",
+          "iv_root": "thermal",
+          "iv_branch": "thermal",
+          "dv_focus": "affect.satisfaction",
+          "dv_focus_label": "Satisfaction",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0811"
+          ],
+          "aliases": [],
+          "paper_count": 1
         },
         {
           "topic_id": "thermal__affect_wellbeing",
@@ -1421,7 +1490,7 @@
         "reverberation",
         "soundscape"
       ],
-      "paper_count": 190,
+      "paper_count": 197,
       "topic_nodes": [
         {
           "topic_id": "acoustic__affect_comfort",
@@ -1443,11 +1512,12 @@
             "PDF-0468",
             "PDF-0773",
             "PDF-0779",
+            "PDF-0841",
             "PDF-0846",
             "PDF-1183"
           ],
           "aliases": [],
-          "paper_count": 8
+          "paper_count": 9
         },
         {
           "topic_id": "acoustic__affect_negative_stress",
@@ -1511,10 +1581,11 @@
             "PDF-0641",
             "PDF-0699",
             "PDF-0832",
-            "PDF-0946"
+            "PDF-0946",
+            "PDF-1180"
           ],
           "aliases": [],
-          "paper_count": 10
+          "paper_count": 11
         },
         {
           "topic_id": "acoustic__affect_satisfaction",
@@ -1597,11 +1668,12 @@
             "PDF-0786",
             "PDF-0819",
             "PDF-0829",
+            "PDF-0834",
             "PDF-0838",
             "PDF-0908"
           ],
           "aliases": [],
-          "paper_count": 17
+          "paper_count": 18
         },
         {
           "topic_id": "acoustic__cog_attention",
@@ -1625,15 +1697,16 @@
             "PDF-0568",
             "PDF-0575",
             "PDF-0578",
+            "PDF-0693",
+            "PDF-0838",
             "PDF-0944",
-            "PDF-1180",
             "PDF-1182",
             "PDF-1190",
             "PDF-1212",
             "PDF-1358"
           ],
           "aliases": [],
-          "paper_count": 14
+          "paper_count": 15
         },
         {
           "topic_id": "acoustic__cog_cognitive_load",
@@ -1676,10 +1749,11 @@
             "PDF-0567",
             "PDF-0571",
             "PDF-0573",
+            "PDF-0829",
             "PDF-1149"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 6
         },
         {
           "topic_id": "acoustic__cog_performance",
@@ -1726,12 +1800,13 @@
             "PDF-1202",
             "PDF-1351",
             "PDF-1358",
+            "PDF-1365",
             "PDF-1366",
             "PDF-1404",
             "PDF-1406"
           ],
           "aliases": [],
-          "paper_count": 34
+          "paper_count": 35
         },
         {
           "topic_id": "acoustic__health",
@@ -1845,6 +1920,7 @@
             "PDF-0394",
             "PDF-0404",
             "PDF-0442",
+            "PDF-0472",
             "PDF-0570",
             "PDF-0636",
             "PDF-0699",
@@ -1858,7 +1934,7 @@
             "PDF-1190"
           ],
           "aliases": [],
-          "paper_count": 17
+          "paper_count": 18
         },
         {
           "topic_id": "acoustic__social",
@@ -1899,8 +1975,27 @@
         "water",
         "greenery"
       ],
-      "paper_count": 147,
+      "paper_count": 161,
       "topic_nodes": [
+        {
+          "topic_id": "natural__affect_comfort",
+          "label": "Nature & Biophilia \u2192 Comfort",
+          "iv_root": "natural",
+          "iv_branch": "natural",
+          "dv_focus": "affect.comfort",
+          "dv_focus_label": "Comfort",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-1154"
+          ],
+          "aliases": [],
+          "paper_count": 1
+        },
         {
           "topic_id": "natural__affect_negative_stress",
           "label": "Nature & Biophilia \u2192 Stress Response",
@@ -1932,6 +2027,7 @@
             "PDF-0855",
             "PDF-0876",
             "PDF-1007",
+            "PDF-1106",
             "PDF-1173",
             "PDF-1188",
             "PDF-1224",
@@ -1949,7 +2045,7 @@
             "PDF-1439"
           ],
           "aliases": [],
-          "paper_count": 32
+          "paper_count": 33
         },
         {
           "topic_id": "natural__affect_preference",
@@ -1967,10 +2063,11 @@
           "paper_ids": [
             "PDF-0186",
             "PDF-0253",
-            "PDF-1319"
+            "PDF-1319",
+            "PDF-1346"
           ],
           "aliases": [],
-          "paper_count": 3
+          "paper_count": 4
         },
         {
           "topic_id": "natural__affect_restoration",
@@ -1992,7 +2089,6 @@
             "PDF-0396",
             "PDF-0417",
             "PDF-0477",
-            "PDF-0536",
             "PDF-0540",
             "PDF-0545",
             "PDF-0620",
@@ -2001,11 +2097,16 @@
             "PDF-0872",
             "PDF-0892",
             "PDF-1007",
+            "PDF-1027",
             "PDF-1224",
-            "PDF-1344"
+            "PDF-1332",
+            "PDF-1344",
+            "PDF-1353",
+            "PDF-1368",
+            "PDF-1387"
           ],
           "aliases": [],
-          "paper_count": 17
+          "paper_count": 21
         },
         {
           "topic_id": "natural__affect_wellbeing",
@@ -2026,6 +2127,7 @@
             "PDF-0287",
             "PDF-0297",
             "PDF-0466",
+            "PDF-0536",
             "PDF-0543",
             "PDF-0558",
             "PDF-0585",
@@ -2035,11 +2137,16 @@
             "PDF-0780",
             "PDF-0810",
             "PDF-0816",
+            "PDF-0884",
             "PDF-0885",
-            "PDF-1434"
+            "PDF-1024",
+            "PDF-1224",
+            "PDF-1425",
+            "PDF-1434",
+            "PDF-1439"
           ],
           "aliases": [],
-          "paper_count": 16
+          "paper_count": 22
         },
         {
           "topic_id": "natural__behav_navigation",
@@ -2078,14 +2185,13 @@
             "PDF-0540",
             "PDF-0686",
             "PDF-0881",
-            "PDF-1173",
-            "PDF-1224",
             "PDF-1343",
             "PDF-1352",
+            "PDF-1370",
             "PDF-1389"
           ],
           "aliases": [],
-          "paper_count": 9
+          "paper_count": 8
         },
         {
           "topic_id": "natural__cog_cognitive_load",
@@ -2170,13 +2276,14 @@
             "PDF-0781",
             "PDF-0872",
             "PDF-1083",
+            "PDF-1173",
+            "PDF-1188",
             "PDF-1238",
             "PDF-1350",
-            "PDF-1389",
-            "PDF-1392"
+            "PDF-1389"
           ],
           "aliases": [],
-          "paper_count": 13
+          "paper_count": 14
         },
         {
           "topic_id": "natural__health",
@@ -2293,10 +2400,11 @@
             "PDF-0682",
             "PDF-0855",
             "PDF-0881",
-            "PDF-1385"
+            "PDF-1385",
+            "PDF-1392"
           ],
           "aliases": [],
-          "paper_count": 6
+          "paper_count": 7
         },
         {
           "topic_id": "natural__social",
@@ -2332,7 +2440,7 @@
         "surface",
         "finish"
       ],
-      "paper_count": 66,
+      "paper_count": 67,
       "topic_nodes": [
         {
           "topic_id": "material__affect_comfort",
@@ -2513,6 +2621,7 @@
             "PDF-0633",
             "PDF-0643",
             "PDF-0647",
+            "PDF-0803",
             "PDF-0823",
             "PDF-0827",
             "PDF-0872",
@@ -2520,7 +2629,7 @@
             "PDF-1297"
           ],
           "aliases": [],
-          "paper_count": 9
+          "paper_count": 10
         },
         {
           "topic_id": "material__mechanism",
@@ -2630,7 +2739,7 @@
         "territory",
         "privacy"
       ],
-      "paper_count": 41,
+      "paper_count": 45,
       "topic_nodes": [
         {
           "topic_id": "social_spatial__affect_negative_stress",
@@ -2650,11 +2759,12 @@
             "PDF-0103",
             "PDF-0283",
             "PDF-0358",
+            "PDF-0461",
             "PDF-0634",
             "PDF-1309"
           ],
           "aliases": [],
-          "paper_count": 6
+          "paper_count": 7
         },
         {
           "topic_id": "social_spatial__affect_restoration",
@@ -2693,10 +2803,12 @@
             "PDF-0232",
             "PDF-0293",
             "PDF-0316",
+            "PDF-0743",
+            "PDF-1285",
             "PDF-1379"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 7
         },
         {
           "topic_id": "social_spatial__cog_attention",
@@ -2716,10 +2828,11 @@
             "PDF-0206",
             "PDF-0293",
             "PDF-0397",
-            "PDF-1285"
+            "PDF-1285",
+            "PDF-1379"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 6
         },
         {
           "topic_id": "social_spatial__cog_performance",
@@ -3189,7 +3302,7 @@
         "ieq",
         "indoor_environmental_quality"
       ],
-      "paper_count": 8,
+      "paper_count": 11,
       "topic_nodes": [
         {
           "topic_id": "multisensory__affect_comfort",
@@ -3230,12 +3343,12 @@
           "paper_count": 1
         },
         {
-          "topic_id": "multisensory__affect_restoration",
-          "label": "Multisensory / Compound \u2192 Restoration / Recovery",
+          "topic_id": "multisensory__affect_satisfaction",
+          "label": "Multisensory / Compound \u2192 Satisfaction",
           "iv_root": "multisensory",
           "iv_branch": "multisensory",
-          "dv_focus": "affect.restoration",
-          "dv_focus_label": "Restoration / Recovery",
+          "dv_focus": "affect.satisfaction",
+          "dv_focus_label": "Satisfaction",
           "authority_iv": "tagging_contractor",
           "authority_dv": "outcome_contractor",
           "description": "",
@@ -3243,7 +3356,7 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
-            "PDF-1403"
+            "PDF-0764"
           ],
           "aliases": [],
           "paper_count": 1
@@ -3262,10 +3375,13 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
-            "PDF-0113"
+            "PDF-0113",
+            "PDF-1336",
+            "PDF-1403",
+            "PDF-1411"
           ],
           "aliases": [],
-          "paper_count": 1
+          "paper_count": 4
         },
         {
           "topic_id": "multisensory__cog_attention",
@@ -3380,12 +3496,13 @@
             "PDF-1202",
             "PDF-1351",
             "PDF-1358",
+            "PDF-1365",
             "PDF-1366",
             "PDF-1404",
             "PDF-1406"
           ],
           "aliases": [],
-          "paper_count": 34
+          "paper_count": 35
         },
         {
           "topic_id": "control__cog_performance",
@@ -3457,6 +3574,8 @@
             "PDF-0052",
             "PDF-0066",
             "PDF-0095",
+            "PDF-0155",
+            "PDF-0158",
             "PDF-0290",
             "PDF-0523",
             "PDF-0542",
@@ -3475,13 +3594,14 @@
             "PDF-1185",
             "PDF-1375",
             "PDF-1380",
+            "PDF-1383",
             "PDF-1388",
             "PDF-1413",
             "PDF-1420",
             "PDF-1421"
           ],
           "aliases": [],
-          "paper_count": 26
+          "paper_count": 29
         },
         {
           "topic_id": "spatial__cog_attention",
@@ -3501,7 +3621,6 @@
             "PDF-0176",
             "PDF-0360",
             "PDF-0500",
-            "PDF-0528",
             "PDF-0548",
             "PDF-0595",
             "PDF-0638",
@@ -3512,7 +3631,7 @@
             "PDF-1435"
           ],
           "aliases": [],
-          "paper_count": 13
+          "paper_count": 12
         },
         {
           "topic_id": "luminous__cog_performance",
@@ -3528,10 +3647,13 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
+            "PDF-0040",
             "PDF-0046",
+            "PDF-0055",
             "PDF-0058",
             "PDF-0108",
             "PDF-0115",
+            "PDF-0124",
             "PDF-0130",
             "PDF-0166",
             "PDF-0183",
@@ -3550,10 +3672,14 @@
             "PDF-0617",
             "PDF-0624",
             "PDF-0629",
+            "PDF-0649",
             "PDF-0754",
             "PDF-0758",
             "PDF-0792",
             "PDF-0805",
+            "PDF-0806",
+            "PDF-0823",
+            "PDF-0827",
             "PDF-0866",
             "PDF-0883",
             "PDF-0896",
@@ -3565,18 +3691,16 @@
             "PDF-1033",
             "PDF-1055",
             "PDF-1208",
-            "PDF-1372",
             "PDF-1373",
-            "PDF-1380",
-            "PDF-1383",
             "PDF-1388",
             "PDF-1413",
+            "PDF-1420",
             "PDF-1424",
             "PDF-1433",
             "PDF-1438"
           ],
           "aliases": [],
-          "paper_count": 46
+          "paper_count": 51
         },
         {
           "topic_id": "social_spatial__cog_performance",
@@ -3621,6 +3745,7 @@
             "PDF-0633",
             "PDF-0643",
             "PDF-0647",
+            "PDF-0803",
             "PDF-0823",
             "PDF-0827",
             "PDF-0872",
@@ -3628,7 +3753,53 @@
             "PDF-1297"
           ],
           "aliases": [],
-          "paper_count": 9
+          "paper_count": 10
+        },
+        {
+          "topic_id": "spatial__cog_performance",
+          "label": "Spatial Form \u2192 Cognitive Performance",
+          "iv_root": "spatial",
+          "iv_branch": "spatial",
+          "dv_focus": "cog.performance",
+          "dv_focus_label": "Cognitive Performance",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0133",
+            "PDF-0140",
+            "PDF-0176",
+            "PDF-0210",
+            "PDF-0214",
+            "PDF-0266",
+            "PDF-0360",
+            "PDF-0395",
+            "PDF-0414",
+            "PDF-0422",
+            "PDF-0452",
+            "PDF-0528",
+            "PDF-0593",
+            "PDF-0596",
+            "PDF-0638",
+            "PDF-0657",
+            "PDF-0662",
+            "PDF-0730",
+            "PDF-0746",
+            "PDF-0749",
+            "PDF-0803",
+            "PDF-0830",
+            "PDF-0886",
+            "PDF-0997",
+            "PDF-1087",
+            "PDF-1282",
+            "PDF-1291",
+            "PDF-1395"
+          ],
+          "aliases": [],
+          "paper_count": 28
         },
         {
           "topic_id": "acoustic__cog_cognitive_load",
@@ -3675,23 +3846,24 @@
             "PDF-0568",
             "PDF-0575",
             "PDF-0578",
+            "PDF-0693",
+            "PDF-0838",
             "PDF-0944",
-            "PDF-1180",
             "PDF-1182",
             "PDF-1190",
             "PDF-1212",
             "PDF-1358"
           ],
           "aliases": [],
-          "paper_count": 14
+          "paper_count": 15
         },
         {
-          "topic_id": "spatial__cog_performance",
-          "label": "Spatial Form \u2192 Cognitive Performance",
-          "iv_root": "spatial",
-          "iv_branch": "spatial",
-          "dv_focus": "cog.performance",
-          "dv_focus_label": "Cognitive Performance",
+          "topic_id": "luminous__cog_memory",
+          "label": "Luminous Environment \u2192 Memory",
+          "iv_root": "luminous",
+          "iv_branch": "luminous",
+          "dv_focus": "cog.memory",
+          "dv_focus_label": "Memory",
           "authority_iv": "tagging_contractor",
           "authority_dv": "outcome_contractor",
           "description": "",
@@ -3699,35 +3871,18 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
-            "PDF-0140",
-            "PDF-0176",
-            "PDF-0210",
-            "PDF-0214",
-            "PDF-0266",
-            "PDF-0360",
-            "PDF-0395",
-            "PDF-0414",
-            "PDF-0422",
-            "PDF-0452",
-            "PDF-0528",
-            "PDF-0593",
-            "PDF-0596",
-            "PDF-0638",
-            "PDF-0657",
-            "PDF-0662",
-            "PDF-0730",
-            "PDF-0746",
-            "PDF-0749",
-            "PDF-0803",
-            "PDF-0830",
-            "PDF-0886",
-            "PDF-0997",
-            "PDF-1087",
-            "PDF-1282",
-            "PDF-1291"
+            "PDF-0141",
+            "PDF-0156",
+            "PDF-0187",
+            "PDF-0334",
+            "PDF-0475",
+            "PDF-0529",
+            "PDF-0804",
+            "PDF-0987",
+            "PDF-1138"
           ],
           "aliases": [],
-          "paper_count": 26
+          "paper_count": 9
         },
         {
           "topic_id": "control__cog_memory",
@@ -3772,13 +3927,14 @@
             "PDF-0781",
             "PDF-0872",
             "PDF-1083",
+            "PDF-1173",
+            "PDF-1188",
             "PDF-1238",
             "PDF-1350",
-            "PDF-1389",
-            "PDF-1392"
+            "PDF-1389"
           ],
           "aliases": [],
-          "paper_count": 13
+          "paper_count": 14
         },
         {
           "topic_id": "social_spatial__cog_attention",
@@ -3798,10 +3954,11 @@
             "PDF-0206",
             "PDF-0293",
             "PDF-0397",
-            "PDF-1285"
+            "PDF-1285",
+            "PDF-1379"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 6
         },
         {
           "topic_id": "natural__cog_memory",
@@ -3842,14 +3999,13 @@
             "PDF-0540",
             "PDF-0686",
             "PDF-0881",
-            "PDF-1173",
-            "PDF-1224",
             "PDF-1343",
             "PDF-1352",
+            "PDF-1370",
             "PDF-1389"
           ],
           "aliases": [],
-          "paper_count": 9
+          "paper_count": 8
         },
         {
           "topic_id": "natural__cog_creativity",
@@ -3913,28 +4069,6 @@
           "paper_count": 4
         },
         {
-          "topic_id": "luminous__cog_memory",
-          "label": "Luminous Environment \u2192 Memory",
-          "iv_root": "luminous",
-          "iv_branch": "luminous",
-          "dv_focus": "cog.memory",
-          "dv_focus_label": "Memory",
-          "authority_iv": "tagging_contractor",
-          "authority_dv": "outcome_contractor",
-          "description": "",
-          "provisional": false,
-          "provisional_note": "",
-          "parent_authority_node": "",
-          "paper_ids": [
-            "PDF-0334",
-            "PDF-0475",
-            "PDF-0529",
-            "PDF-0987"
-          ],
-          "aliases": [],
-          "paper_count": 4
-        },
-        {
           "topic_id": "acoustic__cog_memory",
           "label": "Acoustic Environment \u2192 Memory",
           "iv_root": "acoustic",
@@ -3952,10 +4086,11 @@
             "PDF-0567",
             "PDF-0571",
             "PDF-0573",
+            "PDF-0829",
             "PDF-1149"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 6
         },
         {
           "topic_id": "spatial__cog_cognitive_load",
@@ -4081,6 +4216,30 @@
           "paper_count": 5
         },
         {
+          "topic_id": "luminous__cog_creativity",
+          "label": "Luminous Environment \u2192 Creativity / Divergent Thinking",
+          "iv_root": "luminous",
+          "iv_branch": "luminous",
+          "dv_focus": "cog.creativity",
+          "dv_focus_label": "Creativity / Divergent Thinking",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0706",
+            "PDF-0904",
+            "PDF-1380",
+            "PDF-1412",
+            "PDF-1427",
+            "PDF-1441"
+          ],
+          "aliases": [],
+          "paper_count": 6
+        },
+        {
           "topic_id": "natural__cog_cognitive_load",
           "label": "Nature & Biophilia \u2192 Cognitive Load",
           "iv_root": "natural",
@@ -4098,28 +4257,6 @@
           ],
           "aliases": [],
           "paper_count": 1
-        },
-        {
-          "topic_id": "luminous__cog_creativity",
-          "label": "Luminous Environment \u2192 Creativity / Divergent Thinking",
-          "iv_root": "luminous",
-          "iv_branch": "luminous",
-          "dv_focus": "cog.creativity",
-          "dv_focus_label": "Creativity / Divergent Thinking",
-          "authority_iv": "tagging_contractor",
-          "authority_dv": "outcome_contractor",
-          "description": "",
-          "provisional": false,
-          "provisional_note": "",
-          "parent_authority_node": "",
-          "paper_ids": [
-            "PDF-0904",
-            "PDF-1412",
-            "PDF-1427",
-            "PDF-1441"
-          ],
-          "aliases": [],
-          "paper_count": 4
         },
         {
           "topic_id": "spatial__cog_creativity",
@@ -4214,11 +4351,12 @@
             "PDF-0103",
             "PDF-0283",
             "PDF-0358",
+            "PDF-0461",
             "PDF-0634",
             "PDF-1309"
           ],
           "aliases": [],
-          "paper_count": 6
+          "paper_count": 7
         },
         {
           "topic_id": "spatial__affect_negative_stress",
@@ -4252,14 +4390,13 @@
             "PDF-0886",
             "PDF-0888",
             "PDF-1361",
-            "PDF-1395",
             "PDF-1396",
             "PDF-1419",
             "PDF-1423",
             "PDF-1437"
           ],
           "aliases": [],
-          "paper_count": 23
+          "paper_count": 22
         },
         {
           "topic_id": "acoustic__affect_restoration",
@@ -4284,10 +4421,11 @@
             "PDF-0641",
             "PDF-0699",
             "PDF-0832",
-            "PDF-0946"
+            "PDF-0946",
+            "PDF-1180"
           ],
           "aliases": [],
-          "paper_count": 10
+          "paper_count": 11
         },
         {
           "topic_id": "acoustic__affect_satisfaction",
@@ -4340,12 +4478,14 @@
             "PDF-0400",
             "PDF-0427",
             "PDF-0435",
+            "PDF-0438",
             "PDF-0518",
             "PDF-0659",
             "PDF-0751",
             "PDF-0755",
             "PDF-0759",
             "PDF-0760",
+            "PDF-0790",
             "PDF-0806",
             "PDF-0808",
             "PDF-0812",
@@ -4361,7 +4501,7 @@
             "PDF-1444"
           ],
           "aliases": [],
-          "paper_count": 36
+          "paper_count": 38
         },
         {
           "topic_id": "material__affect_wellbeing",
@@ -4408,6 +4548,7 @@
             "PDF-0287",
             "PDF-0297",
             "PDF-0466",
+            "PDF-0536",
             "PDF-0543",
             "PDF-0558",
             "PDF-0585",
@@ -4417,11 +4558,42 @@
             "PDF-0780",
             "PDF-0810",
             "PDF-0816",
+            "PDF-0884",
             "PDF-0885",
-            "PDF-1434"
+            "PDF-1024",
+            "PDF-1224",
+            "PDF-1425",
+            "PDF-1434",
+            "PDF-1439"
           ],
           "aliases": [],
-          "paper_count": 16
+          "paper_count": 22
+        },
+        {
+          "topic_id": "luminous__affect_comfort",
+          "label": "Luminous Environment \u2192 Comfort",
+          "iv_root": "luminous",
+          "iv_branch": "luminous",
+          "dv_focus": "affect.comfort",
+          "dv_focus_label": "Comfort",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0021",
+            "PDF-0216",
+            "PDF-0323",
+            "PDF-0416",
+            "PDF-0418",
+            "PDF-0457",
+            "PDF-0626",
+            "PDF-0777"
+          ],
+          "aliases": [],
+          "paper_count": 8
         },
         {
           "topic_id": "spatial__affect_comfort",
@@ -4443,6 +4615,39 @@
           ],
           "aliases": [],
           "paper_count": 3
+        },
+        {
+          "topic_id": "luminous__affect_preference",
+          "label": "Luminous Environment \u2192 Aesthetic Preference",
+          "iv_root": "luminous",
+          "iv_branch": "luminous",
+          "dv_focus": "affect.preference",
+          "dv_focus_label": "Aesthetic Preference",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0030",
+            "PDF-0154",
+            "PDF-0189",
+            "PDF-0275",
+            "PDF-0290",
+            "PDF-0378",
+            "PDF-0423",
+            "PDF-0524",
+            "PDF-0665",
+            "PDF-0785",
+            "PDF-0808",
+            "PDF-1303",
+            "PDF-1325",
+            "PDF-1356",
+            "PDF-1375"
+          ],
+          "aliases": [],
+          "paper_count": 15
         },
         {
           "topic_id": "control__affect_preference",
@@ -4518,6 +4723,7 @@
             "PDF-0855",
             "PDF-0876",
             "PDF-1007",
+            "PDF-1106",
             "PDF-1173",
             "PDF-1188",
             "PDF-1224",
@@ -4535,7 +4741,7 @@
             "PDF-1439"
           ],
           "aliases": [],
-          "paper_count": 32
+          "paper_count": 33
         },
         {
           "topic_id": "control__affect_restoration",
@@ -4598,16 +4804,18 @@
           "paper_ids": [
             "PDF-0041",
             "PDF-0043",
+            "PDF-0154",
             "PDF-0274",
             "PDF-0280",
             "PDF-0374",
             "PDF-0561",
             "PDF-0684",
+            "PDF-0864",
             "PDF-0865",
             "PDF-1410"
           ],
           "aliases": [],
-          "paper_count": 9
+          "paper_count": 11
         },
         {
           "topic_id": "control__affect_wellbeing",
@@ -4655,15 +4863,12 @@
             "PDF-0285",
             "PDF-0535",
             "PDF-0601",
-            "PDF-0602",
-            "PDF-0629",
             "PDF-0714",
             "PDF-0758",
-            "PDF-0964",
             "PDF-1413"
           ],
           "aliases": [],
-          "paper_count": 11
+          "paper_count": 8
         },
         {
           "topic_id": "control__affect_negative_stress",
@@ -4702,10 +4907,12 @@
             "PDF-0232",
             "PDF-0293",
             "PDF-0316",
+            "PDF-0743",
+            "PDF-1285",
             "PDF-1379"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 7
         },
         {
           "topic_id": "thermal__affect_preference",
@@ -4759,10 +4966,13 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
-            "PDF-0113"
+            "PDF-0113",
+            "PDF-1336",
+            "PDF-1403",
+            "PDF-1411"
           ],
           "aliases": [],
-          "paper_count": 1
+          "paper_count": 4
         },
         {
           "topic_id": "acoustic__affect_wellbeing",
@@ -4793,11 +5003,12 @@
             "PDF-0786",
             "PDF-0819",
             "PDF-0829",
+            "PDF-0834",
             "PDF-0838",
             "PDF-0908"
           ],
           "aliases": [],
-          "paper_count": 17
+          "paper_count": 18
         },
         {
           "topic_id": "acoustic__affect_soundscape",
@@ -4850,39 +5061,11 @@
             "PDF-0450",
             "PDF-0644",
             "PDF-0648",
+            "PDF-0773",
             "PDF-1072"
           ],
           "aliases": [],
-          "paper_count": 6
-        },
-        {
-          "topic_id": "luminous__affect_preference",
-          "label": "Luminous Environment \u2192 Aesthetic Preference",
-          "iv_root": "luminous",
-          "iv_branch": "luminous",
-          "dv_focus": "affect.preference",
-          "dv_focus_label": "Aesthetic Preference",
-          "authority_iv": "tagging_contractor",
-          "authority_dv": "outcome_contractor",
-          "description": "",
-          "provisional": false,
-          "provisional_note": "",
-          "parent_authority_node": "",
-          "paper_ids": [
-            "PDF-0154",
-            "PDF-0189",
-            "PDF-0275",
-            "PDF-0378",
-            "PDF-0423",
-            "PDF-0524",
-            "PDF-0665",
-            "PDF-0785",
-            "PDF-1303",
-            "PDF-1325",
-            "PDF-1356"
-          ],
-          "aliases": [],
-          "paper_count": 11
+          "paper_count": 7
         },
         {
           "topic_id": "material__affect_comfort",
@@ -4964,7 +5147,6 @@
             "PDF-0396",
             "PDF-0417",
             "PDF-0477",
-            "PDF-0536",
             "PDF-0540",
             "PDF-0545",
             "PDF-0620",
@@ -4973,11 +5155,16 @@
             "PDF-0872",
             "PDF-0892",
             "PDF-1007",
+            "PDF-1027",
             "PDF-1224",
-            "PDF-1344"
+            "PDF-1332",
+            "PDF-1344",
+            "PDF-1353",
+            "PDF-1368",
+            "PDF-1387"
           ],
           "aliases": [],
-          "paper_count": 17
+          "paper_count": 21
         },
         {
           "topic_id": "natural__affect_preference",
@@ -4995,34 +5182,11 @@
           "paper_ids": [
             "PDF-0186",
             "PDF-0253",
-            "PDF-1319"
+            "PDF-1319",
+            "PDF-1346"
           ],
           "aliases": [],
-          "paper_count": 3
-        },
-        {
-          "topic_id": "luminous__affect_comfort",
-          "label": "Luminous Environment \u2192 Comfort",
-          "iv_root": "luminous",
-          "iv_branch": "luminous",
-          "dv_focus": "affect.comfort",
-          "dv_focus_label": "Comfort",
-          "authority_iv": "tagging_contractor",
-          "authority_dv": "outcome_contractor",
-          "description": "",
-          "provisional": false,
-          "provisional_note": "",
-          "parent_authority_node": "",
-          "paper_ids": [
-            "PDF-0216",
-            "PDF-0323",
-            "PDF-0416",
-            "PDF-0418",
-            "PDF-0457",
-            "PDF-0626"
-          ],
-          "aliases": [],
-          "paper_count": 6
+          "paper_count": 4
         },
         {
           "topic_id": "spatial__affect_satisfaction",
@@ -5072,6 +5236,7 @@
             "PDF-0544",
             "PDF-0553",
             "PDF-0629",
+            "PDF-0655",
             "PDF-0744",
             "PDF-0768",
             "PDF-0794",
@@ -5084,10 +5249,12 @@
             "PDF-1015",
             "PDF-1105",
             "PDF-1337",
-            "PDF-1383"
+            "PDF-1383",
+            "PDF-1390",
+            "PDF-1393"
           ],
           "aliases": [],
-          "paper_count": 25
+          "paper_count": 28
         },
         {
           "topic_id": "acoustic__affect_comfort",
@@ -5109,11 +5276,12 @@
             "PDF-0468",
             "PDF-0773",
             "PDF-0779",
+            "PDF-0841",
             "PDF-0846",
             "PDF-1183"
           ],
           "aliases": [],
-          "paper_count": 8
+          "paper_count": 9
         },
         {
           "topic_id": "material__affect_negative_stress",
@@ -5287,6 +5455,44 @@
           "paper_count": 2
         },
         {
+          "topic_id": "multisensory__affect_satisfaction",
+          "label": "Multisensory / Compound \u2192 Satisfaction",
+          "iv_root": "multisensory",
+          "iv_branch": "multisensory",
+          "dv_focus": "affect.satisfaction",
+          "dv_focus_label": "Satisfaction",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0764"
+          ],
+          "aliases": [],
+          "paper_count": 1
+        },
+        {
+          "topic_id": "thermal__affect_satisfaction",
+          "label": "Thermal & Air Quality \u2192 Satisfaction",
+          "iv_root": "thermal",
+          "iv_branch": "thermal",
+          "dv_focus": "affect.satisfaction",
+          "dv_focus_label": "Satisfaction",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0811"
+          ],
+          "aliases": [],
+          "paper_count": 1
+        },
+        {
           "topic_id": "luminous__affect_satisfaction",
           "label": "Luminous Environment \u2192 Satisfaction",
           "iv_root": "luminous",
@@ -5306,12 +5512,12 @@
           "paper_count": 1
         },
         {
-          "topic_id": "multisensory__affect_negative_stress",
-          "label": "Multisensory / Compound \u2192 Stress Response",
-          "iv_root": "multisensory",
-          "iv_branch": "multisensory",
-          "dv_focus": "affect.negative.stress",
-          "dv_focus_label": "Stress Response",
+          "topic_id": "natural__affect_comfort",
+          "label": "Nature & Biophilia \u2192 Comfort",
+          "iv_root": "natural",
+          "iv_branch": "natural",
+          "dv_focus": "affect.comfort",
+          "dv_focus_label": "Comfort",
           "authority_iv": "tagging_contractor",
           "authority_dv": "outcome_contractor",
           "description": "",
@@ -5319,18 +5525,18 @@
           "provisional_note": "",
           "parent_authority_node": "",
           "paper_ids": [
-            "PDF-1403"
+            "PDF-1154"
           ],
           "aliases": [],
           "paper_count": 1
         },
         {
-          "topic_id": "multisensory__affect_restoration",
-          "label": "Multisensory / Compound \u2192 Restoration / Recovery",
+          "topic_id": "multisensory__affect_negative_stress",
+          "label": "Multisensory / Compound \u2192 Stress Response",
           "iv_root": "multisensory",
           "iv_branch": "multisensory",
-          "dv_focus": "affect.restoration",
-          "dv_focus_label": "Restoration / Recovery",
+          "dv_focus": "affect.negative.stress",
+          "dv_focus_label": "Stress Response",
           "authority_iv": "tagging_contractor",
           "authority_dv": "outcome_contractor",
           "description": "",
@@ -5394,13 +5600,17 @@
             "PDF-0335",
             "PDF-0382",
             "PDF-0427",
+            "PDF-0488",
             "PDF-0537",
             "PDF-0544",
+            "PDF-0602",
             "PDF-0624",
             "PDF-0625",
             "PDF-0628",
+            "PDF-0629",
             "PDF-0714",
             "PDF-0767",
+            "PDF-0817",
             "PDF-0850",
             "PDF-0858",
             "PDF-0859",
@@ -5414,7 +5624,7 @@
             "PDF-1408"
           ],
           "aliases": [],
-          "paper_count": 25
+          "paper_count": 29
         },
         {
           "topic_id": "natural__physio",
@@ -5435,10 +5645,11 @@
             "PDF-0682",
             "PDF-0855",
             "PDF-0881",
-            "PDF-1385"
+            "PDF-1385",
+            "PDF-1392"
           ],
           "aliases": [],
-          "paper_count": 6
+          "paper_count": 7
         },
         {
           "topic_id": "spatial__physio",
@@ -5522,6 +5733,7 @@
             "PDF-0394",
             "PDF-0404",
             "PDF-0442",
+            "PDF-0472",
             "PDF-0570",
             "PDF-0636",
             "PDF-0699",
@@ -5535,7 +5747,7 @@
             "PDF-1190"
           ],
           "aliases": [],
-          "paper_count": 17
+          "paper_count": 18
         },
         {
           "topic_id": "material__physio",
@@ -5659,6 +5871,7 @@
             "PDF-0714",
             "PDF-0896",
             "PDF-1208",
+            "PDF-1337",
             "PDF-1349",
             "PDF-1372",
             "PDF-1374",
@@ -5667,7 +5880,7 @@
             "PDF-1421"
           ],
           "aliases": [],
-          "paper_count": 18
+          "paper_count": 19
         },
         {
           "topic_id": "spatial__neural",
@@ -5694,21 +5907,30 @@
             "PDF-0591",
             "PDF-0593",
             "PDF-0594",
+            "PDF-0595",
             "PDF-0596",
             "PDF-0657",
             "PDF-0886",
             "PDF-0914",
             "PDF-0958",
             "PDF-1025",
+            "PDF-1347",
             "PDF-1355",
             "PDF-1395",
             "PDF-1396",
+            "PDF-1414",
             "PDF-1419",
+            "PDF-1423",
+            "PDF-1428",
+            "PDF-1429",
             "PDF-1432",
-            "PDF-1435"
+            "PDF-1435",
+            "PDF-1437",
+            "PDF-1442",
+            "PDF-1443"
           ],
           "aliases": [],
-          "paper_count": 23
+          "paper_count": 32
         },
         {
           "topic_id": "acoustic__neural",
@@ -5815,6 +6037,31 @@
       "authority": "outcome_contractor",
       "topic_nodes": [
         {
+          "topic_id": "luminous__behav_navigation",
+          "label": "Luminous Environment \u2192 Spatial Navigation",
+          "iv_root": "luminous",
+          "iv_branch": "luminous",
+          "dv_focus": "behav.navigation",
+          "dv_focus_label": "Spatial Navigation",
+          "authority_iv": "tagging_contractor",
+          "authority_dv": "outcome_contractor",
+          "description": "",
+          "provisional": false,
+          "provisional_note": "",
+          "parent_authority_node": "",
+          "paper_ids": [
+            "PDF-0014",
+            "PDF-0117",
+            "PDF-0367",
+            "PDF-0544",
+            "PDF-0721",
+            "PDF-1045",
+            "PDF-1372"
+          ],
+          "aliases": [],
+          "paper_count": 7
+        },
+        {
           "topic_id": "spatial__behav_navigation",
           "label": "Spatial Form \u2192 Spatial Navigation",
           "iv_root": "spatial",
@@ -5840,10 +6087,11 @@
             "PDF-0818",
             "PDF-0911",
             "PDF-0997",
-            "PDF-1000"
+            "PDF-1000",
+            "PDF-1359"
           ],
           "aliases": [],
-          "paper_count": 13
+          "paper_count": 14
         },
         {
           "topic_id": "natural__behav_navigation",
@@ -5883,27 +6131,6 @@
           ],
           "aliases": [],
           "paper_count": 2
-        },
-        {
-          "topic_id": "luminous__behav_navigation",
-          "label": "Luminous Environment \u2192 Spatial Navigation",
-          "iv_root": "luminous",
-          "iv_branch": "luminous",
-          "dv_focus": "behav.navigation",
-          "dv_focus_label": "Spatial Navigation",
-          "authority_iv": "tagging_contractor",
-          "authority_dv": "outcome_contractor",
-          "description": "",
-          "provisional": false,
-          "provisional_note": "",
-          "parent_authority_node": "",
-          "paper_ids": [
-            "PDF-0367",
-            "PDF-0721",
-            "PDF-1045"
-          ],
-          "aliases": [],
-          "paper_count": 3
         }
       ]
     },
@@ -5931,10 +6158,11 @@
             "PDF-0416",
             "PDF-0631",
             "PDF-0752",
-            "PDF-0766"
+            "PDF-0766",
+            "PDF-0964"
           ],
           "aliases": [],
-          "paper_count": 5
+          "paper_count": 6
         },
         {
           "topic_id": "thermal__health",
@@ -6085,6 +6313,8 @@
             "PDF-0054",
             "PDF-0062",
             "PDF-0200",
+            "PDF-0500",
+            "PDF-0528",
             "PDF-0587",
             "PDF-0679",
             "PDF-0728",
@@ -6093,7 +6323,7 @@
             "PDF-1233"
           ],
           "aliases": [],
-          "paper_count": 10
+          "paper_count": 12
         },
         {
           "topic_id": "luminous__social",
@@ -6112,6 +6342,8 @@
             "PDF-0062",
             "PDF-0222",
             "PDF-0286",
+            "PDF-0327",
+            "PDF-0557",
             "PDF-0741",
             "PDF-1122",
             "PDF-1148",
@@ -6121,7 +6353,7 @@
             "PDF-1436"
           ],
           "aliases": [],
-          "paper_count": 10
+          "paper_count": 12
         },
         {
           "topic_id": "material__social",
@@ -6585,11 +6817,12 @@
         "PDF-0468",
         "PDF-0773",
         "PDF-0779",
+        "PDF-0841",
         "PDF-0846",
         "PDF-1183"
       ],
       "aliases": [],
-      "paper_count": 8
+      "paper_count": 9
     },
     "acoustic__affect_negative_stress": {
       "topic_id": "acoustic__affect_negative_stress",
@@ -6653,10 +6886,11 @@
         "PDF-0641",
         "PDF-0699",
         "PDF-0832",
-        "PDF-0946"
+        "PDF-0946",
+        "PDF-1180"
       ],
       "aliases": [],
-      "paper_count": 10
+      "paper_count": 11
     },
     "acoustic__affect_satisfaction": {
       "topic_id": "acoustic__affect_satisfaction",
@@ -6739,11 +6973,12 @@
         "PDF-0786",
         "PDF-0819",
         "PDF-0829",
+        "PDF-0834",
         "PDF-0838",
         "PDF-0908"
       ],
       "aliases": [],
-      "paper_count": 17
+      "paper_count": 18
     },
     "acoustic__cog_attention": {
       "topic_id": "acoustic__cog_attention",
@@ -6767,15 +7002,16 @@
         "PDF-0568",
         "PDF-0575",
         "PDF-0578",
+        "PDF-0693",
+        "PDF-0838",
         "PDF-0944",
-        "PDF-1180",
         "PDF-1182",
         "PDF-1190",
         "PDF-1212",
         "PDF-1358"
       ],
       "aliases": [],
-      "paper_count": 14
+      "paper_count": 15
     },
     "acoustic__cog_cognitive_load": {
       "topic_id": "acoustic__cog_cognitive_load",
@@ -6818,10 +7054,11 @@
         "PDF-0567",
         "PDF-0571",
         "PDF-0573",
+        "PDF-0829",
         "PDF-1149"
       ],
       "aliases": [],
-      "paper_count": 5
+      "paper_count": 6
     },
     "acoustic__cog_performance": {
       "topic_id": "acoustic__cog_performance",
@@ -6868,12 +7105,13 @@
         "PDF-1202",
         "PDF-1351",
         "PDF-1358",
+        "PDF-1365",
         "PDF-1366",
         "PDF-1404",
         "PDF-1406"
       ],
       "aliases": [],
-      "paper_count": 34
+      "paper_count": 35
     },
     "acoustic__health": {
       "topic_id": "acoustic__health",
@@ -6987,6 +7225,7 @@
         "PDF-0394",
         "PDF-0404",
         "PDF-0442",
+        "PDF-0472",
         "PDF-0570",
         "PDF-0636",
         "PDF-0699",
@@ -7000,7 +7239,7 @@
         "PDF-1190"
       ],
       "aliases": [],
-      "paper_count": 17
+      "paper_count": 18
     },
     "acoustic__social": {
       "topic_id": "acoustic__social",
@@ -7348,15 +7587,17 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0021",
         "PDF-0216",
         "PDF-0323",
         "PDF-0416",
         "PDF-0418",
         "PDF-0457",
-        "PDF-0626"
+        "PDF-0626",
+        "PDF-0777"
       ],
       "aliases": [],
-      "paper_count": 6
+      "paper_count": 8
     },
     "luminous__affect_negative_stress": {
       "topic_id": "luminous__affect_negative_stress",
@@ -7384,6 +7625,7 @@
         "PDF-0544",
         "PDF-0553",
         "PDF-0629",
+        "PDF-0655",
         "PDF-0744",
         "PDF-0768",
         "PDF-0794",
@@ -7396,10 +7638,12 @@
         "PDF-1015",
         "PDF-1105",
         "PDF-1337",
-        "PDF-1383"
+        "PDF-1383",
+        "PDF-1390",
+        "PDF-1393"
       ],
       "aliases": [],
-      "paper_count": 25
+      "paper_count": 28
     },
     "luminous__affect_preference": {
       "topic_id": "luminous__affect_preference",
@@ -7415,20 +7659,24 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0030",
         "PDF-0154",
         "PDF-0189",
         "PDF-0275",
+        "PDF-0290",
         "PDF-0378",
         "PDF-0423",
         "PDF-0524",
         "PDF-0665",
         "PDF-0785",
+        "PDF-0808",
         "PDF-1303",
         "PDF-1325",
-        "PDF-1356"
+        "PDF-1356",
+        "PDF-1375"
       ],
       "aliases": [],
-      "paper_count": 11
+      "paper_count": 15
     },
     "luminous__affect_restoration": {
       "topic_id": "luminous__affect_restoration",
@@ -7449,15 +7697,12 @@
         "PDF-0285",
         "PDF-0535",
         "PDF-0601",
-        "PDF-0602",
-        "PDF-0629",
         "PDF-0714",
         "PDF-0758",
-        "PDF-0964",
         "PDF-1413"
       ],
       "aliases": [],
-      "paper_count": 11
+      "paper_count": 8
     },
     "luminous__affect_satisfaction": {
       "topic_id": "luminous__affect_satisfaction",
@@ -7509,12 +7754,14 @@
         "PDF-0400",
         "PDF-0427",
         "PDF-0435",
+        "PDF-0438",
         "PDF-0518",
         "PDF-0659",
         "PDF-0751",
         "PDF-0755",
         "PDF-0759",
         "PDF-0760",
+        "PDF-0790",
         "PDF-0806",
         "PDF-0808",
         "PDF-0812",
@@ -7530,7 +7777,7 @@
         "PDF-1444"
       ],
       "aliases": [],
-      "paper_count": 36
+      "paper_count": 38
     },
     "luminous__behav_navigation": {
       "topic_id": "luminous__behav_navigation",
@@ -7546,12 +7793,16 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0014",
+        "PDF-0117",
         "PDF-0367",
+        "PDF-0544",
         "PDF-0721",
-        "PDF-1045"
+        "PDF-1045",
+        "PDF-1372"
       ],
       "aliases": [],
-      "paper_count": 3
+      "paper_count": 7
     },
     "luminous__cog_attention": {
       "topic_id": "luminous__cog_attention",
@@ -7571,6 +7822,8 @@
         "PDF-0052",
         "PDF-0066",
         "PDF-0095",
+        "PDF-0155",
+        "PDF-0158",
         "PDF-0290",
         "PDF-0523",
         "PDF-0542",
@@ -7589,13 +7842,14 @@
         "PDF-1185",
         "PDF-1375",
         "PDF-1380",
+        "PDF-1383",
         "PDF-1388",
         "PDF-1413",
         "PDF-1420",
         "PDF-1421"
       ],
       "aliases": [],
-      "paper_count": 26
+      "paper_count": 29
     },
     "luminous__cog_cognitive_load": {
       "topic_id": "luminous__cog_cognitive_load",
@@ -7632,13 +7886,15 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0706",
         "PDF-0904",
+        "PDF-1380",
         "PDF-1412",
         "PDF-1427",
         "PDF-1441"
       ],
       "aliases": [],
-      "paper_count": 4
+      "paper_count": 6
     },
     "luminous__cog_memory": {
       "topic_id": "luminous__cog_memory",
@@ -7654,13 +7910,18 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0141",
+        "PDF-0156",
+        "PDF-0187",
         "PDF-0334",
         "PDF-0475",
         "PDF-0529",
-        "PDF-0987"
+        "PDF-0804",
+        "PDF-0987",
+        "PDF-1138"
       ],
       "aliases": [],
-      "paper_count": 4
+      "paper_count": 9
     },
     "luminous__cog_performance": {
       "topic_id": "luminous__cog_performance",
@@ -7676,10 +7937,13 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0040",
         "PDF-0046",
+        "PDF-0055",
         "PDF-0058",
         "PDF-0108",
         "PDF-0115",
+        "PDF-0124",
         "PDF-0130",
         "PDF-0166",
         "PDF-0183",
@@ -7698,10 +7962,14 @@
         "PDF-0617",
         "PDF-0624",
         "PDF-0629",
+        "PDF-0649",
         "PDF-0754",
         "PDF-0758",
         "PDF-0792",
         "PDF-0805",
+        "PDF-0806",
+        "PDF-0823",
+        "PDF-0827",
         "PDF-0866",
         "PDF-0883",
         "PDF-0896",
@@ -7713,18 +7981,16 @@
         "PDF-1033",
         "PDF-1055",
         "PDF-1208",
-        "PDF-1372",
         "PDF-1373",
-        "PDF-1380",
-        "PDF-1383",
         "PDF-1388",
         "PDF-1413",
+        "PDF-1420",
         "PDF-1424",
         "PDF-1433",
         "PDF-1438"
       ],
       "aliases": [],
-      "paper_count": 46
+      "paper_count": 51
     },
     "luminous__health": {
       "topic_id": "luminous__health",
@@ -7744,10 +8010,11 @@
         "PDF-0416",
         "PDF-0631",
         "PDF-0752",
-        "PDF-0766"
+        "PDF-0766",
+        "PDF-0964"
       ],
       "aliases": [],
-      "paper_count": 5
+      "paper_count": 6
     },
     "luminous__mechanism": {
       "topic_id": "luminous__mechanism",
@@ -7844,6 +8111,7 @@
         "PDF-0714",
         "PDF-0896",
         "PDF-1208",
+        "PDF-1337",
         "PDF-1349",
         "PDF-1372",
         "PDF-1374",
@@ -7852,7 +8120,7 @@
         "PDF-1421"
       ],
       "aliases": [],
-      "paper_count": 18
+      "paper_count": 19
     },
     "luminous__physio": {
       "topic_id": "luminous__physio",
@@ -7875,13 +8143,17 @@
         "PDF-0335",
         "PDF-0382",
         "PDF-0427",
+        "PDF-0488",
         "PDF-0537",
         "PDF-0544",
+        "PDF-0602",
         "PDF-0624",
         "PDF-0625",
         "PDF-0628",
+        "PDF-0629",
         "PDF-0714",
         "PDF-0767",
+        "PDF-0817",
         "PDF-0850",
         "PDF-0858",
         "PDF-0859",
@@ -7895,7 +8167,7 @@
         "PDF-1408"
       ],
       "aliases": [],
-      "paper_count": 25
+      "paper_count": 29
     },
     "luminous__social": {
       "topic_id": "luminous__social",
@@ -7914,6 +8186,8 @@
         "PDF-0062",
         "PDF-0222",
         "PDF-0286",
+        "PDF-0327",
+        "PDF-0557",
         "PDF-0741",
         "PDF-1122",
         "PDF-1148",
@@ -7923,7 +8197,7 @@
         "PDF-1436"
       ],
       "aliases": [],
-      "paper_count": 10
+      "paper_count": 12
     },
     "material__affect_comfort": {
       "topic_id": "material__affect_comfort",
@@ -8104,6 +8378,7 @@
         "PDF-0633",
         "PDF-0643",
         "PDF-0647",
+        "PDF-0803",
         "PDF-0823",
         "PDF-0827",
         "PDF-0872",
@@ -8111,7 +8386,7 @@
         "PDF-1297"
       ],
       "aliases": [],
-      "paper_count": 9
+      "paper_count": 10
     },
     "material__mechanism": {
       "topic_id": "material__mechanism",
@@ -8245,13 +8520,13 @@
       "aliases": [],
       "paper_count": 1
     },
-    "multisensory__affect_restoration": {
-      "topic_id": "multisensory__affect_restoration",
-      "label": "Multisensory / Compound \u2192 Restoration / Recovery",
+    "multisensory__affect_satisfaction": {
+      "topic_id": "multisensory__affect_satisfaction",
+      "label": "Multisensory / Compound \u2192 Satisfaction",
       "iv_root": "multisensory",
       "iv_branch": "multisensory",
-      "dv_focus": "affect.restoration",
-      "dv_focus_label": "Restoration / Recovery",
+      "dv_focus": "affect.satisfaction",
+      "dv_focus_label": "Satisfaction",
       "authority_iv": "tagging_contractor",
       "authority_dv": "outcome_contractor",
       "description": "",
@@ -8259,7 +8534,7 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
-        "PDF-1403"
+        "PDF-0764"
       ],
       "aliases": [],
       "paper_count": 1
@@ -8278,10 +8553,13 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
-        "PDF-0113"
+        "PDF-0113",
+        "PDF-1336",
+        "PDF-1403",
+        "PDF-1411"
       ],
       "aliases": [],
-      "paper_count": 1
+      "paper_count": 4
     },
     "multisensory__cog_attention": {
       "topic_id": "multisensory__cog_attention",
@@ -8341,6 +8619,25 @@
       "aliases": [],
       "paper_count": 2
     },
+    "natural__affect_comfort": {
+      "topic_id": "natural__affect_comfort",
+      "label": "Nature & Biophilia \u2192 Comfort",
+      "iv_root": "natural",
+      "iv_branch": "natural",
+      "dv_focus": "affect.comfort",
+      "dv_focus_label": "Comfort",
+      "authority_iv": "tagging_contractor",
+      "authority_dv": "outcome_contractor",
+      "description": "",
+      "provisional": false,
+      "provisional_note": "",
+      "parent_authority_node": "",
+      "paper_ids": [
+        "PDF-1154"
+      ],
+      "aliases": [],
+      "paper_count": 1
+    },
     "natural__affect_negative_stress": {
       "topic_id": "natural__affect_negative_stress",
       "label": "Nature & Biophilia \u2192 Stress Response",
@@ -8372,6 +8669,7 @@
         "PDF-0855",
         "PDF-0876",
         "PDF-1007",
+        "PDF-1106",
         "PDF-1173",
         "PDF-1188",
         "PDF-1224",
@@ -8389,7 +8687,7 @@
         "PDF-1439"
       ],
       "aliases": [],
-      "paper_count": 32
+      "paper_count": 33
     },
     "natural__affect_preference": {
       "topic_id": "natural__affect_preference",
@@ -8407,10 +8705,11 @@
       "paper_ids": [
         "PDF-0186",
         "PDF-0253",
-        "PDF-1319"
+        "PDF-1319",
+        "PDF-1346"
       ],
       "aliases": [],
-      "paper_count": 3
+      "paper_count": 4
     },
     "natural__affect_restoration": {
       "topic_id": "natural__affect_restoration",
@@ -8432,7 +8731,6 @@
         "PDF-0396",
         "PDF-0417",
         "PDF-0477",
-        "PDF-0536",
         "PDF-0540",
         "PDF-0545",
         "PDF-0620",
@@ -8441,11 +8739,16 @@
         "PDF-0872",
         "PDF-0892",
         "PDF-1007",
+        "PDF-1027",
         "PDF-1224",
-        "PDF-1344"
+        "PDF-1332",
+        "PDF-1344",
+        "PDF-1353",
+        "PDF-1368",
+        "PDF-1387"
       ],
       "aliases": [],
-      "paper_count": 17
+      "paper_count": 21
     },
     "natural__affect_wellbeing": {
       "topic_id": "natural__affect_wellbeing",
@@ -8466,6 +8769,7 @@
         "PDF-0287",
         "PDF-0297",
         "PDF-0466",
+        "PDF-0536",
         "PDF-0543",
         "PDF-0558",
         "PDF-0585",
@@ -8475,11 +8779,16 @@
         "PDF-0780",
         "PDF-0810",
         "PDF-0816",
+        "PDF-0884",
         "PDF-0885",
-        "PDF-1434"
+        "PDF-1024",
+        "PDF-1224",
+        "PDF-1425",
+        "PDF-1434",
+        "PDF-1439"
       ],
       "aliases": [],
-      "paper_count": 16
+      "paper_count": 22
     },
     "natural__behav_navigation": {
       "topic_id": "natural__behav_navigation",
@@ -8518,14 +8827,13 @@
         "PDF-0540",
         "PDF-0686",
         "PDF-0881",
-        "PDF-1173",
-        "PDF-1224",
         "PDF-1343",
         "PDF-1352",
+        "PDF-1370",
         "PDF-1389"
       ],
       "aliases": [],
-      "paper_count": 9
+      "paper_count": 8
     },
     "natural__cog_cognitive_load": {
       "topic_id": "natural__cog_cognitive_load",
@@ -8610,13 +8918,14 @@
         "PDF-0781",
         "PDF-0872",
         "PDF-1083",
+        "PDF-1173",
+        "PDF-1188",
         "PDF-1238",
         "PDF-1350",
-        "PDF-1389",
-        "PDF-1392"
+        "PDF-1389"
       ],
       "aliases": [],
-      "paper_count": 13
+      "paper_count": 14
     },
     "natural__health": {
       "topic_id": "natural__health",
@@ -8733,10 +9042,11 @@
         "PDF-0682",
         "PDF-0855",
         "PDF-0881",
-        "PDF-1385"
+        "PDF-1385",
+        "PDF-1392"
       ],
       "aliases": [],
-      "paper_count": 6
+      "paper_count": 7
     },
     "natural__social": {
       "topic_id": "natural__social",
@@ -8776,11 +9086,12 @@
         "PDF-0103",
         "PDF-0283",
         "PDF-0358",
+        "PDF-0461",
         "PDF-0634",
         "PDF-1309"
       ],
       "aliases": [],
-      "paper_count": 6
+      "paper_count": 7
     },
     "social_spatial__affect_restoration": {
       "topic_id": "social_spatial__affect_restoration",
@@ -8819,10 +9130,12 @@
         "PDF-0232",
         "PDF-0293",
         "PDF-0316",
+        "PDF-0743",
+        "PDF-1285",
         "PDF-1379"
       ],
       "aliases": [],
-      "paper_count": 5
+      "paper_count": 7
     },
     "social_spatial__cog_attention": {
       "topic_id": "social_spatial__cog_attention",
@@ -8842,10 +9155,11 @@
         "PDF-0206",
         "PDF-0293",
         "PDF-0397",
-        "PDF-1285"
+        "PDF-1285",
+        "PDF-1379"
       ],
       "aliases": [],
-      "paper_count": 5
+      "paper_count": 6
     },
     "social_spatial__cog_performance": {
       "topic_id": "social_spatial__cog_performance",
@@ -9032,14 +9346,13 @@
         "PDF-0886",
         "PDF-0888",
         "PDF-1361",
-        "PDF-1395",
         "PDF-1396",
         "PDF-1419",
         "PDF-1423",
         "PDF-1437"
       ],
       "aliases": [],
-      "paper_count": 23
+      "paper_count": 22
     },
     "spatial__affect_preference": {
       "topic_id": "spatial__affect_preference",
@@ -9057,16 +9370,18 @@
       "paper_ids": [
         "PDF-0041",
         "PDF-0043",
+        "PDF-0154",
         "PDF-0274",
         "PDF-0280",
         "PDF-0374",
         "PDF-0561",
         "PDF-0684",
+        "PDF-0864",
         "PDF-0865",
         "PDF-1410"
       ],
       "aliases": [],
-      "paper_count": 9
+      "paper_count": 11
     },
     "spatial__affect_restoration": {
       "topic_id": "spatial__affect_restoration",
@@ -9170,10 +9485,11 @@
         "PDF-0818",
         "PDF-0911",
         "PDF-0997",
-        "PDF-1000"
+        "PDF-1000",
+        "PDF-1359"
       ],
       "aliases": [],
-      "paper_count": 13
+      "paper_count": 14
     },
     "spatial__cog_attention": {
       "topic_id": "spatial__cog_attention",
@@ -9193,7 +9509,6 @@
         "PDF-0176",
         "PDF-0360",
         "PDF-0500",
-        "PDF-0528",
         "PDF-0548",
         "PDF-0595",
         "PDF-0638",
@@ -9204,7 +9519,7 @@
         "PDF-1435"
       ],
       "aliases": [],
-      "paper_count": 13
+      "paper_count": 12
     },
     "spatial__cog_cognitive_load": {
       "topic_id": "spatial__cog_cognitive_load",
@@ -9283,6 +9598,7 @@
       "provisional_note": "",
       "parent_authority_node": "",
       "paper_ids": [
+        "PDF-0133",
         "PDF-0140",
         "PDF-0176",
         "PDF-0210",
@@ -9308,10 +9624,11 @@
         "PDF-0997",
         "PDF-1087",
         "PDF-1282",
-        "PDF-1291"
+        "PDF-1291",
+        "PDF-1395"
       ],
       "aliases": [],
-      "paper_count": 26
+      "paper_count": 28
     },
     "spatial__health": {
       "topic_id": "spatial__health",
@@ -9409,21 +9726,30 @@
         "PDF-0591",
         "PDF-0593",
         "PDF-0594",
+        "PDF-0595",
         "PDF-0596",
         "PDF-0657",
         "PDF-0886",
         "PDF-0914",
         "PDF-0958",
         "PDF-1025",
+        "PDF-1347",
         "PDF-1355",
         "PDF-1395",
         "PDF-1396",
+        "PDF-1414",
         "PDF-1419",
+        "PDF-1423",
+        "PDF-1428",
+        "PDF-1429",
         "PDF-1432",
-        "PDF-1435"
+        "PDF-1435",
+        "PDF-1437",
+        "PDF-1442",
+        "PDF-1443"
       ],
       "aliases": [],
-      "paper_count": 23
+      "paper_count": 32
     },
     "spatial__physio": {
       "topic_id": "spatial__physio",
@@ -9481,6 +9807,8 @@
         "PDF-0054",
         "PDF-0062",
         "PDF-0200",
+        "PDF-0500",
+        "PDF-0528",
         "PDF-0587",
         "PDF-0679",
         "PDF-0728",
@@ -9489,7 +9817,7 @@
         "PDF-1233"
       ],
       "aliases": [],
-      "paper_count": 10
+      "paper_count": 12
     },
     "thermal__affect_comfort": {
       "topic_id": "thermal__affect_comfort",
@@ -9510,10 +9838,11 @@
         "PDF-0450",
         "PDF-0644",
         "PDF-0648",
+        "PDF-0773",
         "PDF-1072"
       ],
       "aliases": [],
-      "paper_count": 6
+      "paper_count": 7
     },
     "thermal__affect_negative_stress": {
       "topic_id": "thermal__affect_negative_stress",
@@ -9576,6 +9905,25 @@
       ],
       "aliases": [],
       "paper_count": 4
+    },
+    "thermal__affect_satisfaction": {
+      "topic_id": "thermal__affect_satisfaction",
+      "label": "Thermal & Air Quality \u2192 Satisfaction",
+      "iv_root": "thermal",
+      "iv_branch": "thermal",
+      "dv_focus": "affect.satisfaction",
+      "dv_focus_label": "Satisfaction",
+      "authority_iv": "tagging_contractor",
+      "authority_dv": "outcome_contractor",
+      "description": "",
+      "provisional": false,
+      "provisional_note": "",
+      "parent_authority_node": "",
+      "paper_ids": [
+        "PDF-0811"
+      ],
+      "aliases": [],
+      "paper_count": 1
     },
     "thermal__affect_wellbeing": {
       "topic_id": "thermal__affect_wellbeing",
@@ -9734,75 +10082,6 @@
       ],
       "aliases": [],
       "paper_count": 1
-    },
-    "multisensory__affect_satisfaction": {
-      "topic_id": "multisensory__affect_satisfaction",
-      "label": "Multisensory \u00d7 Environmental Satisfaction",
-      "iv_root": "multisensory",
-      "iv_root_label": "Multisensory",
-      "iv_root_description": "",
-      "iv_branch": "multisensory",
-      "iv_branch_label": "Multisensory",
-      "dv_root": "affect",
-      "dv_root_label": "Affect and Stress",
-      "dv_focus": "affect.satisfaction",
-      "dv_focus_label": "Environmental Satisfaction",
-      "authority_iv": "multisensory",
-      "authority_dv": "affect",
-      "description": "Provisional KA ingest extension created from construct patch evidence for Multisensory and Environmental Satisfaction.",
-      "provisional": true,
-      "provisional_note": "Created in Knowledge Atlas ingest to reconcile construct patch output with canonical topic memberships.",
-      "parent_authority_node": "multisensory",
-      "paper_ids": [],
-      "paper_count": 0,
-      "aliases": [],
-      "cross_relations": []
-    },
-    "thermal__affect_satisfaction": {
-      "topic_id": "thermal__affect_satisfaction",
-      "label": "Thermal and Air Conditions \u00d7 Environmental Satisfaction",
-      "iv_root": "thermal",
-      "iv_root_label": "Thermal and Air Conditions",
-      "iv_root_description": "Temperature, ventilation, humidity, and thermal comfort conditions.",
-      "iv_branch": "thermal",
-      "iv_branch_label": "Thermal and Air Conditions",
-      "dv_root": "affect",
-      "dv_root_label": "Affect and Stress",
-      "dv_focus": "affect.satisfaction",
-      "dv_focus_label": "Environmental Satisfaction",
-      "authority_iv": "thermal",
-      "authority_dv": "affect",
-      "description": "Provisional KA ingest extension created from construct patch evidence for Thermal and Air Conditions and Environmental Satisfaction.",
-      "provisional": true,
-      "provisional_note": "Created in Knowledge Atlas ingest to reconcile construct patch output with canonical topic memberships.",
-      "parent_authority_node": "thermal",
-      "paper_ids": [],
-      "paper_count": 0,
-      "aliases": [],
-      "cross_relations": []
-    },
-    "natural__affect_comfort": {
-      "topic_id": "natural__affect_comfort",
-      "label": "Natural and Biophilic Conditions \u00d7 Comfort",
-      "iv_root": "natural",
-      "iv_root_label": "Natural and Biophilic Conditions",
-      "iv_root_description": "Biophilic, vegetation, water, and nature-exposure conditions.",
-      "iv_branch": "natural",
-      "iv_branch_label": "Natural and Biophilic Conditions",
-      "dv_root": "affect",
-      "dv_root_label": "Affect and Stress",
-      "dv_focus": "affect.comfort",
-      "dv_focus_label": "Comfort",
-      "authority_iv": "natural",
-      "authority_dv": "affect",
-      "description": "Provisional KA ingest extension created from construct patch evidence for Natural and Biophilic Conditions and Comfort.",
-      "provisional": true,
-      "provisional_note": "Created in Knowledge Atlas ingest to reconcile construct patch output with canonical topic memberships.",
-      "parent_authority_node": "natural",
-      "paper_ids": [],
-      "paper_count": 0,
-      "aliases": [],
-      "cross_relations": []
     }
   },
   "cross_relations": [
@@ -10666,12 +10945,6 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "acoustic__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
       "topic_id_a": "control__affect_restoration",
       "topic_id_b": "spatial__affect_restoration",
       "shared_value": "affect.restoration"
@@ -10708,12 +10981,6 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "control__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
       "topic_id_a": "spatial__affect_restoration",
       "topic_id_b": "luminous__affect_restoration",
       "shared_value": "affect.restoration"
@@ -10744,12 +11011,6 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "spatial__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
       "topic_id_a": "luminous__affect_restoration",
       "topic_id_b": "natural__affect_restoration",
       "shared_value": "affect.restoration"
@@ -10774,12 +11035,6 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "luminous__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
       "topic_id_a": "natural__affect_restoration",
       "topic_id_b": "thermal__affect_restoration",
       "shared_value": "affect.restoration"
@@ -10798,12 +11053,6 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "natural__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
       "topic_id_a": "thermal__affect_restoration",
       "topic_id_b": "social_spatial__affect_restoration",
       "shared_value": "affect.restoration"
@@ -10816,26 +11065,8 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "thermal__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
       "topic_id_a": "social_spatial__affect_restoration",
       "topic_id_b": "material__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "social_spatial__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "affect.restoration"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "material__affect_restoration",
-      "topic_id_b": "multisensory__affect_restoration",
       "shared_value": "affect.restoration"
     },
     {
@@ -11189,6 +11420,18 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "acoustic__affect_satisfaction",
+      "topic_id_b": "multisensory__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "acoustic__affect_satisfaction",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "acoustic__affect_satisfaction",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "affect.satisfaction"
     },
@@ -11201,12 +11444,54 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "spatial__affect_satisfaction",
+      "topic_id_b": "multisensory__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "spatial__affect_satisfaction",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "spatial__affect_satisfaction",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "affect.satisfaction"
     },
     {
       "type": "same_dv_family",
       "topic_id_a": "control__affect_satisfaction",
+      "topic_id_b": "multisensory__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "control__affect_satisfaction",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "control__affect_satisfaction",
+      "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "multisensory__affect_satisfaction",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "multisensory__affect_satisfaction",
+      "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "affect.satisfaction"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "thermal__affect_satisfaction",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "affect.satisfaction"
     },
@@ -11299,6 +11584,42 @@
       "topic_id_a": "spatial__health",
       "topic_id_b": "natural__health",
       "shared_value": "health"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "spatial__behav_navigation",
+      "shared_value": "behav.navigation"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "natural__behav_navigation",
+      "shared_value": "behav.navigation"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "control__behav_navigation",
+      "shared_value": "behav.navigation"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "spatial__behav_navigation",
+      "topic_id_b": "natural__behav_navigation",
+      "shared_value": "behav.navigation"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "spatial__behav_navigation",
+      "topic_id_b": "control__behav_navigation",
+      "shared_value": "behav.navigation"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "natural__behav_navigation",
+      "topic_id_b": "control__behav_navigation",
+      "shared_value": "behav.navigation"
     },
     {
       "type": "same_dv_family",
@@ -11470,6 +11791,48 @@
     },
     {
       "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "spatial__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "multisensory__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "thermal__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "material__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "acoustic__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "control__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
       "topic_id_a": "spatial__affect_comfort",
       "topic_id_b": "multisensory__affect_comfort",
       "shared_value": "affect.comfort"
@@ -11489,12 +11852,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "spatial__affect_comfort",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "affect.comfort"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "spatial__affect_comfort",
       "topic_id_b": "acoustic__affect_comfort",
       "shared_value": "affect.comfort"
     },
@@ -11502,6 +11859,12 @@
       "type": "same_dv_family",
       "topic_id_a": "spatial__affect_comfort",
       "topic_id_b": "control__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "spatial__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "affect.comfort"
     },
     {
@@ -11519,12 +11882,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "multisensory__affect_comfort",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "affect.comfort"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "multisensory__affect_comfort",
       "topic_id_b": "acoustic__affect_comfort",
       "shared_value": "affect.comfort"
     },
@@ -11532,6 +11889,12 @@
       "type": "same_dv_family",
       "topic_id_a": "multisensory__affect_comfort",
       "topic_id_b": "control__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "multisensory__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "affect.comfort"
     },
     {
@@ -11543,12 +11906,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "thermal__affect_comfort",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "affect.comfort"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "thermal__affect_comfort",
       "topic_id_b": "acoustic__affect_comfort",
       "shared_value": "affect.comfort"
     },
@@ -11560,8 +11917,8 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "material__affect_comfort",
-      "topic_id_b": "luminous__affect_comfort",
+      "topic_id_a": "thermal__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "affect.comfort"
     },
     {
@@ -11578,20 +11935,26 @@
     },
     {
       "type": "same_dv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "acoustic__affect_comfort",
-      "shared_value": "affect.comfort"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "control__affect_comfort",
+      "topic_id_a": "material__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "affect.comfort"
     },
     {
       "type": "same_dv_family",
       "topic_id_a": "acoustic__affect_comfort",
       "topic_id_b": "control__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "acoustic__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "affect.comfort"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "control__affect_comfort",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "affect.comfort"
     },
     {
@@ -11764,6 +12127,36 @@
     },
     {
       "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "control__affect_preference",
+      "shared_value": "affect.preference"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "material__affect_preference",
+      "shared_value": "affect.preference"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "spatial__affect_preference",
+      "shared_value": "affect.preference"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "thermal__affect_preference",
+      "shared_value": "affect.preference"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "natural__affect_preference",
+      "shared_value": "affect.preference"
+    },
+    {
+      "type": "same_dv_family",
       "topic_id_a": "control__affect_preference",
       "topic_id_b": "material__affect_preference",
       "shared_value": "affect.preference"
@@ -11783,12 +12176,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "control__affect_preference",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "affect.preference"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "control__affect_preference",
       "topic_id_b": "natural__affect_preference",
       "shared_value": "affect.preference"
     },
@@ -11807,12 +12194,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "material__affect_preference",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "affect.preference"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "material__affect_preference",
       "topic_id_b": "natural__affect_preference",
       "shared_value": "affect.preference"
     },
@@ -11825,68 +12206,14 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "spatial__affect_preference",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "affect.preference"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "spatial__affect_preference",
       "topic_id_b": "natural__affect_preference",
       "shared_value": "affect.preference"
     },
     {
       "type": "same_dv_family",
       "topic_id_a": "thermal__affect_preference",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "affect.preference"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "thermal__affect_preference",
       "topic_id_b": "natural__affect_preference",
       "shared_value": "affect.preference"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "natural__affect_preference",
-      "shared_value": "affect.preference"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "spatial__behav_navigation",
-      "topic_id_b": "natural__behav_navigation",
-      "shared_value": "behav.navigation"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "spatial__behav_navigation",
-      "topic_id_b": "control__behav_navigation",
-      "shared_value": "behav.navigation"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "spatial__behav_navigation",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "behav.navigation"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "natural__behav_navigation",
-      "topic_id_b": "control__behav_navigation",
-      "shared_value": "behav.navigation"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "natural__behav_navigation",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "behav.navigation"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "control__behav_navigation",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "behav.navigation"
     },
     {
       "type": "same_dv_family",
@@ -11926,6 +12253,42 @@
     },
     {
       "type": "same_dv_family",
+      "topic_id_a": "luminous__cog_memory",
+      "topic_id_b": "control__cog_memory",
+      "shared_value": "cog.memory"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__cog_memory",
+      "topic_id_b": "natural__cog_memory",
+      "shared_value": "cog.memory"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__cog_memory",
+      "topic_id_b": "acoustic__cog_memory",
+      "shared_value": "cog.memory"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__cog_memory",
+      "topic_id_b": "material__cog_memory",
+      "shared_value": "cog.memory"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__cog_memory",
+      "topic_id_b": "multisensory__cog_memory",
+      "shared_value": "cog.memory"
+    },
+    {
+      "type": "same_dv_family",
+      "topic_id_a": "luminous__cog_memory",
+      "topic_id_b": "spatial__cog_memory",
+      "shared_value": "cog.memory"
+    },
+    {
+      "type": "same_dv_family",
       "topic_id_a": "control__cog_memory",
       "topic_id_b": "natural__cog_memory",
       "shared_value": "cog.memory"
@@ -11933,12 +12296,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "control__cog_memory",
-      "topic_id_b": "luminous__cog_memory",
-      "shared_value": "cog.memory"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "control__cog_memory",
       "topic_id_b": "acoustic__cog_memory",
       "shared_value": "cog.memory"
     },
@@ -11963,12 +12320,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "natural__cog_memory",
-      "topic_id_b": "luminous__cog_memory",
-      "shared_value": "cog.memory"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "natural__cog_memory",
       "topic_id_b": "acoustic__cog_memory",
       "shared_value": "cog.memory"
     },
@@ -11987,30 +12338,6 @@
     {
       "type": "same_dv_family",
       "topic_id_a": "natural__cog_memory",
-      "topic_id_b": "spatial__cog_memory",
-      "shared_value": "cog.memory"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "luminous__cog_memory",
-      "topic_id_b": "acoustic__cog_memory",
-      "shared_value": "cog.memory"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "luminous__cog_memory",
-      "topic_id_b": "material__cog_memory",
-      "shared_value": "cog.memory"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "luminous__cog_memory",
-      "topic_id_b": "multisensory__cog_memory",
-      "shared_value": "cog.memory"
-    },
-    {
-      "type": "same_dv_family",
-      "topic_id_a": "luminous__cog_memory",
       "topic_id_b": "spatial__cog_memory",
       "shared_value": "cog.memory"
     },
@@ -14489,6 +14816,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__physio",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__physio",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14543,6 +14876,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__mechanism",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__mechanism",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14591,6 +14930,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__cog_performance",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__cog_performance",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14633,6 +14978,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__neural",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__neural",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14669,6 +15020,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__affect_preference",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__affect_preference",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14699,6 +15056,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__affect_comfort",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__affect_comfort",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14723,6 +15086,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__health",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__health",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14741,6 +15110,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__affect_restoration",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__affect_restoration",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
     },
@@ -14753,7 +15128,19 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "thermal__affect_negative_stress",
+      "topic_id_b": "thermal__affect_satisfaction",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__affect_negative_stress",
       "topic_id_b": "thermal__social",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__affect_wellbeing",
+      "topic_id_b": "thermal__affect_satisfaction",
       "shared_value": "thermal"
     },
     {
@@ -14761,6 +15148,18 @@
       "topic_id_a": "thermal__affect_wellbeing",
       "topic_id_b": "thermal__social",
       "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "thermal__affect_satisfaction",
+      "topic_id_b": "thermal__social",
+      "shared_value": "thermal"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__health",
+      "topic_id_b": "luminous__behav_navigation",
+      "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
@@ -14777,6 +15176,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__health",
+      "topic_id_b": "luminous__affect_comfort",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__health",
       "topic_id_b": "luminous__cog_attention",
       "shared_value": "luminous"
     },
@@ -14784,6 +15189,12 @@
       "type": "same_iv_family",
       "topic_id_a": "luminous__health",
       "topic_id_b": "luminous__mechanism",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__health",
+      "topic_id_b": "luminous__affect_preference",
       "shared_value": "luminous"
     },
     {
@@ -14813,31 +15224,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__health",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__health",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__health",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__health",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__health",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -14855,6 +15248,96 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__health",
+      "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_wellbeing",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__physio",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_comfort",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__cog_attention",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__mechanism",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_preference",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__cog_performance",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_restoration",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__social",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__neural",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__cog_memory",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__cog_cognitive_load",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_b": "luminous__cog_creativity",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__behav_navigation",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "luminous"
     },
@@ -14867,6 +15350,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_wellbeing",
+      "topic_id_b": "luminous__affect_comfort",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_wellbeing",
       "topic_id_b": "luminous__cog_attention",
       "shared_value": "luminous"
     },
@@ -14879,6 +15368,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_wellbeing",
+      "topic_id_b": "luminous__affect_preference",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_wellbeing",
       "topic_id_b": "luminous__cog_performance",
       "shared_value": "luminous"
     },
@@ -14903,31 +15398,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_wellbeing",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_wellbeing",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_wellbeing",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_wellbeing",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_wellbeing",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -14946,6 +15423,12 @@
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_wellbeing",
       "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__physio",
+      "topic_id_b": "luminous__affect_comfort",
       "shared_value": "luminous"
     },
     {
@@ -14963,6 +15446,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__physio",
+      "topic_id_b": "luminous__affect_preference",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__physio",
       "topic_id_b": "luminous__cog_performance",
       "shared_value": "luminous"
     },
@@ -14987,31 +15476,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__physio",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__physio",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__physio",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__physio",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__physio",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15029,6 +15500,78 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__physio",
+      "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__cog_attention",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__mechanism",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__affect_preference",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__cog_performance",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__affect_restoration",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__social",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__neural",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__cog_memory",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__affect_negative_stress",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__cog_cognitive_load",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
+      "topic_id_b": "luminous__cog_creativity",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_comfort",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "luminous"
     },
@@ -15041,6 +15584,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_attention",
+      "topic_id_b": "luminous__affect_preference",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__cog_attention",
       "topic_id_b": "luminous__cog_performance",
       "shared_value": "luminous"
     },
@@ -15065,31 +15614,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_attention",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__cog_attention",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__cog_attention",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__cog_attention",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_attention",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15108,6 +15639,12 @@
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_attention",
       "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__mechanism",
+      "topic_id_b": "luminous__affect_preference",
       "shared_value": "luminous"
     },
     {
@@ -15137,31 +15674,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__mechanism",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__mechanism",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__mechanism",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__mechanism",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__mechanism",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15179,6 +15698,60 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__mechanism",
+      "topic_id_b": "luminous__affect_satisfaction",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__cog_performance",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__affect_restoration",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__social",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__neural",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__cog_memory",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__affect_negative_stress",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__cog_cognitive_load",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
+      "topic_id_b": "luminous__cog_creativity",
+      "shared_value": "luminous"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "luminous__affect_preference",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "luminous"
     },
@@ -15203,31 +15776,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_performance",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__cog_performance",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__cog_performance",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__cog_performance",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_performance",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15263,31 +15818,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_restoration",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_restoration",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_restoration",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_restoration",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__affect_restoration",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15317,31 +15854,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__social",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__social",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__social",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__social",
       "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__social",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15365,13 +15884,7 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__neural",
-      "topic_id_b": "luminous__affect_preference",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__neural",
-      "topic_id_b": "luminous__affect_comfort",
+      "topic_id_b": "luminous__cog_memory",
       "shared_value": "luminous"
     },
     {
@@ -15383,18 +15896,6 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__neural",
-      "topic_id_b": "luminous__cog_memory",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__neural",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__neural",
       "topic_id_b": "luminous__cog_cognitive_load",
       "shared_value": "luminous"
     },
@@ -15407,121 +15908,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__neural",
-      "topic_id_b": "luminous__affect_satisfaction",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__affect_comfort",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__cog_memory",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__cog_cognitive_load",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__cog_creativity",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_preference",
-      "topic_id_b": "luminous__affect_satisfaction",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "luminous__affect_negative_stress",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "luminous__cog_memory",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "luminous__cog_cognitive_load",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "luminous__cog_creativity",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_comfort",
-      "topic_id_b": "luminous__affect_satisfaction",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_negative_stress",
-      "topic_id_b": "luminous__cog_memory",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_negative_stress",
-      "topic_id_b": "luminous__behav_navigation",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_negative_stress",
-      "topic_id_b": "luminous__cog_cognitive_load",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_negative_stress",
-      "topic_id_b": "luminous__cog_creativity",
-      "shared_value": "luminous"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "luminous__affect_negative_stress",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "luminous__cog_memory",
-      "topic_id_b": "luminous__behav_navigation",
+      "topic_id_b": "luminous__affect_negative_stress",
       "shared_value": "luminous"
     },
     {
@@ -15544,19 +15937,19 @@
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_a": "luminous__affect_negative_stress",
       "topic_id_b": "luminous__cog_cognitive_load",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_a": "luminous__affect_negative_stress",
       "topic_id_b": "luminous__cog_creativity",
       "shared_value": "luminous"
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "luminous__behav_navigation",
+      "topic_id_a": "luminous__affect_negative_stress",
       "topic_id_b": "luminous__affect_satisfaction",
       "shared_value": "luminous"
     },
@@ -16001,13 +16394,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__affect_wellbeing",
-      "topic_id_b": "natural__social",
+      "topic_id_b": "natural__cog_memory",
       "shared_value": "natural"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__affect_wellbeing",
-      "topic_id_b": "natural__cog_memory",
+      "topic_id_b": "natural__social",
       "shared_value": "natural"
     },
     {
@@ -16056,6 +16449,12 @@
       "type": "same_iv_family",
       "topic_id_a": "natural__affect_wellbeing",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__affect_wellbeing",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
@@ -16079,13 +16478,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__affect_negative_stress",
-      "topic_id_b": "natural__social",
+      "topic_id_b": "natural__cog_memory",
       "shared_value": "natural"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__affect_negative_stress",
-      "topic_id_b": "natural__cog_memory",
+      "topic_id_b": "natural__social",
       "shared_value": "natural"
     },
     {
@@ -16134,6 +16533,12 @@
       "type": "same_iv_family",
       "topic_id_a": "natural__affect_negative_stress",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__affect_negative_stress",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
@@ -16151,13 +16556,13 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__physio",
-      "topic_id_b": "natural__social",
+      "topic_id_b": "natural__cog_memory",
       "shared_value": "natural"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__physio",
-      "topic_id_b": "natural__cog_memory",
+      "topic_id_b": "natural__social",
       "shared_value": "natural"
     },
     {
@@ -16206,6 +16611,12 @@
       "type": "same_iv_family",
       "topic_id_a": "natural__physio",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__physio",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
@@ -16217,18 +16628,18 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__mechanism",
+      "topic_id_b": "natural__cog_memory",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__mechanism",
       "topic_id_b": "natural__social",
       "shared_value": "natural"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__mechanism",
-      "topic_id_b": "natural__cog_memory",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__mechanism",
       "topic_id_b": "natural__behav_navigation",
       "shared_value": "natural"
     },
@@ -16272,6 +16683,18 @@
       "type": "same_iv_family",
       "topic_id_a": "natural__mechanism",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__mechanism",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__cog_performance",
+      "topic_id_b": "natural__cog_memory",
       "shared_value": "natural"
     },
     {
@@ -16283,12 +16706,6 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__cog_performance",
-      "topic_id_b": "natural__cog_memory",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__cog_performance",
       "topic_id_b": "natural__behav_navigation",
       "shared_value": "natural"
     },
@@ -16336,56 +16753,14 @@
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__cog_memory",
+      "topic_id_a": "natural__cog_performance",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__behav_navigation",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__affect_restoration",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__cog_attention",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__affect_preference",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__cog_creativity",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__neural",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__cog_cognitive_load",
-      "shared_value": "natural"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "natural__social",
-      "topic_id_b": "natural__health",
+      "topic_id_a": "natural__cog_memory",
+      "topic_id_b": "natural__social",
       "shared_value": "natural"
     },
     {
@@ -16438,6 +16813,66 @@
     },
     {
       "type": "same_iv_family",
+      "topic_id_a": "natural__cog_memory",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__behav_navigation",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__affect_restoration",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__cog_attention",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__affect_preference",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__cog_creativity",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__neural",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__cog_cognitive_load",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__social",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
       "topic_id_a": "natural__behav_navigation",
       "topic_id_b": "natural__affect_restoration",
       "shared_value": "natural"
@@ -16480,6 +16915,12 @@
     },
     {
       "type": "same_iv_family",
+      "topic_id_a": "natural__behav_navigation",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
       "topic_id_a": "natural__affect_restoration",
       "topic_id_b": "natural__cog_attention",
       "shared_value": "natural"
@@ -16516,6 +16957,12 @@
     },
     {
       "type": "same_iv_family",
+      "topic_id_a": "natural__affect_restoration",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
       "topic_id_a": "natural__cog_attention",
       "topic_id_b": "natural__affect_preference",
       "shared_value": "natural"
@@ -16546,6 +16993,12 @@
     },
     {
       "type": "same_iv_family",
+      "topic_id_a": "natural__cog_attention",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
       "topic_id_a": "natural__affect_preference",
       "topic_id_b": "natural__cog_creativity",
       "shared_value": "natural"
@@ -16570,6 +17023,12 @@
     },
     {
       "type": "same_iv_family",
+      "topic_id_a": "natural__affect_preference",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
       "topic_id_a": "natural__cog_creativity",
       "topic_id_b": "natural__neural",
       "shared_value": "natural"
@@ -16584,6 +17043,12 @@
       "type": "same_iv_family",
       "topic_id_a": "natural__cog_creativity",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__cog_creativity",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
@@ -16596,12 +17061,30 @@
       "type": "same_iv_family",
       "topic_id_a": "natural__neural",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__neural",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
       "type": "same_iv_family",
       "topic_id_a": "natural__cog_cognitive_load",
       "topic_id_b": "natural__health",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__cog_cognitive_load",
+      "topic_id_b": "natural__affect_comfort",
+      "shared_value": "natural"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "natural__health",
+      "topic_id_b": "natural__affect_comfort",
       "shared_value": "natural"
     },
     {
@@ -16619,6 +17102,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "multisensory__affect_comfort",
+      "topic_id_b": "multisensory__affect_satisfaction",
+      "shared_value": "multisensory"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "multisensory__affect_comfort",
       "topic_id_b": "multisensory__mechanism",
       "shared_value": "multisensory"
     },
@@ -16632,12 +17121,6 @@
       "type": "same_iv_family",
       "topic_id_a": "multisensory__affect_comfort",
       "topic_id_b": "multisensory__cog_attention",
-      "shared_value": "multisensory"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "multisensory__affect_comfort",
-      "topic_id_b": "multisensory__affect_restoration",
       "shared_value": "multisensory"
     },
     {
@@ -16649,6 +17132,12 @@
     {
       "type": "same_iv_family",
       "topic_id_a": "multisensory__affect_wellbeing",
+      "topic_id_b": "multisensory__affect_satisfaction",
+      "shared_value": "multisensory"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "multisensory__affect_wellbeing",
       "topic_id_b": "multisensory__mechanism",
       "shared_value": "multisensory"
     },
@@ -16666,8 +17155,8 @@
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "multisensory__affect_wellbeing",
-      "topic_id_b": "multisensory__affect_restoration",
+      "topic_id_a": "multisensory__cog_memory",
+      "topic_id_b": "multisensory__affect_satisfaction",
       "shared_value": "multisensory"
     },
     {
@@ -16690,8 +17179,20 @@
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "multisensory__cog_memory",
-      "topic_id_b": "multisensory__affect_restoration",
+      "topic_id_a": "multisensory__affect_satisfaction",
+      "topic_id_b": "multisensory__mechanism",
+      "shared_value": "multisensory"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "multisensory__affect_satisfaction",
+      "topic_id_b": "multisensory__affect_negative_stress",
+      "shared_value": "multisensory"
+    },
+    {
+      "type": "same_iv_family",
+      "topic_id_a": "multisensory__affect_satisfaction",
+      "topic_id_b": "multisensory__cog_attention",
       "shared_value": "multisensory"
     },
     {
@@ -16708,55 +17209,12 @@
     },
     {
       "type": "same_iv_family",
-      "topic_id_a": "multisensory__mechanism",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "multisensory"
-    },
-    {
-      "type": "same_iv_family",
       "topic_id_a": "multisensory__affect_negative_stress",
       "topic_id_b": "multisensory__cog_attention",
       "shared_value": "multisensory"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "multisensory__affect_negative_stress",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "multisensory"
-    },
-    {
-      "type": "same_iv_family",
-      "topic_id_a": "multisensory__cog_attention",
-      "topic_id_b": "multisensory__affect_restoration",
-      "shared_value": "multisensory"
     }
   ],
-  "provisional_extensions": [
-    {
-      "topic_id": "multisensory__affect_satisfaction",
-      "iv_root": "multisensory",
-      "dv_focus": "affect.satisfaction",
-      "parent_authority_node": "multisensory",
-      "status": "ka_ingest_extension",
-      "reason": "construct patch introduced a topic pair absent from the canonical topic node inventory"
-    },
-    {
-      "topic_id": "thermal__affect_satisfaction",
-      "iv_root": "thermal",
-      "dv_focus": "affect.satisfaction",
-      "parent_authority_node": "thermal",
-      "status": "ka_ingest_extension",
-      "reason": "construct patch introduced a topic pair absent from the canonical topic node inventory"
-    },
-    {
-      "topic_id": "natural__affect_comfort",
-      "iv_root": "natural",
-      "dv_focus": "affect.comfort",
-      "parent_authority_node": "natural",
-      "status": "ka_ingest_extension",
-      "reason": "construct patch introduced a topic pair absent from the canonical topic node inventory"
-    }
-  ],
+  "provisional_extensions": [],
   "notes": [
     "IV authority: Tagging_Contractor. Image tags are evidence_layer aliases, not IV roots.",
     "DV authority: Outcome_Contractor. Provisional extensions carry parent_authority_node.",

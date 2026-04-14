@@ -686,7 +686,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="/" class="nav-brand">
+        <a href="../ka_home.html" class="nav-brand">
             <svg class="ka-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -771,7 +771,7 @@
                         <option>All Tracks</option>
                         <option>Track 1 — Image Tagging</option>
                         <option>Track 2 — Article Finding</option>
-                        <option>Track 3 — VR Production</option>
+                        <option>Track 3 — AI & VR</option>
                         <option>Track 4 — Use Case Evaluation</option>
                     </select>
                 </div>
@@ -921,7 +921,7 @@
                         <tr onclick="expandRow(this)">
                             <td class="name-cell">Alex Chen</td>
                             <td>UCSD</td>
-                            <td><span class="track-badge">Track 3 — VR Production</span></td>
+                            <td><span class="track-badge">Track 3 — AI & VR</span></td>
                             <td><span class="track-badge">Track 1 — Image Tagging</span></td>
                             <td><span class="skills-truncate">Unity experience, 2 VR projects, C# proficient...</span></td>
                             <td>Mar 22</td>
@@ -978,7 +978,7 @@
                         <div class="capacity-text">4 approved / 5 target</div>
                     </div>
                     <div class="capacity-card">
-                        <div class="capacity-card-title">Track 3: VR Production</div>
+                        <div class="capacity-card-title">Track 3: AI & VR</div>
                         <div class="capacity-bar">
                             <div class="capacity-fill" style="width: 33%;"></div>
                         </div>
@@ -1153,8 +1153,8 @@
             const labels = {
                 track1: 'Track 1 — Image Tagging',
                 track2: 'Track 2 — Article Finding',
-                track3: 'Track 3 — VR Production',
-                track4: 'Track 4 — GUI Evaluation & Experiment Design'
+                track3: 'Track 3 — AI & VR',
+                track4: 'Track 4 — Interaction Design'
             };
             return labels[code] || code || '—';
         }
@@ -1402,9 +1402,7 @@ window.KA_PAGE_FUNCTION = {
   ]
 };
 </script>
-<script src="../ka_page_function.js"></script>
-<script src="../ka_demo_wiring.js"></script>
-<script src="../ka_mode_switch.js"></script>
+<script src="../ka_page_function.js"></script><script src="../ka_mode_switch.js"></script>
 <script src="../ka_site_shell.js"></script>
 
 <script>
