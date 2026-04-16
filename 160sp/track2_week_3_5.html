@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 2 &middot; Week 3.5 &middot; Article Finder &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track2_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 2","track2_hub.html"],["Week 3.5",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="t2-hero">
+    <div class="t2-hero-inner">
+      <div class="eyebrow">Track 2 &middot; Week 3.5</div>
+      <h1>Define the smallest trustworthy AF path</h1>
+      <p class="hero-sub">This week is about stopping vagueness. Your team must agree on the AF boundary, identify one minimum viable path through the repo, and define exactly what evidence would show that the path works.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>What is the smallest end-to-end path through Article Finder that we can make trustworthy before we try to make it ambitious?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 2 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 2</div>
+        <h2>Week sequence</h2>
+        <div class="muted">Use the week pages as the primary assignment path.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track2_hub.html">Overview</a></li>
+        <li><a class="active" href="track2_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track2_week_4.html">Week 4</a></li>
+        <li><a href="track2_week_5.html">Week 5</a></li>
+        <li><a href="track2_week_6.html">Week 6</a></li>
+        <li><a href="track2_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track2_setup.html">Setup guide</a></li>
+        <li><a href="ka_track2_intake.html">Article intake</a></li>
+        <li><a href="ka_track2_resources.html">Shared resources</a></li>
+        <li><a href="ka_track2_hub.html">Task manifests</a></li>
+        <li><a href="https://github.com/dkirsh/KA_Contextual_Docs" target="_blank" rel="noopener noreferrer">KA Contextual Docs</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">Teams often lose two weeks by talking as if the system already exists. In Track 2 that failure is especially easy, because AF has a lot of real components and a lot of surrounding prose. Week 3.5 is therefore a discipline week: identify the real commands, the real boundary, the real tests, and the real missing pieces.</p>
+        <div class="callout callout-blue">
+          <h3>Use the repo as ground truth</h3>
+          <p>The current AF repo exposes real entry points such as <code>python cli/main.py doctor</code>, <code>stats</code>, <code>classify</code>, <code>discover</code>, and <code>build-jobs</code>. Work from those. Do not inherit imaginary helper scripts from older site text without verifying that they exist.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>What you need to understand before building</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>AF is not AE</h3>
+            <p>AF owns discovery, import, deduplication, classification, intake, and bundle construction. AE owns downstream extraction. Your week fails if you confuse those responsibilities.</p>
+          </div>
+          <div class="card">
+            <h3>The handoff is an artifact</h3>
+            <p>The relevant AF &rarr; AE contract is the job bundle. If the bundle is malformed, mislabeled, or duplicate-ridden, the handoff is bad even if the PDF itself looks fine.</p>
+          </div>
+          <div class="card">
+            <h3>Question filtering is a second opinion</h3>
+            <p>The question constitution layer can promote rejects and surface edge cases, but it does not replace the broader AF triage logic.</p>
+          </div>
+          <div class="card">
+            <h3>The right unit of progress is a proved behavior</h3>
+            <p>"I worked on the discovery pipeline" is not progress. "The same query run twice makes zero extra API calls and creates no duplicate DOI rows" is.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>the smallest plausible slice of the repo to inspect first</li>
+              <li>a list of concrete pass/fail tests for your chosen component</li>
+              <li>likely false positives for a discovery or dedup path</li>
+              <li>a tighter version of your success condition</li>
+              <li>an issue template or PR checklist that forces evidence</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>guess which files or commands exist without you giving them the repo facts</li>
+              <li>decide that something works because it "sounds right" architecturally</li>
+              <li>replace reading the actual job-bundle or question-filter contract</li>
+              <li>write a large subsystem before you have named three tests it must pass</li>
+            </ul>
+          </div>
+        </div>
+        <pre>Useful prompt pattern this week:
+You are looking at Article_Finder_v3_2_3. The exact command/file I need to
+understand is: ________. My success condition is: ________. Give me the
+smallest implementation path, 3 pass/fail tests, 3 likely false positives,
+and the evidence I should capture if the tests pass.</pre>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <ol>
+          <li><strong>15 minutes:</strong> open the repo and identify the real entry points: <code>python cli/main.py --help</code>, <code>doctor</code>, <code>stats</code>, <code>ui</code>.</li>
+          <li><strong>20 minutes:</strong> read the Track 2 context docs on AF &rarr; AE handoff, question constitutions, and unified registry fields.</li>
+          <li><strong>20 minutes:</strong> choose one owned component for the week. Examples: intake dedup, question filter, benchmark design, bundle validation, or review workflow.</li>
+          <li><strong>20 minutes:</strong> write the first success condition and at least three tests for that component before anyone writes fresh code.</li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>At-home work</h2>
+        <ul class="tight-list">
+          <li>set up the AF repo from your own fork and verify the environment with real commands</li>
+          <li>read <code>docs/PRODUCTION_RUN.md</code>, <code>docs/QUESTION_FILTER_WITH_AG_2026-04-07.md</code>, and the relevant KA contextual notes</li>
+          <li>write a one-page boundary note stating what your chosen component owns, what it emits, and how you will know it worked</li>
+          <li>capture the first version of a reproducible verification packet, even if it currently contains failures</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Deliverables</h2>
+        <div class="deliverables">
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable A</span>
+              <span class="badge badge-blue">environment + verification</span>
+            </div>
+            <h3>Environment proof packet</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">If your local repo, Python environment, and base commands are uncertain, every later claim is weak.</div>
+              <div class="term">What to submit</div><div class="desc">A short markdown note or issue comment containing your repo path, branch name, Python version, and the output of <code>python cli/main.py doctor</code>, <code>python cli/main.py stats</code>, and one focused test command such as <code>pytest tests/test_question_relevance_gate.py</code>.</div>
+              <div class="term">What good looks like</div><div class="desc">Another student can read the packet and know you are on the correct repo, with the correct CLI, and that at least one real verification command executed in your environment.</div>
+              <div class="term">Required verification</div><div class="desc">Include exact commands and outputs, not prose summaries. If something failed, include the failure and your current explanation.</div>
+              <div class="term">Common false positives</div><div class="desc">A screenshot of a terminal without the command; an output block from the wrong repo; saying "doctor worked" without showing anything; using stale site commands that are not in AF.</div>
+              <div class="term">Example</div><div class="desc"><code>python cli/main.py doctor</code><br><code>python cli/main.py stats</code><br><code>python -m pytest tests/test_question_relevance_gate.py</code></div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-amber">Deliverable B</span>
+              <span class="badge badge-blue">boundary + ownership</span>
+            </div>
+            <h3>Boundary and success-condition memo</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">Track 2 will drift immediately unless each student knows exactly what part of the pipeline they own and what the handoff boundary is.</div>
+              <div class="term">What to submit</div><div class="desc">One page naming the component you are working on, its inputs, outputs, downstream consumer, three explicit tests, and one false positive you expect to encounter.</div>
+              <div class="term">What good looks like</div><div class="desc">Someone outside your pair can tell what "done" means without asking you to explain it orally.</div>
+              <div class="term">Required verification</div><div class="desc">At least one test must be about integration, not only a local helper function. At least one test must guard against a false positive.</div>
+              <div class="term">Common false positives</div><div class="desc">Describing a domain aspiration instead of a pipeline behavior; listing generic goals such as "improve discovery"; omitting the downstream consumer of your output.</div>
+              <div class="term">Example</div><div class="desc">"Component: dedup after intake. Pass if the same DOI never creates two accepted candidate rows, and if two title variants with the same authors are flagged for review rather than silently duplicated."</div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable C</span>
+              <span class="badge badge-blue">test discipline</span>
+            </div>
+            <h3>Initial test matrix</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">This class is using AI heavily. That makes explicit tests more important, not less.</div>
+              <div class="term">What to submit</div><div class="desc">A small table with columns for test name, command or procedure, expected behavior, evidence captured, and pass/fail result.</div>
+              <div class="term">What good looks like</div><div class="desc">The matrix contains at least three tests, one edge case, and one integration check. It is written before large implementation work begins.</div>
+              <div class="term">Required verification</div><div class="desc">At least one row must be repeatable by a teammate without private local assumptions.</div>
+              <div class="term">Common false positives</div><div class="desc">Treating "the page rendered" or "the script exited 0 once" as sufficient evidence; writing test names with no commands or expected outputs.</div>
+              <div class="term">Example</div><div class="desc">"Run the same query twice; expected result: second run creates no duplicate DOI row and shows no additional external fetches in the log."</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Verification checklist</h2>
+        <ul class="verification-checklist">
+          <li><span class="check-mark">&#10003;</span><div><strong>Exact repo:</strong> you can name the repo URL and branch you are actually using.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Exact boundary:</strong> you can state one AF output and the AE-side artifact or consumer it feeds.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Exact commands:</strong> you ran at least two real AF CLI commands and recorded the outputs.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Exact tests:</strong> your chosen component has at least three named pass/fail tests.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Exact false positive:</strong> you can name one plausible way the system could look correct while being wrong.</div></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Exit condition for the week</h2>
+        <p>You are ready to move on only if your team has stopped talking in generalities. By the end of Week 3.5, each student should be able to say: which component they own, what command or path they are proving, how success will be tested, and what evidence they already have or still lack.</p>
+      </section>
+
+      <section class="section">
+        <div class="page-switch">
+          <a class="btn btn-secondary" href="track2_hub.html">&larr; Back to overview</a>
+          <a class="btn btn-primary" href="track2_week_4.html">Go to Week 4 &rarr;</a>
+        </div>
+      </section>
+
+      <p class="footer-note">Supporting docs for this week: <a href="ka_track2_setup.html">setup</a>, <a href="ka_track2_hub.html">task manifests</a>, and <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs / track2</a>.</p>
+    </main>
+  </div>
+
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

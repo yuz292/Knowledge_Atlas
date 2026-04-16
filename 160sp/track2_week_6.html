@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 2 &middot; Week 6 &middot; Article Finder &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track2_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 2","track2_hub.html"],["Week 6",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="t2-hero">
+    <div class="t2-hero-inner">
+      <div class="eyebrow">Track 2 &middot; Week 6</div>
+      <h1>Make the pipeline robust across topics</h1>
+      <p class="hero-sub">Week 6 is where you find out whether your improvements generalize. The question is no longer "does it work for one convenient topic?" but "does it stay sensible when we vary the topic, the research front, and the failure modes?"</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>When we run AF on multiple topics or research fronts, does it remain disciplined about relevance, duplication, logging, and uncertainty?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 2 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 2</div>
+        <h2>Week sequence</h2>
+        <div class="muted">This week is about robustness, logging, and comparison.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track2_hub.html">Overview</a></li>
+        <li><a href="track2_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track2_week_4.html">Week 4</a></li>
+        <li><a href="track2_week_5.html">Week 5</a></li>
+        <li><a class="active" href="track2_week_6.html">Week 6</a></li>
+        <li><a href="track2_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track2_resources.html">Shared resources</a></li>
+        <li><a href="ka_track2_hub.html">Task manifests</a></li>
+        <li><a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">A pipeline that works on one hand-picked topic may simply be overfit. Week 6 tests whether your logic survives topic changes, adjacent literatures, messy metadata, and the real ambiguity that appears when a corpus grows.</p>
+        <div class="callout callout-blue">
+          <h3>Near miss is not the same as topic expansion</h3>
+          <p>If your filter surfaces a paper that almost fits the current topic, that is one kind of signal. If it surfaces a paper that suggests the topic boundary itself should expand, that is another. Keep those signals separate.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>What you need to understand before building</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Generalization requires comparison</h3>
+            <p>You need at least two topics, bundles, or research fronts if you want to say the pipeline behaves consistently.</p>
+          </div>
+          <div class="card">
+            <h3>Logging is part of correctness</h3>
+            <p>If a rerun duplicates papers or silently changes decisions and you cannot tell why, the system is not yet trustworthy.</p>
+          </div>
+          <div class="card">
+            <h3>Failure taxonomy matters</h3>
+            <p>Separate API failure, metadata absence, duplicate miss, borderline topic fit, and schema failure. Those are different repair problems.</p>
+          </div>
+          <div class="card">
+            <h3>Cross-topic drift is expected</h3>
+            <p>The goal is not zero drift. The goal is to detect it, characterize it, and decide whether it is acceptable.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>a comparison matrix for two topics or research fronts</li>
+              <li>a failure taxonomy for the logs you are seeing</li>
+              <li>a minimal logging schema: what counts, thresholds, and event fields should be recorded</li>
+              <li>possible topic-expansion interpretations of your edge cases</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>average away real disagreements between two topics</li>
+              <li>turn every edge case into a topic-expansion candidate by default</li>
+              <li>write "robustness" language before you have comparative evidence</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <ol>
+          <li><strong>20 minutes:</strong> choose two distinct topics, questions, or research fronts.</li>
+          <li><strong>20 minutes:</strong> run the same AF path on both and record counts, top candidates, duplicates, and reject reasons.</li>
+          <li><strong>20 minutes:</strong> inspect differences and name which ones reflect true topical difference and which ones look like pipeline weakness.</li>
+          <li><strong>20 minutes:</strong> write a short failure log with categories and proposed repairs.</li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>At-home work</h2>
+        <ul class="tight-list">
+          <li>repeat the two-topic comparison cleanly and store the results in one place</li>
+          <li>improve one logging or review surface so that failures are easier to diagnose next time</li>
+          <li>document any genuine near miss, topic expansion, or new-topic signal that emerged</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Deliverables</h2>
+        <div class="deliverables">
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable A</span>
+              <span class="badge badge-blue">comparison</span>
+            </div>
+            <h3>Two-topic comparison report</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">You need evidence that the system does not only behave sensibly on one favored topic.</div>
+              <div class="term">What to submit</div><div class="desc">A report comparing two runs: commands, counts, accepted papers, borderline papers, rejects, duplicates, and notable differences.</div>
+              <div class="term">What good looks like</div><div class="desc">The report identifies both topic-specific effects and pipeline-specific weaknesses.</div>
+              <div class="term">Required verification</div><div class="desc">Use comparable settings across the two runs and say when you intentionally changed something.</div>
+              <div class="term">Common false positives</div><div class="desc">Comparing two totally different workflows and calling the result "robustness"; using only aggregate counts with no qualitative inspection.</div>
+              <div class="term">Example</div><div class="desc">One topic produces many review-only papers because it contains more theory literature; another produces more empirical accepts. That difference is documented rather than hidden.</div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-amber">Deliverable B</span>
+              <span class="badge badge-blue">failure log</span>
+            </div>
+            <h3>Failure log with repair loop</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">Mature systems improve because failures are categorized, not merely complained about.</div>
+              <div class="term">What to submit</div><div class="desc">At least five logged failures, each with category, evidence, probable cause, and next repair step.</div>
+              <div class="term">What good looks like</div><div class="desc">The failures are concrete and differentiated: duplicate miss, metadata gap, API issue, edge-case ambiguity, bad bundle field, and so on.</div>
+              <div class="term">Required verification</div><div class="desc">Each logged failure includes one observable symptom such as a count mismatch, missing field, unexpected status, or wrong routing decision.</div>
+              <div class="term">Common false positives</div><div class="desc">A vague "it was inconsistent"; listing only bugs that were already fixed; no evidence attached.</div>
+              <div class="term">Example</div><div class="desc">"Title-only intake created two borderline papers with inconsistent year parsing; symptom: duplicate titles but different years in the DB."</div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable C</span>
+              <span class="badge badge-blue">instrumentation</span>
+            </div>
+            <h3>One improved review or logging aid</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">Week 6 should leave the team with better visibility into what the pipeline is doing.</div>
+              <div class="term">What to submit</div><div class="desc">A small code change, dashboard view, report template, or review worksheet that makes one class of failure easier to detect.</div>
+              <div class="term">What good looks like</div><div class="desc">The aid shortens the gap between "something looks wrong" and "we know what to inspect next."</div>
+              <div class="term">Required verification</div><div class="desc">Show the aid in use on one real comparison or failure case.</div>
+              <div class="term">Common false positives</div><div class="desc">A cosmetic chart with no decision value; extra logging that nobody can interpret; a doc page unrelated to the observed failures.</div>
+              <div class="term">Example</div><div class="desc">A compact table showing, per run, total candidates, accepted, review, reject, duplicates, and edge-case counts.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Verification checklist</h2>
+        <ul class="verification-checklist">
+          <li><span class="check-mark">&#10003;</span><div><strong>Two comparable runs:</strong> you can compare them without hand-waving away major differences.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Failure categories:</strong> at least five failures are named with evidence and next steps.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Uncertainty preserved:</strong> near misses, topic-expansion signals, and new-topic signals remain distinct where relevant.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Instrumentation improved:</strong> one aid now makes debugging or review easier than it was in Week 5.</div></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Exit condition for the week</h2>
+        <p>You can move to Week 7 once the team has comparative evidence, a structured failure log, and at least one better way to see what the pipeline is doing. If all you have is a second pile of papers, you are not ready yet.</p>
+      </section>
+
+      <section class="section">
+        <div class="page-switch">
+          <a class="btn btn-secondary" href="track2_week_5.html">&larr; Back to Week 5</a>
+          <a class="btn btn-primary" href="track2_week_7.html">Go to Week 7 &rarr;</a>
+        </div>
+      </section>
+
+      <p class="footer-note">Supporting docs for this week: <a href="ka_track2_resources.html">resources</a> and <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs / track2</a>.</p>
+    </main>
+  </div>
+
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

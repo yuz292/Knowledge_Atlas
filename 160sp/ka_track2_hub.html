@@ -8,7 +8,7 @@
 <style>:root { --hub-color: #2A6A88; }</style>
 </head>
 <body data-ka-active="" data-ka-journey="contributor"
-      data-ka-crumbs='[["Home","ka_home.html"],["Tracks","ka_track_picker.html"],["Article Finder Hub",""]]'>
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 2 manifest",""]]'>
 
 <a class="ka-skip" href="#main">Skip to main content</a>
 <div id="ka-navbar-slot"></div>
@@ -22,11 +22,18 @@
     evidentiary strength, and deliver structured, verifiable article records to the
     Knowledge Atlas pipeline.
   </p>
+  <p class="subtitle" style="margin-top:14px;max-width:860px;">
+    This page is now the manifest library, not the primary student roadmap. Start from
+    <a href="track2_hub.html">track2_hub.html</a> for the week-by-week sequence, and use
+    <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs</a>
+    for cross-repo notes on registry fields, question constitutions, and AF to AE handoff.
+  </p>
   <p class="roster-count">Spring 2026 roster: 4 enrolled students</p>
 </section>
 
 <div class="ka-shell">
   <aside id="ka-journey-slot"></aside>
+  <div id="main"></div>
 
   <main id="ka-main">
 
@@ -54,14 +61,15 @@
           </ul>
 
           <h4>One-shot bootstrap</h4>
-<pre>git clone https://github.com/ucsd-cogs160/article_finder.git
-cd article_finder
+<pre>git clone https://github.com/dkirsh/Article_Finder_v3_2_3.git
+cd Article_Finder_v3_2_3
 python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -e .
 pip install -r requirements.txt
-cp .env.example .env     # fill in ZOTERO_API_KEY, ZOTERO_GROUP_ID
-python3 scripts/verify_env.py</pre>
-          <p><code>verify_env.py</code> returns <code>OK</code> only when Zotero, CrossRef,
-          and the course DB are all reachable. If any line prints <code>FAIL</code>,
+cp config/settings.yaml config/settings.local.yaml
+python3 cli/main.py doctor
+python3 cli/main.py stats</pre>
+          <p>Start with <code>doctor</code> and <code>stats</code>. If either one fails,
           post in Region 6 (Help &amp; queue) before trying to claim tasks.</p>
         </div>
       </section>

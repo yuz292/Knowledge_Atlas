@@ -45,7 +45,7 @@
 <body>
 
 <nav>
-  <a href="../ka_home.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;"><svg viewBox="0 0 32 32" fill="none" style="width:28px;height:28px;">
+  <a href="ka_schedule.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;"><svg viewBox="0 0 32 32" fill="none" style="width:28px;height:28px;">
       <circle cx="16" cy="16" r="3.5" fill="#F5A623"/>
       <circle cx="16" cy="5" r="2.5" fill="#A8C8BF"/>
       <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
@@ -64,8 +64,8 @@
     <a href="week2_exercises.html" class="nav-link">A0</a>
     <a href="week3_agenda.html" class="nav-link">A1</a>
     <a href="ka_track1_tagging.html" class="nav-link">Track 1</a>
-    <a href="ka_track2_pipeline.html" class="nav-link active">Track 2</a>
-    <a href="ka_track3_vr.html" class="nav-link">Track 3</a>
+    <a href="track2_hub.html" class="nav-link active">Track 2</a>
+    <a href="track3_hub.html" class="nav-link">Track 3</a>
     <a href="ka_track4_ux.html" class="nav-link">Track 4</a>
   </div>
   <div class="nav-right">
@@ -90,11 +90,11 @@
     <h2 class="section-title">Scope</h2>
     <div class="scope-callout">
       <strong>One repository only.</strong> Everything on this page refers to
-      <code>kirsh-lab/Article_Finder</code>. The sibling repository
+      <code>dkirsh/Article_Finder_v3_2_3</code>. The sibling repository
       <code>Article_Eater_PostQuinean_v1_recovery</code> is consumed by a different track and
-      should not be cloned for Track 2. The Finder writes a well-defined handoff artefact
-      (<code>data/handoff/*.json</code>) that the Eater reads; the contract between them is the
-      only thing Track 2 needs to honour.
+      should not be cloned for Track 2. The Finder's downstream obligation is to emit valid
+      AF-to-AE job bundles with the right metadata and status, not to implement AE extraction
+      internals.
     </div>
   </div>
 
@@ -130,8 +130,8 @@
     <div class="step-head"><span class="step-num">1</span>Fork the repository on GitHub (once per person)</div>
     <ol>
       <li>Sign in to GitHub, then open
-        <a href="https://github.com/kirsh-lab/Article_Finder" style="color:var(--amber);font-weight:600;">
-          github.com/kirsh-lab/Article_Finder</a>.</li>
+        <a href="https://github.com/dkirsh/Article_Finder_v3_2_3" style="color:var(--amber);font-weight:600;">
+          github.com/dkirsh/Article_Finder_v3_2_3</a>.</li>
       <li>Click the <strong>Fork</strong> button in the top-right corner.</li>
       <li>Accept the defaults. GitHub creates a copy at
         <code>github.com/&lt;your-handle&gt;/Article_Finder</code>.</li>
@@ -139,27 +139,27 @@
         legacy branches.</li>
     </ol>
     <div class="callout callout-info">
-      <strong>Why fork instead of clone directly?</strong> You do not have write access to
-      <code>kirsh-lab/Article_Finder</code>, which is deliberate: it prevents accidental pushes to
-      <code>main</code> and it gives every student a private space to break things. All of your
-      commits will live on your fork until you open a pull request.
+      <strong>Why fork instead of clone directly?</strong> Even if you later get broader repo
+      access, you should still work from your own fork of
+      <code>dkirsh/Article_Finder_v3_2_3</code>. It protects the shared
+      <code>main</code> branch and makes review cleaner.
     </div>
 
     <div class="step-head"><span class="step-num">2</span>Clone <em>your fork</em> (not the lab's copy)</div>
-    <pre>mkdir -p ~/REPOS && cd ~/REPOS
-git clone git@github.com:&lt;your-handle&gt;/Article_Finder.git
-cd Article_Finder</pre>
+<pre>mkdir -p ~/REPOS && cd ~/REPOS
+git clone git@github.com:&lt;your-handle&gt;/Article_Finder_v3_2_3.git
+cd Article_Finder_v3_2_3</pre>
     <p>Replace <code>&lt;your-handle&gt;</code> with your GitHub username. The clone creates a remote
     called <code>origin</code> that points at your fork.</p>
 
     <div class="step-head"><span class="step-num">3</span>Add the lab repository as <code>upstream</code></div>
-    <pre>git remote add upstream git@github.com:kirsh-lab/Article_Finder.git
+    <pre>git remote add upstream git@github.com:dkirsh/Article_Finder_v3_2_3.git
 git remote -v
 # You should see:
-#   origin    git@github.com:&lt;your-handle&gt;/Article_Finder.git (fetch)
-#   origin    git@github.com:&lt;your-handle&gt;/Article_Finder.git (push)
-#   upstream  git@github.com:kirsh-lab/Article_Finder.git       (fetch)
-#   upstream  git@github.com:kirsh-lab/Article_Finder.git       (push)</pre>
+#   origin    git@github.com:&lt;your-handle&gt;/Article_Finder_v3_2_3.git (fetch)
+#   origin    git@github.com:&lt;your-handle&gt;/Article_Finder_v3_2_3.git (push)
+#   upstream  git@github.com:dkirsh/Article_Finder_v3_2_3.git       (fetch)
+#   upstream  git@github.com:dkirsh/Article_Finder_v3_2_3.git       (push)</pre>
     <p>You will <strong>pull</strong> from <code>upstream</code> whenever the lab's
     <code>main</code> advances, and <strong>push</strong> only to <code>origin</code>. Never push
     directly to <code>upstream</code>; the server-side protection rules will reject it anyway.</p>
@@ -185,32 +185,36 @@ py -3 -m venv .venv
 
     <div class="step-head"><span class="step-num">6</span>Install dependencies</div>
     <pre>pip install --upgrade pip
+pip install -e .
 pip install -r requirements.txt</pre>
 
-    <div class="step-head"><span class="step-num">7</span>Configure your API credentials</div>
-    <pre>cp .env.example .env
-# Edit .env and fill in:
-#   SEMANTIC_SCHOLAR_API_KEY=...
-#   OPENALEX_EMAIL=you@ucsd.edu</pre>
+    <div class="step-head"><span class="step-num">7</span>Configure your local settings</div>
+    <pre>cp config/settings.yaml config/settings.local.yaml
+# Edit config/settings.local.yaml and set:
+#   apis.openalex.email
+#   apis.crossref.email
+#   apis.unpaywall.email
+# Optional:
+#   apis.semantic_scholar.api_key</pre>
     <div class="callout callout-warn">
-      <strong>Never commit <code>.env</code>.</strong> It is already in <code>.gitignore</code>;
-      keep it that way. If you accidentally push a key, rotate it immediately on the provider's
-      website and then remove it from git history with <code>git filter-repo</code>. Ask a TA if
-      you have already pushed — it is recoverable, but do not keep committing on top of it.
+      <strong>Never commit secrets.</strong> <code>config/settings.local.yaml</code> is the
+      local override file for your machine. Keep API keys and local emails there, not in shared
+      tracked files. If you accidentally push a live key, rotate it immediately.
     </div>
 
-    <div class="step-head"><span class="step-num">8</span>Initialise the local pipeline database</div>
-    <pre>python scripts/init_pipeline_db.py</pre>
-    <p style="font-size:0.88rem;color:var(--muted);">Creates <code>data/pipeline_lifecycle.db</code>
-    (SQLite) with empty tables for candidates, downloads, and VOI scores.</p>
+    <div class="step-head"><span class="step-num">8</span>Run the built-in checks</div>
+    <pre>python cli/main.py doctor
+python cli/main.py stats</pre>
+    <p style="font-size:0.88rem;color:var(--muted);">These are the real AF sanity checks. If either
+    fails, stop and repair that before you attempt discovery, intake, or bundling work.</p>
 
-    <div class="step-head"><span class="step-num">9</span>Run a sanity-check query</div>
-    <pre>python -m article_finder.cli discover \
-    --query "ceiling height creativity" \
-    --max-results 10</pre>
-    <p>You should see ten candidate articles with DOIs, abstracts, and VOI scores logged to the
-    database. If the command fails with <code>ModuleNotFoundError: article_finder</code>, your
-    virtual environment is not active — re-run Step 5 and try again.</p>
+    <div class="step-head"><span class="step-num">9</span>Inspect the real command surface</div>
+    <pre>python cli/main.py --help
+python cli/main.py discover --help
+python -m pytest tests/test_question_relevance_gate.py</pre>
+    <p>You should now be looking at the commands AF actually exposes, not at stale site prose.
+    If <code>pytest</code> fails before the test runs, fix your environment first. If the command
+    surface is not what you expect, trust the repo over the website.</p>
   </div>
 
   <!-- ─────────── PART C — DAILY GITHUB WORKFLOW ─────────── -->
@@ -234,8 +238,8 @@ git push origin main</pre>
     <div class="step-head"><span class="step-num">11</span>Create a feature branch</div>
     <pre>git checkout -b track2/&lt;your-handle&gt;/&lt;short-topic&gt;</pre>
     <p>For example: <code>track2/dkirsh/voi-prior-calibration</code>. The branch name is not
-    cosmetic — our CI reads the <code>track2/</code> prefix and runs the Track 2 test suite only.
-    Branches that do not match the prefix get no CI coverage.</p>
+    cosmetic. Use the <code>track2/</code> prefix so reviewers can recognize course work quickly
+    and so branch purpose stays legible on GitHub.</p>
 
     <div class="step-head"><span class="step-num">12</span>Commit in small, readable increments</div>
     <pre>git add path/to/file.py
@@ -252,7 +256,7 @@ git commit -m "voi: widen prior on ceiling-height studies (fixes #123)"</pre>
     <div class="step-head"><span class="step-num">14</span>Open a Pull Request against <code>upstream/main</code></div>
     <ol>
       <li>Visit your fork on GitHub. GitHub will display a yellow banner offering to open a PR
-        against <code>kirsh-lab/Article_Finder:main</code>. Click <strong>Compare &amp; pull request</strong>.</li>
+        against <code>dkirsh/Article_Finder_v3_2_3:main</code>. Click <strong>Compare &amp; pull request</strong>.</li>
       <li>Title: one sentence describing the change. Body: a short paragraph on motivation,
         a bullet list of what changed, and a <em>Testing</em> section showing the command you ran
         to verify the change.</li>
@@ -288,8 +292,8 @@ git push origin --delete track2/&lt;your-handle&gt;/&lt;short-topic&gt;</pre>
     <pre>cd ~/REPOS/Knowledge_Atlas
 python3 160sp/ka_local_server_setup.py   # serves at http://localhost:8765</pre>
     <p>The Article-Finder-facing pages live at
-    <code>/160sp/ka_article_finder_assignment.html</code> and
-    <code>/160sp/ka_collect_articles.html</code>.</p>
+    <code>/160sp/track2_hub.html</code> and
+    <code>/160sp/ka_track2_intake.html</code>.</p>
     <p style="margin-top:10px;">
       <a href="ka_track2_intake.html"
          style="display:inline-block;background:var(--amber,#E8872A);color:#fff;
@@ -340,7 +344,7 @@ python3 160sp/ka_local_server_setup.py   # serves at http://localhost:8765</pre>
   </div>
 
   <div class="track-nav">
-    <a href="ka_track2_pipeline.html" class="cta-button secondary">← Back to Track 2</a>
+    <a href="track2_hub.html" class="cta-button secondary">← Back to Track 2 roadmap</a>
     <a href="ka_technical_setup.html" class="cta-button">Full Technical Setup →</a>
   </div>
 </div>

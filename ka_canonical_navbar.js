@@ -45,10 +45,44 @@
       '<line x1="7.2" y1="20.2" x2="13.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>' +
     '</svg>';
 
+  function isIn160sp() {
+    return location.pathname.indexOf('/160sp/') !== -1;
+  }
+
   function basePrefix() {
     // Pages in /160sp/ need to ../ back up to the root for canonical hrefs.
-    // Detect by the current path containing /160sp/.
-    return (location.pathname.indexOf('/160sp/') !== -1) ? '../' : '';
+    return isIn160sp() ? '../' : '';
+  }
+
+  // Portal pages: their logo links to global home.
+  // All other pages within a user-type section: logo links to that section's portal.
+  var PORTAL_PAGES = [
+    'ka_schedule.html',           // 160sp portal
+    'ka_home_student.html',       // student portal
+    'ka_home_student_new.html',   // new-student portal
+    'ka_home_instructor.html',    // instructor portal
+    'ka_home_researcher.html',    // researcher portal
+    'ka_home_practitioner.html',  // practitioner portal
+    'ka_home_contributor.html',   // contributor portal
+    'ka_home_theory.html'         // theory portal
+  ];
+
+  function logoHref() {
+    var path = location.pathname;
+    var page = path.split('/').pop() || '';
+
+    // If this IS a portal page, logo goes to global home.
+    for (var i = 0; i < PORTAL_PAGES.length; i++) {
+      if (page === PORTAL_PAGES[i]) {
+        return basePrefix() + 'ka_home.html';
+      }
+    }
+    // If inside 160sp section, logo goes to the 160sp portal.
+    if (isIn160sp()) {
+      return 'ka_schedule.html';
+    }
+    // Otherwise (root-level pages), logo goes to global home.
+    return 'ka_home.html';
   }
 
   function readUser() {
@@ -64,7 +98,7 @@
       '<a class="ka-skip" href="#ka-main">Skip to main content</a>' +
       '<nav class="ka-topnav" aria-label="Primary">' +
         '<div class="ka-nav-left">' +
-          '<a class="ka-wordmark" href="' + prefix + 'ka_home.html">' +
+          '<a class="ka-wordmark" href="' + logoHref() + '">' +
             WORDMARK_SVG +
             '<span class="ka-wordmark-text">' +
               '<span class="ka-wordmark-top">Knowledge</span>' +

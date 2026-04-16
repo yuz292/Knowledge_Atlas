@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 2 &middot; Week 5 &middot; Article Finder &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track2_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 2","track2_hub.html"],["Week 5",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="t2-hero">
+    <div class="t2-hero-inner">
+      <div class="eyebrow">Track 2 &middot; Week 5</div>
+      <h1>Reduce false positives and prove the handoff</h1>
+      <p class="hero-sub">Now that you have one working path, the next task is to make it less naive: improve deduplication and metadata quality, test the question filter where it matters, and show that the AF &rarr; AE handoff artifact is valid.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>Can we show that AF does not merely find papers, but filters them intelligently and hands AE a structurally trustworthy bundle?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 2 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 2</div>
+        <h2>Week sequence</h2>
+        <div class="muted">This week is about quality, not just quantity.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track2_hub.html">Overview</a></li>
+        <li><a href="track2_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track2_week_4.html">Week 4</a></li>
+        <li><a class="active" href="track2_week_5.html">Week 5</a></li>
+        <li><a href="track2_week_6.html">Week 6</a></li>
+        <li><a href="track2_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track2_intake.html">Article intake</a></li>
+        <li><a href="ka_track2_resources.html">Shared resources</a></li>
+        <li><a href="ka_track2_hub.html">Task manifests</a></li>
+        <li><a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">A weak literature system can always make its numbers look better by being permissive. Week 5 is where you stop rewarding permissiveness and start rewarding discrimination: fewer duplicates, cleaner metadata, clearer reasons, and a bundle that AE can process without guessing.</p>
+      </section>
+
+      <section class="section">
+        <h2>What you need to understand before building</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Deduplication is multi-signal</h3>
+            <p>DOI matching is strongest, but title and author overlap matter too. A system that only catches exact DOI matches will miss real duplicates.</p>
+          </div>
+          <div class="card">
+            <h3>Metadata quality affects every later stage</h3>
+            <p>Bad title, DOI, year, or abstract fields make relevance, bundling, and later extraction less reliable.</p>
+          </div>
+          <div class="card">
+            <h3>The handoff schema is not decoration</h3>
+            <p><code>paper.json</code> is the formal contract between AF and AE. If required fields are missing or misleading, the handoff is bad.</p>
+          </div>
+          <div class="card">
+            <h3>Borderline cases teach you about scope</h3>
+            <p>The question filter can surface near misses, topic expansion candidates, and new-topic candidates. Those categories should not be flattened into a single "maybe."</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>adversarial duplicate examples that stress DOI, title, and author matching</li>
+              <li>a benchmark design for accepted, rejected, and edge-case papers</li>
+              <li>a schema-validation checklist for job bundles</li>
+              <li>failure modes in title normalization, DOI parsing, and APA formatting</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>invent missing metadata instead of marking the uncertainty</li>
+              <li>erase edge cases because they complicate the demo</li>
+              <li>claim that a bundle is contract-compliant without inspecting the generated files</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <ol>
+          <li><strong>20 minutes:</strong> assemble a 20-paper benchmark set containing obvious accepts, obvious rejects, duplicates, and borderline cases.</li>
+          <li><strong>20 minutes:</strong> run the current dedup and triage path over that set.</li>
+          <li><strong>20 minutes:</strong> inspect one or more generated bundles and compare the metadata against the schema and source paper records.</li>
+          <li><strong>20 minutes:</strong> decide where the current errors come from: matching, enrichment, constitution boundaries, or bundle construction.</li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>At-home work</h2>
+        <ul class="tight-list">
+          <li>improve one quality-control component: dedup, metadata repair, question gating, or bundle validation</li>
+          <li>re-run the same benchmark and record before/after behavior</li>
+          <li>build at least one real AE-ready bundle from a paper you would currently keep</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Deliverables</h2>
+        <div class="deliverables">
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable A</span>
+              <span class="badge badge-blue">benchmark</span>
+            </div>
+            <h3>Twenty-paper benchmark with labels</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">You cannot improve quality without a fixed set of cases that includes things the pipeline should reject or flag.</div>
+              <div class="term">What to submit</div><div class="desc">A labeled benchmark table with at least 20 entries spanning accept, review, reject, duplicate, and edge-case categories.</div>
+              <div class="term">What good looks like</div><div class="desc">The benchmark includes hard cases, not only obvious wins. It is suitable for rerunning after repairs.</div>
+              <div class="term">Required verification</div><div class="desc">Each label must have a brief justification grounded in title, abstract, article type, or metadata quality.</div>
+              <div class="term">Common false positives</div><div class="desc">Using a benchmark made only of clearly in-domain papers; leaving duplicates out because they are inconvenient; labeling with no rationale.</div>
+              <div class="term">Example</div><div class="desc">A mixed set containing two DOI duplicates, one fuzzy title duplicate, three review articles, and two adjacent restoration papers that trigger edge-case discussion.</div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-amber">Deliverable B</span>
+              <span class="badge badge-blue">before/after repair</span>
+            </div>
+            <h3>Quality repair with before/after evidence</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">The class needs to see that a concrete repair reduced a known weakness.</div>
+              <div class="term">What to submit</div><div class="desc">A branch or patch plus a short note showing the old behavior, the change, and the new behavior on the same benchmark or run.</div>
+              <div class="term">What good looks like</div><div class="desc">The note isolates one improvement clearly enough that someone else can say whether it truly helped.</div>
+              <div class="term">Required verification</div><div class="desc">Use the same benchmark or topic run before and after. Do not change the test set midstream unless you say why.</div>
+              <div class="term">Common false positives</div><div class="desc">Changing the query and the dedup logic at the same time; showing only the new output; claiming success because counts changed without explaining why.</div>
+              <div class="term">Example</div><div class="desc">Title normalization now catches one fuzzy duplicate pair that previously slipped into the accepted set.</div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable C</span>
+              <span class="badge badge-blue">handoff proof</span>
+            </div>
+            <h3>One valid AF &rarr; AE bundle</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">Track 2 cannot claim progress unless it can hand AE something structurally trustworthy.</div>
+              <div class="term">What to submit</div><div class="desc">A generated job bundle plus a short inspection note showing the contents of <code>paper.json</code>, PDF hash presence, and why the paper belongs.</div>
+              <div class="term">What good looks like</div><div class="desc">The bundle is not merely present on disk. Its metadata lines up with the paper record, the schema, and the reason for inclusion.</div>
+              <div class="term">Required verification</div><div class="desc">Show the command used to build it, the bundle path, and the specific fields you inspected.</div>
+              <div class="term">Common false positives</div><div class="desc">Handing over a PDF with no trustworthy metadata; assuming one successful file write means the bundle is valid; not checking that the paper is actually one you would send onward.</div>
+              <div class="term">Example</div><div class="desc"><code>python cli/main.py build-jobs --status send_to_eater --output data/job_bundles</code> followed by inspection of the created <code>paper.json</code>.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Verification checklist</h2>
+        <ul class="verification-checklist">
+          <li><span class="check-mark">&#10003;</span><div><strong>Benchmark exists:</strong> you have a fixed test set with labels.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>False positives are named:</strong> at least one paper or duplicate case exposed a real weakness.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Repair is evidenced:</strong> you can compare before and after on the same or clearly comparable cases.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Bundle inspected:</strong> you looked inside the handoff artifact, not just its folder name.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Scope is honest:</strong> if the question filter or bundle path is still partial, you say so explicitly.</div></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Exit condition for the week</h2>
+        <p>Move on only when you can show that the system is becoming more selective and more trustworthy, not merely busier. A valid bundle, a named benchmark, and one before/after repair are the minimum evidence.</p>
+      </section>
+
+      <section class="section">
+        <div class="page-switch">
+          <a class="btn btn-secondary" href="track2_week_4.html">&larr; Back to Week 4</a>
+          <a class="btn btn-primary" href="track2_week_6.html">Go to Week 6 &rarr;</a>
+        </div>
+      </section>
+
+      <p class="footer-note">Supporting docs for this week: <a href="ka_track2_intake.html">article intake</a>, <a href="ka_track2_hub.html">task manifests</a>, and <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs / track2</a>.</p>
+    </main>
+  </div>
+
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 2 &middot; Week 4 &middot; Article Finder &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track2_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 2","track2_hub.html"],["Week 4",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="t2-hero">
+    <div class="t2-hero-inner">
+      <div class="eyebrow">Track 2 &middot; Week 4</div>
+      <h1>Run one real topic through a first working AF path</h1>
+      <p class="hero-sub">This week shifts from setup to operation. The point is to prove that one real topic or question can pass through discovery, triage, and first-pass review without dissolving into hand-waving.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>Can we run one concrete topic through Article Finder and show which candidates are accepted, which are borderline, which are duplicates, and why?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 2 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 2</div>
+        <h2>Week sequence</h2>
+        <div class="muted">Work this page before you broaden the system.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track2_hub.html">Overview</a></li>
+        <li><a href="track2_week_3_5.html">Week 3.5</a></li>
+        <li><a class="active" href="track2_week_4.html">Week 4</a></li>
+        <li><a href="track2_week_5.html">Week 5</a></li>
+        <li><a href="track2_week_6.html">Week 6</a></li>
+        <li><a href="track2_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track2_setup.html">Setup guide</a></li>
+        <li><a href="ka_track2_intake.html">Article intake</a></li>
+        <li><a href="ka_track2_resources.html">Shared resources</a></li>
+        <li><a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">By the end of this week you should have one genuinely operational example, not a speculative architecture. That example may still be small. Small is acceptable. Unproved is not.</p>
+        <div class="callout callout-amber">
+          <h3>Choose one topic and stay with it long enough to learn from it</h3>
+          <p>Changing topics every day hides failure. Pick one topic, one question bundle, or one research front and keep enough pressure on it to expose duplicates, weak metadata, and borderline cases.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>What you need to understand before building</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Corpus growth and triage quality are different</h3>
+            <p>Adding papers is easy. Showing that the added papers are relevant, non-duplicate, and defensibly prioritized is the real work.</p>
+          </div>
+          <div class="card">
+            <h3>Borderline papers are informative</h3>
+            <p>If a paper sits between reject and send-to-eater, that is where the question filter, constitutions, and review logic become valuable.</p>
+          </div>
+          <div class="card">
+            <h3>Review is part of the system</h3>
+            <p>A human-reviewed sample is not an admission of failure. It is how you learn whether automated ranking and triage are credible.</p>
+          </div>
+          <div class="card">
+            <h3>Real topics drift</h3>
+            <p>The first query will often retrieve papers that are adjacent, not central. That drift should be measured and documented.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>query variants or synonym expansions for one topic</li>
+              <li>a candidate benchmark set of obvious accept / obvious reject / borderline papers</li>
+              <li>expected failure modes in metadata enrichment or relevance scoring</li>
+              <li>a review rubric for checking the top ten returned papers</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>declare relevance without you reading the title and abstract</li>
+              <li>collapse borderline cases into accept just to make the counts look stronger</li>
+              <li>generate fake "representative" outputs instead of using your real run logs</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <ol>
+          <li><strong>20 minutes:</strong> choose a topic, research front, or starter question constitution.</li>
+          <li><strong>25 minutes:</strong> run one AF path such as <code>discover</code>, <code>citations --fetch</code>, or a staged intake batch.</li>
+          <li><strong>20 minutes:</strong> inspect the top returned candidates and manually label 5 likely accepts and 5 borderline or reject cases.</li>
+          <li><strong>15 minutes:</strong> compare notes with a partner and identify the first false-positive pattern.</li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>At-home work</h2>
+        <ul class="tight-list">
+          <li>rerun your chosen topic path cleanly and record what changed and what did not</li>
+          <li>improve one weak point: query wording, dedup threshold, metadata recovery, or borderline review logic</li>
+          <li>prepare a small evidence bundle that shows the topic can be handled repeatably, not just once</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Deliverables</h2>
+        <div class="deliverables">
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable A</span>
+              <span class="badge badge-blue">real topic run</span>
+            </div>
+            <h3>Seed-corpus run with evidence</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">You need one real slice of the literature, not only a repo diagram.</div>
+              <div class="term">What to submit</div><div class="desc">A short run report naming the topic, the commands you used, the number of candidate papers returned, and a sample of the resulting records or IDs.</div>
+              <div class="term">What good looks like</div><div class="desc">The report shows a small but defensible seed set, not an inflated count with no inspection.</div>
+              <div class="term">Required verification</div><div class="desc">Include raw counts, date/time of the run, and one repeated run or explanation of drift if API sources changed.</div>
+              <div class="term">Common false positives</div><div class="desc">Counting everything returned by a broad query as useful; claiming the run is reproducible without recording the exact command and thresholds.</div>
+              <div class="term">Example</div><div class="desc"><code>python cli/main.py discover --email you@ucsd.edu --iterations 1 --expansion-limit 20 --pdf-limit 5</code></div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-amber">Deliverable B</span>
+              <span class="badge badge-blue">review sample</span>
+            </div>
+            <h3>Manual review packet: five accepts and five borderline cases</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">The system is only useful if you can tell strong candidates from plausible-looking noise.</div>
+              <div class="term">What to submit</div><div class="desc">Ten reviewed records: five you would currently send onward, and five you would mark review or reject, each with one or two sentences explaining why.</div>
+              <div class="term">What good looks like</div><div class="desc">Your explanations refer to observable evidence: topic fit, article type, outcomes, or metadata quality. They do not rely on vague intuitions.</div>
+              <div class="term">Required verification</div><div class="desc">At least one borderline paper must be included because it exposed a weakness in your current filter or query.</div>
+              <div class="term">Common false positives</div><div class="desc">Only showing easy accepts; using AI labels as if they were the review; excluding all edge cases because they make the report look messy.</div>
+              <div class="term">Example</div><div class="desc">A nature-and-attention run that includes one restoration-only paper marked <em>review</em> because it lacks a direct attention measure.</div>
+            </div>
+          </article>
+
+          <article class="deliverable">
+            <div class="deliverable-meta">
+              <span class="badge badge-teal">Deliverable C</span>
+              <span class="badge badge-blue">repair loop</span>
+            </div>
+            <h3>One focused repair or clarified spec</h3>
+            <div class="kv">
+              <div class="term">Rationale</div><div class="desc">Week 4 should not end with "we noticed problems." It should end with one concrete repair, tightened threshold, or clarified review rule.</div>
+              <div class="term">What to submit</div><div class="desc">A branch, patch, or tightly written spec note that changes one thing in response to observed evidence.</div>
+              <div class="term">What good looks like</div><div class="desc">The repair links directly to a failure from your run or review packet.</div>
+              <div class="term">Required verification</div><div class="desc">Show the before/after behavior or explicitly state why the change is documentation-only and what future run will verify it.</div>
+              <div class="term">Common false positives</div><div class="desc">Changing three variables at once; improving prose without reducing uncertainty; saying "fixed" with no rerun.</div>
+              <div class="term">Example</div><div class="desc">Lowering an overly broad query variant, then rerunning the same topic and showing the borderline count dropped while core papers stayed present.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Verification checklist</h2>
+        <ul class="verification-checklist">
+          <li><span class="check-mark">&#10003;</span><div><strong>One real topic:</strong> you can name it and reproduce the exact command used to fetch or stage papers.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>One reviewed sample:</strong> you have five strong candidates and five problematic or borderline ones, with reasons.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>One false positive:</strong> you can point to a paper that initially looked relevant but should not automatically pass.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>One repair:</strong> you changed either the code, the query, or the spec in response to evidence.</div></li>
+          <li><span class="check-mark">&#10003;</span><div><strong>Pass/fail basis:</strong> your evidence bundle makes it clear what succeeded and what remains uncertain.</div></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Exit condition for the week</h2>
+        <p>You can move on when you have one topic path that another student could rerun, inspect, and challenge. The exact counts may still improve later. The important thing is that the path is now explicit, inspectable, and no longer imaginary.</p>
+      </section>
+
+      <section class="section">
+        <div class="page-switch">
+          <a class="btn btn-secondary" href="track2_week_3_5.html">&larr; Back to Week 3.5</a>
+          <a class="btn btn-primary" href="track2_week_5.html">Go to Week 5 &rarr;</a>
+        </div>
+      </section>
+
+      <p class="footer-note">Supporting docs for this week: <a href="ka_track2_intake.html">article intake</a>, <a href="ka_track2_resources.html">shared resources</a>, and <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs / track2</a>.</p>
+    </main>
+  </div>
+
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>
