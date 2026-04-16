@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 4 &middot; Week 5 &middot; Interaction Design &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track4_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 4","track4_hub.html"],["Week 5",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Track 4 &middot; Week 5</div>
+      <h1>Systematic heuristic audits</h1>
+      <p>Journey maps showed you where your persona gets stuck. This week you diagnose <em>why</em> &mdash; systematically, using the 35-dimension heuristic framework, across your entire page cluster.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>Which heuristic violations are most severe, most frequent, and most fixable in your page cluster &mdash; and what is the evidence for each?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 4 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 4</div>
+        <h2>Week sequence</h2>
+        <div class="muted">Work this page before you broaden.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track4_hub.html">Overview</a></li>
+        <li><a href="track4_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track4_week_4.html">Week 4</a></li>
+        <li><a class="active" href="track4_week_5.html">Week 5</a></li>
+        <li><a href="track4_week_6.html">Week 6</a></li>
+        <li><a href="track4_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track4_setup.html">Setup guide</a></li>
+        <li><a href="ka_track4_ux.html">Full UX overview</a></li>
+        <li><a href="ka_track4_persona_panel.html">Persona panel exercise</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">Journey maps are narrative. Heuristic audits are systematic. You need both. The audit forces you to evaluate every page in your cluster against the same 35 criteria, which prevents you from fixating on the first problem you noticed and missing the pattern that connects twelve smaller problems across pages.</p>
+        <div class="callout callout-amber">
+          <h3>Prioritise by severity &times; frequency</h3>
+          <p>A major violation that appears on 12 pages matters more than a catastrophic violation on one obscure page. The audit report must rank findings, not just list them.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>The 35-dimension framework</h2>
+        <p class="lead">The K-ATLAS usability critic uses three established frameworks. You do not need to memorise all 35 dimensions, but you must apply them systematically to each page.</p>
+
+        <h3>Nielsen's 10 usability heuristics (H1&ndash;H10)</h3>
+        <table class="heuristic-table">
+          <thead><tr><th>ID</th><th>Heuristic</th><th>One-line test</th></tr></thead>
+          <tbody>
+            <tr><td>H1</td><td>Visibility of system status</td><td>Does the user always know where they are and what is happening?</td></tr>
+            <tr><td>H2</td><td>Match between system and real world</td><td>Does the language match the user's mental model?</td></tr>
+            <tr><td>H3</td><td>User control and freedom</td><td>Can the user undo, go back, or escape?</td></tr>
+            <tr><td>H4</td><td>Consistency and standards</td><td>Do similar things look and behave the same way?</td></tr>
+            <tr><td>H5</td><td>Error prevention</td><td>Does the design prevent mistakes before they happen?</td></tr>
+            <tr><td>H6</td><td>Recognition rather than recall</td><td>Is information visible rather than requiring memory?</td></tr>
+            <tr><td>H7</td><td>Flexibility and efficiency of use</td><td>Can experts take shortcuts?</td></tr>
+            <tr><td>H8</td><td>Aesthetic and minimalist design</td><td>Is every element earning its space?</td></tr>
+            <tr><td>H9</td><td>Help users recognise and recover from errors</td><td>Are error messages clear and actionable?</td></tr>
+            <tr><td>H10</td><td>Help and documentation</td><td>Is help available and findable when needed?</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Shneiderman's 8 golden rules (R1&ndash;R8)</h3>
+        <table class="heuristic-table">
+          <thead><tr><th>ID</th><th>Rule</th><th>One-line test</th></tr></thead>
+          <tbody>
+            <tr><td>R1</td><td>Strive for consistency</td><td>Same layout, colour, and terminology across pages?</td></tr>
+            <tr><td>R2</td><td>Seek universal usability</td><td>Works for novices and experts? Accessible?</td></tr>
+            <tr><td>R3</td><td>Offer informative feedback</td><td>Every action gets a visible response?</td></tr>
+            <tr><td>R4</td><td>Design dialogs to yield closure</td><td>Multi-step tasks have clear beginning, middle, and end?</td></tr>
+            <tr><td>R5</td><td>Prevent errors</td><td>Invalid states are unreachable?</td></tr>
+            <tr><td>R6</td><td>Permit easy reversal of actions</td><td>Can the user get back to where they were?</td></tr>
+            <tr><td>R7</td><td>Keep users in control</td><td>The user initiates actions, not the system?</td></tr>
+            <tr><td>R8</td><td>Reduce short-term memory load</td><td>Information from one step is still visible in the next?</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Visualization dimensions (V1&ndash;V17)</h3>
+        <p>For pages with charts, graphs, or data displays: data-ink ratio (Tufte), lie factor, colour accessibility, axis labelling, legend clarity, tooltip helpfulness, responsive sizing, annotation quality, perceptual ordering (Cleveland &amp; McGill), small-multiples coherence, animation appropriateness, drill-down affordance, uncertainty representation, comparison support, label readability, interactive feedback, and export capability.</p>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>heuristic-by-heuristic evaluation &mdash; paste page HTML, ask "evaluate against H1 through H10"</li>
+              <li>accessibility audit &mdash; "run axe-core checks on this markup and list WCAG violations"</li>
+              <li>pattern detection &mdash; "I found H4 violations on 5 pages; what underlying CSS inconsistency could explain all five?"</li>
+              <li>severity justification &mdash; "is this a cosmetic or major violation for a researcher with 30 minutes?"</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>produce the entire audit report without you verifying each finding on the live page</li>
+              <li>rate severity without specifying which persona and time budget</li>
+              <li>declare a page "passes" all heuristics &mdash; every page has violations; the question is how severe</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <div class="meeting-grid">
+          <article class="meeting">
+            <div class="kicker">Tuesday &mdash; Audit methodology</div>
+            <div class="start"><strong>Start here:</strong> Bring your cluster page list and your friction inventories from Week 4.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Instructor walks through one page live, demonstrating all 35 dimensions.</li>
+              <li>Each student begins auditing their first 3 pages using the heuristic tables above.</li>
+              <li>Compare preliminary findings with a partner &mdash; are you calibrated on severity ratings?</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Continue auditing. Target at least 8 pages by Thursday.</li>
+              <li>For each page, complete a friction inventory row for every violation found.</li>
+            </ul>
+          </article>
+          <article class="meeting">
+            <div class="kicker">Thursday &mdash; Findings &amp; prioritisation</div>
+            <div class="start"><strong>Start here:</strong> Bring your audit-in-progress with findings from &ge;5 pages.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Present your top 5 findings ranked by severity &times; frequency.</li>
+              <li>Receive instructor feedback &mdash; are you catching the right problems?</li>
+              <li>Cross-check: look at another student's cluster through your persona's eyes. What did they miss that your persona would notice?</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Finalise the heuristic audit report.</li>
+              <li>Prioritise findings into a ranked list that will drive Week 6's fix sprint.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Week deliverables</h2>
+        <article class="deliverable">
+          <h3><span class="num">D6</span> Heuristic audit report</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>The audit is the diagnostic foundation for everything that follows. Without it, fixes are guided by taste rather than evidence.</p>
+              <p><strong>What to submit</strong><br>A structured report covering at least 8 pages. One section per page, each with a friction inventory table. Summary section ranking findings by severity &times; frequency.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Findings cite specific heuristics with evidence (screenshots, quotes from panel transcripts). Severity ratings are justified by persona context. The priority ranking is defensible.</p>
+              <p><strong>Example</strong><br>"H4 violation: the sidebar on ka_articles.html uses a different link colour (#2A7868) than the sidebar on ka_topics.html (#1A5A50). Severity: minor (cosmetic inconsistency, but erodes trust across repeated visits). Frequency: appears on 8 of 13 content-nav pages."</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer-note">These pages are built from the student-facing Track 4 roadmap and styled for the K-ATLAS 160sp shell.</p>
+    </main>
+  </div>
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

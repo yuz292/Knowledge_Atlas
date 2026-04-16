@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 4 Overview &middot; Interaction Design &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track4_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 4",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">COGS 160 &middot; Track 4</div>
+      <h1>Track 4: Interaction Design roadmap</h1>
+      <p>Your job is to make the Knowledge Atlas work for people who are not you. Each of you owns one persona for the rest of the quarter. Every page review, every critique, every journey you map is done from that persona's point of view &mdash; with evidence, not opinion.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">Rule: you are not the user (Nielsen, 1993)</span>
+        <span class="hero-pill">8 personas &middot; 35 heuristic dimensions &middot; 5 AI agents</span>
+        <span class="hero-pill">Deliverables: journey maps, heuristic audits, fix PRs, slide decks</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 4 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 4</div>
+        <h2>Interaction Design</h2>
+        <div class="muted">Weekly pages and deliverables</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a class="active" href="track4_hub.html">Overview</a></li>
+        <li><a href="track4_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track4_week_4.html">Week 4</a></li>
+        <li><a href="track4_week_5.html">Week 5</a></li>
+        <li><a href="track4_week_6.html">Week 6</a></li>
+        <li><a href="track4_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track4_setup.html">Setup guide</a></li>
+        <li><a href="ka_track4_ux.html">Full UX overview</a></li>
+        <li><a href="ka_track4_hub.html">Team hub</a></li>
+        <li><a href="ka_track4_persona_panel.html">Persona panel exercise</a></li>
+      </ul>
+      <div class="subnav-note">
+        The <a href="ka_track4_ux.html">full UX overview</a> has the 8 personas, chip mapping, and the complete syllabus. Use this hub and the week pages as the current assignment sequence.
+      </div>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Start here</h2>
+        <p class="lead">If you do only four things before the next class meeting, do these in this order: set up the site locally, claim your persona, read the persona panel exercise, and walk one real page through your persona's eyes rather than your own.</p>
+        <div class="cards">
+          <div class="card">
+            <span class="badge badge-teal">1 &middot; Setup</span>
+            <h3>Clone the repo and serve locally</h3>
+            <p>Use the <a href="ka_track4_setup.html">Track 4 setup guide</a>. Clone <code>Knowledge_Atlas</code>, run <code>python3 -m http.server 8000</code>, and open <code>localhost:8000/160sp/ka_schedule.html</code>. Install axe DevTools or Lighthouse for accessibility audits.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-blue">2 &middot; Persona</span>
+            <h3>Claim one of the 8 personas</h3>
+            <p>Read all 8 personas in the <a href="ka_track4_ux.html#persona">full UX overview &sect;2</a>. Each student claims a different persona. That persona is yours for the rest of the quarter.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-amber">3 &middot; Panel</span>
+            <h3>Build your AI persona panel</h3>
+            <p>Complete the <a href="ka_track4_persona_panel.html">persona panel exercise</a>: write a three-panellist prompt, get critique, revise, and run it on one real page.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-teal">4 &middot; Evidence</span>
+            <h3>Walk one page as your persona</h3>
+            <p>Produce a journey note with at least three friction points, each tagged to a Nielsen heuristic. File one finding as a GitHub Issue with the <code>ux-journey</code> label.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>The shape of the quarter</h2>
+        <p class="lead">The track has three phases: learn to see through your persona's eyes (Weeks 3&ndash;4), diagnose what is broken and why (Week 5), and fix it with evidence that the fix worked (Weeks 6&ndash;7).</p>
+        <div class="cards">
+          <div class="card">
+            <span class="badge badge-teal">Phase 1</span>
+            <h3>Persona grounding &amp; journey mapping</h3>
+            <p>Weeks 3.5&ndash;4. You build AI persona panels, calibrate them against multiple pages, and produce detailed journey maps for your persona's tasks on the site.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-blue">Phase 2</span>
+            <h3>Heuristic audits</h3>
+            <p>Week 5. You systematically evaluate your assigned page cluster against 35 heuristic dimensions (Nielsen H1&ndash;H10, Shneiderman R1&ndash;R8, Visualization V1&ndash;V17). Deliverable: a prioritised audit report.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-amber">Phase 3</span>
+            <h3>Fix sprints &amp; integration</h3>
+            <p>Weeks 6&ndash;7. You implement your top-severity fixes as Pull Requests, re-run your persona panel to measure improvement, and present your work in a 10-minute assertion-evidence slide deck.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Page clusters &amp; ownership</h2>
+        <p class="lead">The site has roughly 120 pages across several natural clusters. Each student owns the cluster(s) most relevant to their persona.</p>
+        <div class="cards">
+          <div class="card">
+            <h3>Cluster A &mdash; Content navigation</h3>
+            <p>~13 pages: articles, topics, theories, mechanisms, neuro perspective, search, filtering, card views. <strong>Best fit:</strong> Researcher or Theory Explorer persona.</p>
+          </div>
+          <div class="card">
+            <h3>Cluster B &mdash; Portals &amp; identity</h3>
+            <p>~9 pages: global home, 6 user-type portals, login, student profile. <strong>Best fit:</strong> PI or cross-cutting reviewer.</p>
+          </div>
+          <div class="card">
+            <h3>Cluster C &mdash; COGS 160 student pages</h3>
+            <p>~68 pages: schedule, track hubs, weekly pages, exercises, assignments, studio pages. <strong>Best fit:</strong> Student Explorer persona.</p>
+          </div>
+          <div class="card">
+            <h3>Cluster D &mdash; Research &amp; theory tools</h3>
+            <p>~10 pages: article detail, argumentation/interpretation panels, QA, warrant displays, theory comparison. <strong>Best fit:</strong> Researcher persona.</p>
+          </div>
+          <div class="card">
+            <h3>Cluster E &mdash; Visualizations</h3>
+            <p>~9 pages with charting libraries (Chart.js, D3): network graphs, evidence distributions, topic maps. <strong>Best fit:</strong> Practitioner persona.</p>
+          </div>
+          <div class="card">
+            <h3>Cluster F &mdash; Designing Experiments</h3>
+            <p>~12 pages in the <code>Designing_Experiments/</code> subdirectory with its own navigation. <strong>Best fit:</strong> Researcher or Contributor persona.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to work with AI in this track</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>persona panel construction &mdash; three panellists with specific contexts, goals, and knowledge states</li>
+              <li>heuristic evaluation &mdash; "apply Nielsen H4 (consistency) to this page and list violations"</li>
+              <li>journey simulation &mdash; "walk this page as Dr. Okafor looking for effect sizes on open-plan cortisol"</li>
+              <li>fix proposals &mdash; "suggest CSS/JS changes that would address this accessibility violation"</li>
+              <li>comparative critique &mdash; "compare the navigation on these two pages and identify inconsistencies"</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>declare a page "good" or "bad" without specifying which heuristics and for which persona</li>
+              <li>generate journey observations without anchoring to a specific URL you have actually visited</li>
+              <li>produce a heuristic report without you verifying each finding against the real page</li>
+              <li>write your fix PR without you understanding what the code change does</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Week-by-week pages</h2>
+        <div class="quick-links">
+          <div class="quick-link">
+            <h4><a href="track4_week_3_5.html">Week 3.5</a></h4>
+            <p>Persona grounding &amp; first panel walkthrough</p>
+          </div>
+          <div class="quick-link">
+            <h4><a href="track4_week_4.html">Week 4</a></h4>
+            <p>Journey mapping &amp; persona calibration</p>
+          </div>
+          <div class="quick-link">
+            <h4><a href="track4_week_5.html">Week 5</a></h4>
+            <p>Systematic heuristic audits</p>
+          </div>
+          <div class="quick-link">
+            <h4><a href="track4_week_6.html">Week 6</a></h4>
+            <p>Fix sprints &amp; cross-persona review</p>
+          </div>
+          <div class="quick-link">
+            <h4><a href="track4_week_7.html">Week 7</a></h4>
+            <p>Integration, re-evaluation &amp; presentation</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>References</h2>
+        <ul class="tight-list">
+          <li>Cooper, A. (2014). <em>About Face: The Essentials of Interaction Design</em> (4th ed.). Wiley.</li>
+          <li>Nielsen, J. (1993). <em>Usability Engineering</em>. Morgan Kaufmann.</li>
+          <li>Nielsen, J. (1994). Heuristic evaluation. In J. Nielsen &amp; R. L. Mack (Eds.), <em>Usability Inspection Methods</em> (pp. 25&ndash;62). Wiley.</li>
+          <li>Pruitt, J., &amp; Adlin, T. (2006). <em>The Persona Lifecycle</em>. Morgan Kaufmann.</li>
+          <li>Shneiderman, B., et al. (2016). <em>Designing the User Interface</em> (6th ed.). Pearson.</li>
+          <li>Tufte, E. R. (2001). <em>The Visual Display of Quantitative Information</em> (2nd ed.). Graphics Press.</li>
+        </ul>
+      </section>
+
+      <p class="footer-note">These pages are built from the student-facing Track 4 roadmap and styled for the K-ATLAS 160sp shell.</p>
+    </main>
+  </div>
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

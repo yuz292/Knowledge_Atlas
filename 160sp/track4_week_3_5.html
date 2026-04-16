@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 4 &middot; Week 3.5 &middot; Interaction Design &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track4_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 4","track4_hub.html"],["Week 3.5",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Track 4 &middot; Week 3.5</div>
+      <h1>Persona grounding &amp; first panel walkthrough</h1>
+      <p>This week you stop being yourself and start being your persona. The quality of every critique you write for the rest of the quarter depends on how well you internalise someone else's goals, constraints, and knowledge.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>Can you construct an AI panel that reacts to a real K-ATLAS page the way your persona would &mdash; and can you tell when the panel is faking it?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 4 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 4</div>
+        <h2>Week sequence</h2>
+        <div class="muted">Work this page before you broaden.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track4_hub.html">Overview</a></li>
+        <li><a class="active" href="track4_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track4_week_4.html">Week 4</a></li>
+        <li><a href="track4_week_5.html">Week 5</a></li>
+        <li><a href="track4_week_6.html">Week 6</a></li>
+        <li><a href="track4_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track4_setup.html">Setup guide</a></li>
+        <li><a href="ka_track4_ux.html">Full UX overview</a></li>
+        <li><a href="ka_track4_persona_panel.html">Persona panel exercise</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">Walking the site as yourself teaches you nothing you do not already know. The discipline of persona adoption forces you to encounter the site the way a stranger does &mdash; someone with different goals, different knowledge, and a different threshold for giving up.</p>
+        <div class="callout callout-amber">
+          <h3>Nielsen's first law applies here</h3>
+          <p>You are not the user. You know where the navigation is because you built it. You know what "warrant strength" means because you read about it in class. Your persona does not. The persona panel is how you simulate the encounter you cannot have directly.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>What you need to understand before building</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>A persona is not a label</h3>
+            <p>"Undergraduate student" is a label. Maya Chen &mdash; 19, second-year, iPhone, ChatGPT daily, does not know what a latent variable is, will bail in 5 seconds if she hits jargon &mdash; is a persona. The difference is generative power: Maya predicts specific reactions; "undergraduate student" predicts nothing (Cooper, 2014).</p>
+          </div>
+          <div class="card">
+            <h3>Three panellists, not one</h3>
+            <p>A single AI persona gives you one viewpoint. Three deliberately-different panellists &mdash; a sceptic, an enthusiast, a pragmatist &mdash; generate productive disagreement. When all three agree on a friction point, you have strong evidence. When they disagree, you have a research question.</p>
+          </div>
+          <div class="card">
+            <h3>The falsifier is the key</h3>
+            <p>A panel prompt that cannot disconfirm itself is generating narrative, not evidence. Desideratum D6 in the <a href="ka_track4_persona_panel.html">exercise</a> requires that your prompt include at least one prediction that the panel could falsify.</p>
+          </div>
+          <div class="card">
+            <h3>Anchor to a specific URL</h3>
+            <p>A panel asked to evaluate "the site" will hallucinate reactions to features that do not exist. Name the exact page URL in your prompt. The panel walks that page, not an abstraction.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>help drafting your three-panellist prompt against the 8 desiderata</li>
+              <li>a critique of your draft prompt &mdash; "which desiderata does this prompt fail?"</li>
+              <li>page-specific reactions &mdash; paste the page HTML and ask the panel to walk it</li>
+              <li>severity ratings for friction points using Nielsen's 4-level scale</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>generate a persona from scratch without grounding it in the 8 provided personas</li>
+              <li>evaluate a page you have not actually opened yourself</li>
+              <li>flatten all panel disagreements into a consensus &mdash; the disagreements are data</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <div class="meeting-grid">
+          <article class="meeting">
+            <div class="kicker">Tuesday &mdash; Setup &amp; persona claim</div>
+            <div class="start"><strong>Start here:</strong> Confirm your local site runs, then read all 8 personas in <a href="ka_track4_ux.html#persona">&sect;2</a>.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Set up the Knowledge Atlas repo locally per the <a href="ka_track4_setup.html">setup guide</a>.</li>
+              <li>Read all 8 personas. Claim your persona when the TA opens the sign-up.</li>
+              <li>Start drafting your three-panellist prompt. Refer to the <a href="ka_track4_persona_panel.html">panel exercise</a> desiderata D1&ndash;D8.</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Finish your panel-creation prompt draft.</li>
+              <li>Pick the specific page URL your panel will walk on Thursday.</li>
+              <li>Run the prompt once as a dry run and note where the panel sounds generic rather than persona-specific.</li>
+            </ul>
+          </article>
+          <article class="meeting">
+            <div class="kicker">Thursday &mdash; Panel exercise &amp; critique</div>
+            <div class="start"><strong>Start here:</strong> Bring your draft prompt and your chosen page URL.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Submit your prompt via the <a href="ka_track4_persona_panel.html">panel exercise page</a> form.</li>
+              <li>Receive the instructor's critique against desiderata D1&ndash;D8.</li>
+              <li>Revise your prompt based on critique. Run the revised panel on your page.</li>
+              <li>Capture the full panel transcript.</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Write a one-page journey note: what the panel encountered, what tripped them, what they could not find, what would have helped.</li>
+              <li>Tag each finding with a Nielsen heuristic where applicable.</li>
+              <li>File at least one finding as a GitHub Issue with the <code>ux-journey</code> label.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Week deliverables</h2>
+        <article class="deliverable">
+          <h3><span class="num">D1</span> Revised panel-creation prompt</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>The prompt is the instrument that generates all your usability data for the rest of the quarter. A vague prompt produces generic observations; a well-constructed prompt produces findings you can act on.</p>
+              <p><strong>What to submit</strong><br>The final revised prompt (post-critique), submitted via the panel exercise form.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Meets all 8 desiderata. Each panellist has a named context, explicit goals, a declared knowledge state, and an output protocol. Includes a falsifier.</p>
+              <p><strong>Example</strong><br>Three panellists for Maya Chen: (1) Maya in Week 3, first visit, on her phone during a bus ride; (2) Maya in Week 6, revisiting to finish A1, on her laptop; (3) Maya's roommate who overheard about the site but has no CogSci background.</p>
+            </div>
+          </div>
+        </article>
+        <article class="deliverable">
+          <h3><span class="num">D2</span> Panel transcript + journey note</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>The transcript is your raw data. The journey note is your first analysis. Together they demonstrate that you can extract actionable findings from a persona simulation.</p>
+              <p><strong>What to submit</strong><br>Full panel transcript (verbatim) plus a one-page journey note with &ge;3 friction points, each tagged to a heuristic.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Friction points are specific ("the breadcrumb says 'Home' but links to the 160sp schedule, violating H2 &mdash; match between system and real world") rather than vague ("navigation is confusing").</p>
+              <p><strong>Example</strong><br>Filed as a PR to <code>docs/ux/journeys/</code> with the journey note as a Markdown file.</p>
+            </div>
+          </div>
+        </article>
+        <article class="deliverable">
+          <h3><span class="num">D3</span> One GitHub Issue</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>Issues turn findings into actionable work items. The <code>ux-journey</code> label makes them findable by anyone working on site improvements.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Title names the page and the problem. Body includes the heuristic violated, the severity, a screenshot or quote from the panel, and a proposed fix.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer-note">These pages are built from the student-facing Track 4 roadmap and styled for the K-ATLAS 160sp shell.</p>
+    </main>
+  </div>
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

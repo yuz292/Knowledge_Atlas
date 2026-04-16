@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 4 &middot; Week 7 &middot; Interaction Design &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track4_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 4","track4_hub.html"],["Week 7",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Track 4 &middot; Week 7</div>
+      <h1>Integration, re-evaluation &amp; presentation</h1>
+      <p>The final week brings everything together. You re-run your persona panel on the pages you fixed, measure improvement, and present your work in a 10-minute assertion-evidence slide deck.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>Did your fixes actually improve the experience for your persona &mdash; and what should the summer development sprint focus on next?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 4 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 4</div>
+        <h2>Week sequence</h2>
+        <div class="muted">Work this page before you broaden.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track4_hub.html">Overview</a></li>
+        <li><a href="track4_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track4_week_4.html">Week 4</a></li>
+        <li><a href="track4_week_5.html">Week 5</a></li>
+        <li><a href="track4_week_6.html">Week 6</a></li>
+        <li><a class="active" href="track4_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track4_setup.html">Setup guide</a></li>
+        <li><a href="ka_track4_ux.html">Full UX overview</a></li>
+        <li><a href="ka_track4_persona_panel.html">Persona panel exercise</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">The final phase closes the loop. You began by building an evaluation instrument (the persona panel), used it to diagnose problems (journey maps and heuristic audits), implemented fixes (PRs), and now you measure whether the fixes worked by re-running the same instrument on the same pages. This is the empirical evaluation of your own work.</p>
+        <div class="callout callout-teal">
+          <h3>Before/after with the same instrument</h3>
+          <p>Run the exact same panel prompt on the exact same pages you audited in Week 5, now with your fixes applied. Compare friction inventory counts, severity distributions, and panel satisfaction ratings. The difference is your measured impact.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Re-evaluation protocol</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Step 1: Re-run the panel</h3>
+            <p>Use your revised panel prompt (the same one from Week 3.5, updated if needed) on at least 4 pages from your cluster &mdash; including the pages where you implemented fixes.</p>
+          </div>
+          <div class="card">
+            <h3>Step 2: Compare friction inventories</h3>
+            <p>Count: how many friction points existed before? How many remain? Which heuristics improved? Which are unchanged? Did any new friction points appear?</p>
+          </div>
+          <div class="card">
+            <h3>Step 3: Measure severity shift</h3>
+            <p>Did catastrophic violations drop to major? Did major drop to minor? A fix that moves a violation from "catastrophic" to "cosmetic" is a significant improvement even if the violation still exists.</p>
+          </div>
+          <div class="card">
+            <h3>Step 4: Document what remains</h3>
+            <p>Not everything can be fixed in one sprint. The remaining issues, with their severity ratings and suggested approaches, become the roadmap for the summer development sprint.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Presentation format</h2>
+        <p class="lead">Each student presents a 10-minute assertion-evidence slide deck. Every slide has a sentence headline (the assertion) supported by visual evidence (screenshot, data, diagram) &mdash; no bullet-point slides.</p>
+        <div class="cards">
+          <div class="card">
+            <h3>Slide 1: Persona portrait</h3>
+            <p>Who is your persona? What do they want from K-ATLAS? What is their time budget, device, and knowledge state?</p>
+          </div>
+          <div class="card">
+            <h3>Slides 2&ndash;3: Journey map with friction</h3>
+            <p>The key journey from Week 4, annotated with the friction points your panel found. Visual: a step-by-step diagram with red flags at friction points.</p>
+          </div>
+          <div class="card">
+            <h3>Slides 4&ndash;5: Top audit findings</h3>
+            <p>Your 3 most important findings from the Week 5 heuristic audit. For each: the heuristic violated, the evidence, and why it matters for your persona.</p>
+          </div>
+          <div class="card">
+            <h3>Slides 6&ndash;7: Fixes implemented</h3>
+            <p>Before/after screenshots of your PRs. For each: what changed, which heuristic was addressed, and the cross-persona review verdict.</p>
+          </div>
+          <div class="card">
+            <h3>Slide 8: Measured improvement</h3>
+            <p>Friction inventory comparison: before vs. after. How many violations resolved? How did severity distribution change?</p>
+          </div>
+          <div class="card">
+            <h3>Slides 9&ndash;10: Remaining issues &amp; recommendations</h3>
+            <p>What should the summer sprint focus on? Rank by severity &times; frequency. Which user types are best served now? Which are worst served?</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <div class="meeting-grid">
+          <article class="meeting">
+            <div class="kicker">Tuesday &mdash; Re-evaluation &amp; deck prep</div>
+            <div class="start"><strong>Start here:</strong> Re-run your panel on the pages you fixed. Collect before/after friction inventories.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Run the panel re-evaluation on at least 4 pages.</li>
+              <li>Compare friction inventories and compute improvement metrics.</li>
+              <li>Begin building the slide deck. Assertion-evidence format: every slide has a sentence headline.</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Finalise the slide deck (10 slides max).</li>
+              <li>Write the final journey document with updated friction inventory.</li>
+              <li>Prepare a 1-page "remaining issues" document for the summer sprint roadmap.</li>
+            </ul>
+          </article>
+          <article class="meeting">
+            <div class="kicker">Thursday &mdash; Presentations &amp; synthesis</div>
+            <div class="start"><strong>Start here:</strong> Your 10-minute deck is ready.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Each student presents (10 min + 5 min Q&amp;A).</li>
+              <li>Cross-persona synthesis: which pages need the most work? Which user types are best/worst served?</li>
+              <li>Collectively build the summer sprint priority matrix: page &times; persona &times; severity.</li>
+            </ul>
+            <h3>After class</h3>
+            <ul class="tight">
+              <li>Submit final slide deck, journey documents, and remaining-issues document.</li>
+              <li>Ensure all PRs are merged or documented as open issues.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Week deliverables</h2>
+        <article class="deliverable">
+          <h3><span class="num">D8</span> Re-evaluation report</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>The re-evaluation closes the empirical loop. It proves your fixes worked (or didn't) using the same instrument you used for diagnosis.</p>
+              <p><strong>What to submit</strong><br>Before/after friction inventories for at least 4 pages. Summary metrics: violations resolved, severity shifts, new issues introduced.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Honest about what improved and what did not. New issues introduced by fixes are documented, not hidden.</p>
+            </div>
+          </div>
+        </article>
+        <article class="deliverable">
+          <h3><span class="num">D9</span> Assertion-evidence slide deck</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>The deck is the final communication artefact. It synthesises your entire quarter's work into a coherent 10-minute narrative.</p>
+              <p><strong>What to submit</strong><br>10-slide deck in assertion-evidence format. No bullet-point slides. Every claim supported by visual evidence.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>A viewer who missed every class could understand: what the persona needed, what was broken, what was fixed, and what remains.</p>
+            </div>
+          </div>
+        </article>
+        <article class="deliverable">
+          <h3><span class="num">D10</span> Summer sprint recommendations</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>The quarter ends but the site doesn't. Your remaining-issues document becomes the input for summer development.</p>
+              <p><strong>What to submit</strong><br>1-page document ranking remaining issues by severity &times; frequency, with suggested approaches and which persona each issue most affects.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Actionable, prioritised, and grounded in evidence from the quarter. A developer who reads only this document knows where to start.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer-note">These pages are built from the student-facing Track 4 roadmap and styled for the K-ATLAS 160sp shell.</p>
+    </main>
+  </div>
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>

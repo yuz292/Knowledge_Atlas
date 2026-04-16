@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track 4 &middot; Week 6 &middot; Interaction Design &middot; COGS 160</title>
+  <link rel="stylesheet" href="../ka_atlas_shell.css">
+  <link rel="stylesheet" href="track4_weeks.css">
+</head>
+<body data-ka-active=""
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 4","track4_hub.html"],["Week 6",""]]'>
+  <div id="ka-navbar-slot"></div>
+  <div id="ka-breadcrumb-slot"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Track 4 &middot; Week 6</div>
+      <h1>Fix sprints &amp; cross-persona review</h1>
+      <p>Diagnosis is done. This week you transition from finding problems to solving them &mdash; and proving that your solutions actually work for your persona without breaking the experience for someone else's.</p>
+      <div class="week-question">
+        <div class="label">This week's question</div>
+        <p>Can you implement your top-severity fixes in clean Pull Requests, and can another student's persona still use the page after your changes?</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <aside class="subnav" aria-label="Track 4 page navigation">
+      <div class="subnav-head">
+        <div class="kicker">Track 4</div>
+        <h2>Week sequence</h2>
+        <div class="muted">Work this page before you broaden.</div>
+      </div>
+      <ul class="subnav-list">
+        <li><a href="track4_hub.html">Overview</a></li>
+        <li><a href="track4_week_3_5.html">Week 3.5</a></li>
+        <li><a href="track4_week_4.html">Week 4</a></li>
+        <li><a href="track4_week_5.html">Week 5</a></li>
+        <li><a class="active" href="track4_week_6.html">Week 6</a></li>
+        <li><a href="track4_week_7.html">Week 7</a></li>
+      </ul>
+      <div class="subnav-divider"></div>
+      <ul class="subnav-links">
+        <li><a href="ka_track4_setup.html">Setup guide</a></li>
+        <li><a href="ka_track4_ux.html">Full UX overview</a></li>
+        <li><a href="ka_track4_persona_panel.html">Persona panel exercise</a></li>
+      </ul>
+    </aside>
+
+    <main id="ka-main">
+      <section class="section">
+        <h2>Why this week matters</h2>
+        <p class="lead">Finding problems is necessary but not sufficient. This week you demonstrate that you can fix real usability issues in production code, submit them as reviewable Pull Requests, and verify that fixes for one persona do not create new problems for another.</p>
+        <div class="callout callout-amber">
+          <h3>Cross-persona review is mandatory</h3>
+          <p>Every PR gets reviewed by a student holding a different persona. A navigation fix that helps the Practitioner (who wants to get in and out fast) might remove contextual information that the Researcher needs. The cross-review catches these trade-offs before they ship.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Types of fixes</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Navigation &amp; information architecture</h3>
+            <p>Missing breadcrumbs, inconsistent back-links, dead-end pages, unclear active-state indicators, broken or misleading labels. These are often CSS + HTML fixes with high impact.</p>
+          </div>
+          <div class="card">
+            <h3>Interactivity</h3>
+            <p>Broken or missing search/filter, non-functional buttons, localStorage issues, keyboard navigation gaps, screen reader failures. These require JS work and testing.</p>
+          </div>
+          <div class="card">
+            <h3>Visualization improvements</h3>
+            <p>Axis labels, colour contrast, responsive sizing, tooltip clarity, data-ink ratio. Apply Tufte's principle: every pixel of ink should convey information.</p>
+          </div>
+          <div class="card">
+            <h3>Content hierarchy</h3>
+            <p>Portal page routing, card layout, progressive disclosure of complexity. The question is always: does the page reveal the right amount of information for the user's current task?</p>
+          </div>
+          <div class="card">
+            <h3>Accessibility</h3>
+            <p>Colour contrast (WCAG 2.1 AA: 4.5:1 for text, 3:1 for large text), keyboard navigability, focus indicators, alt text, ARIA labels. These are non-negotiable on any merge.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>How to use AI this week</h2>
+        <div class="ai-grid">
+          <div class="ai-card good">
+            <h3>Ask AI for</h3>
+            <ul class="tight-list">
+              <li>implementation &mdash; "write the CSS change that fixes this breadcrumb inconsistency"</li>
+              <li>accessibility checking &mdash; "does this colour combination meet WCAG AA?"</li>
+              <li>test generation &mdash; "write a checklist I can use to verify this fix works in Chrome and Firefox"</li>
+              <li>PR description &mdash; "summarise this change in terms of which heuristic it addresses"</li>
+            </ul>
+          </div>
+          <div class="ai-card bad">
+            <h3>Do not ask AI to</h3>
+            <ul class="tight-list">
+              <li>generate a fix you do not understand &mdash; you must be able to explain every line in the PR</li>
+              <li>skip the cross-persona review &mdash; "it looks fine to me" is not a review</li>
+              <li>merge without testing on the local server</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>In-class activities</h2>
+        <div class="meeting-grid">
+          <article class="meeting">
+            <div class="kicker">Tuesday &mdash; Fix sprint planning</div>
+            <div class="start"><strong>Start here:</strong> Bring your audit report's top 5 findings ranked by priority.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Present your top 5 fixes with mockups, wireframes, or code sketches.</li>
+              <li>Instructor approves or redirects &mdash; some fixes may be too large; scope down.</li>
+              <li>Begin implementing fix #1 and fix #2.</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Complete fixes #1&ndash;#3. Test each on the local server.</li>
+              <li>Take before/after screenshots for each fix.</li>
+              <li>Open PRs with clear descriptions citing the heuristic addressed.</li>
+            </ul>
+          </article>
+          <article class="meeting">
+            <div class="kicker">Thursday &mdash; Cross-persona review</div>
+            <div class="start"><strong>Start here:</strong> Each student reviews one of the other students' PRs.</div>
+            <h3>In class</h3>
+            <ul class="tight">
+              <li>Walk the fixed page through <em>your</em> persona's eyes (not the fixer's persona).</li>
+              <li>File review comments: does the fix help your persona, hurt them, or have no effect?</li>
+              <li>Discuss trade-offs as a group. If a fix helps one persona but hurts another, how do you resolve it?</li>
+            </ul>
+            <h3>Home</h3>
+            <ul class="tight">
+              <li>Complete fixes #4 and #5 based on feedback.</li>
+              <li>Merge approved PRs.</li>
+              <li>Update friction inventory to reflect resolved issues.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Week deliverables</h2>
+        <article class="deliverable">
+          <h3><span class="num">D7</span> Five merged Pull Requests</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>Rationale</strong><br>PRs are the tangible output of the fix sprint. They prove you can move from diagnosis to treatment in production code.</p>
+              <p><strong>What to submit</strong><br>5 PRs, each with: a title naming the page and heuristic, before/after screenshots, a description explaining the fix, and at least one cross-persona review comment.</p>
+            </div>
+            <div>
+              <p><strong>What good work looks like</strong><br>Each PR addresses a specific, documented finding from the audit report. Before/after screenshots make the improvement visible. The cross-review confirms no persona regression.</p>
+              <p><strong>Example</strong><br>"Fix H4 violation: standardise sidebar link colours across content-nav pages. Before: 3 different teal shades. After: consistent --teal (#2A7868) on all 13 pages. Cross-review: Practitioner persona confirms faster scanning."</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer-note">These pages are built from the student-facing Track 4 roadmap and styled for the K-ATLAS 160sp shell.</p>
+    </main>
+  </div>
+  <script src="../ka_canonical_navbar.js" defer></script>
+</body>
+</html>
