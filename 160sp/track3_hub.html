@@ -3,88 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Track 3 Overview · Track 3 · COGS 160</title>
-  <link rel="stylesheet" href="../ka_atlas_shell.css">
-  <link rel="stylesheet" href="track3_weeks.css">
+  <title>Track 3 Hub Redirect</title>
+  <meta http-equiv="refresh" content="0; url=ka_track3_hub.html">
+  <link rel="canonical" href="ka_track3_hub.html">
 </head>
-<body data-ka-active="track3" data-ka-crumbs='[[&quot;Home&quot;, &quot;../ka_home.html&quot;], [&quot;COGS 160&quot;, &quot;ka_schedule.html&quot;], [&quot;Track 3&quot;, &quot;track3_hub.html&quot;]]'>
-  <div id="ka-navbar-slot"></div>
-  <div id="ka-breadcrumb-slot"></div>
-  <div class="breadcrumb-fallback"><div class="inner">Home / COGS 160 / Track 3 / Track 3 Overview</div></div>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="eyebrow">COGS 160 · Track 3</div>
-      <h1>Track 3: AI and VR studio</h1>
-      <p>A student-facing roadmap for the final 7.5 weeks, focused on transforming strong built-environment models into controlled, usable research variants.</p>
-    </div>
-  </header>
-  <div class="page-shell">
-    
-    <aside class="subnav" aria-label="Track 3 page navigation">
-      <div class="subnav-head">
-        <div class="kicker">Track 3</div>
-        <h2>AI + VR studio</h2>
-        <div class="muted">Weekly pages and deliverables</div>
-      </div>
-      <ul class="subnav-list">
-        <li><a class="active" href="track3_hub.html">Overview</a></li><li><a class="" href="track3_week_1.html">Week 1</a></li><li><a class="" href="track3_week_2.html">Week 2</a></li><li><a class="" href="track3_week_3.html">Week 3</a></li><li><a class="" href="track3_week_4.html">Week 4</a></li><li><a class="" href="track3_week_5.html">Week 5</a></li><li><a class="" href="track3_week_6.html">Week 6</a></li><li><a class="" href="track3_week_7.html">Week 7</a></li><li><a class="" href="track3_week_7_5.html">Week 7.5</a></li>
-        <li class="subnav-divider"></li>
-        <li><a class="" href="ka_track3_hub.html">Team Hub</a></li><li><a class="" href="ka_track3_setup.html">Setup Guide</a></li><li><a class="" href="ka_track3_resources.html">Resources</a></li><li><a class="" href="ka_track3_vr.html">VR Assignment</a></li>
-      </ul>
-    </aside>
-    
-    <main>
-      
-<section class="section">
-  <h2>Studio framing</h2>
-  <p>Current AI tools can generate useful parts of 3D environments, but they do not reliably produce coherent, editable, Unreal-ready experimental rooms from research-style specifications. Your job in this studio is to work on the missing layer: controlled transformation of existing built-environment models.</p>
-  <p>That means the class is not mainly about text-to-3D generation. It is about taking strong source models and learning how to alter them in ways that are geometrically plausible, experimentally meaningful, and clearly documented.</p>
-  <p>Some requests will not arrive in everyday design language. A researcher may ask for a room that increases refuge while preserving visibility control, or increases awe without making the room feel cold. You must learn how to translate that language into room edits, and how to explain those edits back to a user.</p>
-</section>
-
-<section class="section">
-  <h2>What success looks like</h2>
-  <div class="cards">
-    <div class="card phase-card"><h3>You can start from an existing room model and identify which transformations it can support.</h3></div><div class="card phase-card"><h3>You can map a research-style request onto architectural factors such as ceiling height, wall curvature, enclosure, light, and prospect/refuge.</h3></div><div class="card phase-card"><h3>You can implement or specify controlled edits without breaking navigation, openings, materials, or scene structure.</h3></div><div class="card phase-card"><h3>You can show what changed, why it changed, and which latent variables the change was meant to influence.</h3></div><div class="card phase-card"><h3>You can package variants so another researcher could use them in an experiment.</h3></div>
-  </div>
-</section>
-
-<section class="section">
-  <h2>How to work with AI in this track</h2>
-  <div class="prompt-box"><p>You are encouraged to ask AI for definitions, comparisons of toolchains, code sketches, debugging suggestions, and summaries of relevant papers. But you must convert that advice into concrete tests and artifacts.</p></div>
-  <ol class="tight">
-    <li>You are encouraged to ask AI for definitions, comparisons of toolchains, examples of data structures, code sketches, debugging suggestions, and summaries of relevant papers. But every time you ask AI something important, you should also ask yourself four questions:</li><li>What would I need to know to tell whether the answer is wrong or too vague?</li><li>What concrete evidence or test would show that the advice actually works on a room model?</li><li>What assumptions is the answer making about the toolchain, asset quality, or scene structure?</li><li>What part of the answer needs to be translated into a deliverable for this studio?</li>
-  </ol>
-</section>
-
-<section class="section">
-  <h2>Core factor set</h2>
-  <div class="pill-row">
-    <span class="pill">Because only 7.5 weeks remain, the studio will concentrate on six factors that create the strongest bridge between research language and room transformation.</span><span class="pill">Ceiling Height &amp; Volume</span><span class="pill">Wall Geometry &amp; Curvature</span><span class="pill">Prospect &amp; Refuge</span><span class="pill">Light Properties</span><span class="pill">Surface Materials &amp; Texture</span>
-  </div>
-</section>
-
-<section class="section">
-  <h2>How the studio is organized</h2>
-  <div class="cards">
-    <div class="card"><h3>You will work as a small production studio rather than as isolated individual projects. With a compact team, everyone contributes across roles rather than specialising in one lane. The areas of responsibility below rotate or overlap as the quarter progresses.</h3></div><div class="card"><h3>Benchmark Rooms &amp; Asset Integrity</h3><p>Curate, inspect, and maintain the shared room corpus. Everyone does this in Week 1; afterwards one person owns corpus health.</p></div><div class="card"><h3>Factor Ontology &amp; Research Mapping</h3><p>Define and refine the six core factors. Connect research language to measurable room parameters.</p></div><div class="card"><h3>Transformation Operators</h3><p>Build and test the Blender-based operators that actually change room geometry, materials, and lighting.</p></div><div class="card"><h3>Researcher Interface &amp; Packaging</h3><p>Design the workflow, logs, and export format so another lab could use the variants.</p></div><div class="card"><h3>Integration</h3><p>Keep the pieces consistent. In a small team this is a shared duty rather than a dedicated role.</p></div>
-  </div>
-  <h3>Standing weekly packet</h3>
-  <ul class="tight">
-    <li>one primary artifact for the week</li><li>one short memo on what was learned, what broke, and what remains uncertain</li><li>evidence of completion: screenshots, short video, export log, scene file, or test notes</li><li>a self-assessment against that week&#x27;s criteria</li>
-  </ul>
-</section>
-
-<section class="section">
-  <h2>Week-by-week pages</h2>
-  <div class="quick-links">
-    <a class="quick-link" href="track3_week_1.html"><h4>Week 1</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_2.html"><h4>Week 2</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_3.html"><h4>Week 3</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_4.html"><h4>Week 4</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_5.html"><h4>Week 5</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_6.html"><h4>Week 6</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_7.html"><h4>Week 7</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a><a class="quick-link" href="track3_week_7_5.html"><h4>Week 7.5</h4><div class="muted">Open this week&apos;s question, meetings, homework, and deliverables.</div></a>
-  </div>
-</section>
-
-      <p class="footer-note">These pages are built from the student-facing Track 3 roadmap and styled for the K-ATLAS 160sp shell.</p>
-    </main>
-  </div>
-  <script src="../ka_canonical_navbar.js" defer></script>
+<body>
+  <p>Track 3 has moved to <a href="ka_track3_hub.html">ka_track3_hub.html</a>.</p>
+  <script>
+    window.location.replace('ka_track3_hub.html');
+  </script>
 </body>
 </html>

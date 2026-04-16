@@ -295,11 +295,11 @@
 
 <div class="page-hero">
   <div class="eyebrow">COGS 160 · Track 3 of 4</div>
-  <h1>Track THREE: AI &amp; VR</h1>
+  <h1>Track THREE: AI &amp; VR Experiments</h1>
   <p>
-    Learn to design 3D environments in Unreal Engine and an AI frontend so that students and researchers
-    can quickly build stimuli by choosing one of your 'rooms' and modifying it — e.g., make the walls
-    curvilinear, change the ceiling height, add windows, change wall color, etc.
+    Learn to build controlled neuroarchitecture experiments from strong room assets. In this course you
+    inspect and transform rooms in Blender, then deliver browser-runnable A-Frame scenes that students,
+    TAs, and researchers can actually open, test, and critique.
   </p>
   <div class="hero-cta-row" style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;">
     <a href="ka_track3_setup.html"
@@ -322,132 +322,104 @@
   <div class="content-section">
     <h2 class="section-title" id="overview">Track Overview</h2>
     <p class="section-intro">
-      Neuroarchitecture experiments need realistic 3D rooms whose properties can be systematically varied.
-      Building those rooms from scratch in Unreal is slow. Your job is to create a library of base rooms —
-      and a simple AI-assisted interface that lets researchers modify them without 3D modeling expertise.
-      A researcher should be able to say "make the walls curvilinear" or "raise the ceiling to 4 meters" and
-      get a usable result.
+      Neuroarchitecture experiments need environments whose properties can be varied in a controlled way.
+      Track 3 builds that missing layer: benchmark rooms, transformation logic, and one browser-runnable
+      experimental scene. The aim is not to produce the most photorealistic environment possible. The aim
+      is to produce a scene that preserves the logic of a real experiment and can be reviewed by the rest of
+      the course without a heavy engine install.
     </p>
 
     <div class="callout callout-info">
-      <strong>The Goal:</strong> Build a library of configurable 3D rooms that are (a) importable into Unreal Engine
-      for VR experiments, and (b) modifiable through a simple AI-powered interface. The end user is a researcher
-      or student who wants to quickly build an experimental stimulus by picking a room type and adjusting its
-      properties — not someone who knows Blender or Unreal.
+      <strong>The course contract:</strong> Blender is the asset-preparation tool. A-Frame is the official
+      submission path for final Track 3 scenes. Unity and Unreal remain acceptable prototype environments,
+      but they are not the grading contract and not the required student baseline.
     </div>
 
     <h3 style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Why This Matters</h3>
     <p>The Image Tagger (Track 1) analyzes 2D photos of rooms. But the experiments that validate those
-    analyses need controlled 3D environments where you can change one architectural variable at a time — ceiling height,
-    lighting color temperature, wall curvature, surface material — while holding everything else constant.
-    Real buildings cannot do this. VR can, but only if someone builds the rooms. That is your track.</p>
+    analyses need controlled 3D environments where one architectural variable can be changed while others
+    are held stable: ceiling height, window area, wall curvature, material warmth, prospect/refuge, and so on.
+    Real buildings are too costly and too rigid for that kind of rapid comparison. Track 3 exists to make
+    those comparisons operational.</p>
 
-    <h3 style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">How AI Changes the Game</h3>
-    <p>Traditional 3D room creation requires months of Blender/Maya training. AI tools in 2026 dramatically
-    reduce that barrier — but they solve different parts of the problem. Understanding what AI can and
-    cannot do is central to this track.</p>
-
-    <div class="callout callout-info" style="border-left:4px solid #E8872A;background:#FFF8F0;">
-      <strong style="color:#E8872A;">What AI Does Well Right Now</strong>
-      <ul style="margin-top:10px;margin-left:1.2rem;">
-        <li><strong>Furniture and objects:</strong> <a href="https://www.meshy.ai/" style="color:var(--green);">Meshy</a> has a native Unreal Engine plugin — type "mid-century modern armchair" and get a textured, UV-mapped mesh directly in the editor. <a href="https://www.tripo3d.ai" style="color:var(--green);">Tripo3D</a> produces clean quad-topology meshes with 4K PBR textures, VR-ready out of the box. Neither requires 3D modeling knowledge.</li>
-        <li><strong>Materials and textures:</strong> AI material generators create PBR-ready surfaces (wood grain, concrete, fabric) that can be applied to any geometry in Unreal. Tripo has a dedicated material pipeline.</li>
-        <li><strong>Room layout from floor plans:</strong> <a href="https://planner5d.com/use/ai-room-design" style="color:var(--green);">Planner5D</a> and <a href="https://arcadium3d.com/" style="color:var(--green);">Arcadium</a> convert 2D floor plans to furnished 3D walkthroughs with AI-placed furniture. Good for rapid visualization.</li>
-        <li><strong>Real-room capture:</strong> Luma AI scans real rooms from phone video into navigable 3D using Gaussian splatting. Instant "ground truth" environments.</li>
-        <li><strong>In-engine AI:</strong> <a href="https://ludusengine.com/" style="color:var(--green);">Ludus AI</a> provides scene generation, Blueprint copilot, and AI-assisted development directly inside Unreal Engine 5. UE5.7's PCG framework is now production-ready for procedural content.</li>
-      </ul>
-    </div>
-
-    <div class="callout callout-info" style="margin-top:16px;">
-      <strong>The Gap AI Doesn't Yet Fill</strong>
-      <p style="margin-top:8px;">No single tool currently takes "a 4m × 6m office with curvilinear walls and three north-facing windows"
-      and outputs an Unreal-ready FBX with proper collision, UV-mapped materials, and parametric editability.
-      AI generates great <em>parts</em> (objects, textures, layouts). Your job is to build the <em>assembly system</em>
-      that combines those parts into coherent, modifiable rooms — and the <em>interface</em> that lets researchers
-      drive the process without learning Blender or Unreal.</p>
-    </div>
-
-    <h3 id="workflow" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">The Hybrid Workflow: AI + Procedural + Assembly</h3>
-    <p>The realistic approach is a three-layer stack where AI handles what it's good at and code handles the rest:</p>
+    <h3 id="workflow" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Course Workflow: Blender + A-Frame</h3>
+    <p>The track is organized as a three-part workflow. Asset preparation and transformation happen first,
+    scene delivery comes later.</p>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0 28px;">
       <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;">
-        <div style="font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:6px;">Layer 1: Room Shell (Procedural)</div>
+        <div style="font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:6px;">Layer 1: Benchmark Rooms &amp; Asset Cleanup</div>
         <div style="font-size:0.84rem;color:var(--muted);line-height:1.6;">
-          Walls, floor, ceiling, and openings are generated by parameterized code — Blender Python scripts
-          or UE5's PCG framework. Parameters: dimensions, wall curvature, ceiling height, window count/placement,
-          door positions. This layer gives full parametric control. AI assists by translating natural-language
-          descriptions into parameter values.
+          Find room assets that are worth transforming, inspect them in Blender, correct scale, note hierarchy,
+          and document what kinds of edits the room can and cannot support.
         </div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;">
-        <div style="font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:6px;">Layer 2: Materials, Textures &amp; Lighting (AI)</div>
+        <div style="font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:6px;">Layer 2: Controlled Variants</div>
         <div style="font-size:0.84rem;color:var(--muted);line-height:1.6;">
-          Surface materials (wood, stone, concrete, biophilic textures) come from AI texture generators
-          producing PBR-ready surfaces. Lighting rigs — warm/cool CCT presets, natural daylight through
-          windows, accent lighting — are AI-configured from descriptions like "late-afternoon sun through
-          north windows." This layer transforms the bare shell into a space with material identity and
-          atmospheric quality. Furniture is secondary and can be added later if needed.
+          Build one or more variants that change a specific factor cleanly. The important question is not
+          “does it look nice?” but “can we say exactly what changed and what stayed constant?”
         </div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;">
-        <div style="font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:6px;">Layer 3: Modification Interface (AI + UI)</div>
+        <div style="font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:6px;">Layer 3: Browser Scene &amp; Validation</div>
         <div style="font-size:0.84rem;color:var(--muted);line-height:1.6;">
-          The critical deliverable: a web interface where a researcher picks a base room and says
-          "make walls curvilinear" or "change ceiling to 4m." The interface uses an LLM to parse the request,
-          maps it to parameter changes (Layer 1) or new asset generation (Layer 2), re-renders, and exports
-          to Unreal. <strong>This is the product your track builds.</strong>
+          Move the result into one browser-runnable A-Frame scene with condition labels, event hooks,
+          and a log schema that another student can inspect without special hardware or an engine install.
         </div>
       </div>
     </div>
 
-    <h3 id="aitools" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">AI Tools You'll Use</h3>
+    <div class="callout callout-info" style="border-left:4px solid #E8872A;background:#FFF8F0;">
+      <strong style="color:#E8872A;">Why the course uses A-Frame</strong>
+      <ul style="margin-top:10px;margin-left:1.2rem;">
+        <li><strong>Pros:</strong> browser-runnable scenes, easier Git workflow, easier TA review, easier handoff to future classes, and much lower setup friction than a full engine project.</li>
+        <li><strong>Cons:</strong> lower fidelity than Unreal, less headroom for very ambitious lighting and physics, and weaker support for heavy headset-specific engineering.</li>
+        <li><strong>Course judgment:</strong> for this class, shareability, reviewability, and experimental clarity matter more than maximal photorealism. That is why A-Frame is the official submission path.</li>
+      </ul>
+    </div>
+
+    <h3 id="aitools" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Toolchain in this course</h3>
     <div style="overflow-x:auto;margin-bottom:24px;">
       <table style="width:100%;border-collapse:collapse;font-size:0.84rem;border:1px solid var(--border);border-radius:8px;overflow:hidden;">
         <thead>
           <tr style="background:var(--navy);color:#fff;">
             <th style="padding:10px 12px;text-align:left;font-weight:600;">Tool</th>
-            <th style="padding:10px 12px;text-align:left;font-weight:600;">What It Does</th>
-            <th style="padding:10px 12px;text-align:left;font-weight:600;">Unreal-Ready?</th>
-            <th style="padding:10px 12px;text-align:left;font-weight:600;">Best For</th>
+            <th style="padding:10px 12px;text-align:left;font-weight:600;">Role in Track 3</th>
+            <th style="padding:10px 12px;text-align:left;font-weight:600;">Strengths</th>
+            <th style="padding:10px 12px;text-align:left;font-weight:600;">Limits</th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px 12px;font-weight:600;">Meshy</td>
-            <td style="padding:8px 12px;color:var(--muted);">Text/image → 3D objects with textures</td>
-            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Yes — native UE plugin</td>
-            <td style="padding:8px 12px;color:var(--muted);">Furniture, fixtures, decorative objects</td>
+            <td style="padding:8px 12px;font-weight:600;">A-Frame</td>
+            <td style="padding:8px 12px;color:var(--muted);">Official course scene runtime and submission format</td>
+            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Browser-runnable, easy review, easy handoff, strong enough for controlled experiments</td>
+            <td style="padding:8px 12px;color:var(--muted);">Lower fidelity and less headroom than a full engine</td>
           </tr>
           <tr style="background:#FAFAF6;border-bottom:1px solid var(--border);">
-            <td style="padding:8px 12px;font-weight:600;">Tripo3D</td>
-            <td style="padding:8px 12px;color:var(--muted);">Text/image → clean quad-topology 3D, 4K PBR textures</td>
-            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Yes — FBX/glTF export</td>
-            <td style="padding:8px 12px;color:var(--muted);">High-quality furniture, materials, architectural elements</td>
+            <td style="padding:8px 12px;font-weight:600;">Blender</td>
+            <td style="padding:8px 12px;color:var(--muted);">Asset inspection, scale correction, cleanup, and transformation staging</td>
+            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Neutral editor, portable exports, strong manual QA</td>
+            <td style="padding:8px 12px;color:var(--muted);">Steeper than pure browser editing; still requires care with hierarchy and export settings</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px 12px;font-weight:600;">Ludus AI</td>
-            <td style="padding:8px 12px;color:var(--muted);">AI toolkit inside UE5: scene generation, Blueprint copilot</td>
-            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Native UE5</td>
-            <td style="padding:8px 12px;color:var(--muted);">In-engine scene assembly, code generation</td>
+            <td style="padding:8px 12px;font-weight:600;">Unity / Unreal</td>
+            <td style="padding:8px 12px;color:var(--muted);">Optional prototype environments for students exploring future extensions</td>
+            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Better rendering, stronger tooling, richer headset support</td>
+            <td style="padding:8px 12px;color:var(--muted);">Not the course baseline and not the official submission contract</td>
           </tr>
           <tr style="background:#FAFAF6;border-bottom:1px solid var(--border);">
-            <td style="padding:8px 12px;font-weight:600;">Planner5D / Arcadium</td>
-            <td style="padding:8px 12px;color:var(--muted);">Floor plan → furnished 3D walkthrough</td>
-            <td style="padding:8px 12px;color:var(--muted);">Partial — needs export cleanup</td>
-            <td style="padding:8px 12px;color:var(--muted);">Rapid visualization, layout prototyping</td>
+            <td style="padding:8px 12px;font-weight:600;">LLM assistants</td>
+            <td style="padding:8px 12px;color:var(--muted);">Help translate research language into factors, specs, and checks</td>
+            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Fast ideation, summaries, debugging support, translation help</td>
+            <td style="padding:8px 12px;color:var(--muted);">Cannot be trusted to define the experiment or validate outputs on their own</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px 12px;font-weight:600;">Luma AI</td>
-            <td style="padding:8px 12px;color:var(--muted);">Phone video → 3D scene (Gaussian splatting)</td>
-            <td style="padding:8px 12px;color:var(--muted);">No — point cloud, not editable mesh</td>
-            <td style="padding:8px 12px;color:var(--muted);">Capturing real rooms as references</td>
-          </tr>
-          <tr style="background:#FAFAF6;">
-            <td style="padding:8px 12px;font-weight:600;">Blender + Python API</td>
-            <td style="padding:8px 12px;color:var(--muted);">Scripted geometry generation, AI-callable</td>
-            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Yes — FBX/Datasmith export</td>
-            <td style="padding:8px 12px;color:var(--muted);">Room shells, parametric walls/ceilings, the backend for your AI interface</td>
+            <td style="padding:8px 12px;font-weight:600;">Meshy / Tripo</td>
+            <td style="padding:8px 12px;color:var(--muted);">Optional source of isolated props or experimental drafts</td>
+            <td style="padding:8px 12px;color:var(--green);font-weight:600;">Fast for tables, lamps, plants, and other small objects</td>
+            <td style="padding:8px 12px;color:var(--muted);">Too unreliable to serve as the sole source of the benchmark room corpus</td>
           </tr>
         </tbody>
       </table>
@@ -544,35 +516,32 @@
     </div>
 
     <h3 id="baserooms" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Where to Find Base Rooms</h3>
-    <p>Students are not expected to model rooms from scratch. Begin with existing high-quality rooms, then
+    <p>Students are not expected to model rooms from scratch. Begin with portable, inspectable assets, then
     modify their architectural properties to manipulate latent variables. Good sources for downloadable
     base rooms include:</p>
     <ul>
-      <li><strong><a href="https://www.unrealengine.com/marketplace" style="color:var(--green);">Unreal Marketplace — ArchViz Packs</a>:</strong> Photorealistic interiors already set up with Lumen lighting and PBR materials. Search for "ArchViz Interior" or "Realistic Room." Many are free or &lt;$20. These are Unreal-native and the fastest starting point.</li>
-      <li><strong><a href="https://sketchfab.com" style="color:var(--green);">Sketchfab</a>:</strong> Thousands of CC-licensed room models in FBX/glTF. Filter by "Architecture → Interior" and "Downloadable." Quality varies — look for quad-topology models with PBR textures.</li>
-      <li><strong><a href="https://www.blender3darchitect.com/" style="color:var(--green);">Blender3DArchitect.com</a>:</strong> Free architectural Blender files: apartments, offices, corridors. Export to FBX for Unreal import. Useful because Blender Python API gives you scripted access to modify geometry.</li>
-      <li><strong><a href="https://polyhaven.com/" style="color:var(--green);">Poly Haven</a>:</strong> Free CC0 HDRIs (for environment lighting), textures, and some 3D models. Essential for realistic natural lighting through windows.</li>
-      <li><strong>Luma AI room scans:</strong> Scan a real room from phone video to get an instant 3D reference. Not directly editable, but valuable for ground-truth comparison.</li>
+      <li><strong><a href="https://sketchfab.com" style="color:var(--green);">Sketchfab</a>:</strong> downloadable interiors in glTF/GLB, FBX, or OBJ. Prefer clean hierarchy and explicit licensing.</li>
+      <li><strong><a href="https://www.turbosquid.com/Search/3D-Models/free/room" style="color:var(--green);">TurboSquid</a>:</strong> useful when the mesh structure survives import well enough to support edits.</li>
+      <li><strong><a href="https://polyhaven.com/" style="color:var(--green);">Poly Haven</a>:</strong> excellent source of CC0 HDRIs, materials, and textures for browser-runnable scenes.</li>
+      <li><strong>Quaternius / Kenney packs:</strong> lightweight props and interior parts that are easier to move through a web workflow than large engine-native packs.</li>
+      <li><strong>Meshy / Tripo:</strong> best used for isolated props or exploratory drafts, not as the only source of the shared benchmark corpus.</li>
     </ul>
 
-    <h3 id="assignment" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Student Assignment: Architectural Modification Briefs</h3>
-    <p>Your core deliverable is a set of <strong>before/after room pairs</strong> demonstrating systematic
-    manipulation of architectural factors and their effect on latent variables. Each brief specifies
-    a single architectural change and predicts its psychological effect. For example:</p>
+    <h3 id="assignment" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Student Assignment: from benchmark room to browser scene</h3>
+    <p>Your core outputs now combine the studio roadmap with the workbook. The track is not only about room images and not only about a final scene. It is about building a defensible chain from source asset to experimental artifact.</p>
 
     <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:16px 0 24px;">
       <div style="font-size:0.84rem;color:var(--muted);line-height:1.7;">
-        <strong style="color:var(--navy);">Example Brief:</strong> Take a standard office room (3.5 m ceiling, rectilinear walls,
-        fluorescent 5000 K lighting, white drywall). Lower the ceiling to 2.5 m, replace drywall with
-        exposed timber paneling, shift lighting to 2700 K warm. <em>Predicted effect:</em> ↑ L25 Coziness/Warmth,
-        ↑ L17 Restorativeness (biophilic material), ↓ L36 Awe/Grandeur (lower ceiling), ↓ L23 Arousal (warm light).
-        Validate with Image Tagger (Track 1) on before/after screenshots.
+        <strong style="color:var(--navy);">Core outputs:</strong>
+        (1) benchmark room sheets,
+        (2) factor and operator specifications,
+        (3) one base-room plus variant package with a clear change log,
+        (4) one browser-runnable <code>vr/scene.html</code> with explicit event hooks and a log schema,
+        and (5) a short researcher-facing workflow or handoff note.
       </div>
     </div>
 
-    <p>Each student produces at least <strong>three modification brief pairs</strong> across different
-    architectural factor categories. The point is not decorating — it is producing controlled experimental
-    stimuli where exactly one envelope variable changes while everything else is held constant.</p>
+    <p>The point is not decorative scene building. It is producing controlled experimental stimuli and explaining exactly what the scene is meant to test, what changed, and what still remains uncertain.</p>
 
     <h3 id="syllabus" style="font-family:Georgia,serif;font-size:1.05rem;color:var(--navy);margin-top:28px;margin-bottom:12px;">Weekly Syllabus</h3>
 
@@ -586,37 +555,40 @@
       </thead>
       <tbody>
         <tr>
-          <td class="week-col">1–2</td>
-          <td class="phase-col">Foundations</td>
-          <td class="activity-col">Article collection (A0). Set up Unreal Engine + Blender. Download a pre-made ArchViz room from UE Marketplace or Sketchfab, import it, and walk through in VR. Understand FBX/glTF pipeline, PBR materials, and Lumen lighting.</td>
+          <td class="week-col">1</td>
+          <td class="phase-col">Setup &amp; benchmark rooms</td>
+          <td class="activity-col">Install Blender, gather candidate rooms, inspect them, and build the first shared benchmark shortlist with room sheets.</td>
+        </tr>
+        <tr>
+          <td class="week-col">2</td>
+          <td class="phase-col">Factors &amp; operator specs</td>
+          <td class="activity-col">Define the reduced factor set, write operator sheets, and make the research-language to room-edit bridge explicit.</td>
         </tr>
         <tr>
           <td class="week-col">3–4</td>
-          <td class="phase-col">Architectural Factor Survey</td>
-          <td class="activity-col">Study the factor → latent variable table above. Take a single base room and produce three variants, each changing one architectural factor: (1) ceiling height, (2) wall curvature or nook, (3) lighting CCT. Screenshot before/after. Run through Image Tagger for validation.</td>
+          <td class="phase-col">Proof of concept &amp; operator library</td>
+          <td class="activity-col">Produce one modest end-to-end proof, then compare operator behavior across rooms and document what is robust, partial, or experimental.</td>
         </tr>
         <tr>
-          <td class="week-col">5–6</td>
-          <td class="phase-col">AI Modification Interface</td>
-          <td class="activity-col">Build the modification frontend. User picks a base room, requests architectural changes ("lower ceiling to 2.5 m," "add bay window with garden prospect," "switch walls to exposed brick"). Interface calls Blender Python API or AI material generator. Output is Unreal-ready FBX.</td>
+          <td class="week-col">5</td>
+          <td class="phase-col">Browser scene build</td>
+          <td class="activity-col">Build the first A-Frame scene, make the IV legible, and open a draft PR with <code>vr/scene.html</code>.</td>
         </tr>
         <tr>
-          <td class="week-col">7–8</td>
-          <td class="phase-col">Room Library &amp; Brief Pairs</td>
-          <td class="activity-col">Expand to cover core room types (office, bedroom, classroom, lobby, corridor). Produce full modification brief pairs for each: before/after screenshots, predicted latent variable shifts, Tagger validation. Test in Unreal for lighting, collision, and walkthrough comfort.</td>
+          <td class="week-col">6</td>
+          <td class="phase-col">Instrumentation &amp; translation pack</td>
+          <td class="activity-col">Add event hooks and log schema, and document how research requests are translated into scene changes and measurement choices.</td>
         </tr>
         <tr>
-          <td class="week-col">9–10</td>
-          <td class="phase-col">Integration &amp; Handoff</td>
-          <td class="activity-col">Package room library with modification briefs. Write researcher guide: "How to create an architectural variant in 10 minutes." Integrate into the Knowledge Atlas site. Course-wide debugging with Track 4 team.</td>
+          <td class="week-col">7–7.5</td>
+          <td class="phase-col">Workflow prototype &amp; final bundle</td>
+          <td class="activity-col">Package the room choice, variant logic, scene, logs, and quick-start workflow so another student or researcher can inspect the complete path.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="callout callout-info" style="margin-top:28px;">
-      <strong>Primary Tool:</strong> <strong>Unreal Engine 5</strong> is the target platform for final rooms (photorealistic rendering,
-      VR support, Lumen lighting). <strong>Blender</strong> is used for modeling and as the scripting backend for
-      AI-driven modifications (Python API). You do not need prior experience with either — we teach both.
+      <strong>Primary working stack:</strong> <strong>Blender</strong> for asset inspection and cleanup, <strong>A-Frame</strong> for final course scenes, and <strong>Unity / Unreal</strong> only when a student is prototyping a future extension and understands that it is not the grading contract.
     </div>
 
     <div class="callout callout-info">
@@ -642,7 +614,7 @@
     <a href="#" class="big-cta big-cta-join" onclick="openJoinModal('3', 'Track 3 — AI &amp; VR'); return false;">
       <div class="big-cta-label">Commit to this track</div>
       <div class="big-cta-head">Join this Track →</div>
-      <div class="big-cta-sub">Build configurable 3D rooms + an AI room-modification harness.</div>
+      <div class="big-cta-sub">Build benchmark rooms, controlled variants, and one browser-runnable research scene.</div>
     </a>
     <a href="ka_track4_ux.html" class="big-cta big-cta-next">
       <div class="big-cta-label">Keep exploring</div>

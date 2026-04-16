@@ -80,12 +80,51 @@
       </section>
 
       <section class="section">
+        <h2>The 8 desiderata for a strong panel-creation prompt (D1–D8)</h2>
+        <p class="lead">Your panel prompt will be graded against these 8 criteria. A strong prompt meets all of them.</p>
+        <div class="cards">
+          <div class="card">
+            <h3>D1 · Specificity over generality</h3>
+            <p>Each panellist has a named context, not a category. "A 160 student in week 4 who has never touched FastAPI" beats "a CogSci undergrad".</p>
+          </div>
+          <div class="card">
+            <h3>D2 · Three deliberately-different angles</h3>
+            <p>The three panellists should disagree productively. One sceptic, one enthusiast, one pragmatist — or one focused on speed, one on depth, one on social proof.</p>
+          </div>
+          <div class="card">
+            <h3>D3 · Goals and constraints made explicit</h3>
+            <p>Each panellist has a goal they came to the site to accomplish, a time budget, a device, and a competing tab they could switch to.</p>
+          </div>
+          <div class="card">
+            <h3>D4 · Knowledge state declared</h3>
+            <p>What does this panellist already know about cognitive science, evidence weighting, or the topic? Vagueness lets the AI smooth over confusing parts.</p>
+          </div>
+          <div class="card">
+            <h3>D5 · Output protocol specified</h3>
+            <p>Tell the panel the exact form their reaction should take: a click trace, a list of friction points, a one-sentence verdict. Without this, you get prose that cannot be compared.</p>
+          </div>
+          <div class="card">
+            <h3>D6 · A falsifier built in</h3>
+            <p>The prompt should make at least one prediction the panel could falsify — e.g., "If useful, list why; if not, list three things you wanted instead."</p>
+          </div>
+          <div class="card">
+            <h3>D7 · No flattery instructions</h3>
+            <p>Avoid "be helpful", "be encouraging", or anything that biases the panel toward agreement. Negative findings are the main asset.</p>
+          </div>
+          <div class="card">
+            <h3>D8 · Anchored to a specific URL or page</h3>
+            <p>The panel walks a real page. Name the URL in the prompt. A panel asked to tour "the site" will hallucinate features that do not exist.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
         <h2>How to use AI this week</h2>
         <div class="ai-grid">
           <div class="ai-card good">
             <h3>Ask AI for</h3>
             <ul class="tight-list">
-              <li>help drafting your three-panellist prompt against the 8 desiderata</li>
+              <li>help drafting your three-panellist prompt against the 8 desiderata (see below)</li>
               <li>a critique of your draft prompt &mdash; "which desiderata does this prompt fail?"</li>
               <li>page-specific reactions &mdash; paste the page HTML and ask the panel to walk it</li>
               <li>severity ratings for friction points using Nielsen's 4-level scale</li>
