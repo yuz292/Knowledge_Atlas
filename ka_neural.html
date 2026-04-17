@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Underpinnings · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+       background:#F7F4EF;color:#2C2C2C;line-height:1.5}
+  main.ka-outer{max-width:1060px;margin:28px auto 80px;padding:0 24px}
+
+  .ka-hero h1{font-family:Georgia,serif;font-size:2rem;color:#1C3D3A;margin-bottom:8px}
+  .ka-hero p{color:#6B6B6B;font-size:.95rem;margin-bottom:22px;line-height:1.6}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+           padding:10px 14px;background:#F9F5EE;border:1px solid #E0D8CC;
+           border-radius:10px;margin-bottom:18px;font-size:.85rem}
+  .toolbar input[type="search"]{flex:1;min-width:220px;padding:7px 10px;
+           border:1.5px solid #D8D0C5;border-radius:6px;font:inherit}
+  .toolbar input[type="search"]:focus{outline:none;border-color:#2A7868;
+           box-shadow:0 0 0 3px rgba(42,120,104,.15)}
+  .toolbar .count{font-size:.78rem;color:#6B6B6B;letter-spacing:.04em}
+  .toolbar .count b{color:#1C3D3A}
+
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+           gap:10px;margin-bottom:18px}
+  .kpi{background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;
+       padding:10px 14px}
+  .kpi-label{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+             color:#8A9A96;font-weight:700;margin-bottom:3px}
+  .kpi-value{font-family:Georgia,serif;font-size:1.5rem;color:#1C3D3A;
+             font-weight:700;line-height:1.1}
+  .kpi-sub{font-size:.76rem;color:#6B6B6B;margin-top:2px}
+  .kpi.ok   {border-left:4px solid #2A7868}
+  .kpi.warn {border-left:4px solid #E8872A}
+  .kpi.crit {border-left:4px solid #A02020}
+
+  /* Framework cards */
+  .fw-grid{display:flex;flex-direction:column;gap:10px}
+  .fw-card{background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;
+           overflow:hidden;transition:border-color .12s,box-shadow .12s}
+  .fw-card[open]{border-color:#2A7868;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .fw-head{display:grid;grid-template-columns:56px 1fr auto auto;gap:14px;
+           align-items:center;padding:12px 16px;cursor:pointer;
+           list-style:none;user-select:none}
+  .fw-head::-webkit-details-marker{display:none}
+  .fw-head .fw-code{display:inline-flex;align-items:center;justify-content:center;
+            font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+            font-size:.82rem;font-weight:700;color:#1A7050;
+            background:#E8F8F2;border-radius:8px;padding:6px 0;
+            letter-spacing:.04em}
+  .fw-card.cross .fw-head .fw-code{color:#985E0A;background:#FEF3E2}
+  .fw-head .fw-name{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;
+            font-weight:700}
+  .fw-head .fw-meta{font-size:.78rem;color:#6B6B6B;margin-top:2px}
+  .fw-head .fw-count{font-size:.74rem;font-weight:700;letter-spacing:.04em;
+            color:#6B6B6B;text-transform:uppercase;padding-right:10px}
+  .fw-head .twisty{color:#8A9A96;font-size:.9rem;transition:transform .15s}
+  .fw-card[open] .twisty{transform:rotate(90deg)}
+
+  .fw-body{border-top:1px dashed #E0D8CC;padding:6px 0}
+
+  /* Mechanism rows */
+  .mech-row{display:grid;grid-template-columns:170px 1fr auto auto;gap:12px;
+            align-items:center;padding:10px 16px 10px 70px;
+            border-bottom:1px dashed #F0EAD9;font-size:.88rem}
+  .mech-row:last-child{border-bottom:0}
+  .mech-row:hover{background:#FAFAF6}
+  .mech-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+           font-size:.72rem;color:#6B6B6B;font-weight:600}
+  .mech-name{color:#2C2C2C}
+  .mech-meta{font-size:.72rem;color:#8A9A96;margin-top:2px}
+  .mech-chips{display:flex;gap:5px;flex-wrap:wrap}
+  .chip{display:inline-block;font-size:.64rem;font-weight:700;
+        padding:2px 7px;border-radius:10px;letter-spacing:.04em;white-space:nowrap}
+  .chip-mat-actually  {background:#E8F8F2;color:#1A7050}
+  .chip-mat-plausibly {background:#E8F0FE;color:#1A56A0}
+  .chip-mat-possibly  {background:#F3E8FE;color:#6B2FA0}
+  .chip-readiness-full    {background:#E8F8F2;color:#1A7050}
+  .chip-readiness-brief   {background:#FEF3E2;color:#985E0A}
+  .chip-readiness-stub    {background:#FEE4E4;color:#A02020}
+  .chip-readiness-missing {background:#F0EAD9;color:#6B6B6B}
+  .chip-fw{background:#E8F0FE;color:#1A56A0}
+
+  /* Error / loading states */
+  .loading{padding:30px;text-align:center;color:#6B6B6B;font-style:italic}
+  .err-box{background:#FEE4E4;color:#A02020;padding:14px 18px;border-radius:8px;
+           border-left:4px solid #A02020;margin:20px 0;font-size:.88rem}
+
+  .ka-note{margin-top:24px;font-size:.82rem;color:#6B6B6B;font-style:italic;
+           padding-top:14px;border-top:1px dashed #E0D8CC}
+  .ka-note code{background:#F9F5EE;padding:1px 6px;border-radius:4px;
+                font-size:.82rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  @media (max-width:760px) {
+    .fw-head{grid-template-columns:48px 1fr auto;padding:10px 12px}
+    .mech-row{grid-template-columns:120px 1fr;padding:8px 12px 8px 48px}
+    .mech-chips,.mech-row .mech-meta-temporal{display:none}
+  }
+</style>
+</head>
+
+<body data-ka-regime="global"
+      data-ka-active="neural"
+      data-ka-crumbs='[["Home","ka_home.html"],["Neural Underpinnings",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+  <div class="ka-hero">
+    <h1>Neural Underpinnings</h1>
+    <p>Plausible Neuroscience Underpinnings — the neural mechanisms by which
+       environmental conditions produce their cognitive, affective, and
+       physiological effects. Mechanisms are organised under
+       <b>15 Tier-1 frameworks</b>, with an additional
+       <b>cross-framework</b> bucket for mechanisms spanning multiple families.
+       Canonical routing table per
+       <code>mechanism_profiles/_index.md</code> in the Article&nbsp;Eater repo;
+       data mirrored here via <code>scripts/regenerate_pnus_json.py</code>.</p>
+  </div>
+
+  <div class="kpi-row" id="kpiRow"><div class="loading">Loading manifest…</div></div>
+
+  <div class="toolbar">
+    <input type="search" id="searchBox" placeholder="Search mechanisms by ID, name, framework, or temporal class…">
+    <label style="display:inline-flex;gap:5px;align-items:center;">
+      <input type="checkbox" id="toggleAllOpen">
+      <span>Expand all</span>
+    </label>
+    <span class="count" id="countLabel">—</span>
+  </div>
+
+  <div id="fwGrid" class="fw-grid">
+    <div class="loading">Loading mechanism manifest…</div>
+  </div>
+
+  <p class="ka-note" id="footNote">
+    Data regenerated from the canonical index; last-generated timestamp appears
+    in the KPI row once the manifest loads. Click any mechanism ID to open its
+    full profile file.
+  </p>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  const MANIFEST_URL = 'data/ka_payloads/pnus.json';
+  const PROFILES_BASE = '';  // leave empty; profile files live outside web root today
+
+  const grid = document.getElementById('fwGrid');
+  const kpiRow = document.getElementById('kpiRow');
+  const searchBox = document.getElementById('searchBox');
+  const countLabel = document.getElementById('countLabel');
+  const toggleAll = document.getElementById('toggleAllOpen');
+  const footNote = document.getElementById('footNote');
+
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c =>
+      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  }
+  function readinessBucket(n){
+    if (!n) return 'missing';
+    if (n < 300) return 'stub';
+    if (n < 600) return 'brief';
+    return 'full';
+  }
+  function maturityClass(m){
+    const s = String(m||'').toLowerCase();
+    if (s.includes('actually'))  return 'chip-mat-actually';
+    if (s.includes('plausibly')) return 'chip-mat-plausibly';
+    if (s.includes('possibly'))  return 'chip-mat-possibly';
+    return '';
+  }
+
+  function render(manifest){
+    const s = manifest.summary || {};
+    const gen = manifest.generated_at || '—';
+    kpiRow.innerHTML = `
+      <div class="kpi ok">
+        <div class="kpi-label">Frameworks</div>
+        <div class="kpi-value">${s.framework_count ?? '—'}</div>
+        <div class="kpi-sub">+ cross-framework bucket</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Mechanisms</div>
+        <div class="kpi-value">${s.total ?? '—'}</div>
+        <div class="kpi-sub">${s.cross_framework_count ?? 0} cross-framework</div>
+      </div>
+      <div class="kpi ok">
+        <div class="kpi-label">Full (≥600w)</div>
+        <div class="kpi-value">${s.readiness?.full ?? 0}</div>
+        <div class="kpi-sub">profile-complete</div>
+      </div>
+      <div class="kpi warn">
+        <div class="kpi-label">Brief (300–599w)</div>
+        <div class="kpi-value">${s.readiness?.brief ?? 0}</div>
+        <div class="kpi-sub">serviceable</div>
+      </div>
+      <div class="kpi crit">
+        <div class="kpi-label">Stub (&lt;300w)</div>
+        <div class="kpi-value">${s.readiness?.stub ?? 0}</div>
+        <div class="kpi-sub">needs writing</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Manifest</div>
+        <div class="kpi-value" style="font-size:.9rem;line-height:1.3">${esc(gen.slice(0,16).replace('T',' '))}</div>
+        <div class="kpi-sub">UTC · weekly refresh</div>
+      </div>`;
+
+    const renderFramework = (fw, crossBucket=false) => {
+      const mechs = crossBucket ? manifest.cross_framework : fw.mechanisms;
+      const fullCount = mechs.filter(m => readinessBucket(m.word_count) === 'full').length;
+      const stubCount = mechs.filter(m => readinessBucket(m.word_count) === 'stub'
+                                       || readinessBucket(m.word_count) === 'missing').length;
+      const code = crossBucket ? 'CF' : fw.id;
+      const name = crossBucket ? 'Cross-framework mechanisms' : fw.name;
+      const meta = crossBucket
+        ? `Mechanisms spanning multiple Tier-1 frameworks`
+        : `Tier-1 framework · ${mechs.length} mechanism${mechs.length===1?'':'s'}`;
+
+      const mechRows = mechs.map(m => {
+        const r = readinessBucket(m.word_count);
+        const matCls = maturityClass(m.maturity);
+        const profilePath = m.file
+          ? `<a href="${PROFILES_BASE}${esc(m.file)}" target="_blank" rel="noopener" style="color:#2A7868;text-decoration:none;font-family:ui-monospace,monospace;">${esc(m.id)}</a>`
+          : esc(m.id);
+        const crossFws = m.frameworks?.length
+          ? `<span class="chip chip-fw">${esc(m.frameworks.join(' · '))}</span>`
+          : '';
+        return `
+          <div class="mech-row" data-search="${esc((m.id+' '+m.name+' '+(m.temporal||'')+' '+(m.maturity||'')).toLowerCase())}">
+            <div>
+              <div class="mech-id">${profilePath}</div>
+              <div class="mech-meta">${esc(m.word_count || 0)} words</div>
+            </div>
+            <div>
+              <div class="mech-name">${esc(m.name)}</div>
+              <div class="mech-meta mech-meta-temporal">${esc(m.temporal || '')}</div>
+            </div>
+            <div class="mech-chips">
+              ${m.maturity ? `<span class="chip ${matCls}">${esc(m.maturity)}</span>` : ''}
+              ${crossFws}
+            </div>
+            <div class="mech-chips">
+              <span class="chip chip-readiness-${r}">${r.toUpperCase()}</span>
+            </div>
+          </div>`;
+      }).join('');
+
+      return `
+        <details class="fw-card ${crossBucket?'cross':''}">
+          <summary class="fw-head">
+            <span class="fw-code">${esc(code)}</span>
+            <div>
+              <div class="fw-name">${esc(name)}</div>
+              <div class="fw-meta">${esc(meta)}</div>
+            </div>
+            <span class="fw-count">${mechs.length} · ${fullCount} full · ${stubCount} thin</span>
+            <span class="twisty">▸</span>
+          </summary>
+          <div class="fw-body">
+            ${mechRows}
+          </div>
+        </details>`;
+    };
+
+    const html = [
+      ...manifest.frameworks.map(fw => renderFramework(fw, false)),
+      renderFramework(null, true),
+    ].join('');
+
+    grid.innerHTML = html;
+    countLabel.innerHTML = `<b>${s.total ?? '?'}</b> mechanisms across <b>${s.framework_count ?? '?'}</b> frameworks + cross-framework`;
+  }
+
+  function applyFilter(){
+    const q = searchBox.value.trim().toLowerCase();
+    document.querySelectorAll('.fw-card').forEach(card => {
+      let visible = 0;
+      card.querySelectorAll('.mech-row').forEach(r => {
+        const hit = !q || r.getAttribute('data-search').includes(q);
+        r.style.display = hit ? '' : 'none';
+        if (hit) visible++;
+      });
+      card.style.display = (q && visible === 0) ? 'none' : '';
+      if (q && visible > 0) card.open = true;
+    });
+  }
+
+  searchBox.addEventListener('input', applyFilter);
+  toggleAll.addEventListener('change', e => {
+    document.querySelectorAll('.fw-card').forEach(c => { c.open = e.target.checked; });
+  });
+
+  fetch(MANIFEST_URL, {cache:'no-store'})
+    .then(r => { if (!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(render)
+    .catch(err => {
+      grid.innerHTML = `<div class="err-box"><b>Could not load <code>${MANIFEST_URL}</code>.</b>
+        Run <code>python3 scripts/regenerate_pnus_json.py</code> to build it, or press
+        the "Refresh PNUs" button on the admin page. Error: ${esc(err.message)}</div>`;
+      kpiRow.innerHTML = '';
+    });
+})();
+</script>
+</body>
+</html>

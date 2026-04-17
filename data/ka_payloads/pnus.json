@@ -1,0 +1,996 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-04-17T17:32:02+00:00",
+  "source": {
+    "repo": "Article_Eater_PostQuinean_v1_recovery",
+    "path": "/sessions/brave-great-tesla/mnt/REPOS/Article_Eater_PostQuinean_v1_recovery/skills/pnu-generator/references/mechanism_profiles/_index.md",
+    "profiles_dir": "/sessions/brave-great-tesla/mnt/REPOS/Article_Eater_PostQuinean_v1_recovery/skills/pnu-generator/references/mechanism_profiles",
+    "mtime": "2026-04-06T01:41:22+00:00"
+  },
+  "summary": {
+    "total": 71,
+    "framework_count": 15,
+    "cross_framework_count": 15,
+    "construct_count": 15,
+    "readiness": {
+      "missing": 0,
+      "stub": 6,
+      "brief": 11,
+      "full": 54
+    }
+  },
+  "frameworks": [
+    {
+      "id": "PP",
+      "name": "Predictive Processing",
+      "mechanisms": [
+        {
+          "id": "PP-GIST-001",
+          "name": "Rapid gist-driven affective framing",
+          "file": "PP-GIST-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (100–200ms)",
+          "exists": true,
+          "word_count": 272
+        },
+        {
+          "id": "PP-PREDICTION-002",
+          "name": "Hierarchical prediction error in visual cortex",
+          "file": "PP-PREDICTION-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (50–250ms)",
+          "exists": true,
+          "word_count": 315
+        },
+        {
+          "id": "PP-GOLDILOCKS-003",
+          "name": "Complexity-preference Goldilocks curve",
+          "file": "PP-GOLDILOCKS-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 565
+        },
+        {
+          "id": "PP-PRECISION-004",
+          "name": "Precision weighting by familiarity",
+          "file": "PP-PRECISION-004.md",
+          "maturity": "How-Actually",
+          "temporal": "Neuromodulatory (min–hr)",
+          "exists": true,
+          "word_count": 249
+        }
+      ]
+    },
+    {
+      "id": "SN",
+      "name": "Salience Network",
+      "mechanisms": [
+        {
+          "id": "SN-SALIENCE-SWITCH-001",
+          "name": "Anterior insula PE threshold → DMN/CEN switching",
+          "file": "SN-SALIENCE-SWITCH-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (200ms–5s)",
+          "exists": true,
+          "word_count": 318
+        },
+        {
+          "id": "SN-THREAT-002",
+          "name": "Rapid threat detection via amygdala-insula loop",
+          "file": "SN-THREAT-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (150–300ms)",
+          "exists": true,
+          "word_count": 262
+        },
+        {
+          "id": "SN-STABILITY-003",
+          "name": "Architectural predictability → network state stability",
+          "file": "SN-STABILITY-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 639
+        }
+      ]
+    },
+    {
+      "id": "DP",
+      "name": "Dopaminergic Prediction",
+      "mechanisms": [
+        {
+          "id": "DP-SCENE-GIST-001",
+          "name": "Dopamine response to scene gist novelty",
+          "file": "DP-SCENE-GIST-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 653
+        },
+        {
+          "id": "DP-REWARD-PREDICTION-002",
+          "name": "Reward prediction error in VTA → striatum",
+          "file": "DP-REWARD-PREDICTION-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (200–300ms)",
+          "exists": true,
+          "word_count": 309
+        },
+        {
+          "id": "DP-NOVELTY-SEEKING-003",
+          "name": "Novelty drives dopamine release and exploration",
+          "file": "DP-NOVELTY-SEEKING-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 731
+        }
+      ]
+    },
+    {
+      "id": "DT",
+      "name": "Default Mode / Theory of Mind",
+      "mechanisms": [
+        {
+          "id": "DT-DEFAULT-MODE-001",
+          "name": "Interoceptive inference & self-referential thought",
+          "file": "DT-DEFAULT-MODE-001.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 672
+        },
+        {
+          "id": "DT-SELF-CONSTRUCT-002",
+          "name": "DMN constructs sense of self in space",
+          "file": "DT-SELF-CONSTRUCT-002.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 716
+        },
+        {
+          "id": "DT-DMN-SUPPRESSION-003",
+          "name": "Chronic unpredictability → DMN suppression",
+          "file": "DT-DMN-SUPPRESSION-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Chronic",
+          "exists": true,
+          "word_count": 759
+        }
+      ]
+    },
+    {
+      "id": "NM",
+      "name": "Neuromodulatory Control",
+      "mechanisms": [
+        {
+          "id": "NM-CHOLINERGIC-ATTENTION-001",
+          "name": "Acetylcholine gating of cortical attention",
+          "file": "NM-CHOLINERGIC-ATTENTION-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast → neuromod",
+          "exists": true,
+          "word_count": 735
+        },
+        {
+          "id": "NM-NORADRENALINE-UNCERTAINTY-002",
+          "name": "Noradrenaline signals unexpected uncertainty",
+          "file": "NM-NORADRENALINE-UNCERTAINTY-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (200–500ms)",
+          "exists": true,
+          "word_count": 331
+        },
+        {
+          "id": "NM-FEAR-LEARNING-002",
+          "name": "Acetylcholine gates fear consolidation",
+          "file": "NM-FEAR-LEARNING-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 763
+        },
+        {
+          "id": "NM-BALANCE-003",
+          "name": "DA/ACh ratio regulates mode switching",
+          "file": "NM-BALANCE-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 756
+        }
+      ]
+    },
+    {
+      "id": "IC",
+      "name": "Interoceptive Coherence",
+      "mechanisms": [
+        {
+          "id": "IC-ALLOSTATIC-DEMAND-001",
+          "name": "Chronic stressor load → allostatic accumulation",
+          "file": "IC-ALLOSTATIC-DEMAND-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Hormonal/chronic",
+          "exists": true,
+          "word_count": 843
+        },
+        {
+          "id": "IC-AFFECT-VALENCE-002",
+          "name": "Architectural aesthetics as affective valence",
+          "file": "IC-AFFECT-VALENCE-002.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Fast → neuromod",
+          "exists": true,
+          "word_count": 816
+        },
+        {
+          "id": "IC-INTEROCEPTIVE-PRECISION-003",
+          "name": "Architecture as interoceptive precision regulator",
+          "file": "IC-INTEROCEPTIVE-PRECISION-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 847
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "name": "Memory Systems",
+      "mechanisms": [
+        {
+          "id": "MS-THETA-PHASE-LOCKING-001",
+          "name": "Rhythmic architecture → theta phase-locking",
+          "file": "MS-THETA-PHASE-LOCKING-001.md",
+          "maturity": "How-Possibly",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 764
+        },
+        {
+          "id": "MS-SHARP-WAVE-RIPPLE-002",
+          "name": "Environmental complexity → ripple consolidation",
+          "file": "MS-SHARP-WAVE-RIPPLE-002.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Overnight",
+          "exists": true,
+          "word_count": 750
+        },
+        {
+          "id": "MS-SPATIAL-CONTEXT-LEARNING-003",
+          "name": "Place cell remapping in novel contexts",
+          "file": "MS-SPATIAL-CONTEXT-LEARNING-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Network (5–30min)",
+          "exists": true,
+          "word_count": 333
+        }
+      ]
+    },
+    {
+      "id": "EC",
+      "name": "Embodied Cognition",
+      "mechanisms": [
+        {
+          "id": "EC-SPATIAL-EXTERNALISM-001",
+          "name": "Architecture as external spatial memory system",
+          "file": "EC-SPATIAL-EXTERNALISM-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Constitutive",
+          "exists": true,
+          "word_count": 759
+        },
+        {
+          "id": "EC-AFFORDANCE-PERCEPTION-002",
+          "name": "Direct perception of architectural affordances",
+          "file": "EC-AFFORDANCE-PERCEPTION-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 713
+        },
+        {
+          "id": "EC-SOCIAL-SPACE-SCAFFOLDING-003",
+          "name": "Architectural proximity as social scaffolding",
+          "file": "EC-SOCIAL-SPACE-SCAFFOLDING-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Chronic",
+          "exists": true,
+          "word_count": 852
+        }
+      ]
+    },
+    {
+      "id": "CB",
+      "name": "Circadian Biology",
+      "mechanisms": [
+        {
+          "id": "CB-CIRCADIAN-ENTRAINMENT-001",
+          "name": "ipRGC-SCN-pineal light-driven entrainment",
+          "file": "CB-CIRCADIAN-ENTRAINMENT-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Hormonal (hours)",
+          "exists": true,
+          "word_count": 382
+        },
+        {
+          "id": "CB-SLEEP-QUALITY-002",
+          "name": "Circadian alignment → sleep consolidation",
+          "file": "CB-SLEEP-QUALITY-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Hormonal/chronic",
+          "exists": true,
+          "word_count": 1003
+        },
+        {
+          "id": "CB-ALLOSTATIC-LOAD-003",
+          "name": "Chronic circadian misalignment → inflammation",
+          "file": "CB-ALLOSTATIC-LOAD-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Chronic",
+          "exists": true,
+          "word_count": 986
+        }
+      ]
+    },
+    {
+      "id": "MSI",
+      "name": "Multisensory Integration",
+      "mechanisms": [
+        {
+          "id": "MSI-AUDIOVISUAL-BINDING-001",
+          "name": "Spatial congruence of acoustic & visual cues",
+          "file": "MSI-AUDIOVISUAL-BINDING-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 918
+        },
+        {
+          "id": "MSI-SPATIAL-RECALIBRATION-002",
+          "name": "Cross-sensory recalibration in acoustic mismatch",
+          "file": "MSI-SPATIAL-RECALIBRATION-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 850
+        },
+        {
+          "id": "MSI-OLFACTORY-INTEGRATION-003",
+          "name": "Air flow & olfactory-visual binding",
+          "file": "MSI-OLFACTORY-INTEGRATION-003.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 1075
+        }
+      ]
+    },
+    {
+      "id": "OL",
+      "name": "Olfactory-Limbic",
+      "mechanisms": [
+        {
+          "id": "OL-DIRECT-PATH-001",
+          "name": "Direct piriform→amygdala→hippocampus encoding",
+          "file": "OL-DIRECT-PATH-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural (100–300ms)",
+          "exists": true,
+          "word_count": 286
+        },
+        {
+          "id": "OL-CONTEXT-BIND-002",
+          "name": "Piriform context-dependent facilitation",
+          "file": "OL-CONTEXT-BIND-002.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Neuromodulatory",
+          "exists": true,
+          "word_count": 497
+        },
+        {
+          "id": "OL-TMR-003",
+          "name": "Targeted memory reactivation via scent during SWS",
+          "file": "OL-TMR-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Overnight",
+          "exists": true,
+          "word_count": 621
+        },
+        {
+          "id": "OL-ADAPTATION-004",
+          "name": "Rapid olfactory habituation (5–10min)",
+          "file": "OL-ADAPTATION-004.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 597
+        },
+        {
+          "id": "OL-PROUST-005",
+          "name": "Odor-evoked autobiographical memory",
+          "file": "OL-PROUST-005.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 703
+        }
+      ]
+    },
+    {
+      "id": "IBS",
+      "name": "Inter-Brain Synchrony",
+      "mechanisms": [
+        {
+          "id": "IBS-RTPJ-COUPLING-001",
+          "name": "rTPJ/IFG coupling speaker-listener",
+          "file": "IBS-RTPJ-COUPLING-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 937
+        },
+        {
+          "id": "IBS-ACOUSTIC-SNR-002",
+          "name": "SNR threshold for inter-brain coupling",
+          "file": "IBS-ACOUSTIC-SNR-002.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 1011
+        },
+        {
+          "id": "IBS-SOCIAL-BUFFER-003",
+          "name": "Visual co-presence → amygdala suppression",
+          "file": "IBS-SOCIAL-BUFFER-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 1052
+        },
+        {
+          "id": "IBS-SOCIAL-PAIN-004",
+          "name": "dACC/insula activation from isolation",
+          "file": "IBS-SOCIAL-PAIN-004.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast → chronic",
+          "exists": true,
+          "word_count": 350
+        }
+      ]
+    },
+    {
+      "id": "SC",
+      "name": "Scene Coherence & Spatial Cognition",
+      "mechanisms": [
+        {
+          "id": "SC-GRID-CELL-001",
+          "name": "Entorhinal grid cell hexagonal organization",
+          "file": "SC-GRID-CELL-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Network (5–15min)",
+          "exists": true,
+          "word_count": 296
+        },
+        {
+          "id": "SC-PLACE-CELL-002",
+          "name": "Hippocampal place cell stability",
+          "file": "SC-PLACE-CELL-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 685
+        },
+        {
+          "id": "SC-BOUNDARY-003",
+          "name": "Boundary cell firing at walls/doorways",
+          "file": "SC-BOUNDARY-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 649
+        },
+        {
+          "id": "SC-GRID-ABSTRACT-004",
+          "name": "Grid cells in abstract conceptual spaces",
+          "file": "SC-GRID-ABSTRACT-004.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 670
+        },
+        {
+          "id": "SC-SCENE-AREA-005",
+          "name": "PPA/OPA/RSC scene-selective activation",
+          "file": "SC-SCENE-AREA-005.md",
+          "maturity": "How-Actually",
+          "temporal": "Fast neural",
+          "exists": true,
+          "word_count": 683
+        },
+        {
+          "id": "SC-BODY-SCALE-006",
+          "name": "Architectural scale & peripersonal space",
+          "file": "SC-BODY-SCALE-006.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Network state",
+          "exists": true,
+          "word_count": 680
+        }
+      ]
+    },
+    {
+      "id": "AL",
+      "name": "Allostatic Load",
+      "mechanisms": [
+        {
+          "id": "AL-CHRONIC-PE-001",
+          "name": "Chronic low-level PE → sustained cortisol",
+          "file": "AL-CHRONIC-PE-001.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Hormonal → chronic",
+          "exists": true,
+          "word_count": 297
+        },
+        {
+          "id": "AL-BODY-BUDGET-002",
+          "name": "Metabolic depletion from combined demands",
+          "file": "AL-BODY-BUDGET-002.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Chronic",
+          "exists": true,
+          "word_count": 640
+        },
+        {
+          "id": "AL-TELOMERE-003",
+          "name": "Chronic stress → telomere shortening",
+          "file": "AL-TELOMERE-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Years",
+          "exists": true,
+          "word_count": 654
+        },
+        {
+          "id": "AL-INFLAMMATION-004",
+          "name": "Sustained HPA → IL-6/NF-κB → inflammation",
+          "file": "AL-INFLAMMATION-004.md",
+          "maturity": "How-Actually",
+          "temporal": "Chronic",
+          "exists": true,
+          "word_count": 679
+        }
+      ]
+    },
+    {
+      "id": "DEV",
+      "name": "Developmental Sensitive Periods",
+      "mechanisms": [
+        {
+          "id": "DEV-PN-CLOSURE-001",
+          "name": "Perineuronal net formation & critical period",
+          "file": "DEV-PN-CLOSURE-001.md",
+          "maturity": "How-Actually",
+          "temporal": "Developmental",
+          "exists": true,
+          "word_count": 642
+        },
+        {
+          "id": "DEV-PACC-PROGRAM-002",
+          "name": "Urban upbringing → pACC stress programming",
+          "file": "DEV-PACC-PROGRAM-002.md",
+          "maturity": "How-Actually",
+          "temporal": "Developmental",
+          "exists": true,
+          "word_count": 322
+        },
+        {
+          "id": "DEV-FFR-DEGRADATION-003",
+          "name": "Chronic noise → FFR fidelity degradation",
+          "file": "DEV-FFR-DEGRADATION-003.md",
+          "maturity": "How-Actually",
+          "temporal": "Developmental",
+          "exists": true,
+          "word_count": 681
+        },
+        {
+          "id": "DEV-ENRICHMENT-004",
+          "name": "Enrichment → BDNF → hippocampal neurogenesis",
+          "file": "DEV-ENRICHMENT-004.md",
+          "maturity": "How-Actually",
+          "temporal": "Developmental",
+          "exists": true,
+          "word_count": 684
+        },
+        {
+          "id": "DEV-THREAT-DEPRIVATION-005",
+          "name": "Orthogonal threat vs deprivation dimensions",
+          "file": "DEV-THREAT-DEPRIVATION-005.md",
+          "maturity": "How-Plausibly",
+          "temporal": "Developmental",
+          "exists": true,
+          "word_count": 765
+        }
+      ]
+    }
+  ],
+  "cross_framework": [
+    {
+      "id": "COMPLEXITY-LOAD-001",
+      "name": "Environmental complexity & cognitive load",
+      "file": "COMPLEXITY-LOAD-001.md",
+      "frameworks": [
+        "PP",
+        "EC",
+        "SN"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Variable",
+      "exists": true,
+      "word_count": 667
+    },
+    {
+      "id": "WAYFINDING-001",
+      "name": "Landmark distinctiveness & spatial memory",
+      "file": "WAYFINDING-001.md",
+      "frameworks": [
+        "EC",
+        "MS",
+        "PP"
+      ],
+      "maturity": "How-Actually",
+      "temporal": "Network",
+      "exists": true,
+      "word_count": 770
+    },
+    {
+      "id": "WAYFINDING-002",
+      "name": "Geometric coherence & route planning",
+      "file": "WAYFINDING-002.md",
+      "frameworks": [
+        "PP",
+        "EC",
+        "DP"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Network",
+      "exists": true,
+      "word_count": 775
+    },
+    {
+      "id": "SOCIAL-PROXIMITY-001",
+      "name": "Visibility & social inference capacity",
+      "file": "SOCIAL-PROXIMITY-001.md",
+      "frameworks": [
+        "EC",
+        "SN",
+        "DT"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Network",
+      "exists": true,
+      "word_count": 864
+    },
+    {
+      "id": "SOCIAL-AFFILIATION-002",
+      "name": "Architectural signaling of group identity",
+      "file": "SOCIAL-AFFILIATION-002.md",
+      "frameworks": [
+        "EC",
+        "DT",
+        "SN"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Chronic",
+      "exists": true,
+      "word_count": 854
+    },
+    {
+      "id": "VISUAL-SEARCH-001",
+      "name": "Architectural clutter & visual search",
+      "file": "VISUAL-SEARCH-001.md",
+      "frameworks": [
+        "PP",
+        "SN",
+        "NM"
+      ],
+      "maturity": "How-Actually",
+      "temporal": "Fast neural",
+      "exists": true,
+      "word_count": 889
+    },
+    {
+      "id": "DISTRACTION-SALIENT-FEATURES-001",
+      "name": "Salient features as distraction",
+      "file": "DISTRACTION-SALIENT-FEATURES-001.md",
+      "frameworks": [
+        "SN",
+        "NM",
+        "PP"
+      ],
+      "maturity": "How-Actually",
+      "temporal": "Fast neural",
+      "exists": true,
+      "word_count": 932
+    },
+    {
+      "id": "EMOTION-REGULATION-001",
+      "name": "Safety cues & emotion downregulation",
+      "file": "EMOTION-REGULATION-001.md",
+      "frameworks": [
+        "IC",
+        "SN",
+        "DT"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Neuromod",
+      "exists": true,
+      "word_count": 905
+    },
+    {
+      "id": "THERMOREGULATION-001",
+      "name": "Thermal comfort & autonomic stability",
+      "file": "THERMOREGULATION-001.md",
+      "frameworks": [
+        "IC",
+        "NM",
+        "CB"
+      ],
+      "maturity": "How-Actually",
+      "temporal": "Neuromod",
+      "exists": true,
+      "word_count": 915
+    },
+    {
+      "id": "INTERO-PP-ALLOSTASIS-001",
+      "name": "Interoceptive PE failure → allostatic cascade",
+      "file": "INTERO-PP-ALLOSTASIS-001.md",
+      "frameworks": [
+        "IC",
+        "PP",
+        "AL"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Chronic",
+      "exists": true,
+      "word_count": 920
+    },
+    {
+      "id": "OLFACTORY-SPATIAL-MEMORY-001",
+      "name": "Scent-tagged spatial encoding",
+      "file": "OLFACTORY-SPATIAL-MEMORY-001.md",
+      "frameworks": [
+        "OL",
+        "MS",
+        "SC"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Network",
+      "exists": true,
+      "word_count": 863
+    },
+    {
+      "id": "SOCIAL-ACOUSTIC-COUPLING-001",
+      "name": "Acoustic SNR × sightline → coupling",
+      "file": "SOCIAL-ACOUSTIC-COUPLING-001.md",
+      "frameworks": [
+        "IBS",
+        "MSI",
+        "NM"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Fast neural",
+      "exists": true,
+      "word_count": 999
+    },
+    {
+      "id": "THERMAL-SOCIAL-WARMTH-001",
+      "name": "Physical warmth → social warmth",
+      "file": "THERMAL-SOCIAL-WARMTH-001.md",
+      "frameworks": [
+        "IC",
+        "IBS",
+        "NM"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Neuromod",
+      "exists": true,
+      "word_count": 954
+    },
+    {
+      "id": "CIRCADIAN-DEV-PROGRAM-001",
+      "name": "Morning light → circadian calibration",
+      "file": "CIRCADIAN-DEV-PROGRAM-001.md",
+      "frameworks": [
+        "CB",
+        "DEV"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Developmental",
+      "exists": true,
+      "word_count": 1084
+    },
+    {
+      "id": "MULTISENSORY-CONGRUENCE-001",
+      "name": "Cross-modal alignment → superadditivity",
+      "file": "MULTISENSORY-CONGRUENCE-001.md",
+      "frameworks": [
+        "MSI",
+        "OL",
+        "IC"
+      ],
+      "maturity": "How-Plausibly",
+      "temporal": "Fast neural",
+      "exists": true,
+      "word_count": 1073
+    }
+  ],
+  "construct_lookup": [
+    {
+      "construct": "C-01 Lighting",
+      "primary": [
+        "CB-CIRCADIAN-ENTRAINMENT-001",
+        "PP-PRECISION-004",
+        "IC-AFFECT-VALENCE-002"
+      ],
+      "secondary": [
+        "SN-SALIENCE-SWITCH-001",
+        "AL-CHRONIC-PE-001"
+      ]
+    },
+    {
+      "construct": "C-02 Acoustics",
+      "primary": [
+        "NM-NORADRENALINE-UNCERTAINTY-002",
+        "SN-SALIENCE-SWITCH-001",
+        "MSI-AUDIOVISUAL-BINDING-001"
+      ],
+      "secondary": [
+        "IBS-ACOUSTIC-SNR-002",
+        "DEV-FFR-DEGRADATION-003"
+      ]
+    },
+    {
+      "construct": "C-03 Color",
+      "primary": [
+        "PP-GIST-001",
+        "IC-AFFECT-VALENCE-002"
+      ],
+      "secondary": [
+        "SN-THREAT-002"
+      ]
+    },
+    {
+      "construct": "C-04 Spatial Layout",
+      "primary": [
+        "SC-GRID-CELL-001",
+        "SC-PLACE-CELL-002",
+        "WAYFINDING-001"
+      ],
+      "secondary": [
+        "EC-SPATIAL-EXTERNALISM-001",
+        "SC-BOUNDARY-003"
+      ]
+    },
+    {
+      "construct": "C-05 Nature/Biophilic",
+      "primary": [
+        "SN-THREAT-002 (inverse)",
+        "PP-PREDICTION-002",
+        "IC-ALLOSTATIC-DEMAND-001"
+      ],
+      "secondary": [
+        "DT-DEFAULT-MODE-001"
+      ]
+    },
+    {
+      "construct": "C-06 Thermal",
+      "primary": [
+        "THERMOREGULATION-001",
+        "IC-INTEROCEPTIVE-PRECISION-003"
+      ],
+      "secondary": [
+        "THERMAL-SOCIAL-WARMTH-001"
+      ]
+    },
+    {
+      "construct": "C-07 Views/Windows",
+      "primary": [
+        "CB-CIRCADIAN-ENTRAINMENT-001",
+        "DT-DEFAULT-MODE-001",
+        "PP-GIST-001"
+      ],
+      "secondary": [
+        "IC-AFFECT-VALENCE-002"
+      ]
+    },
+    {
+      "construct": "C-08 Materials",
+      "primary": [
+        "EC-AFFORDANCE-PERCEPTION-002",
+        "PP-GIST-001",
+        "IC-AFFECT-VALENCE-002"
+      ],
+      "secondary": [
+        "SN-THREAT-002"
+      ]
+    },
+    {
+      "construct": "C-09 Density",
+      "primary": [
+        "IBS-SOCIAL-PAIN-004",
+        "SN-SALIENCE-SWITCH-001",
+        "NM-NORADRENALINE-UNCERTAINTY-002"
+      ],
+      "secondary": [
+        "SOCIAL-PROXIMITY-001"
+      ]
+    },
+    {
+      "construct": "C-10 Urban vs Natural",
+      "primary": [
+        "DEV-PACC-PROGRAM-002",
+        "AL-CHRONIC-PE-001",
+        "SN-THREAT-002"
+      ],
+      "secondary": [
+        "DT-DEFAULT-MODE-001"
+      ]
+    },
+    {
+      "construct": "C-11 Wayfinding",
+      "primary": [
+        "WAYFINDING-001",
+        "WAYFINDING-002",
+        "SC-PLACE-CELL-002"
+      ],
+      "secondary": [
+        "EC-SPATIAL-EXTERNALISM-001"
+      ]
+    },
+    {
+      "construct": "C-12 Privacy",
+      "primary": [
+        "IBS-SOCIAL-PAIN-004",
+        "SN-SALIENCE-SWITCH-001",
+        "DT-DEFAULT-MODE-001"
+      ],
+      "secondary": [
+        "SOCIAL-PROXIMITY-001"
+      ]
+    },
+    {
+      "construct": "C-13 Scent",
+      "primary": [
+        "OL-DIRECT-PATH-001",
+        "OL-CONTEXT-BIND-002",
+        "OLFACTORY-SPATIAL-MEMORY-001"
+      ],
+      "secondary": [
+        "OL-ADAPTATION-004"
+      ]
+    },
+    {
+      "construct": "C-14 Art/Decoration",
+      "primary": [
+        "PP-GOLDILOCKS-003",
+        "PP-PREDICTION-002",
+        "DP-REWARD-PREDICTION-002"
+      ],
+      "secondary": [
+        "IC-AFFECT-VALENCE-002"
+      ]
+    },
+    {
+      "construct": "C-15 Furniture",
+      "primary": [
+        "EC-AFFORDANCE-PERCEPTION-002",
+        "SC-BODY-SCALE-006"
+      ],
+      "secondary": [
+        "THERMOREGULATION-001"
+      ]
+    }
+  ]
+}

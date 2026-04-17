@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instructor Admin · COGS 160 Spring 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<!-- Access model shared with the rest of the site; harmless if absent. -->
+<script src="ka_user_type.js" defer></script>
+<style>
+/* ── K-ATLAS tokens (see KA_STYLE_GUIDE.md §2) ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1C3D3A; --teal: #2A7868; --teal-lt: #5AC8AA; --teal-bg: #E6F5F0;
+  --amber: #E8872A; --amber-lt: #FFF3E0; --amber-dk: #9a5010; --gold: #F5A623;
+  --cream: #F7F4EF; --ink: #2C2C2C; --muted: #6B6B6B; --label: #8A9A96;
+  --border: #E0D8CC; --border-dk: #D8D0C5; --panel: #F9F5EE;
+  --white: #FFFFFF; --blue-lt: #EBF2F8; --green-lt: #E3F4EC; --red: #A02020;
+  --success-bg: #E8F8F2; --success-tx: #1A7050;
+  --warn-bg: #FEF3E2;    --warn-tx:  #985E0A;
+  --error-bg: #FEE4E4;   --error-tx: #A02020;
+  --info-bg:  #E8F0FE;   --info-tx:  #1A56A0;
+  --track1: #8A5028; --track2: #E8872A; --track3: #3A6EA8; --track4: #A84F6B;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+       background: var(--cream); color: var(--ink); line-height: 1.5; }
+
+/* ── Nav (K-ATLAS inline pattern, admin-styled) ── */
+.top-nav { background: var(--navy); padding: 0 24px; display: flex; align-items: center;
+           height: 54px; gap: 18px; position: sticky; top: 0; z-index: 100;
+           box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.nav-brand { color: #fff; font-weight: 800; font-size: 1.02rem; text-decoration: none;
+             font-family: Georgia, serif; letter-spacing: 0.02em; }
+.nav-brand .las { color: var(--gold); }
+.nav-sep { color: rgba(255,255,255,0.25); }
+.nav-link { color: #B8D4CE; text-decoration: none; padding: 5px 10px; border-radius: 5px;
+            font-size: 0.85rem; font-weight: 500; transition: background 0.15s, color 0.15s; }
+.nav-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.nav-admin-badge { margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
+                   background: var(--amber); color: #fff; padding: 4px 12px;
+                   border-radius: 20px; font-size: 0.72rem; font-weight: 700;
+                   letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-user { color: rgba(255,255,255,0.8); font-size: 0.78rem; margin-left: 14px; }
+
+/* ── Hero ── */
+.hero { background: linear-gradient(135deg, var(--navy) 0%, #163230 100%); color: #fff;
+        padding: 36px 24px 28px; }
+.hero-inner { max-width: 1400px; margin: 0 auto; }
+.hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+                color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+.hero h1 { font-family: Georgia, serif; font-size: 2.0rem; font-weight: 700;
+           line-height: 1.15; margin-bottom: 6px; }
+.hero-sub { font-size: 0.95rem; color: #9ABFB8; max-width: 760px; }
+.hero-warn { display: inline-block; margin-top: 14px; background: rgba(232,135,42,0.18);
+             border: 1px solid rgba(232,135,42,0.45); color: #FFD9B0;
+             padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; }
+
+/* ── Tabs (KA_STYLE_GUIDE §5d) ── */
+.tabs-wrap { background: var(--white); border-bottom: 1px solid var(--border);
+             position: sticky; top: 54px; z-index: 50; box-shadow: 0 1px 3px rgba(0,0,0,0.04);}
+.tabs { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex;
+        gap: 4px; overflow-x: auto; }
+.tab { padding: 14px 16px; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+       color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap;
+       transition: color 0.15s, border-color 0.15s; }
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.tab-count { display: inline-block; margin-left: 6px; background: var(--panel);
+             color: var(--muted); padding: 1px 7px; border-radius: 10px;
+             font-size: 0.68rem; font-weight: 700; }
+.tab.active .tab-count { background: var(--teal-bg); color: var(--teal); }
+
+/* ── Main ── */
+main { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.tabpanel { display: none; }
+.tabpanel.active { display: block; }
+
+/* ── Cards (KA_STYLE_GUIDE §5b) ── */
+.card { background: var(--white); border: 1.5px solid var(--border); border-radius: 12px;
+        padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.card-title { font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700;
+              color: var(--navy); margin-bottom: 4px; }
+.card-sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 14px; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-end;
+             border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 14px; }
+
+/* ── Dashboard KPI tiles ── */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px; margin-bottom: 20px; }
+.kpi { background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
+       padding: 14px 16px; }
+.kpi-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+             color: var(--label); font-weight: 700; margin-bottom: 4px; }
+.kpi-value { font-family: Georgia, serif; font-size: 1.8rem; color: var(--navy);
+             font-weight: 700; line-height: 1.1; }
+.kpi-foot { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+.kpi.attn { border-left: 4px solid var(--amber); }
+.kpi.ok   { border-left: 4px solid var(--teal); }
+.kpi.crit { border-left: 4px solid var(--red); }
+
+/* ── Pills (KA_STYLE_GUIDE §5c) ── */
+.pill { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 3px 9px;
+        border-radius: 12px; letter-spacing: 0.04em; line-height: 1.4; }
+.pill-ok    { background: var(--success-bg); color: var(--success-tx); }
+.pill-warn  { background: var(--warn-bg);    color: var(--warn-tx); }
+.pill-error { background: var(--error-bg);   color: var(--error-tx); }
+.pill-info  { background: var(--info-bg);    color: var(--info-tx); }
+.pill-track1 { background: #F1E6DC; color: var(--track1); }
+.pill-track2 { background: var(--amber-lt); color: var(--amber-dk); }
+.pill-track3 { background: #E3EBF6; color: var(--track3); }
+.pill-track4 { background: #F3E0E6; color: var(--track4); }
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+thead th { background: var(--panel); text-align: left; padding: 10px 12px;
+           font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+           color: var(--label); font-weight: 700; border-bottom: 1.5px solid var(--border); }
+tbody td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:hover { background: #FAFAF6; }
+tbody tr.dropped td { opacity: 0.55; text-decoration: line-through; }
+.tb-name { font-weight: 600; color: var(--ink); }
+.tb-sub  { color: var(--muted); font-size: 0.78rem; }
+.tb-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+           font-size: 0.82rem; color: var(--ink); background: var(--panel);
+           padding: 1px 6px; border-radius: 4px; }
+
+/* ── Buttons ── */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+       border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+       border: 1.5px solid transparent; text-decoration: none; transition: all 0.15s; }
+.btn-primary   { background: var(--amber); color: #fff; border-color: var(--amber); }
+.btn-primary:hover   { background: #D27320; border-color: #D27320; }
+.btn-secondary { background: var(--white); color: var(--ink); border-color: var(--border-dk); }
+.btn-secondary:hover { background: var(--panel); }
+.btn-teal      { background: var(--teal); color: #fff; border-color: var(--teal); }
+.btn-teal:hover      { background: #1F5C50; border-color: #1F5C50; }
+.btn-danger    { background: #fff; color: var(--red); border-color: #E8B8B8; }
+.btn-danger:hover    { background: var(--error-bg); }
+.btn-sm   { padding: 4px 9px; font-size: 0.76rem; }
+.btn-icon { padding: 4px 7px; font-size: 0.82rem; }
+.btn-row  { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+
+/* ── Filter bar ── */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+           margin-bottom: 14px; padding: 12px 14px; background: var(--panel);
+           border: 1px solid var(--border); border-radius: 8px; }
+.filters input[type="search"] { flex: 1; min-width: 220px; padding: 7px 10px;
+           border: 1.5px solid var(--border-dk); border-radius: 6px;
+           font-family: inherit; font-size: 0.88rem; }
+.filters input[type="search"]:focus { outline: none; border-color: var(--teal);
+           box-shadow: 0 0 0 3px rgba(42,120,104,0.15); }
+.filters select { padding: 7px 10px; border: 1.5px solid var(--border-dk);
+           border-radius: 6px; font-family: inherit; font-size: 0.85rem;
+           background: var(--white); }
+
+/* ── Form controls ── */
+.form-row { display: grid; grid-template-columns: 160px 1fr; gap: 14px;
+            padding: 10px 0; align-items: start; }
+.form-row label { font-weight: 600; font-size: 0.86rem; color: var(--navy);
+                  padding-top: 7px; }
+.form-row input, .form-row select, .form-row textarea {
+  width: 100%; padding: 7px 10px; border: 1.5px solid var(--border-dk);
+  border-radius: 6px; font-family: inherit; font-size: 0.88rem; }
+.form-row textarea { resize: vertical; min-height: 90px; font-family: inherit; }
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+  outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,120,104,0.15); }
+.form-hint { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+
+/* ── Track matrix ── */
+.matrix-wrap { overflow-x: auto; }
+.matrix { min-width: 920px; }
+.matrix th.col-week { background: var(--navy); color: #fff; padding: 10px 12px;
+                      text-align: center; font-size: 0.78rem; letter-spacing: 0.06em; }
+.matrix th.col-track { text-align: left; }
+.matrix td.track-cell { vertical-align: top; padding: 10px 12px; min-width: 140px;
+                        border-left: 1px solid var(--border); }
+.matrix td.track-cell.t1 { border-left: 3px solid var(--track1); }
+.matrix td.track-cell.t2 { border-left: 3px solid var(--track2); }
+.matrix td.track-cell.t3 { border-left: 3px solid var(--track3); }
+.matrix td.track-cell.t4 { border-left: 3px solid var(--track4); }
+.matrix td.wk-label { background: var(--panel); font-weight: 700; font-family: Georgia, serif;
+                      color: var(--navy); text-align: center; width: 68px; }
+.deliv { font-size: 0.82rem; margin-bottom: 2px; color: var(--ink); line-height: 1.35; }
+.deliv-meta { font-size: 0.72rem; color: var(--muted); margin-bottom: 6px; }
+.submit-bar { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--muted); }
+.submit-bar .bar { flex: 1; height: 5px; background: var(--panel); border-radius: 3px;
+                   overflow: hidden; }
+.submit-bar .bar > div { height: 100%; background: var(--teal); }
+
+/* ── Progress bars ── */
+.progress { background: var(--panel); border-radius: 4px; height: 8px; overflow: hidden;
+            min-width: 90px; }
+.progress > div { height: 100%; background: var(--teal); transition: width 0.3s; }
+.progress.low  > div { background: var(--amber); }
+.progress.crit > div { background: var(--red); }
+
+/* ── Modal ── */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(28,61,58,0.55);
+                  display: none; align-items: center; justify-content: center;
+                  z-index: 200; padding: 20px; }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--white); border-radius: 12px; max-width: 560px; width: 100%;
+         box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+.modal-head { padding: 18px 22px; border-bottom: 1px solid var(--border);
+              display: flex; justify-content: space-between; align-items: center; }
+.modal-head h2 { font-family: Georgia, serif; font-size: 1.2rem; color: var(--navy); }
+.modal-close { background: none; border: none; font-size: 1.4rem; color: var(--muted);
+               cursor: pointer; line-height: 1; }
+.modal-body { padding: 18px 22px; }
+.modal-foot { padding: 14px 22px; border-top: 1px solid var(--border);
+              display: flex; justify-content: flex-end; gap: 10px; background: var(--panel);
+              border-radius: 0 0 12px 12px; }
+.email-preview { background: var(--panel); border: 1px dashed var(--border-dk);
+                 border-radius: 8px; padding: 14px; font-size: 0.85rem; white-space: pre-wrap;
+                 font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.55; }
+.auth-key { display: inline-block; background: var(--navy); color: var(--gold);
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700;
+            letter-spacing: 0.05em; padding: 6px 12px; border-radius: 6px;
+            font-size: 1.0rem; }
+
+/* ── Toast ── */
+#toast-stack { position: fixed; bottom: 24px; right: 24px; z-index: 300;
+               display: flex; flex-direction: column; gap: 10px; }
+.toast { background: var(--navy); color: #fff; padding: 12px 18px; border-radius: 8px;
+         box-shadow: 0 8px 24px rgba(0,0,0,0.25); font-size: 0.86rem;
+         border-left: 4px solid var(--teal-lt); min-width: 260px; max-width: 360px;
+         animation: toast-in 0.25s ease-out; }
+.toast.warn  { border-left-color: var(--amber); }
+.toast.error { border-left-color: #E8A0A0; }
+.toast b { color: var(--gold); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ── Two-column panels for dashboard ── */
+.two-col { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; }
+                            .form-row { grid-template-columns: 1fr; }
+                            .form-row label { padding-top: 0; } }
+
+/* ── Footer ── */
+footer { text-align: center; padding: 28px 20px; color: var(--muted); font-size: 0.8rem;
+         border-top: 1px solid var(--border); margin-top: 30px; background: var(--white); }
+footer a { color: var(--teal); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Checklist widget ── */
+.checklist li { display: flex; align-items: center; gap: 10px; padding: 6px 0;
+                font-size: 0.88rem; border-bottom: 1px dashed var(--border); }
+.checklist li:last-child { border-bottom: none; }
+.checklist .status { width: 16px; text-align: center; flex-shrink: 0; }
+.checklist .ok    { color: var(--teal); }
+.checklist .warn  { color: var(--amber); }
+.checklist .err   { color: var(--red); }
+
+/* ── Login gate ── */
+#auth-gate { position: fixed; inset: 0; background: linear-gradient(135deg, var(--navy) 0%, #0e2220 100%);
+             display: flex; align-items: center; justify-content: center; padding: 24px;
+             z-index: 9999; }
+#auth-gate.hidden { display: none; }
+.auth-card { background: var(--white); border-radius: 14px; max-width: 440px; width: 100%;
+             padding: 30px 32px; box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
+.auth-brand { font-family: Georgia, serif; color: var(--navy); font-size: 1.0rem;
+              font-weight: 800; letter-spacing: 0.02em; margin-bottom: 4px; }
+.auth-brand .las { color: var(--gold); }
+.auth-eyebrow { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+                color: var(--amber); font-weight: 700; margin-bottom: 2px; }
+.auth-title { font-family: Georgia, serif; font-size: 1.45rem; color: var(--navy);
+              font-weight: 700; margin: 4px 0 8px; }
+.auth-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
+.auth-row { margin-bottom: 12px; }
+.auth-row label { display: block; font-size: 0.78rem; font-weight: 700;
+                  letter-spacing: 0.06em; text-transform: uppercase; color: var(--label);
+                  margin-bottom: 4px; }
+.auth-row input, .auth-row select { width: 100%; padding: 9px 11px;
+     border: 1.5px solid var(--border-dk); border-radius: 6px;
+     font-family: inherit; font-size: 0.95rem; background: var(--white); }
+.auth-row input:focus, .auth-row select:focus { outline: none; border-color: var(--teal);
+     box-shadow: 0 0 0 3px rgba(42,120,104,0.15); }
+.auth-btn { width: 100%; margin-top: 8px; padding: 11px; background: var(--amber);
+            color: #fff; font-weight: 700; border: none; border-radius: 7px;
+            font-size: 0.95rem; cursor: pointer; transition: background 0.15s; }
+.auth-btn:hover { background: #D27320; }
+.auth-err { background: var(--error-bg); color: var(--error-tx); padding: 8px 12px;
+            border-radius: 6px; font-size: 0.82rem; margin-bottom: 12px; display: none; }
+.auth-err.show { display: block; }
+.auth-links { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px;
+              font-size: 0.82rem; }
+.auth-links a { color: var(--teal); text-decoration: none; }
+.auth-links a:hover { text-decoration: underline; }
+.auth-note { font-size: 0.78rem; color: var(--muted); margin-top: 16px;
+             padding-top: 12px; border-top: 1px dashed var(--border); line-height: 1.55; }
+
+/* ── Impersonation controls ── */
+.impersonate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 10px; margin-top: 10px; }
+.ut-card { border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px;
+           background: var(--white); display: flex; flex-direction: column; gap: 6px; }
+.ut-card.gated { border-color: var(--amber); background: #FFFBF4; }
+.ut-card h4 { font-family: Georgia, serif; font-size: 0.98rem; color: var(--navy);
+              font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.ut-card .lock { font-size: 0.9rem; color: var(--amber); }
+.ut-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.45; margin-bottom: 2px; }
+.ut-card .ut-links { font-size: 0.74rem; color: var(--label); letter-spacing: 0.06em;
+                     text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+
+/* ── Impersonation live banner ── */
+#imp-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+              background: var(--amber); color: #fff; padding: 6px 16px;
+              text-align: center; font-size: 0.82rem; font-weight: 600;
+              box-shadow: 0 2px 6px rgba(0,0,0,0.2); display: none; }
+#imp-banner.show { display: block; }
+#imp-banner a { color: #fff; text-decoration: underline; }
+body.impersonating { padding-top: 32px; }
+
+/* ── Access-control doc table ── */
+.ac-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.ac-table th, .ac-table td { text-align: left; padding: 10px 12px;
+                             border-bottom: 1px solid var(--border); font-size: 0.88rem;
+                             vertical-align: top; }
+.ac-table th { background: var(--panel); font-size: 0.72rem; letter-spacing: 0.08em;
+               text-transform: uppercase; color: var(--label); font-weight: 700; }
+.ac-public { color: var(--success-tx); font-weight: 700; }
+.ac-gated  { color: var(--warn-tx); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ── Impersonation banner (appears only while admin is viewing as another user type) ── -->
+<div id="imp-banner" role="status">
+  Viewing site as <b id="imp-label">—</b> ·
+  <a href="#" onclick="event.preventDefault();stopImpersonating()">Stop impersonating</a> ·
+  <a href="#" onclick="event.preventDefault();goTab('access');">Change role</a>
+</div>
+
+<!-- ── Admin login gate (covers everything until signed in) ── -->
+<div id="auth-gate">
+  <form class="auth-card" onsubmit="return doAdminLogin(event)">
+    <div class="auth-brand">Knowledge At<span class="las">las</span></div>
+    <div class="auth-eyebrow">COGS 160 Spring 2026</div>
+    <h1 class="auth-title">Instructor sign-in</h1>
+    <p class="auth-sub">This console lets you run the class roster, issue login keys,
+       mark deliverables, and act as any user type on the site.
+       Sign in with your UCSD instructor account.</p>
+
+    <div id="authErr" class="auth-err"></div>
+
+    <div class="auth-row"><label for="au_email">UCSD email</label>
+      <input id="au_email" type="email" autocomplete="username" required
+             placeholder="you@ucsd.edu" value="dkirsh@ucsd.edu"></div>
+    <div class="auth-row"><label for="au_key">Admin key / password</label>
+      <input id="au_key" type="password" autocomplete="current-password" required
+             placeholder="Your instructor credential"></div>
+    <div class="auth-row"><label for="au_role">Sign in as</label>
+      <select id="au_role">
+        <option value="instructor">Instructor — full permissions</option>
+        <option value="ta">TA — roster + deliverables only</option>
+      </select></div>
+
+    <button class="auth-btn" type="submit">Sign in</button>
+
+    <div class="auth-links">
+      <a href="ka_student_setup.html">Browse the public site →</a>
+      <a href="#" onclick="event.preventDefault();openSsoStub()">Use UCSD SSO instead</a>
+    </div>
+
+    <p class="auth-note">
+      <b>Access model:</b> the only gated user type is <b>160 Student</b> (enrolled class).
+      Visitor, Researcher, Practitioner, and Contributor roles are public &mdash; anyone may
+      browse the site as any of them without signing in. Admins can impersonate any of
+      these roles seamlessly from the dashboard.
+    </p>
+  </form>
+</div>
+
+<!-- ── Top nav ── -->
+<nav class="top-nav" aria-label="Primary">
+  <a class="nav-brand" href="ka_schedule.html">Knowledge At<span class="las">las</span></a>
+  <span class="nav-sep">|</span>
+  <a class="nav-link" href="ka_schedule.html">Schedule</a>
+  <a class="nav-link" href="ka_student_setup.html">Setup</a>
+  <a class="nav-link" href="ka_track1_hub.html">T1</a>
+  <a class="nav-link" href="ka_track2_hub.html">T2</a>
+  <a class="nav-link" href="ka_track3_hub.html">T3</a>
+  <a class="nav-link" href="ka_track4_hub.html">T4</a>
+  <span class="nav-admin-badge">Admin</span>
+  <span class="nav-user" id="navUser">Prof. D. Kirsh</span>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Instructor Console · Spring 2026</div>
+    <h1>COGS 160 Admin</h1>
+    <p class="hero-sub">Roster, logins, deliverables, announcements, and site health in one place.
+       Actions (email, password reset, snapshots) are wired to local endpoints &mdash; in
+       production they call the course backend.</p>
+    <span class="hero-warn">⚠ Prototype UI &mdash; replace stubbed <code>fetch()</code> calls in
+       <code>ADMIN_API</code> with your production backend before deploy.</span>
+  </div>
+</header>
+
+<!-- ── Tabs ── -->
+<div class="tabs-wrap" role="tablist">
+  <nav class="tabs">
+    <div class="tab active" data-tab="dashboard">Dashboard</div>
+    <div class="tab" data-tab="roster">Roster <span class="tab-count" id="rosterCount">–</span></div>
+    <div class="tab" data-tab="logins">Logins &amp; Keys</div>
+    <div class="tab" data-tab="tracks">Tracks &amp; Deliverables</div>
+    <div class="tab" data-tab="grades">Progress</div>
+    <div class="tab" data-tab="announce">Announcements</div>
+    <div class="tab" data-tab="site">Site Health</div>
+    <div class="tab" data-tab="content">Content</div>
+    <div class="tab" data-tab="settings">Settings</div>
+    <div class="tab" data-tab="access">Access &amp; Roles</div>
+    <div class="tab" data-tab="audit">Audit Log</div>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══════════════════════  DASHBOARD  ══════════════════════ -->
+<section class="tabpanel active" id="tab-dashboard">
+
+  <div class="kpi-grid">
+    <div class="kpi ok">   <div class="kpi-label">Enrolled</div>      <div class="kpi-value" id="kEnr">–</div> <div class="kpi-foot">Active this quarter</div></div>
+    <div class="kpi">      <div class="kpi-label">Signed in 7d</div>  <div class="kpi-value" id="kAct">–</div> <div class="kpi-foot">Unique logins</div></div>
+    <div class="kpi attn"> <div class="kpi-label">Pending resets</div><div class="kpi-value" id="kRst">–</div> <div class="kpi-foot">Auth keys unclaimed</div></div>
+    <div class="kpi attn"> <div class="kpi-label">Overdue</div>       <div class="kpi-value" id="kOvr">–</div> <div class="kpi-foot">Past deadline</div></div>
+    <div class="kpi crit"> <div class="kpi-label">At risk</div>       <div class="kpi-value" id="kRsk">–</div> <div class="kpi-foot">≥ 2 missed</div></div>
+    <div class="kpi">      <div class="kpi-label">Last snapshot</div> <div class="kpi-value" id="kSnap" style="font-size:1.05rem;line-height:1.3;">–</div><div class="kpi-foot" id="kSnapAgo">–</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">This week</div>
+          <div class="card-sub">Week <span id="dashWeek">3</span> &mdash; <span id="dashWeekLabel">Signal in the Mess</span></div>
+        </div>
+        <a class="btn btn-secondary btn-sm" href="ka_schedule.html">Open schedule →</a>
+      </div>
+      <table>
+        <thead><tr><th>Track</th><th>Due Thursday</th><th>Submitted</th><th>Action</th></tr></thead>
+        <tbody id="dashDueRows"></tbody>
+      </table>
+      <div class="tb-sub" style="margin-top:8px;">
+        All four tracks run in parallel each week. Use the "+" on each row to mark a submission received.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Recent activity</div>
+          <div class="card-sub">Last 24 hours</div>
+        </div>
+      </div>
+      <ul class="checklist" id="dashActivity"></ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <div class="card-title">Impersonate a user type</div>
+        <div class="card-sub">
+          Pick a role and the whole site re-renders as though you were that user &mdash; you keep
+          admin privileges silently in the background. Use this to QA student-facing pages.
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="goTab('access')">Full access model →</button>
+    </div>
+    <div class="impersonate-grid" id="impGrid"></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head"><div><div class="card-title">Roster at a glance</div>
+        <div class="card-sub">Enrollment by track</div></div></div>
+      <div id="dashTrackBreak"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><div class="card-title">Shortcuts</div>
+        <div class="card-sub">Frequent instructor tasks</div></div></div>
+      <div class="btn-row" style="flex-direction:column;align-items:stretch;gap:8px;">
+        <button class="btn btn-teal"      onclick="goTab('logins')">Reset a student's login →</button>
+        <button class="btn btn-teal"      onclick="goTab('announce')">Broadcast to class →</button>
+        <button class="btn btn-teal"      onclick="goTab('tracks')">Mark deliverables received →</button>
+        <button class="btn btn-teal"      onclick="openImportModal()">⬆ Upload roster CSV →</button>
+        <button class="btn btn-teal"      onclick="openAddAdminModal()">+ Add administrator →</button>
+        <button class="btn btn-secondary" onclick="exportRoster()">Export roster CSV</button>
+        <button class="btn btn-teal"      onclick="refreshPnusFromLocal()">⟳ Refresh PNUs from local Mac →</button>
+        <button class="btn btn-secondary" onclick="runSiteCheck()">Run broken-link check</button>
+        <button class="btn btn-secondary" onclick="triggerSnapshot()">Take a site snapshot</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════  ROSTER  ══════════════════════ -->
+<section class="tabpanel" id="tab-roster">
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <div class="card-title">Class roster</div>
+        <div class="card-sub">COGS 160 · Spring 2026 · <span id="rosterSub">…</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary btn-sm" onclick="exportRoster()">Export CSV</button>
+        <button class="btn btn-teal btn-sm"      onclick="openImportModal()">⬆ Upload roster CSV</button>
+        <button class="btn btn-primary btn-sm"   onclick="openAddStudentModal()">+ Add student</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input type="search" id="rosterSearch" placeholder="Search by name, email, or login…">
+      <select id="filterTrack">
+        <option value="">All tracks</option>
+        <option>Track 1 · Image Tagger</option>
+        <option>Track 2 · Pipeline</option>
+        <option>Track 3 · VR</option>
+        <option>Track 4 · UX</option>
+      </select>
+      <select id="filterStatus">
+        <option value="">All status</option>
+        <option>active</option>
+        <option>pending</option>
+        <option>at-risk</option>
+        <option>dropped</option>
+      </select>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table id="rosterTable">
+        <thead>
+          <tr>
+            <th>Student</th><th>Login</th><th>Track</th><th>Last sign-in</th>
+            <th>Progress</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rosterBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════  LOGINS & KEYS  ══════════════════════ -->
+<section class="tabpanel" id="tab-logins">
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head"><div>
+        <div class="card-title">Reset a single login</div>
+        <div class="card-sub">Generate a one-time auth key and email the student.</div>
+      </div></div>
+
+      <div class="form-row">
+        <label for="resetStudent">Student</label>
+        <div>
+          <select id="resetStudent"></select>
+          <div class="form-hint">Start typing in the roster filter if the list is long.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="resetKeyLen">Key length</label>
+        <select id="resetKeyLen">
+          <option value="8">8 chars (easy to type)</option>
+          <option value="12" selected>12 chars (recommended)</option>
+          <option value="20">20 chars (strong)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="resetExpiry">Expires in</label>
+        <select id="resetExpiry">
+          <option value="1">1 hour</option>
+          <option value="24" selected>24 hours</option>
+          <option value="72">72 hours</option>
+          <option value="168">7 days</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="resetMsg">Message (optional)</label>
+        <textarea id="resetMsg" placeholder="Added to the email body after the key."></textarea>
+      </div>
+
+      <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-secondary" onclick="previewResetEmail()">Preview email</button>
+        <button class="btn btn-primary"   onclick="sendResetEmail()">Generate key &amp; send</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div>
+        <div class="card-title">Bulk auth-key actions</div>
+        <div class="card-sub">For the whole class or a filtered slice.</div>
+      </div></div>
+
+      <div class="form-row">
+        <label>Scope</label>
+        <select id="bulkScope">
+          <option value="all">All active students</option>
+          <option value="track1">Track 1 only</option>
+          <option value="track2">Track 2 only</option>
+          <option value="track3">Track 3 only</option>
+          <option value="track4">Track 4 only</option>
+          <option value="pending">Pending / never logged in</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Action</label>
+        <select id="bulkAction">
+          <option value="fresh">Issue fresh one-time keys</option>
+          <option value="resend">Resend current keys</option>
+          <option value="revoke">Revoke active sessions</option>
+        </select>
+      </div>
+      <button class="btn btn-teal" onclick="runBulkKeys()">Run for affected students</button>
+
+      <div style="border-top:1px solid var(--border); margin-top:18px; padding-top:14px;">
+        <h3 style="font-family:Georgia,serif;font-size:1.0rem;color:var(--navy);margin-bottom:8px;">
+          Recently issued keys</h3>
+        <ul class="checklist" id="keyLog"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Auth policy</div>
+      <div class="card-sub">Applies to all COGS 160 logins.</div>
+    </div></div>
+    <div class="form-row"><label>Login method</label>
+      <select>
+        <option>SSO (UCSD SAML) + one-time key backup</option>
+        <option>Magic-link email only</option>
+        <option>Email + password</option>
+      </select></div>
+    <div class="form-row"><label>Session TTL</label>
+      <select><option>12 hours</option><option selected>7 days</option><option>Quarter</option></select></div>
+    <div class="form-row"><label>Require 2FA for instructors</label>
+      <select><option selected>Yes</option><option>No</option></select></div>
+  </div>
+</section>
+
+<!-- ══════════════════════  TRACKS & DELIVERABLES  ══════════════════════ -->
+<section class="tabpanel" id="tab-tracks">
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">160sp Tracks &mdash; What's due when</div>
+      <div class="card-sub">Design · Build · Run · Present. Click any cell to mark submissions received.</div>
+    </div><div class="btn-row">
+      <button class="btn btn-secondary btn-sm" onclick="goTab('content')">Edit schedule →</button>
+    </div></div>
+
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th class="col-week">Week</th>
+            <th class="col-track" style="color:var(--track1);">Track 1 · Image Tagger</th>
+            <th class="col-track" style="color:var(--track2);">Track 2 · Pipeline</th>
+            <th class="col-track" style="color:var(--track3);">Track 3 · VR</th>
+            <th class="col-track" style="color:var(--track4);">Track 4 · UX Research</th>
+          </tr>
+        </thead>
+        <tbody id="matrixBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════  GRADES / PROGRESS  ══════════════════════ -->
+<section class="tabpanel" id="tab-grades">
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Student progress</div>
+      <div class="card-sub">Per-student completion against their track deliverables.</div>
+    </div><div class="btn-row">
+      <button class="btn btn-secondary btn-sm" onclick="exportGrades()">Export grades CSV</button>
+    </div></div>
+    <div style="overflow-x:auto;">
+      <table id="gradesTable">
+        <thead><tr>
+          <th>Student</th><th>Track</th><th>A0</th><th>A1</th><th>Track deliverables</th>
+          <th>Submissions</th><th>Avg</th><th>Flag</th>
+        </tr></thead>
+        <tbody id="gradesBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════  ANNOUNCEMENTS  ══════════════════════ -->
+<section class="tabpanel" id="tab-announce">
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head"><div>
+        <div class="card-title">Compose broadcast</div>
+        <div class="card-sub">Posts to the course banner and optionally emails students.</div>
+      </div></div>
+
+      <div class="form-row"><label>Audience</label>
+        <select id="annAud">
+          <option value="all">All enrolled</option>
+          <option>Track 1 · Image Tagger</option>
+          <option>Track 2 · Pipeline</option>
+          <option>Track 3 · VR</option>
+          <option>Track 4 · UX</option>
+          <option>At-risk students</option>
+          <option>Dropped students (re-engagement)</option>
+        </select></div>
+      <div class="form-row"><label>Channels</label>
+        <div>
+          <label style="font-weight:500;"><input type="checkbox" id="annSite" checked> Site banner</label>&nbsp;&nbsp;
+          <label style="font-weight:500;"><input type="checkbox" id="annEmail" checked> Email</label>&nbsp;&nbsp;
+          <label style="font-weight:500;"><input type="checkbox" id="annSlack"> Slack / Canvas</label>
+        </div></div>
+      <div class="form-row"><label>Subject</label>
+        <input type="text" id="annSubj" placeholder="Week 3 deliverables · Thursday 5pm"></div>
+      <div class="form-row"><label>Body</label>
+        <textarea id="annBody" rows="6" placeholder="Hi Track 2 team — this week's pipeline check-in…"></textarea></div>
+      <div class="form-row"><label>Priority</label>
+        <select><option>Normal</option><option>Important</option><option>Urgent</option></select></div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
+        <button class="btn btn-secondary" onclick="saveDraft()">Save draft</button>
+        <button class="btn btn-secondary" onclick="previewAnnouncement()">Preview</button>
+        <button class="btn btn-primary"   onclick="sendAnnouncement()">Send</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div>
+        <div class="card-title">Recent announcements</div>
+        <div class="card-sub">Last 30 days</div>
+      </div></div>
+      <ul class="checklist" id="annLog"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════  SITE HEALTH  ══════════════════════ -->
+<section class="tabpanel" id="tab-site">
+  <div class="kpi-grid">
+    <div class="kpi ok">  <div class="kpi-label">Pages</div>           <div class="kpi-value">94</div> <div class="kpi-foot">Deployed</div></div>
+    <div class="kpi">     <div class="kpi-label">Visits 7d</div>       <div class="kpi-value">2,834</div><div class="kpi-foot">Uniques: 48</div></div>
+    <div class="kpi attn"><div class="kpi-label">Broken links</div>    <div class="kpi-value">3</div>  <div class="kpi-foot">Last scan 2h ago</div></div>
+    <div class="kpi">     <div class="kpi-label">Storage</div>         <div class="kpi-value">42 MB</div><div class="kpi-foot">of 1 GB</div></div>
+    <div class="kpi ok">  <div class="kpi-label">SSL expires</div>     <div class="kpi-value">89 d</div><div class="kpi-foot">Auto-renews</div></div>
+    <div class="kpi">     <div class="kpi-label">Build</div>           <div class="kpi-value">#217</div><div class="kpi-foot">2026-04-16 10:24</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head"><div><div class="card-title">Deployment controls</div>
+        <div class="card-sub">Safe actions &mdash; backend-gated in production.</div></div></div>
+      <div class="btn-row" style="flex-direction:column;align-items:stretch;gap:8px;">
+        <button class="btn btn-teal"      onclick="refreshPnusFromLocal()">⟳ Refresh PNUs from local Mac</button>
+        <button class="btn btn-teal"      onclick="triggerSnapshot()">Take snapshot now</button>
+        <button class="btn btn-teal"      onclick="runSiteCheck()">Run broken-link scan</button>
+        <button class="btn btn-secondary" onclick="toast('info','Deploying staging… build #218 queued.')">Deploy staging</button>
+        <button class="btn btn-primary"   onclick="confirmDeployProd()">Deploy production</button>
+        <button class="btn btn-secondary" onclick="toast('info','Tail opened in new console tab.')">View server logs</button>
+        <button class="btn btn-secondary" onclick="toast('info','Restart queued (takes ~15s).')">Restart web service</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div><div class="card-title">Flagged items</div>
+        <div class="card-sub">Live checks on the public site.</div></div></div>
+      <ul class="checklist">
+        <li><span class="status err">✕</span>
+          <code>ka_track2_intake.html</code> → dead link to
+          <code>../ka_topics.html#pipeline</code></li>
+        <li><span class="status err">✕</span>
+          <code>week4_agenda.html</code> → 404 on <code>atlas_boxology_v2.png</code></li>
+        <li><span class="status err">✕</span>
+          <code>ka_article_finder_assignment.html</code> → redirect loop on Zotero CDN</li>
+        <li><span class="status warn">⚠</span> 17 pages missing Open-Graph preview image</li>
+        <li><span class="status warn">⚠</span> 4 pages still use legacy UCSD-blue palette (see KA_STYLE_GUIDE §9)</li>
+        <li><span class="status ok">✓</span> No orphan pages detected</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════  CONTENT  ══════════════════════ -->
+<section class="tabpanel" id="tab-content">
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Quick-edit links</div>
+      <div class="card-sub">Jump to the source file in your editor or open the rendered page.</div>
+    </div></div>
+    <table>
+      <thead><tr><th>Page</th><th>Path</th><th>Last modified</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td class="tb-name">Course schedule</td>         <td class="tb-mono">ka_schedule.html</td>            <td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_schedule.html">Open</a></td></tr>
+        <tr><td class="tb-name">Student setup · landing</td> <td class="tb-mono">ka_student_setup.html</td>       <td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_student_setup.html">Open</a></td></tr>
+        <tr><td class="tb-name">Track signup</td>            <td class="tb-mono">ka_track_signup.html</td>        <td>2026-04-12</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_track_signup.html">Open</a></td></tr>
+        <tr><td class="tb-name">Track 1 hub</td>             <td class="tb-mono">ka_track1_hub.html</td>          <td>2026-04-15</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_track1_hub.html">Open</a></td></tr>
+        <tr><td class="tb-name">Track 2 hub</td>             <td class="tb-mono">ka_track2_hub.html</td>          <td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_track2_hub.html">Open</a></td></tr>
+        <tr><td class="tb-name">Track 3 hub</td>             <td class="tb-mono">ka_track3_hub.html</td>          <td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_track3_hub.html">Open</a></td></tr>
+        <tr><td class="tb-name">Track 4 hub</td>             <td class="tb-mono">ka_track4_hub.html</td>          <td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_track4_hub.html">Open</a></td></tr>
+        <tr><td class="tb-name">Week 3 agenda</td>           <td class="tb-mono">week3_agenda.html</td>           <td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="week3_agenda.html">Open</a></td></tr>
+        <tr><td class="tb-name">Article-finder assignment</td><td class="tb-mono">ka_article_finder_assignment.html</td><td>2026-04-16</td><td class="btn-row"><a class="btn btn-secondary btn-sm" href="ka_article_finder_assignment.html">Open</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════  SETTINGS  ══════════════════════ -->
+<section class="tabpanel" id="tab-settings">
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Course settings</div>
+      <div class="card-sub">Changes here affect behaviour for all students.</div>
+    </div></div>
+    <div class="form-row"><label>Term</label><input value="Spring 2026"></div>
+    <div class="form-row"><label>Quarter start</label><input type="date" value="2026-03-30"></div>
+    <div class="form-row"><label>Quarter end</label><input type="date" value="2026-06-05"></div>
+    <div class="form-row"><label>Default user type</label>
+      <select><option selected>160 Student → syllabus</option>
+              <option>Researcher → topics</option>
+              <option>Contributor → tracks</option></select></div>
+    <div class="form-row"><label>Enroll key</label>
+      <div><input value="KA-SP26-COGS160" style="width:60%;"> &nbsp;
+        <button class="btn btn-secondary btn-sm" onclick="toast('info','New enroll key generated.')">Regenerate</button></div></div>
+    <div class="form-row"><label>Office-hours link</label><input value="https://ucsd.zoom.us/j/…"></div>
+    <div class="form-row"><label>TA list</label><input value="— none assigned —"></div>
+    <button class="btn btn-primary" onclick="toast('ok','Settings saved.')">Save changes</button>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Backup &amp; export</div>
+      <div class="card-sub">Everything above can be rolled back from a snapshot.</div>
+    </div></div>
+    <ul class="checklist">
+      <li><span class="status ok">●</span> 2026-04-16 10:24 — #217 — <a href="#" class="tb-mono">restore</a></li>
+      <li><span class="status ok">●</span> 2026-04-15 18:30 — #216 — <a href="#" class="tb-mono">restore</a></li>
+      <li><span class="status ok">●</span> 2026-04-14 09:12 — #215 — <a href="#" class="tb-mono">restore</a></li>
+      <li><span class="status ok">●</span> 2026-04-13 19:12 — #214 — <a href="#" class="tb-mono">restore</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════  ACCESS & ROLES  ══════════════════════ -->
+<section class="tabpanel" id="tab-access">
+
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <div class="card-title">Course administrators</div>
+        <div class="card-sub">
+          Anyone with an admin record here can sign in to this console. Roles scope
+          what they're allowed to do. The primary instructor cannot be removed.
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary btn-sm" onclick="openRolesReference()">Roles reference</button>
+        <button class="btn btn-primary btn-sm"   onclick="openAddAdminModal()">+ Add administrator</button>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table id="adminsTable">
+        <thead><tr>
+          <th>Administrator</th><th>Role</th><th>Scopes</th>
+          <th>Added</th><th>Last sign-in</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="adminsBody"></tbody>
+      </table>
+    </div>
+    <div class="tb-sub" style="margin-top:8px;">
+      New admins receive an email with a one-time invite key that expires in 72 hours.
+      On first sign-in they set a permanent credential.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Access model</div>
+      <div class="card-sub">Who sees what &mdash; canonical reference for the site.</div>
+    </div></div>
+
+    <p style="font-size:0.92rem;margin-bottom:10px;">
+      Only <b>160 Student</b> and <b>Instructor</b> require a login. Every other role
+      is a <i>presentation mode</i>: a visitor to the site picks one, and the navigation,
+      landing page, and content emphasis adjust accordingly. An admin can slip into
+      any of these roles without losing admin privileges; a small amber banner at the
+      top of every page confirms the impersonation and offers a one-click return.
+    </p>
+
+    <table class="ac-table">
+      <thead><tr><th>User type</th><th>Access</th><th>Login required</th><th>Default landing</th><th>What they see</th></tr></thead>
+      <tbody id="acTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Impersonate now</div>
+      <div class="card-sub">
+        Clicking a role sets <code>ka.userType</code> and <code>ka.impersonating</code> in
+        sessionStorage and opens that role's default landing page in a new tab.
+      </div>
+    </div></div>
+    <div class="impersonate-grid" id="impGrid2"></div>
+
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:0.85rem;color:var(--muted);">
+      <b>Current session:</b>
+      <span id="accSessInfo">admin · no impersonation active</span>
+      &nbsp; <button class="btn btn-secondary btn-sm" onclick="stopImpersonating()">Stop impersonating</button>
+      &nbsp; <button class="btn btn-danger btn-sm" onclick="adminSignOut()">Sign out of admin</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Integration &mdash; for every other page on the site</div>
+      <div class="card-sub">Include the companion script so pages respect the same rules.</div>
+    </div></div>
+    <p style="font-size:0.88rem;">Add one line inside every page's <code>&lt;head&gt;</code>:</p>
+    <pre style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:0.82rem;overflow-x:auto;">&lt;script src="ka_user_type.js" defer&gt;&lt;/script&gt;</pre>
+    <p style="font-size:0.86rem;margin-top:8px;">
+      That script renders the impersonation banner (when applicable), exposes
+      <code>window.KA.userType</code> to page code, and guards any element marked
+      <code>data-ka-requires="160-student"</code> by hiding it from unauthenticated
+      visitors while admin-impersonators pass through transparently.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════  AUDIT LOG  ══════════════════════ -->
+<section class="tabpanel" id="tab-audit">
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Audit log</div>
+      <div class="card-sub">Every admin action is recorded for 365 days.</div>
+    </div><div class="btn-row">
+      <button class="btn btn-secondary btn-sm" onclick="exportAudit()">Export JSON</button>
+    </div></div>
+    <table>
+      <thead><tr><th>When</th><th>Actor</th><th>Action</th><th>Target</th><th>Result</th></tr></thead>
+      <tbody id="auditBody"></tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<!-- ── Modal scaffold ── -->
+<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Modal</h2>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+
+<div id="toast-stack" aria-live="polite"></div>
+
+<footer>
+  COGS 160 Admin · Spring 2026 · <a href="ka_schedule.html">Back to schedule</a> ·
+  Style: <a href="#" onclick="return false;">KA_STYLE_GUIDE.md</a> ·
+  Prof. David Kirsh, Cognitive Science, UCSD
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   User-type catalog — shared with ka_user_type.js.
+   `gated:true` means the user type requires a real login;
+   everything else is a public presentation mode anyone may adopt.
+   ───────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   ADMIN_ROLES — permission sets available when inviting staff.
+   Each role is a small set of scopes checked on the server.
+   ───────────────────────────────────────────────────────────── */
+const ADMIN_ROLES = {
+  instructor: {
+    label: 'Instructor',
+    desc:  'Full permissions. Reset logins, deploy, impersonate, edit roster, grading.',
+    scopes: ['roster.rw','logins.rw','grades.rw','announce.rw','deploy.rw','settings.rw','impersonate','audit.read'],
+  },
+  coinstructor: {
+    label: 'Co-instructor',
+    desc:  'Same as Instructor but cannot deploy to production or change settings.',
+    scopes: ['roster.rw','logins.rw','grades.rw','announce.rw','impersonate','audit.read'],
+  },
+  ta: {
+    label: 'Teaching Assistant',
+    desc:  'Roster view, grading, announcements. No login resets, no deploys.',
+    scopes: ['roster.read','grades.rw','announce.rw','audit.read'],
+  },
+  auditor: {
+    label: 'Read-only auditor',
+    desc:  'Can view everything but modify nothing. For department review.',
+    scopes: ['roster.read','grades.read','announce.read','audit.read'],
+  },
+};
+
+/* ─────────────────────────────────────────────────────────────
+   ADMINS — staff with elevated access. Primary (you) first.
+   In production this comes from the server; the shape matches.
+   ───────────────────────────────────────────────────────────── */
+const ADMINS = [
+  { id:'a01', name:'David Kirsh',     email:'dkirsh@ucsd.edu',        role:'instructor',
+    added:'2026-03-15', addedBy:'self',      lastSignIn:'2026-04-16 09:02', status:'active',  primary:true },
+  { id:'a02', name:'Rahul Sengupta',  email:'rsengupta@ucsd.edu',     role:'ta',
+    added:'2026-03-28', addedBy:'dkirsh',    lastSignIn:'2026-04-15 18:40', status:'active',  primary:false },
+  { id:'a03', name:'Mira Alvarez',    email:'malvarez@ucsd.edu',      role:'ta',
+    added:'2026-03-28', addedBy:'dkirsh',    lastSignIn:'—',                status:'invited', primary:false },
+  { id:'a04', name:'Tanishq Rathore', email:'trathore@ucsd.edu',      role:'instructor',
+    added:'2026-04-16', addedBy:'dkirsh',    lastSignIn:'—',                status:'invited', primary:false },
+];
+
+const USER_TYPES = [
+  { id:'visitor',      label:'Visitor',              gated:false,
+    blurb:'Default for anyone arriving at the home page without picking a role.',
+    landing:'../ka_home.html',         sees:'Public Atlas overview, topics, evidence index.' },
+  { id:'researcher',   label:'Researcher',           gated:false,
+    blurb:'Academic browsing the knowledge network for a literature scan.',
+    landing:'../ka_topics.html',       sees:'Topics, theories, mechanisms, neural underpinnings, citations.' },
+  { id:'practitioner', label:'Practitioner',         gated:false,
+    blurb:'Applied user (clinician, UX practitioner, engineer) looking for relevance.',
+    landing:'../ka_home.html',         sees:'Practitioner-facing summaries, case examples, caveats.' },
+  { id:'contributor',  label:'Contributor',          gated:false,
+    blurb:'Volunteer adding content &mdash; tagging, pipeline, VR, UX research.',
+    landing:'ka_track_signup.html',    sees:'Track picker, contribution guides, public hubs.' },
+  { id:'160-student',  label:'160 Student',          gated:true,
+    blurb:'Enrolled in COGS 160 Spring 2026. Access controlled by enrollment.',
+    landing:'ka_schedule.html',        sees:'Syllabus, track hubs, assignments, submissions.' },
+  { id:'instructor',   label:'Instructor / Admin',   gated:true,
+    blurb:'Course staff. Full permissions, audit-logged, may impersonate any other type.',
+    landing:'ka_admin.html',           sees:'Everything, including student PII and deploy controls.' },
+];
+
+/* ─────────────────────────────────────────────────────────────
+   ADMIN_API — replace these stubs with real fetch() calls.
+   Each stub returns a promise resolving to a plausible mock.
+   ───────────────────────────────────────────────────────────── */
+const ADMIN_API = {
+  resetLogin:    (id, opts) => Promise.resolve({ok:true, authKey: randKey(opts.len)}),
+  revokeSession: (id)       => Promise.resolve({ok:true}),
+  sendEmail:     (payload)  => Promise.resolve({ok:true, id: 'msg_'+Math.random().toString(36).slice(2,8)}),
+  broadcast:     (payload)  => Promise.resolve({ok:true, recipients: payload.n||0}),
+  siteCheck:     ()         => Promise.resolve({ok:true, broken: 3}),
+  snapshot:      ()         => Promise.resolve({ok:true, build: '#218'}),
+  deployProd:    ()         => Promise.resolve({ok:true}),
+  inviteAdmin:   (payload)  => Promise.resolve({ok:true, inviteKey: randKey(12), id:'a'+String(ADMINS.length+1).padStart(2,'0')}),
+  removeAdmin:   (id)       => Promise.resolve({ok:true}),
+  changeAdminRole: (id, r)  => Promise.resolve({ok:true}),
+  /* Calls the server-side /api/admin/refresh-pnus endpoint which SSHes
+     to the instructor's Mac, runs refresh_pnus_from_local.sh there, and
+     writes the returned JSON into the site's data/ka_payloads/pnus.json.
+     See scripts/ka_admin_refresh_endpoint.py and
+     docs/SSH_SETUP_FOR_PNU_REFRESH.md. In this demo the call is stubbed. */
+  refreshPnus:   ()         => {
+    // In production, replace with:
+    //   return fetch('/api/admin/refresh-pnus', {
+    //     method:'POST',
+    //     headers:{'X-Admin-Token': SS.getItem('ka.adminToken')||''}
+    //   }).then(r => r.ok ? r.json() : Promise.reject(r.status+' '+r.statusText));
+    return new Promise((resolve) => setTimeout(() => resolve({
+      ok: true,
+      summary: { total: 71, framework_count: 15, cross_framework_count: 15,
+                 readiness: { full: 54, brief: 11, stub: 6, missing: 0 } },
+      bytes: 28500,
+      generated_at: new Date().toISOString(),
+      ssh_stderr_tail: '(demo mode — no SSH actually performed)',
+    }), 900));
+  },
+};
+
+/* ── Demo roster (15 students, realistic shape) ── */
+const ROSTER = [
+  {id:'s01', name:'Aisha Rahman',      email:'arahman@ucsd.edu',  login:'arahman',  track:'Track 1 · Image Tagger', last:'2026-04-16 09:12', status:'active',  progress:82, a0:1,a1:1,sub:9,avg:3.6,flag:''},
+  {id:'s02', name:'Ben Choi',          email:'bchoi@ucsd.edu',    login:'bchoi',    track:'Track 1 · Image Tagger', last:'2026-04-15 22:40', status:'active',  progress:78, a0:1,a1:1,sub:8,avg:3.5,flag:''},
+  {id:'s03', name:'Carla Mendoza',     email:'cmendoza@ucsd.edu', login:'cmendoza', track:'Track 1 · Image Tagger', last:'2026-04-11 14:05', status:'at-risk', progress:44, a0:1,a1:0,sub:4,avg:2.6,flag:'Missed A1'},
+  {id:'s04', name:'Derek O\u2019Neill', email:'doneill@ucsd.edu', login:'doneill',  track:'Track 2 · Pipeline',     last:'2026-04-16 08:01', status:'active',  progress:90, a0:1,a1:1,sub:10,avg:3.8,flag:''},
+  {id:'s05', name:'Elena Petrov',      email:'epetrov@ucsd.edu',  login:'epetrov',  track:'Track 2 · Pipeline',     last:'2026-04-15 19:22', status:'active',  progress:85, a0:1,a1:1,sub:9,avg:3.7,flag:''},
+  {id:'s06', name:'Farid Al-Hassan',   email:'falhassan@ucsd.edu',login:'falhassan',track:'Track 2 · Pipeline',     last:'—',                status:'pending', progress:0,  a0:0,a1:0,sub:0,avg:0,  flag:'Never logged in'},
+  {id:'s07', name:'Grace Nakamura',    email:'gnakamura@ucsd.edu',login:'gnakamura',track:'Track 3 · VR',           last:'2026-04-16 07:48', status:'active',  progress:71, a0:1,a1:1,sub:7,avg:3.4,flag:''},
+  {id:'s08', name:'Hugo Vasquez',      email:'hvasquez@ucsd.edu', login:'hvasquez', track:'Track 3 · VR',           last:'2026-04-14 16:30', status:'active',  progress:66, a0:1,a1:1,sub:6,avg:3.2,flag:''},
+  {id:'s09', name:'Imani Okafor',      email:'iokafor@ucsd.edu',  login:'iokafor',  track:'Track 3 · VR',           last:'2026-04-12 11:45', status:'at-risk', progress:38, a0:1,a1:0,sub:3,avg:2.4,flag:'Missed A1, Week 2'},
+  {id:'s10', name:'Jamal Carter',      email:'jcarter@ucsd.edu',  login:'jcarter',  track:'Track 3 · VR',           last:'2026-04-16 06:15', status:'active',  progress:74, a0:1,a1:1,sub:7,avg:3.4,flag:''},
+  {id:'s11', name:'Kavya Iyer',        email:'kiyer@ucsd.edu',    login:'kiyer',    track:'Track 4 · UX',           last:'2026-04-15 21:10', status:'active',  progress:88, a0:1,a1:1,sub:10,avg:3.7,flag:''},
+  {id:'s12', name:'Liam Sorensen',     email:'lsorensen@ucsd.edu',login:'lsorensen',track:'Track 4 · UX',           last:'2026-04-15 14:20', status:'active',  progress:80, a0:1,a1:1,sub:8,avg:3.5,flag:''},
+  {id:'s13', name:'Maya Patel',        email:'mpatel@ucsd.edu',   login:'mpatel',   track:'Track 4 · UX',           last:'2026-04-16 10:02', status:'active',  progress:92, a0:1,a1:1,sub:11,avg:3.9,flag:''},
+  {id:'s14', name:'Nolan Briggs',      email:'nbriggs@ucsd.edu',  login:'nbriggs',  track:'Track 4 · UX',           last:'2026-04-08 09:00', status:'dropped', progress:15, a0:1,a1:0,sub:1,avg:0,  flag:'Withdrew 2026-04-10'},
+  {id:'s15', name:'Olivia Zhang',      email:'ozhang@ucsd.edu',   login:'ozhang',   track:'Track 2 · Pipeline',     last:'—',                status:'pending', progress:0,  a0:0,a1:0,sub:0,avg:0,  flag:'Never logged in'},
+];
+
+/* ── 160sp deliverables by (track, week). 8 teaching weeks. ── */
+const DELIVERABLES = [
+  { wk:1,  label:'Week 1 · Orient',
+    t1:{d:'Install Pillow + Tesseract; verify env.',   sub: 4, of: 5},
+    t2:{d:'Clone pipeline; run sample ingestion.',     sub: 3, of: 4},
+    t3:{d:'VR headset setup; Unity Hub running.',      sub: 3, of: 4},
+    t4:{d:'20 articles via AI search tools.',           sub: 2, of: 3} },
+  { wk:2,  label:'Week 2 · A0',
+    t1:{d:'Tag 10 gold figures; kappa ≥ 0.7 with partner.', sub: 5, of: 5},
+    t2:{d:'Submit first 5 PDFs through pipeline.',     sub: 4, of: 4},
+    t3:{d:'Capture first room-scale scene.',           sub: 3, of: 4},
+    t4:{d:'Heuristic pass of KA home + syllabus.',     sub: 3, of: 3} },
+  { wk:3,  label:'Week 3 · A1',
+    t1:{d:'Build controlled vocabulary; 50 tags.',     sub: 3, of: 5},
+    t2:{d:'Relevance filter on 50 PDFs.',              sub: 3, of: 4},
+    t3:{d:'Storyboard a VR onboarding flow.',          sub: 2, of: 4},
+    t4:{d:'Think-aloud study with 3 classmates.',      sub: 3, of: 3} },
+  { wk:4,  label:'Week 4',
+    t1:{d:'Scale vocabulary to 150 tags; 2nd reviewer.', sub: 0, of: 5},
+    t2:{d:'Ingest 200 PDFs; dedupe + hash.',           sub: 0, of: 4},
+    t3:{d:'First interactive scene in VR.',            sub: 0, of: 4},
+    t4:{d:'Persona panel + first journey map.',        sub: 0, of: 3} },
+  { wk:5,  label:'Week 5',
+    t1:{d:'Quality audit + disagreement report.',      sub: 0, of: 5},
+    t2:{d:'Topic classifier v1 (see Codex note).',     sub: 0, of: 4},
+    t3:{d:'Locomotion + interaction polish.',          sub: 0, of: 4},
+    t4:{d:'Usability test report draft.',              sub: 0, of: 3} },
+  { wk:6,  label:'Week 6',
+    t1:{d:'Figure-caption OCR passes gold set.',       sub: 0, of: 5},
+    t2:{d:'End-to-end demo pipeline on 500 PDFs.',     sub: 0, of: 4},
+    t3:{d:'Integrate Atlas data into VR scene.',       sub: 0, of: 4},
+    t4:{d:'Redesign proposal with prototype.',         sub: 0, of: 3} },
+  { wk:7,  label:'Week 7',
+    t1:{d:'Production cut of tagging pipeline.',       sub: 0, of: 5},
+    t2:{d:'Backward sync; 1,428 PDFs to prod.',        sub: 0, of: 4},
+    t3:{d:'Playtest with 5 external users.',           sub: 0, of: 4},
+    t4:{d:'A/B test of redesign.',                     sub: 0, of: 3} },
+  { wk:8,  label:'Week 8 · Present',
+    t1:{d:'Final demo + reflection paper.',            sub: 0, of: 5},
+    t2:{d:'Final demo + reflection paper.',            sub: 0, of: 4},
+    t3:{d:'Final demo + reflection paper.',            sub: 0, of: 4},
+    t4:{d:'Final demo + reflection paper.',            sub: 0, of: 3} },
+];
+
+/* ─── Helpers ─── */
+function el(sel, root=document){ return root.querySelector(sel); }
+function els(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ─── Session / auth (demo; replace with real SSO check) ─── */
+const SS = window.sessionStorage;
+function isAdmin(){ return SS.getItem('ka.admin') === 'yes'; }
+function currentUserType(){ return SS.getItem('ka.userType') || 'instructor'; }
+function isImpersonating(){ return SS.getItem('ka.impersonating') === 'true'; }
+
+function doAdminLogin(ev){
+  ev.preventDefault();
+  const email = el('#au_email').value.trim();
+  const key   = el('#au_key').value.trim();
+  const role  = el('#au_role').value;
+  const errEl = el('#authErr');
+  errEl.classList.remove('show');
+  if (!email || !key) { errEl.textContent = 'Email and admin key are both required.'; errEl.classList.add('show'); return false; }
+  if (!/.+@.+/.test(email)) { errEl.textContent = 'That does not look like a valid email.'; errEl.classList.add('show'); return false; }
+  // DEMO: any non-empty key is accepted. Real backend must validate.
+  // If the email matches a known admin, use that admin's role.
+  const known = ADMINS.find(a => a.email.toLowerCase() === email.toLowerCase());
+  const effectiveRole = known ? known.role : role;
+  if (known && known.status !== 'active' && known.status !== 'invited') {
+    errEl.textContent = 'That admin account is suspended.'; errEl.classList.add('show'); return false;
+  }
+  SS.setItem('ka.admin', 'yes');
+  SS.setItem('ka.adminEmail', email);
+  SS.setItem('ka.adminRole', effectiveRole);
+  SS.setItem('ka.userType', 'instructor');
+  SS.removeItem('ka.impersonating');
+  el('#navUser').textContent = email.split('@')[0] + (role==='ta' ? ' · TA' : ' · Instructor');
+  hideAuthGate();
+  toast('ok', `Signed in as <b>${esc(email)}</b>.`);
+  logAudit('auth.signin', email, role);
+  return false;
+}
+function adminSignOut(){
+  SS.removeItem('ka.admin');
+  SS.removeItem('ka.adminEmail');
+  SS.removeItem('ka.adminRole');
+  SS.removeItem('ka.userType');
+  SS.removeItem('ka.impersonating');
+  location.reload();
+}
+function hideAuthGate(){ el('#auth-gate').classList.add('hidden'); }
+function showAuthGate(){ el('#auth-gate').classList.remove('hidden'); }
+function openSsoStub(){
+  toast('info','UCSD SSO handoff would redirect here in production.');
+}
+
+/* ─── Impersonation ─── */
+function impersonate(typeId, opts={openInNewTab:true}){
+  if (!isAdmin()) { toast('error','Only admins may impersonate.'); return; }
+  const ut = USER_TYPES.find(u => u.id === typeId);
+  if (!ut) { toast('error','Unknown user type.'); return; }
+  SS.setItem('ka.userType', typeId);
+  SS.setItem('ka.impersonating', 'true');
+  showImpBanner();
+  logAudit('impersonate.start', typeId, opts.openInNewTab ? 'opened '+ut.landing : 'inline');
+  toast('ok', `Now viewing site as <b>${esc(ut.label)}</b>.`);
+  if (opts.openInNewTab && ut.landing && ut.id !== 'instructor') {
+    window.open(ut.landing, '_blank', 'noopener');
+  }
+  renderAccess();
+}
+function stopImpersonating(){
+  SS.removeItem('ka.impersonating');
+  SS.setItem('ka.userType', 'instructor');
+  hideImpBanner();
+  logAudit('impersonate.stop', '', '');
+  toast('ok','Returned to instructor view.');
+  renderAccess();
+}
+function showImpBanner(){
+  const ut = USER_TYPES.find(u => u.id === currentUserType());
+  if (!ut || !isImpersonating()) return;
+  el('#imp-label').textContent = ut.label;
+  el('#imp-banner').classList.add('show');
+  document.body.classList.add('impersonating');
+}
+function hideImpBanner(){
+  el('#imp-banner').classList.remove('show');
+  document.body.classList.remove('impersonating');
+}
+
+/* ─── Render impersonate cards + access table ─── */
+function impersonateCardHtml(u){
+  return `<div class="ut-card ${u.gated?'gated':''}">
+    <div class="ut-links">${u.gated?'<span class="lock">🔒</span> Gated':'Public'}</div>
+    <h4>${esc(u.label)}</h4>
+    <p>${esc(u.blurb)}</p>
+    <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+      ${u.id==='instructor'
+        ? '<span class="pill pill-ok">You are here</span>'
+        : `<button class="btn btn-teal btn-sm" onclick="impersonate('${u.id}')">Become ${esc(u.label)}</button>`}
+      ${u.landing && u.id!=='instructor'
+        ? `<a class="btn btn-secondary btn-sm" href="${esc(u.landing)}" target="_blank" rel="noopener">Preview →</a>` : ''}
+    </div>
+  </div>`;
+}
+function renderImpersonateGrids(){
+  const html = USER_TYPES.map(impersonateCardHtml).join('');
+  const g1 = el('#impGrid'); if (g1) g1.innerHTML = html;
+  const g2 = el('#impGrid2'); if (g2) g2.innerHTML = html;
+}
+function renderAccess(){
+  el('#acTableBody').innerHTML = USER_TYPES.map(u => `
+    <tr>
+      <td><b>${esc(u.label)}</b></td>
+      <td>${u.gated ? '<span class="ac-gated">Gated</span>' : '<span class="ac-public">Public</span>'}</td>
+      <td>${u.gated ? 'Yes' : 'No'}</td>
+      <td><code>${esc(u.landing)}</code></td>
+      <td>${esc(u.sees)}</td>
+    </tr>`).join('');
+  const email = SS.getItem('ka.adminEmail') || 'instructor';
+  const ut = currentUserType();
+  el('#accSessInfo').textContent = isImpersonating()
+    ? `admin (${email}) · impersonating ${ut}`
+    : `admin (${email}) · no impersonation active`;
+  renderImpersonateGrids();
+  renderAdmins();
+}
+
+/* ─── Admins CRUD ─── */
+function renderAdmins(){
+  const body = el('#adminsBody'); if (!body) return;
+  body.innerHTML = ADMINS.map(a => {
+    const role = ADMIN_ROLES[a.role] || {label:a.role, scopes:[]};
+    const statusPillCls = a.status==='active' ? 'pill-ok'
+                       : a.status==='invited' ? 'pill-info'
+                       : 'pill-warn';
+    return `<tr>
+      <td><div class="tb-name">${esc(a.name)}${a.primary?' <span class="pill pill-info" title="Primary admin cannot be removed">★ primary</span>':''}</div>
+          <div class="tb-sub">${esc(a.email)}</div></td>
+      <td>
+        <select ${a.primary?'disabled':''} onchange="changeAdminRole('${a.id}', this.value)"
+                style="padding:5px 8px;border:1.5px solid var(--border-dk);border-radius:5px;font-size:0.82rem;background:var(--white);">
+          ${Object.entries(ADMIN_ROLES).map(([k,r]) =>
+            `<option value="${k}" ${a.role===k?'selected':''}>${esc(r.label)}</option>`).join('')}
+        </select>
+      </td>
+      <td><div class="tb-sub" style="font-family:ui-monospace,monospace;">
+        ${role.scopes.slice(0,3).map(s=>esc(s)).join(', ')}${role.scopes.length>3?`, +${role.scopes.length-3}`:''}</div></td>
+      <td>${esc(a.added)}<div class="tb-sub">by ${esc(a.addedBy)}</div></td>
+      <td>${esc(a.lastSignIn)}</td>
+      <td><span class="pill ${statusPillCls}">${esc(a.status)}</span></td>
+      <td><div class="btn-row">
+        ${a.status==='invited'
+          ? `<button class="btn btn-secondary btn-sm" onclick="resendAdminInvite('${a.id}')">Resend invite</button>`
+          : `<button class="btn btn-secondary btn-sm" onclick="emailAdmin('${a.id}')">Email</button>`}
+        ${a.primary
+          ? `<button class="btn btn-secondary btn-sm" disabled title="Primary admin cannot be removed">Remove</button>`
+          : `<button class="btn btn-danger btn-sm" onclick="confirmRemoveAdmin('${a.id}')">Remove</button>`}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function openAddAdminModal(){
+  openModal('Add administrator', `
+    <p style="font-size:0.88rem;margin-bottom:12px;">
+      The new admin will receive an email with a one-time invite key. On first
+      sign-in they set a permanent credential. The invite is logged to the audit trail.</p>
+
+    <div class="form-row"><label>Name</label><input id="ad_name" placeholder="Full name"></div>
+    <div class="form-row"><label>UCSD email</label>
+      <input id="ad_email" type="email" placeholder="user@ucsd.edu"></div>
+    <div class="form-row"><label>Role</label>
+      <select id="ad_role" onchange="previewAdminScopes()">
+        ${Object.entries(ADMIN_ROLES).map(([k,r]) => `<option value="${k}">${esc(r.label)}</option>`).join('')}
+      </select></div>
+    <div class="form-row"><label>Permissions</label>
+      <div id="ad_scopes" style="font-size:0.84rem;background:var(--panel);
+           border:1px solid var(--border);border-radius:6px;padding:10px 12px;"></div></div>
+    <div class="form-row"><label>Expires in</label>
+      <select id="ad_expiry">
+        <option value="24">24 hours</option>
+        <option value="72" selected>72 hours (recommended)</option>
+        <option value="168">7 days</option></select></div>
+    <div class="form-row"><label>Note (optional)</label>
+      <textarea id="ad_note" rows="3" placeholder="Included in the invite email body."></textarea></div>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Preview invite',cls:'btn-secondary',on:previewAdminInvite},
+     {label:'Send invite',cls:'btn-primary',on:sendAdminInvite}]);
+  previewAdminScopes();
+}
+
+function previewAdminScopes(){
+  const role = ADMIN_ROLES[el('#ad_role').value];
+  if (!role) return;
+  el('#ad_scopes').innerHTML = `
+    <div style="margin-bottom:6px;"><b>${esc(role.label)}</b> &mdash; ${esc(role.desc)}</div>
+    <div style="font-family:ui-monospace,monospace;font-size:0.78rem;color:var(--muted);">
+      scopes: ${role.scopes.map(s=>`<span class="pill pill-info" style="margin:0 3px 3px 0;">${esc(s)}</span>`).join('')}
+    </div>`;
+}
+
+function previewAdminInvite(){
+  const name  = el('#ad_name').value.trim()  || '(name)';
+  const email = el('#ad_email').value.trim() || '(email)';
+  const role  = ADMIN_ROLES[el('#ad_role').value];
+  const hrs   = el('#ad_expiry').value;
+  const note  = el('#ad_note').value.trim();
+  const key   = randKey(12);
+  openModal('Invite preview · ' + role.label, `
+    <div class="email-preview">To: ${esc(email)}
+From: cogs160@ucsd.edu
+Subject: You've been invited to administer COGS 160 (Spring 2026)
+
+Hi ${esc(name.split(' ')[0])},
+
+Prof. Kirsh has invited you to administer the COGS 160 course site as
+${esc(role.label)}. Sign in at
+https://knowledge-atlas.ucsd.edu/160sp/ka_admin.html with your UCSD
+email and this one-time invite key:
+
+  <span class="auth-key">${key}</span>
+
+This invite expires in ${hrs} hour${hrs==='1'?'':'s'}. On first sign-in
+you'll set a permanent credential.
+
+Your role gives you these permissions:
+${role.scopes.map(s => '  • ' + s).join('\n')}
+${note ? '\n' + esc(note) + '\n' : ''}
+If you didn't expect this invitation, reply right away.
+
+— COGS 160 Spring 2026</div>`,
+    [{label:'Close',cls:'btn-secondary',on:()=>{ closeModal(); openAddAdminModal(); }}]);
+}
+
+function sendAdminInvite(){
+  const name  = el('#ad_name').value.trim();
+  const email = el('#ad_email').value.trim();
+  const role  = el('#ad_role').value;
+  const hrs   = Number(el('#ad_expiry').value);
+  const note  = el('#ad_note').value.trim();
+
+  if (!name || !email) { toast('error','Name and email are both required.'); return; }
+  if (!/.+@.+/.test(email)) { toast('error','That email is not well-formed.'); return; }
+  if (ADMINS.some(a => a.email.toLowerCase() === email.toLowerCase())) {
+    toast('error','That email is already an administrator.'); return;
+  }
+
+  ADMIN_API.inviteAdmin({name, email, role, hrs, note}).then(r => {
+    ADMINS.push({
+      id: r.id, name, email, role,
+      added: new Date().toISOString().slice(0,10),
+      addedBy: (SS.getItem('ka.adminEmail')||'dkirsh').split('@')[0],
+      lastSignIn: '—', status: 'invited', primary: false,
+    });
+    closeModal();
+    renderAdmins();
+    toast('ok', `Invite sent to <b>${esc(name)}</b> as ${esc(ADMIN_ROLES[role].label)} &mdash; key ${r.inviteKey}`);
+    logAudit('admin.invite', email, role+' · '+hrs+'h');
+  });
+}
+
+function changeAdminRole(id, newRole){
+  const a = ADMINS.find(x => x.id === id); if (!a) return;
+  if (a.primary) { toast('error','Primary admin role is locked.'); renderAdmins(); return; }
+  const prev = a.role;
+  ADMIN_API.changeAdminRole(id, newRole).then(() => {
+    a.role = newRole;
+    renderAdmins();
+    toast('ok', `<b>${esc(a.name)}</b> is now ${esc(ADMIN_ROLES[newRole].label)}.`);
+    logAudit('admin.role', a.email, prev+' → '+newRole);
+  });
+}
+
+function confirmRemoveAdmin(id){
+  const a = ADMINS.find(x => x.id === id); if (!a || a.primary) return;
+  openModal('Remove ' + a.name + '?',
+    `<p>This revokes <b>${esc(a.name)}</b>'s admin access immediately.
+     Their active sessions are destroyed and any pending invite key is invalidated.</p>
+     <p style="margin-top:10px;font-size:0.85rem;color:var(--muted);">
+     The audit log will retain the record of this removal.</p>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Remove',cls:'btn-danger',on:()=>{
+        ADMIN_API.removeAdmin(id).then(() => {
+          const i = ADMINS.findIndex(x => x.id === id);
+          if (i >= 0) ADMINS.splice(i, 1);
+          closeModal(); renderAdmins();
+          toast('ok', `Removed <b>${esc(a.name)}</b>.`);
+          logAudit('admin.remove', a.email, a.role);
+        });
+     }}]);
+}
+
+function resendAdminInvite(id){
+  const a = ADMINS.find(x => x.id === id); if (!a) return;
+  const key = randKey(12);
+  toast('ok', `Resent invite to <b>${esc(a.name)}</b> &mdash; key ${key}`);
+  logAudit('admin.invite.resend', a.email, 'key='+key);
+}
+function emailAdmin(id){
+  const a = ADMINS.find(x => x.id === id); if (!a) return;
+  emailOne && (a.email); // re-use single-student email flow if needed
+  openModal('Email ' + a.name, `
+    <div class="form-row"><label>To</label><input value="${esc(a.email)}" readonly></div>
+    <div class="form-row"><label>Subject</label><input id="em_s" placeholder="Quick note"></div>
+    <div class="form-row"><label>Message</label><textarea id="em_b" rows="5"></textarea></div>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Send',cls:'btn-primary',on:()=>{ toast('ok', `Email sent to ${esc(a.name)}.`); closeModal(); logAudit('email.admin', a.email); }}]);
+}
+
+function openRolesReference(){
+  openModal('Administrator roles', `
+    <table class="ac-table"><thead><tr><th>Role</th><th>What it can do</th><th>Scopes</th></tr></thead>
+    <tbody>
+    ${Object.entries(ADMIN_ROLES).map(([k,r]) => `
+      <tr><td><b>${esc(r.label)}</b></td>
+          <td>${esc(r.desc)}</td>
+          <td><div style="font-family:ui-monospace,monospace;font-size:0.76rem;">
+            ${r.scopes.map(s=>`<span class="pill pill-info" style="margin:0 3px 3px 0;">${esc(s)}</span>`).join('')}
+          </div></td></tr>`).join('')}
+    </tbody></table>
+    <p style="font-size:0.82rem;color:var(--muted);margin-top:10px;">
+      Scopes are checked server-side on every request; the UI merely hints at what
+      each role can access.</p>`,
+    [{label:'Close',cls:'btn-secondary',on:closeModal}]);
+}
+function randKey(n=12){
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let k = ''; for (let i=0;i<n;i++) k += alphabet[Math.floor(Math.random()*alphabet.length)];
+  return k.match(/.{1,4}/g).join('-');
+}
+function trackCls(t){
+  if (t.startsWith('Track 1')) return 'pill-track1';
+  if (t.startsWith('Track 2')) return 'pill-track2';
+  if (t.startsWith('Track 3')) return 'pill-track3';
+  return 'pill-track4';
+}
+function statusPill(s){
+  return ({active:'pill-ok', pending:'pill-info', 'at-risk':'pill-warn', dropped:'pill-error'}[s]) || 'pill-info';
+}
+
+/* ─── Tabs ─── */
+els('.tab').forEach(t => t.addEventListener('click', () => goTab(t.dataset.tab)));
+function goTab(name){
+  els('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===name));
+  els('.tabpanel').forEach(p => p.classList.toggle('active', p.id==='tab-'+name));
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* ─── Dashboard ─── */
+function renderDashboard(){
+  const active = ROSTER.filter(r=>r.status==='active').length;
+  const pending = ROSTER.filter(r=>r.status==='pending').length;
+  const risk = ROSTER.filter(r=>r.status==='at-risk').length;
+  const overdue = ROSTER.filter(r => r.a1===0 && r.status!=='dropped').length;
+  const signed7d = ROSTER.filter(r => r.last && r.last!=='—').length;
+  el('#kEnr').textContent = ROSTER.filter(r=>r.status!=='dropped').length;
+  el('#kAct').textContent = signed7d;
+  el('#kRst').textContent = pending;
+  el('#kOvr').textContent = overdue;
+  el('#kRsk').textContent = risk;
+  el('#kSnap').textContent = 'Build #217';
+  el('#kSnapAgo').textContent = '2026-04-16 10:24';
+
+  // This week's due — all 4 tracks + course-wide row
+  const currentWeek = 3;
+  const w = DELIVERABLES[currentWeek - 1];
+  el('#dashWeek').textContent = currentWeek;
+  el('#dashWeekLabel').textContent = w.label.split('·').slice(1).join('·').trim() || 'This week';
+
+  const courseWide = {
+    label: 'Course-wide · all students',
+    d:     'Week ' + currentWeek + ' agenda · A1 write-up · Thursday studio attendance',
+    sub:   ROSTER.filter(r => r.a1===1 && r.status!=='dropped').length,
+    of:    ROSTER.filter(r => r.status!=='dropped').length,
+  };
+
+  const rows = [
+    {tag:'ALL',   pill:'pill-info',   label:'Course-wide',         d:courseWide},
+    {tag:'T1',    pill:'pill-track1', label:'Track 1 · Image Tagger', d:w.t1},
+    {tag:'T2',    pill:'pill-track2', label:'Track 2 · Pipeline',     d:w.t2},
+    {tag:'T3',    pill:'pill-track3', label:'Track 3 · VR',           d:w.t3},
+    {tag:'T4',    pill:'pill-track4', label:'Track 4 · UX Research',  d:w.t4},
+  ];
+
+  el('#dashDueRows').innerHTML = rows.map((r, i) => `
+    <tr>
+      <td><span class="pill ${r.pill}" title="${esc(r.label)}">${r.tag}</span>
+          <div class="tb-sub" style="margin-top:2px;">${esc(r.label)}</div></td>
+      <td>${esc(r.d.d)}</td>
+      <td><div class="submit-bar">
+            <span>${r.d.sub}/${r.d.of}</span>
+            <div class="bar"><div style="width:${r.d.of ? (r.d.sub/r.d.of*100) : 0}%;"></div></div>
+          </div></td>
+      <td>${i===0
+        ? `<button class="btn btn-secondary btn-sm" onclick="goTab('grades')">Progress →</button>`
+        : `<button class="btn btn-secondary btn-sm" onclick="goTab('tracks')">Mark →</button>`}</td>
+    </tr>`).join('');
+
+  // Activity
+  el('#dashActivity').innerHTML = `
+    <li><span class="status ok">●</span> 09:12 — <b>arahman</b> submitted Track 1 vocabulary file</li>
+    <li><span class="status ok">●</span> 08:48 — <b>mpatel</b> uploaded usability report draft</li>
+    <li><span class="status ok">●</span> 08:01 — <b>doneill</b> pushed pipeline filter v3</li>
+    <li><span class="status warn">⚠</span> 07:30 — broken-link scan found 3 issues</li>
+    <li><span class="status ok">●</span> 06:15 — <b>jcarter</b> signed in (VR headset config)</li>
+    <li><span class="status err">✕</span> 2026-04-15 — <b>nbriggs</b> withdrew from course</li>`;
+
+  // Track breakdown
+  const byTrack = {};
+  ROSTER.filter(r=>r.status!=='dropped').forEach(r => byTrack[r.track] = (byTrack[r.track]||0)+1);
+  const total = Object.values(byTrack).reduce((a,b)=>a+b,0);
+  el('#dashTrackBreak').innerHTML = Object.entries(byTrack).map(([k,v],i) => `
+    <div style="display:grid;grid-template-columns:140px 1fr 40px;gap:10px;align-items:center;margin-bottom:6px;">
+      <span style="font-size:0.86rem;font-weight:600;">${esc(k.split('·')[0].trim())}</span>
+      <div class="progress"><div style="width:${v/total*100}%;"></div></div>
+      <span style="font-size:0.86rem;color:var(--muted);text-align:right;">${v}</span>
+    </div>`).join('');
+}
+
+/* ─── Roster ─── */
+function renderRoster(){
+  const q = (el('#rosterSearch').value || '').toLowerCase().trim();
+  const ft = el('#filterTrack').value;
+  const fs = el('#filterStatus').value;
+  const rows = ROSTER.filter(r => {
+    if (ft && r.track !== ft) return false;
+    if (fs && r.status !== fs) return false;
+    if (q && !(r.name.toLowerCase().includes(q) ||
+               r.email.toLowerCase().includes(q) ||
+               r.login.toLowerCase().includes(q))) return false;
+    return true;
+  });
+  el('#rosterCount').textContent = rows.length;
+  el('#rosterSub').textContent = rows.length + ' of ' + ROSTER.length + ' students';
+  el('#rosterBody').innerHTML = rows.map(r => `
+    <tr class="${r.status==='dropped' ? 'dropped' : ''}">
+      <td><div class="tb-name">${esc(r.name)}</div><div class="tb-sub">${esc(r.email)}</div></td>
+      <td><span class="tb-mono">${esc(r.login)}</span></td>
+      <td><span class="pill ${trackCls(r.track)}">${esc(r.track.split('·')[0].trim())}</span></td>
+      <td>${esc(r.last)}</td>
+      <td><div class="progress ${r.progress<40?'crit':r.progress<70?'low':''}">
+            <div style="width:${r.progress}%;"></div></div>
+          <div class="tb-sub">${r.progress}%</div></td>
+      <td><span class="pill ${statusPill(r.status)}">${r.status}</span>
+          ${r.flag ? `<div class="tb-sub" style="margin-top:2px;color:var(--warn-tx);">${esc(r.flag)}</div>`:''}</td>
+      <td><div class="btn-row">
+        <button class="btn btn-secondary btn-sm" onclick="openResetModal('${r.id}')">Reset</button>
+        <button class="btn btn-secondary btn-sm" onclick="emailOne('${r.id}')">Email</button>
+        <button class="btn btn-secondary btn-sm" onclick="openProfileModal('${r.id}')">Profile</button>
+      </div></td>
+    </tr>`).join('');
+}
+['rosterSearch','filterTrack','filterStatus'].forEach(id =>
+  el('#'+id).addEventListener('input', renderRoster));
+
+/* ─── Logins picker ─── */
+function renderLoginPicker(){
+  el('#resetStudent').innerHTML = ROSTER
+    .filter(r => r.status !== 'dropped')
+    .map(r => `<option value="${r.id}">${esc(r.name)} · ${esc(r.login)} · ${esc(r.track.split('·')[0].trim())}</option>`)
+    .join('');
+  el('#keyLog').innerHTML = `
+    <li><span class="status ok">✓</span> 2026-04-15 19:10 — fresh key for <b>falhassan</b> &mdash; <span class="auth-key" style="font-size:0.82rem;padding:2px 8px;">KQ4R-9HJT-LN2W</span></li>
+    <li><span class="status ok">✓</span> 2026-04-14 08:42 — fresh key for <b>ozhang</b></li>
+    <li><span class="status warn">⚠</span> 2026-04-12 11:30 — revoked session for <b>nbriggs</b> (withdrew)</li>`;
+}
+
+/* ─── Reset login flow ─── */
+function openResetModal(id){
+  goTab('logins');
+  el('#resetStudent').value = id;
+  setTimeout(() => { window.scrollTo({top: 320, behavior: 'smooth'}); }, 50);
+}
+function emailOne(id){
+  const s = ROSTER.find(r=>r.id===id);
+  openModal('Email '+s.name, `
+    <div class="form-row"><label>To</label><input value="${esc(s.email)}" readonly></div>
+    <div class="form-row"><label>Subject</label><input id="m1subj" placeholder="Quick note"></div>
+    <div class="form-row"><label>Message</label><textarea id="m1body" rows="6"></textarea></div>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Send', cls:'btn-primary', on:()=>{ toast('ok', `Email sent to ${s.name}.`); closeModal(); logAudit('email.single', s.login);}}]);
+}
+function openProfileModal(id){
+  const s = ROSTER.find(r=>r.id===id);
+  openModal(s.name, `
+    <div class="form-row"><label>Email</label><div>${esc(s.email)}</div></div>
+    <div class="form-row"><label>Login</label><div class="tb-mono">${esc(s.login)}</div></div>
+    <div class="form-row"><label>Track</label><div>${esc(s.track)}</div></div>
+    <div class="form-row"><label>Last sign-in</label><div>${esc(s.last)}</div></div>
+    <div class="form-row"><label>Progress</label>
+      <div><div class="progress ${s.progress<40?'crit':s.progress<70?'low':''}">
+        <div style="width:${s.progress}%;"></div></div><div class="tb-sub">${s.progress}%</div></div></div>
+    <div class="form-row"><label>A0 / A1</label><div>${s.a0?'✓':'—'} / ${s.a1?'✓':'—'}</div></div>
+    <div class="form-row"><label>Submissions</label><div>${s.sub}</div></div>
+    <div class="form-row"><label>Flag</label><div>${esc(s.flag||'—')}</div></div>`,
+    [{label:'Close',cls:'btn-secondary',on:closeModal},
+     {label:'Reset login',cls:'btn-teal',on:()=>{ closeModal(); openResetModal(id); }}]);
+}
+function previewResetEmail(){
+  const s = ROSTER.find(r=>r.id===el('#resetStudent').value);
+  if (!s) return;
+  const hrs = el('#resetExpiry').value;
+  const key = randKey(Number(el('#resetKeyLen').value));
+  const msg = el('#resetMsg').value.trim();
+  openModal('Email preview', `
+    <div class="email-preview">To: ${esc(s.email)}
+From: cogs160@ucsd.edu
+Subject: Your COGS 160 login reset
+
+Hi ${esc(s.name.split(' ')[0])},
+
+Your instructor (Prof. Kirsh) just reset your COGS 160 login. Sign in at
+https://knowledge-atlas.ucsd.edu/160sp/ with your UCSD email and this
+one-time authorization key:
+
+  <span class="auth-key">${key}</span>
+
+This key expires in ${hrs} hour${hrs==='1'?'':'s'}. After you sign in you'll
+set a fresh password.
+
+${msg ? '\n' + esc(msg) + '\n' : ''}
+If you didn't expect this, reply to this email right away.
+
+— COGS 160 Spring 2026</div>`,
+    [{label:'Close',cls:'btn-secondary',on:closeModal}]);
+}
+function sendResetEmail(){
+  const sid = el('#resetStudent').value;
+  const s = ROSTER.find(r=>r.id===sid);
+  if (!s) return;
+  const opts = { len: Number(el('#resetKeyLen').value),
+                 expiry: Number(el('#resetExpiry').value),
+                 note: el('#resetMsg').value };
+  ADMIN_API.resetLogin(sid, opts).then(r => {
+    toast('ok', `Reset sent to <b>${esc(s.name)}</b> &mdash; key ${r.authKey}`);
+    logAudit('login.reset', s.login, 'key='+r.authKey);
+  });
+}
+
+/* ─── Bulk ─── */
+function runBulkKeys(){
+  const scope = el('#bulkScope').value;
+  const action = el('#bulkAction').value;
+  const n = scope==='all' ? ROSTER.filter(r=>r.status==='active').length
+          : scope==='pending' ? ROSTER.filter(r=>r.status==='pending').length
+          : ROSTER.filter(r=>r.track.toLowerCase().includes(scope.slice(-1))).length;
+  toast('ok', `${action} applied to <b>${n}</b> student${n===1?'':'s'}.`);
+  logAudit('login.bulk', scope, action+' × '+n);
+}
+
+/* ─── Deliverables matrix ─── */
+function renderMatrix(){
+  el('#matrixBody').innerHTML = DELIVERABLES.map(wk => `
+    <tr>
+      <td class="wk-label">${wk.wk}<div style="font-size:0.62rem;font-weight:500;color:var(--muted);letter-spacing:0.08em;">${esc(wk.label.split('·').slice(1).join('·').trim())||'—'}</div></td>
+      ${['t1','t2','t3','t4'].map((t,i)=>`
+        <td class="track-cell ${t}">
+          <div class="deliv">${esc(wk[t].d)}</div>
+          <div class="submit-bar">
+            <span>${wk[t].sub}/${wk[t].of}</span>
+            <div class="bar"><div style="width:${(wk[t].sub/wk[t].of*100)}%;"></div></div>
+            <button class="btn btn-secondary btn-sm" style="margin-left:4px;font-size:0.7rem;padding:2px 6px;"
+              onclick="markSubmission(${wk.wk},${i+1})">+</button>
+          </div>
+        </td>`).join('')}
+    </tr>`).join('');
+}
+function markSubmission(wk, t){
+  const row = DELIVERABLES.find(d => d.wk===wk);
+  const cell = row['t'+t];
+  if (cell.sub < cell.of) cell.sub++;
+  renderMatrix();
+  renderDashboard();
+  toast('ok', `Week ${wk} / Track ${t} &mdash; submission logged.`);
+  logAudit('deliv.mark', `wk${wk}.t${t}`, `${cell.sub}/${cell.of}`);
+}
+
+/* ─── Progress ─── */
+function renderGrades(){
+  el('#gradesBody').innerHTML = ROSTER.map(r => `
+    <tr class="${r.status==='dropped' ? 'dropped' : ''}">
+      <td class="tb-name">${esc(r.name)}</td>
+      <td><span class="pill ${trackCls(r.track)}">${esc(r.track.split('·')[0].trim())}</span></td>
+      <td>${r.a0 ? '<span class="pill pill-ok">✓</span>' : '<span class="pill pill-error">—</span>'}</td>
+      <td>${r.a1 ? '<span class="pill pill-ok">✓</span>' : '<span class="pill pill-error">—</span>'}</td>
+      <td><div class="progress ${r.progress<40?'crit':r.progress<70?'low':''}"><div style="width:${r.progress}%;"></div></div></td>
+      <td>${r.sub}</td>
+      <td>${r.avg ? r.avg.toFixed(1) : '—'}</td>
+      <td>${r.flag ? `<span class="pill pill-warn">${esc(r.flag)}</span>` : '<span class="tb-sub">—</span>'}</td>
+    </tr>`).join('');
+}
+
+/* ─── Announcements ─── */
+function previewAnnouncement(){
+  const subj = el('#annSubj').value || '(no subject)';
+  const body = el('#annBody').value || '(empty)';
+  const aud = el('#annAud').value;
+  const audCount = aud==='all'
+    ? ROSTER.filter(r=>r.status!=='dropped').length
+    : ROSTER.filter(r => r.track.includes(aud.split('·')[0].trim())).length;
+  openModal('Preview · ' + audCount + ' recipient' + (audCount===1?'':'s'), `
+    <div class="email-preview">Subject: ${esc(subj)}
+
+${esc(body)}
+
+— Prof. D. Kirsh · COGS 160 Spring 2026</div>`,
+    [{label:'Close',cls:'btn-secondary',on:closeModal}]);
+}
+function sendAnnouncement(){
+  const aud = el('#annAud').value;
+  const n = aud==='all' ? ROSTER.filter(r=>r.status==='active').length
+                        : ROSTER.filter(r=>r.track.includes(aud.split('·')[0].trim())).length;
+  ADMIN_API.broadcast({n}).then(() => {
+    toast('ok', `Broadcast sent to <b>${n}</b> student${n===1?'':'s'}.`);
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="status ok">●</span> Just now — <b>${esc(el('#annSubj').value||'(untitled)')}</b> · ${n} recipients`;
+    el('#annLog').prepend(li);
+    logAudit('announce', aud, n+' recipients');
+    el('#annSubj').value=''; el('#annBody').value='';
+  });
+}
+function saveDraft(){ toast('ok','Draft saved.'); }
+function renderAnnouncements(){
+  el('#annLog').innerHTML = `
+    <li><span class="status ok">●</span> 2026-04-14 — <b>Welcome to Week 3</b> · 13 recipients</li>
+    <li><span class="status ok">●</span> 2026-04-07 — <b>A0 deadline reminder</b> · 15 recipients</li>
+    <li><span class="status ok">●</span> 2026-03-30 — <b>First day welcome + track picker</b> · 15 recipients</li>`;
+}
+
+/* ─── Site actions ─── */
+function triggerSnapshot(){
+  ADMIN_API.snapshot().then(r => { toast('ok', `Snapshot queued &mdash; build ${r.build}.`); logAudit('site.snapshot','prod','build '+r.build); });
+}
+function runSiteCheck(){
+  ADMIN_API.siteCheck().then(r => { toast('warn', `Scan complete &mdash; <b>${r.broken}</b> broken link${r.broken===1?'':'s'}.`); });
+}
+function refreshPnusFromLocal(){
+  openModal('Refresh PNUs from local Mac', `
+    <p>This asks the production web server to SSH to your Mac and regenerate
+    <code>data/ka_payloads/pnus.json</code> from the canonical mechanism index.</p>
+    <div style="margin-top:12px;background:var(--panel);border:1px solid var(--border);
+         border-radius:8px;padding:10px 14px;font-size:.85rem;">
+      <b>What happens, in order:</b>
+      <ol style="margin:8px 0 4px 20px;padding:0;line-height:1.5;">
+        <li>Server opens an SSH connection to <code>dkirsh-mac.ucsd.edu</code>
+            using the restricted key <code>/etc/ka/ka_refresh_key</code>.</li>
+        <li>The Mac's <code>authorized_keys</code> forces execution of
+            <code>refresh_pnus_from_local.sh</code> — no other command is possible.</li>
+        <li>Script re-reads <code>mechanism_profiles/_index.md</code> in the
+            Article&nbsp;Eater repo, regenerates the JSON, and pipes it back.</li>
+        <li>Server validates the JSON, writes it over the live manifest, and
+            returns the new counts to this browser.</li>
+      </ol>
+    </div>
+    <p style="margin-top:12px;font-size:.85rem;color:var(--muted);">
+      Takes about 3–5 seconds. Rate-limited to once every 20&nbsp;s.
+      If the SSH fails, nothing on the server changes.</p>`,
+    [{label:'Cancel', cls:'btn-secondary', on:closeModal},
+     {label:'Refresh now', cls:'btn-primary', on:() => {
+        closeModal();
+        const t = document.createElement('div');
+        t.className = 'toast'; t.innerHTML = '⟳ Contacting local Mac…';
+        el('#toast-stack').appendChild(t);
+        ADMIN_API.refreshPnus().then(r => {
+          t.remove();
+          const s = r.summary || {};
+          toast('ok', `PNUs refreshed &mdash; <b>${s.total||'?'}</b> mechanisms · ${s.readiness?.full||0} full / ${s.readiness?.brief||0} brief / ${s.readiness?.stub||0} stub.`);
+          logAudit('pnus.refresh', 'server→mac', `${s.total} mech · ${r.bytes} bytes`);
+        }).catch(err => {
+          t.remove();
+          toast('error', `Refresh failed: ${esc(String(err))}`);
+          logAudit('pnus.refresh.fail', 'server→mac', String(err));
+        });
+     }}]);
+}
+
+function confirmDeployProd(){
+  openModal('Confirm production deploy',
+    `<p>This will push the current workspace to <b>knowledge-atlas.ucsd.edu</b>.</p>
+     <p style="margin-top:10px;">Students currently signed in: <b>4</b>.</p>
+     <p style="margin-top:10px;font-size:0.85rem;color:var(--muted);">
+     Takes about 40&nbsp;seconds. A snapshot is taken automatically first.</p>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Deploy now',cls:'btn-primary', on:()=>{ closeModal(); ADMIN_API.deployProd().then(()=>{ toast('ok','Production deploy complete.'); logAudit('site.deploy','prod','build #218'); }); }}]);
+}
+
+/* ─── Export ─── */
+function exportRoster(){
+  const rows = [['name','email','login','track','status','last','progress']].concat(
+    ROSTER.map(r => [r.name,r.email,r.login,r.track,r.status,r.last,r.progress]));
+  download('roster.csv', rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n'));
+}
+function exportGrades(){
+  const rows = [['name','track','A0','A1','submissions','avg','progress','flag']].concat(
+    ROSTER.map(r => [r.name,r.track,r.a0,r.a1,r.sub,r.avg,r.progress,r.flag]));
+  download('grades.csv', rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n'));
+}
+function exportAudit(){ download('audit.json', JSON.stringify(AUDIT, null, 2)); }
+function download(name, text){
+  const blob = new Blob([text], {type:'text/plain'});
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('ok', `Downloaded <b>${name}</b>.`);
+}
+
+/* ─── Add / import ─── */
+function openAddStudentModal(){
+  openModal('Add a student', `
+    <div class="form-row"><label>Name</label><input id="asN" placeholder="First Last"></div>
+    <div class="form-row"><label>Email</label><input id="asE" placeholder="user@ucsd.edu"></div>
+    <div class="form-row"><label>Login</label><input id="asL" placeholder="auto"></div>
+    <div class="form-row"><label>Track</label>
+      <select id="asT">
+        <option>Track 1 · Image Tagger</option>
+        <option>Track 2 · Pipeline</option>
+        <option>Track 3 · VR</option>
+        <option>Track 4 · UX</option></select></div>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Add &amp; email key',cls:'btn-primary',on:()=>{
+        const n = el('#asN').value, e = el('#asE').value, l = el('#asL').value || e.split('@')[0], t = el('#asT').value;
+        if (!n || !e) { toast('error','Name and email are required.'); return; }
+        ROSTER.push({id:'s'+(ROSTER.length+1).toString().padStart(2,'0'),
+                     name:n,email:e,login:l,track:t,last:'—',status:'pending',
+                     progress:0,a0:0,a1:0,sub:0,avg:0,flag:'Just added'});
+        closeModal(); renderRoster(); renderGrades(); renderLoginPicker(); renderDashboard();
+        toast('ok', `Added <b>${esc(n)}</b> &mdash; enrollment email queued.`);
+        logAudit('roster.add', l, t);
+     }}]);
+}
+function openImportModal(){
+  openModal('Upload roster CSV', `
+    <p style="font-size:0.88rem;margin-bottom:10px;">
+      Drop a <code>.csv</code> (or <code>.tsv</code>) file with a header row.
+      Expected columns: <code>name, email, track</code> (track may be "1"–"4" or
+      the full label). <code>login</code> is optional &mdash; auto-derived from email if missing.</p>
+
+    <div id="impDrop" style="border:2px dashed var(--border-dk); border-radius:10px;
+         padding: 26px 16px; text-align:center; background: var(--panel);
+         cursor: pointer; transition: background 0.15s, border-color 0.15s;">
+      <div style="font-size:1.6rem;line-height:1;margin-bottom:6px;">⬆</div>
+      <div style="font-size:0.9rem; font-weight:600; color: var(--navy);">
+        Drop a CSV here, or <span style="color:var(--teal); text-decoration:underline;">click to choose a file</span></div>
+      <div style="font-size:0.78rem; color: var(--muted); margin-top:4px;"
+           id="impFileName">No file selected · max 5&nbsp;MB</div>
+      <input type="file" id="impFile" accept=".csv,.tsv,text/csv,text/tab-separated-values"
+             style="display:none;">
+    </div>
+
+    <div style="margin-top:14px;">
+      <label style="font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--label);">
+        Or paste rows directly</label>
+      <textarea id="impBox" style="width:100%;height:110px;padding:10px;margin-top:6px;
+         border:1.5px solid var(--border-dk);border-radius:6px;
+         font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.82rem;"
+        placeholder="name,email,track&#10;Ada Lovelace,alovelace@ucsd.edu,Track 1&#10;Alan Turing,aturing@ucsd.edu,Track 2"></textarea>
+    </div>
+
+    <div id="impPreview" style="display:none; margin-top:14px;
+         background: var(--white); border:1px solid var(--border); border-radius:8px;
+         padding: 10px 12px; max-height: 220px; overflow-y: auto;">
+      <div style="font-size:0.78rem;font-weight:700;color:var(--navy);margin-bottom:6px;"
+           id="impPreviewHead">Preview</div>
+      <div id="impPreviewBody" style="font-size:0.82rem;"></div>
+    </div>`,
+    [{label:'Cancel',cls:'btn-secondary',on:closeModal},
+     {label:'Parse &amp; preview',cls:'btn-secondary',on:csvParsePreview},
+     {label:'Upload &amp; enroll',cls:'btn-primary', on:csvImportCommit}]);
+
+  const drop = el('#impDrop'), file = el('#impFile');
+  drop.addEventListener('click', () => file.click());
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.background='var(--teal-bg)'; drop.style.borderColor='var(--teal)';});
+  drop.addEventListener('dragleave', () => { drop.style.background='var(--panel)'; drop.style.borderColor='var(--border-dk)'; });
+  drop.addEventListener('drop', e => {
+    e.preventDefault(); drop.style.background='var(--panel)'; drop.style.borderColor='var(--border-dk)';
+    const f = e.dataTransfer.files[0]; if (f) readCsvFile(f);
+  });
+  file.addEventListener('change', e => { const f = e.target.files[0]; if (f) readCsvFile(f); });
+}
+function readCsvFile(f){
+  if (f.size > 5*1024*1024) { toast('error','File too large (5&nbsp;MB max).'); return; }
+  el('#impFileName').textContent = `${f.name} · ${(f.size/1024).toFixed(1)} KB`;
+  const rd = new FileReader();
+  rd.onload = () => { el('#impBox').value = rd.result; csvParsePreview(); };
+  rd.onerror = () => toast('error', 'Could not read that file.');
+  rd.readAsText(f);
+}
+function csvParse(text){
+  const delim = text.includes('\t') && !text.includes(',') ? '\t' : ',';
+  const lines = text.trim().split(/\r?\n/).filter(Boolean);
+  if (lines.length === 0) return {rows: [], errors: ['Empty file']};
+  // split respecting simple "quoted,values"
+  const splitRow = r => {
+    const out=[]; let cur='', q=false;
+    for (const ch of r) {
+      if (ch==='"') { q=!q; continue; }
+      if (ch===delim && !q) { out.push(cur); cur=''; continue; }
+      cur+=ch;
+    } out.push(cur); return out.map(s=>s.trim());
+  };
+  let header = splitRow(lines[0]).map(h => h.toLowerCase());
+  let start = 1;
+  if (!header.some(h => /name|email|track/.test(h))) { header = ['name','email','track','login']; start = 0; }
+  const iN = header.indexOf('name'), iE = header.indexOf('email'),
+        iT = header.indexOf('track'), iL = header.indexOf('login');
+  const rows=[], errors=[];
+  for (let i=start; i<lines.length; i++) {
+    const c = splitRow(lines[i]);
+    if (c.length < 2) { errors.push(`Row ${i+1}: too few columns`); continue; }
+    const name = iN>=0 ? c[iN] : c[0];
+    const email = iE>=0 ? c[iE] : c[1];
+    const traw = iT>=0 ? c[iT] : (c[2]||'');
+    const login = iL>=0 && c[iL] ? c[iL] : (email.split('@')[0]||'').toLowerCase();
+    if (!name || !email) { errors.push(`Row ${i+1}: missing name or email`); continue; }
+    if (!/.+@.+/.test(email)) { errors.push(`Row ${i+1}: bad email "${email}"`); continue; }
+    const trackMap = {
+      '1':'Track 1 · Image Tagger', '2':'Track 2 · Pipeline',
+      '3':'Track 3 · VR',           '4':'Track 4 · UX' };
+    let track = trackMap[traw.trim()] || traw;
+    if (!/^Track [1-4]/.test(track)) { errors.push(`Row ${i+1}: unknown track "${traw}"`); continue; }
+    rows.push({ name, email, login, track });
+  }
+  return {rows, errors};
+}
+function csvParsePreview(){
+  const {rows, errors} = csvParse(el('#impBox').value);
+  const box = el('#impPreview');
+  if (rows.length === 0 && errors.length === 0) { box.style.display='none'; return; }
+  box.style.display = 'block';
+  el('#impPreviewHead').textContent = `Preview · ${rows.length} valid · ${errors.length} issue${errors.length===1?'':'s'}`;
+  const trs = rows.slice(0, 25).map(r => `
+    <tr><td>${esc(r.name)}</td><td>${esc(r.email)}</td>
+        <td class="tb-mono">${esc(r.login)}</td>
+        <td><span class="pill ${trackCls(r.track)}">${esc(r.track.split('·')[0].trim())}</span></td></tr>`).join('');
+  const errHtml = errors.length ? `<div style="color:var(--red);margin-top:8px;font-size:0.78rem;">
+      ${errors.slice(0,8).map(e=>'• '+esc(e)).join('<br>')}${errors.length>8?'<br>…':''}</div>` : '';
+  el('#impPreviewBody').innerHTML = `
+    <table><thead><tr><th>Name</th><th>Email</th><th>Login</th><th>Track</th></tr></thead>
+    <tbody>${trs}</tbody></table>
+    ${rows.length>25?`<div class="tb-sub" style="margin-top:6px;">…and ${rows.length-25} more.</div>`:''}
+    ${errHtml}`;
+}
+function csvImportCommit(){
+  const {rows, errors} = csvParse(el('#impBox').value);
+  if (rows.length === 0) { toast('error','No valid rows to import.'); return; }
+  let added = 0;
+  rows.forEach(r => {
+    if (ROSTER.some(x => x.email.toLowerCase() === r.email.toLowerCase())) return;
+    ROSTER.push({id:'s'+(ROSTER.length+1).toString().padStart(2,'0'),
+                 name:r.name, email:r.email, login:r.login, track:r.track,
+                 last:'—', status:'pending', progress:0,
+                 a0:0,a1:0,sub:0,avg:0, flag:'Imported — email queued'});
+    added++;
+  });
+  closeModal();
+  renderRoster(); renderGrades(); renderLoginPicker(); renderDashboard();
+  toast('ok', `Imported <b>${added}</b> new student${added===1?'':'s'}${errors.length?` &mdash; ${errors.length} skipped`:''}.`);
+  logAudit('roster.import','csv', `${added} added · ${errors.length} errors`);
+}
+
+/* ─── Modal ─── */
+function openModal(title, bodyHtml, buttons=[]){
+  el('#modalTitle').textContent = title;
+  el('#modalBody').innerHTML = bodyHtml;
+  el('#modalFoot').innerHTML = '';
+  buttons.forEach(b => {
+    const btn = Object.assign(document.createElement('button'), { className:'btn '+(b.cls||'btn-secondary') });
+    btn.innerHTML = b.label;
+    btn.addEventListener('click', b.on);
+    el('#modalFoot').appendChild(btn);
+  });
+  el('#modal').classList.add('open');
+}
+function closeModal(){ el('#modal').classList.remove('open'); }
+el('#modal').addEventListener('click', e => { if (e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+
+/* ─── Toast ─── */
+function toast(kind, html){
+  const t = document.createElement('div');
+  t.className = 'toast '+(kind==='warn'?'warn':kind==='error'?'error':'');
+  t.innerHTML = html;
+  el('#toast-stack').appendChild(t);
+  setTimeout(() => t.remove(), 4500);
+}
+
+/* ─── Audit log ─── */
+const AUDIT = [
+  {ts:'2026-04-16 10:24', who:'dkirsh', act:'site.deploy',  tgt:'prod',      res:'build #217 OK'},
+  {ts:'2026-04-16 09:40', who:'dkirsh', act:'announce',     tgt:'all',       res:'13 recipients'},
+  {ts:'2026-04-15 19:10', who:'dkirsh', act:'login.reset',  tgt:'falhassan', res:'key issued · 24h TTL'},
+  {ts:'2026-04-14 08:42', who:'dkirsh', act:'login.reset',  tgt:'ozhang',    res:'key issued · 24h TTL'},
+  {ts:'2026-04-12 11:30', who:'dkirsh', act:'login.revoke', tgt:'nbriggs',   res:'withdrew'},
+  {ts:'2026-04-10 14:00', who:'dkirsh', act:'roster.update',tgt:'nbriggs',   res:'status → dropped'},
+];
+function logAudit(act, tgt, res){
+  const now = new Date().toISOString().replace('T',' ').slice(0,16);
+  AUDIT.unshift({ts:now, who:'dkirsh', act, tgt, res: res||''});
+  renderAudit();
+}
+function renderAudit(){
+  el('#auditBody').innerHTML = AUDIT.map(a => `
+    <tr><td>${esc(a.ts)}</td><td class="tb-mono">${esc(a.who)}</td>
+        <td class="tb-mono">${esc(a.act)}</td><td>${esc(a.tgt)}</td>
+        <td><span class="tb-sub">${esc(a.res)}</span></td></tr>`).join('');
+}
+
+/* ─── Boot ─── */
+function bootAdminUI(){
+  renderDashboard();
+  renderRoster();
+  renderLoginPicker();
+  renderMatrix();
+  renderGrades();
+  renderAnnouncements();
+  renderAudit();
+  renderAccess();
+  if (isImpersonating()) showImpBanner();
+}
+
+// Gate: if not signed in, show overlay and defer rendering until login.
+if (isAdmin()) {
+  hideAuthGate();
+  const email = SS.getItem('ka.adminEmail');
+  if (email) el('#navUser').textContent = email.split('@')[0] +
+    (SS.getItem('ka.adminRole')==='ta' ? ' · TA' : ' · Instructor');
+  bootAdminUI();
+} else {
+  showAuthGate();
+  // Still boot the UI so it's ready when the overlay dismisses.
+  bootAdminUI();
+}
+
+// After any successful login, the call to hideAuthGate() happens inside
+// doAdminLogin(); the UI is already rendered, so the instructor sees
+// everything instantly without a second paint.
+</script>
+</body>
+</html>

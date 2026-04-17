@@ -4,181 +4,253 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Theories · Knowledge Atlas</title>
-<link rel="stylesheet" href="ka_atlas_shell.css">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+       background:#F7F4EF;color:#2C2C2C;line-height:1.6}
+  main.ka-outer{max-width:920px;margin:32px auto 80px;padding:0 24px}
+  .ka-hero h1{font-family:Georgia,serif;font-size:2.0rem;color:#1C3D3A;margin-bottom:8px}
+  .ka-hero p{color:#6B6B6B;font-size:1.0rem;margin-bottom:28px}
+  .tier-head{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;
+             margin:36px 0 4px;padding-bottom:8px;border-bottom:2px solid #E0D8CC}
+  .tier-head:first-of-type{margin-top:8px}
+  .tier-sub{font-size:.88rem;color:#6B6B6B;margin-bottom:16px;font-style:italic}
+  .ka-item{border-top:1px solid #E0D8CC;padding:16px 0}
+  .ka-item:first-of-type{border-top:0;padding-top:8px}
+  .ka-item h3{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;margin-bottom:3px}
+  .ka-item h3 .code{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+                    font-size:.74rem;background:#E8F8F2;color:#1A7050;font-weight:700;
+                    letter-spacing:.04em;padding:2px 7px;border-radius:10px;
+                    margin-right:8px;vertical-align:middle}
+  .ka-item h3 .code-t15{background:#FFF3E0;color:#9a5010}
+  .ka-item .parents{font-size:.74rem;color:#8A9A96;letter-spacing:.04em;
+                    text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .ka-item p{font-size:.94rem;color:#2C2C2C}
+  .ka-note{margin-top:28px;font-size:.82rem;color:#6B6B6B;font-style:italic;
+           padding-top:14px;border-top:1px dashed #E0D8CC}
+</style>
 </head>
-<body data-ka-active="theories"
+
+<body data-ka-regime="global"
+      data-ka-active="theories"
       data-ka-crumbs='[["Home","ka_home.html"],["Theories",""]]'>
 
 <div id="ka-navbar-slot"></div>
 <div id="ka-breadcrumb-slot"></div>
 
-<section class="ka-hero">
-  <div class="ka-hero-tag">Knowledge Atlas · Theories</div>
-  <h1>Theories in Architectural Cognition</h1>
-  <p class="ka-hero-sub">
-    Theories are large-scale explanatory frameworks that organise findings across many
-    experiments. Each card gives the theory's core claim, its predictive scope, the
-    evidence that supports or challenges it, and the mechanisms and neural substrates
-    through which it operates.
+<main id="ka-main" class="ka-outer">
+  <div class="ka-hero">
+    <h1>Theories</h1>
+    <p>Knowledge Atlas organises theories of environmental cognition in two
+       tiers. <b>Tier&nbsp;1 (T1)</b> frameworks are the foundational, mostly
+       domain-neutral mechanisms that underpin how people perceive and respond
+       to their surroundings. <b>Tier&nbsp;1.5 (T1.5)</b> domain theories apply
+       two or more T1 frameworks to a specific architectural or environmental
+       concern. Tier definitions and mappings follow
+       <code>THEORY_HIERARCHY_IMPLEMENTATION.md</code>.</p>
+  </div>
+
+  <!-- ══════════════  T1  ═══════════════════════════════════════ -->
+  <h2 class="tier-head">Tier 1 — Foundational frameworks</h2>
+  <p class="tier-sub">Eleven mostly domain-neutral mechanisms: ten cognitive /
+     neural systems and one superordinate configurer that decides when each
+     system is recruited.</p>
+
+  <div class="ka-item">
+    <h3><span class="code">PP</span>Predictive Processing</h3>
+    <p>Perception, attention, and affect are driven by prediction, prediction
+       error, and precision-weighting; environmental structure shapes what the
+       agent predicts and how confidently.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">SN</span>Salience Networks</h3>
+    <p>Environmental cues recruit orienting, task-switching, and threat /
+       surprise-detection systems, producing rapid reorientation to
+       novelty-relevant or safety-relevant features.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">DP</span>Default-mode &amp; Place</h3>
+    <p>Place encoding, internally directed cognition, and spatial memory
+       binding mediate environmental experience through hippocampal and
+       default-mode circuitry.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">DT</span>Dual-Task / Attentional Load</h3>
+    <p>Environments influence cognitive load, attentional depletion, and the
+       competition between concurrent task demands and restoration.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">NM</span>Neuromodulatory Systems</h3>
+    <p>Environmental stimulation modulates arousal, reward, vigilance, and
+       restoration through dopaminergic, serotonergic, cholinergic, and related
+       neuromodulatory systems.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">IC</span>Interoceptive-Constructionist Affect</h3>
+    <p>Environmental conditions alter bodily state and affective
+       interpretation through interoceptive signalling and insula-centred
+       appraisal; affect is constructed, not read off a stimulus.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">MS</span>Multisensory Integration</h3>
+    <p>Coherent or incoherent cross-modal signals shape perception, comfort,
+       and material interpretation through superior colliculus and cortical
+       multisensory regions.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">EC</span>Embodied Cognition</h3>
+    <p>Bodily state, posture, action simulation, and perceived affordance
+       participate in how spaces are perceived, categorised, and valued;
+       meaning is not primarily symbolic.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">CB</span>Chronobiological Regulation</h3>
+    <p>Light and temporal structure regulate circadian entrainment, daytime
+       alertness, and physiological timing through retinohypothalamic and
+       suprachiasmatic pathways.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">MSI</span>Motor-Sensory Integration</h3>
+    <p>Motor planning and sensory feedback are coupled in a closed loop that
+       supports navigation, manipulation, and spatial prediction during
+       movement through an environment.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code">IE_DPT</span>Implicit-Explicit Dual-Process Theory</h3>
+    <p>A superordinate configurer that decides, for any situation, whether
+       implicit / automatic or explicit / controlled processing is recruited —
+       meta-configuring which other T1 systems operate.</p>
+  </div>
+
+  <!-- ══════════════  T1.5  ═════════════════════════════════════ -->
+  <h2 class="tier-head">Tier 1.5 — Domain application theories</h2>
+  <p class="tier-sub">Thirteen mid-level theories, each mapping to two-to-four
+     T1 parents. These are the theories most frequently named in the applied
+     literature; each is a specific composition of foundational mechanisms.</p>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">ART</span>Attention Restoration Theory</h3>
+    <div class="parents">Parents: PP · SN · DP  &nbsp;·&nbsp;  Kaplan &amp; Kaplan · 1989</div>
+    <p>Natural environments passively engage involuntary attention and allow
+       directed attention to replenish, producing measurable recovery on
+       executive-function tasks after exposure.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">SRT</span>Stress Reduction Theory</h3>
+    <div class="parents">Parents: IC · NM · PP  &nbsp;·&nbsp;  Ulrich · 1983</div>
+    <p>Exposure to natural settings produces a rapid, affect-mediated decrement
+       in autonomic arousal, independent of cognitive appraisal.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">BIOPHILIA</span>Biophilia Hypothesis</h3>
+    <div class="parents">Parents: NM · IC · EC  &nbsp;·&nbsp;  Wilson · 1984; Kellert et al.</div>
+    <p>Humans carry an evolved affinity for natural life and life-like forms;
+       exposure to nature or biomorphic design elicits embodied safety signals
+       and positive appraisal.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">PROSPECT_REFUGE</span>Prospect-Refuge Theory</h3>
+    <div class="parents">Parents: PP · SN · DP  &nbsp;·&nbsp;  Appleton · 1975</div>
+    <p>Environments that afford both broad outward view (prospect) and
+       sheltered vantage (refuge) are preferred because they satisfy evolved
+       vigilance-and-safety heuristics.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">PRIVACY_REGULATION</span>Privacy Regulation Theory</h3>
+    <div class="parents">Parents: IE_DPT · EC · IC  &nbsp;·&nbsp;  Altman · 1975</div>
+    <p>Privacy is a dialectical, dynamic regulation of access to the self —
+       people explicitly and bodily adjust interaction with others to achieve
+       a desired level of contact at each moment.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">KAPLAN_PREFERENCE</span>Kaplan Preference Matrix</h3>
+    <div class="parents">Parents: PP · SN · IE_DPT  &nbsp;·&nbsp;  Kaplan &amp; Kaplan · 1982</div>
+    <p>Environmental preference arises from a four-factor balance of coherence,
+       complexity, legibility, and mystery, reflecting the agent's need to
+       understand and to explore.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">ADAPTIVE_THERMAL</span>Adaptive Thermal Comfort</h3>
+    <div class="parents">Parents: IC · NM · IE_DPT  &nbsp;·&nbsp;  de Dear &amp; Brager · 1998</div>
+    <p>Thermal comfort is adaptive rather than absolute: occupants' preferred
+       temperature tracks recent outdoor conditions via homeostatic signalling,
+       autonomic regulation, and behavioural adjustment.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">SPACE_SYNTAX</span>Space Syntax</h3>
+    <div class="parents">Parents: PP · EC · IE_DPT  &nbsp;·&nbsp;  Hillier &amp; Hanson · 1984</div>
+    <p>Spatial configuration — not individual rooms — drives movement, encounter,
+       and understanding of a building or urban area, through visibility,
+       embodied navigation, and habit / wayfinding.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">SOUNDSCAPE</span>Soundscape Theory</h3>
+    <div class="parents">Parents: PP · SN · NM · IE_DPT  &nbsp;·&nbsp;  Schafer · 1977; ISO 12913</div>
+    <p>The acoustic environment as perceived in context; its interpretation
+       depends on predictive pattern recognition, saliency filtering, arousal
+       regulation, and explicit listening strategies.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">PLACE_ATTACHMENT</span>Place Attachment</h3>
+    <div class="parents">Parents: IC · DP · IE_DPT  &nbsp;·&nbsp;  Low &amp; Altman · 1992</div>
+    <p>An affective bond between person and place arising from repeated
+       emotionally meaningful experience, place memory, and the integration of
+       place into personal identity.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">BRECVEMA</span>BRECVEMA — Music &amp; aesthetic emotion</h3>
+    <div class="parents">Parents: PP · NM · IC  &nbsp;·&nbsp;  Juslin · 2013</div>
+    <p>Eight mechanisms of musically induced emotion: Brainstem reflex,
+       Rhythmic entrainment, Evaluative conditioning, emotional Contagion,
+       Visual imagery, Episodic memory, Musical expectancy, and Aesthetic
+       judgment.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">FLOW_THEORY</span>Flow Theory</h3>
+    <div class="parents">Parents: PP · DT · NM  &nbsp;·&nbsp;  Csikszentmihalyi · 1975</div>
+    <p>Optimal experience arises when perceived challenge matches perceived
+       skill; attention narrows, load becomes well-regulated, and engagement
+       systems sustain absorbed activity.</p>
+  </div>
+
+  <div class="ka-item">
+    <h3><span class="code code-t15">GOLDILOCKS_PRINCIPLE</span>Goldilocks Principle</h3>
+    <div class="parents">Parents: PP · NM · IE_DPT</div>
+    <p>Stimulation is valued when it is neither too much nor too little:
+       inverted-U arousal, autonomic balance, and threshold regulation produce
+       a preferred middle band for complexity, novelty, and density.</p>
+  </div>
+
+  <p class="ka-note">
+    Canonical lists per
+    <code>docs/THEORY_HIERARCHY_IMPLEMENTATION.md</code>. Tier&nbsp;2 templates
+    (operation-specific test instances such as <code>ART_FOCUS</code> or
+    <code>SRT_RECOVERY</code>) are not listed here; they appear in the evidence
+    and articles explorers as tags on individual study rows.
   </p>
-</section>
-
-<div class="ka-shell">
-
-  <aside id="ka-journey-slot"></aside>
-
-  <main id="ka-main">
-    <h2 class="ka-section-title">Browse theories</h2>
-    <p class="ka-section-intro">
-      Click any theory to expand its full card in place. Use the search box to filter
-      by keyword. Each theory links outward to its supporting articles, proposed
-      mechanisms, and candidate neural underpinnings.
-    </p>
-
-    <input type="search" class="ka-search" id="theory-search"
-           placeholder="Search theories by name, construct, or author…"
-           aria-label="Search theories">
-
-    <div class="ka-card-grid" id="theory-grid" style="margin-top:18px;">
-      <!-- Stub cards; populate from topic_ontology.json in the next pass. -->
-      <article class="ka-card" data-theory="art">
-        <div class="ka-card-title">Attention Restoration Theory (ART)</div>
-        <div class="ka-card-meta">
-          <span><span class="voi-dot voi-high"></span> High VOI</span>
-          <span>Kaplan &amp; Kaplan · 1989</span>
-        </div>
-        <div class="ka-card-pills">
-          <span class="ka-pill">Cognition</span>
-          <span class="ka-pill ka-pill-cool">Nature exposure</span>
-          <span class="ka-pill ka-pill-neuro">DMN engagement</span>
-        </div>
-        <div class="ka-card-body">
-          <p><strong>Core claim:</strong> Natural environments passively engage
-          involuntary attention and allow directed attention to replenish, producing
-          measurable recovery on executive-function tasks after exposure.</p>
-          <p style="margin-top:8px;"><strong>Where to look next:</strong>
-          <a href="ka_articles.html?filter=art">Articles (14)</a> ·
-          <a href="ka_mechanisms.html?theory=art">Mechanisms (3)</a> ·
-          <a href="ka_neuro_perspective.html?theory=art">Neural underpinnings (2)</a></p>
-        </div>
-      </article>
-
-      <article class="ka-card" data-theory="sbt">
-        <div class="ka-card-title">Stress Reduction Theory (SRT)</div>
-        <div class="ka-card-meta">
-          <span><span class="voi-dot voi-high"></span> High VOI</span>
-          <span>Ulrich · 1983</span>
-        </div>
-        <div class="ka-card-pills">
-          <span class="ka-pill">Physiology</span>
-          <span class="ka-pill ka-pill-warn">Autonomic</span>
-        </div>
-        <div class="ka-card-body">
-          <p><strong>Core claim:</strong> Exposure to natural settings produces a rapid,
-          affect-mediated decrement in autonomic arousal, independent of cognitive
-          appraisal.</p>
-        </div>
-      </article>
-
-      <article class="ka-card" data-theory="prospect">
-        <div class="ka-card-title">Prospect-Refuge Theory</div>
-        <div class="ka-card-meta">
-          <span><span class="voi-dot voi-medium"></span> Medium VOI</span>
-          <span>Appleton · 1975</span>
-        </div>
-        <div class="ka-card-pills">
-          <span class="ka-pill ka-pill-cool">Spatial</span>
-          <span class="ka-pill">Affective</span>
-        </div>
-        <div class="ka-card-body">
-          <p><strong>Core claim:</strong> Environments that afford both broad outward
-          view (prospect) and sheltered vantage (refuge) are preferred because they
-          satisfy evolved vigilance-and-safety heuristics.</p>
-        </div>
-      </article>
-
-      <article class="ka-card" data-theory="environmental-affordance">
-        <div class="ka-card-title">Environmental Affordance Theory</div>
-        <div class="ka-card-meta">
-          <span><span class="voi-dot voi-medium"></span> Medium VOI</span>
-          <span>Gibson · 1979 (ext. Heft, 2010)</span>
-        </div>
-        <div class="ka-card-pills">
-          <span class="ka-pill ka-pill-cool">Perception</span>
-          <span class="ka-pill">Action</span>
-        </div>
-        <div class="ka-card-body">
-          <p><strong>Core claim:</strong> Perceived action possibilities of a setting
-          are recovered directly from its geometry and material properties, without
-          intervening cognitive inference.</p>
-        </div>
-      </article>
-
-      <article class="ka-card" data-theory="embodied-cognition">
-        <div class="ka-card-title">Embodied Cognition in Architecture</div>
-        <div class="ka-card-meta">
-          <span><span class="voi-dot voi-medium"></span> Medium VOI</span>
-          <span>Mallgrave · 2013; Robinson · 2021</span>
-        </div>
-        <div class="ka-card-pills">
-          <span class="ka-pill ka-pill-neuro">Sensorimotor</span>
-          <span class="ka-pill">Metaphor</span>
-        </div>
-        <div class="ka-card-body">
-          <p><strong>Core claim:</strong> Architectural experience is scaffolded by
-          sensorimotor simulations of the body moving through and acting on the built
-          environment; spatial meaning is not primarily symbolic.</p>
-        </div>
-      </article>
-
-      <article class="ka-card" data-theory="thermal-alliesthesia">
-        <div class="ka-card-title">Thermal Alliesthesia</div>
-        <div class="ka-card-meta">
-          <span><span class="voi-dot voi-low"></span> Low VOI</span>
-          <span>de Dear · 2011</span>
-        </div>
-        <div class="ka-card-pills">
-          <span class="ka-pill ka-pill-warn">Thermal</span>
-          <span class="ka-pill">Pleasure</span>
-        </div>
-        <div class="ka-card-body">
-          <p><strong>Core claim:</strong> Thermal pleasure depends on the body's current
-          thermal state, so oscillating rather than constant conditions maximise
-          occupant satisfaction.</p>
-        </div>
-      </article>
-    </div>
-    <!-- End grid -->
-
-    <p style="margin-top:24px;font-size:0.85rem;color:#8A9A96;">
-      <em>Placeholder data. A subsequent pass will replace these cards with records
-      drawn from <code>data/ka_payloads/topic_ontology.json</code>.</em>
-    </p>
-  </main>
-</div>
-
-<footer class="ka-footer">
-  Knowledge Atlas · UCSD Cognitive Science · Spring 2026
-</footer>
-
-<script>
-// Expand-in-place on card click.
-document.addEventListener('click', function (e) {
-  var card = e.target.closest('.ka-card');
-  if (!card) return;
-  card.classList.toggle('expanded');
-});
-// Simple client-side filter.
-document.getElementById('theory-search').addEventListener('input', function (e) {
-  var q = (e.target.value || '').toLowerCase().trim();
-  document.querySelectorAll('.ka-card').forEach(function (c) {
-    var hit = c.textContent.toLowerCase().indexOf(q) !== -1;
-    c.style.display = hit || !q ? '' : 'none';
-  });
-});
-</script>
-
-<script src="ka_canonical_navbar.js" defer></script>
-<script src="ka_journey_nav.js"      defer></script>
+</main>
 </body>
 </html>
