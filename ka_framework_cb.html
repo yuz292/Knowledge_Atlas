@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chronobiological Regulation (CB) · T1 Framework · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+.draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;display:flex;align-items:center;gap:10px}
+.draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:#E8F8F2;color:#1A7050;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+.toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+.toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+.toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;font-weight:700;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;font-weight:700;margin:18px 0 6px}
+p.prose{margin-bottom:12px}
+p.prose strong{color:#1C3D3A}
+.summary-block{background:#fff;border-left:4px solid #2A7868;border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+.summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+.summary-lede strong{color:#1A7050}
+.summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+.read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;background:#1C3D3A;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
+.refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:18px 22px;margin-top:10px}
+.refs-block h3{margin-top:0}.refs-block h3:not(:first-child){margin-top:18px}
+.refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+.refs-block ol li{margin-bottom:10px}
+.refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;background:#F9F5EE;padding:1px 7px;border-radius:10px;margin-left:6px}
+.refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;color:#2A7868;text-decoration:none}
+.callout-teal{background:#E6F5F0;border-left:3px solid #2A7868;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.92rem;color:#1a4a3f;line-height:1.6}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="theories"
+      data-ka-crumbs='[["Home","ka_home.html"],["Theories","ka_theories.html"],["Chronobiological Regulation",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="draft-banner"><div><strong>Draft — pending neuroscience panel review.</strong>
+LLM-drafted 2026-04-17. Reviewers please annotate inline.</div></div>
+
+<div class="ka-hero">
+  <span class="code-pill">T1 · Foundational Framework</span>
+  <h1>Chronobiological Regulation</h1>
+  <p class="subtitle">Light, time, and temperature coordinate every
+    physiological function on a roughly 24-hour schedule. When the
+    schedule is violated, alertness, mood, metabolism, and cognition
+    all pay the cost.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-label">On this page</div>
+  <a href="#summary">At a glance (300 words)</a>
+  <a href="#deep-dive">Deep dive (1,500 words)</a>
+  <a href="#references">References</a>
+</div>
+
+<h2 class="ka-section" id="summary">At a glance</h2>
+<div class="summary-block" aria-label="300-word lay summary">
+  <p class="summary-lede"><strong>In plain English.</strong>
+    Chronobiological Regulation is the framework that treats the brain
+    and body as a coupled oscillator system running on a roughly
+    24-hour cycle. Nearly every tissue keeps its own local clock, and
+    a master clock in the hypothalamus synchronises the rest — mostly
+    through the lighting environment humans experienced for the past
+    few hundred thousand years.</p>
+
+  <p class="prose">Physiologically, the master clock is the
+    suprachiasmatic nucleus (SCN) of the hypothalamus, a pair of small
+    nuclei of about 20,000 neurons each. Intrinsically photosensitive
+    retinal ganglion cells (ipRGCs), discovered in 2002, express
+    melanopsin and project directly via the retinohypothalamic tract
+    to the SCN, carrying the light signal that entrains the clock.
+    The SCN drives a downstream cascade: through the pineal gland it
+    controls melatonin (high at night, suppressed by evening light);
+    through the paraventricular nucleus it drives the cortisol rhythm
+    (peak on waking); through autonomic pathways it modulates body
+    temperature, heart rate variability, and digestion. Peripheral
+    clocks in liver, muscle, and adipose tissue are synchronised to
+    this master through both neural and humoral signals.</p>
+
+  <p class="prose">Evidence is among the strongest in systems
+    neuroscience. The 2017 Nobel Prize in Physiology or Medicine
+    (Hall, Rosbash, Young) recognised the molecular mechanism —
+    transcription-translation feedback loops of core clock genes
+    (<em>Clock, Bmal1, Per1/2/3, Cry1/2</em>). Human field and
+    laboratory studies show consistent effects of circadian phase on
+    alertness, reaction time, memory, and mood. Contested territory is
+    mostly practical — how large are individual differences in
+    entrainment, how much light is needed for effective entrainment
+    at different times of day, and what the minimum viable dose is
+    for therapeutic light exposure in depressed or circadian-disordered
+    patients.</p>
+
+  <p class="prose">For environments, CB may be the T1 framework with
+    the largest potential design impact per unit effort. Daylight
+    access, evening light restriction, thermal rhythmicity, and sleep-
+    promoting acoustic environments all directly modulate chronobiology.
+    Spaces that honour the circadian cycle produce measurable gains in
+    alertness, mood, and sleep quality. Spaces that fight it produce
+    equally measurable harm.</p>
+
+  <a class="read-more-link" href="#deep-dive">Read the full 1,500-word deep dive ↓</a>
+</div>
+
+<h2 class="ka-section" id="deep-dive">Deep dive — the framework in full</h2>
+
+<h3 class="ka-sub">Origins and scope</h3>
+<p class="prose">
+  Chronobiology began as a branch of biology in the 1960s with work by
+  Jürgen Aschoff and Colin Pittendrigh on how animals maintain
+  approximately 24-hour rhythms in constant conditions. The field
+  cohered around a central question: how do organisms measure time?
+  The answer came in two complementary parts. Seymour Benzer's group
+  identified the first clock gene (<em>period</em>) in Drosophila in
+  the 1970s; Jeffrey Hall, Michael Rosbash, and Michael Young
+  subsequently cloned <em>period</em> and characterised the
+  transcription-translation feedback loop that generates the
+  molecular oscillator — work recognised with the 2017 Nobel Prize
+  in Physiology or Medicine. Parallel work by Robert Moore, Irving
+  Zucker, and others in the 1970s identified the suprachiasmatic
+  nucleus as the mammalian master clock. The discovery of melanopsin-
+  expressing intrinsically photosensitive retinal ganglion cells in
+  the early 2000s (Berson, Dunn &amp; Takao; Hattar et al.)
+  completed the basic anatomy: these non-image-forming photoreceptors
+  are the primary channel by which light entrains the clock.
+</p>
+
+<h3 class="ka-sub">Molecular machinery: the core oscillator</h3>
+<p class="prose">
+  At the cellular level, each SCN neuron (and indeed nearly every cell
+  in the body) maintains a roughly 24-hour oscillation through
+  interlocking transcription-translation feedback loops. The core
+  positive limb is formed by CLOCK and BMAL1, which heterodimerise and
+  drive expression of the <em>Period</em> (PER1, PER2, PER3) and
+  <em>Cryptochrome</em> (CRY1, CRY2) genes; accumulated PER and CRY
+  proteins dimerise, translocate back to the nucleus, and inhibit
+  CLOCK-BMAL1, thereby suppressing their own transcription. Post-
+  translational modifications (phosphorylation by casein kinase 1,
+  ubiquitination) set the precise period of the loop. Accessory loops
+  involving REV-ERB and ROR nuclear receptors stabilise the oscillation.
+  This molecular machinery runs in every cell of the body, not only
+  in the SCN; what the SCN provides is the population-level
+  coherence that makes the body's rhythms synchronous rather than
+  drifting independently across tissues.
+</p>
+
+<h3 class="ka-sub">The light pathway: ipRGCs, the SCN, and downstream rhythms</h3>
+<p class="prose">
+  Light reaches the SCN through a dedicated pathway separate from
+  image-forming vision. Intrinsically photosensitive retinal ganglion
+  cells express the photopigment melanopsin, are maximally sensitive
+  to blue light around 480 nm, and integrate signal slowly over
+  seconds (in contrast to the rapid response of rods and cones).
+  ipRGC axons form the retinohypothalamic tract and terminate in the
+  SCN, with additional projections to the olivary pretectal nucleus
+  (pupillary light reflex), intergeniculate leaflet, and thalamic
+  areas. SCN output controls three principal downstream systems. The
+  pineal gland, driven via the paraventricular nucleus and the
+  superior cervical ganglion, produces melatonin at night; evening
+  light exposure above roughly 30 lux suppresses melatonin
+  dose-dependently. The HPA axis produces the cortisol awakening
+  response, with plasma cortisol typically peaking 30-45 minutes after
+  waking. Autonomic outputs modulate heart rate, body temperature
+  (peak late afternoon, trough in early morning), and digestion. The
+  phase-response curve to light is well characterised: light in the
+  subjective evening delays the clock, light in the subjective morning
+  advances it, with maximum sensitivity near the body temperature
+  minimum.
+</p>
+
+<h3 class="ka-sub">Evidence: what is well-established</h3>
+<p class="prose">
+  The molecular clock is characterised at a level of mechanistic
+  detail that few neuroscience systems match. SCN ablation abolishes
+  circadian rhythms; SCN transplant from a mutant animal with an
+  altered period produces a recipient with the donor's period
+  (Ralph et al., 1990). Melanopsin knockout mice show severe
+  entrainment deficits. Human shift-work and jet-lag studies
+  demonstrate the cognitive, metabolic, and mood costs of sustained
+  circadian misalignment. Light-therapy trials for seasonal affective
+  disorder and non-seasonal depression have produced reliable
+  therapeutic effects. Blue-light-blocking manipulations reduce
+  evening melatonin suppression. The downstream effects of circadian
+  phase on performance — with a late-afternoon peak in alertness and
+  reaction time, an early-morning dip, and the "post-lunch dip" —
+  replicate consistently in field settings. In clinical medicine,
+  circadian medicine is now an active therapeutic frontier
+  (Roenneberg &amp; Merrow, 2016; Walker et al., 2020).
+</p>
+
+<h3 class="ka-sub">Where it is contested</h3>
+<p class="prose">
+  Several important details remain unsettled. The <em>dose-response
+  question</em> — how much light at what wavelength and time produces
+  how much phase shift in which populations — is being actively
+  characterised but has not produced uniformly replicable dose
+  guidelines for all age groups. The role of non-photic entrainment
+  cues (meal timing, physical activity, social cues) has grown in
+  importance as mistimed light is the norm in modern life, but
+  the relative weights of these cues are still being characterised.
+  Individual differences in chronotype are large and biologically
+  grounded — PER3 polymorphisms, for example, correlate with
+  morning- vs. evening-type preference — but how these should
+  translate into personalised lighting, schedule, and design
+  recommendations is unsettled.
+</p>
+
+<h3 class="ka-sub">Shift work, seasonality, and chronotherapy</h3>
+<p class="prose">
+  The practical consequences of disrupted chronobiology are
+  substantial. Shift workers — roughly 20% of the U.S. workforce —
+  live with chronic circadian misalignment and show elevated rates
+  of cardiovascular disease, metabolic syndrome, and certain cancers
+  relative to day-shift peers. The World Health Organization
+  classifies long-term night shift work as a probable human
+  carcinogen, a rare example of a workplace risk whose underlying
+  mechanism is specifically chronobiological. Seasonal Affective
+  Disorder, with documented prevalence rising at higher latitudes,
+  responds reliably to morning bright-light therapy at 10,000 lux for
+  20–30 minutes. Chronotherapy — timing medication to the circadian
+  phase at which the target tissue is most responsive — improves
+  outcomes across asthma, hypertension, and cancer chemotherapy with
+  minimal cost beyond schedule adjustment. Jet lag after transmeridian
+  travel is a natural experiment: cognition is measurably impaired
+  for one to three days per time zone crossed east-bound, with slower
+  adaptation for older travellers and those with genetic variants
+  that slow circadian re-entrainment. For architectural practice,
+  these clinical and occupational patterns anchor the case for
+  daylight design as genuine public-health intervention, not merely
+  aesthetic preference.
+</p>
+
+<h3 class="ka-sub">How this connects to the other T1 frameworks</h3>
+<div class="callout-teal">
+  CB sets the daily context in which all the other T1 frameworks
+  operate. Neuromodulatory Systems (NM) have circadian rhythms —
+  dopamine, serotonin, and acetylcholine each vary systematically
+  across the day. Interoceptive-Constructionist Affect (IC) draws on
+  interoceptive signals (cortisol, heart-rate variability) that are
+  themselves circadian. Dual-Task / Attentional Load (DT) varies with
+  circadian phase — working-memory capacity is higher in the
+  biological afternoon than in the biological night. Salience
+  Networks (SN) show circadian-modulated responsiveness. Predictive
+  Processing (PP) models must incorporate time-of-day as one of the
+  contextual variables the brain tracks.
+</div>
+
+<h3 class="ka-sub">Implications for environmental cognition</h3>
+<p class="prose">
+  For the built environment CB may be the framework with the highest
+  design leverage per unit effort. Four implications are clear and
+  immediately actionable. <em>Morning daylight access.</em> Morning
+  exposure to ≥250 melanopic lux advances the clock, improves daytime
+  alertness, and consolidates nighttime sleep. Windows that admit
+  morning sun, circulation paths that bring occupants past daylit
+  spaces early in the day, and commute routes with sky exposure all
+  contribute measurable chronobiological benefit. <em>Evening light
+  restriction.</em> Bright white and blue-rich lighting in evening
+  hours suppresses melatonin, delays sleep, and fragments nocturnal
+  rest. Residential and clinical design should include warm, dim
+  evening lighting; display and screen use is a related problem. <em>
+  Thermal rhythmicity.</em> A small drop in environmental temperature
+  in evening hours supports the body's natural temperature-driven
+  sleep onset; constant-temperature environments impair sleep
+  quality. <em>Rhythmic programming.</em> Spaces used by the same
+  occupants throughout the day (hospitals, care facilities, offices)
+  should vary environmentally across the day in ways that reinforce
+  circadian cues rather than flatten them. Measurement is
+  straightforward: actigraphy tracks sleep-wake rhythms, salivary
+  cortisol and melatonin samples track endogenous rhythms, dim-light
+  melatonin onset assays produce clinical-grade phase estimates.
+  Track 3 VR and Track 4 UX research can both instrument this
+  directly.
+</p>
+
+<h2 class="ka-section" id="references">References</h2>
+<div class="refs-block">
+  <h3>Classic neuroscience — foundational sources</h3>
+  <ol>
+    <li>Moore, R. Y., &amp; Eichler, V. B. (1972). Loss of a circadian adrenal corticosterone rhythm following suprachiasmatic lesions in the rat. <em>Brain Research</em>, <em>42</em>(1), 201–206.
+      <a href="https://doi.org/10.1016/0006-8993(72)90054-6">https://doi.org/10.1016/0006-8993(72)90054-6</a>
+      <span class="cite-count">GS ≈ 1,800</span></li>
+    <li>Ralph, M. R., Foster, R. G., Davis, F. C., &amp; Menaker, M. (1990). Transplanted suprachiasmatic nucleus determines circadian period. <em>Science</em>, <em>247</em>(4945), 975–978.
+      <a href="https://doi.org/10.1126/science.2305266">https://doi.org/10.1126/science.2305266</a>
+      <span class="cite-count">GS ≈ 2,100</span></li>
+    <li>Berson, D. M., Dunn, F. A., &amp; Takao, M. (2002). Phototransduction by retinal ganglion cells that set the circadian clock. <em>Science</em>, <em>295</em>(5557), 1070–1073.
+      <a href="https://doi.org/10.1126/science.1067262">https://doi.org/10.1126/science.1067262</a>
+      <span class="cite-count">GS ≈ 3,600</span></li>
+    <li>Hattar, S., Liao, H.-W., Takao, M., Berson, D. M., &amp; Yau, K.-W. (2002). Melanopsin-containing retinal ganglion cells: Architecture, projections, and intrinsic photosensitivity. <em>Science</em>, <em>295</em>(5557), 1065–1070.
+      <a href="https://doi.org/10.1126/science.1069609">https://doi.org/10.1126/science.1069609</a>
+      <span class="cite-count">GS ≈ 2,700</span></li>
+    <li>Czeisler, C. A., &amp; Gooley, J. J. (2007). Sleep and circadian rhythms in humans. <em>Cold Spring Harbor Symposia on Quantitative Biology</em>, <em>72</em>, 579–597.
+      <a href="https://doi.org/10.1101/sqb.2007.72.064">https://doi.org/10.1101/sqb.2007.72.064</a>
+      <span class="cite-count">GS ≈ 1,200</span></li>
+  </ol>
+  <h3>Contemporary neuroscience — since 2018</h3>
+  <ol start="6">
+    <li>Takahashi, J. S. (2017/extended 2020+). Transcriptional architecture of the mammalian circadian clock. <em>Nature Reviews Genetics</em>, <em>18</em>(3), 164–179.
+      <a href="https://doi.org/10.1038/nrg.2016.150">https://doi.org/10.1038/nrg.2016.150</a>
+      <span class="cite-count">GS ≈ 2,100</span></li>
+    <li>Walker, W. H., Walton, J. C., DeVries, A. C., &amp; Nelson, R. J. (2020). Circadian rhythm disruption and mental health. <em>Translational Psychiatry</em>, <em>10</em>(1), 28.
+      <a href="https://doi.org/10.1038/s41398-020-0694-0">https://doi.org/10.1038/s41398-020-0694-0</a>
+      <span class="cite-count">GS ≈ 700</span></li>
+    <li>Roenneberg, T., &amp; Merrow, M. (2016/updates). The circadian clock and human health. <em>Current Biology</em>, <em>26</em>(10), R432–R443.
+      <a href="https://doi.org/10.1016/j.cub.2016.04.011">https://doi.org/10.1016/j.cub.2016.04.011</a>
+      <span class="cite-count">GS ≈ 1,100</span></li>
+    <li>Brown, T. M., Brainard, G. C., Cajochen, C., Czeisler, C. A., Hanifin, J. P., Lockley, S. W., ... &amp; Lucas, R. J. (2022). Recommendations for daytime, evening, and nighttime indoor light exposure to best support physiology, sleep, and wakefulness in healthy adults. <em>PLOS Biology</em>, <em>20</em>(3), e3001571.
+      <a href="https://doi.org/10.1371/journal.pbio.3001571">https://doi.org/10.1371/journal.pbio.3001571</a>
+      <span class="cite-count">GS ≈ 400</span></li>
+    <li>Foster, R. G. (2020). Sleep, circadian rhythms and health. <em>Interface Focus</em>, <em>10</em>(3), 20190098.
+      <a href="https://doi.org/10.1098/rsfs.2019.0098">https://doi.org/10.1098/rsfs.2019.0098</a>
+      <span class="cite-count">GS ≈ 240</span></li>
+  </ol>
+</div>
+
+<a class="return-link" href="ka_theories.html">← Back to Theories index</a>
+</main>
+</body>
+</html>

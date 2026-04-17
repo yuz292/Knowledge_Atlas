@@ -116,11 +116,31 @@ The validator rejects any page that:
 - Contains an inline `<nav>` outside `#ka-navbar-slot`
 - Omits `ka_canonical_navbar.js` from its `<script>` includes
 - Lacks `data-ka-regime` on `<body>`
-- Declares a regime that contradicts its URL path
+- Declares a regime that contradicts its URL path (exception: `archive`
+  regime, which is legitimately orphan — see §8a)
 - Declares `data-ka-active` pointing at an id not in `REGIME_ITEMS[regime]`
 - References a nav item via a hand-coded href instead of the regime table
 - Reads from `localStorage` or `sessionStorage` to render personalised
   content *before* the server has validated the session
+
+### 8a. The `archive` regime
+
+Pages marked `data-ka-regime="archive"` are exempt from the
+orphan-page check because they are *intentionally* unreachable from
+public surfaces. An archived page is linked only from two
+designated places: the Track 4 hub (for UX-research study of prior
+design patterns) and the instructor admin console. The validator
+enforces the inverse constraint: any page with
+`data-ka-regime="archive"` that is linked from a surface other than
+those two is a validation error.
+
+The archive index (`ka_archive.html`) enumerates archived pages with
+reason, category tag (`archived` / `folded` / `retired` / `useful`),
+and links to the live page and any replacement. Archived pages
+themselves keep the canonical navbar but are not listed in any
+regime's `REGIME_ITEMS` array. When a page is archived, remove its
+entry from `REGIME_ITEMS` and add a row to `ka_archive.html`; when a
+page is un-archived, do the inverse.
 
 ## 9. Updating the item list
 

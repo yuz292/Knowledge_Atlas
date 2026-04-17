@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Default-mode &amp; Place (DP) · T1 Framework · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+.draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;display:flex;align-items:center;gap:10px}
+.draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:#E8F8F2;color:#1A7050;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+.toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+.toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+.toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;font-weight:700;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;font-weight:700;margin:18px 0 6px}
+p.prose{margin-bottom:12px}
+p.prose strong{color:#1C3D3A}
+.summary-block{background:#fff;border-left:4px solid #2A7868;border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+.summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+.summary-lede strong{color:#1A7050}
+.summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+.read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;background:#1C3D3A;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
+.refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:18px 22px;margin-top:10px}
+.refs-block h3{margin-top:0}
+.refs-block h3:not(:first-child){margin-top:18px}
+.refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+.refs-block ol li{margin-bottom:10px}
+.refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;background:#F9F5EE;padding:1px 7px;border-radius:10px;margin-left:6px}
+.refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;color:#2A7868;text-decoration:none}
+.callout-teal{background:#E6F5F0;border-left:3px solid #2A7868;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.92rem;color:#1a4a3f;line-height:1.6}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="theories"
+      data-ka-crumbs='[["Home","ka_home.html"],["Theories","ka_theories.html"],["Default-mode &amp; Place",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="draft-banner"><div><strong>Draft — pending neuroscience panel review.</strong>
+LLM-drafted 2026-04-17. Reviewers please annotate inline.</div></div>
+
+<div class="ka-hero">
+  <span class="code-pill">T1 · Foundational Framework</span>
+  <h1>Default-mode &amp; Place</h1>
+  <p class="subtitle">Place cells, grid cells, and the default-mode network
+    together form the brain's machinery for knowing where you are, where
+    you have been, and where you might go — in physical space and in the
+    mental space of memory and imagination.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-label">On this page</div>
+  <a href="#summary">At a glance (300 words)</a>
+  <a href="#deep-dive">Deep dive (1,500 words)</a>
+  <a href="#references">References</a>
+</div>
+
+<h2 class="ka-section" id="summary">At a glance</h2>
+<div class="summary-block" aria-label="300-word lay summary">
+  <p class="summary-lede"><strong>In plain English.</strong>
+    Default-mode &amp; Place names the joint contribution of two
+    intimately linked systems: the hippocampal-entorhinal "place-coding"
+    circuit that builds maps of physical space, and the cortical
+    default-mode network that reuses that machinery for memory,
+    daydreaming, and imagination. Knowing where you are and knowing
+    what happened to you last Tuesday turn out to share substrate.</p>
+
+  <p class="prose">Physiologically, the place system is now one of the
+    best-understood circuits in the brain. Hippocampal <em>place cells</em>
+    fire when the animal occupies a specific location; entorhinal
+    <em>grid cells</em> tile space with a hexagonal lattice; boundary
+    cells in the subiculum and parahippocampal region fire at walls and
+    doorways; head-direction cells in the anterior thalamus and
+    retrosplenial cortex encode facing direction. The cortical
+    default-mode network — medial prefrontal cortex, posterior cingulate,
+    angular gyrus, and hippocampal-parahippocampal regions — activates
+    during self-referential processing, mind-wandering, and
+    future-oriented simulation. The two systems share hippocampal
+    substrate and theta rhythm, and recent work shows the grid-cell
+    architecture is recruited for abstract conceptual navigation, not
+    only for physical space.</p>
+
+  <p class="prose">Evidence for the place-cell side is extraordinarily
+    strong — John O'Keefe, May-Britt Moser, and Edvard Moser shared the
+    2014 Nobel Prize for discovering place cells and grid cells, and the
+    neural code has been confirmed in humans through direct recording
+    during neurosurgery. The default-mode side is well established at
+    the network level, with Marcus Raichle's canonical discovery
+    replicated thousands of times. Contested territory concerns the
+    precise computational role of the DMN, whether it is primarily
+    about "self" or more generally about context-free simulation, and
+    how cleanly place coding for physical space carries over to
+    conceptual-space reasoning.</p>
+
+  <p class="prose">For environments, DP is the framework that explains
+    why some buildings are easy to learn and others defeat navigation
+    decades after regular use. Spaces with clear boundaries, distinctive
+    landmarks, and predictable geometric structure are readily encoded
+    by the place system; spaces with repetitive corridors, similar
+    unlabelled doors, and weak orientation cues overtax the system and
+    produce persistent wayfinding difficulty. Designing for Default-mode
+    &amp; Place is designing for cognitive legibility — not merely
+    aesthetic clarity but a neural kind of knowability.</p>
+
+  <a class="read-more-link" href="#deep-dive">Read the full 1,500-word deep dive ↓</a>
+</div>
+
+<h2 class="ka-section" id="deep-dive">Deep dive — the framework in full</h2>
+
+<h3 class="ka-sub">Two systems, one substrate</h3>
+<p class="prose">
+  The Default-mode &amp; Place framework joins two lines of work that
+  were historically separate. The place-coding literature grew out of
+  John O'Keefe's 1971 discovery that hippocampal pyramidal neurons fire
+  selectively when a rat occupies specific locations in an environment,
+  extended by the Mosers' 2005 discovery of grid cells in medial
+  entorhinal cortex that fire in a hexagonal lattice tiling the
+  environment. The default-mode network was characterised initially as
+  a "task-negative" network whose activity was suppressed during
+  externally focused tasks; Raichle and colleagues (2001, 2015) made
+  the case that this apparent baseline activity was a principled neural
+  signature of internally directed cognition. The two literatures
+  converged when it became clear that hippocampal and
+  parahippocampal regions — the place-coding substrate — are DMN nodes,
+  and that the DMN's characteristic activity during mind-wandering
+  involves the recall of past episodes and the simulation of future
+  ones, both of which recruit place-coding machinery. The joint
+  framework is that place and self are encoded by overlapping
+  circuitry, which explains why episodic memory has a spatial
+  character and why place-experience has an autobiographical character.
+</p>
+
+<h3 class="ka-sub">The place-coding circuit in detail</h3>
+<p class="prose">
+  The cognitive map is built from five cell types working together.
+  <em>Place cells</em> in hippocampal CA1 and CA3 fire when the animal
+  is in a specific location; a population of place cells provides a
+  decodable representation of current position. <em>Grid cells</em> in
+  medial entorhinal cortex fire at multiple positions arranged in a
+  triangular lattice, creating a metric substrate for place cell
+  remapping. <em>Head-direction cells</em> in anterior thalamic nuclei,
+  presubiculum, and retrosplenial cortex fire as a function of the
+  animal's heading, providing a compass. <em>Boundary cells</em> in
+  subiculum and parahippocampal cortex fire at walls, doorways, and
+  other spatial limits — these are what make a room a room rather than
+  a point. <em>Speed cells</em> in entorhinal cortex and medial
+  septum provide a velocity signal that the grid-cell code integrates.
+  Theta-rhythm oscillations (6–10 Hz in rodents, 1–4 Hz in humans)
+  coordinate these populations and organise place-cell sequences during
+  exploration and during replay in rest and sleep. The whole circuit
+  has been directly recorded in humans during neurosurgery for
+  intractable epilepsy, with clear place cells, grid cells, and
+  boundary cells observed during virtual navigation tasks.
+</p>
+
+<h3 class="ka-sub">The default-mode network and its functions</h3>
+<p class="prose">
+  The DMN comprises medial prefrontal cortex (mPFC), posterior
+  cingulate cortex (PCC) and retrosplenial cortex, the angular gyrus
+  of inferior parietal lobule, and medial temporal-lobe structures
+  (hippocampus, parahippocampal cortex). DMN activity rises during
+  self-referential processing, autobiographical memory retrieval,
+  future-oriented imagination, theory-of-mind reasoning about others,
+  and mind-wandering during unconstrained rest. These functions are
+  united by a common thread: internally directed simulation drawing on
+  long-term memory. Mark Raichle's framing of the DMN as the brain's
+  "intrinsic system" — active by default when external demands drop —
+  has held up across thousands of resting-state fMRI studies. Randy
+  Buckner and Demis Hassabis's work in the 2000s and 2010s formalised
+  the overlap between remembering and imagining: patients with
+  hippocampal lesions cannot construct detailed future scenarios, just
+  as they cannot retrieve detailed past ones, because both draw on the
+  same scene-construction machinery.
+</p>
+
+<h3 class="ka-sub">Evidence: what is well-established</h3>
+<p class="prose">
+  Place cells, grid cells, head-direction cells, and boundary cells
+  are established beyond serious contest, with direct
+  electrophysiological recording in rodent, non-human primate, and
+  human tissue. The hexagonal grid structure is mathematically
+  characterised and has been shown to generalise to non-spatial
+  conceptual domains (Constantinescu, O'Reilly &amp; Behrens, 2016;
+  Bellmund et al., 2018). The DMN is a replicable functional-connectivity
+  signature observed in every imaging population studied. The
+  hippocampal role in scene construction and episodic simulation is
+  confirmed by lesion studies, fMRI, and comparative work. Theta
+  rhythm's role in coordinating place-cell sequences during exploration
+  and replay is established in rodents and partially extended to humans.
+  Clinical relevance is strong: Alzheimer's disease produces early
+  pathology in entorhinal cortex and hippocampus, with wayfinding
+  deficits among the earliest cognitive signs.
+</p>
+
+<h3 class="ka-sub">Where it is contested</h3>
+<p class="prose">
+  Two live debates. First, what the DMN is <em>for</em> in
+  computational terms: the candidate accounts (self-referential
+  processing, unconstrained simulation, predictive modelling of context,
+  maintenance of a long-term generative model) agree on neuroanatomy
+  but disagree on framing. Buckner's synthesis emphasises
+  simulation; Barrett's extends to the generation of interoceptive
+  predictions; Raichle's original framing was more about baseline
+  organisation. Second, the scope of the grid-cell claim for
+  non-spatial cognition: recent fMRI evidence suggests hexagonal
+  coding of conceptual spaces, but whether the same cells or merely
+  analogous computational architecture is at work is unsettled
+  (Bellmund et al., 2018; Park et al., 2020).
+</p>
+
+<h3 class="ka-sub">Aging, pathology, and developmental trajectories</h3>
+<p class="prose">
+  The place system ages badly. Entorhinal cortex and hippocampal
+  subfield CA1 are among the earliest sites of tau pathology in
+  Alzheimer's disease, which is why spatial disorientation is often
+  the first cognitive symptom families notice. Grid-cell coherence
+  degrades in at-risk populations even before clinical symptoms
+  appear, giving the framework a potential preclinical biomarker.
+  Hippocampal atrophy in normal aging predicts wayfinding decline
+  independently of general cognitive slowing, and enriched
+  environments (physical activity, cognitive engagement, social
+  contact) produce measurable hippocampal neurogenesis in rodent
+  studies with translational implications for design of care
+  facilities. Developmentally, place and grid cells mature through
+  adolescence; the ability to build flexible cognitive maps of large
+  spaces continues to strengthen into the mid-twenties. These
+  clinical and developmental trajectories give design for
+  environmental legibility a quantifiable impact — hospitals,
+  care facilities, and schools that make the place system's job
+  easier produce measurable gains for occupants whose place systems
+  are stressed or still maturing, and the gain can be instrumented
+  with behavioural wayfinding tests that need no imaging.
+</p>
+
+<h3 class="ka-sub">How this connects to the other T1 frameworks</h3>
+<div class="callout-teal">
+  DP supplies the spatial and autobiographical memory that Predictive
+  Processing (PP) draws on for top-down predictions about familiar
+  environments. Salience Networks (SN) suppress DMN when external
+  demands rise — that anti-phase dynamic is one of the best-documented
+  network-level phenomena in systems neuroscience. Embodied Cognition
+  (EC) integrates with place coding when bodily movement updates the
+  grid-cell and place-cell representations through idiothetic
+  self-motion cues. Interoceptive-Constructionist Affect (IC) shares
+  DMN nodes (mPFC, PCC) that contribute contextual priors to emotion
+  construction. Implicit-Explicit Dual-Process Theory (IE_DPT)
+  implicates DMN in implicit mode and task-positive CEN in explicit
+  mode.
+</div>
+
+<h3 class="ka-sub">Implications for environmental cognition</h3>
+<p class="prose">
+  For architecture this is the framework most directly tied to the
+  design of <em>legibility</em>. A space is easy to learn when the
+  place-coding circuit can lock in stable representations: distinctive
+  landmarks that anchor place cells, clear geometric boundaries that
+  drive boundary cells, directional cues that support head-direction
+  coding, and a hierarchy of scales that matches the grid-cell
+  multi-scale tiling. Office buildings, hospitals, and transit
+  facilities that defeat wayfinding typically violate several of these
+  simultaneously: repetitive corridors with weak landmarks,
+  ambiguous boundaries between zones, absence of reliable compass
+  cues, monotonous geometric scale. Conversely, environments that
+  exploit natural wayfinding cues — sky views for global orientation,
+  material transitions at functional boundaries, architectural
+  elements at predictable intervals — are encoded quickly and retained.
+  A second implication concerns the DMN side: environments that
+  support unforced mind-wandering (gardens, galleries, quiet reading
+  rooms) allow the DMN to run its default consolidation-and-simulation
+  program, while environments that prevent it through constant
+  low-level salience demands prevent the cognitive work the DMN
+  performs. Track 3 VR studies can measure both effects tractably by
+  instrumenting wayfinding performance and by tracking gaze-behaviour
+  signatures of mind-wandering.
+</p>
+
+<h2 class="ka-section" id="references">References</h2>
+<div class="refs-block">
+  <h3>Classic neuroscience — foundational sources</h3>
+  <ol>
+    <li>O'Keefe, J., &amp; Nadel, L. (1978). <em>The hippocampus as a cognitive map</em>. Clarendon Press.
+      <span class="cite-count">GS ≈ 18,000</span></li>
+    <li>Hafting, T., Fyhn, M., Molden, S., Moser, M.-B., &amp; Moser, E. I. (2005). Microstructure of a spatial map in the entorhinal cortex. <em>Nature</em>, <em>436</em>(7052), 801–806.
+      <a href="https://doi.org/10.1038/nature03721">https://doi.org/10.1038/nature03721</a>
+      <span class="cite-count">GS ≈ 7,600</span></li>
+    <li>Raichle, M. E., MacLeod, A. M., Snyder, A. Z., Powers, W. J., Gusnard, D. A., &amp; Shulman, G. L. (2001). A default mode of brain function. <em>PNAS</em>, <em>98</em>(2), 676–682.
+      <a href="https://doi.org/10.1073/pnas.98.2.676">https://doi.org/10.1073/pnas.98.2.676</a>
+      <span class="cite-count">GS ≈ 22,000</span></li>
+    <li>Buckner, R. L., Andrews-Hanna, J. R., &amp; Schacter, D. L. (2008). The brain's default network: Anatomy, function, and relevance to disease. <em>Annals of the New York Academy of Sciences</em>, <em>1124</em>, 1–38.
+      <a href="https://doi.org/10.1196/annals.1440.011">https://doi.org/10.1196/annals.1440.011</a>
+      <span class="cite-count">GS ≈ 9,700</span></li>
+    <li>Hassabis, D., Kumaran, D., Vann, S. D., &amp; Maguire, E. A. (2007). Patients with hippocampal amnesia cannot imagine new experiences. <em>PNAS</em>, <em>104</em>(5), 1726–1731.
+      <a href="https://doi.org/10.1073/pnas.0610561104">https://doi.org/10.1073/pnas.0610561104</a>
+      <span class="cite-count">GS ≈ 2,400</span></li>
+  </ol>
+  <h3>Contemporary neuroscience — since 2018</h3>
+  <ol start="6">
+    <li>Raichle, M. E. (2015). The brain's default mode network. <em>Annual Review of Neuroscience</em>, <em>38</em>, 433–447.
+      <a href="https://doi.org/10.1146/annurev-neuro-071013-014030">https://doi.org/10.1146/annurev-neuro-071013-014030</a>
+      <span class="cite-count">GS ≈ 4,200</span></li>
+    <li>Bellmund, J. L. S., Gärdenfors, P., Moser, E. I., &amp; Doeller, C. F. (2018). Navigating cognition: Spatial codes for human thinking. <em>Science</em>, <em>362</em>(6415), eaat6766.
+      <a href="https://doi.org/10.1126/science.aat6766">https://doi.org/10.1126/science.aat6766</a>
+      <span class="cite-count">GS ≈ 780</span></li>
+    <li>Park, S. A., Miller, D. S., &amp; Boorman, E. D. (2021). Inferences on a multidimensional social hierarchy use a grid-like code. <em>Nature Neuroscience</em>, <em>24</em>(9), 1292–1301.
+      <a href="https://doi.org/10.1038/s41593-021-00916-3">https://doi.org/10.1038/s41593-021-00916-3</a>
+      <span class="cite-count">GS ≈ 200</span></li>
+    <li>Schafer, M., &amp; Schiller, D. (2018). Navigating social space. <em>Neuron</em>, <em>100</em>(2), 476–489.
+      <a href="https://doi.org/10.1016/j.neuron.2018.10.006">https://doi.org/10.1016/j.neuron.2018.10.006</a>
+      <span class="cite-count">GS ≈ 340</span></li>
+    <li>Epstein, R. A., Patai, E. Z., Julian, J. B., &amp; Spiers, H. J. (2017/extended 2020). The cognitive map in humans: Spatial navigation and beyond. <em>Nature Neuroscience</em>, <em>20</em>(11), 1504–1513.
+      <a href="https://doi.org/10.1038/nn.4656">https://doi.org/10.1038/nn.4656</a>
+      <span class="cite-count">GS ≈ 1,100</span></li>
+  </ol>
+</div>
+
+<a class="return-link" href="ka_theories.html">← Back to Theories index</a>
+</main>
+</body>
+</html>

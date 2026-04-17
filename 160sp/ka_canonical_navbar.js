@@ -40,6 +40,8 @@
       { id:'theories',   label:'Theories',             href:'ka_theories.html' },
       { id:'mechanisms', label:'Mechanisms',           href:'ka_mechanisms.html' },
       { id:'neural',     label:'Neural Underpinnings', href:'ka_neural.html' },
+      { id:'contribute', label:'Contribute',           href:'ka_contribute.html' },
+      { id:'about',      label:'About',                href:'ka_about.html' },
     ],
     '160sp': [
       { id:'syllabus', label:'Syllabus', href:'ka_schedule.html' },

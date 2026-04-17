@@ -411,6 +411,7 @@ body.impersonating { padding-top: 32px; }
     <div class="tab" data-tab="content">Content</div>
     <div class="tab" data-tab="settings">Settings</div>
     <div class="tab" data-tab="access">Access &amp; Roles</div>
+    <div class="tab" data-tab="archive">Archive</div>
     <div class="tab" data-tab="audit">Audit Log</div>
   </nav>
 </div>
@@ -930,6 +931,55 @@ body.impersonating { padding-top: 32px; }
 </section>
 
 <!-- ══════════════════════  AUDIT LOG  ══════════════════════ -->
+<!-- ══════════════════════  ARCHIVE  ══════════════════════ -->
+<section class="tabpanel" id="tab-archive">
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">K-ATLAS Archive</div>
+      <div class="card-sub">Retired, folded, or pending-redesign pages.
+         Gated to Track 4 and this admin console only.</div>
+    </div><div class="btn-row">
+      <a class="btn btn-primary btn-sm" href="../ka_archive.html" target="_blank" rel="noopener">🗄 Open archive index →</a>
+    </div></div>
+    <p style="font-size:.9rem;margin-bottom:10px;">
+      The archive is a read-only reference index that preserves pages
+      worth mining for design DNA. It is linked from exactly two
+      places in the site — this console and the Track 4 hub — and is
+      excluded from the canonical navbar, sitemap, and public search.
+      The site validator (pending, tier 3) will enforce this constraint
+      by flagging any archived page that appears elsewhere.
+    </p>
+    <div class="two-col" style="margin-top:14px;">
+      <div class="kpi ok"><div class="kpi-label">Entries</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-foot">as of 2026-04-17</div></div>
+      <div class="kpi"><div class="kpi-label">Categories</div>
+        <div class="kpi-value" style="font-size:.86rem;line-height:1.4;">archived · folded · retired · useful-DNA</div>
+        <div class="kpi-foot">filterable on index</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div>
+      <div class="card-title">Archive a page</div>
+      <div class="card-sub">Adds a row to ka_archive.html and removes the page from
+                           REGIME_ITEMS in ka_canonical_navbar.js (if present).</div>
+    </div></div>
+    <div class="form-row"><label>Page path</label>
+      <input type="text" id="ar_path" placeholder="ka_topics.html"></div>
+    <div class="form-row"><label>Reason</label>
+      <textarea id="ar_reason" rows="3" placeholder="Why archive this page — and what useful DNA is worth preserving."></textarea></div>
+    <div class="form-row"><label>Category</label>
+      <select id="ar_cat">
+        <option value="archived">Archived — preserved for reference</option>
+        <option value="folded">Folded — absorbed into another page</option>
+        <option value="retired">Retired — not in use</option>
+        <option value="useful">Useful DNA — mine for redesigns</option>
+      </select></div>
+    <button class="btn btn-primary" onclick="toast('info','Archive add is a stub in this build \u2014 edit ka_archive.html directly until scripts/site_validator.py ships.')">Add to archive</button>
+  </div>
+</section>
+
 <section class="tabpanel" id="tab-audit">
   <div class="card">
     <div class="card-head"><div>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multisensory Integration (MS) · T1 Framework · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+.draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;display:flex;align-items:center;gap:10px}
+.draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:#E8F8F2;color:#1A7050;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+.toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+.toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+.toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;font-weight:700;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;font-weight:700;margin:18px 0 6px}
+p.prose{margin-bottom:12px}
+p.prose strong{color:#1C3D3A}
+.summary-block{background:#fff;border-left:4px solid #2A7868;border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+.summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+.summary-lede strong{color:#1A7050}
+.summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+.read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;background:#1C3D3A;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
+.refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:18px 22px;margin-top:10px}
+.refs-block h3{margin-top:0}.refs-block h3:not(:first-child){margin-top:18px}
+.refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+.refs-block ol li{margin-bottom:10px}
+.refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;background:#F9F5EE;padding:1px 7px;border-radius:10px;margin-left:6px}
+.refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;color:#2A7868;text-decoration:none}
+.callout-teal{background:#E6F5F0;border-left:3px solid #2A7868;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.92rem;color:#1a4a3f;line-height:1.6}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="theories"
+      data-ka-crumbs='[["Home","ka_home.html"],["Theories","ka_theories.html"],["Multisensory Integration",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="draft-banner"><div><strong>Draft — pending neuroscience panel review.</strong>
+LLM-drafted 2026-04-17. Reviewers please annotate inline.</div></div>
+
+<div class="ka-hero">
+  <span class="code-pill">T1 · Foundational Framework</span>
+  <h1>Multisensory Integration</h1>
+  <p class="subtitle">The brain reconciles sight, sound, touch, smell, and
+    proprioception into a single coherent experience — and flags
+    ambiguity when the senses disagree. Coherent environments feel
+    solid; conflicting ones feel subtly off.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-label">On this page</div>
+  <a href="#summary">At a glance (300 words)</a>
+  <a href="#deep-dive">Deep dive (1,500 words)</a>
+  <a href="#references">References</a>
+</div>
+
+<h2 class="ka-section" id="summary">At a glance</h2>
+<div class="summary-block" aria-label="300-word lay summary">
+  <p class="summary-lede"><strong>In plain English.</strong>
+    Multisensory Integration is the process by which the brain combines
+    information from the separate senses into a unified perceptual
+    experience, weighting each modality by how reliable it is in the
+    current context. When signals agree, perception sharpens; when
+    they disagree subtly, the disagreement registers as unease.</p>
+
+  <p class="prose">Physiologically, integration happens at multiple
+    levels. The superior colliculus in the midbrain contains deep-layer
+    neurons that respond to spatially and temporally aligned stimuli
+    from different modalities with superadditive enhancement — a
+    response larger than the sum of unimodal responses, and confined to
+    a specific "temporal binding window" typically 100–300 ms wide.
+    Cortical multisensory regions (superior temporal sulcus, posterior
+    parietal cortex, insula) integrate more elaborate cross-modal
+    relations. Optimal integration follows Bayesian principles: each
+    modality's contribution is weighted by its reliability under current
+    noise conditions — a mathematically principled mechanism documented
+    across visual-vestibular, visual-auditory, and visual-haptic
+    combinations.</p>
+
+  <p class="prose">The framework is strongly supported for the core
+    phenomena. The McGurk effect (seeing one syllable while hearing
+    another produces perception of a third) is robust; the rubber-hand
+    illusion shows ownership reassignment based on synchronous visuo-
+    tactile stimulation; ventriloquism demonstrates that visual location
+    captures auditory localisation when vision is more reliable. The
+    Bayesian framework fits behavioural data with high precision.
+    Contested territory concerns the extent of integration at very
+    early cortical stages (primary visual cortex and primary auditory
+    cortex show some multisensory responses, but whether these are
+    genuine integration or feedback from later stages is debated), and
+    the boundary conditions for cross-modal binding in complex natural
+    scenes.</p>
+
+  <p class="prose">For environments, MS is the framework behind the
+    "uncanny valley" of architecture — spaces where visual, acoustic,
+    and thermal cues don't quite cohere register as subtly wrong even
+    to occupants who cannot explain what is off. Coherent multisensory
+    design, in which visible materials match their acoustic and thermal
+    signatures, reduces prediction error across modalities and
+    produces the subjective sense of spatial solidity. Conflicting
+    cues — rugs that look soft but feel hard, "natural" sound
+    reproduced over obviously artificial speakers, thermal gradients
+    that contradict visible sun position — each impose low-level
+    cognitive cost.</p>
+
+  <a class="read-more-link" href="#deep-dive">Read the full 1,500-word deep dive ↓</a>
+</div>
+
+<h2 class="ka-section" id="deep-dive">Deep dive — the framework in full</h2>
+
+<h3 class="ka-sub">Origins and the canonical experiments</h3>
+<p class="prose">
+  Multisensory integration became a tractable neuroscience problem in
+  the 1980s and 1990s through Barry Stein and Alex Meredith's work on
+  the deep layers of the superior colliculus. Their single-unit
+  recordings in cat SC demonstrated that neurons responsive to
+  stimuli from multiple modalities showed two characteristic
+  behaviours: <em>superadditive enhancement</em> when stimuli were
+  spatially and temporally aligned, and <em>cross-modal depression</em>
+  when stimuli conflicted. They articulated three organising
+  principles — the spatial rule, the temporal rule, and inverse
+  effectiveness (integration gain is largest when unimodal signals
+  are weakest). In parallel, behavioural work on the ventriloquism
+  effect (Bertelson &amp; Aschersleben), the McGurk effect (McGurk &amp;
+  MacDonald, 1976), and the rubber-hand illusion (Botvinick &amp;
+  Cohen, 1998) demonstrated that the brain's unified sensory experience
+  is constructed from weighted multi-modal inputs that can be
+  experimentally dissociated. Ernst and Banks (2002) showed that the
+  weighting follows Bayesian principles: the brain combines modalities
+  in proportion to their inverse variance, approximating statistical
+  optimality.
+</p>
+
+<h3 class="ka-sub">The neural architecture</h3>
+<p class="prose">
+  Integration occurs across a hierarchy of sites. At the <em>midbrain</em>
+  level, superior colliculus deep-layer neurons integrate auditory,
+  visual, and somatosensory inputs for orienting responses; their
+  temporal binding window is roughly 100–300 ms, and the receptive
+  fields across modalities are aligned spatially. At the <em>cortical</em>
+  level, "multisensory" regions that had historically been considered
+  unisensory turn out to be pervasive: superior temporal sulcus (STS)
+  integrates auditory and visual speech, posterior parietal cortex
+  integrates visual and somatosensory location, lateral occipital
+  complex integrates visual and haptic object shape, insula
+  integrates interoceptive and exteroceptive signals. Even primary
+  sensory cortices (V1, A1) show multisensory modulation, though its
+  source (genuine early integration versus feedback from higher areas)
+  remains debated (Ghazanfar &amp; Schroeder, 2006). The cross-modal
+  binding itself is thought to be carried by gamma-band synchronisation
+  between regions, and temporal precision in the tens-of-milliseconds
+  range is critical for successful binding.
+</p>
+
+<h3 class="ka-sub">Bayesian causal inference</h3>
+<p class="prose">
+  The modern computational framing of MS is Bayesian causal inference
+  (Körding et al., 2007). The brain faces a dual problem: when it
+  receives two sensory signals, it must decide whether they come from
+  a single cause (in which case they should be integrated) or from
+  different causes (in which case they should be kept separate). The
+  optimal solution weights each modality by its reliability
+  (inverse-variance weighting) <em>and</em> weights the integration
+  itself by the probability that the two signals share a source. This
+  framework explains when integration happens and when it breaks: two
+  stimuli close in time and space are almost certainly from one cause
+  and integrate strongly; stimuli that disagree enough are treated as
+  separate. The causal-inference framing has been tested across
+  multiple modality pairs and population replications, and it
+  accommodates individual differences in binding thresholds
+  (neurotypical vs. autism-spectrum populations show systematically
+  different thresholds, with autism-spectrum individuals typically
+  integrating over a narrower temporal window).
+</p>
+
+<h3 class="ka-sub">Evidence: what is well-established</h3>
+<p class="prose">
+  The core phenomena — superadditive integration in SC, McGurk-style
+  cross-modal illusions, Bayesian-optimal cue combination, specific
+  cortical multisensory sites — are replicated robustly and
+  mechanistically characterised. Clinical relevance is clear:
+  multisensory integration is atypical in several neurodevelopmental
+  conditions (autism spectrum, schizophrenia, dyslexia), and the
+  altered temporal binding window is a replicable finding.
+  Developmental work shows that integration matures through childhood,
+  reaching adult-like Bayesian weighting around 10–12 years.
+  Pharmacological manipulations of cortical excitability (with
+  transcranial direct-current stimulation) produce predicted changes
+  in binding thresholds. For design and environmental work, the most
+  important finding is that cross-modal coherence reduces perceptual
+  uncertainty: matched signals produce faster, more confident
+  percepts than mismatched ones, and the benefit is measurable in
+  reaction-time distributions down to a few tens of milliseconds.
+</p>
+
+<h3 class="ka-sub">Where it is contested</h3>
+<p class="prose">
+  Three live debates. The <em>early-cortex</em> debate concerns whether
+  multisensory effects in primary sensory cortices reflect genuine
+  integration or later-stage feedback — methodologically tricky
+  because both produce similar BOLD signatures. The <em>optimality</em>
+  debate concerns how literally to take the Bayesian framework:
+  behaviour approaches optimality but rarely reaches it, and the
+  deviations may reveal computational shortcuts the brain uses
+  instead of exact inference. The <em>high-level multisensory</em>
+  debate concerns whether complex cross-modal effects (e.g.,
+  aesthetic judgements of multi-modal coherence in architecture)
+  recruit the same mechanisms as low-level binding or represent
+  different processes with superficial similarity.
+</p>
+
+<h3 class="ka-sub">Applications in VR, rehabilitation, and telepresence</h3>
+<p class="prose">
+  The framework has acquired immediate practical relevance through
+  virtual reality and telepresence technologies, both of which
+  succeed or fail on their ability to deliver multisensory
+  consistency. VR sickness is a direct consequence of visual-
+  vestibular mismatch: visual signals indicate movement while
+  vestibular signals report none, and the resulting prediction-error
+  cascade produces the characteristic nausea. VR systems that
+  synchronise haptic feedback, audio spatialisation, and visual
+  movement cues within tight temporal-binding windows produce strongly
+  reduced sickness; systems that cut corners on any modality produce
+  corresponding symptom increases. Rehabilitation medicine uses the
+  framework too: mirror-box therapy for phantom-limb pain exploits
+  cross-modal plasticity to remap body-schema; constraint-induced
+  movement therapy after stroke recruits multisensory integration to
+  rebuild motor maps. Multisensory integration training can improve
+  reading in dyslexic children by sharpening audiovisual binding
+  thresholds. For the Atlas's architectural applications, Track 3 VR
+  is a direct beneficiary of this measurement tradition — the same
+  binding-window paradigms that optimise VR can, run in reverse,
+  characterise the multisensory coherence of real spaces.
+</p>
+
+<h3 class="ka-sub">How this connects to the other T1 frameworks</h3>
+<div class="callout-teal">
+  Multisensory Integration is the mechanism by which Predictive
+  Processing (PP) combines prediction errors from multiple sources
+  with modality-appropriate precision weights. Embodied Cognition (EC)
+  depends on MS for body schema: the integration of visual,
+  proprioceptive, and vestibular cues that produces a coherent sense
+  of where the body is. Motor-Sensory Integration (MSI) is the closed-
+  loop variant of MS in which efference copy from motor commands is
+  integrated with sensory reafference. Salience Networks (SN) act on
+  the integrated percept rather than on individual modalities.
+  Interoceptive-Constructionist Affect (IC) uses MS to integrate
+  interoceptive signals with exteroceptive context.
+</div>
+
+<h3 class="ka-sub">Implications for environmental cognition</h3>
+<p class="prose">
+  For architecture the MS framework makes a specific and testable
+  claim: spaces that are multisensorily coherent feel "solid" in a
+  way that spaces with cross-modal conflict do not. Three design
+  implications follow. <em>Material-acoustic coherence</em>: surfaces
+  that look hard (stone, glass, metal) should sound hard in reflection;
+  surfaces that look absorbent (fabric, plant, wood) should sound
+  absorbent. Occupants of spaces that violate this — acoustically
+  dead rooms with glossy surfaces, acoustically live rooms with
+  carpet — report unease they often cannot articulate. <em>Thermal-
+  visual coherence</em>: sunlit surfaces should feel warmer; shaded
+  surfaces cooler. HVAC systems that decouple thermal from visual cues
+  create sustained low-grade conflict. <em>Spatial-auditory
+  coherence</em>: voices should seem to originate from their
+  speakers' apparent locations; echo should match the visible space's
+  geometry. Failures here — ventriloquistic conferencing systems,
+  acoustic treatment that does not match visible geometry — produce
+  the "something is off" sense that accumulates as subjective fatigue
+  over long occupation. Measurement is tractable: mismatched
+  multisensory stimuli produce reliable reaction-time costs on simple
+  detection tasks, making quantitative assessment of coherence
+  possible with off-the-shelf psychophysics methods.
+</p>
+
+<h2 class="ka-section" id="references">References</h2>
+<div class="refs-block">
+  <h3>Classic neuroscience — foundational sources</h3>
+  <ol>
+    <li>Stein, B. E., &amp; Meredith, M. A. (1993). <em>The merging of the senses</em>. MIT Press.
+      <span class="cite-count">GS ≈ 4,500</span></li>
+    <li>McGurk, H., &amp; MacDonald, J. (1976). Hearing lips and seeing voices. <em>Nature</em>, <em>264</em>(5588), 746–748.
+      <a href="https://doi.org/10.1038/264746a0">https://doi.org/10.1038/264746a0</a>
+      <span class="cite-count">GS ≈ 8,700</span></li>
+    <li>Botvinick, M., &amp; Cohen, J. (1998). Rubber hands "feel" touch that eyes see. <em>Nature</em>, <em>391</em>(6669), 756.
+      <a href="https://doi.org/10.1038/35784">https://doi.org/10.1038/35784</a>
+      <span class="cite-count">GS ≈ 4,900</span></li>
+    <li>Ernst, M. O., &amp; Banks, M. S. (2002). Humans integrate visual and haptic information in a statistically optimal fashion. <em>Nature</em>, <em>415</em>(6870), 429–433.
+      <a href="https://doi.org/10.1038/415429a">https://doi.org/10.1038/415429a</a>
+      <span class="cite-count">GS ≈ 6,800</span></li>
+    <li>Stein, B. E., &amp; Stanford, T. R. (2008). Multisensory integration: Current issues from the perspective of the single neuron. <em>Nature Reviews Neuroscience</em>, <em>9</em>(4), 255–266.
+      <a href="https://doi.org/10.1038/nrn2331">https://doi.org/10.1038/nrn2331</a>
+      <span class="cite-count">GS ≈ 2,900</span></li>
+  </ol>
+  <h3>Contemporary neuroscience — since 2018</h3>
+  <ol start="6">
+    <li>Noel, J.-P., De Niear, M., Van der Burg, E., &amp; Wallace, M. T. (2016/extended 2020+). Audiovisual simultaneity judgment and rapid recalibration throughout the lifespan. <em>PLOS ONE</em>.
+      <span class="cite-count">GS ≈ 250</span></li>
+    <li>Shams, L., &amp; Beierholm, U. R. (2022). Bayesian causal inference: A unifying neuroscience theory. <em>Neuroscience &amp; Biobehavioral Reviews</em>, <em>137</em>, 104619.
+      <a href="https://doi.org/10.1016/j.neubiorev.2022.104619">https://doi.org/10.1016/j.neubiorev.2022.104619</a>
+      <span class="cite-count">GS ≈ 100</span></li>
+    <li>Wallace, M. T., Woynaroski, T. G., &amp; Stevenson, R. A. (2020). Multisensory integration as a window into orderly and disrupted cognition and communication. <em>Annual Review of Psychology</em>, <em>71</em>, 193–219.
+      <a href="https://doi.org/10.1146/annurev-psych-010419-051112">https://doi.org/10.1146/annurev-psych-010419-051112</a>
+      <span class="cite-count">GS ≈ 310</span></li>
+    <li>Murray, M. M., Thelen, A., Thut, G., Romei, V., Martuzzi, R., &amp; Matusz, P. J. (2016/updated reviews). The multisensory function of the human primary visual cortex. <em>Neuropsychologia</em>, <em>83</em>, 161–169.
+      <span class="cite-count">GS ≈ 300</span></li>
+    <li>Stevenson, R. A., Wallace, M. T., &amp; Woynaroski, T. G. (2019). Multisensory integration and autism spectrum disorder. <em>Autism Research</em>, 12(8), 1148–1160.
+      <span class="cite-count">GS ≈ 200</span></li>
+  </ol>
+</div>
+
+<a class="return-link" href="ka_theories.html">← Back to Theories index</a>
+</main>
+</body>
+</html>

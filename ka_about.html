@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Knowledge Atlas</title>
+<meta name="description" content="About the Knowledge Atlas: what it is, who it serves, how it evaluates evidence, and how to contribute.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+     background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:880px;margin:28px auto 80px;padding:0 26px;
+              display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:flex-start}
+@media (max-width:820px){main.ka-outer{grid-template-columns:1fr}}
+
+.subnav{position:sticky;top:74px;align-self:start;font-size:.86rem}
+.subnav-label{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+              color:#8A9A96;font-weight:700;margin-bottom:8px}
+.subnav a{display:block;padding:6px 10px;color:#2A7868;text-decoration:none;
+          border-left:2px solid transparent;margin-bottom:2px}
+.subnav a:hover{background:#F9F5EE}
+.subnav a.active{border-left-color:#E8872A;color:#1C3D3A;font-weight:600}
+
+article h1{font-family:Georgia,serif;font-size:2.0rem;color:#1C3D3A;
+           margin-bottom:6px}
+article .lede{color:#6B6B6B;font-size:1.0rem;margin-bottom:28px;line-height:1.55}
+
+section{margin-bottom:32px;scroll-margin-top:80px}
+section h2{font-family:Georgia,serif;font-size:1.3rem;color:#1C3D3A;
+           font-weight:700;margin-bottom:10px;padding-bottom:6px;
+           border-bottom:1.5px solid #E0D8CC}
+section p{margin-bottom:12px}
+section a{color:#2A7868;font-weight:600;text-decoration:none}
+section a:hover{text-decoration:underline}
+
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px}
+.person{background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;padding:14px 16px}
+.person h3{font-family:Georgia,serif;font-size:1.0rem;color:#1C3D3A;margin-bottom:2px}
+.person .role{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+              color:#E8872A;font-weight:700;margin-bottom:8px}
+.person p{font-size:.88rem;color:#2C2C2C;margin:0}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:14px 0}
+.stat{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:10px;padding:12px 14px}
+.stat .n{font-family:Georgia,serif;font-size:1.5rem;color:#1C3D3A;font-weight:700;line-height:1.1}
+.stat .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+             color:#8A9A96;font-weight:700}
+
+.cta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.cta-card{display:block;background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;
+          padding:16px 18px;text-decoration:none;color:#1C3D3A;transition:all .15s}
+.cta-card:hover{border-color:#2A7868;transform:translateY(-2px);
+                box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.cta-card h3{font-family:Georgia,serif;font-size:1.0rem;margin-bottom:4px}
+.cta-card p{font-size:.82rem;color:#6B6B6B;margin:0}
+</style>
+</head>
+
+<body data-ka-regime="global"
+      data-ka-active="about"
+      data-ka-crumbs='[["Home","ka_home.html"],["About",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<aside class="subnav">
+  <div class="subnav-label">On this page</div>
+  <a href="#what" class="active">What it is</a>
+  <a href="#who">Who it serves</a>
+  <a href="#epistemics">Epistemics</a>
+  <a href="#how">How it's built</a>
+  <a href="#people">People</a>
+  <a href="#get-involved">Get involved</a>
+</aside>
+
+<article>
+
+  <h1>About the Knowledge Atlas</h1>
+  <p class="lede">A working research atlas joining cognitive neuroscience
+    to environmental and architectural design. Maintained by Prof. David
+    Kirsh and the COGS 160 Spring 2026 collaborators at UC San Diego.</p>
+
+  <section id="what">
+    <h2>What the Atlas is</h2>
+    <p>The Knowledge Atlas indexes peer-reviewed work in
+       environmental-cognition research, organises it under eleven
+       foundational neuroscience frameworks, and maps each finding to
+       testable architectural implications. It is a living document,
+       regenerated on a weekly cycle, that is as honest about what the
+       field does <em>not</em> yet know as it is about what it does.</p>
+    <p>The Atlas covers three intertwined sub-fields:
+       <em>cognitive neuroscience</em> — how perception, attention,
+       affect, and memory actually work in the brain;
+       <em>environmental psychology</em> — how built and natural
+       environments shape human behaviour and well-being; and
+       <em>evidence-grounded design</em> — how to translate both into
+       practice that can be measured and falsified rather than merely
+       asserted.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="n">906</div><div class="label">Articles</div></div>
+      <div class="stat"><div class="n">71</div><div class="label">Neural mechanisms</div></div>
+      <div class="stat"><div class="n">11</div><div class="label">T1 frameworks</div></div>
+      <div class="stat"><div class="n">13</div><div class="label">T1.5 theories</div></div>
+    </div>
+  </section>
+
+  <section id="who">
+    <h2>Who the Atlas serves</h2>
+    <p>Four audiences share the site, each with a slightly different
+       navigation path.
+       <a href="ka_topics.html">Researchers</a> use it to scan topics,
+       evidence, and gaps for scholarly work.
+       <a href="ka_articles.html">Practitioners</a> — architects,
+       landscape designers, building scientists — use it to find
+       evidence that bears on a specific design decision.
+       <a href="ka_contribute.html">Contributors</a> add articles,
+       tag images, and help run the pipeline that keeps the corpus
+       current.
+       <a href="160sp/ka_schedule.html">COGS 160 students</a> use it
+       as the working surface of their quarter-long course in the
+       Cognitive Science department at UCSD.</p>
+  </section>
+
+  <section id="epistemics">
+    <h2>Epistemics: how evidence is evaluated</h2>
+    <p>Every article enters through a Quinean coherentist evaluation.
+       Claims are tagged with warrant type (observation, inference,
+       composition, etc.), a confidence score, and a contested-status
+       flag. The scoring procedure — developed jointly with the
+       Article Eater project — combines Spohn-style ranking theory,
+       Bayesian updating, and explicit contestability tracking.
+       Evidence is not filtered to what the Atlas expects or prefers
+       &mdash; it is displayed with its uncertainty intact, so readers
+       can form their own view of how far any particular claim
+       generalises.</p>
+    <p>Two principles are load-bearing. First, <em>neural plausibility
+       is not evidence</em>: a mechanistically elegant story about
+       brain circuitry does not, by itself, make a behavioural claim
+       more likely to be true. Second, <em>replication is weighted
+       heavily</em>: a single striking finding is recorded but does not
+       advance a topic's confidence rating until independent
+       replication lands. These rules make the Atlas slower than a
+       popular-science summary but better calibrated to the actual
+       scientific state of play.</p>
+  </section>
+
+  <section id="how">
+    <h2>How the Atlas is built</h2>
+    <p>The Atlas is assembled by a collaboration between human
+       maintainers, an expert panel of neuroscientists and architects,
+       and a pipeline of AI workers. Articles are proposed by students
+       and researchers, ingested by the Article Eater pipeline, graded
+       against the Quinean coherentist procedure, and then rendered as
+       per-article PNU (Plausible Neuroscience Underpinning) pages.
+       Mechanism-profile documents, framework deep-dives, and topic
+       pages are generated on the same pipeline but flagged as
+       LLM-drafts pending panel review before they carry
+       authoritative weight.</p>
+    <p>The site is static HTML served from a canonical repository. A
+       weekly scheduled task refreshes its machine-readable manifests;
+       on-demand refresh from the maintainer's machine is available
+       through the admin console. Evidence and gaps are folded into
+       each <a href="ka_topics.html">topic page</a> as sub-tabs,
+       keeping navigation flat.</p>
+  </section>
+
+  <section id="people">
+    <h2>People</h2>
+    <div class="people">
+      <div class="person">
+        <h3>David Kirsh</h3>
+        <div class="role">Principal investigator</div>
+        <p>Professor, Cognitive Science, UC San Diego. Formerly
+           research faculty at the MIT AI Lab.</p>
+      </div>
+      <div class="person">
+        <h3>COGS 160 collaborators</h3>
+        <div class="role">Spring 2026 cohort</div>
+        <p>Fifteen enrolled students distributed across four tracks:
+           Image Tagging, Article Finder, VR, and UX Research.</p>
+      </div>
+      <div class="person">
+        <h3>Expert panel</h3>
+        <div class="role">Review layer</div>
+        <p>Neuroscientists and architects who review framework
+           deep-dives and mechanism-profile pages before they become
+           canonical on the site.</p>
+      </div>
+      <div class="person">
+        <h3>AI workers</h3>
+        <div class="role">Pipeline layer</div>
+        <p>Claude Code, Agentic Gemini, and Codex instances run the
+           Article Eater pipeline under human supervision, with every
+           mutation logged to the audit trail.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="get-involved">
+    <h2>Get involved</h2>
+    <div class="cta-grid">
+      <a class="cta-card" href="ka_contribute.html">
+        <h3>Propose an article →</h3>
+        <p>Upload a PDF, paste a citation, or add a DOI. Takes about
+           two minutes.</p>
+      </a>
+      <a class="cta-card" href="ka_theories.html">
+        <h3>Browse the theories →</h3>
+        <p>Eleven foundational frameworks and thirteen domain
+           application theories.</p>
+      </a>
+      <a class="cta-card" href="mailto:cogs160@ucsd.edu">
+        <h3>Email the project →</h3>
+        <p>For collaboration, press, or corrections.</p>
+      </a>
+    </div>
+  </section>
+
+</article>
+
+</main>
+
+<script>
+// Sub-nav active state on scroll
+(function(){
+  const links = document.querySelectorAll('.subnav a[href^="#"]');
+  const sections = Array.from(links).map(a =>
+    document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+  function onScroll(){
+    const y = window.scrollY + 120;
+    let active = sections[0] && sections[0].id;
+    for (const s of sections) if (s.offsetTop <= y) active = s.id;
+    links.forEach(a => a.classList.toggle('active',
+      a.getAttribute('href') === '#' + active));
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

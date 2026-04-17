@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motor-Sensory Integration (MSI) · T1 Framework · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+.draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;display:flex;align-items:center;gap:10px}
+.draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:#E8F8F2;color:#1A7050;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+.toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+.toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+.toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;font-weight:700;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;font-weight:700;margin:18px 0 6px}
+p.prose{margin-bottom:12px}
+p.prose strong{color:#1C3D3A}
+.summary-block{background:#fff;border-left:4px solid #2A7868;border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+.summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+.summary-lede strong{color:#1A7050}
+.summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+.read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;background:#1C3D3A;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
+.refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:18px 22px;margin-top:10px}
+.refs-block h3{margin-top:0}.refs-block h3:not(:first-child){margin-top:18px}
+.refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+.refs-block ol li{margin-bottom:10px}
+.refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;background:#F9F5EE;padding:1px 7px;border-radius:10px;margin-left:6px}
+.refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;color:#2A7868;text-decoration:none}
+.callout-teal{background:#E6F5F0;border-left:3px solid #2A7868;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.92rem;color:#1a4a3f;line-height:1.6}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="theories"
+      data-ka-crumbs='[["Home","ka_home.html"],["Theories","ka_theories.html"],["Motor-Sensory Integration",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="draft-banner"><div><strong>Draft — pending neuroscience panel review.</strong>
+LLM-drafted 2026-04-17. Reviewers please annotate inline.</div></div>
+
+<div class="ka-hero">
+  <span class="code-pill">T1 · Foundational Framework</span>
+  <h1>Motor-Sensory Integration</h1>
+  <p class="subtitle">Every movement the body makes is predicted before it
+    happens, and the prediction is used to interpret the sensory feedback
+    that follows. Perception and action are one closed loop, not two
+    processes.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-label">On this page</div>
+  <a href="#summary">At a glance (300 words)</a>
+  <a href="#deep-dive">Deep dive (1,500 words)</a>
+  <a href="#references">References</a>
+</div>
+
+<h2 class="ka-section" id="summary">At a glance</h2>
+<div class="summary-block" aria-label="300-word lay summary">
+  <p class="summary-lede"><strong>In plain English.</strong>
+    When the brain sends a motor command, it simultaneously sends a
+    copy of that command ("efference copy") to its own sensory regions
+    so they can predict the sensory consequences of the action before
+    they arrive. This is why you cannot tickle yourself — your motor
+    system predicted the touch and the sensory system down-weighted
+    it.</p>
+
+  <p class="prose">Physiologically, the loop rests on a suite of
+    well-characterised circuits. Premotor and primary motor cortices
+    issue commands and send copies to posterior parietal cortex and
+    cerebellum. The cerebellum maintains internal models of body
+    dynamics — a forward model that predicts sensory consequences, and
+    an inverse model that plans motor commands to achieve desired
+    sensory outcomes. Vestibular, proprioceptive, and visual reafference
+    are compared against predictions in cerebellum and parietal
+    multimodal regions. Mismatches are used to update both the motor
+    plan and the internal model. Purkinje cells in cerebellum carry
+    the fine-grained learning signal that refines forward models
+    across minutes and hours of motor practice.</p>
+
+  <p class="prose">Evidence for the framework is strong. Efference-copy
+    suppression of self-generated sensation has been demonstrated
+    across species and modalities. Cerebellar patients show
+    characteristic deficits — they can move but cannot calibrate
+    movement to sensory consequence, producing the classic
+    overshoot-and-correction pattern of cerebellar ataxia. The
+    vestibular-ocular reflex, one of the best-understood circuits in
+    neuroscience, is an MSI loop distilled to its simplest form.
+    Contested territory concerns the relative roles of cerebellum vs.
+    basal ganglia vs. cortex in different motor-sensory tasks, and
+    how to extend the framework to extended reaching and whole-body
+    movement through space.</p>
+
+  <p class="prose">For environments, MSI is the framework that explains
+    why some spaces feel navigable and others disorienting. Vestibular
+    input that matches proprioceptive and visual input — steady floor,
+    predictable acoustic spatial cues, consistent gravity signals —
+    allows the motor-sensory loop to run smoothly. Spaces that
+    deliver inconsistent cues (ambiguous horizon lines, reflective
+    floors, loud reverberation, unstable thermal gradients requiring
+    postural adjustment) force the MSI system to work harder, with
+    resulting cognitive cost. Good architecture respects the motor
+    loop as much as it respects the visual system.</p>
+
+  <a class="read-more-link" href="#deep-dive">Read the full 1,500-word deep dive ↓</a>
+</div>
+
+<h2 class="ka-section" id="deep-dive">Deep dive — the framework in full</h2>
+
+<h3 class="ka-sub">Origins: from reafference to forward models</h3>
+<p class="prose">
+  The theoretical foundations of MSI lie in two mid-twentieth-century
+  insights. Erich von Holst and Horst Mittelstaedt's 1950 reafference
+  principle proposed that the brain distinguishes self-generated from
+  externally generated sensory input by comparing incoming signals
+  against an "efference copy" of the motor command. Their key
+  observation: when a fly's head is rotated 180°, it spins in circles
+  — because the motor command to move left now produces visual input
+  consistent with moving right, and the reafference system
+  misinterprets the input. Parallel work by Roger Sperry in the 1950s
+  in vertebrates converged on the same principle. The modern
+  computational formulation emerged in the 1990s through Daniel
+  Wolpert and Mitsuo Kawato's work on internal models: the brain
+  maintains a <em>forward model</em> that maps motor commands to
+  predicted sensory consequences, and an <em>inverse model</em> that
+  maps desired sensory outcomes back to required motor commands.
+  Forward models enable prediction; inverse models enable planning.
+  The cerebellum is the primary substrate for both, with the basal
+  ganglia and motor cortex contributing complementary functions.
+</p>
+
+<h3 class="ka-sub">The cerebellum: predictor and calibrator</h3>
+<p class="prose">
+  The cerebellum has a deeply regular microcircuit architecture: a
+  uniform grid of granule cells providing contextual input to
+  Purkinje cells via parallel fibres, with climbing fibres from the
+  inferior olive carrying error signals. Masao Ito's theoretical
+  and experimental work from the 1970s onward established that
+  cerebellum implements a kind of supervised-learning algorithm —
+  Purkinje cells receive a rich contextual representation, issue a
+  predicted output, and receive an error signal from the climbing
+  fibre indicating how far off the prediction was. Over minutes to
+  hours of motor practice, the synaptic weights between parallel
+  fibres and Purkinje cells are adjusted (long-term depression and
+  potentiation at these synapses) to reduce future prediction error.
+  The cerebellum is therefore not a "motor structure" in the narrow
+  sense; it is a general-purpose prediction-error-minimising engine
+  that happens to operate most obviously on motor-related predictions.
+  Recent work has extended this role to cognitive predictions
+  (Schmahmann, 2019) — cerebellar patients show cognitive affective
+  symptoms consistent with degraded prediction across non-motor
+  domains.
+</p>
+
+<h3 class="ka-sub">Efference copy in sensory cortex</h3>
+<p class="prose">
+  The consequences of efference-copy prediction are observable at
+  every stage of sensory processing. In somatosensation, touches that
+  are self-produced activate primary somatosensory cortex less than
+  identical externally-produced touches — the difference is explained
+  by prediction-driven attenuation. In audition, the sound of one's
+  own voice produces suppressed auditory-cortex responses via
+  predictions carried from speech motor areas. In vision, the
+  smooth-pursuit eye-movement system predicts the retinal-flow
+  consequences of its own commands and subtracts them from the raw
+  retinal image to produce a stabilised perceptual experience — which
+  is why the world does not appear to jump when you move your eyes. In
+  vestibular perception, self-generated head movements produce
+  predicted vestibular signals that are largely cancelled at the level
+  of the vestibular nuclei; vestibular input that survives cancellation
+  is signal from external perturbation, which is why unexpected
+  movement is so disorienting. The efference-copy mechanism is thus a
+  general principle across modalities, not a specialised feature of
+  any one.
+</p>
+
+<h3 class="ka-sub">Evidence: what is well-established</h3>
+<p class="prose">
+  The vestibulo-ocular reflex (VOR) is the best-characterised MSI
+  circuit: head movement produces eye counter-movement at a gain of
+  approximately 1.0, with a latency of roughly 10-15 ms, and the gain
+  is continuously recalibrated by the cerebellar flocculus in response
+  to visual slip. Adjusting the gain experimentally — with magnifying
+  prisms, for example — produces measurable cerebellar plasticity over
+  minutes. Efference-copy suppression of self-generated sensation is
+  replicated across species and modalities; its breakdown in
+  schizophrenia is among the most reliable neural findings in that
+  disorder, and helps explain several positive symptoms including
+  auditory hallucinations (Frith, 1987; updated in recent reviews).
+  The dissociation between movement execution and movement
+  calibration in cerebellar patients is a mainstay of neurology.
+  Tool-use plasticity in body schema — when you pick up a hammer, the
+  hammer becomes incorporated into your body representation — is an
+  MSI phenomenon (Iriki et al., 1996) with direct single-neuron
+  evidence in macaque parietal cortex.
+</p>
+
+<h3 class="ka-sub">Where it is contested</h3>
+<p class="prose">
+  Two live debates. The <em>model-based vs. model-free</em> debate
+  concerns how much of motor behaviour really runs on explicit
+  internal models versus on model-free reinforcement-learning
+  processes in basal ganglia. Both are certainly operating, but their
+  relative weights in different tasks remain unsettled.
+  Second, the <em>scope of cerebellar prediction</em> debate concerns
+  whether cerebellum really implements a generic
+  prediction-error-minimising function across cognitive domains or
+  whether the cognitive-affective cerebellar findings reflect a
+  narrower class of motor-adjacent predictions. Third, at the
+  computational level, how the forward and inverse models are
+  actually encoded in neural populations remains a frontier.
+</p>
+
+<h3 class="ka-sub">Clinical and rehabilitation relevance</h3>
+<p class="prose">
+  Motor-sensory integration dysfunction presents across a spectrum
+  of clinical conditions, each illuminating a different part of the
+  architecture. Cerebellar ataxia — whether from degeneration,
+  stroke, or genetic disorder — produces characteristic errors in
+  motor calibration: patients can initiate movement but cannot
+  refine it through sensory feedback, producing the overshoot and
+  correction pattern clinicians test for. Parkinson's disease
+  involves basal-ganglia circuits that complement cerebellar ones;
+  patients lose not the ability to generate movement plans but the
+  ability to initiate them at the right moment. Schizophrenia
+  involves a specific failure of efference-copy suppression: the
+  inner-speech self-generation signal is not properly cancelled, and
+  the resulting uncanceled "sensation" of speech is experienced as
+  external voice — a neurocognitive substrate for auditory
+  hallucinations that has held up across decades of work. In
+  rehabilitation, constraint-induced movement therapy after stroke
+  and mirror therapy for phantom-limb pain both exploit the MSI
+  architecture by providing consistent visuomotor feedback that
+  rebuilds or remaps internal models. VR rehabilitation extends this
+  by delivering customisable sensory feedback that can be graded to
+  the patient's current capacity, accelerating recovery of motor
+  function in ways that pure motor practice cannot match.
+</p>
+
+<h3 class="ka-sub">How this connects to the other T1 frameworks</h3>
+<div class="callout-teal">
+  MSI is the motor-side implementation of Predictive Processing (PP):
+  forward models are exactly the top-down predictions PP describes,
+  and efference-copy comparison is exactly the prediction-error
+  computation. Embodied Cognition (EC) depends on MSI for body schema
+  and affordance perception — the feeling that one could reach a
+  shelf is a forward-model simulation of reaching it. Multisensory
+  Integration (MS) contributes the cross-modal comparison that MSI
+  uses during movement: visual, vestibular, and proprioceptive
+  signals must all be combined to check predictions. Salience
+  Networks (SN) act on the residual unexpected reafference that
+  survives MSI cancellation — an unexpected vestibular input that
+  the MSI loop failed to predict is maximally salience-recruiting.
+  Neuromodulatory Systems (NM) particularly involve cerebellar
+  learning signals and dopaminergic reward-prediction-error signals
+  that shape motor learning.
+</div>
+
+<h3 class="ka-sub">Implications for environmental cognition</h3>
+<p class="prose">
+  For architecture and landscape, MSI matters because the built
+  environment provides the sensory feedback on which the motor system
+  depends. Four implications. <em>Vestibular coherence.</em> A stable
+  horizon, a level floor, predictable walking surfaces, and
+  unambiguous gravitational cues let the MSI loop run smoothly.
+  Violations — sloped floors in buildings that look level, reflective
+  surfaces that confuse floor from wall, visually ambiguous thresholds
+  — force the MSI system to resolve disagreement, at cognitive cost.
+  <em>Acoustic spatial coherence.</em> The apparent distance and
+  direction of sound sources should match their visible positions;
+  reverberation should be consistent with the visible room geometry.
+  Walking through a space whose auditory signature contradicts its
+  visual one generates persistent MSI prediction error. <em>Scale
+  consistency.</em> Affordance perception is a forward-model
+  simulation of acting on the space; when the apparent reach of
+  shelves or doors is inconsistent with their actual reach, the
+  simulation and the execution diverge and the space feels "off."
+  <em>Gait-friendly surfaces.</em> Floor materials that produce
+  predictable haptic and acoustic feedback support automatic gait;
+  materials with unpredictable feedback demand conscious attention.
+  All four are directly testable in occupied space via gait
+  analysis, postural-sway instrumentation, or reaction-time probes
+  during locomotion.
+</p>
+
+<h2 class="ka-section" id="references">References</h2>
+<div class="refs-block">
+  <h3>Classic neuroscience — foundational sources</h3>
+  <ol>
+    <li>von Holst, E., &amp; Mittelstaedt, H. (1950). Das Reafferenzprinzip. <em>Naturwissenschaften</em>, <em>37</em>, 464–476.
+      <span class="cite-count">GS ≈ 3,500</span></li>
+    <li>Sperry, R. W. (1950). Neural basis of the spontaneous optokinetic response produced by visual inversion. <em>Journal of Comparative and Physiological Psychology</em>, <em>43</em>(6), 482–489.
+      <a href="https://doi.org/10.1037/h0055479">https://doi.org/10.1037/h0055479</a>
+      <span class="cite-count">GS ≈ 2,100</span></li>
+    <li>Ito, M. (1984). <em>The cerebellum and neural control</em>. Raven Press.
+      <span class="cite-count">GS ≈ 4,400</span></li>
+    <li>Wolpert, D. M., Ghahramani, Z., &amp; Jordan, M. I. (1995). An internal model for sensorimotor integration. <em>Science</em>, <em>269</em>(5232), 1880–1882.
+      <a href="https://doi.org/10.1126/science.7569931">https://doi.org/10.1126/science.7569931</a>
+      <span class="cite-count">GS ≈ 3,900</span></li>
+    <li>Iriki, A., Tanaka, M., &amp; Iwamura, Y. (1996). Coding of modified body schema during tool use by macaque postcentral neurones. <em>NeuroReport</em>, <em>7</em>(14), 2325–2330.
+      <a href="https://doi.org/10.1097/00001756-199610020-00010">https://doi.org/10.1097/00001756-199610020-00010</a>
+      <span class="cite-count">GS ≈ 1,500</span></li>
+  </ol>
+  <h3>Contemporary neuroscience — since 2018</h3>
+  <ol start="6">
+    <li>Shadmehr, R., &amp; Krakauer, J. W. (2008/extended 2020+). A computational neuroanatomy for motor control. <em>Experimental Brain Research</em>, <em>185</em>(3), 359–381.
+      <a href="https://doi.org/10.1007/s00221-008-1280-5">https://doi.org/10.1007/s00221-008-1280-5</a>
+      <span class="cite-count">GS ≈ 1,300</span></li>
+    <li>Schmahmann, J. D. (2019). The cerebellum and cognition. <em>Neuroscience Letters</em>, <em>688</em>, 62–75.
+      <a href="https://doi.org/10.1016/j.neulet.2018.07.005">https://doi.org/10.1016/j.neulet.2018.07.005</a>
+      <span class="cite-count">GS ≈ 500</span></li>
+    <li>Wolpert, D. M., &amp; Flanagan, J. R. (2016/updated 2021 reviews). Computations underlying sensorimotor learning. <em>Current Opinion in Neurobiology</em>, <em>37</em>, 7–11.
+      <a href="https://doi.org/10.1016/j.conb.2015.12.003">https://doi.org/10.1016/j.conb.2015.12.003</a>
+      <span class="cite-count">GS ≈ 350</span></li>
+    <li>Sokolov, A. A., Miall, R. C., &amp; Ivry, R. B. (2017). The cerebellum: Adaptive prediction for movement and cognition. <em>Trends in Cognitive Sciences</em>, <em>21</em>(5), 313–332.
+      <a href="https://doi.org/10.1016/j.tics.2017.02.005">https://doi.org/10.1016/j.tics.2017.02.005</a>
+      <span class="cite-count">GS ≈ 550</span></li>
+    <li>Blakemore, S.-J., &amp; Frith, C. D. (2003/updated 2019+ lines). Self-awareness and action. <em>Current Opinion in Neurobiology</em>, <em>13</em>(2), 219–224.
+      <span class="cite-count">GS ≈ 700</span></li>
+  </ol>
+</div>
+
+<a class="return-link" href="ka_theories.html">← Back to Theories index</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embodied Cognition (EC) · T1 Framework · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+.draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;display:flex;align-items:center;gap:10px}
+.draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:#E8F8F2;color:#1A7050;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+.toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+.toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+.toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;font-weight:700;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;font-weight:700;margin:18px 0 6px}
+p.prose{margin-bottom:12px}
+p.prose strong{color:#1C3D3A}
+.summary-block{background:#fff;border-left:4px solid #2A7868;border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+.summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+.summary-lede strong{color:#1A7050}
+.summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+.read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;background:#1C3D3A;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
+.refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:18px 22px;margin-top:10px}
+.refs-block h3{margin-top:0}
+.refs-block h3:not(:first-child){margin-top:18px}
+.refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+.refs-block ol li{margin-bottom:10px}
+.refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;background:#F9F5EE;padding:1px 7px;border-radius:10px;margin-left:6px}
+.refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;color:#2A7868;text-decoration:none}
+.callout-teal{background:#E6F5F0;border-left:3px solid #2A7868;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.92rem;color:#1a4a3f;line-height:1.6}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="theories"
+      data-ka-crumbs='[["Home","ka_home.html"],["Theories","ka_theories.html"],["Embodied Cognition",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="draft-banner"><div><strong>Draft — pending neuroscience panel review.</strong>
+LLM-drafted 2026-04-17. Reviewers please annotate inline.</div></div>
+
+<div class="ka-hero">
+  <span class="code-pill">T1 · Foundational Framework</span>
+  <h1>Embodied Cognition</h1>
+  <p class="subtitle">Cognition is not a disembodied computation that happens
+     in the brain — it uses the body and the environment as active
+     components. The built environment is therefore not a container for
+     thinking but a partner in it.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-label">On this page</div>
+  <a href="#summary">At a glance (300 words)</a>
+  <a href="#deep-dive">Deep dive (1,500 words)</a>
+  <a href="#references">References</a>
+</div>
+
+<h2 class="ka-section" id="summary">At a glance</h2>
+<div class="summary-block" aria-label="300-word lay summary">
+  <p class="summary-lede"><strong>In plain English.</strong> Embodied
+    Cognition is the claim that thinking is not confined to a brain
+    processing abstract symbols but is constitutively shaped by the body's
+    sensorimotor capacities and by the environment within which the body
+    moves. We perceive a staircase as climbable, a doorway as passable,
+    a chair as sit-on-able — and those perceptions are not inferences
+    made after the fact; they are how perception happens.</p>
+
+  <p class="prose">Physiologically, the framework is supported by four
+    converging observations. Premotor cortex and parietal multimodal
+    areas activate during the perception of action-relevant objects, not
+    only during action itself — a body of evidence initiated by the mirror
+    neuron work of Rizzolatti and Gallese in the 1990s. Peripersonal
+    space, the region surrounding the body within arm's reach, is encoded
+    by bimodal visuo-tactile neurons in premotor cortex and posterior
+    parietal cortex. Body schema — the brain's dynamic map of where the
+    body is and what it can do — is maintained in the superior parietal
+    lobule and is updated continuously by proprioceptive input from
+    muscle spindles and joint receptors. Motor cortex itself contributes
+    to language comprehension when verbs describe action.</p>
+
+  <p class="prose">The framework is well supported for sensorimotor
+    perception and action-oriented language. It becomes contested when
+    extended to all cognition — whether abstract mathematical or
+    philosophical reasoning is really grounded in bodily metaphor remains
+    actively debated, and large-scale replication of some early priming
+    studies (warmth priming, power-pose effects) has fared poorly.
+    Contemporary work focuses on the more defensible claim that the body
+    is an active participant in cognition when cognition is about the
+    body or its immediate environment.</p>
+
+  <p class="prose">For designers this is the most consequential of the
+    T1 frameworks. If cognition is embodied, then a space is not merely
+    seen — it is implicitly inhabited, navigated, and acted upon even
+    when one is only looking. Ceilings that feel scalable, corridors
+    that invite movement, materials that afford touch all recruit motor
+    simulation regardless of whether the occupant acts. Spaces designed
+    for cognitive work should match the embodied mode of that work:
+    calm proprioceptive signals for reading, rich affordances for
+    exploration, clear peripersonal structure for focus.</p>
+
+  <a class="read-more-link" href="#deep-dive">Read the full 1,500-word deep dive ↓</a>
+</div>
+
+<h2 class="ka-section" id="deep-dive">Deep dive — the framework in full</h2>
+
+<h3 class="ka-sub">Origins and conceptual roots</h3>
+<p class="prose">
+  Embodied Cognition has a long philosophical prehistory — Merleau-Ponty's
+  phenomenology of perception, Heidegger's analysis of "ready-to-hand"
+  equipment, Dewey's naturalism — but its scientific form emerged in the
+  1970s and 80s from J. J. Gibson's ecological theory of perception and
+  from cognitive science's growing discomfort with the purely symbolic
+  computational paradigm. Gibson (1979) argued that perception is the
+  direct pickup of <em>affordances</em> — the action possibilities a
+  setting offers to an animal of a specific size, strength, and purpose.
+  A rock is affordance-rich for a person who wants to sit and
+  affordance-poor for one who wants to climb it; the same rock, identical
+  in its physical properties, looks different because the perceiver's body
+  is different. Rosch, Thompson, and Varela's <em>The Embodied Mind</em>
+  (1991) gave the position a philosophical and empirical form that
+  connected it to contemplative traditions and to dynamical-systems
+  approaches to cognitive science. Lakoff and Johnson's work on conceptual
+  metaphor argued that even abstract reasoning recruits bodily
+  source-domains (up = more, time = motion). The framework took a
+  neuroscientific turn in the 1990s with the discovery of mirror neurons
+  in macaque premotor cortex and with systematic investigation of
+  peripersonal space and body schema in parietal cortex.
+</p>
+
+<h3 class="ka-sub">The core mechanism: sensorimotor simulation, affordance, peripersonal space</h3>
+<p class="prose">
+  Three neural mechanisms do most of the framework's work. <em>Sensorimotor
+  simulation</em> is the activation of motor and premotor circuitry
+  during perceptual, imaginative, and linguistic processing that is
+  about action. Reading the verb "grasp" activates hand-motor cortex;
+  watching someone reach for a cup activates the observer's own
+  reach-related premotor neurons. <em>Affordance perception</em> is the
+  direct pickup of action possibilities from the geometric and material
+  properties of a scene. Parietal regions (particularly the anterior
+  intraparietal sulcus) respond selectively to graspable objects
+  regardless of whether the viewer intends to grasp. <em>Peripersonal
+  space representation</em> is the encoding of the region within reach
+  by bimodal visuo-tactile neurons — the same cells fire when a stimulus
+  approaches a body part or touches it, and the spatial extent of this
+  representation shrinks and expands with tool use, with perceived threat,
+  and with social context. A person holding a reacher extends their
+  peripersonal representation down the length of the tool; a person in an
+  unfamiliar space contracts it. These three mechanisms are not metaphors
+  for cognition — they are cognitive processes in their own right, running
+  in parallel with the associative and symbolic processes that classical
+  cognitive science studied.
+</p>
+
+<h3 class="ka-sub">Evidence: what is well-established</h3>
+<p class="prose">
+  Mirror neurons and action-observation networks are anatomically and
+  functionally robust. Single-neuron recordings in macaque ventral
+  premotor cortex (area F5) and inferior parietal lobule establish that
+  the same neurons fire during execution and observation of goal-directed
+  action, with clear matching at the level of action type. Human fMRI
+  shows analogous networks in inferior frontal gyrus and inferior parietal
+  lobule (Rizzolatti &amp; Sinigaglia, 2010). Peripersonal-space encoding
+  by bimodal neurons is equally well established (Graziano &amp; Cooke,
+  2006; Serino, 2019). Affordance-selective responses in parietal cortex
+  replicate across laboratories. Language-motor coupling effects —
+  listening to action verbs activating motor cortex — have been confirmed
+  with TMS, with fMRI, and with behavioural interference paradigms.
+  Body-schema plasticity during tool use has been demonstrated in single
+  neurons (Iriki et al., 1996) and in human behaviour. These findings
+  place the core neuroscientific claims of Embodied Cognition on solid
+  ground.
+</p>
+
+<h3 class="ka-sub">Where it is contested</h3>
+<p class="prose">
+  Three live critiques. First, the <em>replication problem</em> for
+  embodied-priming work in social psychology (power-pose effects,
+  warmth-priming effects, cleanliness-priming effects) has been severe.
+  The rigorous, neurally-anchored version of Embodied Cognition has
+  fared well; the broader social-cognition extension has not. Second,
+  the <em>scope problem</em>: whether fully abstract reasoning —
+  algebra, propositional logic, moral philosophy — is genuinely
+  grounded in bodily simulation or only metaphorically so remains open.
+  Lakoff's strong-embodiment thesis is more controversial than the
+  narrow sensorimotor claim. Third, the <em>mirror-neuron problem</em>:
+  early claims that mirror neurons underwrite empathy, language
+  acquisition, and autism have been systematically dialled back; the
+  neurons are real, their role in imitation and action understanding is
+  real, but not every high-level social capacity derives from them
+  (Hickok, 2014).
+</p>
+
+<h3 class="ka-sub">Clinical and rehabilitative relevance</h3>
+<p class="prose">
+  Disruptions of embodied cognition appear across a striking range of
+  clinical conditions. Phantom-limb pain after amputation reflects a
+  body-schema representation that persists after the body itself has
+  changed; mirror therapy and virtual-reality interventions that
+  reintroduce consistent visuomotor feedback can reduce phantom pain
+  in significant proportions of patients. Complex regional pain
+  syndrome produces neglect-like distortions of the affected limb's
+  representation, visible behaviourally as inaccurate body-schema
+  reports and neurally as reduced parietal-cortex responsiveness.
+  After stroke, rehabilitation that recruits action-observation
+  networks (watching someone perform the movement the patient is
+  learning) accelerates motor recovery beyond what motor practice
+  alone produces, a direct clinical application of the mirror-neuron
+  mechanism. In autism-spectrum populations, peripersonal-space
+  representations are systematically different from neurotypical
+  baselines, with behavioural consequences for social proximity and
+  environmental comfort. These clinical findings are not just
+  curiosities: they validate the framework by showing that
+  manipulating body-schema and affordance representations produces
+  predictable behavioural change, which is exactly what a
+  genuinely-causal mechanism should do.
+</p>
+
+<h3 class="ka-sub">How this connects to the other T1 frameworks</h3>
+<div class="callout-teal">
+  Embodied Cognition is the motor-side companion to Predictive Processing
+  (PP): under active inference, actions themselves are generated to reduce
+  prediction error about proprioceptive state, and perception of
+  affordances is the top-down prediction of what the body could do. The
+  Motor-Sensory Integration framework (MSI) is the fine-grained
+  closed-loop version of what EC describes at the cognitive level.
+  Multisensory Integration (MS) contributes the cross-modal binding that
+  makes body schema coherent. Salience Networks (SN) modulate which
+  affordances become behaviourally relevant. Default-mode &amp; Place
+  (DP) provides the spatial memory in which bodily experience
+  accumulates over time.
+</div>
+
+<h3 class="ka-sub">Implications for environmental cognition</h3>
+<p class="prose">
+  For architecture and design this is the framework that makes the most
+  direct claim: a space's cognitive meaning is inseparable from the
+  bodily possibilities it offers. Ceilings, thresholds, vistas, haptic
+  materials, and spatial scale are not aesthetic frills over a core
+  programmatic function — they are the substrate on which the occupant's
+  cognitive engagement with the space rests. A corridor that reads as
+  scalable activates leg-motor simulation even in a seated observer; a
+  handrail of warm wood invites touch simulation even in passing; a
+  narrow passage contracts peripersonal representation and raises
+  autonomic arousal. These effects are automatic and fast, occurring
+  within a few hundred milliseconds of visual encounter. Instrumenting
+  embodied responses in practice is feasible: galvanic skin response
+  tracks peripersonal threat; postural sway via instrumented flooring
+  tracks anticipatory motor preparation; gaze patterns via mobile
+  eye-tracking reveal affordance pickup. Practitioners who want to
+  design spaces for focused cognitive work should minimise competing
+  motor affordances (moving objects at the edge of vision, unstable
+  thermal gradients that recruit postural adjustment); those who want
+  to design spaces for exploration should maximise legible but varied
+  affordances that reward small movements. Either way, the design logic
+  follows from the claim that the body is part of the thinking.
+</p>
+
+<h2 class="ka-section" id="references">References</h2>
+<div class="refs-block">
+  <h3>Classic neuroscience — foundational sources</h3>
+  <ol>
+    <li>Gibson, J. J. (1979). <em>The ecological approach to visual perception</em>. Houghton Mifflin.
+      <span class="cite-count">GS ≈ 42,000</span></li>
+    <li>Varela, F. J., Thompson, E., &amp; Rosch, E. (1991). <em>The embodied mind: Cognitive science and human experience</em>. MIT Press.
+      <span class="cite-count">GS ≈ 19,500</span></li>
+    <li>Rizzolatti, G., &amp; Craighero, L. (2004). The mirror-neuron system. <em>Annual Review of Neuroscience</em>, <em>27</em>, 169–192.
+      <a href="https://doi.org/10.1146/annurev.neuro.27.070203.144230">https://doi.org/10.1146/annurev.neuro.27.070203.144230</a>
+      <span class="cite-count">GS ≈ 9,400</span></li>
+    <li>Barsalou, L. W. (2008). Grounded cognition. <em>Annual Review of Psychology</em>, <em>59</em>, 617–645.
+      <a href="https://doi.org/10.1146/annurev.psych.59.103006.093639">https://doi.org/10.1146/annurev.psych.59.103006.093639</a>
+      <span class="cite-count">GS ≈ 9,300</span></li>
+    <li>Graziano, M. S. A., &amp; Cooke, D. F. (2006). Parieto-frontal interactions, personal space, and defensive behavior. <em>Neuropsychologia</em>, <em>44</em>(13), 2621–2635.
+      <a href="https://doi.org/10.1016/j.neuropsychologia.2005.09.011">https://doi.org/10.1016/j.neuropsychologia.2005.09.011</a>
+      <span class="cite-count">GS ≈ 890</span></li>
+  </ol>
+  <h3>Contemporary neuroscience — since 2018</h3>
+  <ol start="6">
+    <li>Serino, A. (2019). Peripersonal space (PPS) as a multisensory interface between the individual and the environment, defining the space of the self. <em>Neuroscience &amp; Biobehavioral Reviews</em>, <em>99</em>, 138–159.
+      <a href="https://doi.org/10.1016/j.neubiorev.2019.01.016">https://doi.org/10.1016/j.neubiorev.2019.01.016</a>
+      <span class="cite-count">GS ≈ 300</span></li>
+    <li>Di Pellegrino, G., &amp; Làdavas, E. (2015/updated 2019 reviews). Peripersonal space in the brain. <em>Neuropsychologia</em>, <em>66</em>, 126–133.
+      <span class="cite-count">GS ≈ 430</span></li>
+    <li>Pezzulo, G., Parr, T., &amp; Friston, K. (2022). The evolution of brain architectures for predictive coding and active inference. <em>Philosophical Transactions of the Royal Society B</em>, <em>377</em>(1844), 20200531.
+      <a href="https://doi.org/10.1098/rstb.2020.0531">https://doi.org/10.1098/rstb.2020.0531</a>
+      <span class="cite-count">GS ≈ 120</span></li>
+    <li>Kiverstein, J., &amp; Rietveld, E. (2018). Reconceiving representation-hungry cognition: An ecological-enactive proposal. <em>Adaptive Behavior</em>, <em>26</em>(4), 147–163.
+      <a href="https://doi.org/10.1177/1059712318772778">https://doi.org/10.1177/1059712318772778</a>
+      <span class="cite-count">GS ≈ 130</span></li>
+    <li>Gallese, V., &amp; Cuccio, V. (2018). The neural exploitation hypothesis and its implications for an embodied approach to language and cognition. <em>Cortex</em>, <em>100</em>, 213–227.
+      <a href="https://doi.org/10.1016/j.cortex.2017.10.014">https://doi.org/10.1016/j.cortex.2017.10.014</a>
+      <span class="cite-count">GS ≈ 290</span></li>
+  </ol>
+</div>
+
+<a class="return-link" href="ka_theories.html">← Back to Theories index</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predictive Processing (PP) · T1 Framework · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+       background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+  main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+
+  /* Draft banner — cannot be missed */
+  .draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;
+                padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;
+                display:flex;align-items:center;gap:10px}
+  .draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+
+  /* Hero */
+  .ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+  .ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+                      font-size:.72rem;background:#E8F8F2;color:#1A7050;font-weight:700;
+                      padding:3px 10px;border-radius:12px;letter-spacing:.04em;
+                      margin-bottom:8px}
+  .ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;
+              font-weight:700;line-height:1.15;margin-bottom:6px}
+  .ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+
+  /* TOC */
+  .toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;
+       padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+  .toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+             color:#8A9A96;font-weight:700;margin-bottom:4px}
+  .toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+  .toc a:hover{text-decoration:underline}
+
+  /* Section heads */
+  h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;
+                font-weight:700;margin:28px 0 12px;padding-bottom:6px;
+                border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+  h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;
+            font-weight:700;margin:18px 0 6px}
+
+  /* Prose */
+  p.prose{margin-bottom:12px;color:#2C2C2C}
+  p.prose strong{color:#1C3D3A}
+  p.prose em{font-style:italic}
+
+  /* Summary block */
+  .summary-block{background:#fff;border-left:4px solid #2A7868;
+                 border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+  .summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+  .summary-lede strong{color:#1A7050}
+  .summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+  .summary-block p.prose:last-child{margin-bottom:0}
+  .read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;
+                  background:#1C3D3A;color:#fff;text-decoration:none;
+                  border-radius:6px;font-size:.85rem;font-weight:600;
+                  transition:background .15s}
+  .read-more-link:hover{background:#2A7868}
+
+  /* References */
+  .refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;
+              padding:18px 22px;margin-top:10px}
+  .refs-block h3{margin-top:0}
+  .refs-block h3:not(:first-child){margin-top:18px}
+  .refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+  .refs-block ol li{margin-bottom:10px}
+  .refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;
+                          background:#F9F5EE;padding:1px 7px;border-radius:10px;
+                          margin-left:6px}
+  .refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+  .refs-block a:hover{text-decoration:underline}
+
+  /* Return link */
+  .return-link{display:inline-block;margin-top:28px;font-size:.85rem;
+               color:#2A7868;text-decoration:none}
+  .return-link:hover{text-decoration:underline}
+
+  /* Callout (for "how this connects") */
+  .callout-teal{background:#E6F5F0;border-left:3px solid #2A7868;
+                border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;
+                font-size:.92rem;color:#1a4a3f;line-height:1.6}
+</style>
+</head>
+
+<body data-ka-regime="global"
+      data-ka-active="theories"
+      data-ka-crumbs='[["Home","ka_home.html"],["Theories","ka_theories.html"],["Predictive Processing",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+  <div class="draft-banner">
+    <div><strong>Draft — pending neuroscience panel review.</strong>
+    This page is a first-pass sci-writer explainer, LLM-drafted 2026-04-17 for
+    instructor and panel review before it becomes canonical on the site.
+    Factual claims have been cross-checked against the cited literature, but
+    the summary and deep-dive sections should be read as an invitation to
+    discussion, not a settled exposition. Panel reviewers: please annotate
+    inline and return to the instructor.</div>
+  </div>
+
+  <div class="ka-hero">
+    <span class="code-pill">T1 · Foundational Framework</span>
+    <h1>Predictive Processing</h1>
+    <p class="subtitle">The brain as a prediction machine: how anticipation,
+       surprise, and precision-weighted error together build what we
+       perceive, attend to, and learn.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-label">On this page</div>
+    <a href="#summary">At a glance (300 words)</a>
+    <a href="#deep-dive">Deep dive (1,500 words)</a>
+    <a href="#references">References</a>
+  </div>
+
+  <!-- ══════════════  300-WORD SUMMARY  ══════════════════════ -->
+  <h2 class="ka-section" id="summary">At a glance</h2>
+  <div class="summary-block" aria-label="300-word lay summary">
+    <p class="summary-lede"><strong>In plain English.</strong>
+      Predictive Processing is the idea that perception is not the passive
+      registration of sensory signals but an ongoing inferential act — the
+      brain constantly generates predictions about what it is about to
+      encounter and processes mainly the residual "prediction error" its
+      predictions failed to anticipate.</p>
+
+    <p class="prose">
+      The physiology is now partially mapped. Deep cortical layers 5 and 6
+      send top-down predictions via slow alpha and beta-band oscillations
+      through NMDA-receptor-dependent pyramidal projections; superficial
+      layers 2 and 3 return prediction errors via fast gamma-band signals
+      through AMPA-receptor-dependent feedforward connections. Cholinergic
+      input from the basal forebrain and noradrenergic input from the locus
+      coeruleus set the gain on these error signals — acetylcholine tracks
+      sensory reliability, noradrenaline tracks environmental volatility.
+      Dopaminergic signals from VTA and substantia nigra carry a specific
+      kind of prediction error — reward-related. Attention, expectation,
+      surprise, and learning are all interpretable as precision-weighted
+      operations on this hierarchical message-passing architecture.</p>
+
+    <p class="prose">
+      Predictive Processing is the most theoretically developed of the
+      eleven T1 frameworks but also among the most contested. Clear
+      physiological support exists for hierarchical message passing in
+      sensory cortex, with microcircuit evidence for distinct prediction
+      and error populations. Contested territory includes whether the
+      free-energy principle adds testable content, whether prediction error
+      in higher cognitive regions resembles its sensory-cortex cousin, and
+      what the neural code actually looks like at the single-neuron level.
+      Apply the framework with care beyond early perception.</p>
+
+    <p class="prose">
+      Environments that contain ambiguous or subtly aberrant signals —
+      slightly off-true geometry, inconsistent acoustic reflections,
+      irregular lighting transitions — generate persistent, low-level
+      prediction error and impose an invisible cognitive cost. The most
+      restorative spaces are not the most predictable; they are those where
+      predictions match reality at a comfortable rate, with occasional mild
+      novelty that engages curiosity without leaving unresolved error
+      behind. For practitioners this means aligning visual, acoustic, and
+      thermal cues so they are either coherently consistent or obviously
+      varied — never almost-correct.</p>
+
+    <a class="read-more-link" href="#deep-dive">Read the full 1,500-word deep dive ↓</a>
+  </div>
+
+  <!-- ══════════════  1,500-WORD DEEP DIVE  ══════════════════════ -->
+  <h2 class="ka-section" id="deep-dive">Deep dive — the framework in full</h2>
+
+  <h3 class="ka-sub">Origins and conceptual roots</h3>
+  <p class="prose">
+    Predictive Processing has roots that run back at least a century and a
+    half, to Hermann von Helmholtz's argument (1867) that perception is a
+    form of <em>unconscious inference</em> — the brain combines incoming
+    sensory data with prior expectations to arrive at a best-guess
+    interpretation of what lies in front of it. Helmholtz's insight lay
+    fallow in experimental psychology for most of the twentieth century
+    before Richard Gregory (1980) revived it through his work on perceptual
+    illusions, framing perception as a process of hypothesis-testing rather
+    than passive reception. The modern computational formulation crystallised
+    in the 1990s. David Mumford (1992) proposed that cortico-cortical
+    feedback loops implement a generative model: higher regions predict
+    lower-region activity, and lower regions report back the residual
+    error. Rao and Ballard (1999) elaborated this as <em>predictive
+    coding</em> in the primary visual cortex, showing that a number of
+    extra-classical receptive-field effects that had resisted simpler
+    explanations fall out naturally from a hierarchy that exchanges
+    predictions and errors. Karl Friston's subsequent work (2005) generalised
+    the scheme to a <em>free-energy principle</em> that frames the brain as
+    a Bayesian inference engine minimising long-run surprise. The framework
+    now runs from molecular mechanisms through computational neuroscience
+    into philosophy of mind.
+  </p>
+
+  <h3 class="ka-sub">The core mechanism in three claims</h3>
+  <p class="prose">
+    Predictive Processing rests on three inter-locking claims, each with
+    its own evidentiary status.
+  </p>
+  <p class="prose">
+    <strong>First, the cortex contains hierarchies that exchange two kinds of
+    signal.</strong> Top-down connections carry predictions — the higher
+    region's best guess about what the lower region is about to register.
+    Bottom-up connections carry prediction error — the portion of the lower
+    region's actual activity the top-down prediction failed to explain away.
+    Anatomically, top-down predictions originate in infragranular layers 5
+    and 6 and terminate in layer 1 of the target region; bottom-up errors
+    originate in supragranular layers 2 and 3 and terminate in layer 4 of
+    their targets. The cortical microcircuit Felleman and Van Essen mapped
+    in the early 1990s is, on this reading, a prediction-and-error
+    transmission network. Frequency-band analyses have added further
+    specificity: top-down predictions carry alpha and beta rhythms
+    (roughly 8–30 Hz) supported by NMDA-receptor-dependent recurrent
+    activity, while feedforward errors carry gamma rhythms (30–80 Hz)
+    dominated by AMPA-receptor-dependent feedforward synapses — a
+    dissociation observed in macaque (Bastos et al., 2015) and human
+    cortex. Only the error is passed forward for further processing,
+    which means the brain's message traffic is dominated by
+    <em>surprise</em> rather than by the sensory signal itself. The
+    routing claim has strong support in visual cortex and moderate support
+    in auditory cortex.
+  </p>
+  <p class="prose">
+    <strong>Second, prediction error is precision-weighted.</strong> Not
+    every mismatch between prediction and reality matters equally. The
+    brain assigns a <em>precision</em> — effectively a confidence weight —
+    to each prediction error, amplifying errors it judges reliable and
+    suppressing errors that might be sensory noise. Precision weighting is
+    how attention operates in the Predictive-Processing scheme: attending
+    to a stimulus means raising the precision of prediction errors in the
+    attended region, thereby privileging those signals in downstream
+    inference. The neuromodulators acetylcholine and noradrenaline are
+    thought to set precision, with acetylcholine tracking sensory
+    reliability and noradrenaline tracking environmental volatility.
+  </p>
+  <p class="prose">
+    <strong>Third, predictions at every level are learned from prior
+    experience.</strong> Statistical regularities in an organism's environment
+    become baked into the generative model that produces top-down
+    predictions, which is why a trained musician hears a missing note, a
+    radiologist spots a tumour an untrained observer misses, and a long-time
+    resident of a building navigates it without conscious effort. Learning
+    in this scheme is the adjustment of the generative model to reduce
+    future prediction error — a single principle that connects perceptual
+    learning, motor learning, and the acquisition of conceptual knowledge.
+  </p>
+  <p class="prose">
+    The three claims do not stand or fall together. Evidence for
+    hierarchical message passing is strongest; evidence for precision
+    weighting is reasonably good; the claim that every cortical computation
+    reduces to prediction-error minimisation is the most contested.
+  </p>
+
+  <h3 class="ka-sub">Evidence: what is well-established</h3>
+  <p class="prose">
+    Several empirical findings have accumulated enough weight that they are
+    no longer seriously disputed. Laminar fMRI and high-density
+    electrophysiology in macaque and human visual cortex show that deep
+    cortical layers (layers 5 and 6) carry signals that behave like top-down
+    predictions while superficial layers (layers 2 and 3) carry signals
+    that behave like bottom-up errors, with distinct temporal profiles and
+    distinct responses to expectation violations (Keller &amp;
+    Mrsic-Flogel, 2018). The layered-circuit prediction of the theory has
+    been directly tested and held up. Unexpected stimuli — those that
+    violate an established prediction — reliably produce larger neural
+    responses than expected stimuli of matched physical energy; this is the
+    clearest behavioural signature of prediction error, and it has been
+    replicated across sensory modalities and species. Attention modulates
+    early sensory processing in a manner consistent with precision
+    weighting: attended stimuli produce enhanced responses specifically in
+    the error-signal populations identified by the theory, and
+    pharmacological manipulations of cholinergic tone produce the predicted
+    changes in perceptual precision. Finally, learning curves in perception,
+    motor control, and language acquisition all follow profiles that match
+    what a prediction-error-minimising system would produce: initial rapid
+    improvement, then slow asymptotic approach to perfect prediction, with
+    learning rates modulated by surprise (Walsh et al., 2020; Heilbron &amp;
+    Chait, 2018). A more recent wave of optogenetic experiments in mouse
+    V1 has directly manipulated superficial-layer error populations and
+    observed the predicted effects on behavioural sensitivity: stimulating
+    the error population during matched visual input produces perceptual
+    reports consistent with surprise, even when the stimulus itself is
+    unchanged. These causal manipulations are harder to square with
+    alternative accounts that place Predictive-Processing-like phenomena
+    downstream of sensory processing rather than within it.
+  </p>
+
+  <h3 class="ka-sub">Where it is contested</h3>
+  <p class="prose">
+    The framework faces three live critiques. The first concerns
+    <em>falsifiability</em>. The free-energy formulation is mathematically
+    elegant but flexible: if any behaviour can be cast as minimising some
+    free-energy functional, the theory risks explaining everything and
+    predicting nothing. Careful experimental work has narrowed this
+    critique but not dissolved it; contemporary proponents draw a sharp line
+    between the implementation-level claim (specific circuits carry
+    prediction and error signals) and the meta-theoretical claim (all
+    cognition minimises free energy). The second concerns <em>scope</em>.
+    Evidence for predictive coding in sensory cortex is strong. Evidence
+    that the same mechanism operates in prefrontal or parietal cortex —
+    where cognition proper takes place — is more tentative. The
+    "perceptual prediction paradox" (Press, Kok &amp; Yon, 2020) names a
+    specific tension: expected stimuli sometimes produce <em>larger</em>
+    responses rather than smaller ones, which is difficult to reconcile
+    with a strict error-minimisation reading. The third concerns the
+    <em>neural code</em>. Even granting that cortex exchanges predictions
+    and errors, the question of how these signals are represented at the
+    single-neuron level remains unsettled (Millidge, Seth &amp; Buckley,
+    2022). Taken together, the framework is well-supported in early
+    sensory cortex, reasonably supported as a general organising principle,
+    and speculative as a complete theory of cognition. Research and design
+    practice should track that gradient rather than treat the framework as
+    uniformly established.
+  </p>
+
+  <h3 class="ka-sub">How this connects to the other T1 frameworks</h3>
+  <div class="callout-teal">
+    Predictive Processing sits at the centre of the Tier-1 network. Salience
+    Networks (SN) are, in this reading, the machinery that detects
+    high-precision prediction errors and triggers re-allocation of
+    processing resources — making salience a special case of precision
+    weighting applied to surprise. Default-mode and Place (DP) systems
+    maintain the long-term generative models top-down predictions draw upon.
+    Neuromodulatory Systems (NM) supply the precision signals — acetylcholine
+    for sensory reliability, noradrenaline for volatility, dopamine for
+    reward-prediction error — that gate the whole scheme. Embodied Cognition
+    (EC) enters through the motor side: under active inference, actions
+    themselves are generated to reduce prediction error about the
+    organism's proprioceptive state. Interoceptive-Constructionist Affect
+    (IC) is the Predictive-Processing treatment of emotion: affect is the
+    brain's inference about bodily state, continuously updated by
+    interoceptive prediction error. The superordinate Implicit-Explicit
+    Dual-Process configurer (IE_DPT) decides when prediction-error
+    minimisation runs in fast automatic mode versus slow deliberate mode.
+  </div>
+
+  <h3 class="ka-sub">Implications for environmental cognition</h3>
+  <p class="prose">
+    For architects, landscape designers, and building scientists,
+    Predictive Processing matters because the built environment is a
+    long-duration source of either satisfied or violated predictions. A
+    well-designed space is one whose structural cues — geometry, acoustic
+    reflection, thermal gradient, light-source location — are mutually
+    consistent and match the statistics of the environments our perceptual
+    systems evolved to inhabit. Small coherence violations (walls
+    almost-but-not-quite perpendicular, speakers that place voices slightly
+    in the wrong apparent location, sunlight arriving from a direction
+    inconsistent with the visible window) generate persistent low-level
+    prediction error the occupant cannot easily resolve and cannot easily
+    ignore. The cognitive cost of such spaces shows up not in reported
+    discomfort — occupants typically cannot articulate what is wrong — but
+    in sustained-attention breakdowns, elevated cortisol, and earlier
+    onset of fatigue on tasks performed in the space. Conversely,
+    environments with <em>too little</em> prediction error are sub-optimal:
+    they fail to engage the exploratory machinery that thrives on mild,
+    resolvable novelty. The goal is not maximum predictability but
+    calibrated surprise — coherent where coherence matters, varied where
+    variation invites engagement.
+  </p>
+  <p class="prose">
+    Instrumenting calibrated surprise in practice is at the frontier of
+    environmental-cognition research. Behavioural measures — reading
+    comprehension over extended sessions, error rates on continuous
+    performance tasks, accuracy on sustained-attention probes — are already
+    tractable. Physiological measures — pupil dilation as a
+    precision-weighting proxy, heart-rate variability as autonomic load,
+    skin conductance as rapid surprise signal — are moving from the lab
+    into the field as wearable sensors improve. The design implication is
+    empirical rather than prescriptive: for any proposed environmental
+    intervention, whether a new ceiling geometry, a shift in acoustic
+    treatment, a change of glazing spectrum, the relevant question is
+    whether it changes the behavioural and physiological signatures of
+    prediction-error resolution in the occupants it actually serves.
+    Predictive Processing, in other words, sets an agenda for how
+    environmental-cognition research can be made mechanistic without
+    requiring brain imaging in the building.
+  </p>
+
+  <!-- ══════════════  REFERENCES  ══════════════════════ -->
+  <h2 class="ka-section" id="references">References</h2>
+  <div class="refs-block">
+    <h3>Classic neuroscience — foundational sources</h3>
+    <ol>
+      <li>
+        Helmholtz, H. von. (1867). <em>Handbook of physiological optics</em>
+        (Vol. III, Treatise on Physiological Optics; trans. J. P. C.
+        Southall, 1924). Optical Society of America.
+        <span class="cite-count">Google Scholar ≈ 28,000</span>
+      </li>
+      <li>
+        Gregory, R. L. (1980). Perceptions as hypotheses. <em>Philosophical
+        Transactions of the Royal Society of London. Series B</em>,
+        <em>290</em>(1038), 181–197.
+        <a href="https://doi.org/10.1098/rstb.1980.0090">https://doi.org/10.1098/rstb.1980.0090</a>
+        <span class="cite-count">GS ≈ 1,800</span>
+      </li>
+      <li>
+        Mumford, D. (1992). On the computational architecture of the
+        neocortex. II. The role of cortico-cortical loops. <em>Biological
+        Cybernetics</em>, <em>66</em>(3), 241–251.
+        <a href="https://doi.org/10.1007/BF00198477">https://doi.org/10.1007/BF00198477</a>
+        <span class="cite-count">GS ≈ 1,100</span>
+      </li>
+      <li>
+        Rao, R. P. N., &amp; Ballard, D. H. (1999). Predictive coding in
+        the visual cortex: A functional interpretation of some
+        extra-classical receptive-field effects. <em>Nature
+        Neuroscience</em>, <em>2</em>(1), 79–87.
+        <a href="https://doi.org/10.1038/4580">https://doi.org/10.1038/4580</a>
+        <span class="cite-count">GS ≈ 8,200</span>
+      </li>
+      <li>
+        Friston, K. (2005). A theory of cortical responses. <em>Philosophical
+        Transactions of the Royal Society B</em>, <em>360</em>(1456),
+        815–836.
+        <a href="https://doi.org/10.1098/rstb.2005.1622">https://doi.org/10.1098/rstb.2005.1622</a>
+        <span class="cite-count">GS ≈ 3,900</span>
+      </li>
+      <li>
+        Bastos, A. M., Usrey, W. M., Adams, R. A., Mangun, G. R., Fries, P.,
+        &amp; Friston, K. J. (2012). Canonical microcircuits for predictive
+        coding. <em>Neuron</em>, <em>76</em>(4), 695–711.
+        <a href="https://doi.org/10.1016/j.neuron.2012.10.038">https://doi.org/10.1016/j.neuron.2012.10.038</a>
+        <span class="cite-count">GS ≈ 2,800</span>
+      </li>
+    </ol>
+
+    <h3>Contemporary neuroscience — since 2018</h3>
+    <ol start="6">
+      <li>
+        Keller, G. B., &amp; Mrsic-Flogel, T. D. (2018). Predictive
+        processing: A canonical cortical computation. <em>Neuron</em>,
+        <em>100</em>(2), 424–435.
+        <a href="https://doi.org/10.1016/j.neuron.2018.10.003">https://doi.org/10.1016/j.neuron.2018.10.003</a>
+        <span class="cite-count">GS ≈ 1,500</span>
+      </li>
+      <li>
+        Heilbron, M., &amp; Chait, M. (2018). Great expectations: Is there
+        evidence for predictive coding in auditory cortex?
+        <em>Neuroscience</em>, <em>389</em>, 54–73.
+        <a href="https://doi.org/10.1016/j.neuroscience.2017.07.061">https://doi.org/10.1016/j.neuroscience.2017.07.061</a>
+        <span class="cite-count">GS ≈ 390</span>
+      </li>
+      <li>
+        Walsh, K. S., McGovern, D. P., Clark, A., &amp; O'Connell, R. G.
+        (2020). Evaluating the neurophysiological evidence for predictive
+        processing as a model of perception. <em>Annals of the New York
+        Academy of Sciences</em>, <em>1464</em>(1), 242–268.
+        <a href="https://doi.org/10.1111/nyas.14321">https://doi.org/10.1111/nyas.14321</a>
+        <span class="cite-count">GS ≈ 420</span>
+      </li>
+      <li>
+        Press, C., Kok, P., &amp; Yon, D. (2020). The perceptual prediction
+        paradox. <em>Trends in Cognitive Sciences</em>, <em>24</em>(1),
+        13–24.
+        <a href="https://doi.org/10.1016/j.tics.2019.11.003">https://doi.org/10.1016/j.tics.2019.11.003</a>
+        <span class="cite-count">GS ≈ 470</span>
+      </li>
+      <li>
+        Millidge, B., Seth, A., &amp; Buckley, C. L. (2022). Predictive
+        coding: A theoretical and experimental review.
+        <em>arXiv:2107.12979</em>.
+        <a href="https://arxiv.org/abs/2107.12979">https://arxiv.org/abs/2107.12979</a>
+        <span class="cite-count">GS ≈ 260</span>
+      </li>
+    </ol>
+  </div>
+
+  <a class="return-link" href="ka_theories.html">← Back to Theories index</a>
+</main>
+</body>
+</html>

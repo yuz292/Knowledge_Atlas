@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive · Knowledge Atlas (gated)</title>
+<meta name="robots" content="noindex, nofollow">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+     background:#F7F4EF;color:#2C2C2C;line-height:1.6}
+main.ka-outer{max-width:1020px;margin:24px auto 80px;padding:0 26px}
+
+/* Gated banner — visible on every archive page */
+.gate-banner{background:#F3E8FE;border:1.5px solid #6B2FA0;border-radius:8px;
+             padding:12px 16px;margin-bottom:22px;font-size:.84rem;color:#4A1F75;
+             display:flex;align-items:flex-start;gap:10px}
+.gate-banner::before{content:"🗄";font-size:1.1rem;flex-shrink:0}
+
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+                    font-size:.72rem;background:#F3E8FE;color:#6B2FA0;font-weight:700;
+                    padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.0rem;color:#1C3D3A;
+            font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+
+/* Filter bar */
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+            padding:10px 14px;background:#F9F5EE;border:1px solid #E0D8CC;
+            border-radius:8px;margin-bottom:18px;font-size:.85rem}
+.filter-row input[type="search"]{flex:1;min-width:220px;padding:7px 10px;
+       border:1.5px solid #D8D0C5;border-radius:6px;font:inherit}
+.filter-row input[type="search"]:focus{outline:none;border-color:#6B2FA0;
+       box-shadow:0 0 0 3px rgba(107,47,160,.15)}
+.filter-row select{padding:7px 10px;border:1.5px solid #D8D0C5;
+       border-radius:6px;font:inherit;background:#fff}
+.count{font-size:.78rem;color:#6B6B6B}
+.count b{color:#1C3D3A}
+
+/* Archive items */
+.archive-grid{display:flex;flex-direction:column;gap:12px}
+.arc-item{background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;
+          padding:14px 18px;transition:border-color .12s}
+.arc-item:hover{border-color:#6B2FA0}
+.arc-item .row1{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.arc-title{font-family:Georgia,serif;font-size:1.06rem;color:#1C3D3A;font-weight:700}
+.arc-path{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+          font-size:.78rem;color:#6B6B6B;background:#F9F5EE;padding:1px 7px;
+          border-radius:10px}
+.arc-reason{font-size:.88rem;color:#2C2C2C;margin-bottom:6px}
+.arc-meta{font-size:.74rem;color:#8A9A96;letter-spacing:.04em;
+          text-transform:uppercase;font-weight:700}
+.arc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:10px;
+     letter-spacing:.04em}
+.tag-useful{background:#E8F8F2;color:#1A7050}
+.tag-archived{background:#F3E8FE;color:#6B2FA0}
+.tag-retired{background:#FEE4E4;color:#A02020}
+.tag-folded{background:#E8F0FE;color:#1A56A0}
+.arc-links{margin-top:8px;font-size:.82rem}
+.arc-links a{color:#2A7868;text-decoration:none;margin-right:14px}
+.arc-links a:hover{text-decoration:underline}
+
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;
+             color:#2A7868;text-decoration:none}
+.ka-note{margin-top:24px;font-size:.82rem;color:#6B6B6B;font-style:italic;
+         padding-top:14px;border-top:1px dashed #E0D8CC}
+</style>
+</head>
+
+<body data-ka-regime="archive"
+      data-ka-active=""
+      data-ka-crumbs='[["Home","ka_home.html"],["Archive (gated)",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="gate-banner">
+  <div>
+    <strong>Gated archive — Track 4 and Admin only.</strong> This index lists
+    retired or deprecated pages that are kept for their design DNA and
+    useful ideas. They are not linked from the public navbar or from
+    sitemap.xml. Accessible only from the Track 4 hub (for UX research on
+    prior patterns) and from the instructor admin console. If you arrived
+    here through a bookmark or direct URL, that is expected &mdash; the
+    page itself is not secret, only unlinked.
+  </div>
+</div>
+
+<div class="ka-hero">
+  <span class="code-pill">Archive · read-only reference</span>
+  <h1>K-ATLAS Archive</h1>
+  <p class="subtitle">Pages that have been retired, folded into other
+     surfaces, or held pending redesign. Preserved for study of prior
+     design patterns and for mining useful prose or UX ideas.</p>
+</div>
+
+<div class="filter-row">
+  <input type="search" id="arcSearch" placeholder="Search by name, reason, or tag…">
+  <select id="arcFilter">
+    <option value="">All categories</option>
+    <option value="retired">Retired — not in use</option>
+    <option value="archived">Archived — preserved for reference</option>
+    <option value="folded">Folded — absorbed into another page</option>
+    <option value="useful">Useful DNA — mine for redesigns</option>
+  </select>
+  <span class="count" id="arcCount">—</span>
+</div>
+
+<div class="archive-grid" id="arcGrid">
+
+  <div class="arc-item" data-tags="archived useful" data-search="ka_evidence.html evidence browser old">
+    <div class="row1">
+      <span class="arc-title">ka_evidence.html</span>
+      <span class="arc-path">/ka/ka_evidence.html</span>
+    </div>
+    <div class="arc-reason">Evidence-browser page with a mode-switching
+       design. Retired pending decision on whether Evidence folds into
+       Topics as a sub-tab or remains standalone. Useful DNA: the
+       mode-pill pattern, the evidence-card layout, the claim-level
+       provenance surface.</div>
+    <div class="arc-meta">Archived 2026-04-17 · Decision deferred</div>
+    <div class="arc-tags">
+      <span class="tag tag-archived">Archived</span>
+      <span class="tag tag-useful">Useful DNA</span>
+    </div>
+    <div class="arc-links">
+      <a href="ka_evidence.html" target="_blank" rel="noopener">View live →</a>
+      <a href="#" onclick="alert('diff view pending site_validator.py');return false;">Compare to spec →</a>
+    </div>
+  </div>
+
+  <div class="arc-item" data-tags="archived useful" data-search="ka_gaps.html gaps research-gap old">
+    <div class="row1">
+      <span class="arc-title">ka_gaps.html</span>
+      <span class="arc-path">/ka/ka_gaps.html</span>
+    </div>
+    <div class="arc-reason">Research-gap explorer that surfaces topics
+       with thin coverage. Retired pending decision on whether Gaps
+       becomes a Topics-page sub-tab or a researcher-only standalone.
+       Useful DNA: the VOI (value of investigation) dot system, the
+       gap-density visualisation.</div>
+    <div class="arc-meta">Archived 2026-04-17 · Decision deferred</div>
+    <div class="arc-tags">
+      <span class="tag tag-archived">Archived</span>
+      <span class="tag tag-useful">Useful DNA</span>
+    </div>
+    <div class="arc-links">
+      <a href="ka_gaps.html" target="_blank" rel="noopener">View live →</a>
+    </div>
+  </div>
+
+  <div class="arc-item" data-tags="folded retired" data-search="collect-articles-upload.html track2 intake">
+    <div class="row1">
+      <span class="arc-title">collect-articles-upload.html</span>
+      <span class="arc-path">/ka/160sp/collect-articles-upload.html</span>
+    </div>
+    <div class="arc-reason">Track 2 student intake surface with inline
+       class nav and personalisation-before-auth. Folded into the
+       canonical Track 2 intake page (testing_new_nav.html &rarr; to be
+       renamed ka_track2_intake.html). Kept here for the PDF-upload
+       dropzone pattern and for the duplicate-detection status-chip
+       design, which the new page inherits.</div>
+    <div class="arc-meta">Folded 2026-04-17 · Content migrated to ka_track2_intake.html</div>
+    <div class="arc-tags">
+      <span class="tag tag-folded">Folded</span>
+      <span class="tag tag-useful">Useful DNA</span>
+    </div>
+    <div class="arc-links">
+      <a href="160sp/collect-articles-upload.html" target="_blank" rel="noopener">View live →</a>
+      <a href="160sp/testing_new_nav.html" target="_blank" rel="noopener">See replacement →</a>
+    </div>
+  </div>
+
+  <div class="arc-item" data-tags="archived useful" data-search="ka_home.html home landing old">
+    <div class="row1">
+      <span class="arc-title">ka_home.html (pre-2026-04 version)</span>
+      <span class="arc-path">/ka/ka_home.html</span>
+    </div>
+    <div class="arc-reason">Original landing page with bespoke inline
+       nav containing user-type tabs (160 Student / Researcher /
+       Contributor / Practitioner / Theorist). Retained for its
+       role-router concept and for the login-register right slot
+       that inspired the unified right-slot component now shared across
+       all K-ATLAS pages. The page itself will be rewritten as a
+       canonical visitor landing; this entry will update then.</div>
+    <div class="arc-meta">Archived 2026-04-17 · Rewrite in queue</div>
+    <div class="arc-tags">
+      <span class="tag tag-archived">Archived</span>
+      <span class="tag tag-useful">Useful DNA</span>
+    </div>
+    <div class="arc-links">
+      <a href="ka_home.html" target="_blank" rel="noopener">View live →</a>
+    </div>
+  </div>
+
+  <div class="arc-item" data-tags="archived" data-search="ka_articles.html articles old complex">
+    <div class="row1">
+      <span class="arc-title">ka_articles.html (pre-redesign)</span>
+      <span class="arc-path">/ka/ka_articles.html</span>
+    </div>
+    <div class="arc-reason">Eight-widget article-exploration surface
+       flagged as "insanely complex" in the 2026-04-16 defect review.
+       Pending redesign as a pure search-and-filter list (year, title,
+       authors, citation count, credibility); the propose-an-article
+       flow split into the Contribute page. Kept here for the
+       reference-display and relevance-rating widgets, which may be
+       reused in dedicated pages later.</div>
+    <div class="arc-meta">Archived 2026-04-17 · Redesign in queue</div>
+    <div class="arc-tags">
+      <span class="tag tag-archived">Archived</span>
+      <span class="tag tag-useful">Useful DNA</span>
+    </div>
+    <div class="arc-links">
+      <a href="ka_articles.html" target="_blank" rel="noopener">View live →</a>
+    </div>
+  </div>
+
+</div>
+
+<p class="ka-note">
+  Add new archive entries by editing <code>ka_archive.html</code> directly.
+  When a page is archived, it should stay at its current URL (so existing
+  inbound links continue to work) but be removed from the canonical navbar
+  items in <code>ka_canonical_navbar.js</code>. The site validator
+  (<code>scripts/site_validator.py</code>, pending) will flag any archived
+  page that is still linked from a non-archive surface.
+</p>
+
+<a class="return-link" href="160sp/ka_track4_hub.html">← Track 4 hub</a>
+&nbsp;·&nbsp;
+<a class="return-link" href="160sp/ka_admin.html">Admin console →</a>
+</main>
+
+<script>
+(function(){
+  const search = document.getElementById('arcSearch');
+  const filter = document.getElementById('arcFilter');
+  const count = document.getElementById('arcCount');
+  const items = Array.from(document.querySelectorAll('.arc-item'));
+
+  function update(){
+    const q = search.value.trim().toLowerCase();
+    const f = filter.value;
+    let visible = 0;
+    items.forEach(el => {
+      const s = el.getAttribute('data-search') || '';
+      const t = el.getAttribute('data-tags') || '';
+      const matchQ = !q || s.toLowerCase().includes(q);
+      const matchF = !f || t.includes(f);
+      el.style.display = (matchQ && matchF) ? '' : 'none';
+      if (matchQ && matchF) visible++;
+    });
+    count.innerHTML = `<b>${visible}</b> of ${items.length} entries`;
+  }
+  search.addEventListener('input', update);
+  filter.addEventListener('change', update);
+  update();
+})();
+</script>
+</body>
+</html>

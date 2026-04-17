@@ -1,767 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contribute – Knowledge Atlas</title>
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --navy:#1C3D3A;--teal:#2A7868;--teal-lt:#5AC8AA;--teal-bg:#E6F5F0;
-      --amber:#E8872A;--amber-lt:#FFF3E0;--amber-dk:#9a5010;
-      --cream:#F7F4EF;--ink:#2C2C2C;--muted:#6B6B6B;--border:#D8D0C5;
-      --white:#FFFFFF;--rose:#A84F6B;--rose-lt:#F8EBF0;
-      --blue:#3A6EA8;--blue-lt:#EBF2F8;--green:#2A7868;
-    }
-    body{font-family:Arial,sans-serif;background:var(--cream);color:var(--ink)}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contribute — Knowledge Atlas</title>
+<meta name="description" content="Propose an article for the Knowledge Atlas. Upload a PDF, paste a citation, and help us build the evidence base.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+     background:#F7F4EF;color:#2C2C2C;line-height:1.6}
+main.ka-outer{max-width:920px;margin:28px auto 80px;padding:0 24px}
 
-    /* ── TOP NAV ── */
-    .top-nav{position:fixed;top:0;left:0;right:0;height:56px;background:var(--navy);border-bottom:1px solid #0f2423;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,.12)}
-    .nav-wordmark{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.1em;color:#A8C8BF;text-decoration:none}
-    .nav-icon{width:20px;height:20px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A8C8BF" stroke-width="1.5"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><line x1="6" y1="6" x2="12" y2="18"/><line x1="18" y1="6" x2="12" y2="18"/></svg>') no-repeat center/contain}
-    .nav-title{color:#fff}.nav-title-accent{color:#F5A623}
-    .nav-links{display:flex;align-items:center;gap:18px;flex:1;justify-content:center}
-    .nav-links a{color:#B8D4CE;font-size:.86rem;text-decoration:none;transition:color .15s}
-    .nav-links a:hover{color:#fff}
-    .nav-links a.active{color:#F5A623}
-    .nav-right{display:flex;align-items:center;gap:14px}
-    .mode-select{font-size:.76rem;padding:6px 10px;border-radius:16px;border:1px solid rgba(168,200,191,.34);background:rgba(255,255,255,.05);color:#D8EAE4}
-    .mode-select option{color:#1C3D3A}
-    .mode-pill{background:rgba(42,120,104,.3);color:#7AACA0;font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 12px;border-radius:20px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.0rem;color:#1C3D3A;margin-bottom:8px}
+.ka-hero p{color:#6B6B6B;font-size:1.0rem;margin-bottom:22px;max-width:640px}
 
-    /* ── HERO ── */
-    .hero{
-      margin-top:56px;
-      background:linear-gradient(160deg,#1C3D3A 0%,#153230 45%,#1A2E2C 100%);
-      padding:72px 32px 64px;text-align:center;position:relative;overflow:hidden;
-    }
-    .hero::before{
-      content:'';position:absolute;inset:0;
-      background-image:linear-gradient(rgba(90,200,170,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(90,200,170,0.04) 1px,transparent 1px);
-      background-size:40px 40px;pointer-events:none;
-    }
-    .hero-inner{position:relative;z-index:1;max-width:720px;margin:0 auto}
-    .hero-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#5AC8AA;margin-bottom:16px}
-    .hero-title{font-family:Georgia,serif;font-size:2.2rem;color:#fff;line-height:1.25;margin-bottom:20px;font-weight:400}
-    .hero-title em{font-style:normal;color:#F5A623}
-    .hero-body{font-family:Georgia,serif;font-size:1.02rem;color:#B8D4CE;line-height:1.75;max-width:620px;margin:0 auto 28px}
-    .hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
-    .hero-stat{text-align:center}
-    .hero-stat-num{font-family:Georgia,serif;font-size:1.6rem;color:#F5A623;font-weight:700}
-    .hero-stat-label{font-size:.72rem;color:#7AACA0;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:flex-start}
+@media (max-width:820px){.two-col{grid-template-columns:1fr}}
 
-    /* ── MAIN ── */
-    .main-wrap{max-width:960px;margin:0 auto;padding:48px 28px 60px}
+.card{background:#fff;border:1.5px solid #E0D8CC;border-radius:12px;
+      padding:22px 24px;margin-bottom:18px}
+.card h2{font-family:Georgia,serif;font-size:1.2rem;color:#1C3D3A;margin-bottom:6px}
+.card .sub{font-size:.88rem;color:#6B6B6B;margin-bottom:16px}
 
-    /* ── ACTION CARDS ── */
-    .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px}
-    @media(max-width:700px){.action-grid{grid-template-columns:1fr}}
-    .action-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px 24px;display:flex;flex-direction:column;transition:box-shadow .15s,transform .12s}
-    .action-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
-    .action-icon{font-size:2.2rem;margin-bottom:14px}
-    .action-kicker{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-    .action-title{font-family:Georgia,serif;font-size:1.15rem;color:var(--navy);margin-bottom:8px}
-    .action-desc{font-size:.86rem;color:var(--muted);line-height:1.65;flex:1;margin-bottom:16px}
+/* Form controls */
+label{display:block;font-size:.74rem;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:#8A9A96;margin-bottom:4px;margin-top:14px}
+label:first-of-type{margin-top:0}
+input[type="text"],input[type="email"],textarea,select{
+  width:100%;padding:9px 11px;border:1.5px solid #D8D0C5;border-radius:7px;
+  font:inherit;font-size:.94rem;background:#fff;color:#2C2C2C}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#2A7868;
+  box-shadow:0 0 0 3px rgba(42,120,104,.15)}
+textarea{min-height:90px;resize:vertical;font-family:inherit}
 
-    /* ── SECTION ── */
-    .section-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px 24px;margin-bottom:24px}
-    .section-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-    .section-title{font-family:Georgia,serif;font-size:1.2rem;color:var(--navy);margin-bottom:6px}
-    .section-sub{font-size:.86rem;color:var(--muted);line-height:1.65;margin-bottom:18px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.row2{grid-template-columns:1fr}}
 
-    /* ── UPLOAD ZONE ── */
-    .upload-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all .15s;background:var(--cream)}
-    .upload-zone:hover,.upload-zone.dragover{border-color:var(--teal);background:var(--teal-bg)}
-    .upload-icon{font-size:2.4rem;margin-bottom:10px}
-    .upload-label{font-size:.95rem;color:var(--ink);font-weight:600;margin-bottom:6px}
-    .upload-hint{font-size:.8rem;color:var(--muted);line-height:1.5}
-    .upload-subhint{font-size:.78rem;color:var(--teal);margin-top:8px}
+.drop{border:2px dashed #D8D0C5;border-radius:10px;padding:26px 18px;
+      text-align:center;background:#F9F5EE;cursor:pointer;transition:all .15s}
+.drop:hover,.drop.over{border-color:#2A7868;background:#E6F5F0}
+.drop-icon{font-size:1.6rem;margin-bottom:4px}
+.drop-label{font-weight:600;color:#1C3D3A;font-size:.95rem;margin-bottom:4px}
+.drop-hint{font-size:.78rem;color:#6B6B6B}
+.file-chip{display:inline-flex;align-items:center;gap:8px;
+           background:#E8F8F2;color:#1A7050;font-size:.82rem;font-weight:600;
+           padding:5px 10px;border-radius:20px;margin-top:10px}
+.file-chip button{background:none;border:none;color:#1A7050;cursor:pointer;font-size:1.0rem;line-height:1}
 
-    /* ── FORM ── */
-    .field-group{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
-    .field-label{font-size:11px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.06em}
-    .field-input,.field-textarea,.field-select{border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-family:Arial,sans-serif;font-size:.86rem;color:var(--ink);background:var(--cream);resize:vertical;width:100%}
-    .field-input:focus,.field-textarea:focus,.field-select:focus{outline:none;border-color:var(--teal);background:#fff}
-    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .field-hint{font-size:.74rem;color:var(--muted);line-height:1.45;margin-top:4px}
+.btn-primary{display:inline-block;padding:11px 20px;background:#E8872A;color:#fff;
+             border:none;border-radius:8px;font-size:.92rem;font-weight:700;
+             cursor:pointer;transition:background .15s;margin-top:18px}
+.btn-primary:hover{background:#D27320}
+.btn-primary:disabled{background:#c7d3cf;cursor:not-allowed}
 
-    /* ── BUTTONS ── */
-    .btn{border:none;border-radius:7px;padding:11px 20px;font-size:.86rem;font-weight:600;cursor:pointer;font-family:Arial,sans-serif;transition:background .12s,color .12s;display:inline-block;text-decoration:none;text-align:center}
-    .btn-primary{background:var(--amber);color:#fff}
-    .btn-primary:hover{background:#c97020}
-    .btn-secondary{background:var(--teal);color:#fff}
-    .btn-secondary:hover{background:#1a5c4e}
-    .btn-ghost{background:#F0EBE3;color:var(--ink);border:1px solid var(--border)}
-    .btn-ghost:hover{background:#E4DDD3}
-    .btn-lg{padding:14px 28px;font-size:.95rem;border-radius:8px}
-    .btn:disabled{background:#ccc;color:#777;cursor:not-allowed}
-    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn-secondary{display:inline-block;padding:11px 20px;background:#fff;color:#1C3D3A;
+               border:1.5px solid #D8D0C5;border-radius:8px;font-size:.92rem;
+               font-weight:600;cursor:pointer;transition:all .15s;
+               margin-top:18px;margin-left:8px}
+.btn-secondary:hover{background:#F9F5EE}
 
-    /* ── FILE TABLE ── */
-    .file-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:16px}
-    .file-table th{background:#f0ebe3;color:var(--navy);padding:9px 12px;text-align:left;font-size:10px;letter-spacing:.07em;font-weight:700;border-bottom:2px solid var(--border);text-transform:uppercase}
-    .file-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
-    .file-table tr:hover td{background:#FAF7F2}
-    .status-pill{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;letter-spacing:.05em}
-    .s-ready{background:var(--teal-bg);color:var(--teal);border:1px solid #b2ddd4}
-    .s-duplicate{background:var(--amber-lt);color:var(--amber-dk);border:1px solid #f0c080}
-    .s-staged{background:var(--blue-lt);color:var(--blue);border:1px solid #b0c8e8}
-    .mini-meta{font-size:11px;color:var(--muted);line-height:1.45}
-    .tiny-btn{border:1px solid var(--border);background:#fff;color:var(--ink);padding:5px 8px;border-radius:5px;font-size:11px;cursor:pointer}
-    .tiny-btn:hover{border-color:var(--teal);color:var(--teal)}
+/* Especially-looking-for list */
+.elf-item{padding:10px 0;border-bottom:1px dashed #E0D8CC;font-size:.88rem}
+.elf-item:last-child{border-bottom:0}
+.elf-item .elf-topic{font-family:Georgia,serif;font-weight:700;color:#1C3D3A;
+                     font-size:.98rem;margin-bottom:2px}
+.elf-item .elf-why{color:#6B6B6B;font-size:.82rem;line-height:1.45}
+.elf-tag{display:inline-block;font-size:.64rem;font-weight:700;
+         background:#FEF3E2;color:#9a5010;padding:2px 7px;border-radius:10px;
+         letter-spacing:.04em;margin-right:6px;text-transform:uppercase}
 
-    /* ── TOPIC FINDER ── */
-    .topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
-    .topic-chip{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .12s}
-    .topic-chip:hover{border-color:var(--teal);background:var(--teal-bg)}
-    .topic-chip.selected{border-color:var(--amber);background:var(--amber-lt)}
-    .topic-name{font-size:.84rem;font-weight:600;color:var(--navy);margin-bottom:4px;line-height:1.35}
-    .topic-meta{font-size:.72rem;color:var(--muted)}
-    .topic-search-wrap{position:relative;margin-bottom:16px}
-    .topic-search{width:100%;padding:11px 14px 11px 36px;border:1px solid var(--border);border-radius:8px;font-size:.88rem;background:var(--white)}
-    .topic-search:focus{outline:none;border-color:var(--teal)}
-    .topic-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--muted);pointer-events:none}
+/* Modal (thanks) */
+.modal-backdrop{position:fixed;inset:0;background:rgba(28,61,58,.55);
+                display:none;align-items:center;justify-content:center;
+                z-index:200;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{background:#fff;border-radius:14px;max-width:500px;width:100%;
+       box-shadow:0 20px 60px rgba(0,0,0,.3);padding:30px 34px}
+.modal h2{font-family:Georgia,serif;font-size:1.55rem;color:#1C3D3A;margin-bottom:10px}
+.modal p{font-size:.94rem;margin-bottom:14px}
+.modal .thank{font-size:1.1rem;color:#1A7050;margin-bottom:8px}
+.modal .close-btn{display:block;margin:10px 0 0 auto;padding:9px 18px;
+                  background:#1C3D3A;color:#fff;border:none;border-radius:7px;
+                  font-weight:600;cursor:pointer}
+.modal .summary-box{background:#F9F5EE;border:1px solid #E0D8CC;
+                    border-radius:8px;padding:12px 14px;font-size:.86rem;
+                    color:#2C2C2C;margin-bottom:14px}
 
-    /* ── CALLOUT ── */
-    .callout{padding:14px 16px;border-radius:8px;font-size:.84rem;line-height:1.65;margin-bottom:16px}
-    .callout-teal{background:var(--teal-bg);border-left:3px solid var(--teal);color:#1a4a3f}
-    .callout-amber{background:var(--amber-lt);border-left:3px solid var(--amber);color:var(--amber-dk)}
-
-    /* ── SCHOLAR PANEL ── */
-    .scholar-panel{background:#FAFAF8;border:1px solid var(--border);border-radius:8px;padding:18px;margin-top:16px;display:none}
-    .scholar-panel.visible{display:block}
-    .scholar-title{font-family:Georgia,serif;font-size:.95rem;color:var(--navy);margin-bottom:8px}
-    .scholar-body{font-size:.84rem;color:var(--ink);line-height:1.65}
-    .scholar-body a{color:var(--teal);font-weight:600}
-
-    /* ── MODAL ── */
-    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;align-items:center;justify-content:center}
-    .modal-overlay.open{display:flex}
-    .modal-box{background:var(--white);border-radius:12px;max-width:500px;width:92vw;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.22)}
-    .modal-head{background:var(--navy);color:#fff;padding:16px 22px;font-family:Georgia,serif;font-size:1.0rem}
-    .modal-body{padding:18px 22px;font-size:.86rem;color:var(--ink);line-height:1.65}
-    .modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end}
-    .btn-ok{background:var(--teal);color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:Arial,sans-serif}
-
-    /* ── FOOTER NAV ── */
-    .footer-nav{max-width:960px;margin:0 auto 48px;padding:0 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .footer-nav a{font-size:.86rem;color:var(--teal);text-decoration:none;font-weight:600;transition:color .15s}
-    .footer-nav a:hover{color:var(--amber)}
-
-    .version-badge{position:fixed;bottom:12px;left:16px;background:var(--navy);color:#A8C8BF;font-size:10px;padding:3px 8px;border-radius:4px;opacity:.6;z-index:50}
-  </style>
-<script src="ka_config.js"></script>
+.toast-stack{position:fixed;bottom:24px;right:24px;z-index:250;display:flex;flex-direction:column;gap:8px}
+.toast{background:#1C3D3A;color:#fff;padding:10px 16px;border-radius:8px;
+       box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:.86rem;
+       border-left:4px solid #5AC8AA;max-width:340px}
+.toast.error{border-left-color:#E8A0A0}
+</style>
 </head>
-<body>
 
-<!-- ── NAV ── -->
-<nav>
-  <div class="nav-left">
-    <a href="ka_home.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-      <svg viewBox="0 0 32 32" fill="none" style="width:30px;height:30px;">
-        <circle cx="16" cy="16" r="3.5" fill="#F5A623"/>
-        <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
-        <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
-        <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
-        <line x1="16" y1="7.5" x2="16" y2="12.5" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
-        <line x1="24.8" y1="20.2" x2="19.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
-        <line x1="7.2" y1="20.2" x2="13.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
-        <line x1="16" y1="7.5" x2="25.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
-        <line x1="25.5" y1="20" x2="6.5" y2="20" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
-        <line x1="6.5" y1="20" x2="16" y2="7.5" stroke="#fff" stroke-width="0.8" stroke-opacity="0.18"/>
-      </svg>
-      <div style="display:flex;flex-direction:column;line-height:1.1;">
-        <span style="font-size:0.66rem;font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:#A8C8BF;">Knowledge</span>
-        <span style="font-size:1.05rem;font-weight:700;color:#fff;">At<span style="color:#F5A623;">las</span></span>
+<body data-ka-regime="global"
+      data-ka-active="contribute"
+      data-ka-crumbs='[["Home","ka_home.html"],["Contribute",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="ka-hero">
+  <h1>Contribute an article</h1>
+  <p>Upload a PDF, paste a citation, add the abstract. We'll take it from
+     there — duplicate detection, metadata extraction, and assignment to
+     a research front happen automatically in the nightly pipeline.</p>
+</div>
+
+<div class="two-col">
+
+  <!-- Propose-an-article form -->
+  <form class="card" id="proposeForm" onsubmit="return submitProposal(event)">
+    <h2>Propose an article</h2>
+    <p class="sub">Required: at least one of PDF / DOI / citation. The more
+       you give us, the less work the pipeline does.</p>
+
+    <label>Your name (optional)</label>
+    <input type="text" id="p_name" placeholder="First Last">
+
+    <label>Your email (optional)</label>
+    <input type="email" id="p_email" placeholder="you@example.edu">
+
+    <div class="row2">
+      <div>
+        <label>DOI or URL</label>
+        <input type="text" id="p_doi" placeholder="10.1038/… or https://…">
       </div>
-    </a>
-    <ul>
-      <li><a href="ka_topics.html">Explore</a></li>
-      <li><a href="ka_topic_hierarchy.html">Topic Map</a></li>
-      <li><a href="ka_evidence.html">Evidence</a></li>
-      <li><a href="ka_gaps.html">Gaps</a></li>
-      <li><a href="ka_article_search.html">Articles</a></li>
-      <li><a href="ka_contribute.html" class="active">Contribute</a></li>
-    </ul>
-  </div>
-</nav>
-
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Help Build the Atlas</div>
-    <h1 class="hero-title">Every paper you contribute makes the whole system <em>smarter</em></h1>
-    <p class="hero-body">
-      The Knowledge Atlas relates scientific articles to one another — linking theories, constructs,
-      and neural mechanisms across studies. The more articles we have on any given topic, the more
-      precisely we can identify contradictions, trace warrant chains, assess replication strength,
-      and surface the questions that matter most. Your contribution, whether a single PDF or a
-      carefully chosen set of papers, directly strengthens the epistemic infrastructure that
-      researchers and students depend on.
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="hero-stat-num" id="statArticles">—</div><div class="hero-stat-label">Articles</div></div>
-      <div class="hero-stat"><div class="hero-stat-num" id="statTopics">—</div><div class="hero-stat-label">Research Topics</div></div>
-      <div class="hero-stat"><div class="hero-stat-num" id="statGaps">—</div><div class="hero-stat-label">Open Gaps</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ── MAIN ── -->
-<div class="main-wrap">
-
-  <!-- Two action cards -->
-  <div class="action-grid">
-    <div class="action-card" id="actionUpload" onclick="scrollToSection('uploadSection')">
-      <div class="action-icon">📄</div>
-      <div class="action-kicker">Option A</div>
-      <div class="action-title">I have a paper to upload</div>
-      <div class="action-desc">
-        Upload a PDF you already have on your machine. We extract metadata automatically,
-        check for duplicates, and stage it for review. You can also paste an APA citation
-        if you do not have the PDF.
-      </div>
-      <span class="btn btn-primary">Upload a PDF ↓</span>
-    </div>
-    <div class="action-card" id="actionFind" onclick="scrollToSection('findSection')">
-      <div class="action-icon">🔍</div>
-      <div class="action-kicker">Option B</div>
-      <div class="action-title">I want to find papers we need</div>
-      <div class="action-desc">
-        Browse the topics where coverage is thinnest and use Google AI Scholar
-        to find papers that fill our most important gaps. We tell you exactly
-        what the Atlas needs most.
-      </div>
-      <span class="btn btn-secondary">Find needed papers ↓</span>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION A: UPLOAD / CITE               -->
-  <!-- ═══════════════════════════════════════ -->
-  <div id="uploadSection" class="section-card">
-    <div class="section-eyebrow">Option A — Submit a Paper</div>
-    <div class="section-title">Upload a PDF or paste a citation</div>
-    <div class="section-sub">
-      Drop a PDF below and we handle the rest — metadata extraction, duplicate checking, and
-      staging for review. If you do not have the PDF, paste the full APA citation instead and
-      we will locate the article.
-    </div>
-
-    <!-- Upload zone -->
-    <div class="upload-zone" id="uploadZone">
-      <div class="upload-icon">📚</div>
-      <div class="upload-label">Click to upload PDFs — or drag and drop here</div>
-      <div class="upload-hint">PDF only · multiple files supported · metadata extraction is automatic</div>
-      <div class="upload-subhint">Already in the Atlas? Duplicates are caught immediately.</div>
-    </div>
-    <input type="file" id="hiddenFileInput" accept=".pdf" multiple style="display:none">
-
-    <!-- File table -->
-    <table class="file-table" id="fileTable" style="display:none">
-      <thead>
-        <tr><th>File</th><th>Extracted Metadata</th><th>Status</th><th>Action</th></tr>
-      </thead>
-      <tbody id="fileBody"></tbody>
-    </table>
-
-    <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:20px">
-      <div class="section-eyebrow" style="margin-bottom:8px">Or paste a citation</div>
-      <div class="field-group">
-        <label class="field-label">APA citation (one per line)</label>
-        <textarea class="field-textarea" id="citationInput" rows="4" placeholder="Kaplan, S. (1995). The restorative benefits of nature: Toward an integrative framework. Journal of Environmental Psychology, 15(3), 169–182. https://doi.org/10.1016/0272-4944(95)90001-2"></textarea>
-        <div class="field-hint">Paste a full APA citation, a DOI, or a title. Multiple lines are treated as separate submissions.</div>
+      <div>
+        <label>Year</label>
+        <input type="text" id="p_year" placeholder="2024">
       </div>
     </div>
 
-    <!-- Metadata refinement -->
-    <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:20px">
-      <div class="section-eyebrow" style="margin-bottom:8px">Refine metadata (optional)</div>
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">DOI</label>
-          <input type="text" class="field-input" id="editDOI" placeholder="10.xxxx/...">
-        </div>
-        <div class="field-group">
-          <label class="field-label">Year</label>
-          <input type="number" class="field-input" id="editYear" placeholder="2024" min="1900" max="2030">
-        </div>
+    <label>APA citation or title</label>
+    <textarea id="p_citation" rows="3"
+      placeholder="Author, A., &amp; Author, B. (2024). Title of the paper. Journal, 12(3), 45–60."></textarea>
+
+    <label>Abstract</label>
+    <textarea id="p_abstract" rows="5"
+      placeholder="Paste the paper's abstract here if you have it."></textarea>
+
+    <label>Upload PDF (drop or click)</label>
+    <div class="drop" id="dropZone">
+      <div class="drop-icon">📄</div>
+      <div class="drop-label">Drop a PDF here or click to browse</div>
+      <div class="drop-hint">PDF only · multiple files OK · 40 MB per file</div>
+      <input type="file" id="pdfInput" accept=".pdf" multiple style="display:none">
+      <div id="fileChips"></div>
+    </div>
+
+    <label>Why is this relevant? (optional but useful)</label>
+    <textarea id="p_relevance" rows="3"
+      placeholder="One or two sentences on why this paper is worth adding — what gap it fills, what mechanism it speaks to, or which of the 'especially looking for' topics on the right it answers."></textarea>
+
+    <button class="btn-primary" type="submit">Submit proposal</button>
+    <button class="btn-secondary" type="button" onclick="clearForm()">Clear</button>
+  </form>
+
+  <!-- Especially looking for -->
+  <aside>
+    <div class="card" style="background:#F9F5EE">
+      <h2>Especially looking for</h2>
+      <p class="sub">Current gaps in the Atlas that the maintainers are
+         actively seeking. Any article that speaks to one of these moves
+         to the top of the review queue.</p>
+
+      <div class="elf-item">
+        <span class="elf-tag">Gap</span>
+        <span class="elf-topic">Pre-registered field studies of daylight and alertness</span>
+        <div class="elf-why">We have strong lab evidence for the
+          ipRGC-SCN pathway; field replications under realistic
+          architectural lighting are thinner than the lab work implies.</div>
       </div>
-      <div class="field-group">
-        <label class="field-label">Title</label>
-        <input type="text" class="field-input" id="editTitle" placeholder="Full article title">
+
+      <div class="elf-item">
+        <span class="elf-tag">Classic anchor</span>
+        <span class="elf-topic">Canonical neuroscience papers on peripersonal space</span>
+        <div class="elf-why">Our mechanism inventory flags EC-AFFORDANCE-PERCEPTION
+          as "needs classic anchor paper set." Graziano, Serino,
+          Làdavas, and their lineages are priority.</div>
       </div>
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">Authors</label>
-          <input type="text" class="field-input" id="editAuthors" placeholder="Last, F. M., Last, F. M., & Last, F. M.">
-        </div>
-        <div class="field-group">
-          <label class="field-label">Journal</label>
-          <input type="text" class="field-input" id="editJournal" placeholder="Journal of Environmental Psychology">
-        </div>
+
+      <div class="elf-item">
+        <span class="elf-tag">Recent</span>
+        <span class="elf-topic">Prediction-error findings in non-sensory cortex</span>
+        <div class="elf-why">The Predictive-Processing framework is
+          well-supported in V1 / A1; evidence for the same architecture
+          in prefrontal and parietal regions is an active frontier we
+          want to track.</div>
       </div>
-      <div class="field-group">
-        <label class="field-label">Why this paper matters (optional)</label>
-        <textarea class="field-textarea" id="editWhy" rows="2" placeholder="Brief note: what theory, mechanism, or gap does this address?"></textarea>
+
+      <div class="elf-item">
+        <span class="elf-tag">Replication</span>
+        <span class="elf-topic">Large-N replications of thermal-comfort-affect findings</span>
+        <div class="elf-why">The warmth-priming literature has had
+          replication trouble. We want both failed and successful
+          replications on record with their effect sizes.</div>
       </div>
-    </div>
 
-    <div class="btn-row">
-      <button class="btn btn-primary btn-lg" id="submitBtn" onclick="submitContribution()">Submit for Review</button>
-      <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
-    </div>
-
-    <div class="callout callout-teal" style="margin-top:18px">
-      <strong>What happens next:</strong> Your submission enters our intake queue. Duplicates are
-      blocked immediately. Non-duplicates are reviewed nightly — accepted papers enter the extraction
-      pipeline where the Atlas identifies constructs, theories, mechanisms, and evidence relationships
-      automatically.
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION B: FIND PAPERS WE NEED         -->
-  <!-- ═══════════════════════════════════════ -->
-  <div id="findSection" class="section-card">
-    <div class="section-eyebrow">Option B — Find Papers We Need</div>
-    <div class="section-title">Browse topics where the Atlas needs more evidence</div>
-    <div class="section-sub">
-      Some research topics have only two or three papers — not enough to reveal contradictions,
-      trace warrant strength, or assess replication. Pick a topic that interests you and use
-      Google AI Scholar to find relevant papers.
-    </div>
-
-    <div class="topic-search-wrap">
-      <span class="topic-search-icon">🔎</span>
-      <input type="text" class="topic-search" id="topicSearch" placeholder="Search topics by name, theory, or construct...">
-    </div>
-
-    <div class="topic-grid" id="topicGrid">
-      <!-- Populated by JS -->
-    </div>
-
-    <!-- Scholar guidance panel -->
-    <div class="scholar-panel" id="scholarPanel">
-      <div class="scholar-title" id="scholarTitle">Finding papers for: <em id="scholarTopic">—</em></div>
-      <div class="scholar-body">
-        <p style="margin-bottom:12px">Search for papers related to <strong id="scholarConstructs">—</strong> using one of these tools:</p>
-        <p style="margin-bottom:8px">
-          <a href="https://scholar.google.com" target="_blank" rel="noopener">Google Scholar →</a> &nbsp;
-          <a href="https://consensus.app" target="_blank" rel="noopener">Consensus →</a> &nbsp;
-          <a href="https://www.semanticscholar.org" target="_blank" rel="noopener">Semantic Scholar →</a> &nbsp;
-          <a href="https://elicit.com" target="_blank" rel="noopener">Elicit →</a>
-        </p>
-        <div class="callout callout-amber" style="margin-top:12px">
-          <strong>Tip:</strong> Search for the theory name combined with one or two constructs.
-          For example: <em id="scholarExample">—</em>. Once you find a relevant paper, scroll
-          back up and either upload the PDF or paste the citation.
-        </div>
+      <div class="elf-item">
+        <span class="elf-tag">Cross-domain</span>
+        <span class="elf-topic">Multisensory integration in architectural VR</span>
+        <div class="elf-why">Track 3 is building VR instruments that
+          instrument occupant behaviour. Prior work on visuo-auditory
+          binding thresholds in naturalistic scenes is welcome.</div>
       </div>
-    </div>
-  </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- WHY IT MATTERS                         -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="section-card" style="background:linear-gradient(135deg,#1C3D3A 0%,#163230 100%);border:none">
-    <div style="max-width:640px;margin:0 auto;text-align:center;padding:16px 0">
-      <div class="section-eyebrow" style="color:#5AC8AA">Why Every Paper Counts</div>
-      <p style="font-family:Georgia,serif;font-size:1.05rem;color:#B8D4CE;line-height:1.75;margin-bottom:16px">
-        Each article the Atlas processes produces dozens of typed propositions — claims about
-        constructs, theories, and mechanisms that are automatically linked to every other
-        proposition in the system. A single paper on attention restoration, for example, might
-        yield evidence that strengthens three warrant chains, introduces a novel measurement
-        instrument, and surfaces a contradiction with stress recovery theory that nobody had
-        noticed before.
-      </p>
-      <p style="font-family:Georgia,serif;font-size:.95rem;color:#7AACA0;line-height:1.65">
-        The Atlas is not a bibliography. It is an epistemic engine — and you are one of its sources of fuel.
+      <p style="font-size:.82rem;color:#6B6B6B;margin-top:14px;">
+        Updated 2026-04-17 · <a href="ka_gaps.html" style="color:#2A7868;text-decoration:none;font-weight:600;">See full gaps inventory →</a>
       </p>
     </div>
-  </div>
 
-  <!-- COGS 160 students -->
-  <div class="section-card">
-    <div class="section-eyebrow">COGS 160 Students</div>
-    <div class="section-title">Looking for your track assignment?</div>
-    <div class="section-sub">
-      If you are enrolled in COGS 160 and need to complete your article-finding assignment,
-      use the dedicated Track 2 workflow instead. It includes progress tracking, milestone
-      verification, and structured citation requirements.
+    <div class="card">
+      <h2>Other ways to contribute</h2>
+      <p class="sub" style="margin-bottom:0">COGS 160 students: your
+         track-specific contribution flows are in the
+         <a href="160sp/ka_schedule.html" style="color:#2A7868;font-weight:600;">course schedule</a>.
+         If you're not enrolled and want to contribute at more than
+         the per-article level (running pipelines, tagging images,
+         building UX tests), reach out at
+         <a href="mailto:cogs160@ucsd.edu" style="color:#2A7868;font-weight:600;">cogs160@ucsd.edu</a>.</p>
     </div>
-    <div class="btn-row">
-      <a class="btn btn-secondary" href="160sp/ka_article_finder_assignment.html">Track 2 Assignment →</a>
-      <a class="btn btn-ghost" href="ka_article_propose.html">Full Article Propose Tool →</a>
-      <a class="btn btn-ghost" href="160sp/ka_student_setup.html">Student Setup →</a>
-    </div>
-  </div>
-
+  </aside>
 </div>
 
-<!-- ── FOOTER NAV ── -->
-<div class="footer-nav">
-  <a href="ka_home.html">← Back to Home</a>
-  <div>
-    <a href="ka_topics.html" style="margin-right:18px">Explore Topics →</a>
-    <a href="ka_evidence.html">Browse Evidence →</a>
-  </div>
-</div>
+</main>
 
-<div class="version-badge">KA UI · v0.4</div>
-
-<!-- ── CONFIRM MODAL ── -->
-<div class="modal-overlay" id="confirmModal">
-  <div class="modal-box">
-    <div class="modal-head" id="confirmTitle">Done</div>
-    <div class="modal-body" id="confirmBody"></div>
-    <div class="modal-foot"><button class="btn-ok" onclick="closeModal()">OK</button></div>
+<!-- Thank-you modal -->
+<div class="modal-backdrop" id="thankModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Thank you.</h2>
+    <p class="thank" id="thankLine">Your proposal has been received.</p>
+    <div class="summary-box" id="thankSummary"></div>
+    <p style="color:#6B6B6B">What happens next: the nightly pipeline
+       runs duplicate detection, extracts metadata, and routes the
+       article to its research-front maintainer for review. If you
+       supplied an email, we'll ping you when the paper is processed
+       (usually within 48 hours).</p>
+    <button class="close-btn" onclick="closeThank()">Close</button>
   </div>
 </div>
 
-<script src="data/ka_payloads/workflow.js"></script>
-<script src="ka_workflow_store.js"></script>
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
 <script>
-/* ── TOPIC DATA ── */
-const FALLBACK_TOPICS = [
-  {id:'RF_008',name:'Neuroaesthetics × Contour × Beauty',cat:'Neuroscience',n:3,voi:0.86,maturity:'emerging',shared_theories:['neuroaesthetics'],shared_constructs:['spatial.contour','affect.aesthetic.beauty']},
-  {id:'RF_009',name:'Attention Restoration Theory × Natural × Eye Movement',cat:'Neuroscience',n:3,voi:0.83,maturity:'emerging',shared_theories:['attention restoration theory'],shared_constructs:['natural','Eye movement patterns']},
-  {id:'RF_010',name:'Stress Recovery Theory × Window × HRV',cat:'Physiological',n:3,voi:0.83,maturity:'emerging',shared_theories:['stress recovery theory'],shared_constructs:['spatial.view.window','cog.physiology.hrv']}
-];
+const pending = [];
+const dz = document.getElementById('dropZone');
+const pdfInp = document.getElementById('pdfInput');
+const chips = document.getElementById('fileChips');
 
-let ALL_TOPICS = [];
-let selectedTopic = null;
-
-/* Clean auto-generated names */
-function cleanTopicName(raw) {
-  let name = (raw || '').replace(/\s*×\s*/g, ', ').replace(/\s+/g,' ').trim();
-  name = name.replace(/\b\w/g, c => c.toUpperCase());
-  if (name.length > 60) name = name.slice(0, 57) + '…';
-  return name;
-}
-
-/* Load topics */
-function loadTopics() {
-  if (window.KA_PAYLOADS && window.KA_PAYLOADS.loadWithFallback) {
-    window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/topics.json', { topics: FALLBACK_TOPICS })
-      .then(function(data) { ALL_TOPICS = (data.topics || FALLBACK_TOPICS).slice(); renderTopics(); updateStats(); });
-  } else {
-    fetch('data/ka_payloads/topics.json')
-      .then(r => r.ok ? r.json() : { topics: FALLBACK_TOPICS })
-      .then(data => { ALL_TOPICS = (data.topics || FALLBACK_TOPICS).slice(); renderTopics(); updateStats(); })
-      .catch(() => { ALL_TOPICS = FALLBACK_TOPICS.slice(); renderTopics(); updateStats(); });
-  }
-}
-
-function updateStats() {
-  document.getElementById('statTopics').textContent = ALL_TOPICS.length;
-  const totalArticles = ALL_TOPICS.reduce((s, t) => s + (t.n || 0), 0);
-  document.getElementById('statArticles').textContent = totalArticles;
-  document.getElementById('statGaps').textContent = ALL_TOPICS.filter(t => (t.n || 0) <= 3).length;
-}
-
-function renderTopics(filter) {
-  const grid = document.getElementById('topicGrid');
-  let topics = ALL_TOPICS.slice()
-    .sort((a, b) => (a.n || 0) - (b.n || 0)); // fewest papers first — biggest need
-
-  if (filter) {
-    const q = filter.toLowerCase();
-    topics = topics.filter(t =>
-      (t.name || '').toLowerCase().includes(q) ||
-      (t.cat || '').toLowerCase().includes(q) ||
-      (t.shared_theories || []).join(' ').toLowerCase().includes(q) ||
-      (t.shared_constructs || []).join(' ').toLowerCase().includes(q)
-    );
-  }
-
-  const shown = topics.slice(0, 24);
-  grid.innerHTML = shown.map(t => {
-    const name = cleanTopicName(t.name);
-    const sel = selectedTopic && selectedTopic.id === t.id ? ' selected' : '';
-    return `<div class="topic-chip${sel}" onclick="selectTopic('${t.id}')">
-      <div class="topic-name">${escapeHtml(name)}</div>
-      <div class="topic-meta">${t.n || 0} papers · ${t.cat || 'General'}${t.maturity ? ' · ' + t.maturity : ''}</div>
-    </div>`;
-  }).join('');
-
-  if (!shown.length) {
-    grid.innerHTML = '<div style="padding:18px;color:var(--muted);font-size:.86rem">No topics match your search.</div>';
-  }
-  if (topics.length > 24) {
-    grid.innerHTML += `<div style="grid-column:1/-1;padding:8px;text-align:center;font-size:.8rem;color:var(--muted)">${topics.length - 24} more topics — refine your search to see them.</div>`;
-  }
-}
-
-function selectTopic(id) {
-  selectedTopic = ALL_TOPICS.find(t => t.id === id) || null;
-  if (!selectedTopic) return;
-  renderTopics(document.getElementById('topicSearch').value);
-
-  const panel = document.getElementById('scholarPanel');
-  panel.classList.add('visible');
-  const name = cleanTopicName(selectedTopic.name);
-  document.getElementById('scholarTopic').textContent = name;
-
-  const constructs = (selectedTopic.shared_constructs || []).slice(0, 3).map(c =>
-    c.replace(/\./g, ' ').replace(/^cog |^affect |^spatial |^neural /,'')
-  ).join(', ') || 'the constructs in this cluster';
-  document.getElementById('scholarConstructs').textContent = constructs;
-
-  const theory = (selectedTopic.shared_theories || [])[0] || 'the relevant theory';
-  const firstConstruct = (selectedTopic.shared_constructs || [])[0] || 'perception';
-  document.getElementById('scholarExample').textContent =
-    `"${theory.replace(/^theory_/,'').replace(/_/g,' ')}" + "${firstConstruct.replace(/\./g,' ')}"`;
-
-  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-/* ── UPLOAD ── */
-const EXISTING_ARTICLES = [
-  {doi:'10.1037/0033-2909.132.6.833',title:'The restorative benefits of nature: toward an integrative framework',authors:'Kaplan, S.',year:1995},
-  {doi:'10.5664/jcsm.3780',title:'Impact of windows and daylight exposure on overall health and sleep quality of office workers',authors:'Boubekri, M., et al.',year:2014}
-];
-
-let PENDING_FILES = [];
-
-const uploadZone = document.getElementById('uploadZone');
-const fileInput = document.getElementById('hiddenFileInput');
-
-uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
-uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
-fileInput.addEventListener('change', () => { handleFiles(fileInput.files); fileInput.value = ''; });
-
-function handleFiles(fileList) {
-  const files = Array.from(fileList || []).filter(f => /\.pdf$/i.test(f.name));
-  if (!files.length) { showConfirm('PDFs required', 'Please upload one or more PDF files.'); return; }
-  files.forEach(f => {
-    const meta = extractMeta(f.name);
-    const dup = findDuplicate(meta);
-    PENDING_FILES.push({
-      id: 'f-' + Date.now() + '-' + Math.random().toString(16).slice(2,6),
-      file: f,  // Keep the actual File object for upload
-      fileName: f.name,
-      sizeMb: (f.size/(1024*1024)).toFixed(1),
-      meta: meta,
-      status: dup ? 'duplicate' : 'ready',
-      dupMatch: dup
-    });
-  });
-  renderFileTable();
-}
-
-function extractMeta(name) {
-  const clean = name.replace(/\.pdf$/i,'');
-  const doiM = clean.match(/10\.\d{4,9}\/[A-Za-z0-9._;()\-/:]+/i);
-  const yearM = clean.match(/(19|20)\d{2}/);
-  const title = clean.replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
-  return { doi: doiM?doiM[0]:'', title: title, year: yearM?parseInt(yearM[0],10):'', authors:'', journal:'' };
-}
-
-function findDuplicate(meta) {
-  if (meta.doi) {
-    const hit = EXISTING_ARTICLES.find(a => a.doi.toLowerCase() === meta.doi.toLowerCase());
-    if (hit) return hit;
-  }
-  if (meta.title) {
-    const norm = s => (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-    const hit = EXISTING_ARTICLES.find(a => norm(a.title) === norm(meta.title));
-    if (hit) return hit;
-  }
-  return null;
-}
-
-function renderFileTable() {
-  const table = document.getElementById('fileTable');
-  const tbody = document.getElementById('fileBody');
-  if (!PENDING_FILES.length) { table.style.display = 'none'; return; }
-  table.style.display = 'table';
-  tbody.innerHTML = PENDING_FILES.map(f => {
-    const statusCls = f.status === 'duplicate' ? 's-duplicate' : f.status === 'staged' ? 's-staged' : 's-ready';
-    const statusLabel = f.status === 'duplicate' ? 'Duplicate' : f.status === 'staged' ? 'Staged' : 'Ready';
-    return `<tr>
-      <td><strong>${escapeHtml(f.fileName)}</strong><div class="mini-meta">${f.sizeMb} MB</div></td>
-      <td><div>${escapeHtml(f.meta.title||'—')}</div><div class="mini-meta">DOI: ${escapeHtml(f.meta.doi||'none')} · Year: ${f.meta.year||'?'}</div></td>
-      <td><span class="status-pill ${statusCls}">${statusLabel}</span>${f.dupMatch?'<div class="mini-meta" style="margin-top:4px">Matches: '+escapeHtml(f.dupMatch.title)+'</div>':''}</td>
-      <td><button class="tiny-btn" onclick="removePending('${f.id}')">Remove</button></td>
-    </tr>`;
-  }).join('');
-}
-
-function removePending(id) {
-  PENDING_FILES = PENDING_FILES.filter(f => f.id !== id);
-  renderFileTable();
-}
-
-/* ── SERVER CONFIG ── */
-const KA_API = window.__KA_CONFIG__?.apiBase ?? '';
-
-/* ── SUBMIT ── */
-async function submitContribution() {
-  const citationText = document.getElementById('citationInput').value.trim();
-  const doi = document.getElementById('editDOI').value.trim();
-  const title = document.getElementById('editTitle').value.trim();
-  const authors = document.getElementById('editAuthors').value.trim();
-  const journal = document.getElementById('editJournal').value.trim();
-  const year = document.getElementById('editYear').value.trim();
-  const why = document.getElementById('editWhy').value.trim();
-
-  const uploadableFiles = PENDING_FILES.filter(f => f.status !== 'duplicate' && f.file);
-  const hasPDFs = uploadableFiles.length > 0;
-  const hasCitation = citationText.length > 0;
-  const hasManualMeta = title.length > 0 || doi.length > 0;
-
-  if (!hasPDFs && !hasCitation && !hasManualMeta) {
-    showConfirm('Nothing to submit', 'Upload a PDF, paste a citation, or fill in at least a title or DOI.');
-    return;
-  }
-
-  // Build the citation block: explicit text + manual metadata line
-  let citations = citationText;
-  if (hasManualMeta && !hasCitation) {
-    const parts = [title, authors, journal, year, doi].filter(Boolean);
-    citations = parts.join('. ');
-  }
-
-  // Build FormData for server submission
-  const formData = new FormData();
-  uploadableFiles.forEach(f => formData.append('files', f.file, f.fileName));
-  if (citations) formData.append('citations', citations);
-  if (why) formData.append('notes', why);
-  formData.append('source_surface', 'ka_contribute');
-
-  // Attach auth token if logged in
-  const headers = {};
-  const token = localStorage.getItem('ka_access_token');
-  if (token) headers['Authorization'] = 'Bearer ' + token;
-
-  // Show loading state
-  const submitBtn = document.querySelector('.btn-primary[onclick*="submitContribution"]') ||
-                    document.querySelector('.btn-primary');
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting…'; }
-
-  try {
-    const resp = await fetch(KA_API + '/api/articles/submit', {
-      method: 'POST', body: formData, headers: headers
-    });
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({ detail: 'Server error' }));
-      showConfirm('Submission failed', err.detail || 'An unexpected error occurred. Please try again.');
-      return;
-    }
-
-    const result = await resp.json();
-    const s = result.summary;
-
-    // Update local file statuses based on server response
-    if (result.items) {
-      result.items.forEach(item => {
-        const local = PENDING_FILES.find(f => f.fileName === item.filename);
-        if (local) {
-          local.status = item.status === 'staged_pending_review' ? 'staged'
-                       : item.status === 'duplicate_existing' ? 'duplicate'
-                       : item.status.startsWith('rejected') ? 'rejected' : local.status;
-          local.serverArticleId = item.article_id;
-        }
-      });
-      renderFileTable();
-    }
-
-    showConfirm(
-      'Submission received — thank you!',
-      `${s.total} item(s) processed: ${s.staged} staged for review, ` +
-      `${s.duplicates} duplicate(s) caught, ${s.rejected} rejected. ` +
-      'Non-duplicates enter the review queue. Accepted papers are processed by the ' +
-      'Atlas extraction pipeline within 24–48 hours. ' +
-      `<br><br><strong>Submission ID:</strong> ${result.submission_id}`
-    );
-  } catch (err) {
-    showConfirm('Connection error', 'Could not reach the Knowledge Atlas server. ' +
-      'Please check that the server is running and try again. ' +
-      '<br><br><em>Technical detail: ' + (err.message || err) + '</em>');
-  } finally {
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
-  }
-}
-
-function clearForm() {
-  PENDING_FILES = [];
-  renderFileTable();
-  document.getElementById('citationInput').value = '';
-  document.getElementById('editDOI').value = '';
-  document.getElementById('editYear').value = '';
-  document.getElementById('editTitle').value = '';
-  document.getElementById('editAuthors').value = '';
-  document.getElementById('editJournal').value = '';
-  document.getElementById('editWhy').value = '';
-}
-
-/* ── SEARCH ── */
-document.getElementById('topicSearch').addEventListener('input', function() {
-  renderTopics(this.value);
+dz.addEventListener('click', () => pdfInp.click());
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('over');
+  handleFiles(e.dataTransfer.files);
 });
+pdfInp.addEventListener('change', e => handleFiles(e.target.files));
 
-/* ── SCROLL ── */
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+function handleFiles(list){
+  for (const f of list){
+    if (!/\.pdf$/i.test(f.name)) { toast('error', `${f.name}: not a PDF — skipped.`); continue; }
+    if (f.size > 40*1024*1024)   { toast('error', `${f.name}: exceeds 40 MB — skipped.`); continue; }
+    pending.push(f);
+  }
+  renderChips();
+}
+function renderChips(){
+  chips.innerHTML = pending.map((f,i) =>
+    `<span class="file-chip">${esc(f.name)} · ${(f.size/1024).toFixed(0)} KB
+       <button type="button" onclick="removeFile(${i})" aria-label="Remove">✕</button></span>`
+  ).join(' ');
+}
+function removeFile(i){ pending.splice(i,1); renderChips(); }
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function toast(kind, msg){
+  const t = document.createElement('div');
+  t.className = 'toast' + (kind==='error' ? ' error' : '');
+  t.innerHTML = msg;
+  document.getElementById('toastStack').appendChild(t);
+  setTimeout(() => t.remove(), 4200);
 }
 
-/* ── UTILS ── */
-function escapeHtml(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function showConfirm(title,body){document.getElementById('confirmTitle').textContent=title;document.getElementById('confirmBody').innerHTML='<p style="color:var(--muted);font-size:.85rem;">'+body+'</p>';document.getElementById('confirmModal').classList.add('open');}
-function closeModal(){document.getElementById('confirmModal').classList.remove('open');}
-document.getElementById('confirmModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+function clearForm(){
+  document.getElementById('proposeForm').reset();
+  pending.length = 0; renderChips();
+}
 
-/* ── INIT ── */
-loadTopics();
-</script>
-<script src="ka_mode_switch.js"></script>
-<script src="ka_site_shell.js"></script>
-<script src="ka_page_function.js"></script><script>
-window.KA_SHELL.initShell({
-  navContainerSelector: '.nav-links',
-  modeSelectId: 'contribute-mode-select',
-  modePillId: 'contribute-mode-pill',
-  defaultMode: 'contributor'
+function submitProposal(ev){
+  ev.preventDefault();
+  const doi = document.getElementById('p_doi').value.trim();
+  const cit = document.getElementById('p_citation').value.trim();
+  if (!pending.length && !doi && !cit){
+    toast('error', 'Give us at least one of: PDF, DOI, or citation.');
+    return false;
+  }
+
+  const payload = {
+    name:    document.getElementById('p_name').value.trim(),
+    email:   document.getElementById('p_email').value.trim(),
+    doi:     doi,
+    year:    document.getElementById('p_year').value.trim(),
+    citation:cit,
+    abstract:document.getElementById('p_abstract').value.trim(),
+    relevance:document.getElementById('p_relevance').value.trim(),
+    pdfs:    pending.map(f => ({name: f.name, size: f.size})),
+  };
+
+  // Stub: replace with a real POST to /api/articles/submit in production.
+  // For now we show a thank-you modal with a summary of what was received.
+  // (The Track 2 intake pipeline has a working endpoint; the public-facing
+  //  version should call the same endpoint with source_surface='public'.)
+  console.log('proposal payload', payload);
+
+  const summary = [
+    pending.length ? `${pending.length} PDF${pending.length>1?'s':''} uploaded` : null,
+    doi ? `DOI: ${esc(doi)}` : null,
+    cit ? `Citation provided` : null,
+    payload.abstract ? 'Abstract included' : null,
+    payload.email ? `We'll email ${esc(payload.email)} when processed` : null,
+  ].filter(Boolean).join(' · ');
+
+  document.getElementById('thankSummary').innerHTML = summary || 'Proposal received.';
+  document.getElementById('thankModal').classList.add('open');
+  clearForm();
+  return false;
+}
+
+function closeThank(){
+  document.getElementById('thankModal').classList.remove('open');
+}
+
+document.getElementById('thankModal').addEventListener('click', e => {
+  if (e.target.id === 'thankModal') closeThank();
 });
 </script>
-<script>
-window.KA_PAGE_FUNCTION = {
-  pageId: 'ka_contribute',
-  title: 'Contribute to the Knowledge Atlas',
-  audience: 'Public contributors (researchers, students, curious citizens); anyone who wants to help expand the evidence base',
-  purpose: 'Recruit contributors by explaining why every paper matters, then provide two clear action paths: upload a PDF you already have, or browse topics where coverage is thinnest and find papers using academic search tools.',
-  workflowPos: 'Entry point for non-enrolled contributors; alternative to Track 2 assignment for public users',
-  notFor: 'COGS 160 enrolled students completing Track 2 assignments (use ka_article_finder_assignment.html instead)',
-  phase: 'Phase 2 — Data Seeding',
-  evalQuestions: [
-    'Does the hero copy motivate contributions without being preachy?',
-    'Are the two action paths (upload vs. find) immediately clear?',
-    'Does the topic browser surface genuine gaps that contributors can fill?',
-    'Is the PDF upload flow simple enough for a first-time visitor?',
-    'Does the page adequately distinguish public contribution from COGS 160 student workflow?'
-  ]
-};
-</script>
-<script>
-window.KA_ABOUT_PAGE = {
-  pageId: 'ka_contribute',
-  objective: 'Recruit public contributors by explaining the epistemic value of each paper, then provide upload and citation intake tools plus a topic-gap browser with search-tool guidance.',
-  users: 'Researchers who want to expand coverage on their topic; students from other courses; curious citizens who found a relevant paper',
-  uses: [
-    'Upload a PDF to the Atlas intake pipeline with automatic duplicate detection',
-    'Paste an APA citation when the contributor does not have the PDF',
-    'Browse research topics sorted by coverage gaps to find where contributions matter most',
-    'Get guided search suggestions for Google Scholar, Consensus, Semantic Scholar, and Elicit',
-    'Distinguish public contribution from COGS 160 student track workflows'
-  ]
-};
-</script>
-<script src="ka_about_page.js"></script>
-<script src="ka_ui_fixes.js"></script>
-<script src="ka_route_cta.js"></script>
 </body>
 </html>

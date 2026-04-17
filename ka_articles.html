@@ -1,1754 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Articles – Knowledge Atlas Contributor</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F7F4EF;
-            color: #2C2C2C;
-        }
-
-        /* Top Navigation */
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 56px;
-            background-color: #1C3D3A;
-            border-bottom: 1px solid #0f2423;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .nav-wordmark {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: #A8C8BF;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A8C8BF" stroke-width="1.5"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><line x1="6" y1="6" x2="12" y2="18"/><line x1="18" y1="6" x2="12" y2="18"/></svg>') no-repeat center;
-            background-size: contain;
-        }
-
-        .nav-title {
-            color: #FFFFFF;
-        }
-
-        .nav-title-accent {
-            color: #F5A623;
-        }
-
-        .nav-center {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            align-items: center;
-        }
-
-        .nav-center a {
-            color: #B8D4CE;
-            font-size: 0.86rem;
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .nav-center a:hover {
-            color: #FFFFFF;
-        }
-
-        .nav-center a.active {
-            color: #F5A623;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .mode-select {
-            font-size: 0.76rem;
-            padding: 6px 10px;
-            border-radius: 16px;
-            border: 1px solid rgba(168, 200, 191, 0.34);
-            background: rgba(255, 255, 255, 0.05);
-            color: #D8EAE4;
-        }
-
-        .mode-select option {
-            color: #1C3D3A;
-        }
-
-        .mode-pill {
-            background-color: #5AC8AA;
-            color: #FFFFFF;
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .profile-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: #2A7868;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        /* Main Layout */
-        .page-container {
-            display: flex;
-            margin-top: 56px;
-            min-height: calc(100vh - 56px);
-        }
-
-        .sidebar {
-            width: 220px;
-            background-color: #FFFFFF;
-            border-right: 1px solid #E0DAD3;
-            padding: 24px 0;
-            overflow-y: auto;
-            position: fixed;
-            height: calc(100vh - 56px);
-            left: 0;
-            top: 56px;
-        }
-
-        .sidebar-section {
-            padding: 0 16px;
-            margin-bottom: 24px;
-        }
-
-        .sidebar-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #8C8C8C;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .sidebar-nav-item {
-            padding: 10px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            color: #2C2C2C;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar-nav-item:hover {
-            background-color: #F7F4EF;
-        }
-
-        .sidebar-nav-item.active {
-            border-left: 3px solid #E8872A;
-            background-color: #FFF4E6;
-            color: #C05A1F;
-            padding-left: 9px;
-        }
-
-        .sidebar-divider {
-            height: 1px;
-            background-color: #E0DAD3;
-            margin: 24px 0;
-        }
-
-        .progress-panel {
-            padding: 16px;
-            background-color: #F7F4EF;
-            border-radius: 6px;
-            font-size: 13px;
-        }
-
-        .progress-label {
-            font-weight: 700;
-            color: #2C2C2C;
-            margin-bottom: 12px;
-            display: block;
-            font-size: 12px;
-        }
-
-        .progress-stat {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #E0DAD3;
-            color: #666;
-            font-size: 12px;
-        }
-
-        .progress-stat:last-child {
-            border-bottom: none;
-        }
-
-        .progress-value {
-            font-weight: 600;
-            color: #2C2C2C;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 220px;
-            padding: 40px;
-            flex: 1;
-        }
-
-        .page-header {
-            margin-bottom: 40px;
-        }
-
-        .page-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #2C2C2C;
-            margin-bottom: 8px;
-        }
-
-        .page-subtitle {
-            font-size: 15px;
-            color: #666;
-        }
-
-        /* Two Panel Layout */
-        .two-panel-layout {
-            display: grid;
-            grid-template-columns: 40% 60%;
-            gap: 32px;
-            align-items: start;
-        }
-
-        /* Left Panel: Search & Queue */
-        .search-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            height: fit-content;
-        }
-
-        .panel-card {
-            background-color: #FFFFFF;
-            border: 1px solid #E0DAD3;
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .panel-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #2C2C2C;
-            margin-bottom: 16px;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .search-input {
-            flex: 1;
-            border: 1px solid #E0DAD3;
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: 13px;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #E8872A;
-            box-shadow: 0 0 0 3px rgba(232,135,42,0.14);
-        }
-
-        .button-search {
-            background-color: #E8872A;
-            color: #FFFFFF;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .button-search:hover {
-            background-color: #C05A1F;
-        }
-
-        .active-query {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: #E0F2EE;
-            border: 1px solid #2A7868;
-            border-radius: 16px;
-            padding: 8px 12px;
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-
-        .active-query-text {
-            color: #2A7868;
-            font-weight: 600;
-        }
-
-        .active-query-remove {
-            color: #2A7868;
-            cursor: pointer;
-            font-weight: 700;
-            margin-left: 4px;
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 8px;
-            font-size: 12px;
-        }
-
-        .filter-select {
-            flex: 1;
-            border: 1px solid #E0DAD3;
-            border-radius: 4px;
-            padding: 6px;
-            font-size: 12px;
-            background-color: #FFFFFF;
-            cursor: pointer;
-        }
-
-        .results-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .result-card {
-            background-color: #F7F4EF;
-            border: 1px solid #E0DAD3;
-            border-radius: 6px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .result-card:hover {
-            border-color: #E8872A;
-            background-color: #FFF4E6;
-        }
-
-        .result-card.active {
-            border: 2px solid #E8872A;
-            background-color: #FFF4E6;
-            border-left: 4px solid #E8872A;
-        }
-
-        .result-title {
-            font-weight: 700;
-            font-size: 13px;
-            color: #2A7868;
-            margin-bottom: 4px;
-        }
-
-        .result-meta {
-            font-size: 11px;
-            color: #999;
-            margin-bottom: 8px;
-        }
-
-        .result-abstract {
-            font-size: 12px;
-            color: #666;
-            line-height: 1.4;
-            margin-bottom: 10px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .result-badges {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .badge {
-            background-color: #E0DAD3;
-            color: #2C2C2C;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .result-actions {
-            display: flex;
-            gap: 6px;
-        }
-
-        .button-small {
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .button-evaluate {
-            background-color: #E8872A;
-            color: #FFFFFF;
-            flex: 1;
-        }
-
-        .button-evaluate:hover {
-            background-color: #C05A1F;
-        }
-
-        .button-reject {
-            background-color: #FFFFFF;
-            color: #2C2C2C;
-            border: 1px solid #E0DAD3;
-            flex: 1;
-        }
-
-        .button-reject:hover {
-            border-color: #666;
-            background-color: #F7F4EF;
-        }
-
-        .queue-footer {
-            font-size: 12px;
-            color: #666;
-            text-align: center;
-            padding-top: 12px;
-            border-top: 1px solid #E0DAD3;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-
-        .pagination-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #E0DAD3;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .pagination-dot.active {
-            background-color: #E8872A;
-        }
-
-        /* Right Panel: Evaluation Form */
-        .eval-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-card {
-            background-color: #FFFFFF;
-            border: 1px solid #E0DAD3;
-            border-radius: 8px;
-            padding: 24px;
-        }
-
-        .form-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2C2C2C;
-            margin-bottom: 6px;
-        }
-
-        .form-subtitle {
-            font-size: 13px;
-            color: #2A7868;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .reference-display {
-            background-color: #F7F4EF;
-            border: 1px solid #E0DAD3;
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 20px;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-
-        .json-status-panel {
-            margin-top: 12px;
-            background: #FFF9F1;
-            border: 1px solid #E9D8BF;
-            border-radius: 6px;
-            padding: 12px;
-        }
-
-        .json-status-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #8D4A12;
-            margin-bottom: 8px;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        .json-status-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .json-status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #FFFFFF;
-            border: 1px solid #E1D3C4;
-            border-radius: 999px;
-            padding: 5px 10px;
-            font-size: 0.76rem;
-            color: #5B5146;
-        }
-
-        .json-status-note {
-            color: #74685A;
-            font-size: 0.82rem;
-        }
-
-        .layer-link-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .layer-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #F3EEE7;
-            border: 1px solid #E0DAD3;
-            border-radius: 999px;
-            padding: 7px 11px;
-            text-decoration: none;
-            color: #2C2C2C;
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-        }
-
-        .layer-link:hover {
-            border-color: #E8872A;
-            color: #C05A1F;
-            background: #FFF4E6;
-        }
-
-        .reference-doi {
-            color: #2A7868;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .reference-doi:hover {
-            color: #1D5450;
-        }
-
-        .abstract-toggle {
-            color: #2A7868;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 8px;
-            display: block;
-        }
-
-        .abstract-text {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #666;
-            line-height: 1.5;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .visual-gallery-panel {
-            margin-top: 14px;
-            padding: 12px;
-            background: #FBF8F2;
-            border: 1px solid #E7DDD0;
-            border-radius: 8px;
-        }
-
-        .visual-gallery-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #6B5D4D;
-            margin-bottom: 10px;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        .visual-gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-            gap: 12px;
-        }
-
-        .visual-thumb {
-            background: #FFFFFF;
-            border: 1px solid #E3D8CA;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .visual-thumb img {
-            display: block;
-            width: 100%;
-            height: 118px;
-            object-fit: cover;
-            background: #EDE6DA;
-        }
-
-        .visual-thumb-copy {
-            padding: 9px 10px;
-        }
-
-        .visual-thumb-title {
-            font-size: 0.76rem;
-            font-weight: 700;
-            color: #2C2C2C;
-            margin-bottom: 4px;
-            line-height: 1.35;
-        }
-
-        .visual-thumb-caption {
-            font-size: 0.73rem;
-            color: #6A635A;
-            line-height: 1.45;
-        }
-
-        .tech-results-panel {
-            margin-top: 12px;
-            padding: 12px;
-            background: #F3EFE7;
-            border: 1px solid #DFD4C5;
-            border-radius: 8px;
-        }
-
-        .tech-results-head {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .tech-results-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #5A4E41;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .tech-results-button {
-            appearance: none;
-            border: 1px solid #C29A63;
-            background: #FFF8EE;
-            color: #8A4E16;
-            border-radius: 999px;
-            padding: 7px 11px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .tech-results-summary,
-        .tech-results-caption {
-            font-size: 0.8rem;
-            color: #5D554C;
-            line-height: 1.55;
-        }
-
-        .tech-results-caption {
-            margin-top: 8px;
-        }
-
-        .visual-modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(16, 18, 20, 0.72);
-            z-index: 2200;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .visual-modal-overlay.open {
-            display: flex;
-        }
-
-        .visual-modal-box {
-            width: min(1040px, 96vw);
-            max-height: 92vh;
-            overflow: auto;
-            background: #FFFDF9;
-            border-radius: 12px;
-            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
-        }
-
-        .visual-modal-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 18px;
-            border-bottom: 1px solid #E7DDD0;
-        }
-
-        .visual-modal-title {
-            font-size: 0.98rem;
-            font-weight: 700;
-            color: #2C2C2C;
-        }
-
-        .visual-modal-close {
-            appearance: none;
-            border: none;
-            background: transparent;
-            font-size: 1.3rem;
-            color: #7B7064;
-            cursor: pointer;
-        }
-
-        .visual-modal-body {
-            padding: 18px;
-        }
-
-        .visual-modal-body img {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            background: #EDE6DA;
-        }
-
-        .visual-modal-caption {
-            margin-top: 12px;
-            font-size: 0.86rem;
-            color: #5A534B;
-            line-height: 1.65;
-        }
-
-        .form-section {
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid #E0DAD3;
-        }
-
-        .form-section:last-of-type {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #8C8C8C;
-            margin-bottom: 12px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .form-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #2C2C2C;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .radio-chip {
-            background-color: #F0E8DF;
-            border: 1px solid #E0DAD3;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-
-        .radio-chip:hover {
-            border-color: #E8872A;
-            background-color: #FFF4E6;
-        }
-
-        .radio-chip.active {
-            background-color: #E8872A;
-            color: #FFFFFF;
-            border-color: #E8872A;
-        }
-
-        .form-select {
-            border: 1px solid #E0DAD3;
-            border-radius: 6px;
-            padding: 10px;
-            font-size: 13px;
-            background-color: #FFFFFF;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
-        }
-
-        .form-select:focus {
-            outline: none;
-            border-color: #E8872A;
-            box-shadow: 0 0 0 3px rgba(232,135,42,0.14);
-        }
-
-        .form-input {
-            border: 1px solid #E0DAD3;
-            border-radius: 6px;
-            padding: 10px;
-            font-size: 13px;
-            font-family: Arial, sans-serif;
-            transition: border-color 0.2s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #E8872A;
-            box-shadow: 0 0 0 3px rgba(232,135,42,0.14);
-        }
-
-        .quality-rating {
-            display: flex;
-            gap: 8px;
-        }
-
-        .star {
-            font-size: 20px;
-            cursor: pointer;
-            color: #D0CCBF;
-            transition: color 0.2s ease;
-        }
-
-        .star:hover,
-        .star.active {
-            color: #E8872A;
-        }
-
-        .form-textarea {
-            border: 1px solid #E0DAD3;
-            border-radius: 6px;
-            padding: 10px;
-            font-size: 13px;
-            font-family: Arial, sans-serif;
-            resize: vertical;
-            transition: border-color 0.2s ease;
-        }
-
-        .form-textarea:focus {
-            outline: none;
-            border-color: #E8872A;
-            box-shadow: 0 0 0 3px rgba(232,135,42,0.14);
-        }
-
-        .chip-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .chip {
-            background-color: #F0E8DF;
-            border: 1px solid #E0DAD3;
-            padding: 8px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-
-        .chip:hover {
-            border-color: #E8872A;
-            background-color: #FFF4E6;
-        }
-
-        .chip.active {
-            background-color: #E8872A;
-            border-color: #E8872A;
-            color: #FFFFFF;
-        }
-
-        .submit-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #E0DAD3;
-        }
-
-        .button-primary {
-            background-color: #E8872A;
-            color: #FFFFFF;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            flex: 1;
-        }
-
-        .button-primary:hover {
-            background-color: #C05A1F;
-        }
-
-        .button-primary:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(232,135,42,0.14);
-        }
-
-        .button-secondary {
-            background-color: #FFFFFF;
-            border: 1px solid #E0DAD3;
-            color: #2C2C2C;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .button-secondary:hover {
-            border-color: #E8872A;
-            color: #E8872A;
-        }
-
-        .flag-link {
-            color: #2A7868;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .flag-link:hover {
-            color: #1D5450;
-        }
-
-        /* Version Badge */
-        .version-badge {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: #1C3D3A;
-            color: #A8C8BF;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-
-        /* Scrollbars */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #F7F4EF;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #D0CCBF;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #B8B0A0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — Knowledge Atlas</title>
+<meta name="description" content="Search and filter the Knowledge Atlas corpus of cognitive-neuroscience-for-architecture articles by year, title, authors, citation count, or evidentiary status.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+     background:#F7F4EF;color:#2C2C2C;line-height:1.55}
+main.ka-outer{max-width:1100px;margin:24px auto 80px;padding:0 24px}
+
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:16px;margin-bottom:20px}
+.ka-hero h1{font-family:Georgia,serif;font-size:1.9rem;color:#1C3D3A;margin-bottom:4px}
+.ka-hero p{color:#6B6B6B;font-size:.95rem;margin:0}
+
+/* Filter toolbar */
+.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;
+         padding:14px;background:#F9F5EE;border:1px solid #E0D8CC;
+         border-radius:10px;margin-bottom:18px;align-items:center}
+.toolbar input[type="search"],.toolbar select{padding:8px 10px;
+  border:1.5px solid #D8D0C5;border-radius:7px;font:inherit;font-size:.88rem;
+  background:#fff;width:100%}
+.toolbar input:focus,.toolbar select:focus{outline:none;border-color:#2A7868;
+  box-shadow:0 0 0 3px rgba(42,120,104,.15)}
+@media (max-width:760px){.toolbar{grid-template-columns:1fr 1fr}}
+
+.count-bar{display:flex;justify-content:space-between;align-items:center;
+           font-size:.84rem;color:#6B6B6B;margin-bottom:10px}
+.count-bar .count b{color:#1C3D3A;font-weight:700}
+.count-bar .sort{display:flex;align-items:center;gap:8px}
+
+/* Article rows */
+.results{display:flex;flex-direction:column;gap:10px}
+.art{background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;
+     padding:14px 18px;transition:all .15s}
+.art:hover{border-color:#2A7868;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.art h3{font-family:Georgia,serif;font-size:1.05rem;color:#1C3D3A;
+        font-weight:700;margin-bottom:4px;line-height:1.3}
+.art h3 a{color:#1C3D3A;text-decoration:none}
+.art h3 a:hover{color:#2A7868}
+.art .authors{font-size:.86rem;color:#2C2C2C;margin-bottom:4px}
+.art .meta{font-size:.78rem;color:#8A9A96;display:flex;gap:12px;flex-wrap:wrap;
+           margin-bottom:6px}
+.art .meta .citations{color:#E8872A;font-weight:700}
+.art .pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{display:inline-block;font-size:.66rem;font-weight:700;
+      padding:2px 8px;border-radius:10px;letter-spacing:.04em}
+.pill-en-strong{background:#E8F8F2;color:#1A7050}
+.pill-en-moderate{background:#FEF3E2;color:#9a5010}
+.pill-en-weak{background:#FEE4E4;color:#A02020}
+.pill-en-contested{background:#F3E8FE;color:#6B2FA0}
+.pill-t1{background:#EBF2F8;color:#1A56A0}
+
+.pagination{display:flex;justify-content:center;gap:6px;margin-top:20px}
+.pagination button{padding:6px 12px;border:1px solid #D8D0C5;background:#fff;
+                   border-radius:6px;cursor:pointer;font:inherit;font-size:.85rem;color:#2C2C2C}
+.pagination button:disabled{color:#8A9A96;cursor:not-allowed}
+.pagination button.active{background:#1C3D3A;color:#fff;border-color:#1C3D3A}
+
+.empty{padding:50px 20px;text-align:center;color:#6B6B6B;font-style:italic;
+       background:#fff;border:1px dashed #D8D0C5;border-radius:10px}
+
+.footer-cta{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:10px;
+            padding:16px 20px;margin-top:22px;font-size:.88rem}
+.footer-cta a{color:#2A7868;font-weight:600;text-decoration:none}
+</style>
 </head>
-<body>
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <div class="nav-wordmark">
-            <div class="nav-icon"></div>
-            <span>KNOWLEDGE</span>
-            <span class="nav-title">/ <span class="nav-title-accent">Atlas</span></span>
-        </div>
-        <div class="nav-center">
-            <a id="nav-shell-explore" href="ka_topics.html">Explore</a>
-            <a id="nav-shell-evidence" href="ka_evidence.html">Evidence</a>
-            <a id="nav-shell-gaps" href="ka_gaps.html">Gaps</a>
-            <a id="nav-shell-articles" href="ka_article_search.html">Articles</a>
-            <a id="nav-shell-contribute" href="ka_contribute.html" class="active">Contribute</a>
-            <a id="nav-shell-course" href="160sp/ka_student_setup.html">Course</a>
-        </div>
-        <div class="nav-right">
-            <select class="mode-select" id="articles-mode-select" aria-label="Switch user mode">
-                <option value="student_explorer">Student explorer</option>
-                <option value="researcher">Researcher</option>
-                <option value="contributor">Contributor</option>
-                <option value="instructor">Instructor</option>
-                <option value="practitioner">Practitioner</option>
-                <option value="theory_mechanism_explorer">Theory Explorer</option>
-            </select>
-            <div class="mode-pill" id="articles-mode-pill">CONTRIBUTOR</div>
-            <div class="profile-avatar" id="articles-profile-avatar">KA</div>
-        </div>
-    </div>
 
-    <!-- Page Container -->
-    <div class="page-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-section">
-                <span class="sidebar-label">Contributor Tasks</span>
-                <div class="sidebar-nav">
-                    <div class="sidebar-nav-item">Tag Images</div>
-                    <div class="sidebar-nav-item">Data Capture</div>
-                    <div class="sidebar-nav-item active">Find Articles</div>
-                    <div class="sidebar-nav-item">My Submissions</div>
-                </div>
-            </div>
+<body data-ka-regime="global"
+      data-ka-active="articles"
+      data-ka-crumbs='[["Home","ka_home.html"],["Articles",""]]'>
 
-            <div class="sidebar-divider"></div>
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
 
-            <div class="sidebar-section">
-                <span class="sidebar-label">My Progress This Week</span>
-                <div class="progress-panel">
-                    <span class="progress-label">Status</span>
-                    <div class="progress-stat">
-                        <span>Evaluated:</span>
-                        <span class="progress-value" id="articles-progress-evaluated">7 / 10</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span>Accepted:</span>
-                        <span class="progress-value" id="articles-progress-accepted">5 articles</span>
-                    </div>
-                    <div class="progress-stat">
-                        <span>Pending:</span>
-                        <span class="progress-value" id="articles-progress-pending">2 queue</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<main id="ka-main" class="ka-outer">
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">Find Articles</h1>
-                <p class="page-subtitle">Search for and evaluate scientific articles for inclusion in the Knowledge Atlas evidence base.</p>
-            </div>
+<div class="ka-hero">
+  <h1>Articles</h1>
+  <p>Search and filter the corpus. Evidentiary status (EN) reflects the
+     Atlas's Quinean coherentist grading. Click any title to open the
+     per-article PNU page.</p>
+</div>
 
-            <div class="two-panel-layout">
-                <!-- Left Panel: Search & Queue -->
-                <div class="search-panel">
-                    <div class="panel-card">
-                        <h2 class="panel-title">Search Queue</h2>
+<!-- Filter toolbar: search + year + citation + EN + sort -->
+<div class="toolbar">
+  <input type="search" id="search" placeholder="Search by title, author, DOI, or topic…">
+  <select id="yearFilter">
+    <option value="">Any year</option>
+    <option value="2024-2026">2024–2026</option>
+    <option value="2020-2023">2020–2023</option>
+    <option value="2015-2019">2015–2019</option>
+    <option value="2010-2014">2010–2014</option>
+    <option value="before-2010">Before 2010</option>
+  </select>
+  <select id="citationFilter">
+    <option value="">Any citations</option>
+    <option value="1000+">1,000+</option>
+    <option value="100-999">100–999</option>
+    <option value="10-99">10–99</option>
+    <option value="lt-10">&lt; 10</option>
+  </select>
+  <select id="enFilter">
+    <option value="">Any EN status</option>
+    <option value="strong">Strong</option>
+    <option value="moderate">Moderate</option>
+    <option value="weak">Weak</option>
+    <option value="contested">Contested</option>
+  </select>
+  <select id="sortBy">
+    <option value="year-desc">Newest first</option>
+    <option value="year-asc">Oldest first</option>
+    <option value="citations-desc">Most cited</option>
+    <option value="title">Title A–Z</option>
+  </select>
+</div>
 
-                        <div class="search-box">
-                            <input type="text" class="search-input" id="articles-search-input" placeholder="Search articles...">
-                            <button class="button-search" id="articles-search-button">Run Search →</button>
-                        </div>
+<div class="count-bar">
+  <span class="count"><b id="resultCount">—</b> articles</span>
+  <span style="font-size:.78rem;color:#8A9A96;">EN = Evidentiary Network status (Atlas grading)</span>
+</div>
 
-                        <div class="active-query">
-                            <span class="active-query-text" id="articles-active-query">workplace lighting AND cognitive performance</span>
-                            <span class="active-query-remove">✕</span>
-                        </div>
+<div class="results" id="results"></div>
 
-                        <div class="filter-row">
-                            <select class="filter-select">
-                                <option>Source: All</option>
-                                <option>PubMed</option>
-                                <option>Google Scholar</option>
-                                <option>Semantic Scholar</option>
-                            </select>
-                            <select class="filter-select">
-                                <option>Year: Any</option>
-                                <option>Last 5 years</option>
-                                <option>Last 10 years</option>
-                            </select>
-                            <select class="filter-select">
-                                <option>Study Type: All</option>
-                                <option>RCT</option>
-                                <option>Observational</option>
-                                <option>Review</option>
-                            </select>
-                        </div>
+<div class="pagination" id="pagination"></div>
 
-                        <div class="pagination">
-                            <div class="pagination-dot active"></div>
-                            <div class="pagination-dot"></div>
-                            <div class="pagination-dot"></div>
-                        </div>
+<div class="footer-cta">
+  Missing a paper that should be here? <a href="ka_contribute.html">Propose an article →</a>
+</div>
 
-                        <div class="results-list" id="articles-results-list">
-                            <!-- Result 1 - Active -->
-                            <div class="result-card active">
-                                <div class="result-title">A review of research into visual discomfort</div>
-                                <div class="result-meta">Viola et al. (2008) • Ergonomics 51(7)</div>
-                                <div class="result-abstract">Investigates the effects of lighting on visual strain and cognitive performance in office environments...</div>
-                                <div class="result-badges">
-                                    <span class="badge">Review</span>
-                                    <span class="badge">2008</span>
-                                </div>
-                                <div class="result-actions">
-                                    <button class="button-small button-evaluate">Evaluate →</button>
-                                    <button class="button-small button-reject">Reject</button>
-                                </div>
-                            </div>
+</main>
 
-                            <!-- Result 2 -->
-                            <div class="result-card">
-                                <div class="result-title">Impact of Natural Lighting on Attention Tasks</div>
-                                <div class="result-meta">Boubekri et al. (2014) • Journal of Environmental Psychology</div>
-                                <div class="result-abstract">Field study examining how windows and natural daylight exposure affect sustained attention and cognitive performance...</div>
-                                <div class="result-badges">
-                                    <span class="badge">Field Study</span>
-                                    <span class="badge">2014</span>
-                                </div>
-                                <div class="result-actions">
-                                    <button class="button-small button-evaluate">Evaluate →</button>
-                                    <button class="button-small button-reject">Reject</button>
-                                </div>
-                            </div>
-
-                            <!-- Result 3 -->
-                            <div class="result-card">
-                                <div class="result-title">The Attentional Blink: A Window on Temporal Attention</div>
-                                <div class="result-meta">Pashler (1994) • Psychological Bulletin</div>
-                                <div class="result-abstract">Meta-analysis of dual-task paradigms revealing temporal constraints in human attention and information processing...</div>
-                                <div class="result-badges">
-                                    <span class="badge">Meta-analysis</span>
-                                    <span class="badge">1994</span>
-                                </div>
-                                <div class="result-actions">
-                                    <button class="button-small button-evaluate">Evaluate →</button>
-                                    <button class="button-small button-reject">Reject</button>
-                                </div>
-                            </div>
-
-                            <!-- Result 4 -->
-                            <div class="result-card">
-                                <div class="result-title">Estimating the reproducibility of psychological science</div>
-                                <div class="result-meta">Open Science Collaboration (2015) • Science 349(6251)</div>
-                                <div class="result-abstract">Large-scale replication study assessing the reproducibility of results from top-tier psychology journals...</div>
-                                <div class="result-badges">
-                                    <span class="badge">RCT</span>
-                                    <span class="badge">2015</span>
-                                </div>
-                                <div class="result-actions">
-                                    <button class="button-small button-evaluate">Evaluate →</button>
-                                    <button class="button-small button-reject">Reject</button>
-                                </div>
-                            </div>
-
-                            <!-- Result 5 -->
-                            <div class="result-card">
-                                <div class="result-title">Circadian rhythms and cognitive performance in shift work</div>
-                                <div class="result-meta">Goel et al. (2009) • Sleep Medicine Reviews</div>
-                                <div class="result-abstract">Review examining how lighting conditions and circadian disruption affect workplace cognitive performance...</div>
-                                <div class="result-badges">
-                                    <span class="badge">Review</span>
-                                    <span class="badge">2009</span>
-                                </div>
-                                <div class="result-actions">
-                                    <button class="button-small button-evaluate">Evaluate →</button>
-                                    <button class="button-small button-reject">Reject</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="queue-footer" id="articles-queue-footer">
-                            My queue: 3 pending evaluation
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Panel: Evaluation Form -->
-                <div class="eval-panel">
-                    <div class="form-card">
-                        <h2 class="form-title">Evaluate Article</h2>
-                        <p class="form-subtitle" id="articles-form-subtitle">A review of research into visual discomfort</p>
-
-                        <div class="reference-display" id="articles-reference-display">
-                            <strong>Viola et al. (2008)</strong>. A review of research into visual discomfort. <em>Ergonomics</em>, 51(7), 1041-1066.
-                            <div style="margin-top: 8px;">DOI: <a class="reference-doi" href="https://doi.org/10.1080/00140130802283516" target="_blank" rel="noopener">10.1080/00140130802283516</a></div>
-                            <a class="abstract-toggle" id="articles-abstract-toggle">Expand abstract</a>
-                        </div>
-
-                        <!-- Section 1: Relevance -->
-                        <div class="form-section">
-                            <div class="section-title">SECTION 1 — RELEVANCE</div>
-
-                            <div class="form-group">
-                                <label class="form-label">Is this article relevant to Knowledge Atlas?</label>
-                                <div class="radio-group">
-                                    <div class="radio-chip active">Yes</div>
-                                    <div class="radio-chip">No</div>
-                                    <div class="radio-chip">Borderline</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Domain Tags</label>
-                                <div class="chip-group">
-                                    <div class="chip active">Lighting</div>
-                                    <div class="chip active">Vision</div>
-                                    <div class="chip">Cognition</div>
-                                    <div class="chip">Workplace</div>
-                                    <div class="chip">Health</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 2: Study Quality -->
-                        <div class="form-section">
-                            <div class="section-title">SECTION 2 — STUDY QUALITY</div>
-
-                            <div class="form-group">
-                                <label class="form-label">Study Type</label>
-                                <select class="form-select">
-                                    <option>Select study type</option>
-                                    <option>RCT</option>
-                                    <option>Quasi-experiment</option>
-                                    <option>Observational</option>
-                                    <option selected>Review</option>
-                                    <option>Meta-analysis</option>
-                                    <option>Case Study</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Sample Size (if applicable)</label>
-                                <input type="number" class="form-input" placeholder="Enter sample size">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Quality Rating (5-star)</label>
-                                <div class="quality-rating">
-                                    <span class="star active">●</span>
-                                    <span class="star active">●</span>
-                                    <span class="star active">●</span>
-                                    <span class="star active">●</span>
-                                    <span class="star">○</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Known Limitations</label>
-                                <textarea class="form-textarea" rows="2" placeholder="Describe any known limitations or biases..."></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Section 3: Evidence Classification -->
-                        <div class="form-section">
-                            <div class="section-title">SECTION 3 — EVIDENCE CLASSIFICATION</div>
-
-                            <div class="form-group">
-                                <label class="form-label">Primary Claim (one sentence)</label>
-                                <textarea class="form-textarea" id="articles-primary-claim" rows="2" placeholder="Summarize the main empirical claim..."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Outcome Measure</label>
-                                <input type="text" class="form-input" id="articles-outcome-measure" placeholder="e.g., visual strain rating, reaction time, accuracy">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Direction of Evidence</label>
-                                <div class="radio-group">
-                                    <div class="radio-chip">Supports KA belief</div>
-                                    <div class="radio-chip">Contradicts KA belief</div>
-                                    <div class="radio-chip active">Ambiguous</div>
-                                    <div class="radio-chip">New claim</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 4: Recommendation -->
-                        <div class="form-section">
-                            <div class="section-title">SECTION 4 — RECOMMENDATION</div>
-
-                            <div class="form-group">
-                                <label class="form-label">Recommendation</label>
-                                <div class="radio-group">
-                                    <div class="radio-chip">Accept for KA</div>
-                                    <div class="radio-chip active">Accept with caveats</div>
-                                    <div class="radio-chip">Reject</div>
-                                    <div class="radio-chip">Needs expert review</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Notes for Reviewer</label>
-                                <textarea class="form-textarea" rows="2" placeholder="Add any final notes or concerns..."></textarea>
-                            </div>
-                        </div>
-
-                        <div class="submit-row">
-                            <button class="button-primary">Submit Evaluation →</button>
-                            <button class="button-secondary">Save Draft</button>
-                            <a class="flag-link">Flag for Instructor</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Version Badge -->
-    <div class="version-badge">KA UI · v0.4</div>
-
-    <div class="visual-modal-overlay" id="visual-modal-overlay" onclick="closeVisualModal(event)">
-        <div class="visual-modal-box" onclick="event.stopPropagation()">
-            <div class="visual-modal-head">
-                <div class="visual-modal-title" id="visual-modal-title">Visual support</div>
-                <button class="visual-modal-close" onclick="closeVisualModal()">×</button>
-            </div>
-            <div class="visual-modal-body">
-                <img id="visual-modal-image" src="" alt="Visual support">
-                <div class="visual-modal-caption" id="visual-modal-caption"></div>
-            </div>
-        </div>
-    </div>
-
-    <script src="data/ka_payloads/workflow.js"></script>
-    <script src="ka_workflow_store.js"></script>
-    <script>
-        let contributorArticles = [];
-        let filteredContributorArticles = [];
-        let selectedContributorArticle = null;
-        let articleAbstractExpanded = false;
-
-        function getContributorIdentity() {
-            return window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.currentUser() : null;
-        }
-
-        function getContributorStore() {
-            return window.KA_WORKFLOW_STORE ? window.KA_WORKFLOW_STORE.intakeSubmissions() : [];
-        }
-
-        function selectContributorArticle(paperId) {
-            selectedContributorArticle = filteredContributorArticles.find(article => article.paper_id === paperId) || filteredContributorArticles[0] || null;
-            articleAbstractExpanded = false;
-            renderContributorArticles();
-            renderContributorDetail();
-        }
-
-        function renderContributorArticles() {
-            const list = document.getElementById('articles-results-list');
-            if (!list) return;
-            list.innerHTML = filteredContributorArticles.slice(0, 8).map(article => {
-                const isActive = selectedContributorArticle && selectedContributorArticle.paper_id === article.paper_id;
-                const abstract = (article.abstract || 'Abstract not yet recovered from the current rebuild.').slice(0, 180);
-                const arg = article.argumentation_summary || {};
-                const primaryTopic = article.primary_topic || ((article.primary_front || {}).name) || '';
-                return `
-                    <div class="result-card ${isActive ? 'active' : ''}" data-paper-id="${article.paper_id}">
-                        <div class="result-title">${article.title}</div>
-                        <div class="result-meta">${article.paper_id} · ${(article.article_type || 'Unknown').replace(/_/g, ' ')}</div>
-                        <div class="result-abstract">${abstract}${abstract.length >= 180 ? '…' : ''}</div>
-                        <div class="result-badges">
-                            <span class="badge">${(article.article_type || 'Unknown').replace(/_/g, ' ')}</span>
-                            <span class="badge">${article.claim_count} claims</span>
-                            ${primaryTopic ? `<span class="badge">Topic: ${primaryTopic}</span>` : ''}
-                            ${article.sample_n ? `<span class="badge">N=${article.sample_n}</span>` : ''}
-                            ${article.direction ? `<span class="badge">Direction: ${String(article.direction).replace(/_/g, ' ')}</span>` : ''}
-                            ${article.sensor_summary ? `<span class="badge">Sensors</span>` : ''}
-                            ${arg.direct_attack_edges ? `<span class="badge">Attacks ${arg.direct_attack_edges}</span>` : ''}
-                        </div>
-                        <div class="result-actions">
-                            <button class="button-small button-evaluate" onclick="event.stopPropagation();selectContributorArticle('${article.paper_id}')">Evaluate →</button>
-                            <button class="button-small button-reject">Reject</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            list.querySelectorAll('.result-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    selectContributorArticle(this.getAttribute('data-paper-id'));
-                });
-            });
-        }
-
-        function escapeHtml(value) {
-            return String(value || '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
-
-        function renderVisualSupportGallery(article) {
-            const gallery = Array.isArray(article.visual_support_gallery) ? article.visual_support_gallery : [];
-            if (!gallery.length) return '';
-            const tiles = gallery.map((item, index) => `
-                <div class="visual-thumb" onclick="openVisualModal('${article.paper_id}', ${index})">
-                    <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.atlas_title || `Visual support ${index + 1}`)}">
-                    <div class="visual-thumb-copy">
-                        <div class="visual-thumb-title">${escapeHtml(item.atlas_title || `Visual support ${index + 1}`)}</div>
-                        <div class="visual-thumb-caption">${escapeHtml(item.atlas_caption || '')}</div>
-                    </div>
-                </div>
-            `).join('');
-            return `
-                <div class="visual-gallery-panel">
-                    <div class="visual-gallery-title">Visual Support Gallery</div>
-                    <div class="visual-gallery-grid">${tiles}</div>
-                </div>
-            `;
-        }
-
-        function renderTechnicalResultsTable(article) {
-            const tech = article.technical_results_table || {};
-            if (!tech.image_url && !tech.summary && !tech.caption) return '';
-            return `
-                <div class="tech-results-panel">
-                    <div class="tech-results-head">
-                        <div class="tech-results-title">Technical Results Surface</div>
-                        ${tech.image_url ? `<button class="tech-results-button" onclick="openTechnicalResultsTable('${article.paper_id}')">Open results table</button>` : ''}
-                    </div>
-                    ${tech.summary ? `<div class="tech-results-summary">${escapeHtml(tech.summary)}</div>` : ''}
-                    ${tech.caption ? `<div class="tech-results-caption">${escapeHtml(tech.caption)}</div>` : ''}
-                </div>
-            `;
-        }
-
-        function openVisualModal(paperId, index) {
-            const article = contributorArticles.find(row => row.paper_id === paperId);
-            const item = article && Array.isArray(article.visual_support_gallery) ? article.visual_support_gallery[index] : null;
-            if (!item) return;
-            document.getElementById('visual-modal-title').textContent = item.atlas_title || `${paperId} visual`;
-            document.getElementById('visual-modal-image').src = item.image_url || '';
-            document.getElementById('visual-modal-image').alt = item.atlas_title || `${paperId} visual`;
-            document.getElementById('visual-modal-caption').textContent = item.atlas_caption || '';
-            document.getElementById('visual-modal-overlay').classList.add('open');
-        }
-
-        function openTechnicalResultsTable(paperId) {
-            const article = contributorArticles.find(row => row.paper_id === paperId);
-            const item = article ? (article.technical_results_table || {}) : null;
-            if (!item || !item.image_url) return;
-            document.getElementById('visual-modal-title').textContent = item.title || `${paperId} technical results surface`;
-            document.getElementById('visual-modal-image').src = item.image_url || '';
-            document.getElementById('visual-modal-image').alt = item.title || `${paperId} technical results surface`;
-            document.getElementById('visual-modal-caption').textContent = item.caption || item.summary || '';
-            document.getElementById('visual-modal-overlay').classList.add('open');
-        }
-
-        function closeVisualModal(event) {
-            const overlay = document.getElementById('visual-modal-overlay');
-            if (event && event.target !== overlay) return;
-            overlay.classList.remove('open');
-        }
-
-        function renderContributorDetail() {
-            const article = selectedContributorArticle || filteredContributorArticles[0];
-            if (!article) return;
-            const subtitle = document.getElementById('articles-form-subtitle');
-            const reference = document.getElementById('articles-reference-display');
-            const claim = document.getElementById('articles-primary-claim');
-            const outcome = document.getElementById('articles-outcome-measure');
-            subtitle.textContent = article.title;
-            const abstractText = article.abstract || 'Abstract not yet recovered from the current rebuild.';
-            const abstractVisible = articleAbstractExpanded ? abstractText : abstractText.slice(0, 260) + (abstractText.length > 260 ? '…' : '');
-            const mainConclusion = article.main_conclusion ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F7F4EF; border-left: 3px solid #E8872A; color: #4E453C; line-height: 1.6;"><strong>Working conclusion:</strong> ${article.main_conclusion}</div>` : '';
-            const constructPair = article.construct_pair || {};
-            const constructPairHtml = (constructPair.comparison || constructPair.outcome)
-                ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F4F0E8; border-left: 3px solid #6E8B63; color: #3E4239; line-height: 1.6;"><strong>Working construct pair:</strong> ${constructPair.comparison || 'Unknown comparison'} -> ${constructPair.outcome || 'Unknown outcome'}</div>`
-                : '';
-            const directionHtml = article.direction
-                ? `<div style="margin-top: 10px; padding: 10px 12px; background: #F6F1EA; border-left: 3px solid #7A5C3E; color: #4E453C; line-height: 1.6;"><strong>Working direction:</strong> ${String(article.direction).replace(/_/g, ' ')}</div>`
-                : '';
-            const galleryHtml = renderVisualSupportGallery(article);
-            const technicalResultsHtml = renderTechnicalResultsTable(article);
-            const jsonStatus = article.json_status || {};
-            const repairSource = jsonStatus.repair_source || article.repair_source || 'rebuild';
-            const encodedPaperId = encodeURIComponent(article.paper_id);
-            const encodedTitle = encodeURIComponent(article.title || article.paper_id);
-            const primaryTopic = article.primary_topic || ((article.primary_front || {}).name) || 'Topic not yet assigned';
-            const frontList = (article.fronts || []).map(front => front.name).filter(Boolean);
-            const frontHtml = `
-                <div style="margin-top: 10px; padding: 10px 12px; background: #F3F6F2; border-left: 3px solid #6E8B63; color: #3E4239; line-height: 1.6;">
-                    <strong>Topic:</strong> ${primaryTopic}
-                    ${frontList.length ? `<div style="margin-top:6px;"><strong>Research fronts:</strong> ${frontList.join(', ')}</div>` : ''}
-                </div>
-            `;
-            const sensorHtml = article.sensor_summary ? `
-                <div style="margin-top: 10px; padding: 10px 12px; background: #EEF4F7; border-left: 3px solid #4D7A8A; color: #30464E; line-height: 1.6;">
-                    <strong>Sensor / method signal:</strong> ${article.sensor_summary}
-                </div>
-            ` : '';
-            const arg = article.argumentation_summary || {};
-            const argHtml = `
-                <div style="margin-top: 10px; padding: 10px 12px; background: #F8F2EC; border-left: 3px solid #A46C3A; color: #4E453C; line-height: 1.6;">
-                    <strong>Argumentation summary:</strong> ${arg.direct_support_edges || 0} support edges, ${arg.direct_attack_edges || 0} attack edges, ${arg.contested_claim_count || 0} contested claims, ${arg.search_target_count || 0} active search targets.
-                    ${(arg.top_attack_schemes || []).length ? `<div style="margin-top:6px;"><strong>Top attack schemes:</strong> ${(arg.top_attack_schemes || []).join(', ')}</div>` : ''}
-                </div>
-            `;
-            const relatedHtml = (article.related_papers || []).length ? `
-                <div style="margin-top: 10px; padding: 10px 12px; background: #F4F0E8; border-left: 3px solid #7A5C3E; color: #4E453C; line-height: 1.6;">
-                    <strong>Related papers:</strong>
-                    <div style="margin-top:6px;">${article.related_papers.slice(0, 4).map(item => `${item.paper_id} — ${item.title} (${item.reason})`).join('<br>')}</div>
-                </div>
-            ` : '';
-            reference.innerHTML = `
-                <strong>${article.paper_id}</strong>. ${article.title}. <em>${(article.article_type || 'Unknown').replace(/_/g, ' ')}</em>
-                <div style="margin-top: 8px;">DOI: ${article.doi ? `<a class="reference-doi" href="https://doi.org/${article.doi}" target="_blank" rel="noopener noreferrer">${article.doi}</a>` : 'Not yet recovered'}</div>
-                <div style="margin-top: 10px; color: #666; line-height: 1.6;">${abstractVisible}</div>
-                ${mainConclusion}
-                ${constructPairHtml}
-                ${directionHtml}
-                ${frontHtml}
-                ${sensorHtml}
-                ${argHtml}
-                ${relatedHtml}
-                <div class="layer-link-row">
-                    <a class="layer-link" href="ka_argumentation.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Argumentation view</a>
-                    <a class="layer-link" href="ka_annotations.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Annotation view</a>
-                    <a class="layer-link" href="ka_interpretation.html?paper_id=${encodedPaperId}&title=${encodedTitle}">Interpretation view</a>
-                </div>
-                <a class="abstract-toggle" id="articles-abstract-toggle">${articleAbstractExpanded ? 'Collapse abstract' : 'Expand abstract'}</a>
-                ${galleryHtml}
-                ${technicalResultsHtml}
-                <div class="json-status-panel">
-                    <div class="json-status-title">JSON Repair Status</div>
-                    <div class="json-status-badges">
-                        <span class="json-status-badge"><strong>Title</strong> ${jsonStatus.title || 'unknown'}</span>
-                        <span class="json-status-badge"><strong>DOI</strong> ${jsonStatus.doi || 'unknown'}</span>
-                        <span class="json-status-badge"><strong>Abstract</strong> ${jsonStatus.abstract || 'unknown'}</span>
-                        <span class="json-status-badge"><strong>Conclusion</strong> ${jsonStatus.main_conclusion || 'unknown'}</span>
-                        <span class="json-status-badge"><strong>Subjects</strong> ${jsonStatus.subject_count_total || 'unknown'}</span>
-                        <span class="json-status-badge"><strong>Construct Pair</strong> ${jsonStatus.construct_pair || 'unknown'}</span>
-                        <span class="json-status-badge"><strong>Direction</strong> ${jsonStatus.direction || 'unknown'}</span>
-                    </div>
-                    <div class="json-status-note">Repair source: ${repairSource}. This record stays visibly provisional until all weak JSON fields are repaired.</div>
-                </div>
-            `;
-            claim.value = `${article.title} appears relevant because it contributes ${article.claim_count} extracted claims to the current rebuild.`;
-            outcome.value = (article.constructs && article.constructs[0]) || (article.theories && article.theories[0]) || '';
-            const toggle = document.getElementById('articles-abstract-toggle');
-            if (toggle) {
-                toggle.addEventListener('click', function() {
-                    articleAbstractExpanded = !articleAbstractExpanded;
-                    renderContributorDetail();
-                });
-            }
-        }
-
-        function syncContributorProgress() {
-            const currentUser = getContributorIdentity();
-            const rows = getContributorStore();
-            const mine = currentUser && currentUser.id ? rows.filter(row => row.userId === currentUser.id) : [];
-            document.getElementById('articles-progress-evaluated').textContent = `${mine.length} / 10`;
-            document.getElementById('articles-progress-accepted').textContent = `${mine.filter(row => row.status === 'approved').length} articles`;
-            document.getElementById('articles-progress-pending').textContent = `${mine.filter(row => row.status === 'pending').length} queue`;
-            document.getElementById('articles-queue-footer').textContent = mine.length
-                ? `My queue: ${mine.filter(row => row.status === 'pending').length} pending evaluation`
-                : 'My queue: no tracked submissions yet';
-            if (currentUser) {
-                const initials = `${currentUser.firstName?.[0] || 'K'}${currentUser.lastName?.[0] || 'A'}`.toUpperCase();
-                document.getElementById('articles-profile-avatar').textContent = initials;
-            }
-        }
-
-        function applyContributorSearch() {
-            const query = document.getElementById('articles-search-input').value.trim().toLowerCase();
-            document.getElementById('articles-active-query').textContent = query || 'Top rebuild-backed contributor candidates';
-            filteredContributorArticles = contributorArticles.filter(article => {
-                if (!query) return true;
-                const blob = [
-                    article.title,
-                    article.paper_id,
-                    article.article_type,
-                    article.primary_topic,
-                    ...(article.constructs || []),
-                    ...(article.theories || []),
-                    ...(article.instruments || []),
-                    ...(article.fronts || []).map(front => front.name || ''),
-                    article.sensor_summary || '',
-                ].join(' ').toLowerCase();
-                return blob.includes(query);
-            });
-            if (!filteredContributorArticles.length) {
-                filteredContributorArticles = contributorArticles.slice(0, 8);
-            }
-            selectContributorArticle(filteredContributorArticles[0]?.paper_id);
-        }
-
-        async function initializeContributorArticlesPage() {
-            const payload = await window.KA_PAYLOADS.loadWithFallback('data/ka_payloads/articles.json', { articles: [] });
-            contributorArticles = payload.articles && payload.articles.length ? payload.articles : [];
-            filteredContributorArticles = contributorArticles.slice(0, 8);
-            syncContributorProgress();
-            renderContributorArticles();
-            renderContributorDetail();
-        }
-
-        // Handle radio chips
-        document.querySelectorAll('.radio-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
-                const group = this.parentElement;
-                group.querySelectorAll('.radio-chip').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        document.querySelectorAll('.chip-group .chip').forEach(chip => {
-            chip.addEventListener('click', function() {
-                this.classList.toggle('active');
-            });
-        });
-
-        document.querySelectorAll('.quality-rating .star').forEach((star, index) => {
-            star.addEventListener('click', function() {
-                document.querySelectorAll('.quality-rating .star').forEach((s, i) => {
-                    if (i <= index) {
-                        s.textContent = '●';
-                        s.classList.add('active');
-                    } else {
-                        s.textContent = '○';
-                        s.classList.remove('active');
-                    }
-                });
-            });
-        });
-
-        document.getElementById('articles-search-button').addEventListener('click', applyContributorSearch);
-        document.getElementById('articles-search-input').addEventListener('input', applyContributorSearch);
-    </script>
-
-<footer class="ka-page-footer" style="background:#1C3D3A; padding:28px 32px; margin-top:40px; display:flex; justify-content:space-between; align-items:center; border-radius:8px 8px 0 0;">
-  <a href="ka_user_home.html" style="color:#A8C8BF; font-size:0.85rem; text-decoration:none;">← Back to My ATLAS</a>
-  <div style="display:flex; gap:12px;">
-    <a href="ka_evidence.html" style="background:#2A7868; color:#F7F4EF; padding:8px 18px; border-radius:6px; text-decoration:none; font-size:0.85rem; font-weight:600;">View Evidence →</a>
-  </div>
-</footer>
-
-<script src="ka_acronyms.js"></script>
-<script src="ka_mode_switch.js"></script>
-<script src="ka_site_shell.js"></script>
-<script src="ka_data_adapter.js"></script>
 <script>
-window.KA_SHELL.initShell({
-  navContainerSelector: '.nav-center',
-  modeSelectId: 'articles-mode-select',
-  modePillId: 'articles-mode-pill',
-  defaultMode: 'contributor'
-});
-initializeContributorArticlesPage();
-</script>
-<script>
-window.KA_PAGE_FUNCTION = {
-  pageId: 'ka_articles',
-  title: 'Article Management — Contributor Tool',
-  audience: 'Track 2 contributors: students assigned to find, evaluate, and annotate articles from the scientific literature',
-  purpose: 'The contributor interface for the article-finding and evaluation pipeline. Track 2 contributors are assigned articles to evaluate for relevance, extract key metadata (DOI [Digital Object Identifier], construct tags, study type, sample size), and flag methodological concerns. This feeds the articles table that the Article Search and Evidence Browser draw from. Note: this page is distinct from Article Search (ka_article_search.html), which is for researchers finding literature, not contributors managing it.',
-  workflowPos: 'Contributor workflow: log in → dashboard → article assignments appear → evaluate articles → submit evaluations → dashboard updates. Parallel to image tagging (Track 1).',
-  notFor: 'Searching for articles by construct or instrument (use Article Search). Browsing processed evidence nodes (use Evidence Browser). Hypothesis building.',
-  phase: 'Phase 3 — User Management + Contributor Pipeline (assignment allocation and evaluation submission writes)',
-  evalQuestions: [
-    'Is the distinction between this page (contributor management) and Article Search (researcher discovery) clear?',
-    'Is the article evaluation form asking for the right metadata — is any field unnecessary or missing?',
-    'Are contributors given enough context to judge relevance — do they know what constructs and signals the KA corpus needs most?',
-    'Is the workflow from "assigned article" to "submitted evaluation" fast enough to be feasible in a study session?',
-    'Does the page communicate progress — how many articles remain in the assignment queue?'
-  ]
-};
-</script>
-<script src="ka_page_function.js"></script><script>
-window.KA_ABOUT_PAGE = {
-  pageId: 'ka_articles',
-  objective: "The master library of articles in the Knowledge Atlas corpus, showing curation status, annotation progress, and linked claims for each entry.",
-  users: "All contributors; instructors reviewing corpus coverage",
-  uses: [
-    "Browse the full article library with status indicators (pending, in-review, annotated)",
-    "Open an article record to see its linked claims and annotations",
-    "Initiate a new annotation or flag an article for quality review",
-    "Filter by track relevance (T1 tagging queue, T2 finding queue)"
-  ]
-};
-</script>
-<script src="ka_about_page.js"></script>
-<script src="ka_ui_fixes.js"></script>
+/* ─────────────────────────────────────────────────────────────
+   Articles — minimal, clean, search-and-filter.
+   Loads from data/ka_payloads/articles.json in production.
+   For this demo, seed a representative sample inline.
+   ───────────────────────────────────────────────────────────── */
 
+const SAMPLE_ARTICLES = [
+  {id:'PDF-0001', title:'Attention restoration theory: Forty years of research', authors:'Kaplan, R.', year:2020, citations:420, en:'strong',  t1:['PP','SN','DP'], doi:'10.1038/nature...'},
+  {id:'PDF-0042', title:'Predictive coding in the visual cortex', authors:'Rao, R. P. N., Ballard, D. H.', year:1999, citations:8200, en:'strong',  t1:['PP'], doi:'10.1038/4580'},
+  {id:'PDF-0103', title:'Effects of daylight access on office-worker alertness and sleep quality', authors:'Figueiro, M. G., et al.', year:2017, citations:520, en:'strong',  t1:['CB'], doi:'10.1016/j.slee.2017'},
+  {id:'PDF-0147', title:'Ceiling height and construal: A replication attempt', authors:'Meyers-Levy, J., Zhu, R., & Novotny, M.', year:2022, citations:45, en:'contested', t1:['EC','PP'], doi:'10.1037/xge...'},
+  {id:'PDF-0199', title:'The locus coeruleus: A new look at the blue spot', authors:'Poe, G. R., et al.', year:2020, citations:520, en:'strong',  t1:['NM','SN'], doi:'10.1038/s41583-020-0360-9'},
+  {id:'PDF-0278', title:'Biophilic design and stress recovery in office environments', authors:'Lee, K. E., et al.', year:2015, citations:890, en:'moderate', t1:['NM','IC'], doi:'10.1016/j.jenvp.2014'},
+  {id:'PDF-0412', title:'Multisensory integration in architectural perception', authors:'Djebbara, Z., et al.', year:2021, citations:140, en:'moderate', t1:['MS','PP'], doi:'10.1016/j.neubiorev.2021'},
+  {id:'PDF-0535', title:'Navigating cognition: Spatial codes for human thinking', authors:'Bellmund, J. L. S., et al.', year:2018, citations:780, en:'strong',  t1:['DP'], doi:'10.1126/science.aat6766'},
+  {id:'PDF-0590', title:'Great expectations: Is there evidence for predictive coding in auditory cortex?', authors:'Heilbron, M., Chait, M.', year:2018, citations:390, en:'strong',  t1:['PP'], doi:'10.1016/j.neuroscience.2017.07.061'},
+  {id:'PDF-0676', title:'Warmth priming and prosocial behaviour: A multi-lab replication', authors:'Chabris, C. F., et al.', year:2019, citations:220, en:'weak',     t1:['IC'], doi:'10.1177/2515245918784...'},
+  {id:'PDF-0750', title:'Peripersonal space as a multisensory interface', authors:'Serino, A.', year:2019, citations:300, en:'strong',  t1:['EC','MS'], doi:'10.1016/j.neubiorev.2019.01.016'},
+  {id:'PDF-0812', title:'Circadian misalignment and cognitive performance in shift workers', authors:'Walker, W. H., et al.', year:2020, citations:700, en:'strong',  t1:['CB','DT'], doi:'10.1038/s41398-020-0694-0'},
+  {id:'PDF-0880', title:'Aesthetic response and salience network activity in architectural stimuli', authors:'Vartanian, O., et al.', year:2013, citations:320, en:'moderate', t1:['SN','IC'], doi:'10.1073/pnas...'},
+  {id:'PDF-0901', title:'The cybernetic Bayesian brain: Interoceptive inference', authors:'Seth, A. K.', year:2019, citations:800, en:'strong',  t1:['IC','PP'], doi:'10.1098/rstb...'},
+  {id:'PDF-0943', title:'Wayfinding in hospital environments: An ethnographic study', authors:'Chen, W., Peng, C.', year:2012, citations:65, en:'moderate', t1:['DP','EC'], doi:'10.1016/j.applergo'},
+];
+
+let PAGE_SIZE = 10;
+let currentPage = 1;
+let filtered = [];
+
+const $ = sel => document.querySelector(sel);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+
+function applyFilters(){
+  const q = $('#search').value.trim().toLowerCase();
+  const yr = $('#yearFilter').value;
+  const cite = $('#citationFilter').value;
+  const en = $('#enFilter').value;
+  const sort = $('#sortBy').value;
+
+  filtered = SAMPLE_ARTICLES.filter(a => {
+    if (q){
+      const hay = (a.title + ' ' + a.authors + ' ' + a.doi + ' ' + (a.t1||[]).join(' ')).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    if (yr){
+      const y = a.year;
+      if (yr === '2024-2026'   && !(y >= 2024 && y <= 2026)) return false;
+      if (yr === '2020-2023'   && !(y >= 2020 && y <= 2023)) return false;
+      if (yr === '2015-2019'   && !(y >= 2015 && y <= 2019)) return false;
+      if (yr === '2010-2014'   && !(y >= 2010 && y <= 2014)) return false;
+      if (yr === 'before-2010' && !(y < 2010)) return false;
+    }
+    if (cite){
+      const c = a.citations;
+      if (cite === '1000+'  && c < 1000)                    return false;
+      if (cite === '100-999' && (c < 100 || c > 999))       return false;
+      if (cite === '10-99'  && (c < 10  || c > 99))         return false;
+      if (cite === 'lt-10'  && c >= 10)                     return false;
+    }
+    if (en && a.en !== en) return false;
+    return true;
+  });
+
+  filtered.sort((a,b) => {
+    if (sort === 'year-desc')      return b.year - a.year;
+    if (sort === 'year-asc')       return a.year - b.year;
+    if (sort === 'citations-desc') return b.citations - a.citations;
+    if (sort === 'title')          return a.title.localeCompare(b.title);
+    return 0;
+  });
+
+  currentPage = 1;
+  render();
+}
+
+function render(){
+  const total = filtered.length;
+  $('#resultCount').textContent = total;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const slice = filtered.slice(start, start + PAGE_SIZE);
+
+  const results = $('#results');
+  if (!total){
+    results.innerHTML = `<div class="empty">No articles match these filters. Try clearing one or two.</div>`;
+    $('#pagination').innerHTML = '';
+    return;
+  }
+
+  results.innerHTML = slice.map(a => `
+    <article class="art">
+      <h3><a href="PNU_ARTICLES/${esc(a.id)}_pnu.html">${esc(a.title)}</a></h3>
+      <div class="authors">${esc(a.authors)}</div>
+      <div class="meta">
+        <span>${esc(a.year)}</span>
+        <span class="citations">${a.citations.toLocaleString()} citations</span>
+        <span>${esc(a.doi)}</span>
+      </div>
+      <div class="pills">
+        <span class="pill pill-en-${esc(a.en)}">EN: ${esc(a.en)}</span>
+        ${(a.t1||[]).map(t => `<span class="pill pill-t1">${esc(t)}</span>`).join('')}
+      </div>
+    </article>
+  `).join('');
+
+  const pages = Math.ceil(total / PAGE_SIZE);
+  const pg = $('#pagination');
+  if (pages <= 1){ pg.innerHTML = ''; return; }
+  let html = `<button onclick="goPage(${Math.max(1, currentPage - 1)})" ${currentPage===1?'disabled':''}>← Prev</button>`;
+  for (let p = 1; p <= pages; p++){
+    html += `<button class="${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  }
+  html += `<button onclick="goPage(${Math.min(pages, currentPage + 1)})" ${currentPage===pages?'disabled':''}>Next →</button>`;
+  pg.innerHTML = html;
+}
+
+function goPage(p){ currentPage = p; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+['search','yearFilter','citationFilter','enFilter','sortBy'].forEach(id =>
+  document.getElementById(id).addEventListener('input', applyFilters));
+
+applyFilters();
+</script>
 </body>
 </html>
