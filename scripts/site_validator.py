@@ -119,6 +119,11 @@ def check_html(path: Path, root: Path, regime_items: dict[str, list[dict]],
     except Exception as e:
         return [Violation(rel, None, "IO", f"could not read file: {e}")]
 
+    # HTML fragments (no <body> tag) are not full pages — skip them.
+    # These are usually template partials included elsewhere.
+    if not BODY_TAG_RE.search(text):
+        return []
+
     # Canonical navbar include
     if not NAVBAR_SCRIPT_RE.search(text):
         vs.append(Violation(rel, None, "NAV001",
@@ -153,14 +158,29 @@ def check_html(path: Path, root: Path, regime_items: dict[str, list[dict]],
     # (which is empty in source; the script injects it) or as part of a
     # nav that's purely presentational inside a section. Heuristic:
     # reject any <nav> that has classes or IDs indicating it's a global
-    # navigation row.
-    for m in INLINE_NAV_RE.finditer(text):
-        # Look at the next ~200 characters
-        chunk = text[m.start():m.start()+300]
-        if re.search(r'class\s*=\s*["\'][^"\']*(?:top-nav|classbar|ka-nav|nav-|main-nav)', chunk, re.I):
-            line = text.count("\n", 0, m.start()) + 1
-            vs.append(Violation(rel, line, "NAV005",
-                "inline global <nav> found; use the canonical navbar instead"))
+    # navigation row, UNLESS it carries style="display:none" (hidden
+    # after canonical navbar rollout, preserved in source for history).
+    # Match each <nav ...> opening tag and look at its attributes only
+    # (not inner content). This prevents class="nav-brand" on an inner
+    # <a> from triggering a false positive on a classless <nav>.
+    NAV_TAG = re.compile(r'<nav\b([^>]*)>', re.I)
+    for m in NAV_TAG.finditer(text):
+        attrs = m.group(1)
+        # A classless <nav> is almost always a semantic section-level nav
+        # (e.g. login-page branding wrapper); leave it alone.
+        cls_m = re.search(r'\bclass\s*=\s*["\']([^"\']+)["\']', attrs, re.I)
+        if not cls_m:
+            continue
+        first = cls_m.group(1).split()[0] if cls_m.group(1).strip() else ""
+        global_classes = {"top-nav","topnav","classbar","ka-nav","header-nav","global-nav","main-nav","site-nav"}
+        if first not in global_classes:
+            continue
+        # Skip if already hidden (e.g. via hide_inline_navs.py)
+        if re.search(r'style\s*=\s*["\'][^"\']*display\s*:\s*none', attrs, re.I):
+            continue
+        line = text.count("\n", 0, m.start()) + 1
+        vs.append(Violation(rel, line, "NAV005",
+            f'inline global <nav class="{first}"> found; use the canonical navbar instead'))
 
     # Local file references — check existence
     base_dir = path.parent

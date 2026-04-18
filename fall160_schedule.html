@@ -128,10 +128,15 @@
 
     .version-badge{position:fixed;bottom:70px;left:16px;background:var(--navy);color:#A8C8BF;font-size:10px;padding:3px 8px;border-radius:4px;opacity:.6;z-index:50}
   </style>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="global">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
 
-<nav class="top-nav">
+
+<nav class="top-nav" style="display:none">
   <div class="nav-wordmark"><span class="nav-icon"></span><span class="nav-title">Knowledge <span class="nav-title-accent">Atlas</span></span></div>
   <div class="nav-center">COGS 160 Fall — Experiment Making</div>
   <div class="nav-right">

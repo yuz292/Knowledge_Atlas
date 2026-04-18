@@ -321,8 +321,13 @@ body.impersonating { padding-top: 32px; }
 .ac-public { color: var(--success-tx); font-weight: 700; }
 .ac-gated  { color: var(--warn-tx); font-weight: 700; }
 </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="160sp">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
 
 <!-- ── Impersonation banner (appears only while admin is viewing as another user type) ── -->
 <div id="imp-banner" role="status">
@@ -372,7 +377,7 @@ body.impersonating { padding-top: 32px; }
 </div>
 
 <!-- ── Top nav ── -->
-<nav class="top-nav" aria-label="Primary">
+<nav class="top-nav" aria-label="Primary" style="display:none">
   <a class="nav-brand" href="ka_schedule.html">Knowledge At<span class="las">las</span></a>
   <span class="nav-sep">|</span>
   <a class="nav-link" href="ka_schedule.html">Schedule</a>

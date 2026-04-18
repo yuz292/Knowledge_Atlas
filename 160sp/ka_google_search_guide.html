@@ -289,8 +289,13 @@
       .compare-grid { grid-template-columns: 1fr; }
     }
   </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="160sp">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
 
 <header class="site-header">
   <div class="header-brand">
@@ -299,7 +304,7 @@
       <div class="header-tag">UC San Diego · Cognitive Science</div>
     </div>
   </div>
-  <nav class="header-nav">
+  <nav class="header-nav" style="display:none">
     <a href="../ka_home.html">Home</a>
     <a href="ka_collect_articles.html">A0 Assignment</a>
     <a href="ka_student_setup.html">Setup</a>

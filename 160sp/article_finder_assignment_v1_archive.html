@@ -202,8 +202,13 @@
       .approach-grid { grid-template-columns: 1fr; }
     }
   </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="160sp">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
 
 <div style="background:#c0392b;color:#fff;text-align:center;padding:10px 20px;font-size:0.85rem;font-weight:600;">
   ⚠️ ARCHIVED PAGE — This is the original individual article-finder assignment (v1). The current version is
@@ -216,7 +221,7 @@
     <div class="header-logo">K-<span>ATLAS</span></div>
     <div class="header-tag">UC San Diego · Cognitive Science</div>
   </div>
-  <nav class="header-nav">
+  <nav class="header-nav" style="display:none">
     <a href="index.html">Home</a>
     <a href="student-assignment.html">My Assignment</a>
     <a href="teach-google-search.html">Search Guide</a>

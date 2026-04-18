@@ -128,11 +128,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
   .section-block { padding: 1.2rem; }
 }
 </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="160sp">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
 
 <!-- ── Navigation ── -->
-<nav class="top-nav">
+<nav class="top-nav" style="display:none">
   <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
   <span class="nav-sep">|</span>
   <a href="week2_exercises.html" class="nav-link active">Exercises</a>

@@ -68,10 +68,15 @@ pre code { background: none; padding: 0; color: inherit; }
 .checklist li { padding: 0.4rem 0; padding-left: 1.8rem; position: relative; }
 .checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--teal); font-size: 1.1rem; }
 </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="160sp">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
 
-<nav class="top-nav">
+
+<nav class="top-nav" style="display:none">
   <a href="../ka_home.html" class="nav-brand">K-ATLAS</a>
   <span class="nav-sep">|</span>
   <a href="week2_exercises.html" class="nav-link">Exercises</a>

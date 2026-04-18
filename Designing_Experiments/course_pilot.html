@@ -163,13 +163,18 @@ table.measures tr:hover{background:var(--slate-50)}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="global">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
 
 <!-- ══════════════════════════════════════════════════════════════════
      TOP NAVIGATION
      ══════════════════════════════════════════════════════════════════ -->
-<nav class="topnav" id="topnav">
+<nav class="topnav" id="topnav" style="display:none">
   <div class="logo" onclick="showPage('home')">COGS 160 <span>Designing Experiments</span></div>
 
   <div class="nav-group">

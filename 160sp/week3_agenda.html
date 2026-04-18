@@ -123,8 +123,13 @@ nav a.nav-link.active { color: #F5A623; background: rgba(232,135,42,0.12); }
   .track-tab { font-size: 0.78rem; padding: 8px 12px; }
 }
 </style>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
 </head>
-<body>
+<body data-ka-regime="160sp">
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
 
 <!-- ── Navigation ── -->
 <nav>
@@ -363,7 +368,7 @@ streamlit run frontend_streamlit/app.py --server.port 8501
       </div>
 
       <p>Read the key reference document: <code>Tagging_Contractor/Tagging_Contractor_What_it_is_and_How_to_use_it.md</code>.
-      Also read the <a href="Image Tagger Status Report.docx.pdf" style="color:var(--teal);">Image Tagger Status Report</a>
+      Also read the <a href="Image%20Tagger%20Status%20Report.docx.pdf" style="color:var(--teal);">Image Tagger Status Report</a>
       for the current state of the tagger pipeline.</p>
 
       <div class="callout callout-info" style="border-left:4px solid #E8872A;background:#FFF8F0;margin-top:18px;">
