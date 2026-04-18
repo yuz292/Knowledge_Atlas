@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goldilocks Principle · T1.5 Domain Theory · Knowledge Atlas</title>
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+     background:#F7F4EF;color:#2C2C2C;line-height:1.65}
+main.ka-outer{max-width:820px;margin:24px auto 80px;padding:0 26px}
+.draft-banner{background:#FEF3E2;border:1.5px solid #E8872A;border-radius:8px;
+              padding:10px 14px;margin-bottom:20px;font-size:.84rem;color:#7a3f0a;
+              display:flex;align-items:center;gap:10px}
+.draft-banner::before{content:"⚠";font-size:1.1rem;color:#E8872A;flex-shrink:0}
+.ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:18px;margin-bottom:22px}
+.ka-hero .code-pill{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+                    font-size:.72rem;background:#FEF3E2;color:#9a5010;font-weight:700;
+                    padding:3px 10px;border-radius:12px;letter-spacing:.04em;margin-bottom:8px}
+.ka-hero h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;
+            font-weight:700;line-height:1.15;margin-bottom:6px}
+.ka-hero .subtitle{font-size:.95rem;color:#6B6B6B}
+.origin{font-size:.85rem;color:#6B6B6B;margin-top:10px}
+.origin em{color:#1C3D3A}
+.toc{background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;
+     padding:12px 16px;margin-bottom:24px;font-size:.86rem}
+.toc-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+           color:#8A9A96;font-weight:700;margin-bottom:4px}
+.toc a{color:#2A7868;text-decoration:none;margin-right:14px}
+.toc a:hover{text-decoration:underline}
+h2.ka-section{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;
+              font-weight:700;margin:28px 0 12px;padding-bottom:6px;
+              border-bottom:1px solid #E0D8CC;scroll-margin-top:80px}
+h3.ka-sub{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;
+          font-weight:700;margin:18px 0 6px}
+p.prose{margin-bottom:12px;color:#2C2C2C}
+p.prose strong{color:#1C3D3A}
+p.prose em{font-style:italic}
+.summary-block{background:#fff;border-left:4px solid #E8872A;
+               border-radius:0 8px 8px 0;padding:18px 22px;margin:6px 0 18px}
+.summary-lede{font-size:1.0rem;line-height:1.55;margin-bottom:10px}
+.summary-lede strong{color:#9a5010}
+.summary-block p.prose{font-size:.94rem;line-height:1.6;margin-bottom:10px}
+.summary-block p.prose:last-child{margin-bottom:0}
+.read-more-link{display:inline-block;margin-top:14px;padding:7px 14px;
+                background:#1C3D3A;color:#fff;text-decoration:none;
+                border-radius:6px;font-size:.85rem;font-weight:600;transition:background .15s}
+.read-more-link:hover{background:#2A7868}
+.refs-block{background:#fff;border:1px solid #E0D8CC;border-radius:8px;
+            padding:18px 22px;margin-top:10px}
+.refs-block h3{margin-top:0}
+.refs-block h3:not(:first-child){margin-top:18px}
+.refs-block ol{padding-left:26px;font-size:.88rem;line-height:1.55}
+.refs-block ol li{margin-bottom:10px}
+.refs-block .cite-count{display:inline-block;font-size:.72rem;color:#6B6B6B;
+                        background:#F9F5EE;padding:1px 7px;border-radius:10px;margin-left:6px}
+.refs-block a{color:#2A7868;text-decoration:none;word-break:break-all}
+.refs-block a:hover{text-decoration:underline}
+.return-link{display:inline-block;margin-top:28px;font-size:.85rem;
+             color:#2A7868;text-decoration:none}
+.return-link:hover{text-decoration:underline}
+.lattice{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:18px 22px;margin-top:10px}
+.lattice-note{font-size:.82rem;color:#6B6B6B;margin-top:10px}
+.lattice ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.lattice li a{display:inline-block;background:#E6F5F0;color:#1A7050;
+              padding:6px 12px;border-radius:18px;font-size:.84rem;text-decoration:none;
+              font-weight:600;border:1px solid #CFE6DE}
+.lattice li a:hover{background:#CFE6DE}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="theories">
+<div id="ka-navbar-slot"></div>
+<main class="ka-outer">
+<div class="draft-banner"><div><strong>Draft — panel review requested.</strong> This page is a first-pass sci-writer explainer for <em>Goldilocks Principle</em>, drafted 2026-04-17 for instructor and panel review before it becomes canonical on the site. Factual claims have been cross-checked against the cited literature. Panel reviewers: please annotate inline and return to the instructor.</div></div><div class="ka-hero">
+  <span class="code-pill">T1.5 · Domain Theory</span>
+  <h1>Goldilocks Principle</h1>
+  <p class="subtitle">Kidd, Piantadosi, & Aslin's account of attention allocation: organisms preferentially attend to stimuli of intermediate complexity, not the simplest or most complex available.</p>
+  <p class="origin">Originators: <em>Celeste Kidd, Steven Piantadosi &amp; Richard Aslin</em> · 2012 &nbsp;·&nbsp; Code: <code>GOLDILOCKS_PRINCIPLE</code></p>
+</div>
+<div class="toc"><div class="toc-label">On this page</div><a href="#summary">At a glance</a><a href="#lattice">T1 parents</a><a href="#references">References</a></div>
+<h2 class="ka-section" id="summary">At a glance</h2>
+<div class="summary-block" aria-label="summary">
+  <p class="summary-lede"><strong>In plain English.</strong> The Goldilocks effect (Kidd, Piantadosi, &amp; Aslin, 2012, 2014) describes the systematic preference organisms show for stimuli of intermediate complexity over stimuli that are either too simple or too complex. Infants look longer at events of moderate surprise than at highly predictable or highly unpredictable events, and this attentional bias generalises to adults and to non-human animals. The principle sits at the intersection of Predictive Processing (PP) — because "intermediate complexity" is well characterised as a moderate level of prediction error; Salience Networks (SN) — because the attentional effect is mediated by salience weighting; and Decision Theory (DT) — because the preference is interpretable as value-maximising information gain (the learning-progress / compression-progress formulations of Schmidhuber, 2010; Oudeyer, Kaplan, &amp; Hafner, 2007). Environmental implications are substantial: environments that are too predictable invite disengagement; environments that are too unpredictable induce stress; the restorative sweet spot is in between. Panel-review pending on the precise mapping between "information gain" and the restorative literature's "soft fascination."</p>
+  <p class="prose" style="font-size:.84rem;color:#8A9A96;">  <em>Note: the full 300-word summary and 1,500-word deep dive for this theory are pending panel review. The summary above gestures at the core argument and the references below are authoritative — see the T1 parent pages for the upstream mechanism.</em></p>
+</div>
+<h2 class="ka-section" id="lattice">T1 parent frameworks</h2>
+<div class="lattice">
+  <ul><li><a href="ka_framework_pp.html">Predictive Processing <span style="opacity:.6">(PP)</span></a></li><li><a href="ka_framework_sn.html">Salience Networks <span style="opacity:.6">(SN)</span></a></li><li><a href="ka_framework_dt.html">Decision Theory <span style="opacity:.6">(DT)</span></a></li></ul>
+  <p class="lattice-note">This T1.5 theory composes the above T1 foundational frameworks. Clicking a parent opens that framework's in-depth entry.</p>
+</div>
+<h2 class="ka-section" id="references">References</h2>
+<div class="refs-block">
+  <h3>Classic (5)</h3>
+  <ol>
+    <li>Kidd, C., Piantadosi, S. T., & Aslin, R. N. (2012). The Goldilocks effect: Human infants allocate attention to visual sequences that are neither too simple nor too complex. <em>PLoS ONE</em>, 7(5), e36399. https://doi.org/10.1371/journal.pone.0036399 <span class="cite-count">GS: 680+</span></li>
+    <li>Kidd, C., Piantadosi, S. T., & Aslin, R. N. (2014). The Goldilocks effect in infant auditory attention. <em>Child Development</em>, 85(5), 1795–1804. https://doi.org/10.1111/cdev.12263 <span class="cite-count">GS: 220+</span></li>
+    <li>Berlyne, D. E. (1960). <em>Conflict, arousal, and curiosity</em>. McGraw-Hill. <span class="cite-count">GS: 6,900+</span></li>
+    <li>Oudeyer, P. Y., Kaplan, F., & Hafner, V. V. (2007). Intrinsic motivation systems for autonomous mental development. <em>IEEE Transactions on Evolutionary Computation</em>, 11(2), 265–286. https://doi.org/10.1109/TEVC.2006.890271 <span class="cite-count">GS: 1,500+</span></li>
+    <li>Schmidhuber, J. (2010). Formal theory of creativity, fun, and intrinsic motivation. <em>IEEE Transactions on Autonomous Mental Development</em>, 2(3), 230–247. https://doi.org/10.1109/TAMD.2010.2056368 <span class="cite-count">GS: 1,400+</span></li>
+  </ol>
+  <h3>Recent neuroscience (5)</h3>
+  <ol>
+    <li>Gottlieb, J., Oudeyer, P. Y., Lopes, M., & Baranes, A. (2013). Information-seeking, curiosity, and attention: Computational and neural mechanisms. <em>Trends in Cognitive Sciences</em>, 17(11), 585–593. https://doi.org/10.1016/j.tics.2013.09.001 <span class="cite-count">GS: 1,100+</span></li>
+    <li>Gruber, M. J., Gelman, B. D., & Ranganath, C. (2014). States of curiosity modulate hippocampus-dependent learning via the dopaminergic circuit. <em>Neuron</em>, 84(2), 486–496. https://doi.org/10.1016/j.neuron.2014.08.060 <span class="cite-count">GS: 1,400+</span></li>
+    <li>Kang, M. J., Hsu, M., Krajbich, I. M., Loewenstein, G., McClure, S. M., Wang, J. T.-Y., & Camerer, C. F. (2009). The wick in the candle of learning: Epistemic curiosity activates reward circuitry and enhances memory. <em>Psychological Science</em>, 20(8), 963–973. https://doi.org/10.1111/j.1467-9280.2009.02402.x <span class="cite-count">GS: 930+</span></li>
+    <li>Poli, F., Serino, G., Mars, R. B., & Hunnius, S. (2020). Infants tailor their attention to maximize learning. <em>Science Advances</em>, 6(39), eabb5053. https://doi.org/10.1126/sciadv.abb5053 <span class="cite-count">GS: 180+</span></li>
+    <li>Kidd, C., & Hayden, B. Y. (2015). The psychology and neuroscience of curiosity. <em>Neuron</em>, 88(3), 449–460. https://doi.org/10.1016/j.neuron.2015.09.010 <span class="cite-count">GS: 1,400+</span></li>
+  </ol>
+</div>
+<a class="return-link" href="ka_theories.html">← Back to all theories</a>
+
+</main>
+</body>
+</html>

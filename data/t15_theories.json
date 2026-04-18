@@ -1,0 +1,76 @@
+{
+  "_generated_from": "scripts/generate_t15_pages.py",
+  "_license": "Content drafted by CW for instructor/panel review 2026-04-17. References verified; prose draft. Panel-review status flagged on each page.",
+  "theories": [
+    {
+      "id": "art",
+      "code": "ART",
+      "title": "Attention Restoration Theory",
+      "tagline": "Nature's restorative effect on directed attention: the Kaplans' account of how soft fascination refills a limited cognitive resource.",
+      "parents": ["PP", "SN", "DP"],
+      "originators": "Rachel Kaplan & Stephen Kaplan",
+      "year": 1989,
+      "summary_lede": "ART proposes that directed attention is a limited, fatiguable resource and that environments rich in \"soft fascination\" — natural settings with gently engaging stimuli, coherent extent, and a sense of being away — permit directed attention to recover.",
+      "summary_paragraphs": [
+        "The theory has four operational components. <em>Being away</em>: psychological or physical distance from demands. <em>Extent</em>: a coherent environment substantial enough to engage the mind. <em>Soft fascination</em>: stimuli that hold involuntary attention effortlessly without demanding it (trees in wind, streams, drifting clouds). <em>Compatibility</em>: a fit between environmental affordances and the agent's purposes. Together they support recovery of the top-down attentional control functions that everyday urban life depletes (Kaplan, 1995).",
+        "Mechanistically, ART intersects with three T1 frameworks: Predictive Processing (PP), because soft-fascination environments generate predictions that mostly succeed, freeing error-signalling circuitry; Salience Networks (SN), because the low-urgency statistical profile of natural stimuli reduces insular and anterior-cingulate engagement; and Distributed Processing (DP), because restorative recovery is measurable at the network level rather than in any single region. The Berman et al. (2008) walking-in-nature study is the canonical behavioural demonstration: participants showed consistent improvement on backward-digit-span after a nature walk versus an urban walk, an effect that replicates in moderate-sized samples.",
+        "Panel-review flags: effect sizes in field studies are often modest (Cohen's <em>d</em> ≈ 0.3–0.5) and depend on the outcome measure chosen; ART has been criticised for under-specifying what counts as \"nature\" (Ohly et al., 2016); and the directed-attention construct itself is ill-operationalised relative to modern attention-network frameworks. Use ART as a productive hypothesis-generator, not as a settled finding. The theory is nonetheless one of the most-cited bridges between cognitive psychology and environmental design."
+      ],
+      "deep_dive_sections": [
+        {
+          "h": "Origins and conceptual lineage",
+          "paragraphs": [
+            "Attention Restoration Theory emerged from the Kaplans' fieldwork with the U.S. Forest Service in the 1970s and their observation that wilderness-experience participants returned describing not just enjoyment but cognitive recovery — a refreshed capacity to focus, to plan, to inhibit distraction. The synthesis they developed in <em>The Experience of Nature</em> (Kaplan & Kaplan, 1989) drew on William James's (1890) distinction between voluntary and involuntary attention and on earlier Gestalt-influenced work on environmental preference.",
+            "The theoretical move was to identify directed (voluntary) attention as a fatiguable resource distinct from involuntary attention, and to argue that involuntary attention — when engaged by stimuli of the right statistical profile — does not deplete the directed-attention reservoir. Natural environments, because of their soft-fascination affordances, permit directed attention to rest while the agent remains awake, alert, and engaged. The empirical signature is that executive-function performance recovers after nature exposure even when the nature exposure was effortful in other ways (walking, for example)."
+          ]
+        },
+        {
+          "h": "Four operational components",
+          "paragraphs": [
+            "<strong>Being away.</strong> Physical or psychological distance from the usual press of demands. Field studies typically use a wilderness or park setting to operationalise this; laboratory studies use views of nature or immersive video as proxies. The being-away construct is weakly specified in the original and has drawn criticism; contemporary work increasingly operationalises it via stated goal-detachment rather than by the environment per se (Korpela & Kytta, 2006).",
+            "<strong>Extent.</strong> An environment coherent enough and rich enough to occupy the mind. A small courtyard may fail on extent where an open meadow succeeds. Extent is about perceived rather than physical size — the same park can have high extent for one observer (who reads the landscape as continuing beyond view) and low for another (who sees it as a discrete bounded area).",
+            "<strong>Soft fascination.</strong> Stimuli that hold involuntary attention at low cognitive cost. Clouds, flames, water in motion, wind-moved foliage, birds, slow animal movement. The stimulus profile is predictable in its statistics but unpredictable in its local sequence — a pattern that predictive-processing accounts of perception (Clark, 2013) suggest should be inherently engaging without being surprising.",
+            "<strong>Compatibility.</strong> A fit between the environment's affordances and the agent's purposes. A mountain path is compatible for the hiker; a manicured ornamental garden is compatible for the contemplative; neither is inherently more restorative than the other. Compatibility brings ART closer to affordance theory (Gibson, 1979) than its original exposition acknowledged."
+          ]
+        },
+        {
+          "h": "Empirical status",
+          "paragraphs": [
+            "The evidence base falls into three tiers. Tier 1 — strong: behavioural studies of directed-attention recovery after nature versus urban exposure show consistent, moderate effect sizes across dozens of replications, with meta-analytic summaries (Stevenson, Schilhab, & Bentsen, 2018) confirming the pattern. Tier 2 — mixed: physiological correlates including heart-rate variability, cortisol, and electroencephalographic markers show smaller and more variable effects, and publication-bias-corrected estimates suggest the true effects are weaker than individual studies imply (Yao et al., 2021). Tier 3 — speculative: claims about specific brain-network changes during soft fascination, specific neurotransmitter mediators, and long-term mental-health benefits remain under-powered and theoretically under-specified.",
+            "Neuroimaging work since the early 2010s has begun to pin down mechanism. Bratman et al. (2015) reported reduced subgenual prefrontal-cortex activation after a nature walk, interpreted as reduced rumination. More recent studies (e.g., Sudimac, Sale, & Kühn, 2022) document amygdala activity decreases following short nature exposures. These findings are consistent with ART but are not yet specific to it — they are also predicted by Stress Reduction Theory (Ulrich, 1983; the T1.5 SRT page)."
+          ]
+        },
+        {
+          "h": "Open questions",
+          "paragraphs": [
+            "Three questions structure the current debate. First: is \"directed attention\" the right level of analysis, or should ART be reformulated in terms of the dorsal attention network, the frontoparietal control network, and the default mode network (Corbetta & Shulman, 2002)? The field is moving in that direction but the theoretical consolidation is incomplete.",
+            "Second: what is the minimum dose? Field work suggests 20–40 minutes of nature exposure produces detectable effects; laboratory work with nature videos finds shorter exposures sufficient. Dose-response curves have been estimated for walking-in-nature paradigms (e.g., Berman et al., 2008) but are not well characterised across modalities.",
+            "Third: does ART generalise beyond \"nature\" narrowly construed? Soft-fascination stimuli can occur in built environments (fountains, fireplaces, certain types of ornamental pattern). The theory predicts these should be restorative; the evidence is sparse but suggestive. The Kaplans themselves were explicit that nature is not required — the statistical profile is — but the popular shorthand has drifted toward \"nature = restoration\" in ways that risk missing the theoretical content."
+          ]
+        },
+        {
+          "h": "Practical implications",
+          "paragraphs": [
+            "For environmental designers, ART implies four priorities: provide actual or virtual access to natural settings for occupants who have been performing sustained cognitive work; design such access to be achievable in short breaks (10–30 min); ensure the setting affords all four components (not just visual nature — extent and being-away are distinct); and attend to the statistical profile of the stimuli, not just their categorical label. A nature mural is not equivalent to a window.",
+            "For cognitive scientists, ART is a productive bridge between laboratory attention research and real-world cognitive ecology. Its empirical core — that executive function recovers after exposure to low-arousal, involuntary-attention-engaging stimuli — is as well-supported as any claim in environmental psychology and survives meta-analytic scrutiny. Its theoretical elaboration is weaker and would benefit from integration with contemporary network-neuroscience accounts of attention."
+          ]
+        }
+      ],
+      "refs_classic": [
+        {"cite": "Kaplan, R., & Kaplan, S. (1989). <em>The experience of nature: A psychological perspective</em>. Cambridge University Press.", "scholar": "12,000+"},
+        {"cite": "Kaplan, S. (1995). The restorative benefits of nature: Toward an integrative framework. <em>Journal of Environmental Psychology</em>, 15(3), 169–182. https://doi.org/10.1016/0272-4944(95)90001-2", "scholar": "6,800+"},
+        {"cite": "Ulrich, R. S. (1983). Aesthetic and affective response to natural environment. In I. Altman & J. F. Wohlwill (Eds.), <em>Behavior and the natural environment</em> (pp. 85–125). Plenum. https://doi.org/10.1007/978-1-4613-3539-9_4", "scholar": "3,400+"},
+        {"cite": "Hartig, T., Mang, M., & Evans, G. W. (1991). Restorative effects of natural environment experiences. <em>Environment and Behavior</em>, 23(1), 3–26. https://doi.org/10.1177/0013916591231001", "scholar": "2,300+"},
+        {"cite": "James, W. (1890). <em>The principles of psychology</em> (Vol. 1). Henry Holt. (Chapter XI: Attention).", "scholar": "40,000+"}
+      ],
+      "refs_neuro": [
+        {"cite": "Berman, M. G., Jonides, J., & Kaplan, S. (2008). The cognitive benefits of interacting with nature. <em>Psychological Science</em>, 19(12), 1207–1212. https://doi.org/10.1111/j.1467-9280.2008.02225.x", "scholar": "3,900+"},
+        {"cite": "Bratman, G. N., Hamilton, J. P., Hahn, K. S., Daily, G. C., & Gross, J. J. (2015). Nature experience reduces rumination and subgenual prefrontal cortex activation. <em>PNAS</em>, 112(28), 8567–8572. https://doi.org/10.1073/pnas.1510459112", "scholar": "2,100+"},
+        {"cite": "Sudimac, S., Sale, V., & Kühn, S. (2022). How nature nurtures: Amygdala activity decreases as the result of a one-hour walk in nature. <em>Molecular Psychiatry</em>, 27(11), 4446–4452. https://doi.org/10.1038/s41380-022-01720-6", "scholar": "270+"},
+        {"cite": "Stevenson, M. P., Schilhab, T., & Bentsen, P. (2018). Attention Restoration Theory II: A systematic review to clarify attention processes affected by exposure to natural environments. <em>Journal of Toxicology and Environmental Health, Part B</em>, 21(4), 227–268. https://doi.org/10.1080/10937404.2018.1505571", "scholar": "480+"},
+        {"cite": "Yao, W., Zhang, X., & Gong, Q. (2021). The effect of exposure to the natural environment on stress reduction: A meta-analysis. <em>Urban Forestry & Urban Greening</em>, 57, 126932. https://doi.org/10.1016/j.ufug.2020.126932", "scholar": "260+"}
+      ]
+    }
+  ],
+  "_note_remaining_twelve": "The remaining twelve T1.5 theories (SRT, BIOPHILIA, PROSPECT_REFUGE, PRIVACY_REGULATION, KAPLAN_PREFERENCE, ADAPTIVE_THERMAL, SPACE_SYNTAX, SOUNDSCAPE, PLACE_ATTACHMENT, BRECVEMA, FLOW_THEORY, GOLDILOCKS_PRINCIPLE) are scaffolded with short 150-word summary stubs by the generator and flagged 'pending panel review' until instructor approves the 300w + 1500w expansion. Panel-review stubs live in the generator module so the data file stays compact while exemplifying the full structure via ART."
+}
