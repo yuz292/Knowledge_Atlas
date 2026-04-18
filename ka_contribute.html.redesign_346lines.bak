@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contribute — Knowledge Atlas</title>
+<meta name="description" content="Propose an article for the Knowledge Atlas. Upload a PDF, paste a citation, and help us build the evidence base.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+     background:#F7F4EF;color:#2C2C2C;line-height:1.6}
+main.ka-outer{max-width:920px;margin:28px auto 80px;padding:0 24px}
+
+.ka-hero h1{font-family:Georgia,serif;font-size:2.0rem;color:#1C3D3A;margin-bottom:8px}
+.ka-hero p{color:#6B6B6B;font-size:1.0rem;margin-bottom:22px;max-width:640px}
+
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:flex-start}
+@media (max-width:820px){.two-col{grid-template-columns:1fr}}
+
+.card{background:#fff;border:1.5px solid #E0D8CC;border-radius:12px;
+      padding:22px 24px;margin-bottom:18px}
+.card h2{font-family:Georgia,serif;font-size:1.2rem;color:#1C3D3A;margin-bottom:6px}
+.card .sub{font-size:.88rem;color:#6B6B6B;margin-bottom:16px}
+
+/* Form controls */
+label{display:block;font-size:.74rem;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:#8A9A96;margin-bottom:4px;margin-top:14px}
+label:first-of-type{margin-top:0}
+input[type="text"],input[type="email"],textarea,select{
+  width:100%;padding:9px 11px;border:1.5px solid #D8D0C5;border-radius:7px;
+  font:inherit;font-size:.94rem;background:#fff;color:#2C2C2C}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#2A7868;
+  box-shadow:0 0 0 3px rgba(42,120,104,.15)}
+textarea{min-height:90px;resize:vertical;font-family:inherit}
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.row2{grid-template-columns:1fr}}
+
+.drop{border:2px dashed #D8D0C5;border-radius:10px;padding:26px 18px;
+      text-align:center;background:#F9F5EE;cursor:pointer;transition:all .15s}
+.drop:hover,.drop.over{border-color:#2A7868;background:#E6F5F0}
+.drop-icon{font-size:1.6rem;margin-bottom:4px}
+.drop-label{font-weight:600;color:#1C3D3A;font-size:.95rem;margin-bottom:4px}
+.drop-hint{font-size:.78rem;color:#6B6B6B}
+.file-chip{display:inline-flex;align-items:center;gap:8px;
+           background:#E8F8F2;color:#1A7050;font-size:.82rem;font-weight:600;
+           padding:5px 10px;border-radius:20px;margin-top:10px}
+.file-chip button{background:none;border:none;color:#1A7050;cursor:pointer;font-size:1.0rem;line-height:1}
+
+.btn-primary{display:inline-block;padding:11px 20px;background:#E8872A;color:#fff;
+             border:none;border-radius:8px;font-size:.92rem;font-weight:700;
+             cursor:pointer;transition:background .15s;margin-top:18px}
+.btn-primary:hover{background:#D27320}
+.btn-primary:disabled{background:#c7d3cf;cursor:not-allowed}
+
+.btn-secondary{display:inline-block;padding:11px 20px;background:#fff;color:#1C3D3A;
+               border:1.5px solid #D8D0C5;border-radius:8px;font-size:.92rem;
+               font-weight:600;cursor:pointer;transition:all .15s;
+               margin-top:18px;margin-left:8px}
+.btn-secondary:hover{background:#F9F5EE}
+
+/* Especially-looking-for list */
+.elf-item{padding:10px 0;border-bottom:1px dashed #E0D8CC;font-size:.88rem}
+.elf-item:last-child{border-bottom:0}
+.elf-item .elf-topic{font-family:Georgia,serif;font-weight:700;color:#1C3D3A;
+                     font-size:.98rem;margin-bottom:2px}
+.elf-item .elf-why{color:#6B6B6B;font-size:.82rem;line-height:1.45}
+.elf-tag{display:inline-block;font-size:.64rem;font-weight:700;
+         background:#FEF3E2;color:#9a5010;padding:2px 7px;border-radius:10px;
+         letter-spacing:.04em;margin-right:6px;text-transform:uppercase}
+
+/* Modal (thanks) */
+.modal-backdrop{position:fixed;inset:0;background:rgba(28,61,58,.55);
+                display:none;align-items:center;justify-content:center;
+                z-index:200;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{background:#fff;border-radius:14px;max-width:500px;width:100%;
+       box-shadow:0 20px 60px rgba(0,0,0,.3);padding:30px 34px}
+.modal h2{font-family:Georgia,serif;font-size:1.55rem;color:#1C3D3A;margin-bottom:10px}
+.modal p{font-size:.94rem;margin-bottom:14px}
+.modal .thank{font-size:1.1rem;color:#1A7050;margin-bottom:8px}
+.modal .close-btn{display:block;margin:10px 0 0 auto;padding:9px 18px;
+                  background:#1C3D3A;color:#fff;border:none;border-radius:7px;
+                  font-weight:600;cursor:pointer}
+.modal .summary-box{background:#F9F5EE;border:1px solid #E0D8CC;
+                    border-radius:8px;padding:12px 14px;font-size:.86rem;
+                    color:#2C2C2C;margin-bottom:14px}
+
+.toast-stack{position:fixed;bottom:24px;right:24px;z-index:250;display:flex;flex-direction:column;gap:8px}
+.toast{background:#1C3D3A;color:#fff;padding:10px 16px;border-radius:8px;
+       box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:.86rem;
+       border-left:4px solid #5AC8AA;max-width:340px}
+.toast.error{border-left-color:#E8A0A0}
+</style>
+</head>
+
+<body data-ka-regime="global"
+      data-ka-active="contribute"
+      data-ka-crumbs='[["Home","ka_home.html"],["Contribute",""]]'>
+
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main id="ka-main" class="ka-outer">
+
+<div class="ka-hero">
+  <h1>Contribute an article</h1>
+  <p>Upload a PDF, paste a citation, add the abstract. We'll take it from
+     there — duplicate detection, metadata extraction, and assignment to
+     a research front happen automatically in the nightly pipeline.</p>
+</div>
+
+<div class="two-col">
+
+  <!-- Propose-an-article form -->
+  <form class="card" id="proposeForm" onsubmit="return submitProposal(event)">
+    <h2>Propose an article</h2>
+    <p class="sub">Required: at least one of PDF / DOI / citation. The more
+       you give us, the less work the pipeline does.</p>
+
+    <label>Your name (optional)</label>
+    <input type="text" id="p_name" placeholder="First Last">
+
+    <label>Your email (optional)</label>
+    <input type="email" id="p_email" placeholder="you@example.edu">
+
+    <div class="row2">
+      <div>
+        <label>DOI or URL</label>
+        <input type="text" id="p_doi" placeholder="10.1038/… or https://…">
+      </div>
+      <div>
+        <label>Year</label>
+        <input type="text" id="p_year" placeholder="2024">
+      </div>
+    </div>
+
+    <label>APA citation or title</label>
+    <textarea id="p_citation" rows="3"
+      placeholder="Author, A., &amp; Author, B. (2024). Title of the paper. Journal, 12(3), 45–60."></textarea>
+
+    <label>Abstract</label>
+    <textarea id="p_abstract" rows="5"
+      placeholder="Paste the paper's abstract here if you have it."></textarea>
+
+    <label>Upload PDF (drop or click)</label>
+    <div class="drop" id="dropZone">
+      <div class="drop-icon">📄</div>
+      <div class="drop-label">Drop a PDF here or click to browse</div>
+      <div class="drop-hint">PDF only · multiple files OK · 40 MB per file</div>
+      <input type="file" id="pdfInput" accept=".pdf" multiple style="display:none">
+      <div id="fileChips"></div>
+    </div>
+
+    <label>Why is this relevant? (optional but useful)</label>
+    <textarea id="p_relevance" rows="3"
+      placeholder="One or two sentences on why this paper is worth adding — what gap it fills, what mechanism it speaks to, or which of the 'especially looking for' topics on the right it answers."></textarea>
+
+    <button class="btn-primary" type="submit">Submit proposal</button>
+    <button class="btn-secondary" type="button" onclick="clearForm()">Clear</button>
+  </form>
+
+  <!-- Especially looking for -->
+  <aside>
+    <div class="card" style="background:#F9F5EE">
+      <h2>Especially looking for</h2>
+      <p class="sub">Current gaps in the Atlas that the maintainers are
+         actively seeking. Any article that speaks to one of these moves
+         to the top of the review queue.</p>
+
+      <div class="elf-item">
+        <span class="elf-tag">Gap</span>
+        <span class="elf-topic">Pre-registered field studies of daylight and alertness</span>
+        <div class="elf-why">We have strong lab evidence for the
+          ipRGC-SCN pathway; field replications under realistic
+          architectural lighting are thinner than the lab work implies.</div>
+      </div>
+
+      <div class="elf-item">
+        <span class="elf-tag">Classic anchor</span>
+        <span class="elf-topic">Canonical neuroscience papers on peripersonal space</span>
+        <div class="elf-why">Our mechanism inventory flags EC-AFFORDANCE-PERCEPTION
+          as "needs classic anchor paper set." Graziano, Serino,
+          Làdavas, and their lineages are priority.</div>
+      </div>
+
+      <div class="elf-item">
+        <span class="elf-tag">Recent</span>
+        <span class="elf-topic">Prediction-error findings in non-sensory cortex</span>
+        <div class="elf-why">The Predictive-Processing framework is
+          well-supported in V1 / A1; evidence for the same architecture
+          in prefrontal and parietal regions is an active frontier we
+          want to track.</div>
+      </div>
+
+      <div class="elf-item">
+        <span class="elf-tag">Replication</span>
+        <span class="elf-topic">Large-N replications of thermal-comfort-affect findings</span>
+        <div class="elf-why">The warmth-priming literature has had
+          replication trouble. We want both failed and successful
+          replications on record with their effect sizes.</div>
+      </div>
+
+      <div class="elf-item">
+        <span class="elf-tag">Cross-domain</span>
+        <span class="elf-topic">Multisensory integration in architectural VR</span>
+        <div class="elf-why">Track 3 is building VR instruments that
+          instrument occupant behaviour. Prior work on visuo-auditory
+          binding thresholds in naturalistic scenes is welcome.</div>
+      </div>
+
+      <p style="font-size:.82rem;color:#6B6B6B;margin-top:14px;">
+        Updated 2026-04-17 · <a href="ka_gaps.html" style="color:#2A7868;text-decoration:none;font-weight:600;">See full gaps inventory →</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Other ways to contribute</h2>
+      <p class="sub" style="margin-bottom:0">COGS 160 students: your
+         track-specific contribution flows are in the
+         <a href="160sp/ka_schedule.html" style="color:#2A7868;font-weight:600;">course schedule</a>.
+         If you're not enrolled and want to contribute at more than
+         the per-article level (running pipelines, tagging images,
+         building UX tests), reach out at
+         <a href="mailto:cogs160@ucsd.edu" style="color:#2A7868;font-weight:600;">cogs160@ucsd.edu</a>.</p>
+    </div>
+  </aside>
+</div>
+
+</main>
+
+<!-- Thank-you modal -->
+<div class="modal-backdrop" id="thankModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Thank you.</h2>
+    <p class="thank" id="thankLine">Your proposal has been received.</p>
+    <div class="summary-box" id="thankSummary"></div>
+    <p style="color:#6B6B6B">What happens next: the nightly pipeline
+       runs duplicate detection, extracts metadata, and routes the
+       article to its research-front maintainer for review. If you
+       supplied an email, we'll ping you when the paper is processed
+       (usually within 48 hours).</p>
+    <button class="close-btn" onclick="closeThank()">Close</button>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<script>
+const pending = [];
+const dz = document.getElementById('dropZone');
+const pdfInp = document.getElementById('pdfInput');
+const chips = document.getElementById('fileChips');
+
+dz.addEventListener('click', () => pdfInp.click());
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('over');
+  handleFiles(e.dataTransfer.files);
+});
+pdfInp.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(list){
+  for (const f of list){
+    if (!/\.pdf$/i.test(f.name)) { toast('error', `${f.name}: not a PDF — skipped.`); continue; }
+    if (f.size > 40*1024*1024)   { toast('error', `${f.name}: exceeds 40 MB — skipped.`); continue; }
+    pending.push(f);
+  }
+  renderChips();
+}
+function renderChips(){
+  chips.innerHTML = pending.map((f,i) =>
+    `<span class="file-chip">${esc(f.name)} · ${(f.size/1024).toFixed(0)} KB
+       <button type="button" onclick="removeFile(${i})" aria-label="Remove">✕</button></span>`
+  ).join(' ');
+}
+function removeFile(i){ pending.splice(i,1); renderChips(); }
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function toast(kind, msg){
+  const t = document.createElement('div');
+  t.className = 'toast' + (kind==='error' ? ' error' : '');
+  t.innerHTML = msg;
+  document.getElementById('toastStack').appendChild(t);
+  setTimeout(() => t.remove(), 4200);
+}
+
+function clearForm(){
+  document.getElementById('proposeForm').reset();
+  pending.length = 0; renderChips();
+}
+
+function submitProposal(ev){
+  ev.preventDefault();
+  const doi = document.getElementById('p_doi').value.trim();
+  const cit = document.getElementById('p_citation').value.trim();
+  if (!pending.length && !doi && !cit){
+    toast('error', 'Give us at least one of: PDF, DOI, or citation.');
+    return false;
+  }
+
+  const payload = {
+    name:    document.getElementById('p_name').value.trim(),
+    email:   document.getElementById('p_email').value.trim(),
+    doi:     doi,
+    year:    document.getElementById('p_year').value.trim(),
+    citation:cit,
+    abstract:document.getElementById('p_abstract').value.trim(),
+    relevance:document.getElementById('p_relevance').value.trim(),
+    pdfs:    pending.map(f => ({name: f.name, size: f.size})),
+  };
+
+  // Stub: replace with a real POST to /api/articles/submit in production.
+  // For now we show a thank-you modal with a summary of what was received.
+  // (The Track 2 intake pipeline has a working endpoint; the public-facing
+  //  version should call the same endpoint with source_surface='public'.)
+  console.log('proposal payload', payload);
+
+  const summary = [
+    pending.length ? `${pending.length} PDF${pending.length>1?'s':''} uploaded` : null,
+    doi ? `DOI: ${esc(doi)}` : null,
+    cit ? `Citation provided` : null,
+    payload.abstract ? 'Abstract included' : null,
+    payload.email ? `We'll email ${esc(payload.email)} when processed` : null,
+  ].filter(Boolean).join(' · ');
+
+  document.getElementById('thankSummary').innerHTML = summary || 'Proposal received.';
+  document.getElementById('thankModal').classList.add('open');
+  clearForm();
+  return false;
+}
+
+function closeThank(){
+  document.getElementById('thankModal').classList.remove('open');
+}
+
+document.getElementById('thankModal').addEventListener('click', e => {
+  if (e.target.id === 'thankModal') closeThank();
+});
+</script>
+</body>
+</html>
