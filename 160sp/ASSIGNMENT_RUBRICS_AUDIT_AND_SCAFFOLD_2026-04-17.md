@@ -86,22 +86,110 @@ This is a load-bearing gap. Students cannot know what they are being graded on, 
 
 ---
 
-## Proposed framework
+## Proposed framework (REVISED 2026-04-17 per DK)
 
 To close the gap, I recommend the following three-layer structure. It is deliberately simple — a full rubric system is a multi-quarter effort; this is what can land in one sprint and be improved over time.
 
-### Layer 1: Track-level point allocation
+### Layer 1: Class-level point allocation (per DK 2026-04-17)
 
-Each track is worth 100 points total, distributed across the 7–8 weeks of track work. Suggested starting allocation (subject to DK's final call):
+DK's decision: **100 points for the whole class**, not per track, with the following split:
 
-| Component | Points |
-|-----------|-------:|
-| Environment setup + Week 1 orientation | 10 |
-| A0 + A1 (weeks 2–3 common work) | 20 |
-| Per-week track deliverable × 5 weeks | 50 (10 × 5) |
-| Mid-sprint checkpoint + quality of collaboration | 10 |
-| Final presentation + reflection paper | 10 |
-| **Total** | **100** |
+| Component | Points | Notes |
+|-----------|-------:|-------|
+| **A0** (common, Week 1–2) | 5 | Orientation / environment / first article find |
+| **A1** (common, Week 2–3) | 5 | Second common deliverable; calibration exercise |
+| **Track work** (one of T1/T2/T3/T4 per student) | **75** | Distributed across Weeks 3–10; points by assignment hardness, NOT uniform per week |
+| **Work on 160F** (Fall 2026 contribution) | 15 | Student contributions to the Fall 2026 restart — site improvements, documentation, transfer packets, next-cohort scaffolding |
+| **Total** | **100** | |
+
+**Key corrections from the earlier draft**:
+
+1. Points are allocated by **hardness of the assignment**, not by time elapsed. A single hard deliverable may be worth 15 points; a routine weekly submission may be worth 3.
+2. **Assignments may span more than one week.** The rubric file names are anchored to the deliverable, not to the week number. A single rubric may cover a multi-week arc.
+3. The 75 track points are sub-allocated per track by the track lead, subject to the constraint that the sub-totals sum to 75 and each track produces roughly 6–9 gradable deliverables over the sprint (Weeks 3–10).
+4. The 15 Work-on-160F points recognise that each student's sprint output must, by policy, contribute to the Fall 2026 next-cohort startup. Points are earned for documented artefacts that a Fall student or the Fall instructor can actually use.
+
+See per-track allocation tables below (§ Per-track hardness-weighted allocation) for the 75-point split within each track.
+
+### Per-track hardness-weighted allocation
+
+Each track lead distributes 75 points across 6–9 deliverables. The allocation is not uniform: harder assignments get more points. The tables below are **starting proposals** that track leads should refine at the Week 3 planning meeting.
+
+#### Track 1 — Image Tagging (75 points)
+
+| Deliverable | Span | Hardness | Points |
+|-------------|:----:|:--------:|-------:|
+| T1.a Tag-schema study + first 20 tagged images | Week 3 | Easy | 5 |
+| T1.b Tag 100 images against the full schema | Weeks 3–4 | Medium | 10 |
+| T1.c Inter-rater kappa with second tagger ≥ 0.7 | Week 4 | Medium-hard | 10 |
+| T1.d HITL validation on 50-image confusing-cases batch | Weeks 4–5 | Medium | 10 |
+| T1.e Fine-tune / select classifier + error analysis | Weeks 5–6 | Hard | 15 |
+| T1.f Published tag set with provenance (500 images) | Weeks 6–7 | Hard | 15 |
+| T1.g Final report + reflection | Weeks 7–8 | Medium | 10 |
+| **Total** | | | **75** |
+
+#### Track 2 — Article Finder (75 points)
+
+| Deliverable | Span | Hardness | Points |
+|-------------|:----:|:--------:|-------:|
+| T2.a Pipeline onboarding + first 15 articles | Week 3 | Easy | 5 |
+| T2.b Weekly 20-article batch × 3 weeks (60 articles) | Weeks 3–5 | Medium | 15 (5×3) |
+| T2.c VOI-banding calibration against 20-article gold set | Week 5 | Medium-hard | 10 |
+| T2.d 50-article topical-coverage sweep (one sub-topic) | Weeks 5–6 | Hard | 15 |
+| T2.e Near-miss triage: adjudicate 30 near-miss cases | Week 6 | Medium | 10 |
+| T2.f 150-article cumulative target + dedup + topic coverage audit | Weeks 7–8 | Hard | 15 |
+| T2.g Final report + reflection | Week 8 | Easy | 5 |
+| **Total** | | | **75** |
+
+#### Track 3 — VR (75 points)
+
+| Deliverable | Span | Hardness | Points |
+|-------------|:----:|:--------:|-------:|
+| T3.a Unity environment + hello-scene commit | Week 3 | Easy | 5 |
+| T3.b First interactive scene (one T1-framework mapping) | Weeks 3–4 | Medium | 10 |
+| T3.c Second scene + reusable component library | Weeks 4–5 | Medium-hard | 12 |
+| T3.d Performance pass — 72 Hz on target hardware | Week 5 | Hard | 10 |
+| T3.e User-study pilot (n = 3) with pre/post survey | Weeks 6–7 | Hard | 15 |
+| T3.f Polish + documentation for Fall handoff | Weeks 7–8 | Medium-hard | 13 |
+| T3.g Final demo + reflection | Week 8 | Easy | 10 |
+| **Total** | | | **75** |
+
+Note: T3 totals sum to 75 precisely (5+10+12+10+15+13+10).
+
+#### Track 4 — UX Research (75 points)
+
+| Deliverable | Span | Hardness | Points |
+|-------------|:----:|:--------:|-------:|
+| T4.a Heuristic audit of K-Atlas public site (10 findings) | Weeks 3–4 | Medium | 12 |
+| T4.b Scenario-based walkthrough on 3 archetype user roles | Week 4 | Medium | 10 |
+| T4.c Moderated usability pilot (n = 5) | Weeks 5–6 | Hard | 15 |
+| T4.d Friction-point severity rubric + prioritised backlog | Week 6 | Medium-hard | 10 |
+| T4.e Reproducibility check — second student confirms 5 findings | Week 7 | Hard | 13 |
+| T4.f Redesign proposal for one high-severity finding | Weeks 7–8 | Medium | 10 |
+| T4.g Final report + reflection | Week 8 | Easy | 5 |
+| **Total** | | | **75** |
+
+#### A0 and A1 common work (10 points total across the class)
+
+| Deliverable | Span | Hardness | Points |
+|-------------|:----:|:--------:|-------:|
+| **A0** — orientation, environment check, first 5 articles into the pipeline | Weeks 1–2 | Easy | 5 |
+| **A1** — schema-study submission + 15 additional articles + first reflection | Weeks 2–3 | Medium | 5 |
+
+Within each 5-point assignment, the three-criterion rubric below scales to 0–5 instead of 0–9: criterion scores (0–3 × three criteria) are rescaled to the available points. Straight rescaling: raw 0 → 0 pts; raw 9 → 5 pts; raw 1–8 → round(raw × 5 / 9). A time-on-submission point is already folded in.
+
+#### Work on 160F (15 points across the sprint)
+
+The Fall-2026 contribution is not a weekly assignment — it is an integrated obligation. Each student chooses one of four contribution tracks at the Week 3 planning meeting and delivers across Weeks 5–10.
+
+| Contribution track | Description | Hardness | Points |
+|--------------------|-------------|:--------:|-------:|
+| **F160.a Documentation** | Write up one workflow (pipeline, tagging, VR build, research protocol) in Fall-ready form | Medium | 15 |
+| **F160.b Site improvement** | Land one reviewed PR on K-Atlas (bug fix, feature, accessibility repair) | Medium | 15 |
+| **F160.c Transfer packet** | Write the Week-0 onboarding packet the Fall cohort will read first | Medium-hard | 15 |
+| **F160.d Scaffolding artefact** | Build one piece of infrastructure (template, rubric draft, sample dataset, tutorial) the Fall instructor can reuse | Hard | 15 |
+
+The 15 points split 5 / 5 / 5 across **shipment** (was it submitted on time and complete?), **usability by a Fall student or instructor who has never seen it** (Fall-reader test, graded at Week 10 review), and **integration** (was it actually merged/linked/cited in the Fall repo before the quarter closes?).
 
 ### Layer 2: Per-deliverable rubric
 
@@ -129,17 +217,17 @@ Every verification procedure is documented in a per-assignment Markdown file at 
 
 ---
 
-## Proposed scaffold — what I would build next
+## Proposed scaffold — what I am building in this session
 
-I can produce the following in one additional session, if you approve:
+1. **`160sp/rubrics/README.md`** — the revised framework, canonicalised, with filing rules.
+2. **`160sp/rubrics/{t1,t2,t3,t4}/{deliverable}.md`** — rubric files per deliverable (not per week), pre-populated with the 3-criterion × 4-level table and track-specific language from the existing assignment descriptions.
+3. **`160sp/rubrics/common/{a0,a1}.md`** — the two common-work rubrics (A0 and A1) with their 5-point rescaling.
+4. **`160sp/rubrics/f160/README.md`** — the Work-on-160F rubric with the four contribution options and the shipment / usability / integration split.
+5. **`160sp/rubrics/verification/README.md`** — a how-to for TAs showing the automated queries (for Track 1 and Track 2), the manual checklists (for Track 3 and Track 4), and the inter-rater protocol (for Track 1 image tagging).
+6. **`160sp/rubrics/grading_sheet_template.md`** — a per-student grading sheet specification (the actual .xlsx can be generated from this spec using the xlsx skill in a follow-on session, but the spec is the load-bearing artefact).
+7. **Admin page integration** — a new "Grading" tab on `ka_admin.html` that surfaces the per-student current-grade view by joining the grading sheet with the unified registry.
 
-1. **`160sp/rubrics/README.md`** — the framework above, canonicalised, with a filing system.
-2. **`160sp/rubrics/{t1,t2,t3,t4}/week{3..7}_{deliverable}.md`** — twenty rubric files, five per track, each with the 3-criterion × 4-level table pre-populated with track-specific language from the existing assignment descriptions.
-3. **`160sp/rubrics/verification/README.md`** — a how-to for TAs showing the automated queries (for Track 1 and Track 2), the manual checklists (for Track 3 and Track 4), and the inter-rater protocol (for Track 1 image tagging).
-4. **`160sp/rubrics/grading_sheet_template.xlsx`** — a per-student grading sheet with one row per student per week, pre-populated columns for the three criteria, and auto-summing total columns.
-5. **Admin page integration** — a new "Grading" tab on `ka_admin.html` that surfaces the per-student current-grade view by joining the grading sheet with the unified registry.
-
-The scaffold work is about 8–10 hours. The FILL-IN work (writing 20 specific rubrics) is another 8–12 hours of track-lead time, split across TAs if you have them. The verification queries for Track 1 and Track 2 are maybe 2–3 hours since they can use the unified pipeline registry directly.
+The scaffold work is about 8–10 hours of CW time. The FILL-IN work (writing 20+ specific rubrics) is another 8–12 hours of track-lead time, split across TAs if available. The verification queries for Track 1 and Track 2 are 2–3 hours because they can use the unified pipeline registry directly.
 
 ---
 
@@ -149,4 +237,18 @@ The honest answer is **no, not yet**. The assignment descriptions tell a student
 
 For Spring 2026, the pragmatic path is: write the scaffold in Week 3 (before track-specific grading begins), get DK to approve the rubric anchors, run Weeks 3–5 with the rubrics in place, revise at the Week 5 mid-sprint checkpoint based on what turned out to be ambiguous, and ship the revised rubric set for Weeks 6–7. The verification layer can come online the same week: Track 1 and Track 2 can go fully automated immediately; Track 3 and Track 4 use the manual checklist.
 
-If this proposal is approved, say "build the scaffold" and I will produce §1–§5 in the next session. If it needs revision first, the three places most worth questioning are: (a) whether 100 points per track is the right total (could be 100 points for the whole class with tracks weighted), (b) whether 10 points per weekly deliverable is fine-grained enough, and (c) whether the three criteria (completeness / quality / reflection) are the right three or should be four or five.
+**Status 2026-04-17**: DK resolved the first open question by picking option (a) — 100 points for the whole class, with 5/5/75/15 split across A0/A1/Track/Work-on-160F. The second question (10-point weekly granularity) is also resolved: points are now allocated by hardness, not by week. The third question (the three criteria) remains as drafted — completeness / quality / reflection survive, with the scoring scale rescaled to the point total of each deliverable.
+
+Scaffold files produced in this session:
+
+| File | Purpose |
+|------|---------|
+| `160sp/rubrics/README.md` | Framework canonical doc |
+| `160sp/rubrics/t1/*.md` | Seven T1 deliverable rubrics |
+| `160sp/rubrics/t2/*.md` | Seven T2 deliverable rubrics |
+| `160sp/rubrics/t3/*.md` | Seven T3 deliverable rubrics |
+| `160sp/rubrics/t4/*.md` | Seven T4 deliverable rubrics |
+| `160sp/rubrics/common/a0.md`, `common/a1.md` | A0 + A1 rubrics |
+| `160sp/rubrics/f160/README.md` | Work-on-160F rubric |
+| `160sp/rubrics/verification/README.md` | TA verification procedures |
+| `160sp/rubrics/grading_sheet_template.md` | Per-student grading-sheet spec |
