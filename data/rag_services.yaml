@@ -1,0 +1,124 @@
+# data/rag_services.yaml
+#
+# Canonical manifest of AI research-assistant services that
+# scripts/rag_harvest.py iterates over for each T2.d.2 student query.
+#
+# Each entry has three required fields:
+#   id        : short slug used in harvest/ directory names
+#   name      : human-readable display name (used in the disagreement report)
+#   adapter   : the Python adapter module under scripts/rag_adapters/{adapter}.py
+#
+# Optional fields:
+#   tier      : subscription level (recorded only; not used programmatically)
+#   access    : "api" | "web" | "manual"  — how harvest works
+#   endpoint  : base URL (for api/web adapters)
+#   notes     : free text
+#
+# DK: fill in the actual set of services you subscribe to. Delete the
+# entries you don't use. The adapters for Elicit, Consensus, SciSpace,
+# and Perplexity are stubs in scripts/rag_adapters/ — each becomes
+# ~50-100 lines once the harvest shape is known.
+#
+# Last updated: 2026-04-18  (CW — placeholder, awaiting DK confirmation)
+
+services:
+  - id: elicit
+    name: "Elicit"
+    adapter: elicit_adapter
+    tier: "Plus"           # TODO: DK confirm
+    access: "api"
+    endpoint: "https://api.elicit.com/v1/"
+    notes: >
+      Elicit's API is authenticated; Plus tier supports the systematic
+      review workflow. The adapter sends the student's query as a
+      search, harvests the ranked paper list with each paper's claim
+      about the main finding and the paper's relevance score.
+
+  - id: consensus
+    name: "Consensus"
+    adapter: consensus_adapter
+    tier: "Premium"        # TODO: DK confirm
+    access: "api"
+    endpoint: "https://api.consensus.app/"
+    notes: >
+      Consensus provides per-paper evidence labels
+      (supports/contradicts/neither) for yes-no queries; also returns
+      a synthesised consensus-meter for each query. The adapter
+      captures both.
+
+  - id: scispace
+    name: "SciSpace"
+    adapter: scispace_adapter
+    tier: "Pro"            # TODO: DK confirm
+    access: "api"
+    notes: >
+      SciSpace (formerly typeset.io) returns papers with extracted
+      abstract + method + result columns per paper. The adapter
+      captures the structured extraction.
+
+  - id: perplexity_research
+    name: "Perplexity Pro (Research mode)"
+    adapter: perplexity_adapter
+    tier: "Pro"            # TODO: DK confirm
+    access: "api"
+    endpoint: "https://api.perplexity.ai/"
+    notes: >
+      Perplexity's Research mode returns a citation-dense synthesised
+      answer with inline paper references. The adapter captures both
+      the answer text and the full reference list.
+
+  # ── Disabled by default — enable if DK has the subscription ──
+  # - id: chatgpt_deep_research
+  #   name: "ChatGPT Deep Research"
+  #   adapter: chatgpt_adapter
+  #   tier: "Pro"
+  #   access: "manual"       # no API; paste student query, paste response
+  #   notes: >
+  #     Deep Research returns a long-form report with citations.
+  #     Harvest is manual: student paste query into ChatGPT Pro,
+  #     paste response into harvest/chatgpt_deep_research/response.md.
+  #
+  # - id: gemini_deep_research
+  #   name: "Gemini Deep Research"
+  #   adapter: gemini_adapter
+  #   tier: "Advanced"
+  #   access: "manual"
+  #
+  # - id: scite
+  #   name: "Scite.ai"
+  #   adapter: scite_adapter
+  #   tier: "Premium"
+  #   access: "api"
+  #   endpoint: "https://api.scite.ai/"
+  #
+  # - id: you_com
+  #   name: "You.com Research"
+  #   adapter: youcom_adapter
+  #   tier: "Pro"
+  #   access: "api"
+
+# ── Normalised schema every adapter must emit ──
+# Each adapter returns a dict matching this shape, written as
+# harvest/{service_id}/normalised.json in the student's T2.d.2/ dir.
+#
+#   {
+#     "service_id": "elicit",
+#     "query": "<the structured query>",
+#     "harvested_at": "<ISO timestamp>",
+#     "synthesis": "<the service's written answer, if any>",
+#     "papers": [
+#       {
+#         "doi": "10.xxxx/...",
+#         "title": "...",
+#         "authors": [...],
+#         "year": 2023,
+#         "abstract": "...",
+#         "service_claimed_relevance": 0.93,    # 0-1 if numeric
+#         "service_claimed_verdict": "supports",  # or null, or "contradicts", etc.
+#         "service_evidence_snippet": "...",      # the service's quoted evidence
+#         "source_url": "https://..."
+#       },
+#       ...
+#     ],
+#     "raw_response_path": "harvest/{service_id}/raw.json"
+#   }

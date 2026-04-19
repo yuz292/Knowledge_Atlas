@@ -73,6 +73,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import sqlite3
@@ -90,7 +91,15 @@ QUEUE = GRADING / "queue"
 IN_PROGRESS = GRADING / "in_progress"
 DONE = GRADING / "done"
 AUTH_DB = REPO / "data" / "ka_auth.db"
-REGISTRY_DB = REPO / "pipeline_registry_unified.db"
+# The unified pipeline registry lives in the sibling AE recovery repo,
+# not in Knowledge_Atlas. Honour KA_UNIFIED_REGISTRY_DB so deploy paths
+# can override; default to the sibling-repo absolute path that works
+# in both Cowork and DK's Mac mount layout.
+REGISTRY_DB = Path(os.environ.get(
+    "KA_UNIFIED_REGISTRY_DB",
+    str(REPO.parent / "Article_Eater_PostQuinean_v1_recovery"
+        / "data" / "pipeline_registry_unified.db"),
+))
 
 # ─── Deliverable catalogue ──────────────────────────────────────────
 #   Maps deliverable_id → (rubric_path_relative_to_rubrics,
