@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crosswalk GUI mockups — design exploration</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+       background:#F7F4EF;color:#2C2C2C;line-height:1.55;padding:40px 0}
+  main{max-width:1180px;margin:0 auto;padding:0 28px}
+  h1{font-family:Georgia,serif;font-size:2.1rem;color:#1C3D3A;margin-bottom:10px}
+  h2{font-family:Georgia,serif;font-size:1.35rem;color:#1C3D3A;
+     margin:48px 0 14px;padding-bottom:6px;border-bottom:2px solid #E0D8CC}
+  h3{font-family:Georgia,serif;font-size:1.05rem;color:#1C3D3A;margin:20px 0 8px}
+  p{margin-bottom:10px;font-size:0.95rem}
+  p strong{color:#1C3D3A}
+  .meta{color:#6B6B6B;font-size:0.88rem;margin-bottom:28px}
+
+  /* Design-doc style */
+  .design-note{background:#fff;border-left:4px solid #E8872A;
+               border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0;
+               font-size:0.9rem;color:#4a3a2a}
+  .design-note b{color:#9a5010}
+  .design-note code{font-family:ui-monospace,Menlo,monospace;
+                    font-size:0.85em;background:#FEF3E2;padding:1px 5px;border-radius:3px}
+  .tradeoffs{font-size:0.85rem;color:#6B6B6B;margin-top:10px;
+             padding:10px 14px;background:#F9F5EE;border-radius:6px}
+  .tradeoffs b{color:#2C2C2C}
+
+  /* Pattern-containing card */
+  .pattern{background:#fff;border:1px solid #E0D8CC;border-radius:10px;
+           padding:22px 24px;margin-bottom:32px}
+  .pattern-header{display:flex;align-items:baseline;gap:14px;margin-bottom:10px}
+  .pattern-num{font-family:Georgia,serif;font-size:1.3rem;color:#E8872A;font-weight:700}
+  .pattern-title{font-family:Georgia,serif;font-size:1.2rem;color:#1C3D3A;font-weight:700}
+  .pattern-desc{font-size:0.88rem;color:#6B6B6B;margin-bottom:14px;line-height:1.5}
+
+  /* ── Pattern 1: Heatmap ── */
+  .heatmap-wrap{overflow-x:auto}
+  table.heatmap{border-collapse:collapse;font-size:0.78rem}
+  table.heatmap th{font-weight:600;color:#1C3D3A;padding:6px 8px;text-align:left;
+                    background:#F9F5EE;border:1px solid #E0D8CC;white-space:nowrap}
+  table.heatmap th.outcome-col{writing-mode:vertical-rl;transform:rotate(180deg);
+                                text-align:left;max-height:180px;vertical-align:bottom;
+                                font-size:0.72rem;padding:8px 6px}
+  table.heatmap td{padding:7px 9px;text-align:center;border:1px solid #E0D8CC;
+                    font-family:ui-monospace,Menlo,monospace;font-weight:600;
+                    min-width:40px;cursor:pointer;transition:outline 0.1s}
+  table.heatmap td:hover{outline:2px solid #E8872A;outline-offset:-2px}
+  table.heatmap td.empty{color:#D0D0D0;background:#FBFBFB}
+  .scale-legend{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:0.78rem;color:#6B6B6B}
+  .scale-legend .swatch{display:inline-block;width:22px;height:12px;border:1px solid #E0D8CC}
+
+  /* ── Pattern 2: Faceted filter ── */
+  .facet-layout{display:grid;grid-template-columns:280px 1fr;gap:22px}
+  @media (max-width:820px){.facet-layout{grid-template-columns:1fr}}
+  .facet-panel{background:#F9F5EE;border-radius:8px;padding:14px 16px}
+  .facet-group{margin-bottom:16px}
+  .facet-group .label{font-size:0.72rem;letter-spacing:0.08em;
+                      text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:6px}
+  .chip{display:inline-block;background:#fff;border:1px solid #D8D0C5;
+        border-radius:16px;padding:5px 11px;font-size:0.82rem;margin:3px 4px 3px 0;
+        cursor:pointer;transition:all 0.12s;color:#2C2C2C}
+  .chip:hover{border-color:#2A7868}
+  .chip.selected{background:#2A7868;color:#fff;border-color:#2A7868}
+  .chip .count{opacity:0.65;margin-left:4px;font-size:0.75em}
+  .facet-results{background:#fff;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px}
+  .facet-results h4{margin-bottom:10px;font-family:Georgia,serif;color:#1C3D3A}
+  .bundle-row{padding:10px 0;border-bottom:1px dashed #E0D8CC;font-size:0.9rem}
+  .bundle-row:last-child{border-bottom:none}
+  .bundle-title{color:#1C3D3A;font-weight:600;margin-bottom:2px}
+  .bundle-meta{color:#6B6B6B;font-size:0.82rem}
+  .clear-link{font-size:0.78rem;color:#2A7868;cursor:pointer;float:right}
+  .clear-link:hover{text-decoration:underline}
+
+  /* ── Pattern 3: Coordinated multi-view ── */
+  .multi-view{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:18px;
+              height:420px}
+  @media (max-width:820px){.multi-view{grid-template-columns:1fr;height:auto}}
+  .mv-panel{background:#F9F5EE;border-radius:8px;padding:12px 14px;
+            overflow-y:auto;font-size:0.86rem}
+  .mv-panel h4{font-family:Georgia,serif;color:#1C3D3A;font-size:0.95rem;
+               margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E0D8CC}
+  .mv-item{padding:6px 9px;margin:2px 0;border-radius:4px;cursor:pointer;
+           transition:background 0.12s}
+  .mv-item:hover{background:#E6F5F0}
+  .mv-item.selected{background:#2A7868;color:#fff}
+  .mv-item.selected .mv-sub{color:#cfe6de}
+  .mv-item.dimmed{opacity:0.35}
+  .mv-item .mv-sub{font-size:0.76rem;color:#6B6B6B;margin-top:2px}
+
+  /* ── Pattern 4: Bidirectional lookup ── */
+  .bidir{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  @media (max-width:640px){.bidir{grid-template-columns:1fr}}
+  .bidir-side{background:#F9F5EE;border-radius:8px;padding:14px 18px}
+  .bidir-side h4{font-family:Georgia,serif;color:#1C3D3A;margin-bottom:8px}
+  .bidir-side select{width:100%;padding:9px 11px;border:1.5px solid #D8D0C5;
+                     border-radius:7px;font-size:0.92rem;background:#fff;
+                     margin-bottom:14px;font-family:inherit}
+  .bidir-output{background:#fff;border-radius:6px;padding:10px 14px;min-height:60px;
+                font-size:0.86rem}
+  .bidir-output .item{padding:4px 0;color:#2C2C2C}
+  .bidir-output .item strong{color:#1C3D3A}
+  .bidir-output .item .n{color:#6B6B6B;font-size:0.82em;margin-left:6px}
+
+  /* Comparison table */
+  table.compare{width:100%;border-collapse:collapse;font-size:0.85rem;margin-top:14px}
+  table.compare th,table.compare td{padding:10px 12px;text-align:left;
+                                     border-bottom:1px solid #E0D8CC;vertical-align:top}
+  table.compare th{background:#F9F5EE;font-weight:600;color:#1C3D3A}
+  table.compare td{color:#2C2C2C}
+  table.compare tr:hover{background:#FBFAF7}
+
+  /* Refs */
+  .refs{background:#fff;border:1px solid #E0D8CC;border-radius:8px;
+        padding:16px 20px;margin-top:32px;font-size:0.86rem}
+  .refs h2{margin-top:0;border:none;padding:0}
+  .refs ol{padding-left:22px;line-height:1.55}
+  .refs li{margin-bottom:9px}
+  .refs .cite{background:#F9F5EE;color:#6B6B6B;font-size:0.76em;
+              padding:1px 6px;border-radius:10px;margin-left:5px}
+  .refs a{color:#2A7868;text-decoration:none;word-break:break-all}
+  .refs a:hover{text-decoration:underline}
+
+  .status-pill{display:inline-block;background:#E6F5F0;color:#1A7050;
+               font-size:0.72rem;padding:2px 9px;border-radius:11px;
+               font-weight:600;margin-left:8px}
+  .status-pill.mixed{background:#FEF3E2;color:#9a5010}
+  .status-pill.unresolved{background:#F8D7DA;color:#8A1A25}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="topics">
+<div id="ka-navbar-slot"></div>
+<main>
+
+<h1>Crosswalk GUI mockups — a design exploration</h1>
+<p class="meta">
+  2026-04-18 · Working mockup over Codex's <code>topic_crosswalk.json</code> (102 defended rows × 18 outcomes × 9 architectural families).
+  Four GUI patterns, same underlying data, rendered in-browser so the affordances can be felt before we commit to one. This page is a design artefact, not production UI.
+</p>
+
+<!-- ═══ Design context ═══ -->
+<div class="design-note">
+  <b>What the crosswalk is and what it is not.</b> Per <code>docs/TOPIC_CROSSWALK_AND_TOPIC_PAGE_CONTRACT_2026-04-19.md</code>, the crosswalk is a <em>bridge layer</em> between human-language outcomes (stress, attention, restoration, …), architectural families (luminous, acoustic, spatial, …), and defended Knowledge Atlas topic bundles. One row = one outcome × one architectural family × one topic bundle × its linked papers, theories, measures. It is not a rival taxonomy; it is the join surface that makes the taxonomies intelligible to a user who says <em>"show me architecture and stress."</em> The patterns below differ only in how they let a user travel across that surface.
+</div>
+
+<!-- ═══ Pattern 1: Heatmap ═══ -->
+<div class="pattern">
+  <div class="pattern-header">
+    <span class="pattern-num">1.</span>
+    <span class="pattern-title">Heatmap matrix (Tufte / Bertin)</span>
+  </div>
+  <p class="pattern-desc">
+    The crosswalk's two root dimensions (architectural family × outcome) rendered as a 9 × 18 grid. Each cell's depth of colour encodes <code>paper_count</code>; empty cells are left grey. Clicking a cell drills into its defended bundles. The view shows at a glance where the evidence base is dense (<em>luminous × cog.attention</em>, <em>natural × affect.restoration</em>) and where it is thin.
+  </p>
+  <div class="heatmap-wrap" id="pattern1"></div>
+  <div class="scale-legend">
+    paper count scale:
+    <span class="swatch" style="background:#f5f0e7"></span> 0
+    <span class="swatch" style="background:#bddbd0"></span> low
+    <span class="swatch" style="background:#4d9b87"></span> mid
+    <span class="swatch" style="background:#1a4a3f"></span> high
+  </div>
+  <div class="tradeoffs">
+    <b>Best for:</b> honest overview — users see coverage density at a glance and cannot miss the gaps. <b>Weak for:</b> browsing when the user already knows their outcome but not the labels; requires visual scanning rather than search. Grounded in Bertin's <em>Sémiologie graphique</em> (1967) and Tufte's data-ink-maximisation principle (1983, 2006).
+  </div>
+</div>
+
+<!-- ═══ Pattern 2: Faceted filter ═══ -->
+<div class="pattern">
+  <div class="pattern-header">
+    <span class="pattern-num">2.</span>
+    <span class="pattern-title">Faceted filter panel (Shneiderman dynamic queries)</span>
+  </div>
+  <p class="pattern-desc">
+    Two chip rows — one for outcomes, one for architectural families. Clicking chips refines a visible bundle list in real time. Results update on every click; clearing chips returns to the full list. This is the direct-manipulation / dynamic-query pattern formalised by Shneiderman (1994) and used by every modern faceted-search UI from Amazon to Elicit.
+  </p>
+  <div class="facet-layout">
+    <div class="facet-panel" id="pattern2-facets"></div>
+    <div class="facet-results" id="pattern2-results"></div>
+  </div>
+  <div class="tradeoffs">
+    <b>Best for:</b> the <em>"show me X and Y"</em> user who already has an intent. Discoverability is high because every chip shows its count. <b>Weak for:</b> users who do not know the vocabulary (the outcome chip labels can be opaque to a novice: what is <code>affect.negative.stress</code>?). Needs a plain-language relabel if this becomes the primary entry path. Grounded in Shneiderman's <em>Dynamic Queries</em> (1994) and Hearst's <em>Search User Interfaces</em> (2009).
+  </div>
+</div>
+
+<!-- ═══ Pattern 3: Coordinated multi-view ═══ -->
+<div class="pattern">
+  <div class="pattern-header">
+    <span class="pattern-num">3.</span>
+    <span class="pattern-title">Coordinated multi-view dashboard (Roberts CMV)</span>
+  </div>
+  <p class="pattern-desc">
+    Three linked panels: outcomes (left), architectural families (middle), defended bundles (right). Selecting an outcome dims non-matching families and filters the bundle list; selecting a family does the reverse. The panels update in lockstep — a canonical Roberts-style <em>multiple coordinated views</em> system (2007). The user can enter from whichever side is most natural: a psychologist might click an outcome first, an architect an architectural family.
+  </p>
+  <div class="multi-view">
+    <div class="mv-panel" id="pattern3-outcomes"></div>
+    <div class="mv-panel" id="pattern3-families"></div>
+    <div class="mv-panel" id="pattern3-bundles"></div>
+  </div>
+  <div class="tradeoffs">
+    <b>Best for:</b> exploration when the user does not know which side to start from. The lockstep updates teach the structure of the bridge. <b>Weak for:</b> mobile screens (three columns cramped below 820 px); also has the highest visual-attention cost of the four patterns. Grounded in Roberts' <em>State of the art: Coordinated and multiple views</em> (2007) and the IVEE precursor (Ahlberg &amp; Shneiderman, 1994).
+  </div>
+</div>
+
+<!-- ═══ Pattern 4: Bidirectional lookup ═══ -->
+<div class="pattern">
+  <div class="pattern-header">
+    <span class="pattern-num">4.</span>
+    <span class="pattern-title">Bidirectional lookup (plainest-possible)</span>
+  </div>
+  <p class="pattern-desc">
+    Two dropdowns that mirror each other. Pick an outcome on the left, see the matching architectural families ranked by paper count on the left's output. Pick a family on the right, see the matching outcomes on the right's output. No matrix, no chips, no lockstep; just two one-way lookups side by side. The simplest pattern on offer.
+  </p>
+  <div class="bidir">
+    <div class="bidir-side">
+      <h4>Start with an outcome</h4>
+      <select id="bidir-outcome"><option value="">Choose an outcome…</option></select>
+      <div class="bidir-output" id="bidir-outcome-output">
+        <span style="color:#8A9A96;font-size:0.85rem">Pick an outcome to see matching architectural families.</span>
+      </div>
+    </div>
+    <div class="bidir-side">
+      <h4>Start with an architectural family</h4>
+      <select id="bidir-family"><option value="">Choose a family…</option></select>
+      <div class="bidir-output" id="bidir-family-output">
+        <span style="color:#8A9A96;font-size:0.85rem">Pick a family to see matching outcomes.</span>
+      </div>
+    </div>
+  </div>
+  <div class="tradeoffs">
+    <b>Best for:</b> novice users who want a single obvious thing. Highest usability on first encounter; every control labels itself. <b>Weak for:</b> users who want to see the whole landscape at once, or who want to filter by both axes simultaneously (this pattern does not compose filters). Grounded in Norman's <em>Design of Everyday Things</em> principle that affordances must be self-explanatory (1988, revised 2013).
+  </div>
+</div>
+
+<!-- ═══ Comparison ═══ -->
+<h2>Comparison and recommendation</h2>
+
+<table class="compare">
+  <thead>
+    <tr>
+      <th style="width:20%">Pattern</th>
+      <th style="width:25%">Best when</th>
+      <th style="width:25%">Fails when</th>
+      <th style="width:30%">Implementation cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>1. Heatmap matrix</b></td>
+      <td>User needs an honest overview of where evidence is dense vs thin</td>
+      <td>User cannot read the labels on the axes; does not afford search</td>
+      <td>Low (~ 80 lines of HTML + JS, no libraries)</td>
+    </tr>
+    <tr>
+      <td><b>2. Faceted filter</b></td>
+      <td>User has an intent ("architecture + stress") and wants to narrow</td>
+      <td>Outcome labels are jargon; needs plain-language overrides</td>
+      <td>Medium (~ 150 lines; responsive layout added complexity)</td>
+    </tr>
+    <tr>
+      <td><b>3. Coordinated multi-view</b></td>
+      <td>User is exploring and wants to learn the taxonomy as they browse</td>
+      <td>Mobile; high visual-attention cost; overkill for simple tasks</td>
+      <td>High (~ 220 lines; lockstep state management; requires a real testing pass)</td>
+    </tr>
+    <tr>
+      <td><b>4. Bidirectional lookup</b></td>
+      <td>First-time visitors who want one answer without exploring</td>
+      <td>Users who want to combine filters or see the whole surface</td>
+      <td>Very low (~ 50 lines, pure HTML select + one handler each)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="design-note" style="margin-top:20px">
+  <b>My recommendation.</b> Use <b>Pattern 2 (faceted filter)</b> as the default entry on <code>ka_topics.html</code>, with <b>Pattern 1 (heatmap)</b> available as a secondary tab labelled <em>Coverage map</em>. Rationale: Pattern 2 serves the intent-driven user well, covers the three entry modes Codex's contract requires (outcome-first, architecture-first, bundle-first — all collapse to facet-first), and the chip counts surface the coverage information the heatmap also shows, just in a different modality. The heatmap as a secondary view gives the audit-minded reader (the instructor, the TA, the reviewer) the honest gap-assessment view the student doesn't need every time. Pattern 3 is over-specified for the 102-row scale and belongs to a later iteration when the corpus grows. Pattern 4 is suitable for a landing-page widget but not for the full topic page.
+</div>
+
+<!-- ═══ References ═══ -->
+<div class="refs">
+  <h2>References</h2>
+  <ol>
+    <li>Ahlberg, C., &amp; Shneiderman, B. (1994). Visual information seeking: Tight coupling of dynamic query filters with starfield displays. <em>Proceedings of CHI '94</em>, 313–317. https://doi.org/10.1145/191666.191775 <span class="cite">GS: 3,100+</span></li>
+    <li>Bertin, J. (1967). <em>Sémiologie graphique: Les diagrammes, les réseaux, les cartes</em>. Gauthier-Villars. (English translation: <em>Semiology of Graphics</em>, W. J. Berg, trans., 1983, University of Wisconsin Press.) <span class="cite">GS: 7,900+</span></li>
+    <li>Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press. <span class="cite">GS: 1,100+</span></li>
+    <li>Hearst, M. A. (2009). <em>Search user interfaces</em>. Cambridge University Press. https://doi.org/10.1017/CBO9781139644082 <span class="cite">GS: 2,800+</span></li>
+    <li>Keim, D. A., Mansmann, F., Schneidewind, J., Thomas, J., &amp; Ziegler, H. (2008). Visual analytics: Scope and challenges. In <em>Visual data mining</em> (pp. 76–90). Springer. https://doi.org/10.1007/978-3-540-71080-6_6 <span class="cite">GS: 1,600+</span></li>
+    <li>Munzner, T. (2014). <em>Visualization analysis and design</em>. CRC Press. https://doi.org/10.1201/b17511 <span class="cite">GS: 3,800+</span></li>
+    <li>Norman, D. A. (2013). <em>The design of everyday things</em> (Revised &amp; expanded ed.). Basic Books. (Original work published 1988.) <span class="cite">GS: 48,000+</span></li>
+    <li>Roberts, J. C. (2007). State of the art: Coordinated and multiple views in exploratory visualization. <em>Proceedings of the Fifth International Conference on Coordinated and Multiple Views in Exploratory Visualization (CMV 2007)</em>, 61–71. https://doi.org/10.1109/CMV.2007.20 <span class="cite">GS: 920+</span></li>
+    <li>Shneiderman, B. (1994). Dynamic queries for visual information seeking. <em>IEEE Software</em>, 11(6), 70–77. https://doi.org/10.1109/52.329404 <span class="cite">GS: 2,400+</span></li>
+    <li>Tufte, E. R. (1983). <em>The visual display of quantitative information</em>. Graphics Press. <span class="cite">GS: 17,000+</span></li>
+    <li>Tufte, E. R. (2006). <em>Beautiful evidence</em>. Graphics Press. <span class="cite">GS: 4,100+</span></li>
+  </ol>
+</div>
+
+</main>
+
+<script>
+// ─── Load the real crosswalk payload ──────────────────────────────
+async function init() {
+  let data;
+  try {
+    const r = await fetch('../data/ka_payloads/topic_crosswalk.json');
+    data = await r.json();
+  } catch (e) {
+    document.querySelector('main').insertAdjacentHTML('afterbegin',
+      '<div class="design-note" style="border-color:#A84F6B"><b>Could not load topic_crosswalk.json.</b> ' +
+      'Serve this page over HTTP (e.g. <code>python3 -m http.server</code> from the repo root) rather than file://. ' +
+      'Reason: <code>' + e.message + '</code></div>');
+    return;
+  }
+
+  const rows      = data.rows           || [];
+  const outcomes  = data.outcome_index  || [];
+  const families  = data.iv_root_index  || [];
+
+  renderHeatmap(rows, outcomes, families);
+  renderFaceted(rows, outcomes, families);
+  renderMultiview(rows, outcomes, families);
+  renderBidirectional(rows, outcomes, families);
+}
+
+// ═══ Pattern 1: Heatmap ═══
+function renderHeatmap(rows, outcomes, families) {
+  // Build cell counts: families (rows) × outcomes (cols) → summed paper_count
+  const cells = new Map();  // "iv_root||outcome" -> {count, rows}
+  let maxCount = 0;
+  for (const r of rows) {
+    const key = `${r.iv_root}||${r.outcome_term_id || r.dv_focus || '?'}`;
+    const e = cells.get(key) || {count: 0, rows: []};
+    e.count += r.paper_count || 0;
+    e.rows.push(r);
+    cells.set(key, e);
+    if (e.count > maxCount) maxCount = e.count;
+  }
+
+  const colorFor = (c) => {
+    if (!c) return '#FBFBFB';
+    const t = Math.log(1 + c) / Math.log(1 + maxCount);
+    // Teal palette
+    const g = Math.round(245 - t * 180);
+    const b = Math.round(240 - t * 180);
+    const r = Math.round(245 - t * 215);
+    return `rgb(${r},${g},${b})`;
+  };
+
+  let html = '<table class="heatmap"><thead><tr><th></th>';
+  for (const o of outcomes) {
+    html += `<th class="outcome-col" title="${o.outcome_label}">${o.outcome_label}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+  for (const f of families) {
+    html += `<tr><th>${f.iv_root_label || f.iv_root}</th>`;
+    for (const o of outcomes) {
+      const key = `${f.iv_root}||${o.outcome_term_id || '?'}`;
+      const cell = cells.get(key);
+      const c = cell ? cell.count : 0;
+      html += `<td class="${c ? '' : 'empty'}" style="background:${colorFor(c)};"
+                   title="${f.iv_root_label} × ${o.outcome_label}: ${c} paper${c===1?'':'s'}">${c || ''}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  document.getElementById('pattern1').innerHTML = html;
+}
+
+// ═══ Pattern 2: Faceted filter ═══
+function renderFaceted(rows, outcomes, families) {
+  const state = {outcome: null, family: null};
+
+  const redraw = () => {
+    // Render outcome chips
+    const oFiltered = state.family
+      ? rows.filter(r => r.iv_root === state.family).map(r => r.outcome_term_id || r.dv_focus)
+      : null;
+    const oSet = oFiltered ? new Set(oFiltered) : null;
+    let oHtml = '<div class="facet-group"><div class="label">Outcome' +
+                (state.outcome ? ` · <span class="clear-link" onclick="__clearFacet(\'outcome\')">clear</span>` : '') + '</div>';
+    for (const o of outcomes) {
+      const dimmed = oSet && !oSet.has(o.outcome_term_id);
+      const selected = state.outcome === o.outcome_term_id;
+      oHtml += `<span class="chip ${selected?'selected':''}" ${dimmed?'style="opacity:.3"':''}
+                    onclick="__toggleFacet('outcome', '${o.outcome_term_id}')"
+                    >${o.outcome_label} <span class="count">${o.paper_count}</span></span>`;
+    }
+    oHtml += '</div>';
+
+    // Render family chips
+    const fFiltered = state.outcome
+      ? rows.filter(r => (r.outcome_term_id || r.dv_focus) === state.outcome).map(r => r.iv_root)
+      : null;
+    const fSet = fFiltered ? new Set(fFiltered) : null;
+    let fHtml = '<div class="facet-group"><div class="label">Architectural family' +
+                (state.family ? ` · <span class="clear-link" onclick="__clearFacet(\'family\')">clear</span>` : '') + '</div>';
+    for (const f of families) {
+      const dimmed = fSet && !fSet.has(f.iv_root);
+      const selected = state.family === f.iv_root;
+      fHtml += `<span class="chip ${selected?'selected':''}" ${dimmed?'style="opacity:.3"':''}
+                    onclick="__toggleFacet('family', '${f.iv_root}')"
+                    >${f.iv_root_label || f.iv_root} <span class="count">${f.paper_count}</span></span>`;
+    }
+    fHtml += '</div>';
+
+    document.getElementById('pattern2-facets').innerHTML = oHtml + fHtml;
+
+    // Filter + render results
+    let results = rows.slice();
+    if (state.outcome) results = results.filter(r => (r.outcome_term_id || r.dv_focus) === state.outcome);
+    if (state.family) results = results.filter(r => r.iv_root === state.family);
+    results.sort((a,b)=>(b.paper_count||0)-(a.paper_count||0));
+
+    let rHtml = `<h4>Defended bundles <span style="font-weight:400;color:#6B6B6B">(${results.length})</span></h4>`;
+    if (results.length === 0) {
+      rHtml += '<div style="color:#6B6B6B;font-size:0.86rem">No defended bundles match this filter combination. This cell is in the gap set.</div>';
+    } else {
+      for (const r of results.slice(0, 14)) {
+        const pill = r.evidence_status === 'defended' ? 'status-pill' :
+                     r.evidence_status === 'mixed' ? 'status-pill mixed' :
+                     'status-pill unresolved';
+        rHtml += `<div class="bundle-row">
+          <div class="bundle-title">${r.topic_label || r.topic_id}
+            <span class="${pill}">${r.evidence_status || 'working'}</span></div>
+          <div class="bundle-meta">${r.outcome_label} × ${r.iv_root_label || r.iv_root} ·
+            <b>${r.paper_count || 0}</b> paper${r.paper_count===1?'':'s'}
+            ${r.defended_paper_count ? `· <b>${r.defended_paper_count}</b> defended` : ''}</div>
+        </div>`;
+      }
+      if (results.length > 14) rHtml += `<div class="bundle-row" style="color:#6B6B6B;text-align:center">… and ${results.length-14} more</div>`;
+    }
+    document.getElementById('pattern2-results').innerHTML = rHtml;
+  };
+
+  window.__toggleFacet = (kind, id) => {
+    state[kind] = state[kind] === id ? null : id;
+    redraw();
+  };
+  window.__clearFacet = (kind) => { state[kind] = null; redraw(); };
+  redraw();
+}
+
+// ═══ Pattern 3: Coordinated multi-view ═══
+function renderMultiview(rows, outcomes, families) {
+  const state = {outcome: null, family: null};
+
+  const redraw = () => {
+    // Outcomes panel
+    const oAllowed = state.family
+      ? new Set(rows.filter(r => r.iv_root === state.family).map(r => r.outcome_term_id || r.dv_focus))
+      : null;
+    let oHtml = '<h4>Outcomes</h4>';
+    for (const o of outcomes) {
+      const dimmed = oAllowed && !oAllowed.has(o.outcome_term_id);
+      const selected = state.outcome === o.outcome_term_id;
+      oHtml += `<div class="mv-item ${selected?'selected':''} ${dimmed?'dimmed':''}"
+                    onclick="__mvToggle('outcome', '${o.outcome_term_id}')">
+        <div>${o.outcome_label}</div>
+        <div class="mv-sub">${o.paper_count} papers · ${o.topic_ids ? o.topic_ids.length : 0} bundles</div>
+      </div>`;
+    }
+    document.getElementById('pattern3-outcomes').innerHTML = oHtml;
+
+    // Families panel
+    const fAllowed = state.outcome
+      ? new Set(rows.filter(r => (r.outcome_term_id || r.dv_focus) === state.outcome).map(r => r.iv_root))
+      : null;
+    let fHtml = '<h4>Architectural families</h4>';
+    for (const f of families) {
+      const dimmed = fAllowed && !fAllowed.has(f.iv_root);
+      const selected = state.family === f.iv_root;
+      fHtml += `<div class="mv-item ${selected?'selected':''} ${dimmed?'dimmed':''}"
+                    onclick="__mvToggle('family', '${f.iv_root}')">
+        <div>${f.iv_root_label || f.iv_root}</div>
+        <div class="mv-sub">${f.paper_count} papers · ${f.topic_ids ? f.topic_ids.length : 0} bundles</div>
+      </div>`;
+    }
+    document.getElementById('pattern3-families').innerHTML = fHtml;
+
+    // Bundles panel
+    let bundles = rows.slice();
+    if (state.outcome) bundles = bundles.filter(r => (r.outcome_term_id || r.dv_focus) === state.outcome);
+    if (state.family)  bundles = bundles.filter(r => r.iv_root === state.family);
+    bundles.sort((a,b)=>(b.paper_count||0)-(a.paper_count||0));
+    let bHtml = `<h4>Defended bundles (${bundles.length})</h4>`;
+    if (!bundles.length) {
+      bHtml += '<div style="color:#6B6B6B;font-size:0.85rem;padding:8px">No bundles for this selection.</div>';
+    } else {
+      for (const b of bundles.slice(0, 18)) {
+        bHtml += `<div class="mv-item">
+          <div>${b.topic_label || b.topic_id}</div>
+          <div class="mv-sub">${b.outcome_label} × ${b.iv_root_label || b.iv_root} · ${b.paper_count||0} papers</div>
+        </div>`;
+      }
+      if (bundles.length > 18) bHtml += `<div class="mv-item" style="color:#8A9A96">… ${bundles.length-18} more</div>`;
+    }
+    document.getElementById('pattern3-bundles').innerHTML = bHtml;
+  };
+
+  window.__mvToggle = (kind, id) => {
+    state[kind] = state[kind] === id ? null : id;
+    redraw();
+  };
+  redraw();
+}
+
+// ═══ Pattern 4: Bidirectional lookup ═══
+function renderBidirectional(rows, outcomes, families) {
+  const outSel = document.getElementById('bidir-outcome');
+  const famSel = document.getElementById('bidir-family');
+  for (const o of outcomes) {
+    const opt = document.createElement('option');
+    opt.value = o.outcome_term_id; opt.textContent = `${o.outcome_label} (${o.paper_count})`;
+    outSel.appendChild(opt);
+  }
+  for (const f of families) {
+    const opt = document.createElement('option');
+    opt.value = f.iv_root; opt.textContent = `${f.iv_root_label || f.iv_root} (${f.paper_count})`;
+    famSel.appendChild(opt);
+  }
+  outSel.addEventListener('change', e => {
+    const oid = e.target.value;
+    if (!oid) return;
+    const matching = rows.filter(r => (r.outcome_term_id||r.dv_focus) === oid);
+    const byFamily = {};
+    for (const r of matching) {
+      byFamily[r.iv_root] = byFamily[r.iv_root] || {label: r.iv_root_label, n: 0, bundles: []};
+      byFamily[r.iv_root].n += r.paper_count || 0;
+      byFamily[r.iv_root].bundles.push(r.topic_label || r.topic_id);
+    }
+    const sorted = Object.entries(byFamily).sort((a,b)=>b[1].n - a[1].n);
+    let html = '';
+    for (const [root, info] of sorted) {
+      html += `<div class="item"><strong>${info.label || root}</strong><span class="n">${info.n} papers · ${info.bundles.length} bundle${info.bundles.length===1?'':'s'}</span></div>`;
+    }
+    document.getElementById('bidir-outcome-output').innerHTML = html || '<div style="color:#6B6B6B">No matches.</div>';
+  });
+  famSel.addEventListener('change', e => {
+    const fid = e.target.value;
+    if (!fid) return;
+    const matching = rows.filter(r => r.iv_root === fid);
+    const byOutcome = {};
+    for (const r of matching) {
+      const k = r.outcome_term_id || r.dv_focus || '?';
+      byOutcome[k] = byOutcome[k] || {label: r.outcome_label, n: 0, bundles: []};
+      byOutcome[k].n += r.paper_count || 0;
+      byOutcome[k].bundles.push(r.topic_label || r.topic_id);
+    }
+    const sorted = Object.entries(byOutcome).sort((a,b)=>b[1].n - a[1].n);
+    let html = '';
+    for (const [oid, info] of sorted) {
+      html += `<div class="item"><strong>${info.label || oid}</strong><span class="n">${info.n} papers · ${info.bundles.length} bundle${info.bundles.length===1?'':'s'}</span></div>`;
+    }
+    document.getElementById('bidir-family-output').innerHTML = html || '<div style="color:#6B6B6B">No matches.</div>';
+  });
+}
+
+init();
+</script>
+</body>
+</html>
