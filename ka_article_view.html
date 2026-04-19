@@ -100,12 +100,22 @@ const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
   if (!id) {
     mount.className = "empty-state";
     mount.innerHTML = `
-      <h3>No article id specified</h3>
-      <p>This page displays one article record. Pass the paper id as <code>?id=PDF-XXXX</code>
-         in the URL. Example: <a href="?id=PDF-0007">?id=PDF-0007</a>.</p>
-      <p>You can also browse by topic from the <a href="ka_topics.html">Topics page</a>;
-         each topic lists its articles and each article link lands here.</p>`;
-    crumb.textContent = "(no id)";
+      <h3>We couldn't find the article you were looking for</h3>
+      <p>This page shows a single paper from the Atlas corpus. It looks like you
+         arrived here without a paper id, either because you followed a stale
+         link or because the link you clicked was malformed.</p>
+      <p>Two easy ways to find what you wanted:</p>
+      <ul style="padding-left:22px;font-size:.9rem">
+        <li>Browse by <a href="ka_topics.html">topic</a> — pick a research topic
+            from the list on the left, then open its Articles tab to see every
+            paper indexed on that topic.</li>
+        <li>Search <a href="ka_articles.html">articles directly</a> by title,
+            author, or year.</li>
+      </ul>
+      <p style="margin-top:12px;font-size:.85rem;color:#8A9A96">If you arrived
+         from an external link, please let the site owner know the link is
+         missing a paper id so they can correct it.</p>`;
+    crumb.textContent = "(no article loaded)";
     return;
   }
   crumb.textContent = id;

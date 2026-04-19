@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Topics — Knowledge Atlas</title>
+<meta name="description" content="Browse research on how architecture and environment shape cognition, emotion, and well-being. Pick a topic, see the evidence.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_crosswalk_patterns.css">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F7F4EF;color:#2C2C2C;
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+       line-height:1.55}
+
+  .welcome-strip{background:linear-gradient(135deg,#1C3D3A 0%,#2A7868 100%);
+                  color:#fff;padding:26px 28px;border-radius:10px;margin-bottom:22px}
+  .welcome-strip h1{font-family:Georgia,serif;font-size:1.85rem;
+                     margin-bottom:8px;color:#fff}
+  .welcome-strip p{font-size:0.98rem;line-height:1.55;color:#E6F5F0;
+                    max-width:720px;margin-bottom:0}
+  .welcome-strip p + p{margin-top:8px}
+  .welcome-strip a.reader-link{color:#F5A623;font-weight:600;text-decoration:none}
+  .welcome-strip a.reader-link:hover{text-decoration:underline}
+
+  .glossary-callout{background:#fff;border:1px solid #E0D8CC;border-radius:8px;
+                    padding:14px 18px;margin-bottom:22px;display:flex;
+                    gap:14px;align-items:flex-start;font-size:0.88rem}
+  .glossary-callout .gc-icon{font-size:1.1rem;color:#9a5010;flex-shrink:0;margin-top:2px}
+  .glossary-callout b{color:#1C3D3A}
+  .glossary-callout code{font-family:ui-monospace,Menlo,monospace;font-size:0.82em;
+                          background:#F9F5EE;padding:1px 5px;border-radius:3px}
+
+  .page-h1{font-family:Georgia,serif;font-size:1.55rem;color:#1C3D3A;
+           margin-bottom:6px}
+  .page-sub{color:#6B6B6B;font-size:0.92rem;margin-bottom:20px;max-width:760px}
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="topics">
+<div id="ka-navbar-slot"></div>
+<main class="ka-topic-page">
+
+  <!-- ── Welcome strip: public visitors get an orienting introduction ── -->
+  <div class="welcome-strip">
+    <h1>What does the research say about architecture and people?</h1>
+    <p>Knowledge Atlas indexes ~ 1,400 peer-reviewed studies on how the built
+       environment affects human cognition, emotion, stress, attention, and
+       well-being. We group those studies into topic <em>bundles</em> so you
+       can see, for any question you care about, what the evidence actually
+       supports and how strongly.</p>
+    <p>Below, pick a topic the way that feels most natural. You can start
+       from an outcome you care about (stress, focus, sleep), from an
+       architectural feature you're curious about (daylight, acoustics,
+       greenery), or see the full landscape.
+       <a class="reader-link" href="ka_about.html#evidence">How we weigh evidence →</a></p>
+  </div>
+
+  <!-- ── A plain-language glossary callout (Nielsen H10: Help and documentation) ── -->
+  <div class="glossary-callout">
+    <span class="gc-icon">ℹ︎</span>
+    <div>
+      <b>A few words you'll see on this page.</b>
+      A <b>topic bundle</b> groups studies that look at the same kind of
+      environmental feature (e.g. <code>luminous</code> = lighting / daylight)
+      and the same kind of outcome (e.g. <code>cog.attention</code> = effects
+      on attention). The pill next to a topic tells you how settled the
+      evidence is:
+      <span class="status-pill" style="margin-left:4px">defended</span> means
+      the evidence is strong enough that we'd cite it confidently;
+      <span class="status-pill mixed" style="margin-left:4px">mixed</span>
+      means studies disagree or the sample is thin;
+      <span class="status-pill unresolved" style="margin-left:4px">unresolved</span>
+      means we can't yet align the term with a canonical outcome vocabulary.
+    </div>
+  </div>
+
+  <h2 class="page-h1">Pick a starting point</h2>
+  <p class="page-sub">
+    The page will ask one question at a time and only show you options that
+    actually have studies behind them. You can back up at any step using the
+    breadcrumb. If you'd rather see everything at once, there's a "Show me
+    the full landscape" tile below.
+  </p>
+
+  <div id="__ka_pattern_mount"></div>
+
+  <!-- ── Secondary pathway for users who prefer a coverage-map view ── -->
+  <div style="margin-top:40px;padding:18px 20px;background:#F9F5EE;
+              border-radius:10px;font-size:0.88rem">
+    <b style="font-family:Georgia,serif;color:#1C3D3A">Looking for something else?</b>
+    <ul style="list-style:none;padding:0;margin-top:10px">
+      <li style="margin-bottom:6px">
+        → <a href="ka_topic_heatmap_view.html" style="color:#2A7868">See a coverage map</a>
+        of where the evidence base is dense and where it's thin.
+      </li>
+      <li style="margin-bottom:6px">
+        → <a href="ka_articles.html" style="color:#2A7868">Search individual articles</a>
+        by title, author, or year.
+      </li>
+      <li style="margin-bottom:6px">
+        → <a href="ka_theories.html" style="color:#2A7868">Read about the theoretical frameworks</a>
+        the Atlas organises evidence against.
+      </li>
+      <li>
+        → <a href="ka_contribute.html" style="color:#2A7868">Suggest a paper we should index</a>.
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-top:28px;padding-top:16px;border-top:1px dashed #E0D8CC;
+              font-size:0.78rem;color:#8A9A96">
+    Internal note (for maintainers): this is the <b>public-visitor</b> variant
+    of the topic page. It defaults to progressive-disclosure faceted browsing
+    and hides the variant-comparison row so a first-time visitor is not asked
+    to pick an interaction style before they pick a topic. Developers
+    comparing the six variants for the UX track should use
+    <a href="ka_topics.html" style="color:#2A7868">the Classic View</a>,
+    which exposes all six in a row at the top.
+  </div>
+
+</main>
+
+<script src="ka_crosswalk_patterns.js"></script>
+<script>
+(async function(){
+  const mount = document.getElementById("__ka_pattern_mount");
+  try {
+    const data = await KA_CROSSWALK.loadCrosswalk();
+    KA_CROSSWALK.renderProgressiveDisclosure(data, mount);
+  } catch (e) {
+    mount.innerHTML =
+      '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px">'+
+      '<b>The topic browser is not reachable right now.</b> We\'re sorry — '+
+      'please try reloading the page. If this persists, browse articles directly '+
+      'from <a href="ka_articles.html" style="color:#8A1A25;text-decoration:underline">the articles page</a>.'+
+      '</div>';
+    if (window.console) console.debug('crosswalk fetch error:', e);
+  }
+})();
+</script>
+</body>
+</html>
