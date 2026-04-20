@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.e — Reproducibility check — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.e</div>
+    <h1>Reproducibility check: paired-replication of UX findings</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Week 7</span>
+      <span><b>Hardness</b> Hard</span>
+      <span><b>Points</b> 13 / 75</span>
+      <span><b>Method</b> Direct-replication design (after Brandt et al. 2014)</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.e_reproducibility.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html">T4.a</a>
+    <a href="ka_t4_b_scenarios.html">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html" class="current">T4.e</a>
+    <a href="ka_t4_f_redesign.html">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal<span class="h2-hint">what this deliverable teaches</span></h2>
+    <p class="lede">
+      You will pair with a classmate and each attempt to reproduce five of the
+      other person's findings — without access to their screenshots or
+      commentary, working only from the finding schema (heuristic, scenario,
+      page, expected vs. observed). Each reproduction produces a binary
+      judgement (reproduces / does not reproduce / partial) and a short
+      narrative note. The deliverable is a <code>replication_report.md</code>
+      that commits to a reproducibility rate and reflects on which pieces of
+      the finding schema were most load-bearing.
+    </p>
+    <p>
+      Usability findings have the same epistemic status as behavioural
+      experiment results: a finding that reproduces on a second observer's
+      machine is evidence; one that does not is either poorly specified or
+      poorly grounded. This deliverable is hard because it forces you to audit
+      your own T4.a/T4.c schema quality through a colleague's failure to
+      reproduce it, which is less comfortable than writing new findings.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do<span class="h2-hint">the steps</span></h2>
+    <ol>
+      <li>Pair up. Your instructor will assign pairs by track-cohort; you can swap if both parties agree.</li>
+      <li>Exchange five findings each (ten reproductions per student total). Send only the schema fields — not your screenshots, your pilot quotes, or your severity rating. The other party should not know which finding you thought was most important.</li>
+      <li>For each finding you receive, open the stated page, perform the stated scenario, and attempt to produce the stated observed behaviour. Record what actually happened on your machine, in your browser, at the timestamp you attempted it.</li>
+      <li>Rate each attempted reproduction: <b>FULL</b> (observed behaviour matches), <b>PARTIAL</b> (something similar but not identical), <b>NONE</b> (behaviour could not be reproduced), or <b>UNDERSPECIFIED</b> (the schema did not give you enough to try).</li>
+      <li>Write one short note per attempted reproduction: what browser, what exact steps, what you saw. If NONE, propose the most charitable hypothesis for why (the page changed between observations, your viewport differs, a feature-flag differs, etc.).</li>
+      <li>Submit <code>replication_report.md</code> with a summary table of ten rows plus a reflection paragraph. The reflection paragraph is graded separately.</li>
+    </ol>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>Files &amp; pages relevant to this deliverable</h2>
+    <ul class="file-list">
+      <li><span class="file-type">INPUT</span><a href="ka_t4_a_heuristic_audit.html" target="_blank">T4.a findings schema</a><span class="file-desc">the format your partner's findings arrive in</span></li>
+      <li><span class="file-type">INPUT</span><a href="ka_t4_c_usability_pilot.html" target="_blank">T4.c pilot findings</a><span class="file-desc">some partners will send pilot-derived rather than audit-derived findings</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_home.html" target="_blank">ka_home.html</a><span class="file-desc">most home-page findings need to reproduce cleanly here</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_topics.html" target="_blank">ka_topics.html</a><span class="file-desc">Classic topic view</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_topic_facet_view.html" target="_blank">ka_topic_facet_view.html</a><span class="file-desc">Facet topic view — note variant-specific findings are more fragile</span></li>
+      <li><span class="file-type">REF</span><a href="https://doi.org/10.1016/j.jesp.2013.10.005" target="_blank">Brandt, IJzerman, Dijksterhuis, Farach, Geller, Giner-Sorolla, Grange, Perugini, Spies, van 't Veer (2014). "The Replication Recipe."</a><span class="file-desc">canonical paper on what a direct replication requires; we borrow its "what would count as the effect" framing</span></li>
+      <li><span class="file-type">TEMPLATE</span><a href="rubrics/t4/replication_report_template.md" target="_blank">replication_report_template.md</a><span class="file-desc">skeleton to copy</span></li>
+      <li><span class="file-type">RUBRIC</span><a href="rubrics/t4/T4.e_reproducibility.md" target="_blank">T4.e rubric</a><span class="file-desc">machine-readable spec</span></li>
+    </ul>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach<span class="h2-hint">so you can see what scores low</span></h2>
+    <p>
+      The most common naive failure is to conclude that "the site changed" for
+      every non-reproduction, which converts the exercise into a
+      self-exculpatory ritual. The block below illustrates.
+    </p>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — do NOT write a replication report like this</span>
+      <div class="naive-body">
+        <p><b>Replication report — summary</b></p>
+        <pre style="background:#FFF;color:#2C2C2C;padding:10px 12px;border-radius:6px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;margin:0">
+F-01  NONE    — could not find the page they described, probably changed
+F-02  NONE    — site updated
+F-03  NONE    — maybe a CSS change
+F-04  NONE    — the site works fine now
+F-05  FULL    — yes reproduced (no notes)
+F-06  NONE    — didn't load
+F-07  NONE    — couldn't tell
+F-08  NONE    — site probably fixed
+F-09  NONE    — different browser
+F-10  NONE    — n/a
+        </pre>
+        <p>
+          Reflection: I reproduced 1/10 findings. This shows the site has
+          improved a lot since my partner's audit, so most findings are no
+          longer valid. I think T4.a is a pretty unreliable method.
+        </p>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores band 0 or 1.</b>
+        Every non-reproduction is attributed to a change in the target rather
+        than a failure of the schema or a failure of the observer. No browser
+        is named, no timestamp is given, no exact steps are traced. The "F-05
+        FULL (no notes)" row is worse than a NONE row — a reproduction without
+        evidence is not a reproduction, it is an affirmation. The reflection
+        inverts the logic of the deliverable: when a partner's finding fails
+        to reproduce on your machine, the most honest hypothesis is usually
+        that the original schema was underspecified, not that the world
+        conveniently fixed itself. A band-3 report forces the student to
+        assign failure-modes: <em>page-absent / schema-incomplete /
+        viewport-specific / interaction-missed / genuine-regression</em>, and
+        to distinguish between them using evidence. Concluding "T4.a is
+        unreliable" on a 1/10 sample with no diagnostic work is exactly the
+        kind of conclusion Brandt et al. (2014) warn against when they insist
+        that a single replication is evidence, not proof.
+      </div>
+    </div>
+
+    <p><b>The report-row template.</b> One row per attempted reproduction:</p>
+<pre style="background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px;font-family:ui-monospace,Menlo,monospace;font-size:0.84rem;overflow-x:auto;line-height:1.55">
+## F-{partner_id} — {their title}
+
+**Verdict**: FULL | PARTIAL | NONE | UNDERSPECIFIED
+**Browser / viewport**: {e.g. Safari 17.3, 1440×900}
+**Timestamp**: {YYYY-MM-DD HH:MM}
+**Steps taken** (numbered, verbatim if possible):
+  1. {navigated to URL}
+  2. {did action}
+**What I actually observed**: {literal, 30–60 words}
+**If NONE or PARTIAL, my hypothesis for why**:
+  schema-incomplete | page-absent | viewport-specific
+  | interaction-missed | genuine-regression
+**Evidence for that hypothesis** (≤ 30 words): {one sentence}
+</pre>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">how your work is graded</span>
+      <ul>
+        <li>Automated: the AI grader checks that <code>replication_report.md</code> has exactly 10 row entries each with a verdict, a browser/viewport, a timestamp, and a steps-taken list.</li>
+        <li>Automated: NONE or PARTIAL verdicts without a hypothesis column cap Rigor at band 1.</li>
+        <li>Automated: cross-check — the partner's original severity rating is looked up in their backlog CSV; large disagreements (you say NONE on a severity-5 finding, or FULL on a severity-1) trigger a human review.</li>
+        <li>TA audit: a TA attempts one of your reproductions on a third machine; disagreement between your verdict and the TA's is rare but instructive.</li>
+      </ul>
+    </div>
+
+    <p><b>Scoring bands</b> (0–3 per criterion, rescaled to the 13-point value):</p>
+    <table class="band-table">
+      <thead><tr><th>Criterion</th><th>Band 0</th><th>Band 1</th><th>Band 2</th><th>Band 3</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Rigor</b></td>
+          <td class="band-0">&lt; 5 attempts or no evidence</td>
+          <td class="band-1">Attempts thin, hypotheses missing</td>
+          <td class="band-2">10 attempts, most with evidence</td>
+          <td class="band-3">10 attempts, every verdict with verbatim steps + hypothesis</td>
+        </tr>
+        <tr>
+          <td><b>Calibration</b></td>
+          <td class="band-0">All verdicts the same</td>
+          <td class="band-1">Verdicts span 2 categories</td>
+          <td class="band-2">Verdicts span 3 categories</td>
+          <td class="band-3">Verdicts span all 4 categories; distribution defended</td>
+        </tr>
+        <tr>
+          <td><b>Reflection</b></td>
+          <td class="band-0">No reflection</td>
+          <td class="band-1">Generic reflection</td>
+          <td class="band-2">Names a specific schema weakness</td>
+          <td class="band-3">Names schema weakness, proposes concrete schema revision, and cites ≥ 1 replication-literature source</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your workspace<span class="h2-hint">draft one replication row here</span></h2>
+    <p>
+      Use this form for one reproduction attempt at a time. The saved draft
+      persists in your browser. Copy the rendered markdown into your
+      <code>replication_report.md</code> before you move to the next finding.
+    </p>
+
+    <div class="t4-workspace">
+      <div class="ws-label">Draft one replication attempt</div>
+      <div class="ws-sub">
+        Record the environment, the exact steps, and — if the finding did not
+        fully reproduce — the hypothesis for why. Naming the failure-mode is
+        the difference between band 2 and band 3.
+      </div>
+
+      <label for="we_partner_id">Finding ID (from your partner)</label>
+      <input type="text" id="we_partner_id" placeholder="F-04">
+
+      <label for="we_title">Finding title (partner's words)</label>
+      <input type="text" id="we_title" placeholder="Topic-page chip labels use internal jargon">
+
+      <label for="we_verdict">Verdict</label>
+      <select id="we_verdict">
+        <option>FULL</option>
+        <option>PARTIAL</option>
+        <option selected>NONE</option>
+        <option>UNDERSPECIFIED</option>
+      </select>
+
+      <label for="we_env">Browser / viewport</label>
+      <input type="text" id="we_env" placeholder="Safari 17.3, 1440×900">
+
+      <label for="we_ts">Timestamp (YYYY-MM-DD HH:MM)</label>
+      <input type="text" id="we_ts" placeholder="2026-05-14 10:22">
+
+      <label for="we_steps">Steps taken (numbered)</label>
+      <textarea id="we_steps" placeholder="1. Navigated to /ka_topics.html&#10;2. Scanned sidebar&#10;3. Hovered on 'defended' pill; no tooltip"></textarea>
+
+      <label for="we_observed">What I actually observed (30–60 words, literal)</label>
+      <textarea id="we_observed" placeholder="Literal description of what happened on your machine."></textarea>
+
+      <label for="we_hypothesis">If NONE / PARTIAL: hypothesis for why</label>
+      <select id="we_hypothesis">
+        <option value="">(choose only if NONE / PARTIAL)</option>
+        <option>schema-incomplete</option>
+        <option>page-absent</option>
+        <option>viewport-specific</option>
+        <option>interaction-missed</option>
+        <option>genuine-regression</option>
+      </select>
+
+      <label for="we_hyp_evidence">Evidence for that hypothesis (≤ 30 words)</label>
+      <textarea id="we_hyp_evidence" placeholder="One sentence of evidence, not speculation."></textarea>
+
+      <button type="button" class="save-btn" onclick="saveDraft()">Save draft (to browser only)</button>
+      <span class="ws-status" id="we_status">Saved.</span>
+
+      <details style="margin-top:10px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Preview as markdown</summary>
+        <pre id="we_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;white-space:pre-wrap"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      With ten reproductions logged, move to
+      <a href="ka_t4_f_redesign.html"><b>T4.f — Redesign proposal</b></a>.
+      T4.f takes the top three backlog items (from T4.d) that survived
+      replication (from T4.e) and asks you to propose a concrete,
+      mid-fidelity redesign for each, with a pre-registered success metric.
+    </p>
+  </div>
+
+</main>
+
+<script>
+function saveDraft() {
+  const d = {
+    partner_id: document.getElementById('we_partner_id').value,
+    title: document.getElementById('we_title').value,
+    verdict: document.getElementById('we_verdict').value,
+    env: document.getElementById('we_env').value,
+    ts: document.getElementById('we_ts').value,
+    steps: document.getElementById('we_steps').value,
+    observed: document.getElementById('we_observed').value,
+    hypothesis: document.getElementById('we_hypothesis').value,
+    hyp_evidence: document.getElementById('we_hyp_evidence').value,
+  };
+  try { localStorage.setItem('ka.t4e_draft', JSON.stringify(d)); } catch(e){}
+  renderPreview(d);
+  const s = document.getElementById('we_status');
+  s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2500);
+}
+function renderPreview(d) {
+  const md = `## ${d.partner_id || 'F-??'} — ${d.title || '(no title)'}
+
+**Verdict**: ${d.verdict}
+**Browser / viewport**: ${d.env || '(not set)'}
+**Timestamp**: ${d.ts || '(not set)'}
+
+**Steps taken**:
+${(d.steps || '(no steps)').split('\n').map(l => '  ' + l).join('\n')}
+
+**What I actually observed**: ${d.observed || '(not yet written)'}
+
+**Failure-mode hypothesis**: ${d.hypothesis || '(N/A)'}
+**Evidence**: ${d.hyp_evidence || '(N/A)'}
+`;
+  document.getElementById('we_preview').textContent = md;
+}
+try {
+  const saved = localStorage.getItem('ka.t4e_draft');
+  if (saved) {
+    const d = JSON.parse(saved);
+    for (const k of Object.keys(d)) {
+      const el = document.getElementById('we_' + k);
+      if (el) el.value = d[k] || el.value;
+    }
+    renderPreview(d);
+  }
+} catch(e){}
+</script>
+</body>
+</html>

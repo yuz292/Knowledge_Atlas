@@ -1,0 +1,316 @@
+/*  ka_t4_page.css — shared styling for Track 4 deliverable pages.
+    Every ka_t4_{deliverable}.html page loads this file so the header strip,
+    section dividers, naive-example styling, and workspace form all render
+    consistently across the eight deliverable pages. Students know they are
+    in a Track 4 surface the moment the page loads.
+*/
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #F7F4EF;
+  color: #2C2C2C;
+  line-height: 1.6;
+}
+main.t4-outer { max-width: 920px; margin: 28px auto 80px; padding: 0 28px; }
+
+/* ── Deliverable header strip (top of every page) ── */
+.t4-header {
+  background: linear-gradient(135deg, #E8872A 0%, #D27320 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px 26px;
+  margin-bottom: 18px;
+}
+.t4-header .eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.t4-header h1 {
+  font-family: Georgia, serif;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.t4-header .t4-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 0.82rem;
+}
+.t4-header .t4-meta b { letter-spacing: 0.04em; font-weight: 700; }
+.t4-header a.rubric-link {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.t4-header a.rubric-link:hover { background: rgba(255,255,255,0.28); }
+
+/* ── Deliverable-nav strip: sibling T4 pages ── */
+.t4-siblings {
+  background: #F9F5EE;
+  border: 1px solid #E0D8CC;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-size: 0.82rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.t4-siblings .sb-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8A9A96;
+  font-weight: 700;
+  margin-right: 6px;
+}
+.t4-siblings a {
+  color: #2A7868;
+  text-decoration: none;
+  padding: 3px 9px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.12s;
+}
+.t4-siblings a:hover { background: #fff; border-color: #CFE6DE; }
+.t4-siblings a.current {
+  background: #2A7868;
+  color: #fff;
+  border-color: #2A7868;
+}
+
+/* ── Section blocks (goal / steps / files / naive / verification / workspace) ── */
+.t4-section {
+  background: #fff;
+  border: 1px solid #E0D8CC;
+  border-radius: 10px;
+  padding: 20px 26px;
+  margin-bottom: 18px;
+}
+.t4-section > h2 {
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+  color: #1C3D3A;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #E0D8CC;
+}
+.t4-section > h2 .h2-icon {
+  display: inline-block;
+  width: 22px;
+  text-align: center;
+  color: #E8872A;
+  margin-right: 4px;
+}
+.t4-section > h2 .h2-hint {
+  font-family: -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8A9A96;
+  margin-left: 8px;
+}
+.t4-section p { margin-bottom: 10px; font-size: 0.95rem; }
+.t4-section p.lede { font-size: 1.02rem; color: #1C3D3A; }
+.t4-section ol, .t4-section ul { padding-left: 22px; margin-bottom: 12px; font-size: 0.92rem; }
+.t4-section ol li, .t4-section ul li { margin-bottom: 6px; }
+.t4-section code {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.82em;
+  background: #F9F5EE;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.t4-section a { color: #2A7868; text-decoration: none; }
+.t4-section a:hover { text-decoration: underline; }
+
+/* ── "Naive approach" block — yellow-amber, marked as anti-pattern ── */
+.t4-naive {
+  background: #FEF3E2;
+  border: 1.5px dashed #E8872A;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 10px 0;
+  font-size: 0.88rem;
+}
+.t4-naive .naive-label {
+  display: inline-block;
+  background: #E8872A;
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.t4-naive .naive-body { color: #7a3f0a; }
+.t4-naive .naive-why {
+  background: #fff;
+  border-left: 3px solid #9a5010;
+  padding: 10px 14px;
+  margin-top: 10px;
+  font-size: 0.84rem;
+  color: #4a3a2a;
+  border-radius: 0 6px 6px 0;
+}
+.t4-naive .naive-why b { color: #9a5010; }
+
+/* ── Files / links block ── */
+.file-list { list-style: none; padding: 0; }
+.file-list li {
+  padding: 7px 0;
+  border-bottom: 1px dashed #E0D8CC;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.file-list li:last-child { border-bottom: none; }
+.file-list .file-type {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #8A9A96;
+  background: #F9F5EE;
+  padding: 1px 7px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.file-list .file-desc { font-size: 0.84rem; color: #6B6B6B; }
+
+/* ── Student workspace form block ── */
+.t4-workspace {
+  background: #E6F5F0;
+  border: 1.5px solid #2A7868;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+.t4-workspace .ws-label {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  color: #1C3D3A;
+  font-size: 1.0rem;
+  margin-bottom: 6px;
+}
+.t4-workspace .ws-sub {
+  color: #6B6B6B;
+  font-size: 0.84rem;
+  margin-bottom: 12px;
+}
+.t4-workspace label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1A7050;
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+.t4-workspace label:first-of-type { margin-top: 0; }
+.t4-workspace input[type="text"],
+.t4-workspace input[type="email"],
+.t4-workspace input[type="number"],
+.t4-workspace textarea,
+.t4-workspace select {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1.5px solid #CFE6DE;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 0.92rem;
+  background: #fff;
+  color: #2C2C2C;
+}
+.t4-workspace input:focus,
+.t4-workspace textarea:focus,
+.t4-workspace select:focus {
+  outline: none;
+  border-color: #2A7868;
+  box-shadow: 0 0 0 3px rgba(42,120,104,0.15);
+}
+.t4-workspace textarea { min-height: 80px; resize: vertical; font-family: inherit; }
+.t4-workspace button.save-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #2A7868;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 16px;
+  font-family: inherit;
+}
+.t4-workspace button.save-btn:hover { background: #1C3D3A; }
+.t4-workspace .ws-status {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: 0.82rem;
+  color: #1A7050;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.t4-workspace .ws-status.show { opacity: 1; }
+
+/* ── Verification block: green, task-oriented ── */
+.t4-verify {
+  background: #F0F9F4;
+  border: 1px solid #CFE6DE;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 10px 0;
+  font-size: 0.88rem;
+}
+.t4-verify .verify-label {
+  display: inline-block;
+  background: #2A7868;
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.t4-verify ul { padding-left: 20px; }
+.t4-verify ul li { margin-bottom: 5px; }
+
+/* ── Points table (for band breakdown) ── */
+table.band-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-top: 10px; }
+table.band-table th, table.band-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid #E0D8CC;
+  vertical-align: top;
+}
+table.band-table th {
+  background: #F9F5EE;
+  font-weight: 700;
+  color: #1C3D3A;
+  font-size: 0.82rem;
+}
+table.band-table .band-0 { color: #8A1A25; font-weight: 700; }
+table.band-table .band-1 { color: #9a5010; font-weight: 700; }
+table.band-table .band-2 { color: #1A7050; font-weight: 700; }
+table.band-table .band-3 { color: #2A7868; font-weight: 700; }

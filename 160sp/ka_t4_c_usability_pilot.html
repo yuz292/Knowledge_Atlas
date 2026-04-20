@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.c — Moderated usability pilot — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.c</div>
+    <h1>Moderated usability pilot (n = 5)</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Weeks 5–6</span>
+      <span><b>Hardness</b> Hard</span>
+      <span><b>Points</b> 15 / 75</span>
+      <span><b>Method</b> Think-aloud protocol (Nielsen &amp; Landauer 1993; Ericsson &amp; Simon 1993)</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.c_usability_pilot.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html">T4.a</a>
+    <a href="ka_t4_b_scenarios.html">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html" class="current">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html">T4.e</a>
+    <a href="ka_t4_f_redesign.html">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal<span class="h2-hint">what this deliverable teaches</span></h2>
+    <p class="lede">
+      You will run a short moderated usability study with five participants drawn
+      from at least two of the three user archetypes (public visitor, COGS 160
+      student, administrator). Each participant works through three scripted
+      scenarios from T4.b while thinking aloud. You will record what actually
+      happened, time each task, code moments of friction, and produce a
+      structured findings file that feeds directly into T4.d (severity triage)
+      and T4.f (redesign proposal).
+    </p>
+    <p>
+      This is the hardest deliverable in Track 4 because the craft is not in
+      running the sessions — the protocol is short — but in resisting the
+      temptation to explain, defend, or rescue the interface while a participant
+      is stuck. The Nielsen &amp; Landauer (1993) result that five users surface
+      roughly 85% of usability issues assumes an observer who reports what was
+      observed rather than what the observer wishes had been observed.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do<span class="h2-hint">the steps</span></h2>
+    <ol>
+      <li>Recruit five participants across at least two archetypes. Friends and classmates are fine; do not recruit anyone who has already audited the site for you (that contaminates the pilot).</li>
+      <li>Write a one-page moderator script covering consent ("I'm testing the site, not you"), the think-aloud instruction, and the three scenarios. The scenarios come from your T4.b file — do not invent new ones here.</li>
+      <li>Run each session for no more than 40 minutes. Screen-record if the participant consents. Otherwise take timestamped notes.</li>
+      <li>For each task, record: completion (yes / no / gave-up), time-on-task, errors observed, verbal friction moments, and your post-hoc severity estimate.</li>
+      <li>After all five sessions, code the notes into structured finding records (one per distinct problem). A problem observed in ≥ 2 sessions gets a "recurrence" tag; this is the filter for band-3 credit.</li>
+      <li>Submit one <code>pilot_log.md</code> per session plus one <code>pilot_findings.md</code> synthesis. Both go under <code>160sp/tracks/t4/{your_id}/pilot/</code>.</li>
+    </ol>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>Files &amp; pages relevant to this deliverable</h2>
+    <ul class="file-list">
+      <li><span class="file-type">INPUT</span><a href="ka_t4_b_scenarios.html" target="_blank">T4.b scenarios</a><span class="file-desc">the three scripted scenarios you will run — one per archetype</span></li>
+      <li><span class="file-type">INPUT</span><a href="ka_t4_a_heuristic_audit.html" target="_blank">T4.a findings</a><span class="file-desc">your own heuristic predictions — useful for what to watch for, but the pilot discovers things the audit missed</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_home.html" target="_blank">ka_home.html</a><span class="file-desc">entry point most sessions start here</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_topics.html" target="_blank">ka_topics.html</a><span class="file-desc">Classic View; at least one session per variant for the comparison</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_topic_facet_view.html" target="_blank">ka_topic_facet_view.html</a><span class="file-desc">progressive-disclosure variant</span></li>
+      <li><span class="file-type">TARGET</span><a href="ka_student_setup.html" target="_blank">ka_student_setup.html</a><span class="file-desc">the student-onboarding flow; run with a 160 participant</span></li>
+      <li><span class="file-type">REF</span><a href="https://www.nngroup.com/articles/how-many-test-users/" target="_blank">NN/g — "Why you only need to test with 5 users"</a><span class="file-desc">the 1993 Nielsen &amp; Landauer analysis</span></li>
+      <li><span class="file-type">RUBRIC</span><a href="rubrics/t4/T4.c_usability_pilot.md" target="_blank">T4.c rubric</a><span class="file-desc">machine-readable spec</span></li>
+    </ul>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach<span class="h2-hint">so you can see what scores low</span></h2>
+    <p>
+      The most common failure mode is a pilot log that reads like an
+      auto-reassuring monologue rather than a trace of what the participant did.
+      The example below is a lightly-edited composite of real band-0 submissions
+      from prior cohorts. Read it and note everything the moderator did
+      <em>for</em> the participant.
+    </p>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — do NOT write pilot logs like this</span>
+      <div class="naive-body">
+        <p><b>Pilot session 2 · 2026-04-28</b></p>
+        <p>
+          Today I tested my roommate. She loves the site! I asked her to find a
+          paper on lighting and she clicked around for a bit and then I showed
+          her where the topic page was and she said oh that's really clear.
+          Then we did the student-setup page. I told her to pick a track and
+          she picked T1 because it's the most colourful. Overall she found the
+          site very intuitive. Success on all three tasks.
+        </p>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores band 0 or 1.</b>
+        The log contradicts its own protocol at every turn. The moderator
+        disclosed affect ("she loves the site") before the task even began,
+        framing consent negotiation as flattery rather than informed choice.
+        When the participant could not find the topic page, the moderator
+        <em>showed her where it was</em> — which is the single action the
+        think-aloud protocol most explicitly forbids (Ericsson &amp; Simon
+        1993). The track selection is attributed to colour preference without
+        evidence the participant said that; attribution of cognition to the
+        observer's guess is the classic think-aloud error. No timings are
+        recorded, no verbal trace is quoted, and the "success" judgment is the
+        moderator's opinion, not the participant's behaviour. A participant
+        who is guided to the answer by the moderator has not completed the task;
+        they have completed a tour. For band 3 you need: verbatim quotes,
+        wall-clock timings, a literal record of navigation, and your own hands
+        off the keyboard.
+      </div>
+    </div>
+
+    <p><b>The session-log template.</b> Copy this into every
+    <code>pilot_log_{n}.md</code>:</p>
+<pre style="background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px;font-family:ui-monospace,Menlo,monospace;font-size:0.84rem;overflow-x:auto;line-height:1.55">
+# Pilot session {n} — {YYYY-MM-DD}
+
+**Participant archetype**: {public_visitor | 160_student | admin}
+**Consent recorded**: yes / no (screen recording yes/no)
+**Moderator**: {your name}
+**Duration (min)**: {e.g. 32}
+
+## Scenario A — {one-sentence goal, verbatim from T4.b}
+- Start page: {URL}
+- Start time: {hh:mm:ss}  · End time: {hh:mm:ss}  · Task completion: complete / gave up at {hh:mm:ss} / succeeded with prompt
+- Navigation trace:
+  1. {url visited / element clicked}
+  2. {url visited / element clicked}
+- Verbal extracts (verbatim, ≥ 2 quotes if possible):
+  - "{quote}"
+  - "{quote}"
+- Friction moments (literal): {e.g. "stared at sidebar for 18 s, scrolled up twice, asked 'is this the right page?'"}
+- Moderator interventions, if any: {list each; an intervention is any sentence that conveys task-relevant information}
+
+## Scenario B — …
+## Scenario C — …
+
+## Moderator reflection (≤ 120 words)
+{what surprised you; what you would change next session}
+</pre>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">how your work is graded</span>
+      <ul>
+        <li>Automated: the AI grader counts session-log files (≥ 5 expected), checks the template is complete, and validates that every scenario has a start/end timestamp and at least one verbatim quote.</li>
+        <li>Automated: a recurrence pass groups findings that appear in ≥ 2 session logs; recurrence count enters the Quality band.</li>
+        <li>TA audit: 30% of submissions are re-read end-to-end by a TA; moderator-intervention leaks (the failure mode in the naive example above) are the most common deduction.</li>
+        <li>Feeds-forward: your <code>pilot_findings.md</code> is the input to T4.d. If your severity ratings in T4.d disagree with what your own pilot notes imply, T4.d loses a band.</li>
+      </ul>
+    </div>
+
+    <p><b>Scoring bands</b> (0–3 per criterion, rescaled to the 15-point value):</p>
+    <table class="band-table">
+      <thead><tr><th>Criterion</th><th>Band 0</th><th>Band 1</th><th>Band 2</th><th>Band 3</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Protocol fidelity</b></td>
+          <td class="band-0">Sessions unsuitable (n &lt; 3 or moderator-led)</td>
+          <td class="band-1">3–4 sessions, some intervention leakage</td>
+          <td class="band-2">5 sessions, protocol mostly clean</td>
+          <td class="band-3">5 sessions, zero intervention leaks, verbatim quotes throughout</td>
+        </tr>
+        <tr>
+          <td><b>Evidence density</b></td>
+          <td class="band-0">Summary only, no traces</td>
+          <td class="band-1">Traces thin, timings missing</td>
+          <td class="band-2">Traces complete per session</td>
+          <td class="band-3">Traces + timings + ≥ 2 verbatim quotes per scenario</td>
+        </tr>
+        <tr>
+          <td><b>Synthesis</b></td>
+          <td class="band-0">No findings extracted</td>
+          <td class="band-1">Findings listed but not tied to evidence</td>
+          <td class="band-2">Findings linked to sessions, recurrence noted</td>
+          <td class="band-3">Findings linked, recurrence quantified, ≥ 3 issues with recurrence ≥ 2</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your workspace<span class="h2-hint">draft a session log here; save locally</span></h2>
+    <p>
+      Use this to sketch one session between runs. Saves to your browser only.
+      Copy the rendered markdown into a new file at
+      <code>160sp/tracks/t4/{your_id}/pilot/pilot_log_{n}.md</code> before you
+      move to the next participant.
+    </p>
+
+    <div class="t4-workspace">
+      <div class="ws-label">Draft one pilot session log</div>
+      <div class="ws-sub">
+        One form per session. The rendered markdown below mirrors the template
+        and can be copied straight into your repo.
+      </div>
+
+      <label for="wc_n">Session number (1–5)</label>
+      <input type="text" id="wc_n" placeholder="e.g. 2">
+
+      <label for="wc_date">Date (YYYY-MM-DD)</label>
+      <input type="text" id="wc_date" placeholder="2026-05-06">
+
+      <label for="wc_archetype">Participant archetype</label>
+      <select id="wc_archetype">
+        <option value="">Choose…</option>
+        <option>public_visitor</option>
+        <option>160_student</option>
+        <option>admin</option>
+      </select>
+
+      <label for="wc_duration">Session duration (minutes, ≤ 40)</label>
+      <input type="text" id="wc_duration" placeholder="e.g. 32">
+
+      <label for="wc_scenarioA">Scenario A — one-line goal, verbatim from T4.b</label>
+      <input type="text" id="wc_scenarioA" placeholder="e.g. Find a defended topic bundle for lighting and attention">
+
+      <label for="wc_traceA">Scenario A navigation trace (one click per line)</label>
+      <textarea id="wc_traceA" placeholder="/ka_home.html — clicked 'Start browsing'&#10;/ka_topics.html — scrolled, paused 18 s&#10;…"></textarea>
+
+      <label for="wc_quoteA">Scenario A verbatim quote (≥ 1)</label>
+      <textarea id="wc_quoteA" placeholder='"I have no idea what &quot;defended&quot; means — is that a fencing thing?"'></textarea>
+
+      <label for="wc_frictionA">Scenario A friction moments (literal)</label>
+      <textarea id="wc_frictionA" placeholder="Stared at sidebar 18 s. Scrolled up twice. Asked whether this was the right page."></textarea>
+
+      <label for="wc_interventionsA">Moderator interventions, if any (honesty matters)</label>
+      <textarea id="wc_interventionsA" placeholder="None — OR — said 'try the sidebar' at 4:12 (task-relevant — participant was stuck)."></textarea>
+
+      <label for="wc_reflection">Moderator reflection (≤ 120 words)</label>
+      <textarea id="wc_reflection" placeholder="What surprised you. What you'd change next session."></textarea>
+
+      <button type="button" class="save-btn" onclick="saveDraft()">Save draft (to browser only)</button>
+      <span class="ws-status" id="wc_status">Saved.</span>
+
+      <details style="margin-top:10px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Preview as markdown</summary>
+        <pre id="wc_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;white-space:pre-wrap"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      Once your five sessions are complete and coded, move to
+      <a href="ka_t4_d_severity_backlog.html"><b>T4.d — Severity rubric and backlog</b></a>.
+      T4.d asks you to take the findings you recurred in the pilot, rate them on
+      a publishable severity rubric, and emit a prioritised backlog that
+      T4.f (Redesign) can act on.
+    </p>
+  </div>
+
+</main>
+
+<script>
+function saveDraft() {
+  const d = {
+    n: document.getElementById('wc_n').value,
+    date: document.getElementById('wc_date').value,
+    archetype: document.getElementById('wc_archetype').value,
+    duration: document.getElementById('wc_duration').value,
+    scenarioA: document.getElementById('wc_scenarioA').value,
+    traceA: document.getElementById('wc_traceA').value,
+    quoteA: document.getElementById('wc_quoteA').value,
+    frictionA: document.getElementById('wc_frictionA').value,
+    interventionsA: document.getElementById('wc_interventionsA').value,
+    reflection: document.getElementById('wc_reflection').value,
+  };
+  try { localStorage.setItem('ka.t4c_draft', JSON.stringify(d)); } catch(e){}
+  renderPreview(d);
+  const s = document.getElementById('wc_status');
+  s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2500);
+}
+
+function renderPreview(d) {
+  const md = `# Pilot session ${d.n || '{n}'} — ${d.date || '{YYYY-MM-DD}'}
+
+**Participant archetype**: ${d.archetype || '(not set)'}
+**Duration (min)**: ${d.duration || '(not set)'}
+
+## Scenario A — ${d.scenarioA || '(goal not set)'}
+
+Navigation trace:
+${(d.traceA || '(no trace)').split('\n').map(l => '  ' + l).join('\n')}
+
+Verbatim quotes:
+${d.quoteA || '(none recorded)'}
+
+Friction moments:
+${d.frictionA || '(none noted)'}
+
+Moderator interventions:
+${d.interventionsA || '(none)'}
+
+## Moderator reflection
+${d.reflection || '(not yet written)'}
+`;
+  document.getElementById('wc_preview').textContent = md;
+}
+
+try {
+  const saved = localStorage.getItem('ka.t4c_draft');
+  if (saved) {
+    const d = JSON.parse(saved);
+    for (const k of Object.keys(d)) {
+      const el = document.getElementById('wc_' + k);
+      if (el) el.value = d[k] || '';
+    }
+    renderPreview(d);
+  }
+} catch(e){}
+</script>
+</body>
+</html>

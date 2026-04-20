@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.f — Redesign proposal — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.f</div>
+    <h1>Redesign proposal: three mid-fidelity designs with pre-registered metrics</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Weeks 7–8</span>
+      <span><b>Hardness</b> Medium</span>
+      <span><b>Points</b> 10 / 75</span>
+      <span><b>Method</b> Sketch → critique → revise (Buxton 2007); Goals-Operators-Methods-Selection analysis (Card, Moran &amp; Newell 1983)</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.f_redesign.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html">T4.a</a>
+    <a href="ka_t4_b_scenarios.html">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html">T4.e</a>
+    <a href="ka_t4_f_redesign.html" class="current">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal<span class="h2-hint">what this deliverable teaches</span></h2>
+    <p class="lede">
+      You will take the top three findings from your T4.d backlog — filtered
+      through T4.e to keep only those that reproduced — and produce a
+      mid-fidelity redesign for each. A mid-fidelity redesign is more committal
+      than a sketch but less committal than working code: a wireframe or
+      annotated mockup that names every new affordance, explains every changed
+      label, and declares a pre-registered success metric that a future
+      usability pilot could measure.
+    </p>
+    <p>
+      This is a medium-hardness deliverable because the temptation is to let
+      yourself off the hook by producing a vague "looks better" mockup. Three
+      disciplines prevent this. First, each redesign must be tied by ID to a
+      backlog row, so the problem it solves is non-negotiable. Second, each
+      redesign carries a pre-registered success metric — before you have
+      evidence it works. Third, each redesign is paired with a GOMS-style
+      task-time estimate that an observer could falsify.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do<span class="h2-hint">the steps</span></h2>
+    <ol>
+      <li>Load your T4.d <code>backlog.csv</code>. Filter out any rows rated NONE or UNDERSPECIFIED in T4.e. From what remains, pick the three highest-RICE rows.</li>
+      <li>For each of the three, produce a mid-fidelity mockup. Acceptable formats: an annotated screenshot edited in Figma / Sketch / Keynote / PowerPoint, a hand-drawn wireframe photographed cleanly, or a raw HTML mockup in a standalone file. The bar is "someone else could implement this without talking to you."</li>
+      <li>Write a 250-word design note per redesign covering: the problem it solves (cite the backlog ID), the mechanism by which it helps (cite a principle or heuristic), a declared success metric (what a future pilot should measure and what threshold counts as success), and one trade-off you are accepting.</li>
+      <li>For at least one redesign, produce a GOMS-style task-time estimate: list the goals, operators, methods, and selections for the revised flow; sum the operator times from Card, Moran &amp; Newell's (1983) keystroke-level model.</li>
+      <li>Submit one <code>redesign_{id}.md</code> per redesign plus the mockup asset, under <code>160sp/tracks/t4/{your_id}/redesign/</code>. Three redesigns total.</li>
+    </ol>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>Files &amp; pages relevant to this deliverable</h2>
+    <ul class="file-list">
+      <li><span class="file-type">INPUT</span><a href="ka_t4_d_severity_backlog.html" target="_blank">Your backlog</a><span class="file-desc">the top-3 rows drive what you redesign</span></li>
+      <li><span class="file-type">INPUT</span><a href="ka_t4_e_reproducibility.html" target="_blank">Your replication verdicts</a><span class="file-desc">use to filter the backlog; do not redesign unreproduced findings</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_topics.html" target="_blank">ka_topics.html</a><span class="file-desc">common redesign target — topic-page variant is one of the most audited pages</span></li>
+      <li><span class="file-type">TARGET</span><a href="../ka_home.html" target="_blank">ka_home.html</a><span class="file-desc">common redesign target — first-impression problems land here</span></li>
+      <li><span class="file-type">TARGET</span><a href="ka_student_setup.html" target="_blank">ka_student_setup.html</a><span class="file-desc">common redesign target — onboarding funnel for 160 students</span></li>
+      <li><span class="file-type">REF</span><a href="https://doi.org/10.1145/1518701.1518814" target="_blank">Buxton, W. (2007). Sketching User Experiences.</a><span class="file-desc">canonical source for the sketch-to-mockup fidelity continuum</span></li>
+      <li><span class="file-type">REF</span><a href="https://doi.org/10.1016/C2013-0-10035-9" target="_blank">Card, Moran &amp; Newell (1983). The Psychology of Human-Computer Interaction.</a><span class="file-desc">canonical source for GOMS and the keystroke-level model</span></li>
+      <li><span class="file-type">RUBRIC</span><a href="rubrics/t4/T4.f_redesign.md" target="_blank">T4.f rubric</a><span class="file-desc">machine-readable spec</span></li>
+    </ul>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach<span class="h2-hint">so you can see what scores low</span></h2>
+    <p>
+      The classic weak redesign is visual restyling without an argument. Read
+      the block below and notice how quickly the prose shifts from "the user
+      cannot" to "it would look nicer if".
+    </p>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — do NOT submit a redesign note like this</span>
+      <div class="naive-body">
+        <p><b>Redesign 1 — make the home page better</b></p>
+        <p>
+          I think the home page could be a lot better. I would change the
+          colours to something more modern and add some icons to the buttons.
+          I would also make the font larger. I think this would help users
+          understand the site faster. The metric would be that users like it
+          more. I would measure this by asking them.
+        </p>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores band 0 or 1.</b>
+        Every sentence is an aesthetic preference presented as a design claim.
+        There is no backlog ID cited, so we cannot tell which finding is
+        being answered. "Make the colours more modern" is not a mechanism;
+        "add some icons" is not a mechanism; "make the font larger" is a
+        mechanism only if you name which text and cite a readability result
+        (e.g. Dyson, 2004 on line-length and comprehension). The metric is
+        "users like it more" — this is a failure of the pre-registration
+        requirement twice over: <em>like it more</em> than what baseline, and
+        measured <em>how</em>, and at what threshold counts as success? A
+        band-3 redesign names a specific baseline (a pilot time-on-task
+        median or an error rate from T4.c), declares a falsifiable threshold,
+        and states what the designer would conclude if the threshold were
+        missed. Crucially, no trade-off is acknowledged: every design choice
+        buys one thing and costs another, and a proposal that claims only
+        upside is not an engineering document, it is marketing copy.
+      </div>
+    </div>
+
+    <p><b>The redesign-note template.</b> One file per redesign:</p>
+<pre style="background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px;font-family:ui-monospace,Menlo,monospace;font-size:0.84rem;overflow-x:auto;line-height:1.55">
+# Redesign {id} — {short title}
+
+**Backlog row**: {F-xx from T4.d}  (RICE {value}, severity {n}, replication verdict {FULL|PARTIAL})
+**Mockup**: ./redesign_{id}.png  (or .html, .fig, .pdf)
+
+## Problem
+{30–60 words, literal, citing pilot quote or audit observation}
+
+## Mechanism — why this proposal addresses the problem
+{40–80 words; cite a heuristic, principle, or empirical result}
+
+## Pre-registered success metric
+- **Baseline**: {what the current site measures on this task, from T4.c}
+- **Threshold**: {numeric threshold that would count as success}
+- **Measurement protocol**: {exactly how a follow-up pilot would measure it}
+- **Falsification condition**: {what would count as "this redesign did NOT work"}
+
+## Trade-off accepted
+{one explicit thing this redesign costs; a design with no costs is not a design}
+
+## GOMS estimate (if applicable)
+{Goals / Operators / Methods / Selections list + keystroke-level time}
+</pre>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">how your work is graded</span>
+      <ul>
+        <li>Automated: the AI grader parses three <code>redesign_*.md</code> files and a mockup asset per redesign. Missing asset caps Evidence at band 1.</li>
+        <li>Automated: the <code>Backlog row</code> field must match a real row in your T4.d CSV; mismatch caps Traceability at band 0.</li>
+        <li>Automated: absence of a Pre-registered success metric section with all four sub-fields caps Rigor at band 1.</li>
+        <li>TA audit: a TA sketches out the proposed flow and challenges one assumption; ability to respond to the challenge in writing is assessed in T4.g (the final report).</li>
+      </ul>
+    </div>
+
+    <p><b>Scoring bands</b> (0–3 per criterion, rescaled to the 10-point value):</p>
+    <table class="band-table">
+      <thead><tr><th>Criterion</th><th>Band 0</th><th>Band 1</th><th>Band 2</th><th>Band 3</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Traceability</b></td>
+          <td class="band-0">No backlog reference</td>
+          <td class="band-1">References stated, not defended</td>
+          <td class="band-2">Three redesigns link to top-3 backlog rows</td>
+          <td class="band-3">Links + explicit replication-verdict cited for each</td>
+        </tr>
+        <tr>
+          <td><b>Mechanism</b></td>
+          <td class="band-0">Aesthetic restyling only</td>
+          <td class="band-1">Mechanism stated, no citation</td>
+          <td class="band-2">Mechanism stated with cited heuristic</td>
+          <td class="band-3">Mechanism + citation + accepted trade-off + (for ≥ 1 redesign) GOMS estimate</td>
+        </tr>
+        <tr>
+          <td><b>Pre-registration</b></td>
+          <td class="band-0">No metric</td>
+          <td class="band-1">Metric stated but not falsifiable</td>
+          <td class="band-2">Baseline + threshold declared</td>
+          <td class="band-3">Baseline + threshold + protocol + explicit falsification condition</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your workspace<span class="h2-hint">draft one redesign note here</span></h2>
+    <p>
+      Draft one redesign at a time. The browser remembers the last draft.
+      Copy the rendered markdown into <code>redesign_{id}.md</code>.
+    </p>
+
+    <div class="t4-workspace">
+      <div class="ws-label">Draft one redesign</div>
+      <div class="ws-sub">
+        The hardest row is the pre-registered success metric — spend real time
+        there; it is the load-bearing rigor field.
+      </div>
+
+      <label for="wf_id">Redesign ID (matches backlog row)</label>
+      <input type="text" id="wf_id" placeholder="F-04">
+
+      <label for="wf_title">Short title</label>
+      <input type="text" id="wf_title" placeholder="Demystify topic-page evidence-status chips">
+
+      <label for="wf_mockup">Mockup asset path (in your repo)</label>
+      <input type="text" id="wf_mockup" placeholder="./redesign_F-04.png">
+
+      <label for="wf_verdict">Replication verdict (from T4.e)</label>
+      <select id="wf_verdict">
+        <option>FULL</option>
+        <option>PARTIAL</option>
+      </select>
+
+      <label for="wf_problem">Problem (30–60 words, with a citation)</label>
+      <textarea id="wf_problem" placeholder="Cite a pilot quote or audit observation."></textarea>
+
+      <label for="wf_mechanism">Mechanism (40–80 words, cite a principle)</label>
+      <textarea id="wf_mechanism" placeholder="Why this proposal addresses the problem. Cite Nielsen heuristic, Tog principle, or empirical result."></textarea>
+
+      <label for="wf_baseline">Pre-registered baseline (from T4.c)</label>
+      <input type="text" id="wf_baseline" placeholder="e.g. Median time-on-task for Scenario A = 94 s across 5 pilot sessions">
+
+      <label for="wf_threshold">Threshold that counts as success</label>
+      <input type="text" id="wf_threshold" placeholder="e.g. Median time ≤ 45 s at n = 5 in a follow-up pilot">
+
+      <label for="wf_protocol">Measurement protocol</label>
+      <textarea id="wf_protocol" placeholder="Exactly how a follow-up pilot would measure this; include sample, moderator script, stop rule."></textarea>
+
+      <label for="wf_falsification">Falsification condition</label>
+      <input type="text" id="wf_falsification" placeholder="e.g. If median is between 75–94 s, treat as null and reconsider chip labelling.">
+
+      <label for="wf_tradeoff">Trade-off accepted</label>
+      <textarea id="wf_tradeoff" placeholder="One real cost your redesign pays. Required."></textarea>
+
+      <label for="wf_goms">GOMS estimate (optional but boosts Mechanism band)</label>
+      <textarea id="wf_goms" placeholder="Goals / Operators / Methods / Selections + keystroke-level seconds."></textarea>
+
+      <button type="button" class="save-btn" onclick="saveDraft()">Save draft (to browser only)</button>
+      <span class="ws-status" id="wf_status">Saved.</span>
+
+      <details style="margin-top:10px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Preview as markdown</summary>
+        <pre id="wf_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;white-space:pre-wrap"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      The final deliverable is
+      <a href="ka_t4_g_final_report.html"><b>T4.g — Track 4 final report</b></a>:
+      a short reflective document that knits T4.a through T4.f into a story
+      about what the evidence showed, which redesigns you would stake real
+      engineering time on, and one methodological lesson you learned from the
+      pair-replication step.
+    </p>
+  </div>
+
+</main>
+
+<script>
+function saveDraft() {
+  const d = {
+    id: document.getElementById('wf_id').value,
+    title: document.getElementById('wf_title').value,
+    mockup: document.getElementById('wf_mockup').value,
+    verdict: document.getElementById('wf_verdict').value,
+    problem: document.getElementById('wf_problem').value,
+    mechanism: document.getElementById('wf_mechanism').value,
+    baseline: document.getElementById('wf_baseline').value,
+    threshold: document.getElementById('wf_threshold').value,
+    protocol: document.getElementById('wf_protocol').value,
+    falsification: document.getElementById('wf_falsification').value,
+    tradeoff: document.getElementById('wf_tradeoff').value,
+    goms: document.getElementById('wf_goms').value,
+  };
+  try { localStorage.setItem('ka.t4f_draft', JSON.stringify(d)); } catch(e){}
+  renderPreview(d);
+  const s = document.getElementById('wf_status');
+  s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2500);
+}
+function renderPreview(d) {
+  const md = `# Redesign ${d.id || '{id}'} — ${d.title || '(no title)'}
+
+**Backlog row**: ${d.id || '{F-xx}'}
+**Mockup**: ${d.mockup || '(asset path)'}
+**Replication verdict**: ${d.verdict || 'FULL'}
+
+## Problem
+${d.problem || '(not written)'}
+
+## Mechanism
+${d.mechanism || '(not written)'}
+
+## Pre-registered success metric
+- **Baseline**: ${d.baseline || '(not set)'}
+- **Threshold**: ${d.threshold || '(not set)'}
+- **Protocol**: ${d.protocol || '(not set)'}
+- **Falsification**: ${d.falsification || '(not set)'}
+
+## Trade-off accepted
+${d.tradeoff || '(required — every design has a cost)'}
+
+${d.goms ? '## GOMS estimate\n' + d.goms : '## GOMS estimate\n(optional)'}
+`;
+  document.getElementById('wf_preview').textContent = md;
+}
+try {
+  const saved = localStorage.getItem('ka.t4f_draft');
+  if (saved) {
+    const d = JSON.parse(saved);
+    for (const k of Object.keys(d)) {
+      const el = document.getElementById('wf_' + k);
+      if (el) el.value = d[k] || el.value;
+    }
+    renderPreview(d);
+  }
+} catch(e){}
+</script>
+</body>
+</html>

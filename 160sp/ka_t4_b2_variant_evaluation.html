@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.b.2 — Topic-page variant evaluation — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+<style>
+  table.matrix { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 12px; }
+  table.matrix th, table.matrix td {
+    border: 1px solid #E0D8CC;
+    padding: 6px 8px;
+    vertical-align: top;
+  }
+  table.matrix th {
+    background: #F9F5EE;
+    font-weight: 700;
+    color: #1C3D3A;
+    text-align: left;
+  }
+  table.matrix td input, table.matrix td select {
+    width: 100%;
+    padding: 4px 6px;
+    border: 1px solid #CFE6DE;
+    border-radius: 4px;
+    font: inherit;
+    font-size: 0.8rem;
+  }
+  table.matrix .row-archetype {
+    font-weight: 700;
+    color: #1C3D3A;
+    background: #F9F5EE;
+  }
+  table.matrix .cell-variant-label {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 0.72rem;
+    color: #8A9A96;
+  }
+</style>
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.b.2</div>
+    <h1>Topic-page variant evaluation (comparative usability study)</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Week 4</span>
+      <span><b>Hardness</b> Medium-hard</span>
+      <span><b>Points</b> 10 / 75</span>
+      <span><b>Method</b> Nielsen heuristics + Rosson &amp; Carroll scenarios</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.b.2_topic_variant_evaluation.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html">T4.a</a>
+    <a href="ka_t4_b_scenarios.html">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html" class="current">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html">T4.e</a>
+    <a href="ka_t4_f_redesign.html">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal</h2>
+    <p class="lede">
+      The Knowledge Atlas ships six topic-page variants — the same underlying
+      crosswalk data rendered as six different interaction patterns. You will
+      walk each of your three T4.b archetypes through each of the six variants
+      (15 walkthroughs), record timings and friction per walkthrough, and
+      produce a defended design recommendation for which variant should
+      become the site's default topic page.
+    </p>
+    <p>
+      This is a real evaluation whose output will inform a production decision.
+      The design recommendation in your comparison report goes straight to the
+      instructor's short-list for the default <code>ka_topics.html</code>
+      entry.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do</h2>
+    <ol>
+      <li>Open your three T4.b archetype files. If the scenarios are not sharp, sharpen them first (a vague scenario produces vague walkthroughs).</li>
+      <li>For each of the 15 cells (3 archetypes × 5 new variants, plus 3 × 1 Classic View = 15 total when you count the Classic View separately; we count the six variants), open the variant in a fresh browser tab, execute the archetype's primary scenario, and record what happens.</li>
+      <li>Use the walkthrough-matrix form below to capture every cell. Measure click count and rough time per scenario with a stopwatch. Do not simulate the walkthrough mentally — run it.</li>
+      <li>After the matrix is full, identify 5–7 findings using the T4 finding schema. Each finding must cite the matrix rows that produced it.</li>
+      <li>Write an 850–1,100-word comparison report with the six sections in the rubric (scenarios summary, per-archetype preference, cross-cutting patterns, per-variant strengths, design recommendation, reflection).</li>
+      <li>Submit the package as <code>160sp/tracks/t4/{your_id}/T4.b.2/</code> per the rubric's § 2.</li>
+    </ol>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>The six variants to walk through</h2>
+    <ul class="file-list">
+      <li><span class="file-type">VAR 1</span><a href="../ka_topic_facet_view.html" target="_blank">ka_topic_facet_view.html</a><span class="file-desc">progressive-disclosure facets (primary variant)</span></li>
+      <li><span class="file-type">VAR 2</span><a href="../ka_topic_heatmap_view.html" target="_blank">ka_topic_heatmap_view.html</a><span class="file-desc">9 × 18 coverage matrix</span></li>
+      <li><span class="file-type">VAR 3</span><a href="../ka_topic_full_facets_view.html" target="_blank">ka_topic_full_facets_view.html</a><span class="file-desc">Shneiderman dynamic-query chips</span></li>
+      <li><span class="file-type">VAR 4</span><a href="../ka_topic_dashboard_view.html" target="_blank">ka_topic_dashboard_view.html</a><span class="file-desc">three lockstep panels</span></li>
+      <li><span class="file-type">VAR 5</span><a href="../ka_topic_quick_lookup_view.html" target="_blank">ka_topic_quick_lookup_view.html</a><span class="file-desc">two one-way dropdowns</span></li>
+      <li><span class="file-type">VAR 6</span><a href="../ka_topics.html" target="_blank">ka_topics.html</a><span class="file-desc">Classic View (sidebar + evidence tabs)</span></li>
+      <li><span class="file-type">REF</span><a href="../docs/crosswalk_gui_mockups.html" target="_blank">Side-by-side comparison mockup</a><span class="file-desc">see all five new variants on one page with the comparison table</span></li>
+      <li><span class="file-type">RUBRIC</span><a href="rubrics/t4/T4.b.2_topic_variant_evaluation.md" target="_blank">T4.b.2 rubric</a><span class="file-desc">scoring bands + machine-readable spec</span></li>
+    </ul>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach</h2>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — walkthroughs without differentiation</span>
+      <div class="naive-body">
+        <p>
+          <b>A walkthrough matrix that shows the student did not actually walk through the variants:</b> all 15 rows report <code>clicks=3</code>, all report <code>time=10s</code>, the <code>first_friction_point</code> column is empty or reads "none", and the <code>notes</code> column says "worked fine" for every cell.
+        </p>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores low.</b>
+        The six variants are deliberately different — the Heatmap does not even
+        have a click path to a topic bundle in the way the Facet View does;
+        the Quick Lookup composes filters differently from the Full Facets.
+        If your matrix is flat, you did not walk through. The T4.b.2 design
+        recommendation rests on <em>differentiated</em> data; a matrix with
+        no variance across variants produces a recommendation of the form
+        "they all work fine", which cannot be defended.
+      </div>
+    </div>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">grading</span>
+      <ul>
+        <li>Automated: all 18 matrix cells (3 archetypes × 6 variants) are populated; each cell has click-count, time, first-friction-point, and notes.</li>
+        <li>Automated: 5–7 findings exist in <code>T4.b.2/findings/</code>, each citing matrix rows; comparison report is 850–1,100 words with all six required sections.</li>
+        <li>Quality check: the AI grader spot-checks three cells and confirms the timing + click data is internally consistent with the notes; a matrix that is flat across variants caps Quality at band 1.</li>
+        <li>Realism check: the design recommendation must name a specific variant (or a specific hybrid with named affordances) for band 3; generic recommendations cap at band 1 or 2.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your walkthrough matrix</h2>
+    <p>
+      Fill this in as you walk. Save often; it persists in your browser.
+      When the matrix is full, export as JSON and commit alongside your
+      findings at <code>160sp/tracks/t4/{your_id}/T4.b.2/walkthrough_matrix.json</code>.
+    </p>
+
+    <div class="t4-workspace" style="padding:18px 22px">
+      <div class="ws-label">The 18 walkthroughs (3 archetypes × 6 variants)</div>
+      <div class="ws-sub">
+        Open each variant in a new tab (links above). Run the archetype's
+        primary scenario. Fill the row. Save.
+      </div>
+
+      <table class="matrix" id="matrix">
+        <thead>
+          <tr>
+            <th style="width:14%">Archetype</th>
+            <th style="width:14%">Variant</th>
+            <th style="width:14%">Outcome</th>
+            <th style="width:10%">Clicks</th>
+            <th style="width:10%">Time (s)</th>
+            <th style="width:18%">First friction</th>
+            <th style="width:20%">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="matrixBody"></tbody>
+      </table>
+
+      <button type="button" class="save-btn" onclick="saveMatrix()">Save matrix (to browser)</button>
+      <button type="button" class="save-btn" style="background:#1C3D3A;margin-left:8px" onclick="exportJSON()">Export JSON</button>
+      <span class="ws-status" id="mx_status">Saved.</span>
+
+      <details style="margin-top:14px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Export preview (copy into walkthrough_matrix.json)</summary>
+        <pre id="mx_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.78rem;white-space:pre-wrap;max-height:340px;overflow-y:auto"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      After the matrix and comparison report are done, your findings feed
+      directly into <a href="ka_t4_d_severity_backlog.html"><b>T4.d — Severity
+      rubric &amp; prioritised backlog</b></a>. The T4.c usability pilot
+      (running real users through scenarios, n=5) and T4.e reproducibility
+      check both also cite your T4.b.2 findings.
+    </p>
+  </div>
+
+</main>
+
+<script>
+const ARCHETYPES = ['160_student', 'public_visitor', 'admin'];
+const VARIANTS = [
+  {id:'facet',     label:'1. Facet View'},
+  {id:'heatmap',   label:'2. Heatmap View'},
+  {id:'full_facets', label:'3. Full Facets'},
+  {id:'dashboard', label:'4. Dashboard View'},
+  {id:'quick_lookup', label:'5. Quick Lookup'},
+  {id:'classic',   label:'6. Classic View'},
+];
+
+function buildMatrix() {
+  const body = document.getElementById('matrixBody');
+  const saved = loadMatrix();
+  let rows = '';
+  for (const a of ARCHETYPES) {
+    for (let vi = 0; vi < VARIANTS.length; vi++) {
+      const v = VARIANTS[vi];
+      const key = `${a}|${v.id}`;
+      const r = saved[key] || {};
+      rows += `<tr>
+        ${vi === 0 ? `<td class="row-archetype" rowspan="6">${a}</td>` : ''}
+        <td><span class="cell-variant-label">${v.label}</span></td>
+        <td>
+          <select data-k="${key}" data-f="outcome">
+            <option value="">…</option>
+            <option ${r.outcome==='succeeded'?'selected':''}>succeeded</option>
+            <option ${r.outcome==='partial'?'selected':''}>partial</option>
+            <option ${r.outcome==='failed'?'selected':''}>failed</option>
+          </select>
+        </td>
+        <td><input type="number" min="0" data-k="${key}" data-f="clicks" value="${r.clicks||''}"></td>
+        <td><input type="number" min="0" data-k="${key}" data-f="time" value="${r.time||''}"></td>
+        <td><input type="text" data-k="${key}" data-f="friction" value="${(r.friction||'').replace(/"/g,'&quot;')}"></td>
+        <td><input type="text" data-k="${key}" data-f="notes" value="${(r.notes||'').replace(/"/g,'&quot;')}"></td>
+      </tr>`;
+    }
+  }
+  body.innerHTML = rows;
+  // attach change listeners
+  body.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('change', saveMatrix);
+  });
+}
+
+function loadMatrix() {
+  try {
+    return JSON.parse(localStorage.getItem('ka.t4b2_matrix') || '{}');
+  } catch(e) { return {}; }
+}
+
+function saveMatrix() {
+  const data = {};
+  document.querySelectorAll('#matrixBody input, #matrixBody select').forEach(el => {
+    const k = el.dataset.k;
+    const f = el.dataset.f;
+    if (!k) return;
+    data[k] = data[k] || {};
+    data[k][f] = el.value;
+  });
+  try { localStorage.setItem('ka.t4b2_matrix', JSON.stringify(data)); } catch(e){}
+  const s = document.getElementById('mx_status');
+  s.classList.add('show'); setTimeout(()=>s.classList.remove('show'), 1800);
+}
+
+function exportJSON() {
+  saveMatrix();
+  const data = loadMatrix();
+  const rows = [];
+  for (const a of ARCHETYPES) {
+    for (const v of VARIANTS) {
+      const r = data[`${a}|${v.id}`] || {};
+      rows.push({
+        archetype: a,
+        variant_id: v.id,
+        outcome: r.outcome || '',
+        clicks: r.clicks || '',
+        time_seconds: r.time || '',
+        first_friction_point: r.friction || '',
+        notes: r.notes || '',
+      });
+    }
+  }
+  document.getElementById('mx_preview').textContent = JSON.stringify({
+    student_id: '(replace with your student id)',
+    walkthroughs: rows,
+    exported_at: new Date().toISOString(),
+  }, null, 2);
+}
+
+buildMatrix();
+exportJSON();
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.b — Scenario-based walkthroughs — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.b</div>
+    <h1>Scenario-based walkthroughs on 3 archetype roles</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Week 4</span>
+      <span><b>Hardness</b> Medium</span>
+      <span><b>Points</b> 5 / 75</span>
+      <span><b>Method</b> Rosson &amp; Carroll scenario-based design</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.b_scenarios.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html">T4.a</a>
+    <a href="ka_t4_b_scenarios.html" class="current">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html">T4.e</a>
+    <a href="ka_t4_f_redesign.html">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal</h2>
+    <p class="lede">
+      For each of three user archetypes, write one concrete scenario the
+      archetype is likely to bring to the site. A scenario is a short,
+      literal, testable description of a user's task — not a list of features
+      they might want. The three scenarios become the evaluation instrument
+      for T4.b.2 and for the T4.c usability pilot.
+    </p>
+    <p>
+      This deliverable is worth five points because its work product is small
+      but load-bearing: every later Track 4 deliverable depends on the
+      scenarios being sharp. A vague scenario ("a user wants to learn about
+      lighting") cannot be walked through; a sharp scenario ("Aisha, a COGS
+      160 Track 1 student, wants to find the five topic bundles with the
+      highest paper count that involve <code>luminous</code>, because she is
+      picking the framework to anchor her tagging schema against") can.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do</h2>
+    <ol>
+      <li>Read the three archetype profiles below. Each links to the canonical persona section in the Knowledge Atlas persona doc.</li>
+      <li>For each archetype, write one primary scenario and one alternate scenario (the archetype's second-most-likely task).</li>
+      <li>A scenario must: name the user concretely, name the goal in terms the user would recognise, state what "success" looks like, and be executable by a second person without any further explanation from you.</li>
+      <li>Save each archetype's scenarios as <code>160sp/tracks/t4/{your_id}/findings/T4.b_{role}.md</code> (three files total).</li>
+      <li>The three files are the direct input to T4.b.2 (variant evaluation) and to the T4.c pilot script.</li>
+    </ol>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>The three archetypes &amp; their canonical profiles</h2>
+    <ul class="file-list">
+      <li><span class="file-type">ROLE</span><b>160_student</b><span class="file-desc">COGS 160 Spring 2026 undergraduate. Varying technical skill. Needs to pick a track, submit articles, understand their grading. Persona 5–6 in the <a href="../../Article_Eater_PostQuinean_v1_recovery/docs/KA_USER_PERSONAS_AND_USE_CASES_2026-03-16.md" target="_blank">persona doc</a>.</span></li>
+      <li><span class="file-type">ROLE</span><b>public_visitor</b><span class="file-desc">A researcher, architect, or journalist arriving via a Google search. Does not know the vocabulary. Persona 7–8 in the persona doc.</span></li>
+      <li><span class="file-type">ROLE</span><b>admin</b><span class="file-desc">The instructor or a TA. Needs roster, grading, audit, class-state view. Persona 2 in the persona doc.</span></li>
+      <li><span class="file-type">REF</span><a href="../../Article_Eater_PostQuinean_v1_recovery/docs/KA_USER_PERSONAS_AND_USE_CASES_2026-03-16.md" target="_blank">Canonical persona doc</a><span class="file-desc">read the section for each of the three personas before writing your scenarios</span></li>
+      <li><span class="file-type">REF</span><a href="rubrics/t4/T4.b_scenarios.md" target="_blank">T4.b rubric</a><span class="file-desc">scoring bands and machine-readable spec</span></li>
+    </ul>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach</h2>
+    <p>
+      A scenario that describes an <em>intent</em> without a <em>task</em> is
+      the commonest failure mode. The block below is the kind of first attempt
+      that will not survive T4.b.2.
+    </p>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — a scenario that is not a scenario</span>
+      <div class="naive-body">
+        <p><b>160_student scenario:</b></p>
+        <p>
+          A student wants to learn about the Knowledge Atlas and see what's on
+          it. They browse around and look at topics and theories. They might
+          also want to submit an article.
+        </p>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores low.</b>
+        The "student" is undifferentiated (no track, no year, no current
+        assignment context); the verb phrase "wants to learn" is not a task
+        (what does success look like? when does the task end?); "browse around"
+        is not something a UX reviewer can walk through; and the <em>might also
+        want to submit an article</em> is a second task smuggled into the first.
+        For T4.b.2 this scenario produces 15 identical walkthrough rows because
+        it generates no per-variant differentiation. Band 3 requires a
+        scenario that ends with an observable outcome a reviewer can
+        independently check.
+      </div>
+    </div>
+
+    <p><b>The schema for each archetype's scenarios:</b></p>
+<pre style="background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px;font-family:ui-monospace,Menlo,monospace;font-size:0.84rem;overflow-x:auto;line-height:1.55">
+# T4.b — {role} archetype scenarios
+
+## Archetype profile (50–100 words)
+{Who they are, what they bring to the site, what vocabulary they have, what
+they do NOT know. Cite the persona doc.}
+
+## Primary scenario
+**Task**: {1-sentence, starts with user name + verb}
+**Entry point**: {which page or URL they land on}
+**Goal completion signal**: {what they see or do that ends the task}
+**Success criteria**: {a reviewer-checkable statement of success}
+**Expected duration**: {seconds, rough estimate}
+
+## Alternate scenario
+{same structure}
+</pre>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">grading</span>
+      <ul>
+        <li>Automated: three <code>T4.b_{role}.md</code> files exist with both scenarios populated.</li>
+        <li>Automated: each scenario has a user-name, an entry URL, and a goal-completion signal.</li>
+        <li>Paired-student check: a second Track 4 student executes each scenario on the live site and confirms the scenario is walkable. A scenario that needs clarification from you is a fail on Quality.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your workspace</h2>
+    <p>
+      Draft one archetype's scenarios below. Save locally; then copy the
+      rendered markdown into the file path listed in step 4. Repeat for the
+      other two archetypes.
+    </p>
+
+    <div class="t4-workspace">
+      <div class="ws-label">Draft scenarios for one archetype</div>
+
+      <label for="wb_role">Archetype</label>
+      <select id="wb_role">
+        <option value="160_student">160_student</option>
+        <option value="public_visitor">public_visitor</option>
+        <option value="admin">admin</option>
+      </select>
+
+      <label for="wb_profile">Archetype profile (50–100 words)</label>
+      <textarea id="wb_profile" placeholder="Who they are. What vocabulary they have. What they do NOT know."></textarea>
+
+      <label for="wb_primary_task">Primary scenario — task (one sentence starting with user name + verb)</label>
+      <input type="text" id="wb_primary_task" placeholder="e.g. Aisha, a Track 1 student, wants to find the five topic bundles with highest paper count involving luminous">
+
+      <label for="wb_primary_entry">Primary scenario — entry page</label>
+      <input type="text" id="wb_primary_entry" placeholder="e.g. ka_home.html">
+
+      <label for="wb_primary_success">Primary scenario — success criterion (reviewer-checkable)</label>
+      <input type="text" id="wb_primary_success" placeholder="e.g. Aisha can point to five named topic bundles with paper counts visible">
+
+      <label for="wb_alt_task">Alternate scenario — task</label>
+      <input type="text" id="wb_alt_task">
+
+      <label for="wb_alt_entry">Alternate scenario — entry page</label>
+      <input type="text" id="wb_alt_entry">
+
+      <label for="wb_alt_success">Alternate scenario — success criterion</label>
+      <input type="text" id="wb_alt_success">
+
+      <button type="button" class="save-btn" onclick="saveB()">Save draft</button>
+      <span class="ws-status" id="wb_status">Saved.</span>
+
+      <details style="margin-top:14px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Preview</summary>
+        <pre id="wb_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;white-space:pre-wrap"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      With your three archetypes and their scenarios in hand, move to
+      <a href="ka_t4_b2_variant_evaluation.html"><b>T4.b.2 — Topic-page variant
+      evaluation</b></a>. T4.b.2 walks each archetype through all six topic-page
+      variants, using the scenarios you just wrote as the evaluation instrument.
+    </p>
+  </div>
+
+</main>
+
+<script>
+function saveB(){
+  const d = {
+    role: document.getElementById('wb_role').value,
+    profile: document.getElementById('wb_profile').value,
+    primary_task: document.getElementById('wb_primary_task').value,
+    primary_entry: document.getElementById('wb_primary_entry').value,
+    primary_success: document.getElementById('wb_primary_success').value,
+    alt_task: document.getElementById('wb_alt_task').value,
+    alt_entry: document.getElementById('wb_alt_entry').value,
+    alt_success: document.getElementById('wb_alt_success').value,
+  };
+  try { localStorage.setItem('ka.t4b_draft_' + d.role, JSON.stringify(d)); } catch(e){}
+  renderB(d);
+  const s = document.getElementById('wb_status');
+  s.classList.add('show');
+  setTimeout(()=>s.classList.remove('show'), 2500);
+}
+function renderB(d){
+  const md = `# T4.b — ${d.role} archetype scenarios
+
+## Archetype profile
+${d.profile || '(not yet written)'}
+
+## Primary scenario
+**Task**: ${d.primary_task || '(not yet written)'}
+**Entry point**: ${d.primary_entry || '(not yet written)'}
+**Success criterion**: ${d.primary_success || '(not yet written)'}
+
+## Alternate scenario
+**Task**: ${d.alt_task || '(not yet written)'}
+**Entry point**: ${d.alt_entry || '(not yet written)'}
+**Success criterion**: ${d.alt_success || '(not yet written)'}
+`;
+  document.getElementById('wb_preview').textContent = md;
+}
+// Restore last-edited archetype
+document.getElementById('wb_role').addEventListener('change', function(){
+  try {
+    const saved = localStorage.getItem('ka.t4b_draft_' + this.value);
+    if (saved) {
+      const d = JSON.parse(saved);
+      document.getElementById('wb_profile').value = d.profile || '';
+      document.getElementById('wb_primary_task').value = d.primary_task || '';
+      document.getElementById('wb_primary_entry').value = d.primary_entry || '';
+      document.getElementById('wb_primary_success').value = d.primary_success || '';
+      document.getElementById('wb_alt_task').value = d.alt_task || '';
+      document.getElementById('wb_alt_entry').value = d.alt_entry || '';
+      document.getElementById('wb_alt_success').value = d.alt_success || '';
+      renderB(d);
+    }
+  } catch(e){}
+});
+document.getElementById('wb_role').dispatchEvent(new Event('change'));
+</script>
+</body>
+</html>

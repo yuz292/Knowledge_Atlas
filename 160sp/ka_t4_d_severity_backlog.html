@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.d — Severity rubric and backlog — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.d</div>
+    <h1>Severity rubric &amp; prioritised backlog</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Week 6</span>
+      <span><b>Hardness</b> Medium</span>
+      <span><b>Points</b> 5 / 75</span>
+      <span><b>Method</b> Nielsen severity (1995) + RICE prioritisation</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.d_severity_backlog.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html">T4.a</a>
+    <a href="ka_t4_b_scenarios.html">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html" class="current">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html">T4.e</a>
+    <a href="ka_t4_f_redesign.html">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal<span class="h2-hint">what this deliverable teaches</span></h2>
+    <p class="lede">
+      You will take the union of findings from T4.a (heuristic audit) and
+      T4.c (usability pilot), deduplicate them, rate each on Nielsen's
+      five-level severity scale, and emit a ranked backlog using a RICE-style
+      score (Reach · Impact · Confidence · Effort). The output is a single
+      <code>backlog.csv</code> that the T4.f redesign deliverable consumes as
+      input: the top three rows drive three of your proposed redesigns.
+    </p>
+    <p>
+      The craft here is defending severity ratings with evidence. A naive
+      backlog rates everything 3/5 because 3 is the middle; a band-3 backlog
+      spans at least four severity levels and names, for each rating, the
+      exact pilot quote or audit observation that justifies it.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do<span class="h2-hint">the steps</span></h2>
+    <ol>
+      <li>Merge your T4.a findings (10 rows) and T4.c recurring findings (typically 5–12 rows) into a single CSV. Deduplicate exact matches; near-duplicates become one row with both sources cited.</li>
+      <li>For each finding, fill five fields: severity (1–5), reach (how many of the three archetypes hit this), impact (1–3; task-failure = 3), confidence (1–3; "seen in pilot twice" = 3, "plausible from audit only" = 1), effort (S / M / L — your estimate of redesign work).</li>
+      <li>Compute a RICE score: <code>(reach × impact × confidence) / effort_weight</code> where effort_weight is 1 for S, 2 for M, 4 for L. Higher is better.</li>
+      <li>Sort descending by RICE. The top three rows become the input to T4.f.</li>
+      <li>Write a 200-word <code>backlog_notes.md</code> explaining the three top rows: why these three, why in this order, what is the lowest-severity finding you deliberately chose <em>not</em> to prioritise and why that was defensible.</li>
+      <li>Submit <code>backlog.csv</code> and <code>backlog_notes.md</code> under <code>160sp/tracks/t4/{your_id}/backlog/</code>.</li>
+    </ol>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>Files &amp; pages relevant to this deliverable</h2>
+    <ul class="file-list">
+      <li><span class="file-type">INPUT</span><a href="ka_t4_a_heuristic_audit.html" target="_blank">T4.a findings directory</a><span class="file-desc">your 10 heuristic-audit findings</span></li>
+      <li><span class="file-type">INPUT</span><a href="ka_t4_c_usability_pilot.html" target="_blank">T4.c pilot findings</a><span class="file-desc">your recurrence-tagged pilot findings (output of T4.c synthesis)</span></li>
+      <li><span class="file-type">REF</span><a href="https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/" target="_blank">NN/g — Severity rating scale</a><span class="file-desc">Nielsen's canonical 0–4 scale, extended here to 1–5 for clarity</span></li>
+      <li><span class="file-type">REF</span><a href="https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/" target="_blank">RICE prioritisation</a><span class="file-desc">the scoring formula used in industry to turn findings into a ranked backlog</span></li>
+      <li><span class="file-type">TEMPLATE</span><a href="rubrics/t4/backlog_template.csv" target="_blank">backlog_template.csv</a><span class="file-desc">empty CSV with the expected 8 columns</span></li>
+      <li><span class="file-type">RUBRIC</span><a href="rubrics/t4/T4.d_severity_backlog.md" target="_blank">T4.d rubric</a><span class="file-desc">machine-readable spec</span></li>
+    </ul>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach<span class="h2-hint">so you can see what scores low</span></h2>
+    <p>
+      The classic weak backlog is a CSV where the severity column is the
+      moderator's affect rating rather than a severity rating. Read the excerpt
+      below and note that every severity has drifted into "how annoyed was I"
+      rather than "how much did this block the user."
+    </p>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — do NOT submit a backlog like this</span>
+      <div class="naive-body">
+<pre style="background:#FFF;color:#2C2C2C;padding:10px 12px;border-radius:6px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;margin:0">
+id,title,source,severity,reach,impact,confidence,effort,rice
+F-01,home button hard to see,audit,4,?,?,?,?,?
+F-02,topic page is weird,pilot,3,?,?,?,?,?
+F-03,navbar colours not my favourite,audit,3,?,?,?,?,?
+F-04,could not find login,pilot,5,?,?,?,?,?
+F-05,footer link broken on Safari,audit,2,?,?,?,?,?
+</pre>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores band 0 or 1.</b>
+        Every weakness in this backlog is a single-word pattern.
+        <em>"Topic page is weird"</em> is not a finding, it is a mood; the
+        severity rating of 3 has no evidence column pointing back to a specific
+        pilot quote or audit observation. <em>"Navbar colours not my
+        favourite"</em> is aesthetic preference rated at severity 3, which
+        implies a task-blocker; Nielsen's own rubric reserves the middle of the
+        scale for "major usability problem — important to fix" and cosmetic
+        issues belong at severity 1. The <em>"could not find login"</em> row
+        is rated 5 but has no reach/impact/confidence data, which means the
+        ranking is literally a guess; a reviewer cannot tell whether this was
+        observed once or five times, in which archetype, or whether the
+        moderator just pattern-matched on "login failure". The unfilled
+        reach/impact/confidence/effort columns mean no RICE score can be
+        computed, so no defensible ranking exists — which means the backlog
+        cannot drive T4.f. Band 3 requires every numeric cell filled and a
+        one-sentence evidence note for every severity of 3 or higher.
+      </div>
+    </div>
+
+    <p><b>The backlog-row template.</b> Every row in <code>backlog.csv</code>:</p>
+<pre style="background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px;font-family:ui-monospace,Menlo,monospace;font-size:0.84rem;overflow-x:auto;line-height:1.55">
+id, title, source, severity(1–5), reach(1–3), impact(1–3),
+confidence(1–3), effort(S|M|L), rice, evidence_ref
+
+F-01, "Topic-page chip labels use internal jargon (defended/mixed/unresolved)",
+  "audit:T4.a-04 + pilot:S2,S4", 4, 3, 3, 3, M, 13.5,
+  "S2 7:18 'is defended a fencing thing?'; S4 12:02 same confusion"
+</pre>
+    <p style="font-size:0.88rem;color:#6B6B6B;margin-top:8px">
+      The evidence_ref column is the load-bearing one. It is the link between
+      pilot notes and severity rating; without it the rating is unfalsifiable.
+    </p>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">how your work is graded</span>
+      <ul>
+        <li>Automated: the AI grader parses <code>backlog.csv</code>, checks all columns are present, and verifies the RICE column is consistent with the formula given.</li>
+        <li>Automated: findings at severity ≥ 3 without an <code>evidence_ref</code> string cap Quality at band 1.</li>
+        <li>Automated: the top-3 rows are extracted and handed to T4.f as input; the three redesigns in T4.f must reference these IDs.</li>
+        <li>TA audit: a TA re-rates a sampled row and flags if the student's rating is &gt; 2 bands off with no evidence to justify it.</li>
+      </ul>
+    </div>
+
+    <p><b>Scoring bands</b> (0–3 on each criterion, rescaled to the 5-point value):</p>
+    <table class="band-table">
+      <thead><tr><th>Criterion</th><th>Band 0</th><th>Band 1</th><th>Band 2</th><th>Band 3</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Completeness</b></td>
+          <td class="band-0">CSV malformed or &lt; 8 rows</td>
+          <td class="band-1">Required columns missing</td>
+          <td class="band-2">All columns present, most rows populated</td>
+          <td class="band-3">Every cell populated, RICE correct for every row</td>
+        </tr>
+        <tr>
+          <td><b>Severity calibration</b></td>
+          <td class="band-0">All severities identical</td>
+          <td class="band-1">Severities span 2 levels</td>
+          <td class="band-2">Severities span 3 levels</td>
+          <td class="band-3">Severities span ≥ 4 levels, each ≥ 3 rating cites evidence</td>
+        </tr>
+        <tr>
+          <td><b>Prioritisation note</b></td>
+          <td class="band-0">No notes file</td>
+          <td class="band-1">Notes present but generic</td>
+          <td class="band-2">Top-3 defended, one deprioritised row explained</td>
+          <td class="band-3">Top-3 defended against alternatives; deprioritisation acknowledges a real trade-off</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your workspace<span class="h2-hint">enter a backlog row; compute RICE live</span></h2>
+    <p>
+      Use this to draft rows one at a time. The RICE value recomputes as you
+      change inputs. Save-to-browser persists across visits; copy the rendered
+      CSV line into your <code>backlog.csv</code>.
+    </p>
+
+    <div class="t4-workspace">
+      <div class="ws-label">Draft one backlog row</div>
+      <div class="ws-sub">
+        Enter the finding and weights; the preview shows a valid CSV line.
+      </div>
+
+      <label for="wd_id">Finding ID (e.g. F-01)</label>
+      <input type="text" id="wd_id" placeholder="F-01">
+
+      <label for="wd_title">Title (concrete, behavioural)</label>
+      <input type="text" id="wd_title" placeholder="Topic-page chip labels use internal jargon">
+
+      <label for="wd_source">Source (audit / pilot / both)</label>
+      <select id="wd_source">
+        <option>audit</option>
+        <option>pilot</option>
+        <option selected>both</option>
+      </select>
+
+      <label for="wd_severity">Severity (1 = cosmetic, 5 = blocks use)</label>
+      <select id="wd_severity" onchange="recompute()">
+        <option value="1">1 — cosmetic</option>
+        <option value="2">2 — minor</option>
+        <option value="3" selected>3 — major</option>
+        <option value="4">4 — catastrophe for affected user</option>
+        <option value="5">5 — blocks all users</option>
+      </select>
+
+      <label for="wd_reach">Reach (how many of 3 archetypes are affected)</label>
+      <select id="wd_reach" onchange="recompute()">
+        <option value="1">1 — one archetype only</option>
+        <option value="2">2 — two archetypes</option>
+        <option value="3" selected>3 — all three</option>
+      </select>
+
+      <label for="wd_impact">Impact (1 = annoyance, 3 = task failure)</label>
+      <select id="wd_impact" onchange="recompute()">
+        <option value="1">1 — annoyance</option>
+        <option value="2" selected>2 — task slowed</option>
+        <option value="3">3 — task fails</option>
+      </select>
+
+      <label for="wd_confidence">Confidence (how strong is your evidence?)</label>
+      <select id="wd_confidence" onchange="recompute()">
+        <option value="1">1 — plausible from audit only</option>
+        <option value="2">2 — seen in pilot once</option>
+        <option value="3" selected>3 — seen ≥ 2 pilot sessions</option>
+      </select>
+
+      <label for="wd_effort">Effort to fix</label>
+      <select id="wd_effort" onchange="recompute()">
+        <option value="S">S — small (hours)</option>
+        <option value="M" selected>M — medium (day)</option>
+        <option value="L">L — large (week+)</option>
+      </select>
+
+      <label for="wd_evidence">Evidence reference</label>
+      <textarea id="wd_evidence" placeholder='e.g. audit:T4.a-04; pilot:S2 7:18 "is defended a fencing thing?"'></textarea>
+
+      <div style="margin-top:12px;padding:10px 14px;background:#E6F5F0;border-radius:6px;font-family:ui-monospace,Menlo,monospace;font-size:0.9rem">
+        <b>Computed RICE:</b> <span id="wd_rice">6.00</span>
+      </div>
+
+      <button type="button" class="save-btn" onclick="saveDraft()">Save draft row (to browser)</button>
+      <span class="ws-status" id="wd_status">Saved.</span>
+
+      <details style="margin-top:10px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Preview as a CSV line</summary>
+        <pre id="wd_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;white-space:pre-wrap"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      With the backlog ranked, move to
+      <a href="ka_t4_e_reproducibility.html"><b>T4.e — Reproducibility check</b></a>
+      to pair with a classmate and see whether your top findings reproduce on
+      their machine. A finding that reproduces cleanly strengthens the case for
+      T4.f (Redesign); one that does not should be demoted in the backlog
+      before T4.f begins.
+    </p>
+  </div>
+
+</main>
+
+<script>
+function rice() {
+  const r = +document.getElementById('wd_reach').value;
+  const i = +document.getElementById('wd_impact').value;
+  const c = +document.getElementById('wd_confidence').value;
+  const e = document.getElementById('wd_effort').value;
+  const w = e === 'S' ? 1 : e === 'M' ? 2 : 4;
+  return (r * i * c) / w;
+}
+function recompute() {
+  document.getElementById('wd_rice').textContent = rice().toFixed(2);
+  render();
+}
+function render() {
+  const id = document.getElementById('wd_id').value || 'F-01';
+  const title = (document.getElementById('wd_title').value || '').replace(/"/g, "'");
+  const source = document.getElementById('wd_source').value;
+  const sev = document.getElementById('wd_severity').value;
+  const r = document.getElementById('wd_reach').value;
+  const i = document.getElementById('wd_impact').value;
+  const c = document.getElementById('wd_confidence').value;
+  const e = document.getElementById('wd_effort').value;
+  const ev = (document.getElementById('wd_evidence').value || '').replace(/"/g, "'");
+  const rc = rice().toFixed(2);
+  const line = `${id},"${title}","${source}",${sev},${r},${i},${c},${e},${rc},"${ev}"`;
+  document.getElementById('wd_preview').textContent = line;
+}
+function saveDraft() {
+  const d = {
+    id: document.getElementById('wd_id').value,
+    title: document.getElementById('wd_title').value,
+    source: document.getElementById('wd_source').value,
+    severity: document.getElementById('wd_severity').value,
+    reach: document.getElementById('wd_reach').value,
+    impact: document.getElementById('wd_impact').value,
+    confidence: document.getElementById('wd_confidence').value,
+    effort: document.getElementById('wd_effort').value,
+    evidence: document.getElementById('wd_evidence').value,
+  };
+  try { localStorage.setItem('ka.t4d_draft', JSON.stringify(d)); } catch(e){}
+  render();
+  const s = document.getElementById('wd_status');
+  s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2500);
+}
+try {
+  const saved = localStorage.getItem('ka.t4d_draft');
+  if (saved) {
+    const d = JSON.parse(saved);
+    for (const k of Object.keys(d)) {
+      const el = document.getElementById('wd_' + k);
+      if (el) el.value = d[k] || el.value;
+    }
+  }
+} catch(e){}
+recompute();
+</script>
+</body>
+</html>

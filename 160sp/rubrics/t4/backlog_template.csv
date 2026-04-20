@@ -1,0 +1,44 @@
+id,title,source,severity,reach,impact,confidence,effort,rice,evidence_ref
+# ─────────────────────────────────────────────────────────────────────
+# T4.d backlog template — Knowledge Atlas Track 4
+# ─────────────────────────────────────────────────────────────────────
+# Column definitions (the rubric grades you on every cell being filled):
+#
+#   id              Stable identifier for the finding. Convention: F-01 … F-NN
+#                   in the order they appear in your audit or pilot synthesis.
+#   title           Concrete, behavioural one-line description.
+#                   e.g. "Topic-page chip labels use internal jargon"
+#   source          Where the finding came from.
+#                   values: audit | pilot | both
+#   severity        Nielsen's 1–5 severity rating.
+#                     1 = cosmetic, 2 = minor, 3 = major,
+#                     4 = catastrophe for affected user, 5 = blocks all users
+#   reach           How many of the three archetypes are affected (1–3).
+#                     1 = one archetype only, 2 = two archetypes, 3 = all three
+#   impact          How severe is the effect on the task (1–3).
+#                     1 = annoyance, 2 = task slowed, 3 = task fails
+#   confidence      How strong is your evidence (1–3).
+#                     1 = plausible from audit only
+#                     2 = seen in pilot once
+#                     3 = seen in ≥ 2 pilot sessions
+#   effort          Estimated implementation effort.
+#                     S = small (hours) → effort_weight 1
+#                     M = medium (day)  → effort_weight 2
+#                     L = large (week+) → effort_weight 4
+#   rice            Computed: (reach × impact × confidence) / effort_weight
+#                   This column is the ranking key; sort descending.
+#                   The top 3 rows are the input to T4.f.
+#   evidence_ref    Pointer back to the primary source of the finding.
+#                   e.g.  "audit:T4.a-04 + pilot:S2 7:18 'is defended a fencing thing?'"
+#                   Severity ≥ 3 without an evidence_ref caps Quality at band 1.
+#
+# Notes for band 3:
+#   · Severities must span ≥ 4 levels across the file.
+#   · Every severity ≥ 3 row must have a non-empty evidence_ref.
+#   · Delete every comment line that begins with "#" before submitting;
+#     they are authoring guidance, not part of the submitted schema.
+# ─────────────────────────────────────────────────────────────────────
+
+F-01,"(example) Topic-page chip labels use internal jargon",both,4,3,3,3,M,13.5,"audit:T4.a-04 + pilot:S2 7:18 'is defended a fencing thing?'; pilot:S4 12:02 same confusion"
+F-02,"(example) Home page Researcher button has no contrast against hero",audit,2,2,1,1,S,4.0,"audit:T4.a-07 — axe contrast 2.8:1 against gradient stop"
+F-03,"(example) Article view fails silently when payload 404s",pilot,5,3,3,3,M,13.5,"pilot:S3 3:14 blank page no error message; S5 same"

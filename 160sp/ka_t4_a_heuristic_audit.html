@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4.a — Heuristic audit — Knowledge Atlas</title>
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_t4_page.css">
+</head>
+<body data-ka-regime="160sp" data-ka-active="track4">
+<div id="ka-navbar-slot"></div>
+
+<main class="t4-outer">
+
+  <!-- Deliverable header -->
+  <div class="t4-header">
+    <div class="eyebrow">Track 4 · UX research · Deliverable T4.a</div>
+    <h1>Heuristic audit of the K-Atlas public site (10 findings)</h1>
+    <div class="t4-meta">
+      <span><b>Span</b> Weeks 3–4</span>
+      <span><b>Hardness</b> Medium</span>
+      <span><b>Points</b> 12 / 75</span>
+      <span><b>Method</b> Nielsen (1994) ten heuristics</span>
+    </div>
+    <a class="rubric-link" href="rubrics/t4/T4.a_heuristic_audit.md" target="_blank">Full rubric →</a>
+  </div>
+
+  <!-- Cross-links to the other 7 Track 4 deliverables -->
+  <div class="t4-siblings">
+    <span class="sb-label">Track 4 deliverables</span>
+    <a href="ka_t4_a_heuristic_audit.html" class="current">T4.a</a>
+    <a href="ka_t4_b_scenarios.html">T4.b</a>
+    <a href="ka_t4_b2_variant_evaluation.html">T4.b.2</a>
+    <a href="ka_t4_c_usability_pilot.html">T4.c</a>
+    <a href="ka_t4_d_severity_backlog.html">T4.d</a>
+    <a href="ka_t4_e_reproducibility.html">T4.e</a>
+    <a href="ka_t4_f_redesign.html">T4.f</a>
+    <a href="ka_t4_g_final_report.html">T4.g</a>
+  </div>
+
+  <!-- Goal -->
+  <div class="t4-section">
+    <h2><span class="h2-icon">◎</span>Goal<span class="h2-hint">what this deliverable teaches</span></h2>
+    <p class="lede">
+      You will produce ten structured findings against the K-Atlas public site,
+      each one coded to one of Nielsen's ten usability heuristics. By the end
+      you will be able to tell a design-decision story in the language any
+      working UX team uses: <em>heuristic · scenario · observed · expected ·
+      severity · recommendation</em>.
+    </p>
+    <p>
+      This deliverable is medium-hardness because the art is not in finding
+      problems — the current site has many — but in writing findings that
+      another student could independently reproduce without seeing your
+      screenshots. A finding that only you can interpret scores band 1; a
+      finding that reproduces in someone else's browser scores band 3.
+    </p>
+  </div>
+
+  <!-- What you'll do -->
+  <div class="t4-section">
+    <h2><span class="h2-icon">›</span>What you'll do<span class="h2-hint">the steps</span></h2>
+    <ol>
+      <li>Read Nielsen's ten heuristics. Keep the list open in a tab; you will cite each finding against exactly one heuristic.</li>
+      <li>Walk the eight pages listed in the <b>Files and links</b> section below. Spend 5–10 minutes on each page with a task in mind (the page-specific task is suggested inline).</li>
+      <li>When you notice friction, stop and record a finding in the schema below. Do not try to fix anything on the live site. Take a screenshot, note what you expected vs. what happened.</li>
+      <li>Produce ten findings total, covering at least six distinct heuristics. Severity ratings should span at least three levels (not all level 2; if your severities all land in the middle, you are not being discriminating enough).</li>
+      <li>Save each finding as its own markdown file under <code>160sp/tracks/t4/{your_id}/findings/T4.a_{nn}.md</code> using the schema in the naive-approach block below.</li>
+      <li>Submit by opening a short GitHub issue tagging <code>T4.a</code> with the list of your ten finding filenames.</li>
+    </ol>
+  </div>
+
+  <!-- Files and links -->
+  <div class="t4-section">
+    <h2><span class="h2-icon">☷</span>Files &amp; pages relevant to this deliverable</h2>
+    <ul class="file-list">
+      <li><span class="file-type">AUDIT</span><a href="../ka_home.html" target="_blank">ka_home.html</a><span class="file-desc">the front door; try the task "as a public visitor, can I tell what this site is for within 30 seconds?"</span></li>
+      <li><span class="file-type">AUDIT</span><a href="../ka_topics.html" target="_blank">ka_topics.html</a><span class="file-desc">Classic View; try the task "show me topic bundles for stress"</span></li>
+      <li><span class="file-type">AUDIT</span><a href="../ka_topic_facet_view.html" target="_blank">ka_topic_facet_view.html</a><span class="file-desc">the new progressive-disclosure variant</span></li>
+      <li><span class="file-type">AUDIT</span><a href="../ka_article_view.html?id=PDF-0007" target="_blank">ka_article_view.html?id=PDF-0007</a><span class="file-desc">individual article page; try "understand what this paper found"</span></li>
+      <li><span class="file-type">AUDIT</span><a href="../ka_theories.html" target="_blank">ka_theories.html</a><span class="file-desc">theory index; try "what are Tier 1 frameworks?"</span></li>
+      <li><span class="file-type">AUDIT</span><a href="../ka_contribute.html" target="_blank">ka_contribute.html</a><span class="file-desc">full contributor page; try "suggest a paper we should index"</span></li>
+      <li><span class="file-type">AUDIT</span><a href="../ka_contribute_public.html" target="_blank">ka_contribute_public.html</a><span class="file-desc">the simpler public variant</span></li>
+      <li><span class="file-type">AUDIT</span><a href="ka_student_setup.html" target="_blank">160sp/ka_student_setup.html</a><span class="file-desc">student onboarding; try "as a new COGS 160 student, pick a track"</span></li>
+      <li><span class="file-type">RUBRIC</span><a href="rubrics/t4/T4.a_heuristic_audit.md" target="_blank">T4.a rubric</a><span class="file-desc">the official rubric file with machine-readable spec</span></li>
+      <li><span class="file-type">REF</span><a href="https://www.nngroup.com/articles/ten-usability-heuristics/" target="_blank">Nielsen's ten heuristics</a><span class="file-desc">canonical reference; one finding per heuristic max for band 3</span></li>
+    </ul>
+    <p style="margin-top:12px;padding:10px 14px;background:#EFECFA;border-left:3px solid #6B53B8;border-radius:4px;font-size:0.88rem">
+      <b style="color:#4A3A8E">Ambitious add-on (optional):</b> the Atlas has
+      twelve <a href="../ka_journeys.html" style="color:#4A3A8E;font-weight:600">"complicated surface" pages</a>
+      — EN, BN, interpretation, argumentation, QA, mechanism, theory, gaps,
+      evidence-landscape, fronts, ontology inspector, topic inspector — each of
+      which already publishes a spec page describing its naive solution and a
+      per-user-type critique scaffold. Advanced T4 students take one of these
+      as an eleventh finding or as a T4.f redesign target. These surfaces are
+      visually and epistemically harder than the public-facing pages above, so
+      approach them only after you are comfortable with the heuristic-finding
+      schema.
+    </p>
+  </div>
+
+  <!-- Naive approach -->
+  <div class="t4-section">
+    <h2><span class="h2-icon">✗</span>Example of a naive approach<span class="h2-hint">so you can see what scores low</span></h2>
+    <p>
+      A common first attempt looks like the block below. It documents a real
+      friction point, but the finding is unreproducible, uncoded, and
+      actionless. Use it as a counter-example; the "<b>why this scores low</b>"
+      annotation after it maps each weakness back to the rubric.
+    </p>
+    <div class="t4-naive">
+      <span class="naive-label">band 0–1 example — do NOT submit findings like this</span>
+      <div class="naive-body">
+        <p><b>T4.a-01 · Home page is confusing</b></p>
+        <p>
+          The home page is really confusing and I could not figure out what to
+          do. The buttons are weird and nothing makes sense. This is a bad page.
+          4/5.
+        </p>
+      </div>
+      <div class="naive-why">
+        <b>Why this scores band 0 or 1.</b>
+        The finding fails every structural requirement at once: no heuristic is
+        named (we cannot tell whether this is a <em>Match between system and the
+        real world</em> problem or a <em>Recognition rather than recall</em>
+        problem); no scenario is declared (which user doing what task?); the
+        observed behaviour is subjective ("confusing") rather than literal;
+        there is no expected behaviour for comparison; no screenshot; no
+        recommendation; severity is picked from the air. A reviewer cannot
+        reproduce the problem and a designer cannot act on it. Band 3 requires
+        all seven schema fields, each filled with specific and defensible
+        content.
+      </div>
+    </div>
+
+    <p><b>The schema a good finding follows.</b> Copy this into each
+    <code>T4.a_{nn}.md</code> file and fill in every field:</p>
+<pre style="background:#F9F5EE;border:1px solid #E0D8CC;border-radius:8px;padding:14px 18px;font-family:ui-monospace,Menlo,monospace;font-size:0.84rem;overflow-x:auto;line-height:1.55">
+# T4.a-{nn} — {short title}
+
+**Heuristic**: {one of Nielsen's 10, e.g. "H4 Consistency and standards"}
+**Scenario**: {one-line scenario the user was attempting}
+**Page**: {URL}
+**Observed behaviour**: {literal description, 30–80 words}
+**Expected behaviour**: {what would make the scenario succeed, 20–50 words}
+**Impact**: {who is affected and how, 20–40 words}
+**Severity**: {1–5 per Nielsen}
+**Screenshot**: {path to ./screenshots/T4.a_{nn}.png}
+**Recommendation**: {one-paragraph suggested fix, 40–80 words}
+</pre>
+  </div>
+
+  <!-- Verification -->
+  <div class="t4-section">
+    <h2><span class="h2-icon">✓</span>Verification</h2>
+    <div class="t4-verify">
+      <span class="verify-label">how your work is graded</span>
+      <ul>
+        <li>Automated: the AI grader reads every <code>T4.a_{nn}.md</code> file in your <code>findings/</code> directory and checks the schema is complete. Missing sections cap the Completeness band at 1.</li>
+        <li>Automated: the 10 findings must cover ≥ 6 distinct heuristics for band 3 on Quality; severity ratings must span ≥ 3 levels.</li>
+        <li>TA audit: 20% of submissions get a blind re-rating by a TA; large TA/AI disagreement flags the deliverable for re-review.</li>
+        <li>Peer reproducibility: your findings are the direct input to T4.e, where a paired student tries to reproduce 5 of them. A finding that no peer can reproduce is not a finding.</li>
+      </ul>
+    </div>
+
+    <p><b>Scoring bands at a glance</b> (0–3 on each criterion, rescaled to the 12-point deliverable value):</p>
+    <table class="band-table">
+      <thead><tr><th>Criterion</th><th>Band 0</th><th>Band 1</th><th>Band 2</th><th>Band 3</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Completeness</b></td>
+          <td class="band-0">&lt; 5 findings, or schema broken</td>
+          <td class="band-1">5–7 findings, schema partial</td>
+          <td class="band-2">8–9 findings, schema complete</td>
+          <td class="band-3">10 findings, schema complete, screenshots present</td>
+        </tr>
+        <tr>
+          <td><b>Quality</b></td>
+          <td class="band-0">Findings reproduce nowhere</td>
+          <td class="band-1">Weak coverage (1–3 heuristics)</td>
+          <td class="band-2">Reasonable coverage (4–5 heuristics)</td>
+          <td class="band-3">≥ 6 heuristics, severities span ≥ 3 levels, every observation is literal</td>
+        </tr>
+        <tr>
+          <td><b>Reflection</b></td>
+          <td class="band-0">No reflection note</td>
+          <td class="band-1">Generic reflection</td>
+          <td class="band-2">Names two specific patterns</td>
+          <td class="band-3">Names two patterns and proposes one systemic fix</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Your workspace -->
+  <div class="t4-section">
+    <h2><span class="h2-icon">✎</span>Your workspace<span class="h2-hint">draft a finding here; save locally</span></h2>
+    <p>
+      Use the form below to draft a finding directly in the browser. Your draft
+      saves to your local browser storage so you can come back to it later.
+      When you are happy with it, copy the rendered markdown into a new file
+      at <code>160sp/tracks/t4/{your_id}/findings/T4.a_{nn}.md</code>.
+    </p>
+
+    <div class="t4-workspace">
+      <div class="ws-label">Draft one finding</div>
+      <div class="ws-sub">
+        Students typically draft all ten in a single pass, then review. This
+        form gives you a structured place to write #1. Repeat for #2–#10.
+      </div>
+
+      <label for="wa_title">Short title (3–6 words)</label>
+      <input type="text" id="wa_title" placeholder="e.g. Topic-page chip labels use internal jargon">
+
+      <label for="wa_heuristic">Heuristic (one of Nielsen's 10)</label>
+      <select id="wa_heuristic">
+        <option value="">Choose a heuristic…</option>
+        <option>H1 Visibility of system status</option>
+        <option>H2 Match between system and the real world</option>
+        <option>H3 User control and freedom</option>
+        <option>H4 Consistency and standards</option>
+        <option>H5 Error prevention</option>
+        <option>H6 Recognition rather than recall</option>
+        <option>H7 Flexibility and efficiency of use</option>
+        <option>H8 Aesthetic and minimalist design</option>
+        <option>H9 Help users recognise, diagnose, and recover from errors</option>
+        <option>H10 Help and documentation</option>
+      </select>
+
+      <label for="wa_scenario">Scenario (who was trying to do what?)</label>
+      <input type="text" id="wa_scenario" placeholder="e.g. A public visitor looking for studies on lighting and attention">
+
+      <label for="wa_page">Page (URL)</label>
+      <input type="text" id="wa_page" placeholder="e.g. https://xrlab.ucsd.edu/ka/ka_topics.html">
+
+      <label for="wa_observed">Observed behaviour (30–80 words, literal)</label>
+      <textarea id="wa_observed" placeholder="What actually happened when you tried the scenario. Quote visible text where relevant."></textarea>
+
+      <label for="wa_expected">Expected behaviour (20–50 words)</label>
+      <textarea id="wa_expected" placeholder="What would have made the scenario succeed."></textarea>
+
+      <label for="wa_severity">Severity (1 = cosmetic, 5 = blocks all use)</label>
+      <select id="wa_severity">
+        <option>1 — cosmetic</option>
+        <option>2 — minor</option>
+        <option selected>3 — major</option>
+        <option>4 — catastrophe for this user</option>
+        <option>5 — blocks all users</option>
+      </select>
+
+      <label for="wa_recommendation">Recommendation (40–80 words)</label>
+      <textarea id="wa_recommendation" placeholder="One concrete change that would address this finding. Describe the affordance, not a design style."></textarea>
+
+      <button type="button" class="save-btn" onclick="saveDraft()">Save draft (to browser only)</button>
+      <span class="ws-status" id="wa_status">Saved.</span>
+
+      <p style="margin-top:14px;font-size:0.82rem;color:#6B6B6B">
+        Saved drafts live in your browser. To submit, copy the rendered markdown
+        (below) into a new file in your repo.
+      </p>
+
+      <details style="margin-top:10px;font-size:0.88rem">
+        <summary style="cursor:pointer;color:#2A7868;font-weight:600">Preview as markdown</summary>
+        <pre id="wa_preview" style="background:#fff;border:1px solid #CFE6DE;border-radius:6px;padding:12px 14px;margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:0.82rem;white-space:pre-wrap"></pre>
+      </details>
+    </div>
+  </div>
+
+  <!-- Next step -->
+  <div class="t4-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Next step</h2>
+    <p>
+      Once you have your ten findings, move to <a href="ka_t4_b_scenarios.html"><b>T4.b — Scenario-based walkthroughs</b></a>.
+      T4.b takes the three user archetypes you already know from the persona
+      doc and asks you to walk each through a short scripted scenario — which
+      is the work that makes T4.b.2's six-variant comparison possible.
+    </p>
+  </div>
+
+</main>
+
+<script>
+function saveDraft() {
+  const d = {
+    title: document.getElementById('wa_title').value,
+    heuristic: document.getElementById('wa_heuristic').value,
+    scenario: document.getElementById('wa_scenario').value,
+    page: document.getElementById('wa_page').value,
+    observed: document.getElementById('wa_observed').value,
+    expected: document.getElementById('wa_expected').value,
+    severity: document.getElementById('wa_severity').value,
+    recommendation: document.getElementById('wa_recommendation').value,
+  };
+  try {
+    localStorage.setItem('ka.t4a_draft', JSON.stringify(d));
+  } catch(e){}
+  renderPreview(d);
+  const s = document.getElementById('wa_status');
+  s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2500);
+}
+
+function renderPreview(d) {
+  const md = `# T4.a — ${d.title || '(no title)'}
+
+**Heuristic**: ${d.heuristic || '(not yet chosen)'}
+**Scenario**: ${d.scenario || '(not yet written)'}
+**Page**: ${d.page || '(no URL)'}
+
+**Observed behaviour**: ${d.observed || '(not yet written)'}
+
+**Expected behaviour**: ${d.expected || '(not yet written)'}
+
+**Severity**: ${d.severity}
+**Screenshot**: ./screenshots/T4.a_01.png
+
+**Recommendation**: ${d.recommendation || '(not yet written)'}
+`;
+  document.getElementById('wa_preview').textContent = md;
+}
+
+// Restore any previously-saved draft
+try {
+  const saved = localStorage.getItem('ka.t4a_draft');
+  if (saved) {
+    const d = JSON.parse(saved);
+    document.getElementById('wa_title').value = d.title || '';
+    document.getElementById('wa_heuristic').value = d.heuristic || '';
+    document.getElementById('wa_scenario').value = d.scenario || '';
+    document.getElementById('wa_page').value = d.page || '';
+    document.getElementById('wa_observed').value = d.observed || '';
+    document.getElementById('wa_expected').value = d.expected || '';
+    if (d.severity) document.getElementById('wa_severity').value = d.severity;
+    document.getElementById('wa_recommendation').value = d.recommendation || '';
+    renderPreview(d);
+  }
+} catch(e){}
+</script>
+</body>
+</html>
