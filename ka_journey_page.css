@@ -1,0 +1,188 @@
+/*  ka_journey_page.css — shared styling for the "complicated journey"
+    pages on Knowledge Atlas. Each ka_journey_{name}.html page describes
+    one of the harder surfaces of the site: what it displays, who needs
+    it, why designing it is difficult, the current naive solution, and
+    a critique scaffold for every user type. Pages are visually unified
+    so students recognise the genre at a glance.
+
+    Palette: indigo/violet head strip to mark these as "complicated"
+    exploration surfaces, distinct from Track 4 deliverable pages
+    (orange gradient) and regular content pages (teal).
+*/
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #F7F4EF;
+  color: #2C2C2C;
+  line-height: 1.6;
+}
+
+main.j-outer { max-width: 940px; margin: 28px auto 80px; padding: 0 28px; }
+
+/* ── Header strip at top of every page ── */
+.j-header {
+  background: linear-gradient(135deg, #4A3A8E 0%, #6B53B8 100%);
+  color: #fff;
+  border-radius: 12px;
+  padding: 26px 30px;
+  margin-bottom: 22px;
+}
+.j-header .eyebrow {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #C9BEF2; margin-bottom: 6px;
+}
+.j-header h1 {
+  font-family: Georgia, serif; font-size: 1.75rem; color: #fff;
+  margin-bottom: 12px; line-height: 1.3;
+}
+.j-header .j-meta {
+  display: flex; flex-wrap: wrap; gap: 14px 22px;
+  font-size: 0.88rem; color: #E2DAFA;
+}
+.j-header .j-meta b { color: #fff; }
+.j-header .status-pill {
+  display: inline-block; padding: 2px 10px; border-radius: 10px;
+  font-size: 0.75rem; font-weight: 700; margin-left: 4px;
+  background: #F5A623; color: #2C2C2C;
+}
+.j-header .status-pill.shipped { background: #2A7868; color: #fff; }
+.j-header .status-pill.prototype { background: #E8872A; color: #fff; }
+.j-header .status-pill.naive { background: #D15A73; color: #fff; }
+.j-header .status-pill.absent { background: #6B6B6B; color: #fff; }
+
+/* ── Cross-link row between journey pages ── */
+.j-siblings {
+  background: #FFF; border: 1px solid #E0D8CC; border-radius: 8px;
+  padding: 10px 14px; margin-bottom: 22px;
+  display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center;
+  font-size: 0.82rem;
+}
+.j-siblings .sb-label { color: #6B53B8; font-weight: 700; margin-right: 8px; }
+.j-siblings a {
+  text-decoration: none; padding: 3px 10px; border-radius: 4px;
+  background: #F0ECFA; color: #4A3A8E; font-weight: 600;
+}
+.j-siblings a:hover { background: #E0D8F5; }
+.j-siblings a.current { background: #4A3A8E; color: #fff; }
+
+/* ── Section cards ── */
+.j-section {
+  background: #fff; border-radius: 10px;
+  padding: 22px 26px; margin-bottom: 18px;
+  border: 1px solid #E0D8CC;
+}
+.j-section h2 {
+  font-family: Georgia, serif; font-size: 1.22rem; color: #4A3A8E;
+  margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px;
+}
+.j-section h2 .h2-icon {
+  color: #6B53B8; font-weight: 700; font-size: 1.1rem;
+}
+.j-section h2 .h2-hint {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 0.78rem; font-weight: 400; color: #6B6B6B; margin-left: 6px;
+  letter-spacing: 0.02em;
+}
+.j-section p { margin-bottom: 10px; }
+.j-section p.lede { font-size: 1.02rem; }
+.j-section ul, .j-section ol { margin-left: 22px; margin-bottom: 12px; }
+.j-section li { margin-bottom: 6px; }
+
+/* ── Per-role list in "Who needs this" ── */
+.role-list { list-style: none; margin-left: 0; }
+.role-list li {
+  padding: 10px 14px; background: #F9F5EE; border-left: 3px solid #6B53B8;
+  border-radius: 4px; margin-bottom: 8px;
+}
+.role-list .role-label {
+  font-family: ui-monospace, Menlo, monospace; font-weight: 700;
+  color: #4A3A8E; margin-right: 8px; font-size: 0.82rem;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* ── Naive-solution block ── */
+.j-naive {
+  background: #FEF3E2; border: 1.5px solid #E8872A; border-radius: 8px;
+  padding: 14px 18px; margin-bottom: 12px;
+}
+.j-naive-label {
+  display: inline-block; padding: 3px 10px; border-radius: 10px;
+  background: #9a5010; color: #fff; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px;
+}
+.j-naive-body { font-size: 0.92rem; color: #2C2C2C; }
+.j-naive-why {
+  background: #FFF; border-left: 3px solid #9a5010;
+  padding: 12px 14px; margin-top: 8px;
+  font-size: 0.88rem; border-radius: 4px;
+}
+.j-naive-why b { color: #9a5010; }
+
+/* ── Critique form ── */
+.j-critique {
+  background: #EFECFA; border-radius: 8px;
+  padding: 16px 18px; margin-top: 10px;
+}
+.j-critique-label {
+  display: inline-block; padding: 3px 10px; border-radius: 10px;
+  background: #4A3A8E; color: #fff; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px;
+}
+.j-critique .role-crit {
+  background: #fff; border-radius: 6px; padding: 10px 14px;
+  margin-bottom: 10px; border-left: 3px solid #6B53B8;
+}
+.j-critique .role-crit .rc-head {
+  font-family: ui-monospace, Menlo, monospace; font-weight: 700;
+  color: #4A3A8E; font-size: 0.82rem; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.j-critique textarea {
+  width: 100%; min-height: 54px; padding: 8px 10px; font: inherit;
+  border: 1px solid #D4D0E8; border-radius: 4px; background: #FDFCFF;
+  resize: vertical;
+}
+.j-critique .save-btn {
+  background: #4A3A8E; color: #fff; border: none; border-radius: 5px;
+  padding: 8px 18px; font-family: inherit; font-size: 0.88rem;
+  font-weight: 600; cursor: pointer; margin-top: 6px;
+}
+.j-critique .save-btn:hover { background: #6B53B8; }
+.j-critique .j-status {
+  display: inline-block; margin-left: 10px; color: #1A7050;
+  font-size: 0.82rem; font-weight: 600; opacity: 0;
+  transition: opacity 0.3s;
+}
+.j-critique .j-status.show { opacity: 1; }
+
+/* ── File list ── */
+.file-list { list-style: none; margin-left: 0; }
+.file-list li {
+  padding: 8px 12px; background: #F9F5EE; border-radius: 4px;
+  margin-bottom: 6px; font-size: 0.88rem; display: flex;
+  gap: 10px; align-items: baseline; flex-wrap: wrap;
+}
+.file-list .file-type {
+  display: inline-block; background: #4A3A8E; color: #fff;
+  padding: 2px 8px; border-radius: 4px; font-size: 0.68rem;
+  font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  flex-shrink: 0;
+}
+.file-list .file-type.data { background: #2A7868; }
+.file-list .file-type.api { background: #4A6FA8; }
+.file-list .file-type.lib { background: #9a5010; }
+.file-list .file-type.missing { background: #D15A73; }
+.file-list a {
+  color: #1C3D3A; font-weight: 600; text-decoration: none;
+  font-family: ui-monospace, Menlo, monospace; font-size: 0.84rem;
+}
+.file-list a:hover { text-decoration: underline; }
+.file-list .file-desc { color: #6B6B6B; flex: 1 1 400px; font-size: 0.84rem; }
+
+/* ── Shared ── */
+code {
+  font-family: ui-monospace, Menlo, monospace;
+  background: #F9F5EE; padding: 1px 6px; border-radius: 3px;
+  font-size: 0.9em;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topic inspector — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="Topic inspector: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="">
+<div id="ka-navbar-slot"></div>
+
+<main class="j-outer">
+
+  <div class="j-header">
+    <div class="eyebrow">Complicated journey surface · Layer G · Structural inspectors</div>
+    <h1>Topic inspector</h1>
+    <div class="j-meta">
+      <span><b>Roles served</b> researcher, admin, 160_student</span>
+      <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
+      <span><b>Complexity tier</b> Medium — per-topic reflective view</span>
+    </div>
+  </div>
+
+  <div class="j-siblings" id="j-siblings-slot"></div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <p>Where the ontology inspector looks at the whole vocabulary, the topic inspector zooms into a single topic bundle and shows everything the Atlas has about it: the papers, the warrants, the interpretations, the mechanisms, the theories, the related bundles, and the extraction history.</p>
+    <p>The inspector is the page a researcher lands on when they want to answer "what does the Atlas know about this exact topic, in full?" and the page an admin uses to audit a single bundle's quality — which papers belong, which mechanisms are implicated, whether the interpretation is stale.</p>
+    <p>The page is tightly coupled to the main topic browser; the browser shows the same data at shallower depth. The inspector's job is to make visible what the browser hides.</p>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
+    <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>Not a target user; the inspector should not be linked from public-facing navbars.</li>
+      <li><span class="role-label">COGS 160 student</span>Track 2 students use the inspector to plan a coverage sweep; Track 4 students use it as a redesign target because the page is dense.</li>
+      <li><span class="role-label">Researcher</span>To get the full picture on a single topic before citing it in a paper.</li>
+      <li><span class="role-label">Practitioner</span>For deep cases; usually better served by the interpretation layer or a topic page.</li>
+      <li><span class="role-label">Administrator</span>To audit a specific bundle end-to-end — extraction quality, paper coverage, interpretation freshness.</li>
+    </ul>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
+    <ol>
+      <li><b>Density.</b> A mature topic has dozens of papers, tens of warrants, several mechanisms, and a handful of theories. The inspector must not force the user to scroll through all of it linearly.</li>
+      <li><b>Cross-surface links.</b> Every item on the inspector is a pointer into another surface (paper page, warrant view, mechanism layer, theory deep-dive). Designing the link density without over-cluttering is non-trivial.</li>
+      <li><b>Extraction-history panel.</b> Admins want to see when the bundle was last re-extracted, what changed, who approved it; that panel is large and must not dominate the page.</li>
+      <li><b>Staleness indicators.</b> Some data on the inspector is months old; some is days old. The page must mark freshness at field level.</li>
+      <li><b>Comparability.</b> Researchers frequently want to compare two bundles; the inspector is single-bundle and the comparison affordance belongs elsewhere — but the inspector should expose the hook.</li>
+    </ol>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
+    <div class="j-naive">
+      <span class="j-naive-label">naive — the current implementation</span>
+      <div class="j-naive-body"><p>The current page shows a single long scroll with sections for papers, warrants, interpretation, mechanisms, theories, and history. Each section is a plain list. There is no density collapse, no cross-section anchors, no per-field freshness marker, and no comparison hook.</p></div>
+    </div>
+    <div class="j-naive-why"><b>Why this is inadequate.</b> Scrolling through the inspector takes minutes on a mature bundle; a researcher looking for a specific warrant must search by browser find-on-page. The admin audit task ("which mechanisms does this bundle cite that are not in the mechanism layer?") has no built-in affordance and must be done manually. The page works as a data dump but not as a reflective surface.</div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
+    <p>
+      For each user type below, write one to three sentences: what in the
+      naive solution works for that user, what fails, and what one thing a
+      redesign should change first. Your drafts save to your browser; copy
+      them into your T4.a or T4.f workspace when you are ready.
+    </p>
+    <div class="j-critique">
+      <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <button type="button" class="save-btn" onclick="saveCritique('topic_inspector')">Save critiques (to browser only)</button>
+      <span class="j-status" id="j-crit-status">Saved.</span>
+    </div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
+    <ul class="file-list">
+      <li><span class="file-type data">data</span><a>data/ka_payloads/topic_bundles.json</a><span class="file-desc">Per-bundle record: papers, warrants, interpretations, mechanisms, theories, history events.</span></li>
+      <li><span class="file-type api">api</span><a>/api/topic/{id}/history</a><span class="file-desc">Extraction and re-extraction history per bundle.</span></li>
+      <li><span class="file-type lib">lib</span><a>ka_topic_inspector_render.js</a><span class="file-desc">Current long-scroll renderer; needs a section-navigation affordance and per-section collapse.</span></li>
+      <li><span class="file-type missing">missing</span><a>freshness-per-field metadata</a><span class="file-desc">Each section's last-update timestamp; currently only a whole-bundle timestamp is stored.</span></li>
+      <li><span class="file-type missing">missing</span><a>compare-hook endpoint</a><span class="file-desc">A shareable URL for "compare bundle A and bundle B"; would link to a separate comparative-view page that does not yet exist.</span></li>
+    </ul>
+  </div>
+
+  <div class="j-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Status and next steps</h2>
+    <p>The inspector is the primary admin audit surface. A redesign here has disproportionate impact on extraction-pipeline quality control.</p>
+  </div>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySiblings) window.renderJourneySiblings('topic_inspector');
+  if (window.restoreCritique) window.restoreCritique('topic_inspector');
+});
+</script>
+</body>
+</html>

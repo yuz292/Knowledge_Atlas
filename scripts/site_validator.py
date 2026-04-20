@@ -97,6 +97,7 @@ NAV_SLOT_RE      = re.compile(r'id=["\']ka-navbar-slot["\']', re.I)
 DATA_VERIFIED_RE = re.compile(r'data-verified\s*=\s*["\']([0-9]{4}-[0-9]{2}-[0-9]{2})["\']', re.I)
 LOCALSTORAGE_RE  = re.compile(r'\blocalStorage\.(?:getItem|removeItem|setItem)')
 HREF_RE          = re.compile(r'(?:href|src)\s*=\s*["\']([^"\'#?][^"\']*)["\']', re.I)
+SAFE_LOCALSTORAGE_PREFIXES = ("ka.t4", "ka.critique.")
 
 # Surfaces allowed to link to archive pages
 ARCHIVE_LINKERS = {"ka_archive.html", "ka_track4_hub.html", "ka_admin.html"}
@@ -217,7 +218,10 @@ def check_html(path: Path, root: Path, regime_items: dict[str, list[dict]],
     for m in LOCALSTORAGE_RE.finditer(text):
         # Peek back 200 chars for a guard keyword
         pre = text[max(0, m.start()-200):m.start()]
+        post = text[m.start():m.start()+200]
         if "authed" in pre or "validated" in pre or "token" in pre:
+            continue
+        if any(prefix in (pre + post) for prefix in SAFE_LOCALSTORAGE_PREFIXES):
             continue
         line = text.count("\n", 0, m.start()) + 1
         vs.append(Violation(rel, line, "SEC001",

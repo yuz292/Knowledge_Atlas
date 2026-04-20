@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Argumentation layer — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="Argumentation layer: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="">
+<div id="ka-navbar-slot"></div>
+
+<main class="j-outer">
+
+  <div class="j-header">
+    <div class="eyebrow">Complicated journey surface · Layer D · Reading evidence</div>
+    <h1>Argumentation layer</h1>
+    <div class="j-meta">
+      <span><b>Roles served</b> researcher, 160_student</span>
+      <span><b>Current status</b> <span class="status-pill absent">absent</span></span>
+      <span><b>Complexity tier</b> High — no implementation yet</span>
+    </div>
+  </div>
+
+  <div class="j-siblings" id="j-siblings-slot"></div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <p>The argumentation layer would render Dung's (1995) abstract argumentation frameworks over the Atlas's claim corpus: nodes are arguments (claim + supporting reasons), edges are <em>attacks</em> (one argument defeats another), and the computation produces an <em>acceptability labelling</em> — which arguments are IN (accepted), OUT (rejected), or UNDEC (undecided) under a given semantics (grounded, preferred, stable).</p>
+    <p>Unlike the EN, which shows epistemic support, the argumentation layer shows the <em>argumentative structure</em>: which argument defeats which, and which coherent sets of arguments survive mutual attack. It is the view that makes contested claims visible as contested, without resolving the contest.</p>
+    <p>The page does not yet exist. What follows is a spec for a page that would be the right target for T4's redesign loop in a future quarter.</p>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
+    <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>Probably not suitable — abstract argumentation semantics require more background than a public visitor typically brings. Better routed to the interpretation layer.</li>
+      <li><span class="role-label">COGS 160 student</span>Track 4 students use the argumentation layer as a critique-heavy target — no naive solution is deployed, so they must reason about the specification first.</li>
+      <li><span class="role-label">Researcher</span>To see whether a minority-view argument they hold is actually defeated by the majority, or merely outnumbered. Dung's semantics separate those.</li>
+      <li><span class="role-label">Practitioner</span>Indirect; practitioners are usually better served by the Interpretation layer, which should quote the argumentation layer's labelling.</li>
+      <li><span class="role-label">Administrator</span>To audit whether the Atlas's arguments are diverse enough — a corpus with no attacks is suspicious.</li>
+    </ul>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
+    <ol>
+      <li><b>Semantics is a choice, not a default.</b> Grounded, preferred, and stable semantics give different IN/OUT labellings; the page must let the user pick, and must explain what the choice means, without trapping the user in a philosophy-of-argumentation lecture.</li>
+      <li><b>Attack vs. disagreement.</b> Not all disagreement is an attack in Dung's sense. Mapping corpus disagreement onto the attack relation is an extraction decision the page must surface.</li>
+      <li><b>Scale.</b> At corpus scale, the attack graph is dense; visualising it is the same density problem as the EN, with an added layer of per-argument labelling that changes with semantics.</li>
+      <li><b>Explanation.</b> A user who sees "this argument is OUT" needs to see <em>why</em> — which attackers defeat it, and whether those attackers are themselves defeated. Recursive explanation is a distinctive requirement.</li>
+      <li><b>No familiar metaphor.</b> Unlike a belief network (which people can read as a mind-map) or a topic page (which people can read as a category browser), an argumentation framework has no everyday metaphor. The page must invent one.</li>
+    </ol>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
+    <div class="j-naive">
+      <span class="j-naive-label">naive — the current implementation</span>
+      <div class="j-naive-body"><p>No naive solution is deployed. The placeholder currently points visitors to the Interpretation layer and notes that an argumentation viewer is planned.</p></div>
+    </div>
+    <div class="j-naive-why"><b>Why this is inadequate.</b> The critique exercise for this page is therefore a <em>specification critique</em> rather than an implementation critique. The student must argue, from each user's perspective, what the page would have to do for that user; the design problem is constrained by the absence of a defaulted metaphor.</div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
+    <p>
+      For each user type below, write one to three sentences: what in the
+      naive solution works for that user, what fails, and what one thing a
+      redesign should change first. Your drafts save to your browser; copy
+      them into your T4.a or T4.f workspace when you are ready.
+    </p>
+    <div class="j-critique">
+      <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <button type="button" class="save-btn" onclick="saveCritique('argumentation')">Save critiques (to browser only)</button>
+      <span class="j-status" id="j-crit-status">Saved.</span>
+    </div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
+    <ul class="file-list">
+      <li><span class="file-type data">data</span><a>data/ka_payloads/argumentation_framework.json</a><span class="file-desc">Argument list with textual content and supporting warrant IDs; attack relation; labellings under each semantics.</span></li>
+      <li><span class="file-type api">api</span><a>/api/argumentation/label</a><span class="file-desc">Accepts a semantics choice and returns labelling.</span></li>
+      <li><span class="file-type lib">lib</span><a>argumentation_solver</a><span class="file-desc">Off-the-shelf Dung semantics solver; candidates: <code>py-arg</code>, <code>argupy</code>, or a hand-rolled graph-search. None currently wired.</span></li>
+      <li><span class="file-type missing">missing</span><a>attack-extraction pipeline</a><span class="file-desc">A pipeline that turns EN defeat edges into Dung attacks, taking account of the defeat type. Not yet designed.</span></li>
+      <li><span class="file-type missing">missing</span><a>ka_argumentation_render.js</a><span class="file-desc">Browser renderer; does not exist.</span></li>
+    </ul>
+  </div>
+
+  <div class="j-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Status and next steps</h2>
+    <p>This is a Track 4 candidate whose highest-value deliverable is an informed spec, not a working prototype; the spec itself is the learning outcome.</p>
+  </div>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySiblings) window.renderJourneySiblings('argumentation');
+  if (window.restoreCritique) window.restoreCritique('argumentation');
+});
+</script>
+</body>
+</html>

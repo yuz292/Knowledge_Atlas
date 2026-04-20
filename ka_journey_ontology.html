@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontology inspector — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="Ontology inspector: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="">
+<div id="ka-navbar-slot"></div>
+
+<main class="j-outer">
+
+  <div class="j-header">
+    <div class="eyebrow">Complicated journey surface · Layer G · Structural inspectors</div>
+    <h1>Ontology inspector</h1>
+    <div class="j-meta">
+      <span><b>Roles served</b> admin, researcher, 160_student</span>
+      <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
+      <span><b>Complexity tier</b> Medium — structural reflection</span>
+    </div>
+  </div>
+
+  <div class="j-siblings" id="j-siblings-slot"></div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <p>The ontology inspector renders the Atlas's controlled vocabulary as an interactive tree (or DAG): the hierarchies of architectural features, outcomes, mechanisms, theoretical frameworks, and measures. It is the page where a user asks "what concepts does this site recognise, and how are they organised?"</p>
+    <p>The inspector is unusual because its content is the site's own structure. It is a reflective view — metadata about the ontology, not about the corpus — and its value is proportional to how legible it makes the ontology's design decisions (which nodes are required, which are deprecated, which are disputed).</p>
+    <p>The prototype shows a tidy-tree visualisation of the four top-level branches, with nodes collapsible and a plain-text search. It does not yet show provenance (who added this node, when), deprecation status, or disputed-concept markers.</p>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
+    <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>Unlikely to be useful; the inspector should not be surfaced on the public navbar.</li>
+      <li><span class="role-label">COGS 160 student</span>Track 1 students use the inspector to anchor tagging; Track 2 students use it to check whether a paper they are about to add fills a new node.</li>
+      <li><span class="role-label">Researcher</span>To verify that a concept in their own work has a home in the Atlas's ontology.</li>
+      <li><span class="role-label">Practitioner</span>Of modest interest; practitioners want answers, not vocabulary trees. The inspector should offer a "for practitioners" off-ramp to mechanism or topic pages.</li>
+      <li><span class="role-label">Administrator</span>The primary user. Admins maintain the ontology and need to see drift (new papers that don't fit existing nodes), deprecation backlogs, and outstanding merge proposals.</li>
+    </ul>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
+    <ol>
+      <li><b>DAG, not a tree.</b> Some concepts have multiple parents. A naive tree widget shows a concept once and hides the duplication; the page must either show the multiple-parent structure honestly or compensate with a cross-link view.</li>
+      <li><b>Provenance.</b> Ontology nodes are decisions by specific people at specific times, with specific references. The page must surface that trail without drowning casual readers.</li>
+      <li><b>Deprecation.</b> Deprecated nodes still appear in old papers; the page must show the deprecation mapping without hiding the old node entirely.</li>
+      <li><b>Disputed concepts.</b> Some concepts are genuinely contested in the field. The page should label that rather than hiding the dispute.</li>
+      <li><b>Size.</b> The full ontology has several hundred nodes. Scrolling a tidy-tree at this size is unpleasant; the page needs search + collapse as primary affordances.</li>
+    </ol>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
+    <div class="j-naive">
+      <span class="j-naive-label">naive — the current implementation</span>
+      <div class="j-naive-body"><p>The prototype shows a collapsible tidy-tree with the four top branches (features, outcomes, mechanisms, theories) expandable on click, and a plain-text search that highlights matching nodes. Nodes are rendered as simple labels with child-count badges. There is no DAG rendering for multi-parent nodes, no provenance tooltip, no deprecation marker, and no dispute marker.</p></div>
+    </div>
+    <div class="j-naive-why"><b>Why this is inadequate.</b> The prototype is a respectable first attempt but hides the structural decisions that make an ontology a design artifact. An admin cannot see which nodes are recent additions or deprecated; a researcher cannot see which nodes are contested; a Track 1 student cannot see which nodes have multiple parents and therefore need more careful tagging judgement.</div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
+    <p>
+      For each user type below, write one to three sentences: what in the
+      naive solution works for that user, what fails, and what one thing a
+      redesign should change first. Your drafts save to your browser; copy
+      them into your T4.a or T4.f workspace when you are ready.
+    </p>
+    <div class="j-critique">
+      <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <button type="button" class="save-btn" onclick="saveCritique('ontology')">Save critiques (to browser only)</button>
+      <span class="j-status" id="j-crit-status">Saved.</span>
+    </div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
+    <ul class="file-list">
+      <li><span class="file-type data">data</span><a>data/ka_payloads/ontology.json</a><span class="file-desc">Full node + edge listing with <code>parent_ids</code>, provenance, deprecation map, and disputed-flag.</span></li>
+      <li><span class="file-type lib">lib</span><a>ka_ontology_render.js</a><span class="file-desc">Tidy-tree renderer; works for single-parent nodes, needs a DAG pass.</span></li>
+      <li><span class="file-type api">api</span><a>/api/ontology/node/{id}/history</a><span class="file-desc">Provenance-over-time for a given node.</span></li>
+      <li><span class="file-type missing">missing</span><a>disputed-concept registry</a><span class="file-desc">List of nodes flagged as contested, with the substance of the dispute. Not yet wired.</span></li>
+      <li><span class="file-type missing">missing</span><a>DAG renderer pass</a><span class="file-desc">Multi-parent nodes should be shown as such; currently rendered multiple times.</span></li>
+    </ul>
+  </div>
+
+  <div class="j-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Status and next steps</h2>
+    <p>The inspector is an admin tool first; public exposure is low-value and should probably be gated behind an admin-only or advanced-user flag.</p>
+  </div>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySiblings) window.renderJourneySiblings('ontology');
+  if (window.restoreCritique) window.restoreCritique('ontology');
+});
+</script>
+</body>
+</html>

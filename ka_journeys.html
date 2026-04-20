@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complicated journey surfaces — Knowledge Atlas</title>
+<meta name="description" content="Index of the harder pages of the Knowledge Atlas: epistemic network, Bayesian network, interpretation, argumentation, QA, mechanism, theory, gaps, fronts, inspectors.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+<style>
+  .j-hero {
+    background: linear-gradient(135deg, #4A3A8E, #6B53B8);
+    color: #fff; border-radius: 12px; padding: 30px 34px;
+    margin-bottom: 22px;
+  }
+  .j-hero h1 { font-family: Georgia, serif; font-size: 1.9rem;
+               color: #fff; margin-bottom: 12px; }
+  .j-hero p { color: #E2DAFA; max-width: 760px; }
+  .layer-grid {
+    display: grid; gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-bottom: 22px;
+  }
+  .layer-card {
+    background: #fff; border: 1px solid #E0D8CC; border-left: 4px solid #6B53B8;
+    border-radius: 8px; padding: 16px 20px;
+  }
+  .layer-card h3 {
+    font-family: Georgia, serif; font-size: 1.08rem;
+    color: #4A3A8E; margin-bottom: 8px;
+  }
+  .layer-card .layer-tag {
+    font-family: ui-monospace, Menlo, monospace;
+    color: #6B53B8; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px;
+  }
+  .layer-card ul { list-style: none; padding: 0; margin-top: 10px; }
+  .layer-card li { padding: 4px 0; }
+  .layer-card a {
+    color: #1C3D3A; text-decoration: none; font-weight: 600; font-size: 0.92rem;
+  }
+  .layer-card a:hover { color: #4A3A8E; text-decoration: underline; }
+  .layer-card .status {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 1px 8px; border-radius: 8px; margin-left: 6px;
+    text-transform: uppercase;
+  }
+  .status.naive { background: #FEF3E2; color: #9a5010; }
+  .status.prototype { background: #E8872A; color: #fff; }
+  .status.shipped { background: #D4EDDA; color: #1A7050; }
+  .status.absent { background: #F0F0F0; color: #6B6B6B; }
+</style>
+</head>
+<body data-ka-regime="global" data-ka-active="">
+<div id="ka-navbar-slot"></div>
+
+<main class="j-outer">
+
+  <div class="j-hero">
+    <div style="font-size:0.74rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9BEF2;margin-bottom:8px">Complicated surfaces index</div>
+    <h1>The harder pages of Knowledge Atlas</h1>
+    <p>
+      The Atlas has ordinary pages — a home, a topic browser, an article view —
+      that most visitors can navigate without guidance. It also has a second
+      class of pages that demand more of both the designer and the reader:
+      epistemic and Bayesian network viewers, an interpretation layer, an
+      argumentation layer, a question-answering surface, mechanism and theory
+      deep-dives, gap and evidence-landscape maps, research-front trackers, and
+      two structural inspectors. These pages exist because the underlying
+      representation demands them — you cannot adequately show a web of belief
+      in a simple list — but each one poses a design problem that ordinary
+      page patterns do not solve. This index lists them and their current
+      implementation status.
+    </p>
+    <p style="margin-top:10px">
+      Every linked page on this index follows the same scaffold: what it
+      displays, who needs it, why the design is hard, the current naive
+      solution, and a critique scaffold for each user type. If you are a
+      Track 4 student, these are candidate T4.a / T4.c targets; if you are a
+      researcher, they are where the site's interpretive claims live.
+    </p>
+  </div>
+
+  <div class="layer-grid">
+
+    <div class="layer-card">
+      <div class="layer-tag">Layer C · Network representations</div>
+      <h3>Belief &amp; causal networks</h3>
+      <p style="font-size:0.88rem;color:#6B6B6B">Graphs — nodes and edges. The first and most load-bearing design challenge on the site.</p>
+      <ul>
+        <li><a href="ka_journey_en.html">Epistemic Network (Web of Belief) viewer</a> <span class="status naive">naive</span></li>
+        <li><a href="ka_journey_bn.html">Bayesian Network viewer</a> <span class="status naive">naive</span></li>
+      </ul>
+    </div>
+
+    <div class="layer-card">
+      <div class="layer-tag">Layer D · Reading evidence</div>
+      <h3>Interpretation, argument, QA</h3>
+      <p style="font-size:0.88rem;color:#6B6B6B">How the Atlas talks <em>about</em> what it has indexed — the prose layer of the knowledge graph.</p>
+      <ul>
+        <li><a href="ka_journey_interpretation.html">Interpretation layer</a> <span class="status naive">naive</span></li>
+        <li><a href="ka_journey_argumentation.html">Argumentation layer</a> <span class="status absent">absent</span></li>
+        <li><a href="ka_journey_qa.html">Question-answering layer</a> <span class="status prototype">prototype</span></li>
+      </ul>
+    </div>
+
+    <div class="layer-card">
+      <div class="layer-tag">Layer E · Mechanisms &amp; theories</div>
+      <h3>Causal pathways and frameworks</h3>
+      <p style="font-size:0.88rem;color:#6B6B6B">Why a manipulation produces an effect — and the theoretical commitments behind that "why".</p>
+      <ul>
+        <li><a href="ka_journey_mechanism.html">Mechanism layer</a> <span class="status naive">naive</span></li>
+        <li><a href="ka_journey_theory.html">Theory deep-dive</a> <span class="status prototype">prototype</span></li>
+      </ul>
+    </div>
+
+    <div class="layer-card">
+      <div class="layer-tag">Layer F · Meta-fronts</div>
+      <h3>Where the evidence is dense &mdash; or absent</h3>
+      <p style="font-size:0.88rem;color:#6B6B6B">Views that answer "what does the field know, and where are the holes?"</p>
+      <ul>
+        <li><a href="ka_journey_gaps.html">Gaps in the evidence base</a> <span class="status naive">naive</span></li>
+        <li><a href="ka_journey_evidence.html">Evidence-landscape map</a> <span class="status prototype">prototype</span></li>
+        <li><a href="ka_journey_fronts.html">Research fronts</a> <span class="status absent">absent</span></li>
+      </ul>
+    </div>
+
+    <div class="layer-card">
+      <div class="layer-tag">Layer G · Structural inspectors</div>
+      <h3>What is in the database</h3>
+      <p style="font-size:0.88rem;color:#6B6B6B">Reflective views onto the ontology and the topic crosswalk themselves.</p>
+      <ul>
+        <li><a href="ka_journey_ontology.html">Ontology inspector</a> <span class="status prototype">prototype</span></li>
+        <li><a href="ka_journey_topic_inspector.html">Topic inspector</a> <span class="status naive">naive</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">ℹ︎</span>Reading the status labels<span class="h2-hint">what the badges mean</span></h2>
+    <p>
+      <b>naive</b> — the page exists but shows the simplest possible
+      implementation; it is a placeholder that serves its function badly. Good
+      T4 critique target.
+      <br>
+      <b>prototype</b> — a first serious attempt; the structure is right but
+      affordances are incomplete. Good redesign target for T4.f.
+      <br>
+      <b>shipped</b> — the page has been through at least one round of user
+      testing and is considered production-quality for its scope.
+      <br>
+      <b>absent</b> — the page does not yet exist; the link here is a spec
+      document, and no implementation has been attempted. These are the
+      highest-leverage Track 4 redesign targets because the critique step has
+      to imagine what the page should do before any design can be proposed.
+    </p>
+  </div>
+
+</main>
+</body>
+</html>

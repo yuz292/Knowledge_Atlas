@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bayesian Network viewer — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="Bayesian Network viewer: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="">
+<div id="ka-navbar-slot"></div>
+
+<main class="j-outer">
+
+  <div class="j-header">
+    <div class="eyebrow">Complicated journey surface · Layer C · Network representations</div>
+    <h1>Bayesian Network viewer</h1>
+    <div class="j-meta">
+      <span><b>Roles served</b> researcher, practitioner, 160_student</span>
+      <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
+      <span><b>Complexity tier</b> High — abstractness of probabilistic variables is the core problem</span>
+    </div>
+  </div>
+
+  <div class="j-siblings" id="j-siblings-slot"></div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <p>The Bayesian Network (BN) viewer shows a directed acyclic graph of causal variables drawn from the Atlas's mechanism layer: architectural features (e.g. <code>window-to-wall ratio</code>, <code>reverberation time</code>), intermediate cognitive/affective states (e.g. <code>attention restoration</code>, <code>cortisol level</code>), and outcomes (e.g. <code>self-reported stress</code>, <code>task accuracy</code>). Nodes carry conditional probability tables (CPTs) or, where the evidence is thin, qualitative influence labels.</p>
+    <p>The viewer lets a user ask three kinds of question: a <em>predictive</em> question (given a setting of architectural features, what is the probability distribution over outcomes?), an <em>interventional</em> question in Pearl's (2009) sense (if I set feature X to value v — do(X=v) — what happens to Y?), and a <em>counterfactual</em> question (had X been different, what would Y have been for this specific case?). The three types need different UI affordances and many viewers collapse them into one.</p>
+    <p>Probability values in the Atlas's BN are almost never tightly constrained by data; they are elicited from the corpus via meta-analysis plus expert elicitation. The viewer must therefore show uncertainty on every edge — credibility intervals, sample sizes, elicitation method — rather than quoting point values that invite false precision.</p>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
+    <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>A public visitor will not know what a conditional probability table is and should be routed either to the Question-Answering layer or to a simplified plain-language summary generated from the BN.</li>
+      <li><span class="role-label">COGS 160 student</span>Track 3 students use the BN to pick a causal chain to operationalise in VR; Track 4 students use it as a redesign target, because CPT tables are visually hostile and invite an obvious critique.</li>
+      <li><span class="role-label">Researcher</span>To test whether a proposed causal story is coherent with the corpus — a BN of your own theory overlaid on the Atlas's lets you see where your story adds edges the corpus does not support.</li>
+      <li><span class="role-label">Practitioner</span>Design-decision support. "If I increase window-to-wall ratio from 20% to 40%, what happens to reported stress?" The BN is the only representation that answers this in quantified form.</li>
+      <li><span class="role-label">Administrator</span>To audit for isolated subgraphs — variables with no parents and no children — which usually indicate an extraction error.</li>
+    </ul>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
+    <ol>
+      <li><b>Probability is abstract.</b> CPT tables are the representation experts expect and the representation novices flee. The viewer needs to present at least three levels of detail: a plain-language qualitative summary, an interactive probability slider, and the raw CPT for researchers.</li>
+      <li><b>Causal assumptions are hidden.</b> A BN <em>asserts</em> a causal direction on every edge. The viewer must make the assumption visible ("this arrow means the paper made a causal claim; 2 of 4 cited papers instead made a correlational claim") to avoid overselling.</li>
+      <li><b>Interventions vs. observations.</b> Pearl's do-calculus distinguishes conditioning from intervening, and the UI must too. A slider that sets a value needs to be clearly labelled as intervention (<code>do(X = v)</code>) not observation.</li>
+      <li><b>Uncertainty propagation.</b> Propagating uncertainty through a BN is computationally manageable but visually overwhelming. The viewer must show how much uncertainty is "in" an answer and avoid reporting a tight posterior when the priors were wide.</li>
+      <li><b>Inference cost.</b> Exact inference is #P-hard; even approximate inference on ≈ 200-node networks takes seconds in a browser. The viewer must queue, cache, and show progress.</li>
+    </ol>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
+    <div class="j-naive">
+      <span class="j-naive-label">naive — the current implementation</span>
+      <div class="j-naive-body"><p>The current page renders a static DAG produced by Graphviz, with node labels and edge arrows but no CPTs, no sliders, no query affordance, and no uncertainty display. Clicking a node opens a modal with the node's name and a raw JSON dump of its CPT.</p></div>
+    </div>
+    <div class="j-naive-why"><b>Why this is inadequate.</b> The page shows the BN but does not let the user <em>use</em> it. None of the three question types (predictive, interventional, counterfactual) is supported. The raw JSON CPT modal exposes machine-readable structure but not the semantic content a researcher or practitioner is trying to extract. A practitioner asking the core use-case question — "what happens to stress if I double the window area?" — has no way to ask it.</div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
+    <p>
+      For each user type below, write one to three sentences: what in the
+      naive solution works for that user, what fails, and what one thing a
+      redesign should change first. Your drafts save to your browser; copy
+      them into your T4.a or T4.f workspace when you are ready.
+    </p>
+    <div class="j-critique">
+      <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
+      </div>
+      <button type="button" class="save-btn" onclick="saveCritique('bn')">Save critiques (to browser only)</button>
+      <span class="j-status" id="j-crit-status">Saved.</span>
+    </div>
+  </div>
+
+  <div class="j-section">
+    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
+    <ul class="file-list">
+      <li><span class="file-type data">data</span><a>data/ka_payloads/bayesian_network.json</a><span class="file-desc">Node list with CPTs, edge list with causal direction and source-paper count, plus credibility-interval metadata.</span></li>
+      <li><span class="file-type api">api</span><a>/api/bn/query</a><span class="file-desc">Accepts a query of the form <code>{evidence: {X: v}, intervention: {Y: w}, target: Z}</code> and returns a posterior distribution over Z with credibility intervals.</span></li>
+      <li><span class="file-type lib">lib</span><a>BN_graphical/bn_inference.py</a><span class="file-desc">The Bayesian-network inference module from the sibling BN_graphical repo. Needs an HTTP adapter exposed to the Atlas.</span></li>
+      <li><span class="file-type data">data</span><a>data/ka_payloads/bn_uncertainty_meta.json</a><span class="file-desc">Per-edge uncertainty metadata: sample size, elicitation source, credibility bounds.</span></li>
+      <li><span class="file-type missing">missing</span><a>ka_bn_render.js</a><span class="file-desc">Browser-side renderer supporting semantic zoom, intervention sliders, and uncertainty bars. Not yet implemented.</span></li>
+    </ul>
+  </div>
+
+  <div class="j-section" style="background:#F9F5EE">
+    <h2><span class="h2-icon">→</span>Status and next steps</h2>
+    <p>Tight dependency on the sibling BN_graphical repo; the two repos share variables but not code. A working BN viewer requires a contract document pinning variable names and value domains, which does not yet exist.</p>
+  </div>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySiblings) window.renderJourneySiblings('bn');
+  if (window.restoreCritique) window.restoreCritique('bn');
+});
+</script>
+</body>
+</html>
