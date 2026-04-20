@@ -160,7 +160,7 @@ curl -X POST http://localhost:8765/api/articles/check-duplicate \
 # Login first
 TOKEN=$(curl -s -X POST http://localhost:8765/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"dkirsh@ucsd.edu","password":"atlas2026"}' | jq -r .access_token)
+  -d '{"email":"dkirsh@ucsd.edu","password":"<local-dev-password>"}' | jq -r .access_token)
 
 # List pending
 curl -H "Authorization: Bearer $TOKEN" http://localhost:8765/api/articles/pending-review

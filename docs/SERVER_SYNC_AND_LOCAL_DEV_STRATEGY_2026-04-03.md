@@ -75,7 +75,7 @@ bash scripts/start_local_server.sh
 | Health check | http://localhost:8765/health |
 
 **Auth credentials for testing**:
-- Instructor: dkirsh@ucsd.edu / atlas2026
+- Instructor: dkirsh@ucsd.edu / value of `KA_BOOTSTRAP_INSTRUCTOR_PASSWORD`
 - Students: register via ka_register.html, then approve via ka_approve.html
 
 **Important**: The server auto-reloads when you edit any file, so you can make changes and refresh the browser immediately.

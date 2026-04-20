@@ -19,7 +19,7 @@ The K-ATLAS site is running locally at `http://localhost:8765` and mirrors the p
 - **Production bug fixed**: ka_article_endpoints.py had an undefined variable (`task1_experimental`) in the my_claim endpoint that would have caused 500 errors for all students checking A0 progress
 
 **Local server startup**: `bash scripts/run_local_site.sh` (port 8765)
-**Test credentials**: dkirsh@ucsd.edu / atlas2026
+**Test credentials**: dkirsh@ucsd.edu / value of `KA_BOOTSTRAP_INSTRUCTOR_PASSWORD`
 **API docs**: http://localhost:8765/docs
 
 ### What has NOT been reviewed yet

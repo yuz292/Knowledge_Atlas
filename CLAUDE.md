@@ -20,8 +20,7 @@ from them that look current but are weeks or months stale.
 | Path | What it is | Frozen as of |
 |------|------------|--------------|
 | `160sp/ka_live_snapshot/` | Mirror of production VM | 2026-04-11 |
-| `160sp/ka_server_snapshot.txt` | Text dump of production VM | 2026-04-11 |
-| `160sp/ka_server_snapshot.sh` | Pull script (output itself is frozen) | n/a |
+| `160sp/ka_server_snapshot.sh` | Pull script (writes operator-local snapshot outside git) | n/a |
 | `archive/` (all subdirectories) | Pre-rename / pre-refactor working trees | varies |
 | `160sp/CODEX_PREDEPLOY_AUDIT_PROMPT_2026-04-13.md` | Audit contract snapshot | 2026-04-13 |
 | Any file matching `SESSION_TRANSFER_DOC_*.md` | Session handoff docs | each dated |
@@ -57,7 +56,7 @@ matches the excluded set above, the match is historical and not a bug:
 
 ### When to refresh snapshots
 
-Only refresh `ka_live_snapshot/` and `ka_server_snapshot.*` *after* a
+Only refresh `ka_live_snapshot/` and the operator-local `ka_server_snapshot.*` output *after* a
 production deploy. Each refresh should create a *new* dated directory
 (`ka_live_snapshot_2026-MM-DD/`) rather than overwriting the existing one, and
 `SNAPSHOT_NOTICE.md` inside the old directory should be updated to point at

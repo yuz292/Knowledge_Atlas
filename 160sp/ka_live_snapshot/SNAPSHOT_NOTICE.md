@@ -3,8 +3,8 @@
 **Status:** FROZEN HISTORICAL MIRROR. Do **not** treat as a source of truth for
 current site state, nav structure, file contracts, or link targets.
 
-**Captured:** on or before 2026-04-11 (see `../ka_server_snapshot.txt` for the
-exact dump timestamp).
+**Captured:** on or before 2026-04-11. The raw VM dump is now treated as an
+operator-local artefact and is not kept in git.
 
 ## Why this directory exists
 
@@ -31,7 +31,7 @@ limited to):
 
 When auditing current site state, restrict searches to the repo root and
 `160sp/` while excluding `ka_live_snapshot/`, `archive/`, and the
-`ka_server_snapshot.*` files. Example:
+operator-local `ka_server_snapshot.*` files. Example:
 
 ```sh
 rg --glob '!ka_live_snapshot/**' --glob '!archive/**' \

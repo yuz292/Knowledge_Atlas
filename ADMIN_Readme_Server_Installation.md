@@ -250,7 +250,7 @@ This first start will:
 The server seeds this instructor account:
 
 - email: `dkirsh@ucsd.edu`
-- password: `atlas2026`
+- password: value of `KA_BOOTSTRAP_INSTRUCTOR_PASSWORD`
 
 Change it immediately after first start.
 

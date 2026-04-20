@@ -14,7 +14,7 @@
 #
 # Instructor login:
 #   Email:    dkirsh@ucsd.edu
-#   Password: atlas2026
+#   Password: value of KA_BOOTSTRAP_INSTRUCTOR_PASSWORD
 #
 # The server auto-reloads when you edit files.
 # ============================================================

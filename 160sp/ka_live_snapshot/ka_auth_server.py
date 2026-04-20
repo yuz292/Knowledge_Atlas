@@ -397,7 +397,7 @@ def init_db():
     if not instr:
         uid = "instructor_kirsh"
         email = "dkirsh@ucsd.edu"
-        ph = pwd_context.hash("atlas2026")
+        ph = pwd_context.hash("change-me-local-only")
         now = datetime.now(timezone.utc).isoformat()
         db.execute("""INSERT OR IGNORE INTO users
             (user_id,email,first_name,last_name,role,password_hash,status,created_at,approved_at)

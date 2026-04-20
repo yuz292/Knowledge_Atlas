@@ -432,14 +432,15 @@ def init_db():
     if not instr:
         uid = "instructor_kirsh"
         email = "dkirsh@ucsd.edu"
-        ph = pwd_context.hash("atlas2026")
+        bootstrap_password = os.getenv("KA_BOOTSTRAP_INSTRUCTOR_PASSWORD", "change-me-local-only")
+        ph = pwd_context.hash(bootstrap_password)
         now = datetime.now(timezone.utc).isoformat()
         db.execute("""INSERT OR IGNORE INTO users
             (user_id,email,first_name,last_name,role,password_hash,status,created_at,approved_at)
             VALUES (?,?,?,?,?,?,?,?,?)""",
             (uid, email, "David", "Kirsh", "instructor", ph, "approved", now, now))
         print("[KA-AUTH] Seeded instructor account")
-        print("[KA-AUTH] Change the instructor password immediately via POST /auth/change-password")
+        print("[KA-AUTH] Set KA_BOOTSTRAP_INSTRUCTOR_PASSWORD before first run, or change the instructor password immediately via POST /auth/change-password")
 
     db.commit()
     db.close()
