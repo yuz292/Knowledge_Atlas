@@ -852,8 +852,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -886,8 +886,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -1347,8 +1347,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -1411,8 +1411,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -2217,8 +2217,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -2687,8 +2687,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -3241,8 +3241,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -4059,8 +4059,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -4207,8 +4207,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -4512,8 +4512,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -5776,8 +5776,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -5849,8 +5849,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -5991,8 +5991,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -6025,8 +6025,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -6673,8 +6673,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -9099,8 +9099,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -9189,8 +9189,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -11453,8 +11453,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -13953,8 +13953,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -14096,8 +14096,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -14269,8 +14269,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -14514,8 +14514,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -14759,8 +14759,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -14831,8 +14831,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -14935,8 +14935,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -15896,8 +15896,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -15962,8 +15962,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -16136,8 +16136,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -16212,8 +16212,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -16285,8 +16285,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -16359,8 +16359,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -16699,8 +16699,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -18609,8 +18609,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -18645,8 +18645,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -18679,8 +18679,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -18714,8 +18714,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -18749,8 +18749,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -18969,8 +18969,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -19156,8 +19156,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -19527,8 +19527,8 @@
     "hide_reason": "",
     "confidence": 0.6,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "theory_fallback",
     "iv_roots": [
@@ -19671,8 +19671,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -19747,8 +19747,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [
@@ -20038,8 +20038,8 @@
     "hide_reason": "",
     "confidence": 0.5,
     "evidence_basis": [
-      "theory_fallback",
-      "claim_derived"
+      "claim_derived",
+      "theory_fallback"
     ],
     "assignment_method": "claim_derived",
     "iv_roots": [

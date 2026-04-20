@@ -110,7 +110,7 @@
       "claim_count": 1,
       "primary_front": "",
       "primary_topic": "Empirical Research",
-      "sensor_summary": "",
+      "sensor_summary": "fMRI",
       "theories": [],
       "missing_iv": true,
       "missing_dv": true,
@@ -276,7 +276,7 @@
       "claim_count": 1,
       "primary_front": "",
       "primary_topic": "Empirical Research",
-      "sensor_summary": "",
+      "sensor_summary": "EEG",
       "theories": [],
       "missing_iv": true,
       "missing_dv": true,
@@ -289,7 +289,7 @@
       "claim_count": 1,
       "primary_front": "",
       "primary_topic": "Cognitive Architecture",
-      "sensor_summary": "",
+      "sensor_summary": "heart rate, skin conductance",
       "theories": [
         "Cognitive Architecture"
       ],
@@ -421,7 +421,7 @@
     },
     {
       "paper_id": "PDF-0262",
-      "title": "A parametric method to model 3D displacements around faults with volumetric vector fields \\\\ Gautier Laurent, G. Caumon, A. Bouziat, M. Jessell",
+      "title": "A parametric method to model 3D displacements around faults with volumetric vector fields",
       "year": null,
       "claim_count": 1,
       "primary_front": "",
@@ -434,7 +434,7 @@
     },
     {
       "paper_id": "PDF-0268",
-      "title": "The St\u00e4ckel systems and algebraic curves.",
+      "title": "The St\u00e4ckel systems and algebraic curves",
       "year": null,
       "claim_count": 1,
       "primary_front": "",
@@ -484,7 +484,7 @@
       "claim_count": 1,
       "primary_front": "",
       "primary_topic": "placemaking",
-      "sensor_summary": "",
+      "sensor_summary": "EEG",
       "theories": [
         "placemaking",
         "multi-sensory design"
