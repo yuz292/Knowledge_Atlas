@@ -453,6 +453,30 @@
     });
   }
 
+  function retireLegacyTopNavs(regime) {
+    const markers = regime === '160sp'
+      ? ['160 Syllabus', 'COGS 160', '160 Student Profile', 'Track 1', 'Track 2', 'Track 3', 'Track 4']
+      : ['Articles', 'Topics', 'Theories', 'Mechanisms', 'Neural Underpinnings', 'Contribute', 'About'];
+
+    document.querySelectorAll('body > nav').forEach(nav => {
+      if (nav.querySelector('.ka-nav')) return;
+      if (nav.dataset.kaNavReplaced === 'true') return;
+      if (nav.dataset.kaKeepLegacyNav === 'true') return;
+
+      const text = (nav.textContent || '').replace(/\s+/g, ' ').trim();
+      const looksLikeLegacy =
+        markers.some(marker => text.includes(marker)) ||
+        nav.classList.contains('topnav') ||
+        nav.querySelector('.nav-brand, .nav-link, .wordmark, .ka-wordmark');
+
+      if (!looksLikeLegacy) return;
+
+      nav.style.display = 'none';
+      nav.setAttribute('aria-hidden', 'true');
+      nav.dataset.kaNavReplaced = 'true';
+    });
+  }
+
   /* ─── Mount ──────────────────────────────────────────────── */
 
   function ensureSlot(id, where) {
@@ -481,6 +505,7 @@
     navSlot.innerHTML   = buildNavbar(regime, session, activeId);
     crumbSlot.innerHTML = buildBreadcrumb();
 
+    retireLegacyTopNavs(regime);
     wireTriggers();
   }
 
