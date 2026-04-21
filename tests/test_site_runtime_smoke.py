@@ -29,6 +29,16 @@ def _fake_request(self, path, *, method="GET", json_body=None, headers=None):
         return smoke.ResponseData("http://test/160sp/ka_admin.html", 200, "This console lets you run the class roster Sign in with your UCSD instructor account")
     if path == "160sp/ka_track2_hub.html":
         return smoke.ResponseData("http://test/160sp/ka_track2_hub.html", 200, "Article Finder Unified pipeline reference")
+    if path == "ka_canonical_navbar.js":
+        return smoke.ResponseData("http://test/ka_canonical_navbar.js", 200, "KA.nav buildNavbar retireLegacyTopNavs")
+    if path == "ka_user_type.js":
+        return smoke.ResponseData("http://test/ka_user_type.js", 200, "KA.userType mountBanner applyElementGates")
+    if path == "ka_atlas_shell.css":
+        return smoke.ResponseData("http://test/ka_atlas_shell.css", 200, ".ka-topnav .ka-shell .ka-journey-nav")
+    if path == "ka_journey_page.css":
+        return smoke.ResponseData("http://test/ka_journey_page.css", 200, ".j-siblings .j-section .j-section-naive")
+    if path == "favicon.ico":
+        return smoke.ResponseData("http://test/favicon.ico", 200, "ICON")
     if path == "data/ka_payloads/topic_crosswalk.json":
         return smoke.ResponseData(
             "http://test/data/ka_payloads/topic_crosswalk.json",

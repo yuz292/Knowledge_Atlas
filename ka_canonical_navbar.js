@@ -235,6 +235,26 @@
     document.head.appendChild(tag);
   }
 
+  function ensureFavicon() {
+    if (!document.head) return;
+    if (document.querySelector('link[rel="icon"], link[rel="shortcut icon"]')) return;
+
+    const base = currentlyIn160sp() ? '../' : '';
+
+    const svg = document.createElement('link');
+    svg.rel = 'icon';
+    svg.type = 'image/svg+xml';
+    svg.href = base + 'favicon.svg';
+    svg.setAttribute('data-ka-managed', 'true');
+    document.head.appendChild(svg);
+
+    const ico = document.createElement('link');
+    ico.rel = 'shortcut icon';
+    ico.href = base + 'favicon.ico';
+    ico.setAttribute('data-ka-managed', 'true');
+    document.head.appendChild(ico);
+  }
+
   /* ─── HTML builders ──────────────────────────────────────── */
 
   function buildBrand(regime) {
@@ -491,6 +511,7 @@
 
   function mount() {
     injectStyles();
+    ensureFavicon();
     const regime = detectRegime();
     const session = detectSession();
     const activeId = (document.body && document.body.getAttribute('data-ka-active')) || '';

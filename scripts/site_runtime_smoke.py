@@ -352,6 +352,41 @@ def check_page_contains(
     return _result(name, category, PASS, "HTTP 200; expected markers present", response=response)
 
 
+def check_asset_contains(
+    client: HttpClient,
+    name: str,
+    path: str,
+    markers: Iterable[str],
+    *,
+    category: str = "public",
+) -> CheckResult:
+    response = client.request(path)
+    if response.code != 200:
+        detail = f"HTTP {response.code or 'ERR'}; {response.error or 'asset did not load'}"
+        return _result(name, category, FAIL, detail, response=response)
+
+    missing = _missing_markers(response.body, markers)
+    if missing:
+        detail = f"HTTP 200; missing asset markers: {', '.join(missing)}"
+        return _result(name, category, FAIL, detail, response=response)
+
+    return _result(name, category, PASS, "HTTP 200; expected asset markers present", response=response)
+
+
+def check_asset_ok(
+    client: HttpClient,
+    name: str,
+    path: str,
+    *,
+    category: str = "public",
+) -> CheckResult:
+    response = client.request(path)
+    if response.code != 200:
+        detail = f"HTTP {response.code or 'ERR'}; {response.error or 'asset did not load'}"
+        return _result(name, category, FAIL, detail, response=response)
+    return _result(name, category, PASS, "HTTP 200; asset is reachable", response=response)
+
+
 def check_json_payload(
     client: HttpClient,
     name: str,
@@ -530,6 +565,16 @@ def run_suite(config: SmokeConfig) -> SmokeReport:
     ]
     for name, path, markers in page_checks:
         results.append(check_page_contains(site_client, name, path, markers))
+
+    asset_checks = [
+        ("Canonical navbar asset", "ka_canonical_navbar.js", ["KA.nav", "buildNavbar", "retireLegacyTopNavs"]),
+        ("User-type asset", "ka_user_type.js", ["KA.userType", "mountBanner", "applyElementGates"]),
+        ("Atlas shell CSS asset", "ka_atlas_shell.css", [".ka-topnav", ".ka-shell", ".ka-journey-nav"]),
+        ("Journey page CSS asset", "ka_journey_page.css", [".j-siblings", ".j-section", ".j-section-naive"]),
+    ]
+    for name, path, markers in asset_checks:
+        results.append(check_asset_contains(site_client, name, path, markers))
+    results.append(check_asset_ok(site_client, "Favicon asset", "favicon.ico"))
 
     results.append(
         check_json_payload(
