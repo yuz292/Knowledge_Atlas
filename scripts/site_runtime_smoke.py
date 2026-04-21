@@ -39,6 +39,7 @@ class SmokeConfig:
     profile: str
     site_base_url: str
     api_base_url: str
+    auth_health_path: str = "health"
     reset_email: str = ""
     student_email: str = ""
     student_password: str = ""
@@ -114,6 +115,8 @@ class HttpClient:
         )
 
     def build_url(self, path: str) -> str:
+        if path.startswith(("http://", "https://")):
+            return path
         path = path.lstrip("/")
         return urllib.parse.urljoin(self.base_url + "/", path)
 
@@ -188,6 +191,11 @@ def _profile_defaults(profile: str) -> dict[str, str]:
                 "KA_SMOKE_STAGING_RESET_EMAIL",
                 fallback="dkirsh@ucsd.edu",
             ),
+            "auth_health_path": _env_default(
+                "KA_SMOKE_AUTH_HEALTH_PATH",
+                "KA_SMOKE_STAGING_AUTH_HEALTH_PATH",
+                fallback="health",
+            ),
             "student_email": _env_default(
                 "KA_SMOKE_STAGING_STUDENT_EMAIL",
                 fallback="jpark@ucsd.edu",
@@ -229,6 +237,11 @@ def _profile_defaults(profile: str) -> dict[str, str]:
                 "KA_SMOKE_PRODUCTION_RESET_EMAIL",
                 fallback="dkirsh@ucsd.edu",
             ),
+            "auth_health_path": _env_default(
+                "KA_SMOKE_AUTH_HEALTH_PATH",
+                "KA_SMOKE_PRODUCTION_AUTH_HEALTH_PATH",
+                fallback="http://127.0.0.1:8765/health",
+            ),
             "student_email": _env_default("KA_SMOKE_PRODUCTION_STUDENT_EMAIL"),
             "student_password": _env_default("KA_SMOKE_PRODUCTION_STUDENT_PASSWORD"),
             "admin_token": _env_default(
@@ -245,6 +258,7 @@ def _profile_defaults(profile: str) -> dict[str, str]:
         "site_base_url": _env_default("KA_SMOKE_BASE_URL", "KA_SMOKE_SITE_BASE_URL"),
         "api_base_url": _env_default("KA_SMOKE_API_BASE_URL"),
         "reset_email": _env_default("KA_SMOKE_RESET_EMAIL"),
+        "auth_health_path": _env_default("KA_SMOKE_AUTH_HEALTH_PATH", fallback="health"),
         "student_email": _env_default("KA_SMOKE_STUDENT_EMAIL"),
         "student_password": _env_default("KA_SMOKE_STUDENT_PASSWORD"),
         "admin_token": _env_default("KA_SMOKE_ADMIN_TOKEN"),
@@ -268,6 +282,9 @@ def build_config(args: argparse.Namespace) -> SmokeConfig:
         site_base_url=site_base_url,
         api_base_url=api_base_url,
         reset_email=args.reset_email if args.reset_email is not None else defaults["reset_email"],
+        auth_health_path=(
+            args.auth_health_path if args.auth_health_path is not None else defaults["auth_health_path"]
+        ),
         student_email=args.student_email if args.student_email is not None else defaults["student_email"],
         student_password=args.student_password if args.student_password is not None else defaults["student_password"],
         admin_token=args.admin_token if args.admin_token is not None else defaults["admin_token"],
@@ -453,7 +470,7 @@ def run_site_validator(repo_root: str) -> CheckResult:
         )
 
     completed = subprocess.run(
-        [sys.executable, str(validator), "--root", repo_root, "--json"],
+        [sys.executable, str(validator), "--root", repo_root, "--json", "--skip", ".venv"],
         capture_output=True,
         text=True,
     )
@@ -534,7 +551,7 @@ def run_suite(config: SmokeConfig) -> SmokeReport:
         check_json_field(
             api_client,
             "Auth health endpoint",
-            "health",
+            config.auth_health_path,
             predicate=lambda payload: payload.get("ok") is True or payload.get("status") == "ok",
             success_detail="HTTP 200; health payload reported a healthy status",
             failure_detail="HTTP 200; health payload did not report a healthy status",
@@ -726,6 +743,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--student-email")
     parser.add_argument("--student-password")
     parser.add_argument("--admin-token")
+    parser.add_argument("--auth-health-path")
     parser.add_argument("--expected-track")
     parser.add_argument("--expected-question-id")
     parser.add_argument("--sample-article-id", default="PDF-0007")
