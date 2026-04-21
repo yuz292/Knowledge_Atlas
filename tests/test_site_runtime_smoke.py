@@ -162,6 +162,7 @@ def test_run_suite_skips_checks_without_credentials(monkeypatch):
 
 def test_auth_health_requires_article_module():
     assert smoke._auth_health_ok({"ok": True, "modules": ["auth", "articles"], "article_module_loaded": True}) is True
+    assert smoke._auth_health_ok({"ok": True}) is False
     assert smoke._auth_health_ok({"ok": True, "modules": ["auth"]}) is False
     assert smoke._auth_health_ok({"ok": True, "modules": ["auth", "articles"], "article_module_loaded": False}) is False
 

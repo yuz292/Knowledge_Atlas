@@ -177,9 +177,11 @@ def _auth_health_ok(payload: dict[str, Any]) -> bool:
     modules = payload.get("modules")
     if not healthy:
         return False
-    if isinstance(modules, list) and "articles" not in modules:
+    if not isinstance(modules, list):
         return False
-    if "article_module_loaded" in payload and payload.get("article_module_loaded") is not True:
+    if "auth" not in modules or "articles" not in modules:
+        return False
+    if payload.get("article_module_loaded") is not True:
         return False
     return True
 
