@@ -22,3 +22,6 @@ data/storage/
 logs/
 ka_server.pid
 .venv/
+docs/runtime_smoke_reports/*.md
+docs/runtime_smoke_reports/*.json
+!docs/runtime_smoke_reports/.gitkeep
