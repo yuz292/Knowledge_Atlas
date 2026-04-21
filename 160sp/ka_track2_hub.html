@@ -173,19 +173,19 @@ python3 cli/main.py stats</pre>
             <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.a</div>
               <div style="color:#1C3D3A;font-weight:600">Citation-harvest automation</div>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 3&ndash;4 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Medium</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 3&ndash;4 &middot; 10 pts &middot; Medium</div>
               <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Pull candidate references from every corpus paper, deduplicate them, resolve DOIs, and write the result to a harvest queue. <b>Acceptance</b>: the pipeline runs end-to-end on a known corpus subset and emits a schema-valid <code>reference_candidates.json</code>.</div>
             </li>
             <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.b</div>
               <div style="color:#1C3D3A;font-weight:600">Abstract screening &amp; accept/reject</div>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 4 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Medium</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 4 &middot; 10 pts &middot; Medium</div>
               <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Run the relevance classifier and a topic-coverage check on every candidate that has an abstract, then label each one <em>accept</em>, <em>reject</em>, or <em>ambiguous</em>. <b>Acceptance</b>: classifier precision reaches the threshold DK sets on a held-out labelled set, and the ambiguous queue is reviewable from the admin console.</div>
             </li>
             <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.c</div>
               <div style="color:#1C3D3A;font-weight:600">PDF acquisition on accepted articles</div>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 5 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Medium</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 5 &middot; 10 pts &middot; Medium</div>
               <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Retrieve the full-text PDF for every accepted article (from publishers, Unpaywall, or legal open-access mirrors), move it to <code>data/pnu_articles/</code>, and log which retrievals succeeded and why the failures failed. <b>Acceptance</b>: PDF yield reaches 70&#8239;% or better on an accepted batch.</div>
             </li>
           </ul>
@@ -195,19 +195,19 @@ python3 cli/main.py stats</pre>
             <li style="background:#FEF3E2;border:2px solid #E8872A;border-radius:6px;padding:12px 16px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.d &middot; AF-1</div>
               <a href="../ka_journey_af_references.html" style="color:#1C3D3A;font-weight:700;text-decoration:none">Reference-harvest candidate generator (full spec)</a>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 6&ndash;7 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Hard &middot; <b style="color:#9a5010">Major</b></div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 6&ndash;7 &middot; 13 pts &middot; Hard &middot; <b style="color:#9a5010">Major</b></div>
               <div style="font-size:.85rem;color:#3A2A10;margin-top:6px">Promote the T2.a harvester into a full candidate-generation surface with four upgrades: deduplication across citation styles, value-of-information ranking, per-topic depth scoring, and an admin approval queue. <b>Acceptance</b>: admins can accept or reject each candidate in one click, and the rejection reasons feed back into the ranker.</div>
             </li>
             <li style="background:#FEF3E2;border:2px solid #E8872A;border-radius:6px;padding:12px 16px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.e &middot; AF-2</div>
               <a href="../ka_journey_af_roi.html" style="color:#1C3D3A;font-weight:700;text-decoration:none">ROI-based candidate generator (full spec)</a>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 7 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Hard &middot; <b style="color:#9a5010">Major</b></div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 7 &middot; 13 pts &middot; Hard &middot; <b style="color:#9a5010">Major</b></div>
               <div style="font-size:.85rem;color:#3A2A10;margin-top:6px">Build four research-opportunity finders, one per type: gap-fill, dispute-resolve, theory-test, and mechanism-ground. Each runs a different targeted search over Crossref, OpenAlex, and Semantic Scholar. <b>Acceptance</b>: tier-1 ROIs render with EN or argumentation justification attached, and the retrieved candidates pass a tighter relevance check than the generic topic classifier.</div>
             </li>
             <li style="background:#FEF3E2;border:2px solid #E8872A;border-radius:6px;padding:12px 16px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.f &middot; AF-3</div>
               <a href="../ka_journey_af_neuro.html" style="color:#1C3D3A;font-weight:700;text-decoration:none">Plausible Neural Underpinnings &mdash; deepening the PNU layer (full spec)</a>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 8 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Very hard &middot; <b style="color:#9a5010">Major</b></div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 8 &middot; 13 pts &middot; Very hard &middot; <b style="color:#9a5010">Major</b></div>
               <div style="font-size:.85rem;color:#3A2A10;margin-top:6px">Deepen the Plausible Neural Underpinnings layer into canonicalised pathways, then annotate each pathway link with the type of evidence that supports it (direct measurement, indirect inference, or theoretical analogy). A sub-sequence matcher searches PubMed, bioRxiv, and the Allen Brain Atlas for papers that ground the links empirically. <b>Acceptance</b>: at least one pathway per Tier-1 claim family is fully grounded.</div>
             </li>
           </ul>
@@ -217,18 +217,20 @@ python3 cli/main.py stats</pre>
             <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
               <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.g</div>
               <div style="color:#1C3D3A;font-weight:600">Track 2 final report</div>
-              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 9 &middot; <span style="color:#9a5010">[pts&mdash;DK to set]</span> &middot; Easy&ndash;Medium</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 9 &middot; 6 pts &middot; Easy&ndash;Medium</div>
               <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Narrative write-up of which of T2.a&ndash;T2.f each student contributed to, with functional verification evidence, lessons, and handoff notes to the next cohort.</div>
             </li>
           </ul>
 
           <p style="margin-top:14px;font-size:.82rem;color:#6B6B6B;font-style:italic">
-            Point allocations are placeholders until DK sets the Track 2 point
-            totals. Track 4&apos;s project block is worth 75 points under the
-            class 5/5/75/15 split; Track 2&apos;s total will match unless the
-            split changes. The AF-001&ndash;AF-004 weekly manifests in Region 4
-            remain as scaffolding tasks inside T2.a / T2.b (seed searches feed
-            the harvester; scope notes feed the classifier training set).
+            Point allocation: 10 / 10 / 10 for the automation stages (T2.a,
+            T2.b, T2.c), 13 / 13 / 13 for the three majors (T2.d, T2.e, T2.f),
+            and 6 for the integration report (T2.g) &mdash; 75 points in
+            total, matching Track 4&apos;s allocation under the class
+            5 / 5 / 75 / 15 split. The AF-001&ndash;AF-004 weekly manifests
+            in Region 4 remain as scaffolding tasks inside T2.a and T2.b:
+            seed searches feed the harvester, and scope notes feed the
+            classifier training set.
           </p>
         </div>
       </section>
