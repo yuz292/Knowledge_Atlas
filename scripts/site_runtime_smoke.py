@@ -557,7 +557,7 @@ def run_suite(config: SmokeConfig) -> SmokeReport:
         ("User home shell", "ka_user_home.html", ["GUI track workbench", "Theory Explorer"]),
         ("Topic facet shell", "ka_topic_facet_view.html", ["Topic Page (Facet View)", "topic_crosswalk.json"]),
         ("Article page shell", f"ka_article_view.html?id={config.sample_article_id}", ["Loading article record", "article_details.json"]),
-        ("Journeys index shell", "ka_journeys.html", ["The harder pages of Knowledge Atlas", "Article Finder problems"]),
+        ("Journeys index shell", "ka_journeys.html", ["The harder pages of Knowledge Atlas", "Article Finder"]),
         ("Theory explorer shell", "ka_home_theory.html", ["Theory Explorer", "Knowledge Atlas"]),
         ("Mechanism journey shell", "ka_journey_mechanism.html", ["Mechanism layer", "data/ka_payloads/mechanisms.json"]),
         ("Admin page shell", "160sp/ka_admin.html", ["This console lets you run the class roster", "Sign in with your UCSD instructor account"]),
