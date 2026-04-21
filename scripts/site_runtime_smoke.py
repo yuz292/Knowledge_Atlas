@@ -469,8 +469,9 @@ def run_site_validator(repo_root: str) -> CheckResult:
             f"Validator not found at {validator}",
         )
 
+    validator_skip = ["archive", "__pycache__", "node_modules", ".git", "ka_live_snapshot", ".venv"]
     completed = subprocess.run(
-        [sys.executable, str(validator), "--root", repo_root, "--json", "--skip", ".venv"],
+        [sys.executable, str(validator), "--root", repo_root, "--json", "--skip", *validator_skip],
         capture_output=True,
         text=True,
     )
