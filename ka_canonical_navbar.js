@@ -69,11 +69,48 @@
 
   const KA = (window.KA = window.KA || {});
   const SS = window.sessionStorage;
+  const LS = window.localStorage;
   function g(k) { try { return SS.getItem(k); } catch (e) { return null; } }
   function s(k, v) { try { SS.setItem(k, v); } catch (e) {} }
+  function lg(k) { try { return LS.getItem(k); } catch (e) { return null; } }
   function esc(x) {
     return String(x == null ? '' : x).replace(/[&<>"']/g, c =>
       ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]);
+  }
+
+  function readCurrentUser() {
+    try {
+      const raw = lg('ka_current_user');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function hasAccessToken() {
+    return !!lg('ka_access_token');
+  }
+
+  function syncCompatSessionFromLocalAuth() {
+    const user = readCurrentUser();
+    const hasToken = hasAccessToken();
+    if (!hasToken || !user || !user.email) return user;
+
+    const role = String(user.role || '').toLowerCase();
+    if (role === 'instructor' || role === 'admin') {
+      s('ka.admin', 'yes');
+      s('ka.adminEmail', user.email);
+      s('ka.adminRole', role);
+      if (!g('ka.userType')) s('ka.userType', 'instructor');
+      try { SS.removeItem('ka.160.authed'); SS.removeItem('ka.studentEmail'); } catch (e) {}
+      return user;
+    }
+
+    s('ka.160.authed', 'yes');
+    s('ka.studentEmail', user.email);
+    if (!g('ka.userType') || g('ka.userType') === 'visitor') s('ka.userType', '160-student');
+    try { SS.removeItem('ka.admin'); SS.removeItem('ka.adminEmail'); SS.removeItem('ka.adminRole'); } catch (e) {}
+    return user;
   }
 
   /* ─── State detection ────────────────────────────────────── */
@@ -85,20 +122,24 @@
   }
 
   function detectSession() {
+    const localUser = syncCompatSessionFromLocalAuth() || readCurrentUser();
+    const hasToken = hasAccessToken();
     const isAdmin = g('ka.admin') === 'yes';
     const studentAuthed = g('ka.160.authed') === 'yes';
     const impersonating = g('ka.impersonating') === 'true';
     const userType = g('ka.userType') || 'visitor';
-    const email = g('ka.adminEmail') || g('ka.studentEmail') || null;
+    const email = g('ka.adminEmail') || g('ka.studentEmail') || (localUser && localUser.email) || null;
 
     // Authority rules, in order:
     //  1. An admin is always "admin", regardless of impersonation
     //     (the banner elsewhere communicates the impersonation)
     //  2. A signed-in 160 Student is "student"
-    //  3. Anyone else is "anonymous" — browsing in a presentation mode
+    //  3. Any other signed-in account is "authenticated"
+    //  4. Anyone else is "anonymous" — browsing in a presentation mode
     let authState;
     if (isAdmin) authState = 'admin';
     else if (studentAuthed) authState = 'student';
+    else if (hasToken && localUser) authState = 'authenticated';
     else authState = 'anonymous';
 
     return { isAdmin, studentAuthed, impersonating, userType, email, authState };
@@ -443,6 +484,9 @@
       ['ka.admin','ka.adminEmail','ka.adminRole','ka.userType',
        'ka.impersonating','ka.160.authed','ka.studentEmail'].forEach(k => {
         try { SS.removeItem(k); } catch (e) {}
+      });
+      ['ka_access_token','ka_current_user','ka_logged_in'].forEach(k => {
+        try { LS.removeItem(k); } catch (e) {}
       });
       location.reload();
     } else if (action === 'navigate') {
