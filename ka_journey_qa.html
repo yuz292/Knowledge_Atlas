@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer D · Reading evidence</div>
-    <h1>Question-answering layer</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> public_visitor, practitioner, researcher</span>
-      <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
-      <span><b>Complexity tier</b> Medium-high — hallucination vs. grounding is the central risk</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer D · Reading evidence</div>
+      <h1>Question-answering layer</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> public_visitor, practitioner, researcher</span>
+        <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
+        <span><b>Complexity tier</b> Medium-high — hallucination vs. grounding is the central risk</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
     <p>The question-answering (QA) layer accepts a natural-language question ("does exposure to daylight improve task performance?") and returns an answer that is grounded in the corpus: a short prose answer, a confidence band, a list of the warrants cited, and a disclosure of what the system would not answer (because the corpus is silent or inconsistent).</p>
     <p>The QA surface is the one most vulnerable to LLM hallucination. The design problem is therefore not just "return a helpful answer" but "refuse to answer when the corpus does not support one, and never cite a warrant the retrieval step did not actually return." Grounding is the load-bearing requirement.</p>
     <p>The prototype supports single-turn questions and does not yet handle follow-ups or comparative questions; it also does not route a question to the right Atlas surface (interpretation, EN, BN) — every question currently hits the same retrieval-plus-generation pipeline.</p>
-  </div>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>This is where the public visitor most often lands. The question-answering surface is the front door for anyone with a specific question rather than an exploration appetite.</li>
       <li><span class="role-label">COGS 160 student</span>Track 2 students audit QA answers against their reading of the cited warrants; discrepancies are a learning payload. Track 4 students redesign the disclosure of uncertainty.</li>
       <li><span class="role-label">Researcher</span>Cautiously — researchers use QA to check whether the Atlas thinks a claim is supported, then they verify by clicking through to the EN and warrants directly.</li>
       <li><span class="role-label">Practitioner</span>To get a design-memo-ready paragraph on demand, backed by citations they can follow.</li>
       <li><span class="role-label">Administrator</span>To monitor for hallucination: answers that cite warrants not in the retrieval set are a correctness bug.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Refusing to answer.</b> The most important design affordance is a clean "the corpus does not support an answer to this" path. Most QA interfaces have a weak version of this; the Atlas needs a strong one because the cost of a confident wrong answer is higher here than in general-purpose QA.</li>
       <li><b>Citation fidelity.</b> Every sentence in the answer should be anchored to at least one retrieved warrant. The UI must surface the anchor, and the backend must enforce it.</li>
       <li><b>Question routing.</b> Some questions are best answered from the interpretation layer, some from the BN, some from the topic page. A single QA endpoint that routes internally is appealing; a visible router is more honest.</li>
       <li><b>Follow-ups.</b> Users ask follow-up questions ("okay, what about older adults specifically?"). The prototype does not carry context forward.</li>
       <li><b>Disagreement.</b> Corpus disagreement must produce an answer like "there are two positions, here is the evidence for each" — not a centroid.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The prototype accepts a text box, POSTs to a retrieval endpoint that returns the top five warrants by embedding similarity, and feeds those plus the question into an LLM. It returns the LLM's output with a list of the five warrant titles below. Confidence is not reported; refusal is not attempted; follow-ups are not supported.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> The prototype has the right bones — retrieval-augmented generation with cited warrants — but the two most important affordances (refusal and confidence) are missing. A user who asks a question outside the corpus's coverage currently gets an answer anyway; a user who asks about a well-studied area gets the same confident tone as a user who asks about an under-studied one. The grounding contract is not enforced at the UI layer: there is nothing stopping the LLM from citing a warrant in the wrong spot, and nothing showing the user that the citation is real.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>The prototype accepts a text box, POSTs to a retrieval endpoint that returns the top five warrants by embedding similarity, and feeds those plus the question into an LLM. It returns the LLM's output with a list of the five warrant titles below. Confidence is not reported; refusal is not attempted; follow-ups are not supported.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> The prototype has the right bones — retrieval-augmented generation with cited warrants — but the two most important affordances (refusal and confidence) are missing. A user who asks a question outside the corpus's coverage currently gets an answer anyway; a user who asks about a well-studied area gets the same confident tone as a user who asks about an under-studied one. The grounding contract is not enforced at the UI layer: there is nothing stopping the LLM from citing a warrant in the wrong spot, and nothing showing the user that the citation is real.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,32 +99,35 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('qa')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('qa')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type api">api</span><a>/api/qa/ask</a><span class="file-desc">Accepts <code>{question, history?}</code>, returns <code>{answer, per_sentence_warrants, confidence, refusal_reason?}</code>.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_qa_pipeline.py</a><span class="file-desc">Retrieval-augmented generation pipeline. Currently uses OpenAI embeddings + GPT-4; refusal heuristics are weak.</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/warrant_embeddings.npy</a><span class="file-desc">Pre-computed warrant embeddings for retrieval.</span></li>
       <li><span class="file-type missing">missing</span><a>confidence-calibration model</a><span class="file-desc">Maps retrieval-quality signals to a confidence band the UI can display. Not wired.</span></li>
       <li><span class="file-type missing">missing</span><a>follow-up context store</a><span class="file-desc">Session-scoped conversation memory. Not wired.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_qa_render.js</a><span class="file-desc">Browser-side renderer; currently renders the LLM output verbatim, does not anchor sentences to warrants.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>The QA layer has the highest reputational risk of any surface on the site because a confident wrong answer here is publicly embarrassing. It is the page where refusal discipline matters most.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>The QA layer has the highest reputational risk of any surface on the site because a confident wrong answer here is publicly embarrassing. It is the page where refusal discipline matters most.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('qa');
   if (window.renderJourneySiblings) window.renderJourneySiblings('qa');
   if (window.restoreCritique) window.restoreCritique('qa');
 });

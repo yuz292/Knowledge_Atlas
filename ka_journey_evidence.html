@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer F · Meta-fronts</div>
-    <h1>Evidence-landscape map</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> researcher, practitioner, public_visitor</span>
-      <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
-      <span><b>Complexity tier</b> Medium — global orientation surface</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer F · Meta-fronts</div>
+      <h1>Evidence-landscape map</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, practitioner, public_visitor</span>
+        <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
+        <span><b>Complexity tier</b> Medium — global orientation surface</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
     <p>The evidence-landscape map is the global orientation view: it shows, for the entire topic × outcome × architectural-feature space, where the evidence base is dense, defended, mixed, or absent. It answers the question "what is the overall shape of what the Atlas knows?" in a single view.</p>
     <p>The map is the entry point most often visited by readers who arrive without a specific question. It is also the surface most prone to false-summary: any global view compresses decisions that a user may want to unpack, and the map must let them drill down when they do.</p>
     <p>The prototype renders the landscape as a two-dimensional heatmap (topics on one axis, outcomes on the other) with colour encoding evidence status. It is a reasonable first attempt but is not yet multi-scalar — it does not show architectural feature or theoretical framework as additional axes.</p>
-  </div>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>The landscape map is often the first interesting page a visitor finds; it is the page that communicates the Atlas's scope.</li>
       <li><span class="role-label">COGS 160 student</span>Track 2 students use the map to triage where to scout new papers.</li>
       <li><span class="role-label">Researcher</span>To orient themselves before a literature review.</li>
       <li><span class="role-label">Practitioner</span>To see which outcomes have well-studied architectural interventions, at a glance.</li>
       <li><span class="role-label">Administrator</span>Useful but partly redundant with the gaps page.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Dimensionality.</b> Topic × outcome × feature × theory = four axes. A 2D map chooses two and hides the rest; the page must give at least filter-based access to the hidden axes.</li>
       <li><b>Colour encoding.</b> Five evidence states (defended, mixed, unresolved, thin, absent) crowd the hue budget; encoding by hue alone fails for colour-blind readers.</li>
       <li><b>Resolution.</b> At the full corpus scale each cell is small; at topic scale each cell is large but hides its contents. The page must support semantic zoom.</li>
       <li><b>Stability.</b> The landscape updates as the corpus grows; the page must show its version and warn when it is stale.</li>
       <li><b>Legend density.</b> The legend for the colour scale plus the four axes plus the zoom controls will eat the page unless designed against a layout budget.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The prototype shows a fixed-size 2D heatmap on a single canvas, with hue encoding evidence state. Hovering a cell opens a tooltip showing the topic and outcome names and the study count. There is no filter control for architectural feature or theory; no colour-blind mode; no legend; no version indicator; no zoom.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> The map communicates the right shape — dense in lighting and acoustic research, sparser in olfactory and thermal — but a researcher wanting to filter by feature ("just show me findings relevant to open-plan offices") has no affordance. The colour-blind reader sees a monochrome muddle. The page does not announce its freshness; a cell that was last updated six months ago looks identical to one updated this morning.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>The prototype shows a fixed-size 2D heatmap on a single canvas, with hue encoding evidence state. Hovering a cell opens a tooltip showing the topic and outcome names and the study count. There is no filter control for architectural feature or theory; no colour-blind mode; no legend; no version indicator; no zoom.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> The map communicates the right shape — dense in lighting and acoustic research, sparser in olfactory and thermal — but a researcher wanting to filter by feature ("just show me findings relevant to open-plan offices") has no affordance. The colour-blind reader sees a monochrome muddle. The page does not announce its freshness; a cell that was last updated six months ago looks identical to one updated this morning.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,31 +99,34 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('evidence')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('evidence')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/evidence_landscape.json</a><span class="file-desc">Dense tensor <code>{topic, outcome, feature, theory, evidence_state, n_papers, last_update}</code>.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_landscape_render.js</a><span class="file-desc">Heatmap renderer with D3; prototype works, needs filter controls, zoom, and a colour-blind palette.</span></li>
       <li><span class="file-type api">api</span><a>/api/landscape/slice</a><span class="file-desc">Returns a filtered slice of the tensor given query axes.</span></li>
       <li><span class="file-type missing">missing</span><a>filter-control UI</a><span class="file-desc">Multi-select chips for feature and theory; not yet wired.</span></li>
       <li><span class="file-type missing">missing</span><a>colour-blind palette</a><span class="file-desc">Should swap hue for a perceptually ordered, colour-blind-safe palette (e.g. viridis sub-range).</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>Closely coupled to the gaps page; a single update to the underlying tensor feeds both. They should probably share a filter bar.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>Closely coupled to the gaps page; a single update to the underlying tensor feeds both. They should probably share a filter bar.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('evidence');
   if (window.renderJourneySiblings) window.renderJourneySiblings('evidence');
   if (window.restoreCritique) window.restoreCritique('evidence');
 });

@@ -18,7 +18,142 @@ body {
   line-height: 1.6;
 }
 
+/* ── Two-column shell: left sidebar + main content ── */
+.j-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 28px;
+  max-width: 1240px;
+  margin: 28px auto 80px;
+  padding: 0 28px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .j-shell { grid-template-columns: 1fr; gap: 16px; padding: 0 16px; }
+  .j-sidebar { position: static !important; }
+}
 main.j-outer { max-width: 940px; margin: 28px auto 80px; padding: 0 28px; }
+main.j-main  { min-width: 0; }  /* allow flex/grid item to shrink inside shell */
+
+/* ── Left sub-nav sidebar (5 card groups, twisty expand/collapse) ── */
+.j-sidebar {
+  position: sticky;
+  top: 20px;
+  background: #fff;
+  border: 1px solid #E0D8CC;
+  border-radius: 8px;
+  padding: 14px 14px 16px 14px;
+  font-size: 0.88rem;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+.j-sidebar .side-label {
+  font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #6B53B8; font-weight: 700; padding: 4px 6px 10px 6px;
+  border-bottom: 1px solid #EEE8DC; margin-bottom: 8px;
+}
+.j-sidebar .side-index {
+  display: block; padding: 6px 10px; margin-bottom: 6px;
+  color: #2A7868; font-weight: 600; text-decoration: none;
+  border-left: 3px solid transparent; border-radius: 0 4px 4px 0;
+}
+.j-sidebar .side-index:hover { background: #F9F5EE; }
+.j-sidebar .side-index.current {
+  background: #F0ECFA; color: #4A3A8E; border-left-color: #4A3A8E;
+}
+.j-sidebar .side-group {
+  margin: 6px 0; border-top: 1px dashed #EEE8DC; padding-top: 6px;
+}
+.j-sidebar .side-group:first-of-type { border-top: none; padding-top: 0; }
+.j-sidebar .side-group > button.side-head {
+  display: flex; width: 100%; align-items: flex-start; gap: 6px;
+  background: transparent; border: 0; padding: 6px 6px; cursor: pointer;
+  font-family: inherit; font-size: 0.82rem; font-weight: 700;
+  color: #1C3D3A; text-align: left; line-height: 1.35;
+}
+.j-sidebar .side-group .twisty {
+  color: #6B53B8; font-size: 0.85rem; font-weight: 400; width: 12px;
+  flex-shrink: 0; margin-top: 1px;
+  transition: transform 0.15s;
+}
+.j-sidebar .side-group.open .twisty { transform: rotate(90deg); }
+.j-sidebar .side-group > button.side-head:hover { color: #4A3A8E; }
+.j-sidebar .side-group .side-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+  padding-left: 18px;
+}
+.j-sidebar .side-group.open .side-body { max-height: 400px; }
+.j-sidebar .side-group .side-body a {
+  display: block; padding: 4px 8px; margin: 2px 0;
+  color: #2C2C2C; text-decoration: none; font-size: 0.82rem;
+  border-left: 3px solid transparent; border-radius: 0 3px 3px 0;
+}
+.j-sidebar .side-group .side-body a:hover { background: #F9F5EE; }
+.j-sidebar .side-group .side-body a.current {
+  background: #F0ECFA; color: #4A3A8E; font-weight: 600;
+  border-left-color: #4A3A8E;
+}
+.j-sidebar .side-group .side-body .side-status {
+  display: inline-block; padding: 0 6px; border-radius: 8px;
+  font-size: 0.64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; margin-left: 6px; vertical-align: 1px;
+}
+/* P1-6: side-status pills use the WCAG-compliant deepened hues. */
+.j-sidebar .side-status.naive { background: #FEF3E2; color: #B23550; }
+.j-sidebar .side-status.prototype { background: #9a5010; color: #fff; }
+.j-sidebar .side-status.shipped { background: #D4EDDA; color: #1A7050; }
+.j-sidebar .side-status.absent { background: #F0F0F0; color: #6B6B6B; }
+
+/* P1-7 (2026-04-20 PM): give the currently-open group's head a tinted
+   background so the sidebar communicates location without relying on
+   the tiny twisty rotation alone. The ".side-group-current" class is
+   set by the JS on the group containing the current page. */
+.j-sidebar .side-group.open > button.side-head {
+  background: #F9F5EE; border-radius: 4px;
+}
+.j-sidebar .side-group.side-group-current > button.side-head {
+  font-weight: 800; color: #4A3A8E;
+}
+
+/* P1-9: collapse-all affordance at the top of the sidebar. */
+.j-sidebar .side-toggle-all {
+  width: 100%; background: transparent; border: 0;
+  padding: 4px 8px 8px 8px;
+  font: inherit; font-size: 0.72rem; font-weight: 600;
+  color: #6B53B8; cursor: pointer; text-align: right;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.j-sidebar .side-toggle-all:hover { color: #4A3A8E; }
+
+/* P1-8 (2026-04-20 PM): AF sidebar group needs stronger differentiation.
+   Full-row background tint + left-border amber on the group head so
+   the "this is a build-spec, not a critique-of-existing" signal is
+   readable at a glance rather than depending on the small "· AF"
+   badge alone. */
+.j-sidebar .side-group.side-accent-af > button.side-head {
+  background: #FEF3E2;
+  border-left: 3px solid #9a5010;
+  padding-left: 7px;
+  color: #9a5010;
+  border-radius: 0 4px 4px 0;
+}
+.j-sidebar .side-group.side-accent-af > button.side-head::after {
+  content: " · AF";
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #fff;
+  background: #9a5010;
+  padding: 0 6px;
+  border-radius: 8px;
+  margin-left: auto;
+  align-self: center;
+}
+.j-sidebar .side-group.side-accent-af .twisty { color: #9a5010; }
+.j-sidebar .side-group.side-accent-af .side-body a.current {
+  background: #FEF3E2; color: #9a5010; border-left-color: #9a5010;
+}
 
 /* ── Header strip at top of every page ── */
 .j-header {
@@ -46,10 +181,40 @@ main.j-outer { max-width: 940px; margin: 28px auto 80px; padding: 0 28px; }
   font-size: 0.75rem; font-weight: 700; margin-left: 4px;
   background: #F5A623; color: #2C2C2C;
 }
+/* P1-6 (2026-04-20 PM): deepened prototype/naive hues from #E8872A/#D15A73
+   to #9a5010/#B23550 so the on-white contrast clears WCAG AA (4.5:1). */
 .j-header .status-pill.shipped { background: #2A7868; color: #fff; }
-.j-header .status-pill.prototype { background: #E8872A; color: #fff; }
-.j-header .status-pill.naive { background: #D15A73; color: #fff; }
+.j-header .status-pill.prototype { background: #9a5010; color: #fff; }
+.j-header .status-pill.naive { background: #B23550; color: #fff; }
 .j-header .status-pill.absent { background: #6B6B6B; color: #fff; }
+
+/* ── Article Finder problems — amber palette (data-j-group="af") ── */
+body[data-j-group="af"] .j-header {
+  background: linear-gradient(135deg, #9a5010 0%, #E8872A 100%);
+}
+body[data-j-group="af"] .j-header .eyebrow { color: #FFE8CB; }
+body[data-j-group="af"] .j-header .j-meta { color: #FFE8CB; }
+body[data-j-group="af"] .j-section h2 { color: #9a5010; }
+body[data-j-group="af"] .j-section h2 .h2-icon { color: #E8872A; }
+body[data-j-group="af"] .j-section h2 .h2-hint::before { color: #D8C8A8; }
+body[data-j-group="af"] .j-section::before { background: #E8872A !important; }
+body[data-j-group="af"] .role-list li { border-left-color: #E8872A; }
+body[data-j-group="af"] .role-list .role-label { color: #9a5010; }
+body[data-j-group="af"] .j-critique {
+  background: #FEF3E2; border: 1px solid #F0C99B;
+}
+body[data-j-group="af"] .j-critique .role-crit { border-left-color: #E8872A; }
+body[data-j-group="af"] .j-critique .role-crit .rc-head { color: #9a5010; }
+body[data-j-group="af"] .j-critique .save-btn { background: #9a5010; }
+body[data-j-group="af"] .j-critique .save-btn:hover { background: #7a3d0c; }
+body[data-j-group="af"] .file-list .file-type { background: #9a5010; }
+body[data-j-group="af"] .j-siblings .sb-label { color: #9a5010; }
+body[data-j-group="af"] .j-siblings a {
+  background: #FEF3E2; color: #9a5010;
+}
+body[data-j-group="af"] .j-siblings a.current {
+  background: #9a5010; color: #fff;
+}
 
 /* ── Cross-link row between journey pages ── */
 .j-siblings {
@@ -71,18 +236,50 @@ main.j-outer { max-width: 940px; margin: 28px auto 80px; padding: 0 28px; }
   background: #fff; border-radius: 10px;
   padding: 22px 26px; margin-bottom: 18px;
   border: 1px solid #E0D8CC;
+  position: relative;
 }
+/* Left accent bar in the group's hue — visually separates sections. */
+.j-section::before {
+  content: "";
+  position: absolute; left: 0; top: 18px; bottom: 18px; width: 4px;
+  background: #6B53B8; border-radius: 2px; opacity: 0.6;
+}
+/* div #1 is j-header, div #2 is j-siblings; sections start at #3. */
+.j-section:nth-of-type(3)::before { background: #6B53B8; } /* what displays */
+.j-section:nth-of-type(4)::before { background: #2A7868; } /* who-needs     */
+.j-section:nth-of-type(5)::before { background: #D15A73; } /* challenges    */
+.j-section:nth-of-type(6)::before { background: #E8872A; } /* naive         */
+/* P1-11 (2026-04-20 PM): the naive section already carries an amber
+   .j-naive block and an amber "naive" label pill; the section-accent
+   left bar is the third amber element on the same card and reads as
+   visual noise. Suppress the bar on sections tagged .j-section-naive
+   (the template adds this class on the naive section). */
+.j-section.j-section-naive::before { display: none; }
+.j-section:nth-of-type(7)::before { background: #4A6FA8; } /* critique      */
+.j-section:nth-of-type(8)::before { background: #9a5010; } /* data files    */
+.j-section:nth-of-type(9)::before { background: #2A7868; } /* status        */
 .j-section h2 {
   font-family: Georgia, serif; font-size: 1.22rem; color: #4A3A8E;
-  margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 12px; line-height: 1.35;
 }
 .j-section h2 .h2-icon {
   color: #6B53B8; font-weight: 700; font-size: 1.1rem;
+  margin-right: 10px;
 }
+.j-section h2 .h2-text { /* wrapping span for the h2 main label */ }
 .j-section h2 .h2-hint {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  font-size: 0.78rem; font-weight: 400; color: #6B6B6B; margin-left: 6px;
+  font-size: 0.78rem; font-weight: 400; color: #6B6B6B;
   letter-spacing: 0.02em;
+}
+/* Explicit separator between h2-text and h2-hint — fixes the
+   "displaysthe information" collapsing seen when flex gap was the
+   only separator. A CSS ::before guarantees readable spacing even
+   if the HTML was rendered without whitespace between siblings. */
+.j-section h2 .h2-hint::before {
+  content: " — ";
+  color: #BDB4A2;
+  margin: 0 4px;
 }
 .j-section p { margin-bottom: 10px; }
 .j-section p.lede { font-size: 1.02rem; }

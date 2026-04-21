@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer E · Mechanisms &amp; theories</div>
-    <h1>Mechanism layer</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> researcher, practitioner, 160_student</span>
-      <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
-      <span><b>Complexity tier</b> Medium-high — cross-scale mechanism chains</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer E · Mechanisms &amp; theories</div>
+      <h1>Mechanism layer</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, practitioner, 160_student</span>
+        <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
+        <span><b>Complexity tier</b> Medium-high — cross-scale mechanism chains</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
     <p>The mechanism layer shows the causal pathways linking architectural and environmental features to psychological and physiological outcomes. Pathways are chains of intermediate states: for example, <em>fractal pattern in visual field → parasympathetic activation → reduced cortisol → lower self-reported stress</em>. Each link in the chain is warranted by papers in the corpus.</p>
     <p>Mechanisms span multiple levels of analysis — retinal, neural, cognitive, affective, behavioural — and pathways that are coherent at one scale may be speculative at another. The viewer must show the scale of each link and whether the link is supported by direct measurement, by theoretical inference, or by analogy.</p>
     <p>Unlike the Bayesian network (which <em>quantifies</em> dependencies) or the epistemic network (which shows <em>evidential</em> relations), the mechanism layer shows <em>constitutive</em> causal structure. The three representations are sibling views on the same underlying corpus but answer different questions.</p>
-  </div>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>A curious visitor can follow a chain to learn the science; the page must be legible at this level without oversimplifying.</li>
       <li><span class="role-label">COGS 160 student</span>Track 1 students use mechanisms to anchor their tagging schema. Track 3 students operationalise a single mechanism chain in VR.</li>
       <li><span class="role-label">Researcher</span>To propose or refute a mediating-variable hypothesis — the mechanism layer is the natural place to see whether a proposed mediator is already a recognised node.</li>
       <li><span class="role-label">Practitioner</span>To translate a design intervention at feature-level into a plausible outcome-level effect via the intervening states. Practitioners want to know the <em>why</em>, not just the <em>what</em>.</li>
       <li><span class="role-label">Administrator</span>To detect mechanism chains with gaps — links that no paper in the corpus actually supports.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Cross-scale composition.</b> A chain that goes retina → neural → cognitive → affective → behavioural passes through at least four disciplines. The viewer must communicate the scale jump, because a chain whose scale is hidden is one whose weakest link is also hidden.</li>
       <li><b>Directness of support.</b> A link supported by a direct measurement is different from a link supported only by theoretical analogy. The page must mark the difference and avoid suggesting uniform warrant.</li>
       <li><b>Alternative mechanisms.</b> Most outcome-feature pairs have more than one proposed mechanism. The page must show the competitors, not the winner, and must indicate when the evidence decides between them.</li>
       <li><b>Granularity.</b> Mechanisms can be collapsed (A → Z) or expanded (A → B → C → … → Z). The user needs to pick the granularity they are reading at.</li>
       <li><b>Citation density.</b> A four-link chain typically cites 8–20 papers. The viewer must make that count visible without making the page a bibliography.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The current page renders each mechanism as a flat linear diagram with nodes and unlabelled arrows. Hover reveals the name of the mediator; there is no scale marker, no directness marker, no alternative-mechanism display, and no citation listing per link.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> A researcher reading the naive diagram cannot tell whether a given link is supported by ten direct studies or by one theoretical analogy; a practitioner cannot tell which link in the chain would be the most leverage-bearing design target; a student cannot tell which mechanism is the consensus one and which is the minority view. The page has the shape of a mechanism view but not the content.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>The current page renders each mechanism as a flat linear diagram with nodes and unlabelled arrows. Hover reveals the name of the mediator; there is no scale marker, no directness marker, no alternative-mechanism display, and no citation listing per link.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> A researcher reading the naive diagram cannot tell whether a given link is supported by ten direct studies or by one theoretical analogy; a practitioner cannot tell which link in the chain would be the most leverage-bearing design target; a student cannot tell which mechanism is the consensus one and which is the minority view. The page has the shape of a mechanism view but not the content.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,31 +99,34 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('mechanism')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('mechanism')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/mechanisms.json</a><span class="file-desc">Mechanism records: <code>{id, topic_bundle, chain: [{node, scale, directness, warrant_ids}], alternatives: [id]}</code>.</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/mechanism_nodes.json</a><span class="file-desc">The node taxonomy, with scale labels (retinal, neural, cognitive, affective, behavioural) and plain-language glosses.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_mechanism_render.js</a><span class="file-desc">Chain renderer; currently shows flat node-link chains; needs scale and directness encoding.</span></li>
       <li><span class="file-type missing">missing</span><a>alternative-mechanism crosswalk</a><span class="file-desc">Per-pair, the list of competing mechanisms. Partially populated from the crosswalk table but not exposed in the payload pipeline.</span></li>
       <li><span class="file-type api">api</span><a>/api/mechanism/{id}/warrants</a><span class="file-desc">Returns the warrants underlying every link in a named mechanism. Currently returns all warrants at once; should paginate by link.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>The mechanism layer is tightly coupled to the theory layer (each mechanism is predicted by some theory) and to the BN (each mechanism's quantified version is a subgraph of the BN). Design changes here must be checked against both.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>The mechanism layer is tightly coupled to the theory layer (each mechanism is predicted by some theory) and to the BN (each mechanism's quantified version is a subgraph of the BN). Design changes here must be checked against both.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('mechanism');
   if (window.renderJourneySiblings) window.renderJourneySiblings('mechanism');
   if (window.restoreCritique) window.restoreCritique('mechanism');
 });

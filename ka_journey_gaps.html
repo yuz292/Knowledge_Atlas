@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer F · Meta-fronts</div>
-    <h1>Gaps in the evidence base</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> researcher, admin, 160_student</span>
-      <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
-      <span><b>Complexity tier</b> Medium — absence is harder to display than presence</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer F · Meta-fronts</div>
+      <h1>Gaps in the evidence base</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, admin, 160_student</span>
+        <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
+        <span><b>Complexity tier</b> Medium — absence is harder to display than presence</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
-    <p>The gaps page displays the cells of the topic × outcome crosswalk where the evidence base is thin, absent, or contested. It is the Atlas's answer to the research-planning question <em>"where should the next study be?"</em> and to the admin's question <em>"where is our coverage worst?"</em></p>
-    <p>Gaps are a negative claim: "there is no evidence on X." Displaying negative claims honestly is harder than displaying positive ones because absence and under-indexing look the same from outside. The page must distinguish a genuine gap in the field's literature from a gap in the Atlas's coverage.</p>
-    <p>Every cell on the gap map carries a confidence score about the gap itself: "we are highly confident the field has not studied this" is a different claim from "we have not indexed papers on this, but our coverage is patchy here."</p>
-  </div>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The gaps page answers two research-planning questions at once: the researcher's <em>"where should the next study be?"</em> and the admin's <em>"where is our coverage worst?"</em> It shows the cells of the topic × outcome crosswalk where the evidence base is thin, absent, or contested.</p>
+    <p>Gaps are a negative claim — "there is no evidence on X" — and negative claims are harder to display than positive ones because absence and under-indexing look identical from outside the Atlas. The page must distinguish a genuine gap in the field's literature from a gap in the Atlas's own coverage. Conflating the two turns a research-opportunity page into a data-hygiene page.</p>
+    <p>Every cell on the gap map carries its own uncertainty: "we are highly confident the field has not studied this" is a different claim from "we have not indexed papers on this, but our coverage is patchy." The page must show which kind of gap each cell represents.</p>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>Possibly — a curious visitor can see that the evidence base is uneven. The page must not mislead a visitor into concluding that "absence of evidence" means "evidence of absence."</li>
       <li><span class="role-label">COGS 160 student</span>Track 2 students take a gap and audit whether it is real; Track 1 students tag recent papers that might fill one.</li>
       <li><span class="role-label">Researcher</span>To find low-hanging research targets — cells where a single good study would materially advance the field.</li>
       <li><span class="role-label">Practitioner</span>To recognise when a design decision is being made in an evidential vacuum.</li>
       <li><span class="role-label">Administrator</span>To prioritise contributor outreach and index expansion. The Atlas's coverage holes drive its T2 scraping queue.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Two kinds of gap.</b> Field gap (no one studied this) vs. coverage gap (field studied it, we haven't indexed it). The page must separate them visibly.</li>
       <li><b>Absence display.</b> Zero-value cells are invisible in many charts (e.g., a bar chart). The page must use a representation where zero is as visible as high density — typically a heatmap or a "stars vs. dots" encoding.</li>
       <li><b>False precision.</b> A cell with "3 studies" may be more or less studied than a cell with "5 studies" once study quality is weighted. The page must weight rather than count.</li>
       <li><b>Actionability.</b> A raw gap list is depressing; an actionable one is scoped to what a reader could plausibly study.</li>
       <li><b>Update cadence.</b> Gaps move as the corpus grows. The page must show its freshness and warn when it is stale.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The current page renders the topic × outcome crosswalk as a plain HTML table with raw study counts per cell, sorted by topic alphabetically. Zero-count cells are blank. There is no distinction between field and coverage gaps, no quality-weighting, no freshness marker, and no action affordance.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> Blank cells read as "nothing here to see" rather than "possible research opportunity"; raw counts mislead by treating a single high-quality meta-analysis and a single opportunistic survey as equivalent. The admin who uses this page to plan outreach cannot tell a field gap from a coverage gap, which is the distinction the page most needs to make.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>The current page renders the topic × outcome crosswalk as a plain HTML table with raw study counts per cell, sorted by topic alphabetically. Zero-count cells are blank. There is no distinction between field and coverage gaps, no quality-weighting, no freshness marker, and no action affordance.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> Blank cells read as "nothing here to see" rather than "possible research opportunity"; raw counts mislead by treating a single high-quality meta-analysis and a single opportunistic survey as equivalent. The admin who uses this page to plan outreach cannot tell a field gap from a coverage gap, which is the distinction the page most needs to make.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,31 +99,34 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('gaps')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('gaps')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/crosswalk_density.json</a><span class="file-desc">Per-cell record: <code>{topic, outcome, n_papers, weighted_n, quality_mean, last_ingest_ts, gap_type: field|coverage|mixed}</code>.</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/pubmed_coverage_estimate.json</a><span class="file-desc">A coarse estimate of how many papers exist on each topic in the external literature, used to compute the field-vs-coverage distinction. Partially populated.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_gaps_render.js</a><span class="file-desc">Heatmap renderer; needs the field-vs-coverage encoding.</span></li>
       <li><span class="file-type api">api</span><a>/api/gaps/suggest</a><span class="file-desc">Returns scoped, actionable research-target suggestions; not yet wired.</span></li>
       <li><span class="file-type missing">missing</span><a>quality-weighting model</a><span class="file-desc">Produces <code>weighted_n</code> from raw study counts using a per-paper quality score. Spec exists; implementation pending.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>The gaps page is the single most useful surface for an admin planning the next index-expansion sprint.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>The gaps page is the single most useful surface for an admin planning the next index-expansion sprint.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('gaps');
   if (window.renderJourneySiblings) window.renderJourneySiblings('gaps');
   if (window.restoreCritique) window.restoreCritique('gaps');
 });

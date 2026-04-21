@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plausible Neural Underpinnings — deepening the PNU layer — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="Plausible Neural Underpinnings — deepening the PNU layer: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="" data-j-group="af">
+<div id="ka-navbar-slot"></div>
+
+<div class="j-shell">
+
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Article Finder Problem · AF-3 · Neuroscience-grounding</div>
+      <h1>Plausible Neural Underpinnings — deepening the PNU layer</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, 160_student (Track 3), admin</span>
+        <span><b>Current status</b> <span class="status-pill absent">absent</span></span>
+        <span><b>Complexity tier</b> Very high — requires a neuroscience pathway model the Atlas does not yet have</span>
+      </div>
+    </div>
+
+    <div class="j-siblings" id="j-siblings-slot"></div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The Plausible Neural Underpinnings (PNU) page displays, for a given Atlas claim about cognition-in-architecture, a sequence of neural mechanisms that could plausibly implement the claim's effect. Where the existing PNU field in each article's page offers a single plain-text summary, this page offers a <em>structured pathway</em>: the retinal, subcortical, cortical, and behavioural waypoints through which an architectural stimulus influences a cognitive outcome.</p>
+    <p>Each pathway is presented as a node-and-arrow diagram from stimulus to outcome, with each arrow annotated by the evidence type that supports it — direct measurement (fMRI / MEG / intracranial recording), indirect inference (behavioural plus model), or theoretical analogy (borrowed from an animal or a different paradigm). The page lets the researcher see, at a glance, which links in the chain are empirically strong and which are speculative.</p>
+    <p>The page also displays the PNU-search affordance: given a target PNU pathway, it queries external neuroscience databases (PubMed, bioRxiv, Allen Brain Atlas) for papers that have measured any one link in the chain. The results feed back into the Atlas's pathway-grounding store, so a pathway that begins as mostly theoretical can become mostly measurement-backed over time.</p>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>High interest in an accessible form. The public-curious reader loves a "how does this happen in the brain" story; the page must render the pathway both as the annotated diagram (for researchers) and as a plain-language walk (for the lay reader).</li>
+      <li><span class="role-label">COGS 160 student</span>Track 3 (VR) students use PNUs to decide which claim to operationalise: a claim whose PNU pathway is empirically grounded is more defensible to VR-model than a claim whose PNU is pure theory. Track 1 (tagging) students use PNU presence as a feature for cross-paper tagging.</li>
+      <li><span class="role-label">Researcher</span>A neuroscience-literate researcher reviewing an architecture-cognition claim wants the PNU — otherwise the claim floats without a mechanism. This page supplies that mechanism and tells them how much of it is measured.</li>
+      <li><span class="role-label">Practitioner</span>Modest interest. A practitioner usually does not need the neural pathway to act on an evidence-backed design recommendation; the pathway matters when the practitioner is translating a novel finding to a new context where the supporting empirical literature is thin.</li>
+      <li><span class="role-label">Administrator</span>To audit which PNU pathways are load-bearing across many Atlas papers, so that gaps in the neuroscience literature become visible as structural gaps in the Atlas's claim graph.</li>
+      </ul>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
+      <li><b>Neural pathways span scales, and claims typically span many of them.</b> A single architecture-cognition claim may reach from retinal ganglion cell response (millisecond timescale) through thalamocortical relay through cortical processing through striatal reinforcement through prefrontal control through overt behaviour (seconds to minutes timescale). Rendering the entire chain legibly is a serious visualisation problem; collapsing it oversimplifies, expanding it overwhelms.</li>
+      <li><b>Evidence for each link is uneven.</b> Some links are empirically airtight (e.g., photoreceptor → bipolar cell → ganglion cell in mammalian retina); others are reasonable inferences from animal work but have never been measured in humans; still others are pure theory-motivated guesses. The diagram must distinguish these, not smudge them together.</li>
+      <li><b>"Kneebone connected to the thighbone" — the sequence-identification problem DK named.</b> Identifying sub-sequences of neural pathways means finding papers that have measured <em>adjacent</em> links in a chain rather than standalone links. A paper that measures retinal output plus V1 activity is more valuable for chain-construction than a paper that measures either in isolation. This is a search problem the Atlas does not currently have machinery for.</li>
+      <li><b>Source heterogeneity.</b> Architectural-cognition papers are rarely the ones that measure neural activity directly; the neural evidence comes from basic-neuroscience papers that are not in the Atlas's primary corpus. The PNU page must reach into external databases whose indexing and formatting differ from the Atlas's own, and must resolve the cross-corpus identity of a "pathway link" across those heterogeneous sources.</li>
+      <li><b>What counts as a PNU match.</b> A paper claiming V4 involvement in pattern perception is not the same as a paper claiming V4 involvement in pattern perception in urban facades specifically. Cross-domain transfer is legitimate but must be flagged. The vetting logic needs to classify whether a retrieved neuroscience paper is a <em>direct</em>, <em>analogical</em>, or <em>speculative</em> match for the PNU link in question.</li>
+      <li><b>The PNU is itself an under-specified construct.</b> Different Atlas papers use PNU to mean different things — sometimes a specific mechanism proposal, sometimes a gesture at a relevant brain region, sometimes a theoretical speculation. Before the page can search for evidence, the Atlas must canonicalise what a PNU is. This is a methodological decision that DK should make.</li>
+      <li><b>Temporal stability of pathway evidence.</b> Neuroscience evidence gets superseded — a 2008 fMRI result that seemed to localise a function may be superseded by a 2023 result that disputes the localisation. The page must version each link's supporting evidence and surface the most recent consensus, not the first paper to claim the mechanism.</li>
+      </ol>
+    </div>
+
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">What a minimal first cut would have to look like</span><span class="h2-hint">the starting point, not an existing page</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">spec — no implementation yet</span>
+        <div class="j-naive-body"><p>No implementation yet. The current state is a per-paper plain-text PNU field in the article-view page, with no structure, no diagram, no cross-paper linking, and no external-database search. A researcher wanting neural grounding for a claim must read each paper's PNU text individually and assemble the pathway in their head.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this minimum is insufficient.</b> The naive version fails the page's reason for being: it cannot answer "what is the neural chain" at the claim level because the chain is not represented as a chain, only as a paragraph. It cannot surface which links are empirically grounded because the evidence-type annotation does not exist. It cannot grow the pathway-grounding store from external searches because no external-search machinery is wired.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the spec as written</span></h2>
+      <p>For each user type below, write one to three sentences: what the spec above gets right for that user, what it misses, and one thing that should be decided before build starts. Drafts save to your browser; paste the useful ones into the Track 2 hub's AF thread when the spec moves to implementation.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+        <button type="button" class="save-btn" onclick="saveCritique('af_neuro')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
+      <li><span class="file-type data">data</span><a><code>data/ka_payloads/pnus.json</code></a><span class="file-desc">Existing per-paper PNU text. Input; must be parsed into structured pathway records rather than rendered as-is.</span></li>
+      <li><span class="file-type missing">missing</span><a>pathway canonicalisation layer</a><span class="file-desc">A controlled vocabulary of neural nodes (brain region, cell type, neurotransmitter system) and the allowed edges between them. Necessary before any structural PNU comparison is possible.</span></li>
+      <li><span class="file-type missing">missing</span><a>PNU-to-pathway parser</a><span class="file-desc">NLP over the existing text PNUs that emits a structured pathway record. Probably an LLM-assisted pass with an admin-reviewable output.</span></li>
+      <li><span class="file-type api">api</span><a>PubMed, bioRxiv, Allen Brain Atlas</a><span class="file-desc">External sources for neuroscience evidence on specific pathway links. Each has different query semantics and rate limits.</span></li>
+      <li><span class="file-type missing">missing</span><a>sub-sequence matcher</a><span class="file-desc">Given a pathway and a retrieved neuroscience paper, determine which link(s) the paper provides evidence for and at what confidence.</span></li>
+      <li><span class="file-type missing">missing</span><a>pathway renderer</a><span class="file-desc">Browser-side diagram component with evidence-type encoding on each edge and collapse/expand for different levels of neural grain.</span></li>
+      <li><span class="file-type missing">missing</span><a>cross-domain transfer classifier</a><span class="file-desc">Distinguishes direct, analogical, and speculative matches between a retrieved paper and a pathway link.</span></li>
+      </ul>
+    </div>
+
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>This is the most empirically ambitious of the three AF problems. It probably requires a partnership with a neuroscience lab for the canonicalisation vocabulary; the engineering work is tractable once the vocabulary is fixed, but fixing the vocabulary is a research project in its own right.</p>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('af_neuro');
+  if (window.renderJourneySiblings) window.renderJourneySiblings('af_neuro');
+  if (window.restoreCritique) window.restoreCritique('af_neuro');
+});
+</script>
+</body>
+</html>

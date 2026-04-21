@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles referred to in the corpus — reference-harvest candidate generator — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="Articles referred to in the corpus — reference-harvest candidate generator: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="" data-j-group="af">
+<div id="ka-navbar-slot"></div>
+
+<div class="j-shell">
+
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Article Finder Problem · AF-1 · Reference harvesting</div>
+      <h1>Articles referred to in the corpus — reference-harvest candidate generator</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> 160_student (Track 2), admin, researcher</span>
+        <span><b>Current status</b> <span class="status-pill absent">absent</span></span>
+        <span><b>Complexity tier</b> High — every indexed paper carries 20–60 references, so a 1,400-paper corpus implies tens of thousands of candidates</span>
+      </div>
+    </div>
+
+    <div class="j-siblings" id="j-siblings-slot"></div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The reference-harvest page displays the candidate articles extracted from the reference lists of the papers the Atlas already indexes. For each of the ≈ 1,400 papers currently in the corpus, the page offers the reader a list of its cited references — each one potentially a paper worth bringing into the corpus itself. The list is deduplicated across the corpus (a paper cited by thirty other Atlas papers appears once, with all thirty citations noted), article-typed (empirical, review, meta-analysis, theory piece, method paper), and topic-identified against the Atlas's topic ontology.</p>
+    <p>The reader sees two stacked views. The upper view is the <em>minimally-filtered candidate set</em>: every unique reference the Atlas has extracted so far, sortable by citation count within the corpus, by estimated value-of-information, and by topic-coverage depth. Each row carries a checkbox; checking a row queues the reference for harvest. The lower view is the <em>harvested corpus</em>: the set of PDFs that have been retrieved, parsed, and added to the pipeline folder, growing over time as the harvest scheduler works through the queue.</p>
+    <p>Every row displays provenance: which Atlas paper(s) cite this reference, the APA citation as extracted, the DOI (when resolvable), and a one-paragraph abstract. Abstracts that could not be recovered are marked and offered for manual entry by an admin or by a T2 student completing a tagged deliverable.</p>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>Likely not a target user for this page in its unfiltered form; a public visitor is better served by the interpretation layer. The harvested-corpus lower panel, showing how the Atlas grows, is appropriate for a public audience.</li>
+      <li><span class="role-label">COGS 160 student</span>Track 2 students use this page as the ground truth for their T2.d topical-coverage sweeps — the candidate set shows them which references the corpus already knows about but has not yet indexed, and the VOI + depth ranking tells them which are most worth retrieving.</li>
+      <li><span class="role-label">Researcher</span>To see which references the corpus recognises as likely-relevant but does not yet index — a map of the literature the Atlas is aware of but has not yet read.</li>
+      <li><span class="role-label">Practitioner</span>To locate a specific reference cited in an Atlas paper they are reading without leaving the Atlas — the reference-harvest page is the closest the Atlas comes to a universal lookup index.</li>
+      <li><span class="role-label">Administrator</span>To plan the harvest schedule and approve additions to the corpus. The approval queue sits between the checkbox-selected candidates and the autoharvest; what the approval gate checks is the T2.d admissibility contract (license, availability, scope fit, duplicate-of-existing test).</li>
+      </ul>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
+      <li><b>Deduplication across citation styles.</b> One reference appears differently across Atlas papers — sometimes with a DOI, sometimes without; sometimes page-ranged, sometimes not; sometimes with diacritics mangled. Citation-matching is a known-hard NLP problem (Giles et al., 1998 at least recognised it as such for CiteSeer). A naive string match produces 30–50% false-negative duplicates; a proper match requires DOI resolution + fuzzy-match-on-author-year-title.</li>
+      <li><b>Abstract recovery for entries without DOI.</b> Not every cited reference has a DOI in its APA form; pre-2000 papers often lack them. The Atlas must decide whether to (a) skip abstract collection, (b) attempt Crossref / Semantic Scholar / OpenAlex lookup from the fuzzy-matched title, or (c) defer to a manual-entry workflow. All three have failure modes worth surfacing to the user.</li>
+      <li><b>Topic identification without an abstract.</b> The Atlas's existing topic classifier (Codex's <code>AdaptiveClassifierSubsystem</code>) requires an abstract. References without an abstract cannot be topic-typed, which means they cannot be ranked by topic-coverage depth, which means the priority-sorted view must explicitly surface them as <em>topic-unknown</em> rather than silently demote them.</li>
+      <li><b>The approval process.</b> Not every referenced paper is appropriate to add to the corpus — some are out-of-scope (a cited methods paper from an unrelated field), some are unavailable (preprints that were never published), some duplicate existing corpus entries under a different citation. The approval queue must offer a one-click-accept / one-click-reject affordance plus a reason tag, and its decisions must feed back into the ranker so low-approval-rate topics get deprioritised.</li>
+      <li><b>Priority ranking.</b> Value-of-information plus article-depth-per-topic is the ranking signal DK has named, but both are non-trivial to compute. VOI requires a model of what the Atlas currently thinks about the topic plus what a new paper would change; article-depth is a reasonable proxy but needs calibration against topics that are legitimately under-studied. The ranker is the most empirically uncertain piece of this page.</li>
+      <li><b>Harvest rate and politeness.</b> Crossref and publisher APIs rate-limit; a harvest queue that runs flat-out risks IP bans. The scheduler must back off on 429s, respect crossref <code>mailto</code> politeness conventions, and serialise publisher-specific harvests rather than parallelising them.</li>
+      <li><b>Showing the harvest growing.</b> The retrieved-PDFs panel must update in something close to real-time so a user who clicks ten checkboxes can watch their queue drain. A polling endpoint at 5-second intervals is probably sufficient; a SSE stream would be smoother. Either way, the page needs a clear empty state and a clear in-progress state.</li>
+      </ol>
+    </div>
+
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">What a minimal first cut would have to look like</span><span class="h2-hint">the starting point, not an existing page</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">spec — no implementation yet</span>
+        <div class="j-naive-body"><p>No implementation yet. A plausible first cut would be a flat table listing every unique reference string from every Atlas paper with no dedupe, no DOI resolution, no abstract, no topic identification, no ranking, and no harvest queue — a dump of the regex-extracted reference field. The page would be many thousands of rows, impossible to scan, with ~ 30% duplicate entries. It would establish that references exist but would not be usable as a harvest source.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this minimum is insufficient.</b> The page is a spec, not an implementation. The naive version above would satisfy neither Track 2 students (who need the ranked, deduped view to pick candidates efficiently) nor the admin (who needs the approval queue to gate additions) nor the researcher (who needs the DOI + abstract for each row to decide whether a reference is worth pursuing). Building the full page is work; this journey page exists to document what work.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the spec as written</span></h2>
+      <p>For each user type below, write one to three sentences: what the spec above gets right for that user, what it misses, and one thing that should be decided before build starts. Drafts save to your browser; paste the useful ones into the Track 2 hub's AF thread when the spec moves to implementation.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+        <button type="button" class="save-btn" onclick="saveCritique('af_references')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
+      <li><span class="file-type missing">missing</span><a>reference-extraction pipeline</a><span class="file-desc">A pass over every PDF in the corpus that extracts the reference list into structured records (author, year, title, venue, DOI). Current state: PDFs are in <code>data/pnu_articles/</code> but their reference lists are not systematically extracted.</span></li>
+      <li><span class="file-type missing">missing</span><a>citation-dedup service</a><span class="file-desc">Fuzzy-match on author+year+title after title normalisation; DOI canonicalisation takes precedence when available.</span></li>
+      <li><span class="file-type api">api</span><a>Crossref, OpenAlex, Semantic Scholar</a><span class="file-desc">External services for DOI lookup, abstract retrieval, and enriched metadata. Rate-limited; require polite-mode <code>mailto</code>.</span></li>
+      <li><span class="file-type data">data</span><a>data/ka_payloads/reference_candidates.json</a><span class="file-desc">Deduplicated candidate table with <code>{ref_id, apa, doi, abstract, cited_by_ka_papers[], topic_guesses[], article_type, priority_score, approval_state}</code>.</span></li>
+      <li><span class="file-type missing">missing</span><a>VOI scorer</a><span class="file-desc">Given (topic, candidate_reference), estimate how much the candidate's inclusion would change the Atlas's current interpretation layer. Requires a model of interpretation stability.</span></li>
+      <li><span class="file-type missing">missing</span><a>harvest scheduler</a><span class="file-desc">Queue worker that respects per-publisher rate limits, retries on transient failures, and writes retrieved PDFs to <code>data/pnu_articles/</code>.</span></li>
+      <li><span class="file-type missing">missing</span><a>approval UI</a><span class="file-desc">Admin-gated page that drains the checkbox queue into a decision list; inline DOI preview and abstract display; one-click-accept with optional reason tag.</span></li>
+      </ul>
+    </div>
+
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>Tightly coupled to Codex's <code>atlas_shared</code> classifier (for article-type + topic-relevance), to the Track 2 topical-coverage rubrics (for the ranking signal), and to the admin console's existing approval flow. Probably the single most leveraged AF-track page because every downstream corpus expansion depends on its output.</p>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('af_references');
+  if (window.renderJourneySiblings) window.renderJourneySiblings('af_references');
+  if (window.restoreCritique) window.restoreCritique('af_references');
+});
+</script>
+</body>
+</html>

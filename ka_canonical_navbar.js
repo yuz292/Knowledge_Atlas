@@ -138,17 +138,20 @@
         box-shadow:0 2px 8px rgba(0,0,0,.15);
         font:500 .88rem -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
       }
-      .ka-nav .ka-brand { display:flex; align-items:center; gap:8px;
+      .ka-nav .ka-brand { display:flex; align-items:center; gap:10px;
         text-decoration:none; color:#fff; }
+      .ka-nav .ka-brand .ka-mark { flex-shrink:0;
+        filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.25)); }
       .ka-nav .ka-brand-mark { font-family:Georgia,serif; font-weight:800;
         letter-spacing:.02em; line-height:1.1; }
       .ka-nav .ka-brand-mark .k { color:#A8C8BF; font-size:.62rem;
         text-transform:uppercase; letter-spacing:.16em; display:block; }
       .ka-nav .ka-brand-mark .a { color:#fff; font-size:1.0rem; }
       .ka-nav .ka-brand-mark .las { color:var(--ka-gold); }
-      .ka-nav .ka-regime-tag { font-size:.62rem; text-transform:uppercase;
-        letter-spacing:.14em; color:#7AACA0; padding:3px 8px;
-        border:1px solid rgba(255,255,255,.18); border-radius:10px; }
+      /* .ka-regime-tag removed 2026-04-20 — rule retained as display:none
+         so any cached-HTML variant that still renders the span keeps it
+         hidden rather than showing inconsistently across pages. */
+      .ka-nav .ka-regime-tag { display:none; }
 
       .ka-nav .ka-center { display:flex; align-items:center; gap:2px; flex:1;
         margin-left:14px; overflow-x:auto; }
@@ -233,15 +236,37 @@
               : (regime === 'global' && currentlyIn160sp())  ? '../ka_home.html'
               : (regime === '160sp')                         ? 'ka_schedule.html'
               :                                                'ka_home.html';
-    const regimeTag = regime === '160sp' ? 'COGS 160 Spring' : 'Research Atlas';
+    // Regime tag ("Research Atlas" / "COGS 160 Spring") removed 2026-04-20
+    // at DK's request — it cluttered the banner and pushed the "About"
+    // link off-screen at common laptop widths. The regime is already
+    // visible through the regime-specific nav items (e.g., 160sp pages
+    // show Schedule / Admin / Hub / Rubrics), so the tag was redundant.
+    //
+    // Triangle-with-orange mark (restored 2026-04-20 per DK): an upright
+    // triangle with three vertex nodes. Apex (top) filled in amber to
+    // read as a focal/discovered claim; base nodes in lighter gold.
+    // 22×22 inline SVG — no HTTP round-trip, scales crisply, works at
+    // arbitrary zoom.
+    const mark = `
+      <svg class="ka-mark" viewBox="0 0 24 24" width="22" height="22"
+           aria-hidden="true" focusable="false">
+        <polygon points="12,3.5 20.5,19 3.5,19"
+                 fill="#E8872A" fill-opacity="0.20"
+                 stroke="#F5A623" stroke-width="1.6" stroke-linejoin="round"/>
+        <line x1="12" y1="3.5" x2="20.5" y2="19" stroke="#F5A623" stroke-width="1.1" opacity="0.55"/>
+        <line x1="12" y1="3.5" x2="3.5"  y2="19" stroke="#F5A623" stroke-width="1.1" opacity="0.55"/>
+        <circle cx="12"   cy="3.5" r="2.6" fill="#E8872A"/>
+        <circle cx="20.5" cy="19"  r="2.1" fill="#F5A623" fill-opacity="0.92"/>
+        <circle cx="3.5"  cy="19"  r="2.1" fill="#F5A623" fill-opacity="0.92"/>
+      </svg>`;
     return `
       <a class="ka-brand" href="${esc(home)}" aria-label="Knowledge Atlas home">
+        ${mark}
         <span class="ka-brand-mark">
           <span class="k">Knowledge</span>
           <span class="a">At<span class="las">las</span></span>
         </span>
-      </a>
-      <span class="ka-regime-tag">${esc(regimeTag)}</span>`;
+      </a>`;
   }
 
   function buildLinks(regime, activeId) {

@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer C · Network representations</div>
-    <h1>Epistemic Network (Web of Belief) viewer</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> researcher, 160_student, admin</span>
-      <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
-      <span><b>Complexity tier</b> High — visual density is the core design problem</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer C · Network representations</div>
+      <h1>Epistemic Network (Web of Belief) viewer</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, 160_student, admin</span>
+        <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
+        <span><b>Complexity tier</b> High — visual density is the core design problem</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
-    <p>The Epistemic Network (EN), sometimes called the Web of Belief after Quine &amp; Ullian (1978), is a directed graph whose nodes are <em>claims</em> extracted from the corpus and whose edges are <em>evidential relations</em> between those claims — support, undercutting defeat, rebutting defeat, and coherence. The viewer lets a user ask: given a claim I care about (say, <em>"exposure to fractal patterns reduces self-reported stress"</em>), which other claims in the Atlas support it, which undercut it, and how densely connected is the local neighbourhood?</p>
-    <p>At the scale of the full corpus the network has thousands of nodes. The viewer must therefore support two modes of use: (a) a <em>local</em> view anchored on one claim, with its support/defeat neighbourhood visible at once, and (b) a <em>global</em> view in which the density of support vs. defeat edges is legible without node-level detail. The two views are joined by a zoom-and-filter affordance in the sense of Shneiderman (1996).</p>
-    <p>Every edge in the EN is warranted by at least one <em>warrant</em>: a structured record that cites the source paper, the extraction confidence, the discounting factor applied, and the rule under which the extraction was made. The viewer must surface these warrants on demand; a network whose edges are unaccountable is not an epistemic representation, it is an art installation.</p>
-  </div>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The Epistemic Network (EN) — Quine &amp; Ullian's Web of Belief (1978) rendered as a directed graph — has claims for nodes and evidential relations for edges. Edges come in four flavours: <em>support</em>, <em>undercutting defeat</em>, <em>rebutting defeat</em>, and <em>coherence</em>. The viewer answers one question well: given a claim you care about — say, <em>"exposure to fractal patterns reduces self-reported stress"</em> — which other claims in the Atlas support it, which undercut it, and how densely connected is the neighbourhood?</p>
+    <p>At corpus scale the graph has thousands of nodes, so the viewer needs two modes. A <em>local</em> mode anchors on one claim and shows its support/defeat neighbourhood at once. A <em>global</em> mode shows where the network is dense and where it is sparse without node-level detail. The two join through a Shneiderman-style (1996) zoom-and-filter affordance — overview first, zoom and filter, then details on demand.</p>
+    <p>Every edge in the EN is backed by at least one <em>warrant</em>: a structured record naming the source paper, the extraction confidence, the discounting applied, and the rule under which the extraction was made. The viewer must surface these warrants on demand but not permanently — a network whose edges cannot be inspected back to their source is not an epistemic representation, it is an art installation.</p>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>Likely not well served by the EN directly; a public visitor is better served by the interpretation layer, which already consumes the EN and summarises it in prose.</li>
       <li><span class="role-label">COGS 160 student</span>Track 2 students use the EN to see which of their candidate papers are already represented as claims, and which are orphans. Track 3 students use it to pick a well-supported claim to operationalise in VR.</li>
       <li><span class="role-label">Researcher</span>To check whether a claim they are considering writing into a paper is supported or contested by the corpus. The EN is the fastest way to see a claim's "local epistemic neighbourhood".</li>
       <li><span class="role-label">Practitioner</span>To skim whether a claim they are about to cite in a design-decision memo stands up to the network's consensus.</li>
       <li><span class="role-label">Administrator</span>To detect over-confidence — nodes with many support edges and zero defeat edges are either genuinely settled or the extraction pipeline is not finding disagreements, and the admin wants to know which.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Density.</b> With ≈ 1,400 papers and an average of ≈ 4 claims each, the full graph has ≈ 5,600 nodes. Force-directed layouts at this scale are unreadable; the viewer must use semantic zoom, topic clustering, or a local-only default view.</li>
       <li><b>Asymmetric edge types.</b> Support, undercutting defeat, and rebutting defeat look the same in a naive node-link drawing. Pollock (1995) and Haack (1993) require the distinction, so the viewer must colour-code or shape-code edges without visually overloading the drawing (Bertin's 1967 retinal-variable budget).</li>
       <li><b>Warrant provenance.</b> Each edge should be inspectable back to the warrant that produced it — with confidence, discounting, and rule — but not permanently displayed. This is a classic <em>details-on-demand</em> problem.</li>
       <li><b>Claim identity.</b> Two papers may make the same claim in different words. The viewer's node identity is therefore an NLP clustering decision, and the user needs to see when two visually-distinct nodes are in fact the same claim (and when the clustering is wrong).</li>
       <li><b>Temporal evolution.</b> The EN changes as papers are added and re-extracted. A static viewer hides this; a dynamic one risks overloading the frame. A timeline scrubber is appealing but perishes in the hands of users who do not read the axis.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The current page renders a single force-directed node-link graph of the entire EN using D3. Nodes are black circles; edges are grey straight lines. Clicking a node centers the layout and darkens the edges to its first-order neighbours. There is no edge-type distinction (support vs. defeat), no filtering, no warrant panel, no search, no zoom, and no legend.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> A reviewer opening the page cannot tell support from defeat (the structural point of an epistemic network), cannot find a specific claim (no search), cannot see why any edge exists (no warrant on hover), and cannot survive the 5,600-node layout (the browser pins one CPU). The page satisfies the minimum structural requirement — it is a network drawing — and fails every epistemic and ergonomic requirement the representation was designed to satisfy. It is a placeholder, not a viewer.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>A single force-directed node-link graph of the entire EN, drawn in D3. Black circles for nodes, grey straight lines for edges. Clicking a node centres the layout and darkens its first-order neighbour edges. No edge-type distinction, no filter, no warrant panel, no search, no zoom, no legend.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> The page is a network drawing — the minimum structural requirement — and fails every epistemic and ergonomic requirement the representation was designed for. A reader cannot tell support from defeat (the structural point of an epistemic network). They cannot find a specific claim (no search). They cannot see why any edge exists (no warrant on hover). And they cannot survive the 5,600-node layout (the browser pins one CPU for minutes). It is a placeholder, not a viewer.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,32 +99,35 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('en')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('en')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/epistemic_network.json</a><span class="file-desc">Array of <code>{id, claim_text, paper_ids, cluster_id}</code>, plus edges <code>{source, target, type: support|undercut|rebut|coherence, warrant_id, confidence}</code>. <b>Not yet wired;</b> currently a stub.</span></li>
       <li><span class="file-type api">api</span><a>/api/warrants/{id}</a><span class="file-desc">Returns the full warrant record for a given edge: rule, source paper, extracted claim, discount factor, rater.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_en_render.js</a><span class="file-desc">The D3-based rendering module. Current version is the naive force-directed layout; needs semantic-zoom and edge-type encoding passes.</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/claim_clusters.json</a><span class="file-desc">Claim-identity clustering: maps <code>claim_id</code> → <code>cluster_id</code>. Produced by Article_Eater's coherence pipeline.</span></li>
       <li><span class="file-type missing">missing</span><a>topic_membership_index</a><span class="file-desc">Per-node topic-bundle tags, so that filtering by topic is possible. Currently absent; blocks the "show me the EN just for lighting papers" use case.</span></li>
       <li><span class="file-type lib">lib</span><a>Article_Eater_PostQuinean_v1_recovery/src/services/bridge_warrants.py</a><span class="file-desc">The warrant service that should feed /api/warrants/{id}. Already exists upstream; the adapter to the Atlas's HTTP surface is not yet written.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>This is the single page with the highest design leverage on the site. Four of the T1 theoretical frameworks (Quine &amp; Ullian 1978, Pollock 1995, Haack 1993, Bender &amp; Koller 2020) directly constrain what the viewer must show; any redesign has to take a position on all four.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>The EN is the single page with the highest design leverage on the site — it touches every claim the Atlas holds. Four T1 theoretical frameworks (Quine &amp; Ullian 1978, Pollock 1995, Haack 1993, Bender &amp; Koller 2020) directly constrain what the viewer must show; any redesign has to take a position on all four.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('en');
   if (window.renderJourneySiblings) window.renderJourneySiblings('en');
   if (window.restoreCritique) window.restoreCritique('en');
 });

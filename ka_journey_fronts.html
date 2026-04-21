@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer F · Meta-fronts</div>
-    <h1>Research fronts</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> researcher, practitioner, 160_student</span>
-      <span><b>Current status</b> <span class="status-pill absent">absent</span></span>
-      <span><b>Complexity tier</b> Medium — temporal signal + noise</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer F · Meta-fronts</div>
+      <h1>Research fronts</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, practitioner, 160_student</span>
+        <span><b>Current status</b> <span class="status-pill absent">absent</span></span>
+        <span><b>Complexity tier</b> Medium — temporal signal + noise</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
     <p>The research-fronts page would show which topics in the Atlas have the highest recent publication velocity — where the field is putting its current effort. A front is a topic + time-window combination where the number of high-quality papers indexed in the last, say, 18 months is high relative to the topic's historical baseline.</p>
     <p>Fronts are useful for orientation but treacherous for inference: a spike in publications is not evidence of truth, and a dip is not evidence of resolution. The page must present velocity as a navigation signal, not as an epistemic one.</p>
     <p>The page does not yet exist. The spec below is the critique target.</p>
-  </div>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>Of modest interest; a news-cycle reader might find "what's new in architecture-cognition research" appealing, but the page must not mislead them into thinking new = true.</li>
       <li><span class="role-label">COGS 160 student</span>Track 2 students prioritise scouting recent papers on active fronts; the page is their scouting shortlist.</li>
       <li><span class="role-label">Researcher</span>To scout what colleagues in adjacent labs are working on.</li>
       <li><span class="role-label">Practitioner</span>To know which architectural interventions the field is currently re-evaluating — a useful hedge against citing a soon-to-be-superseded claim.</li>
       <li><span class="role-label">Administrator</span>To align the Atlas's T2 scraping queue with current field effort.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Baseline selection.</b> "Velocity" requires a baseline. Choosing a per-topic historical baseline vs. a corpus-wide baseline produces different front lists; the choice must be visible.</li>
       <li><b>Noise vs. signal.</b> A single high-profile paper can spike publication rates in a way that is news-cycle noise, not a genuine front.</li>
       <li><b>Temporal granularity.</b> 3-month windows are noisy; 2-year windows are stale. The page must let the user pick.</li>
       <li><b>Hype filtering.</b> Some recent-paper spikes are driven by replication failures and controversy, not by the field discovering something; the page should mark contested fronts distinctly.</li>
       <li><b>Embargo.</b> Many recent papers in the Atlas are unreviewed or preprints; fronts driven by preprints need a provenance marker.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>No naive solution is deployed. The placeholder on this path currently redirects to the evidence-landscape map.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> As with the argumentation layer, the critique exercise for this page is a specification critique. A student is asked what a research-front page ought to do before any design is proposed; the student must reason about which of the challenges above is a blocker for each user type.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>No naive solution is deployed. The placeholder on this path currently redirects to the evidence-landscape map.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> As with the argumentation layer, the critique exercise for this page is a specification critique. A student is asked what a research-front page ought to do before any design is proposed; the student must reason about which of the challenges above is a blocker for each user type.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,31 +99,34 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('fronts')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('fronts')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/paper_timestamps.json</a><span class="file-desc">Per-paper publication date plus venue type (journal, preprint, conference).</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/topic_velocity.json</a><span class="file-desc">Per-topic publication velocity at several temporal granularities. Not yet computed.</span></li>
       <li><span class="file-type api">api</span><a>/api/fronts/rank</a><span class="file-desc">Returns ranked fronts for a given window + baseline choice; not yet wired.</span></li>
       <li><span class="file-type missing">missing</span><a>contested-front detector</a><span class="file-desc">Flags fronts where the recent papers disagree more than the historical baseline.</span></li>
       <li><span class="file-type missing">missing</span><a>ka_fronts_render.js</a><span class="file-desc">Browser-side renderer.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>This is the page where the temptation to over-design is highest — it sounds like a news feed and could easily drift into one. The correct design target is a navigation aid, not a newsroom.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>This is the page where the temptation to over-design is highest — it sounds like a news feed and could easily drift into one. The correct design target is a navigation aid, not a newsroom.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('fronts');
   if (window.renderJourneySiblings) window.renderJourneySiblings('fronts');
   if (window.restoreCritique) window.restoreCritique('fronts');
 });

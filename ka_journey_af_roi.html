@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROI-based candidate generator — driven by EN and argumentation analysis — Knowledge Atlas complicated surfaces</title>
+<meta name="description" content="ROI-based candidate generator — driven by EN and argumentation analysis: what this page displays, who needs it and why, the design challenge, the naive solution in place now, and per-user-type critique prompts.">
+<script src="ka_canonical_navbar.js" defer></script>
+<script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
+<link rel="stylesheet" href="ka_journey_page.css">
+</head>
+<body data-ka-regime="global" data-ka-active="" data-j-group="af">
+<div id="ka-navbar-slot"></div>
+
+<div class="j-shell">
+
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Article Finder Problem · AF-2 · Research-opportunity identification</div>
+      <h1>ROI-based candidate generator — driven by EN and argumentation analysis</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, 160_student (Track 2), admin</span>
+        <span><b>Current status</b> <span class="status-pill absent">absent</span></span>
+        <span><b>Complexity tier</b> High — requires both an ROI-identification model and a vetted-search backend</span>
+      </div>
+    </div>
+
+    <div class="j-siblings" id="j-siblings-slot"></div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The ROI page displays a structured list of <em>research opportunities</em> identified by the Atlas — places where the epistemic network or the argumentation analysis points at a missing, contested, or under-evidenced claim that a new paper might resolve. Each ROI is a seed for a targeted search: a short natural-language description of what the Atlas wants to know, paired with the EN or argumentation evidence that justifies the search.</p>
+    <p>The reader sees ROIs grouped into four types, each with its own accent hue and its own rationale. Within each group the ROIs are ranked by leverage — how much an answer would shift the Atlas's current interpretation. Rows carry checkboxes; checking an ROI triggers an external search against Crossref + OpenAlex + Semantic Scholar, and the retrieved candidates are then vetted for topic-relevance using a deeper topic-identifier than the one used for reference harvesting.</p>
+    <p><b>The four ROI types</b> are (1) <em>gap-filling</em> — topic × outcome cells where the evidence density is low; (2) <em>dispute-resolving</em> — claims in the EN that are currently contested (i.e., have roughly balanced support and defeat edges); (3) <em>theory-testing</em> — predictions derived from a Tier 1 framework that have not yet been tested in the corpus; and (4) <em>mechanism-grounding</em> — edges in the mechanism layer that currently rest on theoretical inference rather than direct measurement. Each ROI type surfaces different kinds of candidate paper and therefore needs a different search strategy.</p>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
+      <li><span class="role-label">Public visitor</span>A curious visitor can see what questions the Atlas has identified as worth researching — this is the research-fronts view from the public angle. The public variant should render the ROIs without the search-triggering checkboxes.</li>
+      <li><span class="role-label">COGS 160 student</span>Track 2 students work ROIs as a scouting mode — rather than topical coverage ("find me 50 papers on lighting"), an ROI task is "find me papers that would settle this particular contested claim." The shift from breadth to depth is the main pedagogical payoff.</li>
+      <li><span class="role-label">Researcher</span>The primary user. Researchers scouting their next study use the ROI page to see where the field has holes the Atlas has identified; a researcher whose proposal directly addresses a tier-1 dispute-resolving ROI has, at minimum, a ready-made motivation paragraph.</li>
+      <li><span class="role-label">Practitioner</span>Indirect. A practitioner wanting actionable evidence for a design decision cares less about the research opportunities the Atlas has identified than about the current state of the evidence; the ROI page is behind-the-scenes literature-review work for them.</li>
+      <li><span class="role-label">Administrator</span>To monitor whether the EN is surfacing enough dispute-resolving ROIs (a corpus that never generates disputes is probably not detecting disagreement) and to prioritise which ROI types get scarce harvest bandwidth.</li>
+      </ul>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
+      <li><b>Turning EN structure into a search query.</b> The EN says "claim X is contested; it has three support edges and three defeat edges; here are the six papers." Translating that into a Crossref query is non-trivial: the right query is not the claim's text but something like "papers that cite any of the six AND discuss outcome Y AND are from 2020 or later". This is semantic search on top of bibliographic search, and both are imperfect.</li>
+      <li><b>The four ROI types have different search needs.</b> A gap-filling ROI wants broad coverage of an under-populated cell; a dispute-resolving ROI wants targeted depth on a specific claim; a theory-testing ROI wants papers that name the theory and test a specific prediction; a mechanism-grounding ROI wants empirical papers on the specific mediating variable. A single search strategy does not serve all four.</li>
+      <li><b>Vetting retrieved candidates for topic-relevance.</b> The existing <code>AdaptiveClassifierSubsystem</code> answers "is this paper relevant to this topic?" but with a loose threshold. For ROI vetting the threshold needs to be tighter — a false-positive on an ROI search is a researcher wasting time on an off-target paper, so the vetting step needs precision over recall. Requires deepening the classifier per DK's note.</li>
+      <li><b>The leverage ranking.</b> Each ROI needs an estimated <em>if this were answered, how much would the Atlas change?</em> metric. For gap-filling this is easy (evidence density goes from 0 to 1). For dispute-resolving it is hard (an answer could stabilise the dispute or make it worse). The ranker must be honest about its uncertainty.</li>
+      <li><b>Presenting the evidence behind an ROI.</b> A researcher who is about to commit time to an ROI-driven search deserves to see exactly why the Atlas thinks this is worth pursuing — which EN nodes, which argumentation structure, which theoretical prediction. The page must offer a one-click expansion that shows the justification without requiring the researcher to leave the page.</li>
+      <li><b>Triaging the firehose.</b> At corpus scale the Atlas could identify hundreds of ROIs. The page must default to showing tier-1 ROIs only (leverage ≥ some threshold) with a toggle to expand to tier-2 and tier-3. An ROI page that shows all of them is unreadable.</li>
+      </ol>
+    </div>
+
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">What a minimal first cut would have to look like</span><span class="h2-hint">the starting point, not an existing page</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">spec — no implementation yet</span>
+        <div class="j-naive-body"><p>No implementation yet. A plausible first cut would be a flat list of topic cells where <code>n_papers < 3</code>, surfaced as "gap" ROIs with no EN or argumentation justification, no leverage ranking, no search-triggering affordance, and no vetting. This would be gap-filling only; the other three ROI types would be unavailable.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this minimum is insufficient.</b> The naive version is a start but does not deliver the main analytic value of the page, which is the translation from EN/argumentation structure into actionable search queries. A researcher reading a naive-version ROI list would conclude the Atlas had identified a hole; they would not have the evidence to decide whether the hole is worth their time.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the spec as written</span></h2>
+      <p>For each user type below, write one to three sentences: what the spec above gets right for that user, what it misses, and one thing that should be decided before build starts. Drafts save to your browser; paste the useful ones into the Track 2 hub's AF thread when the spec moves to implementation.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
+      <div class="role-crit">
+        <div class="rc-head">Public visitor</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
+        <textarea id="crit_public_visitor" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">COGS 160 student</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a student working through one of the four tracks</div>
+        <textarea id="crit_160_student" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Researcher</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a working scientist (graduate student, postdoc, faculty) using the Atlas to triage literature</div>
+        <textarea id="crit_researcher" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Practitioner</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">an architect, designer, or clinician looking for actionable evidence</div>
+        <textarea id="crit_practitioner" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+      <div class="role-crit">
+        <div class="rc-head">Administrator</div>
+        <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
+        <textarea id="crit_admin" placeholder="What the spec gets right for this user, what it misses, and one decision that should be made before build."></textarea>
+      </div>
+        <button type="button" class="save-btn" onclick="saveCritique('af_roi')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
+      <li><span class="file-type lib">lib</span><a><code>argumentation_framework.json</code></a><span class="file-desc">The Dung-style argumentation structure computed in Layer D; input to the dispute-resolving ROI identifier.</span></li>
+      <li><span class="file-type data">data</span><a><code>data/ka_payloads/evidence_landscape.json</code></a><span class="file-desc">Topic × outcome × feature × theory tensor; input to the gap-filling ROI identifier.</span></li>
+      <li><span class="file-type data">data</span><a><code>data/ka_payloads/theories.json</code></a><span class="file-desc">Tier 1 and Tier 1.5 frameworks plus their predictions; input to the theory-testing ROI identifier.</span></li>
+      <li><span class="file-type data">data</span><a><code>data/ka_payloads/mechanisms.json</code></a><span class="file-desc">Mechanism layer with per-link directness scores; input to the mechanism-grounding ROI identifier.</span></li>
+      <li><span class="file-type missing">missing</span><a>ROI ranker</a><span class="file-desc">Given an ROI, estimate its leverage. One sub-ranker per ROI type because the leverage semantics differ across types.</span></li>
+      <li><span class="file-type missing">missing</span><a>ROI-to-query translator</a><span class="file-desc">Turns an ROI record into a structured Crossref / OpenAlex / Semantic Scholar query.</span></li>
+      <li><span class="file-type missing">missing</span><a>tighter relevance vetter</a><span class="file-desc">A deeper classifier than the current AdaptiveClassifierSubsystem's broad-relevance check. DK's note explicitly flags this as required.</span></li>
+      <li><span class="file-type api">api</span><a>/api/af/roi/trigger</a><span class="file-desc">Accepts a set of ROI ids and queues their searches. Returns an ROI-specific result set, vetted.</span></li>
+      </ul>
+    </div>
+
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>Depends on the Layer D (argumentation) and Layer F (evidence landscape + fronts) implementations landing first — both are currently marked <code>absent</code> or <code>prototype</code> on the complicated-surfaces side. This AF page is therefore a medium-horizon build, not an immediate one.</p>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('af_roi');
+  if (window.renderJourneySiblings) window.renderJourneySiblings('af_roi');
+  if (window.restoreCritique) window.restoreCritique('af_roi');
+});
+</script>
+</body>
+</html>

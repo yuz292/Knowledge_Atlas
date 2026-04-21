@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer E · Mechanisms &amp; theories</div>
-    <h1>Theory deep-dive</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> researcher, 160_student, public_visitor</span>
-      <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
-      <span><b>Complexity tier</b> Medium — content-heavy but bounded</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer E · Mechanisms &amp; theories</div>
+      <h1>Theory deep-dive</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> researcher, 160_student, public_visitor</span>
+        <span><b>Current status</b> <span class="status-pill prototype">prototype</span></span>
+        <span><b>Complexity tier</b> Medium — content-heavy but bounded</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
-    <p>The theory deep-dive is the page that lets a user read about one of the 24 theoretical frameworks the Atlas indexes — the eleven T1 "foundational" theories (e.g. Attention Restoration Theory, Stress Recovery Theory, Prospect-Refuge) and the thirteen T1.5 domain-specific theories (e.g. fractal-dimension theory of visual preference, biophilic hypothesis variants).</p>
-    <p>For each theory the page shows its core claim in plain language, the mechanisms it predicts, the outcomes it has been used to explain, the empirical warrants that support or undercut its predictions, and the relationships to neighbouring theories (compatible, competing, specialises, generalises).</p>
-    <p>Theories are the Atlas's most stable content, but they are also the content most prone to overclaiming. The page must communicate theoretical maturity — how much of the theory is actually tested — rather than letting each theory look equally well-supported.</p>
-  </div>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The theory deep-dive lets a user read about one of the 24 theoretical frameworks the Atlas indexes. Eleven are T1 "foundational" theories — Attention Restoration Theory, Stress Recovery Theory, Prospect-Refuge among them. Thirteen are T1.5 domain-specific theories — fractal-dimension theory of visual preference, biophilic-hypothesis variants, and their kin.</p>
+    <p>For each theory the page shows the core claim in plain language, the mechanisms the theory predicts, the outcomes it has been used to explain, the empirical warrants that support or undercut its predictions, and the relationships to neighbouring theories (compatible, competing, specialises, generalises).</p>
+    <p>Theories are the Atlas's most stable content. They are also the content most prone to overclaiming — an elegant theoretical framework is easier to present than the messy empirical record under it. The page must communicate theoretical maturity — how much of the theory is actually tested — rather than letting every theory look equally well-supported.</p>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>A public visitor often arrives at a theory page from a Wikipedia link or a Google result; the page must land a coherent one-minute read before offering the deeper structure.</li>
       <li><span class="role-label">COGS 160 student</span>Track 1 students use theories to anchor their tagging schema; Track 3 students pick one theory whose mechanism they will operationalise in VR.</li>
       <li><span class="role-label">Researcher</span>To triage whether a theory's current state of evidence supports the use they want to put it to.</li>
       <li><span class="role-label">Practitioner</span>Practitioners rarely want theory deep-dives; they are usually better served by mechanism or topic pages. The theory page should offer a "for practitioners" alternative route at the top.</li>
       <li><span class="role-label">Administrator</span>To mark a theory as <code>draft</code> / <code>reviewed</code> / <code>contested</code> and to attach the responsible review panel.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Tier distinction.</b> T1 and T1.5 theories need to be visibly distinct; mixing them flattens a principled distinction.</li>
       <li><b>Maturity display.</b> A well-validated theory and a speculative theory render the same on a naive template. The page must surface how much empirical work anchors each claim.</li>
       <li><b>Cross-theory linkage.</b> Users frequently want "what's the difference between Attention Restoration Theory and Stress Recovery Theory?" — a comparative view that the deep-dive page does not by itself afford.</li>
       <li><b>Citation density.</b> A well-developed theory has a hundred-plus citations. The page must rank and filter rather than list.</li>
       <li><b>Draft banner.</b> All framework pages are currently marked "working draft — expert review in progress"; the page must explain what that means without chilling the reader into doubt.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The current page is a long markdown-rendered essay per theory, with headings for <em>core claim</em>, <em>predictions</em>, <em>evidence</em>, and <em>references</em>. There is no comparative view, no maturity display, and no interactivity.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> The prose is academically respectable but visually monotonous; a reader cannot see at a glance which theory has a thousand citations versus ten, cannot compare two theories side-by-side, and cannot navigate the graph of theoretical relationships. The draft banner at the top of every page is handled consistently (good) but does not specify what the panel review process will actually check (bad).</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>The current page is a long markdown-rendered essay per theory, with headings for <em>core claim</em>, <em>predictions</em>, <em>evidence</em>, and <em>references</em>. There is no comparative view, no maturity display, and no interactivity.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> The prose is academically respectable but visually monotonous; a reader cannot see at a glance which theory has a thousand citations versus ten, cannot compare two theories side-by-side, and cannot navigate the graph of theoretical relationships. The draft banner at the top of every page is handled consistently (good) but does not specify what the panel review process will actually check (bad).</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,31 +99,34 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('theory')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('theory')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/theories.json</a><span class="file-desc">Per-theory records with core claim, predictions, linked mechanisms, linked warrants, and relation edges to sibling theories.</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/theory_maturity.json</a><span class="file-desc">Per-theory maturity metrics: citation count in corpus, number of successful vs. failed predictions, review-panel status.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_framework_page.html (per theory)</a><span class="file-desc">Currently 24 static pages, one per theory. A shared renderer fed by <code>theories.json</code> would reduce duplication.</span></li>
       <li><span class="file-type api">api</span><a>/api/theory/compare</a><span class="file-desc">Endpoint for the missing comparative view; not yet implemented.</span></li>
       <li><span class="file-type missing">missing</span><a>theory-relation graph</a><span class="file-desc">The cross-theory relationships (compatible / competes / specialises / generalises) exist in narrative form but are not a machine-readable graph yet.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>The theory layer is the most read surface after the topic pages. It is a sensible T4.f redesign target because the 24 current pages share a common structure and a single template redesign cascades to all of them.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>The theory layer is the most read surface after the topic pages. It is a sensible T4.f redesign target because the 24 current pages share a common structure and a single template redesign cascades to all of them.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('theory');
   if (window.renderJourneySiblings) window.renderJourneySiblings('theory');
   if (window.restoreCritique) window.restoreCritique('theory');
 });

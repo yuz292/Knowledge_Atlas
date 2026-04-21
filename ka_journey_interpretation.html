@@ -10,71 +10,70 @@
 <script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 </head>
-<body data-ka-regime="global" data-ka-active="">
+<body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
 
-  <div class="j-header">
-    <div class="eyebrow">Complicated journey surface · Layer D · Reading evidence</div>
-    <h1>Interpretation layer</h1>
-    <div class="j-meta">
-      <span><b>Roles served</b> public_visitor, researcher, 160_student</span>
-      <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
-      <span><b>Complexity tier</b> Medium-high — the prose layer of the knowledge graph</span>
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
+
+    <div class="j-header">
+      <div class="eyebrow">Complicated journey surface · Layer D · Reading evidence</div>
+      <h1>Interpretation layer</h1>
+      <div class="j-meta">
+        <span><b>Roles served</b> public_visitor, researcher, 160_student</span>
+        <span><b>Current status</b> <span class="status-pill naive">naive</span></span>
+        <span><b>Complexity tier</b> Medium-high — the prose layer of the knowledge graph</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-siblings" id="j-siblings-slot"></div>
+    <div class="j-siblings" id="j-siblings-slot"></div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">◧</span>What this page displays<span class="h2-hint">the information on offer</span></h2>
-    <p>The interpretation layer is where the Atlas talks <em>about</em> the evidence it has indexed. For each topic bundle (e.g. <code>luminous × cog.attention</code>) an interpretation is a short structured commentary that names the main claim the bundle supports, the qualifications, the pattern of disagreement, and the open questions. Interpretations are the layer that converts a pile of warrants into something a human can read in two minutes.</p>
-    <p>Each interpretation has a provenance trail: which warrants from the EN underlie each sentence, which moderator variables are considered, and which claims are explicitly excluded for lack of evidence. The viewer must make that trail discoverable without cluttering the reading experience.</p>
-    <p>Interpretations are not authoritative in the sense a review paper is; they are <em>defeasible</em> (Pollock 1987). The page must communicate that they can change as new warrants are added, and must show the timestamp and version history of each interpretation.</p>
-  </div>
+    <div class="j-section">
+      <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
+    <p>The interpretation layer is where the Atlas talks <em>about</em> the evidence it indexes. For each topic bundle (e.g. <code>luminous × cog.attention</code>) an interpretation is a short structured commentary: the main claim the bundle supports, the qualifications, the pattern of disagreement, the open questions. This layer converts a pile of warrants into something a researcher can read in two minutes.</p>
+    <p>Every interpretation carries a provenance trail — which warrants from the EN underlie each sentence, which moderator variables the interpretation considers, which claims it explicitly excludes for lack of evidence. The viewer has to make that trail discoverable without cluttering the reading experience.</p>
+    <p>Interpretations are not authoritative in the sense a review paper is; they are <em>defeasible</em> (Pollock, 1987). The page must communicate that they can change as new warrants land, and must show the timestamp and version history of each interpretation.</p>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☰</span>Who needs this, and why<span class="h2-hint">functions served, per user type</span></h2>
-    <ul class="role-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☰</span><span class="h2-text">Who needs this, and why</span><span class="h2-hint">functions served, per user type</span></h2>
+      <ul class="role-list">
       <li><span class="role-label">Public visitor</span>The interpretation layer is the main payoff for a public visitor: they came with a question, and this page answers it in prose grounded in the evidence base.</li>
       <li><span class="role-label">COGS 160 student</span>Track 2 students audit whether the interpretation's cited warrants actually say what the interpretation claims. Track 4 students treat the prose as a redesign target.</li>
       <li><span class="role-label">Researcher</span>To see how the Atlas's synthesis agrees or disagrees with a review paper they have already read; the discrepancies are informative.</li>
       <li><span class="role-label">Practitioner</span>To find a citation-backed one-paragraph summary they can paste into a design memo.</li>
       <li><span class="role-label">Administrator</span>To flag interpretations whose provenance trail has stale warrants — e.g., a warrant has since been downgraded but the interpretation still quotes it confidently.</li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">△</span>Why this page is hard to design<span class="h2-hint">the challenges</span></h2>
-    <ol>
+    <div class="j-section">
+      <h2><span class="h2-icon">△</span><span class="h2-text">Why this page is hard to design</span><span class="h2-hint">the challenges</span></h2>
+      <ol>
       <li><b>Prose-plus-links.</b> The interpretation is a short essay but every claim must be anchored to a warrant. The UX for inline citations is thorny; the most obvious solution (superscripts) clutters at density.</li>
       <li><b>Confidence gradient.</b> Sentences within one interpretation carry different confidence levels; the viewer must visually distinguish a strongly-supported sentence from a "this is one study's speculation" sentence without treating the entire interpretation as equally provisional.</li>
       <li><b>Versioning.</b> Interpretations re-write when the evidence changes. The user needs to know whether they are reading the current version and what changed last.</li>
       <li><b>Authorship and accountability.</b> Interpretations in the Atlas can be LLM-generated, human-edited, or human-written. The page must flag which, because interpretations produced by an LLM have a different error profile than human-authored ones.</li>
       <li><b>Disagreement display.</b> When an interpretation explicitly notes "the literature disagrees", the page must show the two sides in a way that is balanced rather than false-balanced — i.e., weight the disagreement by evidence strength.</li>
-    </ol>
-  </div>
-
-  <div class="j-section">
-    <h2><span class="h2-icon">✗</span>The simple naive solution in place now<span class="h2-hint">what you'll actually see</span></h2>
-    <div class="j-naive">
-      <span class="j-naive-label">naive — the current implementation</span>
-      <div class="j-naive-body"><p>The current page renders the interpretation as plain markdown converted to HTML, with plain links at the end for citations. There is no inline anchor between sentences and warrants; no confidence marker per sentence; no version banner; no authorship flag; no disagreement rendering.</p></div>
+      </ol>
     </div>
-    <div class="j-naive-why"><b>Why this is inadequate.</b> A reader cannot tell which sentence of the interpretation is grounded in which warrant, which means they cannot tell whether a claim they doubt is supported by one 2010 paper or by a dozen replications. The interpretation therefore reads as if it were a review article — more authoritative than it should be — and defeats the Atlas's reason for being a defeasible synthesis rather than a static review.</div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">✎</span>Critique it from each user's perspective<span class="h2-hint">who is and is not served by the naive solution</span></h2>
-    <p>
-      For each user type below, write one to three sentences: what in the
-      naive solution works for that user, what fails, and what one thing a
-      redesign should change first. Your drafts save to your browser; copy
-      them into your T4.a or T4.f workspace when you are ready.
-    </p>
-    <div class="j-critique">
-      <span class="j-critique-label">critique by user type</span>
+    <div class="j-section j-section-naive">
+      <h2><span class="h2-icon">✗</span><span class="h2-text">The simple naive solution in place now</span><span class="h2-hint">what you'll actually see</span></h2>
+      <div class="j-naive">
+        <span class="j-naive-label">naive — the current implementation</span>
+        <div class="j-naive-body"><p>The current page renders the interpretation as plain markdown converted to HTML, with plain links at the end for citations. There is no inline anchor between sentences and warrants; no confidence marker per sentence; no version banner; no authorship flag; no disagreement rendering.</p></div>
+      </div>
+      <div class="j-naive-why"><b>Why this is inadequate.</b> A reader cannot tell which sentence of the interpretation is grounded in which warrant, which means they cannot tell whether a claim they doubt is supported by one 2010 paper or by a dozen replications. The interpretation therefore reads as if it were a review article — more authoritative than it should be — and defeats the Atlas's reason for being a defeasible synthesis rather than a static review.</div>
+    </div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">✎</span><span class="h2-text">Critique it from each user's perspective</span><span class="h2-hint">who is and is not served by the naive solution</span></h2>
+      <p>For each user type below, write one to three sentences: what in the naive solution works for that user, what fails, and what one thing a redesign should change first. Your drafts save to your browser; copy them into your T4.a or T4.f workspace when you are ready.</p>
+      <div class="j-critique">
+        <span class="j-critique-label">critique by user type</span>
       <div class="role-crit">
         <div class="rc-head">Public visitor</div>
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a scientifically-curious layperson who arrived from a link</div>
@@ -100,31 +99,34 @@
         <div style="font-size:0.82rem;color:#6B6B6B;margin-bottom:6px">a course or site admin doing quality control</div>
         <textarea id="crit_admin" placeholder="What works for this user, what fails, and one thing a redesign should change first."></textarea>
       </div>
-      <button type="button" class="save-btn" onclick="saveCritique('interpretation')">Save critiques (to browser only)</button>
-      <span class="j-status" id="j-crit-status">Saved.</span>
+        <button type="button" class="save-btn" onclick="saveCritique('interpretation')">Save critiques (to browser only)</button>
+        <span class="j-status" id="j-crit-status">Saved.</span>
+      </div>
     </div>
-  </div>
 
-  <div class="j-section">
-    <h2><span class="h2-icon">☷</span>Data files and endpoints to populate this page<span class="h2-hint">what a real implementation would call</span></h2>
-    <ul class="file-list">
+    <div class="j-section">
+      <h2><span class="h2-icon">☷</span><span class="h2-text">Data files and endpoints to populate this page</span><span class="h2-hint">what a real implementation would call</span></h2>
+      <ul class="file-list">
       <li><span class="file-type data">data</span><a>data/ka_payloads/interpretations.json</a><span class="file-desc">Per-bundle interpretation records: <code>{bundle_id, text, sentence_warrants: [{sentence_idx, warrant_ids, confidence}], authors, version, timestamp}</code>.</span></li>
       <li><span class="file-type api">api</span><a>/api/interpretations/{bundle_id}/history</a><span class="file-desc">Version history for a given interpretation.</span></li>
       <li><span class="file-type data">data</span><a>data/ka_payloads/warrants.json</a><span class="file-desc">The warrant records cited by each interpretation sentence.</span></li>
       <li><span class="file-type lib">lib</span><a>ka_interpretation_render.js</a><span class="file-desc">Markdown renderer with inline warrant anchors; not yet built.</span></li>
       <li><span class="file-type missing">missing</span><a>sentence_confidence_classifier</a><span class="file-desc">A per-sentence confidence estimator. Could be LLM-produced but not wired into the payload pipeline.</span></li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="j-section" style="background:#F9F5EE">
-    <h2><span class="h2-icon">→</span>Status and next steps</h2>
-    <p>The interpretation layer is the Atlas's most user-facing surface and the one where poor design most directly misleads the public. It is an obvious T4.f redesign candidate.</p>
-  </div>
+    <div class="j-section" style="background:#F9F5EE">
+      <h2><span class="h2-icon">→</span><span class="h2-text">Status and next steps</span></h2>
+      <p>The interpretation layer is the Atlas's most user-facing surface and the one where poor design most directly misleads the public. It is an obvious T4.f redesign candidate.</p>
+    </div>
 
-</main>
+  </main>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('interpretation');
   if (window.renderJourneySiblings) window.renderJourneySiblings('interpretation');
   if (window.restoreCritique) window.restoreCritique('interpretation');
 });

@@ -7,6 +7,7 @@
 <meta name="description" content="Index of the harder pages of the Knowledge Atlas: epistemic network, Bayesian network, interpretation, argumentation, QA, mechanism, theory, gaps, fronts, inspectors.">
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
+<script src="ka_journey_surface.js" defer></script>
 <link rel="stylesheet" href="ka_journey_page.css">
 <style>
   .j-hero {
@@ -46,8 +47,10 @@
     padding: 1px 8px; border-radius: 8px; margin-left: 6px;
     text-transform: uppercase;
   }
-  .status.naive { background: #FEF3E2; color: #9a5010; }
-  .status.prototype { background: #E8872A; color: #fff; }
+  /* P1-6 (2026-04-20 PM): deepened naive/prototype hues to clear
+     WCAG AA 4.5:1 contrast on white. */
+  .status.naive { background: #FEF3E2; color: #B23550; }
+  .status.prototype { background: #9a5010; color: #fff; }
   .status.shipped { background: #D4EDDA; color: #1A7050; }
   .status.absent { background: #F0F0F0; color: #6B6B6B; }
 </style>
@@ -55,7 +58,11 @@
 <body data-ka-regime="global" data-ka-active="">
 <div id="ka-navbar-slot"></div>
 
-<main class="j-outer">
+<div class="j-shell">
+
+  <aside class="j-sidebar" id="j-sidebar-slot" aria-label="Complicated-surface journey index"></aside>
+
+  <main class="j-main">
 
   <div class="j-hero">
     <div style="font-size:0.74rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9BEF2;margin-bottom:8px">Complicated surfaces index</div>
@@ -136,6 +143,17 @@
       </ul>
     </div>
 
+    <div class="layer-card" style="border-left-color:#E8872A;background:#FFFBF5">
+      <div class="layer-tag" style="color:#9a5010">Article Finder problems · AF-1 to AF-3</div>
+      <h3 style="color:#9a5010">Article Finder — specs for new functionality</h3>
+      <p style="font-size:0.88rem;color:#6B6B6B">Three T2-track build-out specs: harvesting candidate articles from the references of corpus papers; ROI-based candidate generation driven by EN and argumentation analysis; deepening the neural-underpinnings (PNU) layer. Each is a feature that does not yet exist; the spec pages describe the problem, the challenges, what a real implementation would call, and invite per-user-type critique — same six-section scaffold as the other journeys, amber-coded to flag them as build-out rather than as critique-of-existing.</p>
+      <ul>
+        <li><a href="ka_journey_af_references.html">AF-1 · Articles referred to in corpus</a> <span class="status absent">absent</span></li>
+        <li><a href="ka_journey_af_roi.html">AF-2 · ROI-based candidate generator</a> <span class="status absent">absent</span></li>
+        <li><a href="ka_journey_af_neuro.html">AF-3 · Plausible Neural Underpinnings</a> <span class="status absent">absent</span></li>
+      </ul>
+    </div>
+
   </div>
 
   <div class="j-section">
@@ -158,6 +176,13 @@
     </p>
   </div>
 
-</main>
+  </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.renderJourneySidebar) window.renderJourneySidebar('__index__');
+});
+</script>
 </body>
 </html>
