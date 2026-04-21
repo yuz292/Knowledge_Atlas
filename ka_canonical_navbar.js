@@ -145,8 +145,8 @@
       .ka-nav .ka-brand .ka-mark,
       .ka-nav .ka-brand img.ka-mark,
       .ka-nav .ka-brand svg.ka-mark {
-        width:22px; height:22px; min-width:22px; min-height:22px;
-        max-width:22px; max-height:22px; display:block;
+        width:30px; height:30px; min-width:30px; min-height:30px;
+        max-width:30px; max-height:30px; display:block;
       }
       .ka-nav .ka-brand-mark { font-family:Georgia,serif; font-weight:800;
         letter-spacing:.02em; line-height:1.1; }
@@ -242,13 +242,25 @@
               : (regime === 'global' && currentlyIn160sp())  ? '../ka_home.html'
               : (regime === '160sp')                         ? 'ka_schedule.html'
               :                                                'ka_home.html';
-    // The triangle icon introduced in the refreshed navbar proved too
-    // visually dominant and, on the home page in particular, it read as
-    // the wrong logo rather than as a small supporting mark. Revert to
-    // the simpler text-only wordmark. That matches the earlier canonical
-    // navbar and keeps the banner from acquiring a second visual thesis.
+    // Canonical Atlas logo: the linked-node mark already used on the login,
+    // register, and user pages. This is the repo's recurring brand object,
+    // unlike the brief triangle experiment that proved visually misleading.
+    const mark = `
+      <svg class="ka-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <circle cx="16" cy="16" r="3.5" fill="#F5A623"/>
+        <circle cx="16" cy="5"  r="2.5" fill="#A8C8BF"/>
+        <circle cx="27" cy="22" r="2.5" fill="#A8C8BF"/>
+        <circle cx="5"  cy="22" r="2.5" fill="#A8C8BF"/>
+        <line x1="16"   y1="7.5"  x2="16"   y2="12.5" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="24.8" y1="20.2" x2="19.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="7.2"  y1="20.2" x2="13.0" y2="17.3" stroke="#F5A623" stroke-width="1.5" stroke-opacity="0.9"/>
+        <line x1="16"   y1="7.5"  x2="25.5" y2="20" stroke="#FFFFFF" stroke-width="0.8" stroke-opacity="0.18"/>
+        <line x1="25.5" y1="20" x2="6.5"   y2="20" stroke="#FFFFFF" stroke-width="0.8" stroke-opacity="0.18"/>
+        <line x1="6.5"  y1="20" x2="16"    y2="7.5" stroke="#FFFFFF" stroke-width="0.8" stroke-opacity="0.18"/>
+      </svg>`;
     return `
       <a class="ka-brand" href="${esc(home)}" aria-label="Knowledge Atlas home">
+        ${mark}
         <span class="ka-brand-mark">
           <span class="k">Knowledge</span>
           <span class="a">At<span class="las">las</span></span>
