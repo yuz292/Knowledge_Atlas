@@ -142,6 +142,12 @@
         text-decoration:none; color:#fff; }
       .ka-nav .ka-brand .ka-mark { flex-shrink:0;
         filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.25)); }
+      .ka-nav .ka-brand .ka-mark,
+      .ka-nav .ka-brand img.ka-mark,
+      .ka-nav .ka-brand svg.ka-mark {
+        width:22px; height:22px; min-width:22px; min-height:22px;
+        max-width:22px; max-height:22px; display:block;
+      }
       .ka-nav .ka-brand-mark { font-family:Georgia,serif; font-weight:800;
         letter-spacing:.02em; line-height:1.1; }
       .ka-nav .ka-brand-mark .k { color:#A8C8BF; font-size:.62rem;
