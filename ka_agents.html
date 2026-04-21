@@ -89,13 +89,29 @@
   </div>
 
   <div class="a-orient">
-    <h3>How to use an agent</h3>
+    <h3>What this page is — and what it isn't</h3>
+    <p style="margin-bottom:10px">
+      <b>This page is a directory, not an execution surface.</b> Agents are
+      prompt contracts — named roles, reference groups, required outputs — that
+      run in an LLM session on the backend (Claude, GPT, Gemini, or a local
+      model). There is no "Run this agent" button on this page. The agents
+      work by being read into a sub-prompt, not by being clicked.
+    </p>
+    <h3 style="margin-top:14px">How to invoke an agent</h3>
     <ol>
-      <li>Read the agent's source page to see its reference group, required inputs, and required outputs.</li>
+      <li>Open the agent's source (<code>/agents/*.md</code>) to review its reference group, required inputs, and required outputs.</li>
       <li>Copy the "Prompt to run this agent" block at the bottom of the source.</li>
-      <li>Paste into your preferred LLM (Claude, GPT, Gemini) with the specific page, chart, or draft attached as context.</li>
-      <li>The agent returns a structured report. Apply the findings and re-run if needed.</li>
+      <li>Paste into a Claude / GPT / Gemini session — Cowork, Claude Code, the web client, or a backend service with an API key — with the specific page, chart, or draft attached as context.</li>
+      <li>The LLM returns the structured report the agent specifies. Apply the findings; re-run the agent on the revised draft if you want a second pass.</li>
     </ol>
+    <p style="margin-top:10px;font-size:.86rem;color:#6B6B6B">
+      A browser-invocation surface (a "Run agent" button that posts the page's
+      current content to a backend LLM and streams back the structured report)
+      is a plausible future feature — it would need a backend endpoint with
+      LLM credentials, a task queue, and a submission UI. It is explicitly
+      not in scope today. For now, the agents run where every other LLM
+      sub-prompt runs: in your own LLM session.
+    </p>
   </div>
 
   <div class="a-grid">
