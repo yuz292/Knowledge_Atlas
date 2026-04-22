@@ -7,6 +7,7 @@
 <meta name="description" content="Browse research topics. Each topic folds in its own evidence and gaps as sub-tabs.">
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
+<script src="ka_data_adapter.js"></script>
 <link rel="stylesheet" href="ka_crosswalk_patterns.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -17,9 +18,30 @@ main.ka-outer{max-width:1200px;margin:22px auto 70px;padding:0 22px}
 .ka-hero{border-bottom:2px solid #E0D8CC;padding-bottom:14px;margin-bottom:18px}
 .ka-hero h1{font-family:Georgia,serif;font-size:1.8rem;color:#1C3D3A;margin-bottom:4px}
 .ka-hero p{color:#6B6B6B;font-size:.92rem;margin:0}
+.topics-live-overview{margin:0 0 18px}
+.topics-live-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+.topics-live-metric{background:#fff;border:1.5px solid #E0D8CC;border-radius:12px;padding:14px 15px}
+.topics-live-metric .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+.topics-live-metric .value{font-size:1.2rem;font-weight:700;color:#1C3D3A}
+.topics-live-metric .sub{font-size:.83rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+.topics-live-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.topics-live-card{background:#fff;border:1.5px solid #E0D8CC;border-radius:12px;padding:18px}
+.topics-live-card h2{font-family:Georgia,serif;font-size:1.05rem;color:#1C3D3A;margin-bottom:8px}
+.topics-live-card p{font-size:.9rem;color:#40514D;line-height:1.58;margin-bottom:12px}
+.topics-live-list{display:grid;gap:10px}
+.topics-live-row{padding:12px 13px;border:1px solid #E9E1D5;border-radius:10px;background:#F9F7F2}
+.topics-live-row b{color:#1C3D3A}
+.topics-live-meta{font-size:.82rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+.topics-live-chip-row{display:flex;flex-wrap:wrap;gap:7px}
+.topics-live-chip,.topics-live-chip-link{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#fff;color:#1C3D3A;font-size:.78rem;text-decoration:none}
+.topics-live-chip-link:hover{border-color:#2A7868;color:#2A7868}
+.topics-live-pnu{font-size:.84rem;color:#40514D;line-height:1.5;background:#fff;border-left:3px solid #E8872A;padding:10px 12px;border-radius:0 8px 8px 0;margin-top:8px}
+.topics-live-loading,.topics-live-error{padding:14px 16px;border-radius:10px}
+.topics-live-loading{background:#fff;color:#6B6B6B;border:1.5px solid #E0D8CC}
+.topics-live-error{background:#F8D7DA;color:#8A1A25;border:1px solid #E2B4B9}
 
 .topics-layout{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:flex-start}
-@media (max-width:900px){.topics-layout{grid-template-columns:1fr}}
+@media (max-width:900px){.topics-layout{grid-template-columns:1fr}.topics-live-grid{grid-template-columns:1fr}}
 
 .sidebar{background:#fff;border:1.5px solid #E0D8CC;border-radius:10px;
          padding:14px;position:sticky;top:68px;
@@ -134,6 +156,10 @@ main.ka-outer{max-width:1200px;margin:22px auto 70px;padding:0 22px}
      — use the row above to jump to the newer faceted versions.</p>
 </div>
 
+<div id="__ka_topics_overview" class="topics-live-overview">
+  <div class="topics-live-loading">Loading the current Atlas classic-topic overview…</div>
+</div>
+
 <div class="topics-layout">
 
   <aside class="sidebar" id="sidebar">
@@ -181,6 +207,104 @@ main.ka-outer{max-width:1200px;margin:22px auto 70px;padding:0 22px}
 
   const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c =>
     ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+
+  function compact(text, limit = 220){
+    const value = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!value) return '';
+    return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
+  }
+
+  function renderClassicOverview(topics, articlesById, theoriesPayload, pnuPayload){
+    const mount = document.getElementById('__ka_topics_overview');
+    if (!mount) return;
+    const theories = (theoriesPayload && theoriesPayload.theories) || [];
+    const pnuRows = (pnuPayload && pnuPayload.papers) || [];
+    const theoryByName = new Map(theories.map(row => [String(row.name || '').toLowerCase(), row]));
+    const topByVoi = topics.slice().sort((a,b) => (b.voi||0) - (a.voi||0)).slice(0,4);
+    const topByVolume = topics.slice().sort((a,b) => (b.n||0) - (a.n||0)).slice(0,4);
+    const categoryCounts = new Map();
+    const theoryCounts = new Map();
+    topics.forEach(topic => {
+      categoryCounts.set(topic.cat || 'Uncategorised', (categoryCounts.get(topic.cat || 'Uncategorised') || 0) + 1);
+      (topic.shared_theories || []).forEach(label => theoryCounts.set(label, (theoryCounts.get(label) || 0) + 1));
+    });
+    const topCategories = [...categoryCounts.entries()].sort((a,b) => b[1]-a[1]).slice(0,5);
+    const topTheorySignals = [...theoryCounts.entries()].sort((a,b) => b[1]-a[1]).slice(0,5);
+
+    mount.innerHTML = `
+      <div class="topics-live-metrics">
+        <div class="topics-live-metric">
+          <div class="label">Current atlas classic overview</div>
+          <div class="value">${esc(topics.length)}</div>
+          <div class="sub">Topic bundles currently surfaced by the classic browser.</div>
+        </div>
+        <div class="topics-live-metric">
+          <div class="label">Topic categories</div>
+          <div class="value">${esc(categoryCounts.size)}</div>
+          <div class="sub">High-level categories visible in the classic list.</div>
+        </div>
+        <div class="topics-live-metric">
+          <div class="label">Theory signals</div>
+          <div class="value">${esc(topTheorySignals.length)}</div>
+          <div class="sub">Theories most recurrent across the visible topic bundles.</div>
+        </div>
+        <div class="topics-live-metric">
+          <div class="label">Paper PNUs</div>
+          <div class="value">${esc((pnuPayload && pnuPayload.summary && pnuPayload.summary.short_summary_count) || 0)}</div>
+          <div class="sub">Paper-level summaries available to ground the topic browser.</div>
+        </div>
+      </div>
+      <div class="topics-live-grid">
+        <section class="topics-live-card">
+          <h2>Highest-value topic bundles</h2>
+          <p>The classic browser is most useful when it makes the high-value bundles plain before one starts filtering.</p>
+          <div class="topics-live-list">
+            ${topByVoi.map(topic => {
+              const firstPaper = (topic.paper_ids || []).map(pid => pnuRows.find(item => item.paper_id === pid)).find(item => item && item.pnu && item.pnu.short_summary);
+              return `
+                <article class="topics-live-row">
+                  <b>${esc(topic.name || topic.id)}</b>
+                  <div class="topics-live-meta">${esc(topic.cat || 'Topic')} · VOI ${Number(topic.voi || 0).toFixed(2)} · ${esc(topic.n || 0)} papers</div>
+                  ${(topic.shared_theories && topic.shared_theories.length) ? `<div class="topics-live-chip-row">${topic.shared_theories.slice(0,4).map(label => {
+                    const theory = theoryByName.get(String(label || '').toLowerCase());
+                    return theory
+                      ? `<a class="topics-live-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${esc(theory.name)}</a>`
+                      : `<span class="topics-live-chip">${esc(label)}</span>`;
+                  }).join('')}</div>` : ''}
+                  ${firstPaper ? `<div class="topics-live-pnu">${esc(compact(firstPaper.pnu.short_summary, 220))}</div>` : ''}
+                </article>`;
+            }).join('')}
+          </div>
+        </section>
+        <section class="topics-live-card">
+          <h2>Where the classic browser is densest</h2>
+          <p>This panel answers a practical question: which categories and theories are doing the most work in the current classic listing.</p>
+          <div class="topics-live-list">
+            <article class="topics-live-row">
+              <b>Category distribution</b>
+              <div class="topics-live-chip-row">${topCategories.map(([label, count]) => `<span class="topics-live-chip">${esc(label)} · ${esc(count)}</span>`).join('')}</div>
+            </article>
+            <article class="topics-live-row">
+              <b>Theory signals</b>
+              <div class="topics-live-chip-row">${topTheorySignals.map(([label, count]) => {
+                const theory = theoryByName.get(String(label || '').toLowerCase());
+                const body = `${esc(label)} · ${esc(count)}`;
+                return theory
+                  ? `<a class="topics-live-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${body}</a>`
+                  : `<span class="topics-live-chip">${body}</span>`;
+              }).join('')}</div>
+            </article>
+            <article class="topics-live-row">
+              <b>Largest bundles by paper count</b>
+              <div class="topics-live-list">
+                ${topByVolume.map(topic => `<div class="topics-live-meta"><b>${esc(topic.name || topic.id)}</b> · ${esc(topic.n || 0)} papers · ${esc(compact(topic.desc || '', 120) || 'Description pending.')}</div>`).join('')}
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    `;
+  }
 
   function shortCat(c){
     return {Neuroscience:'Neuro',Methodology:'Method',Physiological:'Phys',Environmental:'Envt'}[c] || c;
@@ -368,23 +492,35 @@ main.ka-outer{max-width:1200px;margin:22px auto 70px;padding:0 22px}
   let ARTICLES_BY_ID = {};
 
   Promise.all([
-    fetch('data/ka_payloads/topics.json',   {cache:'no-store'})
-      .then(r => r.ok ? r.json() : Promise.reject('topics.json: ' + r.status)),
+    (window.KA_DATA_ADAPTER
+      ? window.KA_DATA_ADAPTER.loadPayload('topics', { topics: [] })
+      : fetch('data/ka_payloads/topics.json', {cache:'no-store'}).then(r => r.ok ? r.json() : Promise.reject('topics.json: ' + r.status))),
     fetch('data/ka_payloads/articles.json', {cache:'no-store'})
       .then(r => r.ok ? r.json() : null)
       .catch(() => null),
+    (window.KA_DATA_ADAPTER
+      ? window.KA_DATA_ADAPTER.loadPayload('theories', { theories: [] })
+      : Promise.resolve({ theories: [] })),
+    (window.KA_DATA_ADAPTER
+      ? window.KA_DATA_ADAPTER.loadPayload('paper_pnus', { papers: [], summary: {} })
+      : Promise.resolve({ papers: [], summary: {} })),
   ])
-    .then(([topicsData, articlesData]) => {
+    .then(([topicsData, articlesData, theoriesData, pnuData]) => {
       TOPICS = topicsData.topics || [];
       if (articlesData && Array.isArray(articlesData.articles)) {
         for (const a of articlesData.articles) {
           if (a && a.paper_id) ARTICLES_BY_ID[a.paper_id] = a;
         }
       }
+      renderClassicOverview(TOPICS, ARTICLES_BY_ID, theoriesData, pnuData);
       renderSidebar();
       if (TOPICS.length) selectTopic(TOPICS[0].id);
     })
     .catch(err => {
+      const overview = document.getElementById('__ka_topics_overview');
+      if (overview) {
+        overview.innerHTML = `<div class="topics-live-error"><b>Could not load the current Atlas classic overview.</b> ${esc(err)}</div>`;
+      }
       PANEL.innerHTML = `<div class="empty" style="color:#A02020">
         Could not load topics from data/ka_payloads/topics.json (${esc(err)}).
         Serve the site over HTTP to load the manifest.</div>`;

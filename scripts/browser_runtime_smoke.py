@@ -229,7 +229,9 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
         theory_page = context.new_page()
         theory_journey_page = context.new_page()
         topic_page = context.new_page()
+        heatmap_page = context.new_page()
         topic_dashboard_page = context.new_page()
+        classic_topics_page = context.new_page()
         mechanism_page = context.new_page()
 
         try:
@@ -244,7 +246,9 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             theory_url = f"{config.base_url}/ka_home_theory.html"
             theory_journey_url = f"{config.base_url}/ka_journey_theory.html"
             topic_url = f"{config.base_url}/ka_topic_facet_view.html"
+            heatmap_url = f"{config.base_url}/ka_topic_heatmap_view.html"
             topic_dashboard_url = f"{config.base_url}/ka_topic_dashboard_view.html"
+            classic_topics_url = f"{config.base_url}/ka_topics.html"
             mechanism_url = f"{config.base_url}/ka_journey_mechanism.html"
 
             home_page.goto(home_url, wait_until="networkidle")
@@ -257,7 +261,9 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             theory_page.goto(theory_url, wait_until="networkidle")
             theory_journey_page.goto(theory_journey_url, wait_until="networkidle")
             topic_page.goto(topic_url, wait_until="networkidle")
+            heatmap_page.goto(heatmap_url, wait_until="networkidle")
             topic_dashboard_page.goto(topic_dashboard_url, wait_until="networkidle")
+            classic_topics_page.goto(classic_topics_url, wait_until="networkidle")
             mechanism_page.goto(mechanism_url, wait_until="networkidle")
 
             nav_text = home_page.locator(".ka-right").inner_text()
@@ -326,6 +332,14 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             else:
                 results.append(_fail("Topic briefing layer", f"Topic facet page did not render the live briefing layer as expected: metrics={topic_metrics}, cards={topic_cards}", url=topic_url))
 
+            heatmap_page.wait_for_selector("#__ka_heatmap_briefing .heat-card")
+            heatmap_cards = heatmap_page.locator("#__ka_heatmap_briefing .heat-card").count()
+            heatmap_metrics = heatmap_page.locator("#__ka_heatmap_briefing .heat-metric").count()
+            if heatmap_cards >= 2 and heatmap_metrics >= 4:
+                results.append(_ok("Topic heatmap briefing", f"Topic heatmap rendered {heatmap_metrics} metrics and {heatmap_cards} density cards", url=heatmap_url))
+            else:
+                results.append(_fail("Topic heatmap briefing", f"Topic heatmap did not render the live briefing layer as expected: metrics={heatmap_metrics}, cards={heatmap_cards}", url=heatmap_url))
+
             topic_dashboard_page.wait_for_selector("#__ka_dashboard_briefing .dash-card")
             dashboard_cards = topic_dashboard_page.locator("#__ka_dashboard_briefing .dash-card").count()
             dashboard_metrics = topic_dashboard_page.locator("#__ka_dashboard_briefing .dash-metric").count()
@@ -333,6 +347,14 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
                 results.append(_ok("Topic dashboard briefing", f"Topic dashboard rendered {dashboard_metrics} metrics and {dashboard_cards} coordination cards", url=topic_dashboard_url))
             else:
                 results.append(_fail("Topic dashboard briefing", f"Topic dashboard did not render the live coordination layer as expected: metrics={dashboard_metrics}, cards={dashboard_cards}", url=topic_dashboard_url))
+
+            classic_topics_page.wait_for_selector("#__ka_topics_overview .topics-live-card")
+            classic_topic_cards = classic_topics_page.locator("#__ka_topics_overview .topics-live-card").count()
+            classic_topic_metrics = classic_topics_page.locator("#__ka_topics_overview .topics-live-metric").count()
+            if classic_topic_cards >= 2 and classic_topic_metrics >= 4:
+                results.append(_ok("Classic topics overview", f"Classic topics rendered {classic_topic_metrics} metrics and {classic_topic_cards} overview cards", url=classic_topics_url))
+            else:
+                results.append(_fail("Classic topics overview", f"Classic topics did not render the live overview layer as expected: metrics={classic_topic_metrics}, cards={classic_topic_cards}", url=classic_topics_url))
 
             mechanism_page.wait_for_selector("#j-mechanism-live .j-live-card")
             mechanism_cards = mechanism_page.locator("#j-mechanism-live .j-live-card").count()

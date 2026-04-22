@@ -19,8 +19,12 @@ def _fake_request(self, path, *, method="GET", json_body=None, headers=None):
         return smoke.ResponseData("http://test/160sp/collect-articles-upload.html", 200, "Loading your assigned questions Part 2: Q2 — Open Corpus")
     if path == "ka_topic_facet_view.html":
         return smoke.ResponseData("http://test/ka_topic_facet_view.html", 200, "Topic Page (Facet View) Current Atlas topic briefings topic_crosswalk.json paper_pnus")
+    if path == "ka_topic_heatmap_view.html":
+        return smoke.ResponseData("http://test/ka_topic_heatmap_view.html", 200, "Topic Page (Heatmap View) Current heatmap atlas briefing topic_crosswalk.json paper_pnus")
     if path == "ka_topic_dashboard_view.html":
         return smoke.ResponseData("http://test/ka_topic_dashboard_view.html", 200, "Topic Page (Dashboard View) Current coordinated atlas dashboard topic_crosswalk.json paper_pnus")
+    if path == "ka_topics.html":
+        return smoke.ResponseData("http://test/ka_topics.html", 200, "Topic Page (Classic View) Current atlas classic overview data/ka_payloads/topics.json")
     if path == "ka_article_view.html?id=PDF-0007":
         return smoke.ResponseData("http://test/ka_article_view.html?id=PDF-0007", 200, "Loading article record Visual support gallery Study record article_details.json")
     if path == "ka_journeys.html":

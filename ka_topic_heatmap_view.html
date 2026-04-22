@@ -6,13 +6,34 @@
 <title>Topic Page (Heatmap View) — Knowledge Atlas</title>
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
+<script src="ka_data_adapter.js"></script>
 <link rel="stylesheet" href="ka_crosswalk_patterns.css">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   body{background:#F7F4EF;color:#2C2C2C}
+  .ka-topic-page{max-width:1180px;margin:0 auto;padding:26px 24px 48px}
+  .heat-briefing{margin:0 0 18px}
+  .heat-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+  .heat-metric{background:#fff;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
+  .heat-metric .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+  .heat-metric .value{font-size:1.2rem;font-weight:700;color:#1C3D3A}
+  .heat-metric .sub{font-size:.83rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+  .heat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .heat-card{background:#fff;border:1px solid #E0D8CC;border-radius:14px;padding:18px}
+  .heat-card h2{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;margin-bottom:8px}
+  .heat-card p{font-size:.9rem;color:#40514D;line-height:1.6;margin-bottom:12px}
+  .heat-list{display:grid;gap:10px}
+  .heat-row{padding:12px 13px;border:1px solid #E9E1D5;border-radius:10px;background:#F9F7F2}
+  .heat-row b{color:#1C3D3A}
+  .heat-meta{font-size:.82rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+  .heat-chip-row{display:flex;flex-wrap:wrap;gap:7px}
+  .heat-chip,.heat-chip-link{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#fff;color:#1C3D3A;font-size:.78rem;text-decoration:none}
+  .heat-chip-link:hover{border-color:#2A7868;color:#2A7868}
+  .heat-pnu{font-size:.84rem;color:#40514D;line-height:1.5;background:#fff;border-left:3px solid #E8872A;padding:10px 12px;border-radius:0 8px 8px 0;margin-top:8px}
   .scale-legend{display:flex;align-items:center;gap:8px;margin-top:12px;
                 font-size:0.8rem;color:#6B6B6B}
   .scale-legend .swatch{display:inline-block;width:22px;height:12px;border:1px solid #E0D8CC}
+  @media (max-width:860px){.heat-grid{grid-template-columns:1fr}.ka-topic-page{padding:20px 16px 36px}}
 </style>
 </head>
 <body data-ka-regime="global" data-ka-active="topics">
@@ -37,6 +58,7 @@
     honest at-a-glance map of where the corpus is dense and where it's thin.
   </p>
 
+  <div id="__ka_heatmap_briefing" class="heat-briefing"></div>
   <div id="__ka_pattern_mount" class="heatmap-wrap"></div>
   <div class="scale-legend">
     paper count scale:
@@ -49,12 +71,146 @@
 
 <script src="ka_crosswalk_patterns.js"></script>
 <script>
+function heatEsc(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])
+  );
+}
+
+function heatCompact(text, limit = 220) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!value) return '';
+  return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
+}
+
+function renderHeatmapBriefing(crosswalk, theoriesPayload, pnuPayload, mount) {
+  const rows = (crosswalk && crosswalk.rows) || [];
+  const theories = (theoriesPayload && theoriesPayload.theories) || [];
+  const pnuRows = (pnuPayload && pnuPayload.papers) || [];
+  const theoryByName = new Map(theories.map(row => [String(row.name || '').toLowerCase(), row]));
+  const outcomes = Array.isArray(crosswalk && crosswalk.outcomes)
+    ? crosswalk.outcomes.length
+    : Object.keys((crosswalk && crosswalk.outcome_index) || {}).length;
+  const families = Array.isArray(crosswalk && crosswalk.families)
+    ? crosswalk.families.length
+    : Object.keys((crosswalk && crosswalk.iv_root_index) || {}).length;
+
+  const topCells = rows.slice().sort((a, b) => (b.defended_paper_count || b.paper_count || 0) - (a.defended_paper_count || a.paper_count || 0)).slice(0, 4);
+  const familyCounts = new Map();
+  const outcomeCounts = new Map();
+  const theoryCounts = new Map();
+  rows.forEach(row => {
+    const outcome = row.outcome_label || row.outcome_term_id || 'Outcome unresolved';
+    const family = row.iv_root_label || row.iv_root || row.iv_label || 'Family unresolved';
+    const count = row.defended_paper_count || row.paper_count || 0;
+    outcomeCounts.set(outcome, (outcomeCounts.get(outcome) || 0) + count);
+    familyCounts.set(family, (familyCounts.get(family) || 0) + count);
+    (row.theories || []).forEach(label => theoryCounts.set(label, (theoryCounts.get(label) || 0) + 1));
+  });
+  const hottestOutcomes = [...outcomeCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const hottestFamilies = [...familyCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const hottestTheories = [...theoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  mount.innerHTML = `
+    <div class="heat-metrics">
+      <div class="heat-metric">
+        <div class="label">Current heatmap atlas briefing</div>
+        <div class="value">${heatEsc(rows.length)}</div>
+        <div class="sub">Defended matrix cells currently exported into the crosswalk payload.</div>
+      </div>
+      <div class="heat-metric">
+        <div class="label">Outcome columns</div>
+        <div class="value">${heatEsc(outcomes)}</div>
+        <div class="sub">Distinct outcomes represented across the current matrix.</div>
+      </div>
+      <div class="heat-metric">
+        <div class="label">Family rows</div>
+        <div class="value">${heatEsc(families)}</div>
+        <div class="sub">Architectural families participating in the current matrix.</div>
+      </div>
+      <div class="heat-metric">
+        <div class="label">Theory signals</div>
+        <div class="value">${heatEsc(hottestTheories.length)}</div>
+        <div class="sub">Recurring theories in the hottest defended cells.</div>
+      </div>
+      <div class="heat-metric">
+        <div class="label">Paper PNUs</div>
+        <div class="value">${heatEsc((pnuPayload && pnuPayload.summary && pnuPayload.summary.short_summary_count) || 0)}</div>
+        <div class="sub">Paper-level summaries available to make the dense cells intelligible.</div>
+      </div>
+    </div>
+    <div class="heat-grid">
+      <section class="heat-card">
+        <h2>Hottest defended cells</h2>
+        <p>These are the matrix cells carrying the most defended papers right now.</p>
+        <div class="heat-list">
+          ${topCells.map(row => {
+            const pnu = (row.paper_ids || []).map(pid => pnuRows.find(item => item.paper_id === pid)).find(item => item && item.pnu && item.pnu.short_summary);
+            return `
+              <article class="heat-row">
+                <b>${heatEsc(row.outcome_label || 'Outcome')} × ${heatEsc(row.iv_root_label || row.iv_label || 'Family')}</b>
+                <div class="heat-meta">${heatEsc(row.defended_paper_count || row.paper_count || 0)} defended papers · ${heatEsc(row.topic_label || row.topic_id || 'Topic bundle')}</div>
+                ${(row.theories && row.theories.length) ? `<div class="heat-chip-row">${row.theories.slice(0, 4).map(label => {
+                  const theory = theoryByName.get(String(label || '').toLowerCase());
+                  return theory
+                    ? `<a class="heat-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${heatEsc(theory.name)}</a>`
+                    : `<span class="heat-chip">${heatEsc(label)}</span>`;
+                }).join('')}</div>` : ''}
+                ${pnu ? `<div class="heat-pnu">${heatEsc(heatCompact(pnu.pnu.short_summary, 220))}</div>` : ''}
+              </article>`;
+          }).join('')}
+        </div>
+      </section>
+      <section class="heat-card">
+        <h2>Where density concentrates</h2>
+        <p>The heatmap is most honest when it says plainly which outcomes and families dominate the present corpus.</p>
+        <div class="heat-list">
+          <article class="heat-row">
+            <b>Outcome pressure</b>
+            <div class="heat-chip-row">${hottestOutcomes.map(([label, count]) => `<span class="heat-chip">${heatEsc(label)} · ${heatEsc(count)}</span>`).join('')}</div>
+          </article>
+          <article class="heat-row">
+            <b>Family pressure</b>
+            <div class="heat-chip-row">${hottestFamilies.map(([label, count]) => `<span class="heat-chip">${heatEsc(label)} · ${heatEsc(count)}</span>`).join('')}</div>
+          </article>
+          <article class="heat-row">
+            <b>Theory signals in dense cells</b>
+            <div class="heat-chip-row">${hottestTheories.map(([label, count]) => {
+              const theory = theoryByName.get(String(label || '').toLowerCase());
+              const body = `${heatEsc(label)} · ${heatEsc(count)}`;
+              return theory
+                ? `<a class="heat-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${body}</a>`
+                : `<span class="heat-chip">${body}</span>`;
+            }).join('')}</div>
+          </article>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
 (async function(){
   const mount = document.getElementById("__ka_pattern_mount");
+  const briefingMount = document.getElementById("__ka_heatmap_briefing");
   try {
     const data = await KA_CROSSWALK.loadCrosswalk();
+    let theoriesPayload = { theories: [] };
+    let pnuPayload = { papers: [], summary: {} };
+    if (window.KA_DATA_ADAPTER) {
+      [theoriesPayload, pnuPayload] = await Promise.all([
+        window.KA_DATA_ADAPTER.loadPayload('theories', { theories: [] }),
+        window.KA_DATA_ADAPTER.loadPayload('paper_pnus', { papers: [], summary: {} }),
+      ]);
+    }
+    renderHeatmapBriefing(data, theoriesPayload, pnuPayload, briefingMount);
     KA_CROSSWALK.renderHeatmap(data, mount);
   } catch (e) {
+    if (briefingMount) {
+      briefingMount.innerHTML =
+        '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px;margin-bottom:14px">'+
+        '<b>Could not load the heatmap atlas briefing.</b> Error: '+heatEsc(e.message||e)+
+        '</div>';
+    }
     mount.innerHTML =
       '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px">'+
       '<b>Could not load the crosswalk data.</b> Serve this page over HTTP (not file://). Error: '+(e.message||e)+'</div>';
