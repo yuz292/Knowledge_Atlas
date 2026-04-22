@@ -6,10 +6,31 @@
 <title>Topic Page (Full Facets) — Knowledge Atlas</title>
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
+<script src="ka_data_adapter.js"></script>
 <link rel="stylesheet" href="ka_crosswalk_patterns.css">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   body{background:#F7F4EF;color:#2C2C2C}
+  .ka-topic-page{max-width:1180px;margin:0 auto;padding:26px 24px 48px}
+  .full-briefing{margin:0 0 18px}
+  .full-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+  .full-metric{background:#fff;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
+  .full-metric .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+  .full-metric .value{font-size:1.2rem;font-weight:700;color:#1C3D3A}
+  .full-metric .sub{font-size:.83rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+  .full-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .full-card{background:#fff;border:1px solid #E0D8CC;border-radius:14px;padding:18px}
+  .full-card h2{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;margin-bottom:8px}
+  .full-card p{font-size:.9rem;color:#40514D;line-height:1.6;margin-bottom:12px}
+  .full-list{display:grid;gap:10px}
+  .full-row{padding:12px 13px;border:1px solid #E9E1D5;border-radius:10px;background:#F9F7F2}
+  .full-row b{color:#1C3D3A}
+  .full-meta{font-size:.82rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+  .full-chip-row{display:flex;flex-wrap:wrap;gap:7px}
+  .full-chip,.full-chip-link{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#fff;color:#1C3D3A;font-size:.78rem;text-decoration:none}
+  .full-chip-link:hover{border-color:#2A7868;color:#2A7868}
+  .full-pnu{font-size:.84rem;color:#40514D;line-height:1.5;background:#fff;border-left:3px solid #E8872A;padding:10px 12px;border-radius:0 8px 8px 0;margin-top:8px}
+  @media (max-width:860px){.full-grid{grid-template-columns:1fr}.ka-topic-page{padding:20px 16px 36px}}
 </style>
 </head>
 <body data-ka-regime="global" data-ka-active="topics">
@@ -34,18 +55,150 @@
     already know the vocabulary and want to combine filters freely.
   </p>
 
+  <div id="__ka_full_briefing" class="full-briefing"></div>
   <div id="__ka_pattern_mount"></div>
 
 </main>
 
 <script src="ka_crosswalk_patterns.js"></script>
 <script>
+function fullEsc(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])
+  );
+}
+
+function fullCompact(text, limit = 220) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!value) return '';
+  return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
+}
+
+function renderFullFacetBriefing(crosswalk, theoriesPayload, pnuPayload, mount) {
+  const rows = (crosswalk && crosswalk.rows) || [];
+  const theories = (theoriesPayload && theoriesPayload.theories) || [];
+  const pnuRows = (pnuPayload && pnuPayload.papers) || [];
+  const theoryByName = new Map(theories.map(row => [String(row.name || '').toLowerCase(), row]));
+  const outcomes = Array.isArray(crosswalk && crosswalk.outcomes)
+    ? crosswalk.outcomes.length
+    : Object.keys((crosswalk && crosswalk.outcome_index) || {}).length;
+  const families = Array.isArray(crosswalk && crosswalk.families)
+    ? crosswalk.families.length
+    : Object.keys((crosswalk && crosswalk.iv_root_index) || {}).length;
+
+  const topBundles = rows.slice().sort((a, b) => (b.defended_paper_count || b.paper_count || 0) - (a.defended_paper_count || a.paper_count || 0)).slice(0, 4);
+  const theoryCounts = new Map();
+  const sensorCounts = new Map();
+  rows.forEach(row => {
+    (row.theories || []).forEach(label => theoryCounts.set(label, (theoryCounts.get(label) || 0) + 1));
+    (row.common_sensors || []).forEach(label => sensorCounts.set(label, (sensorCounts.get(label) || 0) + 1));
+  });
+  const topTheories = [...theoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const topSensors = [...sensorCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const mostFlexible = rows.slice().sort((a, b) => ((b.theories || []).length + (b.common_sensors || []).length) - ((a.theories || []).length + (a.common_sensors || []).length)).slice(0, 4);
+
+  mount.innerHTML = `
+    <div class="full-metrics">
+      <div class="full-metric">
+        <div class="label">Current full-facet atlas briefing</div>
+        <div class="value">${fullEsc(rows.length)}</div>
+        <div class="sub">Defended bundles available to the all-chips-at-once facet surface.</div>
+      </div>
+      <div class="full-metric">
+        <div class="label">Outcome chips</div>
+        <div class="value">${fullEsc(outcomes)}</div>
+        <div class="sub">Outcome dimensions currently visible as facet chips.</div>
+      </div>
+      <div class="full-metric">
+        <div class="label">Family chips</div>
+        <div class="value">${fullEsc(families)}</div>
+        <div class="sub">Architectural-family dimensions visible as facet chips.</div>
+      </div>
+      <div class="full-metric">
+        <div class="label">Theory signals</div>
+        <div class="value">${fullEsc(topTheories.length)}</div>
+        <div class="sub">Most recurrent theories across the full-facet space.</div>
+      </div>
+      <div class="full-metric">
+        <div class="label">Paper PNUs</div>
+        <div class="value">${fullEsc((pnuPayload && pnuPayload.summary && pnuPayload.summary.short_summary_count) || 0)}</div>
+        <div class="sub">Paper-level summaries available to ground the facet combinations.</div>
+      </div>
+    </div>
+    <div class="full-grid">
+      <section class="full-card">
+        <h2>Most populated facet bundles</h2>
+        <p>These are the bundles most likely to reward free combinatorial filtering because they already carry substantial defended evidence.</p>
+        <div class="full-list">
+          ${topBundles.map(row => {
+            const pnu = (row.paper_ids || []).map(pid => pnuRows.find(item => item.paper_id === pid)).find(item => item && item.pnu && item.pnu.short_summary);
+            return `
+              <article class="full-row">
+                <b>${fullEsc(row.topic_label || row.topic_id || 'Topic bundle')}</b>
+                <div class="full-meta">${fullEsc(row.outcome_label || 'Outcome')} × ${fullEsc(row.iv_root_label || row.iv_label || 'Family')} · ${fullEsc(row.defended_paper_count || row.paper_count || 0)} defended papers</div>
+                ${(row.theories && row.theories.length) ? `<div class="full-chip-row">${row.theories.slice(0, 4).map(label => {
+                  const theory = theoryByName.get(String(label || '').toLowerCase());
+                  return theory
+                    ? `<a class="full-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${fullEsc(theory.name)}</a>`
+                    : `<span class="full-chip">${fullEsc(label)}</span>`;
+                }).join('')}</div>` : ''}
+                ${pnu ? `<div class="full-pnu">${fullEsc(fullCompact(pnu.pnu.short_summary, 220))}</div>` : ''}
+              </article>`;
+          }).join('')}
+        </div>
+      </section>
+      <section class="full-card">
+        <h2>What free filtering exposes</h2>
+        <p>This page is strongest when it makes visible not only counts, but also the theories and sensors that recur across many possible combinations.</p>
+        <div class="full-list">
+          <article class="full-row">
+            <b>Recurring theory signals</b>
+            <div class="full-chip-row">${topTheories.map(([label, count]) => {
+              const theory = theoryByName.get(String(label || '').toLowerCase());
+              const body = `${fullEsc(label)} · ${fullEsc(count)}`;
+              return theory
+                ? `<a class="full-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${body}</a>`
+                : `<span class="full-chip">${body}</span>`;
+            }).join('')}</div>
+          </article>
+          <article class="full-row">
+            <b>Common sensors across bundles</b>
+            <div class="full-chip-row">${topSensors.map(([label, count]) => `<span class="full-chip">${fullEsc(label)} · ${fullEsc(count)}</span>`).join('')}</div>
+          </article>
+          <article class="full-row">
+            <b>Most combinable bundles</b>
+            <div class="full-list">
+              ${mostFlexible.map(row => `<div class="full-meta"><b>${fullEsc(row.topic_label || row.topic_id || 'Topic bundle')}</b> · ${fullEsc((row.theories || []).length)} theories · ${fullEsc((row.common_sensors || []).length)} sensors</div>`).join('')}
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
 (async function(){
   const mount = document.getElementById("__ka_pattern_mount");
+  const briefingMount = document.getElementById("__ka_full_briefing");
   try {
     const data = await KA_CROSSWALK.loadCrosswalk();
+    let theoriesPayload = { theories: [] };
+    let pnuPayload = { papers: [], summary: {} };
+    if (window.KA_DATA_ADAPTER) {
+      [theoriesPayload, pnuPayload] = await Promise.all([
+        window.KA_DATA_ADAPTER.loadPayload('theories', { theories: [] }),
+        window.KA_DATA_ADAPTER.loadPayload('paper_pnus', { papers: [], summary: {} }),
+      ]);
+    }
+    renderFullFacetBriefing(data, theoriesPayload, pnuPayload, briefingMount);
     KA_CROSSWALK.renderFaceted(data, mount);
   } catch (e) {
+    if (briefingMount) {
+      briefingMount.innerHTML =
+        '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px;margin-bottom:14px">'+
+        '<b>Could not load the full-facet atlas briefing.</b> Error: '+fullEsc(e.message||e)+
+        '</div>';
+    }
     mount.innerHTML =
       '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px">'+
       '<b>Could not load the crosswalk data.</b> Serve this page over HTTP (not file://). Error: '+(e.message||e)+'</div>';

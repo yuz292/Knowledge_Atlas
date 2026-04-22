@@ -6,10 +6,31 @@
 <title>Topic Page (Quick Lookup) — Knowledge Atlas</title>
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
+<script src="ka_data_adapter.js"></script>
 <link rel="stylesheet" href="ka_crosswalk_patterns.css">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   body{background:#F7F4EF;color:#2C2C2C}
+  .ka-topic-page{max-width:1180px;margin:0 auto;padding:26px 24px 48px}
+  .quick-briefing{margin:0 0 18px}
+  .quick-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+  .quick-metric{background:#fff;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
+  .quick-metric .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+  .quick-metric .value{font-size:1.2rem;font-weight:700;color:#1C3D3A}
+  .quick-metric .sub{font-size:.83rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+  .quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .quick-card{background:#fff;border:1px solid #E0D8CC;border-radius:14px;padding:18px}
+  .quick-card h2{font-family:Georgia,serif;font-size:1.08rem;color:#1C3D3A;margin-bottom:8px}
+  .quick-card p{font-size:.9rem;color:#40514D;line-height:1.6;margin-bottom:12px}
+  .quick-list{display:grid;gap:10px}
+  .quick-row{padding:12px 13px;border:1px solid #E9E1D5;border-radius:10px;background:#F9F7F2}
+  .quick-row b{color:#1C3D3A}
+  .quick-meta{font-size:.82rem;color:#6B6B6B;line-height:1.45;margin-top:4px}
+  .quick-chip-row{display:flex;flex-wrap:wrap;gap:7px}
+  .quick-chip,.quick-chip-link{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#fff;color:#1C3D3A;font-size:.78rem;text-decoration:none}
+  .quick-chip-link:hover{border-color:#2A7868;color:#2A7868}
+  .quick-pnu{font-size:.84rem;color:#40514D;line-height:1.5;background:#fff;border-left:3px solid #E8872A;padding:10px 12px;border-radius:0 8px 8px 0;margin-top:8px}
+  @media (max-width:860px){.quick-grid{grid-template-columns:1fr}.ka-topic-page{padding:20px 16px 36px}}
 </style>
 </head>
 <body data-ka-regime="global" data-ka-active="topics">
@@ -34,18 +55,139 @@
     control labels itself, no filter composition, no hidden options.
   </p>
 
+  <div id="__ka_quick_briefing" class="quick-briefing"></div>
   <div id="__ka_pattern_mount"></div>
 
 </main>
 
 <script src="ka_crosswalk_patterns.js"></script>
 <script>
+function quickEsc(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])
+  );
+}
+
+function quickCompact(text, limit = 220) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!value) return '';
+  return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
+}
+
+function renderQuickBriefing(crosswalk, theoriesPayload, pnuPayload, mount) {
+  const rows = (crosswalk && crosswalk.rows) || [];
+  const theories = (theoriesPayload && theoriesPayload.theories) || [];
+  const pnuRows = (pnuPayload && pnuPayload.papers) || [];
+  const theoryByName = new Map(theories.map(row => [String(row.name || '').toLowerCase(), row]));
+
+  const outcomeCounts = new Map();
+  const familyCounts = new Map();
+  const theoryCounts = new Map();
+  rows.forEach(row => {
+    const outcome = row.outcome_label || row.outcome_term_id || 'Outcome unresolved';
+    const family = row.iv_root_label || row.iv_root || row.iv_label || 'Family unresolved';
+    const count = row.defended_paper_count || row.paper_count || 0;
+    outcomeCounts.set(outcome, (outcomeCounts.get(outcome) || 0) + count);
+    familyCounts.set(family, (familyCounts.get(family) || 0) + count);
+    (row.theories || []).forEach(label => theoryCounts.set(label, (theoryCounts.get(label) || 0) + 1));
+  });
+
+  const topOutcomes = [...outcomeCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const topFamilies = [...familyCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const topTheories = [...theoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const quickPnus = pnuRows.slice().sort((a, b) => (b.supporting_paper_count || 0) - (a.supporting_paper_count || 0)).slice(0, 3);
+
+  mount.innerHTML = `
+    <div class="quick-metrics">
+      <div class="quick-metric">
+        <div class="label">Current quick-lookup atlas guide</div>
+        <div class="value">${quickEsc(rows.length)}</div>
+        <div class="sub">Defended bundles reachable through the simplest front door.</div>
+      </div>
+      <div class="quick-metric">
+        <div class="label">Entry outcomes</div>
+        <div class="value">${quickEsc(topOutcomes.length)}</div>
+        <div class="sub">Outcome directions that presently carry the most defended evidence.</div>
+      </div>
+      <div class="quick-metric">
+        <div class="label">Entry families</div>
+        <div class="value">${quickEsc(topFamilies.length)}</div>
+        <div class="sub">Architectural families that make the strongest starting points.</div>
+      </div>
+      <div class="quick-metric">
+        <div class="label">Theory signals</div>
+        <div class="value">${quickEsc(topTheories.length)}</div>
+        <div class="sub">Recurring theories behind the seemingly simple lookup choices.</div>
+      </div>
+      <div class="quick-metric">
+        <div class="label">Paper PNUs</div>
+        <div class="value">${quickEsc((pnuPayload && pnuPayload.summary && pnuPayload.summary.short_summary_count) || 0)}</div>
+        <div class="sub">Paper-level summaries available to make the quick route intellectually honest.</div>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <section class="quick-card">
+        <h2>Best starting outcomes and families</h2>
+        <p>The quick-lookup page is strongest when it quietly guides a novice toward the most fruitful first choices.</p>
+        <div class="quick-list">
+          <article class="quick-row">
+            <b>Outcome-first entries</b>
+            <div class="quick-chip-row">${topOutcomes.map(([label, count]) => `<span class="quick-chip">${quickEsc(label)} · ${quickEsc(count)}</span>`).join('')}</div>
+          </article>
+          <article class="quick-row">
+            <b>Family-first entries</b>
+            <div class="quick-chip-row">${topFamilies.map(([label, count]) => `<span class="quick-chip">${quickEsc(label)} · ${quickEsc(count)}</span>`).join('')}</div>
+          </article>
+        </div>
+      </section>
+      <section class="quick-card">
+        <h2>What the simple front door hides</h2>
+        <p>Even this page rests on theories and specific papers. The live guide makes those latent structures visible without making the page complicated.</p>
+        <div class="quick-list">
+          <article class="quick-row">
+            <b>Theory signals</b>
+            <div class="quick-chip-row">${topTheories.map(([label, count]) => {
+              const theory = theoryByName.get(String(label || '').toLowerCase());
+              const body = `${quickEsc(label)} · ${quickEsc(count)}`;
+              return theory
+                ? `<a class="quick-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${body}</a>`
+                : `<span class="quick-chip">${body}</span>`;
+            }).join('')}</div>
+          </article>
+          ${quickPnus.map(row => `
+            <article class="quick-row">
+              <b>${quickEsc(row.title || row.paper_id)}</b>
+              <div class="quick-meta">${quickEsc(row.paper_id || '')}${row.primary_topic ? ` · ${quickEsc(row.primary_topic)}` : ''}</div>
+              ${row.pnu && row.pnu.short_summary ? `<div class="quick-pnu">${quickEsc(quickCompact(row.pnu.short_summary, 220))}</div>` : ''}
+            </article>`).join('')}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
 (async function(){
   const mount = document.getElementById("__ka_pattern_mount");
+  const briefingMount = document.getElementById("__ka_quick_briefing");
   try {
     const data = await KA_CROSSWALK.loadCrosswalk();
+    let theoriesPayload = { theories: [] };
+    let pnuPayload = { papers: [], summary: {} };
+    if (window.KA_DATA_ADAPTER) {
+      [theoriesPayload, pnuPayload] = await Promise.all([
+        window.KA_DATA_ADAPTER.loadPayload('theories', { theories: [] }),
+        window.KA_DATA_ADAPTER.loadPayload('paper_pnus', { papers: [], summary: {} }),
+      ]);
+    }
+    renderQuickBriefing(data, theoriesPayload, pnuPayload, briefingMount);
     KA_CROSSWALK.renderBidirectional(data, mount);
   } catch (e) {
+    if (briefingMount) {
+      briefingMount.innerHTML =
+        '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px;margin-bottom:14px">'+
+        '<b>Could not load the quick-lookup atlas guide.</b> Error: '+quickEsc(e.message||e)+
+        '</div>';
+    }
     mount.innerHTML =
       '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px">'+
       '<b>Could not load the crosswalk data.</b> Serve this page over HTTP (not file://). Error: '+(e.message||e)+'</div>';

@@ -230,7 +230,9 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
         theory_journey_page = context.new_page()
         topic_page = context.new_page()
         heatmap_page = context.new_page()
+        full_facets_page = context.new_page()
         topic_dashboard_page = context.new_page()
+        quick_lookup_page = context.new_page()
         classic_topics_page = context.new_page()
         mechanism_page = context.new_page()
 
@@ -247,7 +249,9 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             theory_journey_url = f"{config.base_url}/ka_journey_theory.html"
             topic_url = f"{config.base_url}/ka_topic_facet_view.html"
             heatmap_url = f"{config.base_url}/ka_topic_heatmap_view.html"
+            full_facets_url = f"{config.base_url}/ka_topic_full_facets_view.html"
             topic_dashboard_url = f"{config.base_url}/ka_topic_dashboard_view.html"
+            quick_lookup_url = f"{config.base_url}/ka_topic_quick_lookup_view.html"
             classic_topics_url = f"{config.base_url}/ka_topics.html"
             mechanism_url = f"{config.base_url}/ka_journey_mechanism.html"
 
@@ -262,7 +266,9 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             theory_journey_page.goto(theory_journey_url, wait_until="networkidle")
             topic_page.goto(topic_url, wait_until="networkidle")
             heatmap_page.goto(heatmap_url, wait_until="networkidle")
+            full_facets_page.goto(full_facets_url, wait_until="networkidle")
             topic_dashboard_page.goto(topic_dashboard_url, wait_until="networkidle")
+            quick_lookup_page.goto(quick_lookup_url, wait_until="networkidle")
             classic_topics_page.goto(classic_topics_url, wait_until="networkidle")
             mechanism_page.goto(mechanism_url, wait_until="networkidle")
 
@@ -340,6 +346,14 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             else:
                 results.append(_fail("Topic heatmap briefing", f"Topic heatmap did not render the live briefing layer as expected: metrics={heatmap_metrics}, cards={heatmap_cards}", url=heatmap_url))
 
+            full_facets_page.wait_for_selector("#__ka_full_briefing .full-card")
+            full_facets_cards = full_facets_page.locator("#__ka_full_briefing .full-card").count()
+            full_facets_metrics = full_facets_page.locator("#__ka_full_briefing .full-metric").count()
+            if full_facets_cards >= 2 and full_facets_metrics >= 4:
+                results.append(_ok("Topic full-facets briefing", f"Topic full-facets rendered {full_facets_metrics} metrics and {full_facets_cards} facet cards", url=full_facets_url))
+            else:
+                results.append(_fail("Topic full-facets briefing", f"Topic full-facets did not render the live briefing layer as expected: metrics={full_facets_metrics}, cards={full_facets_cards}", url=full_facets_url))
+
             topic_dashboard_page.wait_for_selector("#__ka_dashboard_briefing .dash-card")
             dashboard_cards = topic_dashboard_page.locator("#__ka_dashboard_briefing .dash-card").count()
             dashboard_metrics = topic_dashboard_page.locator("#__ka_dashboard_briefing .dash-metric").count()
@@ -347,6 +361,14 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
                 results.append(_ok("Topic dashboard briefing", f"Topic dashboard rendered {dashboard_metrics} metrics and {dashboard_cards} coordination cards", url=topic_dashboard_url))
             else:
                 results.append(_fail("Topic dashboard briefing", f"Topic dashboard did not render the live coordination layer as expected: metrics={dashboard_metrics}, cards={dashboard_cards}", url=topic_dashboard_url))
+
+            quick_lookup_page.wait_for_selector("#__ka_quick_briefing .quick-card")
+            quick_lookup_cards = quick_lookup_page.locator("#__ka_quick_briefing .quick-card").count()
+            quick_lookup_metrics = quick_lookup_page.locator("#__ka_quick_briefing .quick-metric").count()
+            if quick_lookup_cards >= 2 and quick_lookup_metrics >= 4:
+                results.append(_ok("Topic quick-lookup guide", f"Topic quick lookup rendered {quick_lookup_metrics} metrics and {quick_lookup_cards} guide cards", url=quick_lookup_url))
+            else:
+                results.append(_fail("Topic quick-lookup guide", f"Topic quick lookup did not render the live guide layer as expected: metrics={quick_lookup_metrics}, cards={quick_lookup_cards}", url=quick_lookup_url))
 
             classic_topics_page.wait_for_selector("#__ka_topics_overview .topics-live-card")
             classic_topic_cards = classic_topics_page.locator("#__ka_topics_overview .topics-live-card").count()
