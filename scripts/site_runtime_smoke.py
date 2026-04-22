@@ -581,11 +581,11 @@ def run_suite(config: SmokeConfig) -> SmokeReport:
         ("Reset-password page shell", "ka_reset_password.html?token=smoke-test-token", ["Choose a new password", "Request a new reset link"]),
         ("User home shell", "ka_user_home.html", ["GUI track workbench", "Theory Explorer"]),
         ("A0 upload shell", "160sp/collect-articles-upload.html", ["Loading your assigned questions", "Part 2: Q2 — Open Corpus"]),
-        ("Topic facet shell", "ka_topic_facet_view.html", ["Topic Page (Facet View)", "topic_crosswalk.json"]),
+        ("Topic facet shell", "ka_topic_facet_view.html", ["Topic Page (Facet View)", "Current Atlas topic briefings", "paper_pnus.json"]),
         ("Article page shell", f"ka_article_view.html?id={config.sample_article_id}", ["Loading article record", "Visual support gallery", "Study record"]),
         ("Journeys index shell", "ka_journeys.html", ["The harder pages of Knowledge Atlas", "Article Finder"]),
         ("Theory explorer shell", "ka_home_theory.html", ["Current Atlas theory index", "theories.json", "mechanisms.json"]),
-        ("Mechanism journey shell", "ka_journey_mechanism.html", ["Mechanism layer", "data/ka_payloads/mechanisms.json"]),
+        ("Mechanism journey shell", "ka_journey_mechanism.html", ["Current mechanism inventory", "data/ka_payloads/mechanisms.json", "data/ka_payloads/theories.json"]),
         ("Admin page shell", "160sp/ka_admin.html", ["This console lets you run the class roster", "Sign in with your UCSD instructor account"]),
         ("Track 2 hub shell", "160sp/ka_track2_hub.html", ["Article Finder", "Unified pipeline reference"]),
     ]

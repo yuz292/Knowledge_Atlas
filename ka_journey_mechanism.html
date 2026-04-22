@@ -8,7 +8,30 @@
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
 <script src="ka_journey_surface.js" defer></script>
+<script src="ka_data_adapter.js"></script>
 <link rel="stylesheet" href="ka_journey_page.css">
+<style>
+  .j-live-loading,.j-live-error{padding:14px 16px;border:1px solid #D9D2C3;border-radius:10px;background:#fff;color:#5A5A5A}
+  .j-live-error{background:#FFF3F0;border-color:#E5B2A7;color:#842029}
+  .j-live-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:12px 0 16px}
+  .j-live-metric{background:#F9F6F0;border:1px solid #E0D8CC;border-radius:10px;padding:13px 14px}
+  .j-live-metric .label{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#768680;font-weight:700;margin-bottom:4px}
+  .j-live-metric .value{font-size:1.2rem;font-weight:700;color:#1C3D3A}
+  .j-live-metric .sub{font-size:.82rem;color:#6B6B6B;margin-top:4px;line-height:1.45}
+  .j-live-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+  .j-live-block{background:#F9F6F0;border:1px solid #E0D8CC;border-radius:10px;padding:14px 15px}
+  .j-live-block h3{font-size:1rem;color:#1C3D3A;margin-bottom:8px}
+  .j-live-block > p{font-size:.88rem;color:#5A5A5A;line-height:1.55;margin-bottom:10px}
+  .j-live-list{display:grid;gap:10px}
+  .j-live-card{background:#fff;border:1px solid #E0D8CC;border-radius:10px;padding:12px 13px}
+  .j-live-card h4{font-size:.94rem;color:#1C3D3A;margin-bottom:4px}
+  .j-live-meta{font-size:.8rem;color:#6B6B6B;margin-bottom:6px;line-height:1.4}
+  .j-live-chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+  .j-live-chip{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;background:#fff;border:1px solid #E0D8CC;color:#1C3D3A;font-size:.77rem}
+  .j-live-card a{color:#2A7868;text-decoration:none}
+  .j-live-card a:hover{color:#E8872A}
+  @media (max-width: 920px){.j-live-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body data-ka-regime="global" data-ka-active="" data-j-group="complicated">
 <div id="ka-navbar-slot"></div>
@@ -35,6 +58,12 @@
     </aside>
 
     <div class="j-siblings" id="j-siblings-slot"></div>
+
+    <div class="j-section">
+      <h2><span class="h2-icon">⛓</span><span class="h2-text">Current mechanism inventory</span><span class="h2-hint">what the live payload already contains</span></h2>
+      <p>This preview is drawn from the current public payloads. It does not solve the full design problem, but it does show what the Atlas already knows about frameworks, cross-framework mechanisms, and the theories under the greatest argumentative pressure.</p>
+      <div id="j-mechanism-live" class="j-live-loading">Loading current mechanism inventory…</div>
+    </div>
 
     <div class="j-section">
       <h2><span class="h2-icon">◧</span><span class="h2-text">What this page displays</span><span class="h2-hint">the information on offer</span></h2>
@@ -130,10 +159,119 @@
 </div>
 
 <script>
+function mechanismEsc(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])
+  );
+}
+
+function mechanismMetric(label, value, sub) {
+  return `
+    <div class="j-live-metric">
+      <div class="label">${mechanismEsc(label)}</div>
+      <div class="value">${mechanismEsc(value)}</div>
+      <div class="sub">${mechanismEsc(sub || '')}</div>
+    </div>
+  `;
+}
+
+async function renderMechanismInventory() {
+  const mount = document.getElementById('j-mechanism-live');
+  if (!mount) return;
+
+  try {
+    let mechanismPayload;
+    let theoryPayload;
+    if (window.KA_DATA_ADAPTER) {
+      [mechanismPayload, theoryPayload] = await Promise.all([
+        window.KA_DATA_ADAPTER.loadPayload('mechanisms', { summary: {}, mechanisms: [] }),
+        window.KA_DATA_ADAPTER.loadPayload('theories', { summary: {}, theories: [] }),
+      ]);
+    } else {
+      const [mechanismRes, theoryRes] = await Promise.all([
+        fetch('data/ka_payloads/mechanisms.json', { cache: 'no-store' }),
+        fetch('data/ka_payloads/theories.json', { cache: 'no-store' }),
+      ]);
+      if (!mechanismRes.ok) throw new Error('mechanisms.json HTTP ' + mechanismRes.status);
+      if (!theoryRes.ok) throw new Error('theories.json HTTP ' + theoryRes.status);
+      mechanismPayload = await mechanismRes.json();
+      theoryPayload = await theoryRes.json();
+    }
+
+    const mechanisms = mechanismPayload.mechanisms || [];
+    const theories = theoryPayload.theories || [];
+    const frameworkCounts = mechanisms.reduce((acc, row) => {
+      const key = row.framework_name || 'Unclassified';
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+    const topFrameworks = Object.entries(frameworkCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const featuredMechanisms = mechanisms.slice().sort((a, b) => {
+      const maturity = value => ({'How-Actually': 3, 'How-Plausibly': 2, 'How-Possibly': 1}[value] || 0);
+      const maturityGap = maturity(b.maturity) - maturity(a.maturity);
+      if (maturityGap) return maturityGap;
+      return (b.word_count || 0) - (a.word_count || 0);
+    }).slice(0, 6);
+    const theoryPressure = theories.slice().sort((a, b) => {
+      const aAttack = ((a.evidence_profile || {}).attack_edge_count || 0);
+      const bAttack = ((b.evidence_profile || {}).attack_edge_count || 0);
+      if (bAttack !== aAttack) return bAttack - aAttack;
+      return (b.article_count || 0) - (a.article_count || 0);
+    }).slice(0, 5);
+    const readiness = (mechanismPayload.summary || {}).readiness || {};
+
+    mount.innerHTML = `
+      <div class="j-live-metrics">
+        ${mechanismMetric('Mechanisms', (mechanismPayload.summary || {}).mechanism_count || mechanisms.length, 'current manifest entries')}
+        ${mechanismMetric('Frameworks', (mechanismPayload.summary || {}).framework_count || 0, 'named explanatory systems')}
+        ${mechanismMetric('Cross-framework', (mechanismPayload.summary || {}).cross_framework_count || 0, 'mechanisms spanning multiple frameworks')}
+        ${mechanismMetric('Full entries', readiness.full || 0, 'entries with substantial write-ups')}
+      </div>
+
+      <div class="j-live-grid">
+        <div class="j-live-block">
+          <h3>Representative mechanisms</h3>
+          <p>${mechanismEsc((mechanismPayload.summary || {}).coverage_note || 'This is the current canonical mechanism inventory.')}</p>
+          <div class="j-live-list">
+            ${featuredMechanisms.map(row => `
+              <div class="j-live-card">
+                <h4>${mechanismEsc(row.name)}</h4>
+                <div class="j-live-meta">${mechanismEsc(row.framework_name || 'Framework pending')} · ${mechanismEsc(row.kind || 'kind pending')} · ${mechanismEsc(row.maturity || 'maturity pending')}</div>
+                <div class="j-live-meta">${mechanismEsc(row.temporal || 'Temporal scale pending')} · ${mechanismEsc(String(row.word_count || 0))} words</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="j-live-block">
+          <h3>Framework density</h3>
+          <div class="j-live-chip-row">
+            ${topFrameworks.map(([label, count]) => `<span class="j-live-chip">${mechanismEsc(label)} (${mechanismEsc(count)})</span>`).join('')}
+          </div>
+          <h3 style="margin-top:16px">Theory pressure points</h3>
+          <p>These are the theories with the heaviest current attack load. They are the places where mechanism-level redesign ought to explain disagreement most clearly.</p>
+          <div class="j-live-list">
+            ${theoryPressure.map(row => `
+              <div class="j-live-card">
+                <h4><a href="ka_home_theory.html?theory=${encodeURIComponent(row.id)}">${mechanismEsc(row.name)}</a></h4>
+                <div class="j-live-meta">${mechanismEsc(String(row.article_count || 0))} papers · ${mechanismEsc(String((row.evidence_profile || {}).support_edge_count || 0))} supports · ${mechanismEsc(String((row.evidence_profile || {}).attack_edge_count || 0))} attacks</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    mount.className = 'j-live-error';
+    mount.innerHTML = `Could not load the current mechanism inventory. Error: <code>${mechanismEsc(error.message || error)}</code>`;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   if (window.renderJourneySidebar) window.renderJourneySidebar('mechanism');
   if (window.renderJourneySiblings) window.renderJourneySiblings('mechanism');
   if (window.restoreCritique) window.restoreCritique('mechanism');
+  renderMechanismInventory();
 });
 </script>
 </body>

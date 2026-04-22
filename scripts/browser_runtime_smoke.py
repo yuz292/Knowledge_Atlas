@@ -227,6 +227,8 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
         login_page = context.new_page()
         article_page = context.new_page()
         theory_page = context.new_page()
+        topic_page = context.new_page()
+        mechanism_page = context.new_page()
 
         try:
             home_url = f"{config.base_url}/ka_home.html"
@@ -238,6 +240,8 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             login_url = f"{config.base_url}/ka_login.html"
             article_url = f"{config.base_url}/ka_article_view.html?id=PDF-0071"
             theory_url = f"{config.base_url}/ka_home_theory.html"
+            topic_url = f"{config.base_url}/ka_topic_facet_view.html"
+            mechanism_url = f"{config.base_url}/ka_journey_mechanism.html"
 
             home_page.goto(home_url, wait_until="networkidle")
             user_home_page.goto(user_home_url, wait_until="networkidle")
@@ -247,6 +251,8 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             admin_page.goto(admin_url, wait_until="networkidle")
             article_page.goto(article_url, wait_until="networkidle")
             theory_page.goto(theory_url, wait_until="networkidle")
+            topic_page.goto(topic_url, wait_until="networkidle")
+            mechanism_page.goto(mechanism_url, wait_until="networkidle")
 
             nav_text = home_page.locator(".ka-right").inner_text()
             if "Log in" in nav_text and "Register" in nav_text:
@@ -297,6 +303,22 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
                 results.append(_ok("Theory live index", f"Theory explorer rendered {theory_options} selectable theories and {theory_cards} featured theory cards", url=theory_url))
             else:
                 results.append(_fail("Theory live index", f"Theory explorer did not render the live index as expected: options={theory_options}, cards={theory_cards}, mechanism_title={mechanism_title}", url=theory_url))
+
+            topic_page.wait_for_selector("#__ka_topic_briefing .brief-card")
+            topic_cards = topic_page.locator("#__ka_topic_briefing .brief-card").count()
+            topic_metrics = topic_page.locator("#__ka_topic_briefing .brief-metric").count()
+            if topic_cards >= 4 and topic_metrics >= 4:
+                results.append(_ok("Topic briefing layer", f"Topic facet page rendered {topic_metrics} summary metrics and {topic_cards} briefing cards", url=topic_url))
+            else:
+                results.append(_fail("Topic briefing layer", f"Topic facet page did not render the live briefing layer as expected: metrics={topic_metrics}, cards={topic_cards}", url=topic_url))
+
+            mechanism_page.wait_for_selector("#j-mechanism-live .j-live-card")
+            mechanism_cards = mechanism_page.locator("#j-mechanism-live .j-live-card").count()
+            mechanism_metrics = mechanism_page.locator("#j-mechanism-live .j-live-metric").count()
+            if mechanism_cards >= 4 and mechanism_metrics >= 4:
+                results.append(_ok("Mechanism inventory layer", f"Mechanism journey rendered {mechanism_metrics} metrics and {mechanism_cards} live inventory cards", url=mechanism_url))
+            else:
+                results.append(_fail("Mechanism inventory layer", f"Mechanism journey did not render the live inventory layer as expected: metrics={mechanism_metrics}, cards={mechanism_cards}", url=mechanism_url))
 
             if config.reset_email:
                 forgot_page.locator("#email").fill(config.reset_email)

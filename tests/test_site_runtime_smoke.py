@@ -18,7 +18,7 @@ def _fake_request(self, path, *, method="GET", json_body=None, headers=None):
     if path == "160sp/collect-articles-upload.html":
         return smoke.ResponseData("http://test/160sp/collect-articles-upload.html", 200, "Loading your assigned questions Part 2: Q2 — Open Corpus")
     if path == "ka_topic_facet_view.html":
-        return smoke.ResponseData("http://test/ka_topic_facet_view.html", 200, "Topic Page (Facet View) topic_crosswalk.json")
+        return smoke.ResponseData("http://test/ka_topic_facet_view.html", 200, "Topic Page (Facet View) Current Atlas topic briefings topic_crosswalk.json paper_pnus.json")
     if path == "ka_article_view.html?id=PDF-0007":
         return smoke.ResponseData("http://test/ka_article_view.html?id=PDF-0007", 200, "Loading article record Visual support gallery Study record article_details.json")
     if path == "ka_journeys.html":
@@ -26,7 +26,7 @@ def _fake_request(self, path, *, method="GET", json_body=None, headers=None):
     if path == "ka_home_theory.html":
         return smoke.ResponseData("http://test/ka_home_theory.html", 200, "Current Atlas theory index theories.json mechanisms.json Theory Explorer Knowledge Atlas")
     if path == "ka_journey_mechanism.html":
-        return smoke.ResponseData("http://test/ka_journey_mechanism.html", 200, "Mechanism layer data/ka_payloads/mechanisms.json")
+        return smoke.ResponseData("http://test/ka_journey_mechanism.html", 200, "Mechanism layer Current mechanism inventory data/ka_payloads/mechanisms.json data/ka_payloads/theories.json")
     if path == "160sp/ka_admin.html":
         return smoke.ResponseData("http://test/160sp/ka_admin.html", 200, "This console lets you run the class roster Sign in with your UCSD instructor account")
     if path == "160sp/ka_track2_hub.html":

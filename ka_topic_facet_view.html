@@ -31,6 +31,24 @@
   .topic-note h2{font-family:Georgia,serif;font-size:1.05rem;color:#1C3D3A;margin-bottom:8px}
   .topic-note p{font-size:.9rem;line-height:1.6;color:#40514D}
   .topic-note code{background:#F9F5EE;padding:1px 5px;border-radius:4px}
+  .topic-briefings{margin-bottom:18px}
+  .brief-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:14px}
+  .brief-metric{background:#fff;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
+  .brief-metric .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
+  .brief-metric .value{font-size:1.22rem;font-weight:700;color:#1C3D3A}
+  .brief-metric .sub{font-size:.83rem;color:#6B6B6B;margin-top:4px;line-height:1.45}
+  .brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .brief-block{background:#fff;border:1px solid #E0D8CC;border-radius:14px;padding:18px}
+  .brief-block h2{font-family:Georgia,serif;font-size:1.12rem;color:#1C3D3A;margin-bottom:8px}
+  .brief-block > p{font-size:.9rem;color:#40514D;line-height:1.6;margin-bottom:12px}
+  .brief-list{display:grid;gap:10px}
+  .brief-card{padding:13px 14px;border:1px solid #E0D8CC;border-radius:10px;background:#F9F7F2}
+  .brief-card h3{font-size:.97rem;color:#1C3D3A;margin-bottom:5px}
+  .brief-meta{font-size:.82rem;color:#6B6B6B;margin-bottom:7px;line-height:1.45}
+  .brief-chip-row{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+  .brief-chip,.brief-chip-link{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#fff;color:#1C3D3A;font-size:.78rem;text-decoration:none}
+  .brief-chip-link:hover{border-color:#2A7868;color:#2A7868}
+  .brief-pnu{font-size:.85rem;color:#40514D;line-height:1.55;background:#fff;border-left:3px solid #E8872A;border-radius:0 8px 8px 0;padding:10px 12px;margin-top:8px}
   #__ka_pattern_mount{background:#fff;border:1px solid #E0D8CC;border-radius:16px;padding:20px}
   .fallback-list{display:grid;gap:12px}
   .fallback-row{padding:14px 16px;border:1px solid #E0D8CC;border-radius:10px;background:#F9F7F2}
@@ -42,6 +60,7 @@
   .page-footer a:hover{text-decoration:underline}
   @media (max-width:820px){
     .topic-notes{grid-template-columns:1fr}
+    .brief-grid{grid-template-columns:1fr}
     .ka-topic-page{padding:20px 16px 36px}
     .topic-hero{padding:24px 22px}
     .ka-topic-title{font-size:1.6rem}
@@ -94,6 +113,7 @@
     </section>
   </div>
 
+  <div id="__ka_topic_briefing" class="topic-briefings"></div>
   <div id="__ka_pattern_mount"></div>
 
 </main>
@@ -151,6 +171,107 @@
 
 <script src="ka_crosswalk_patterns.js"></script>
 <script>
+function topicEsc(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])
+  );
+}
+
+function topicCompact(text, limit = 210) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!value) return '';
+  return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
+}
+
+function theoryLink(label, theoryByName) {
+  const theory = theoryByName.get(String(label || '').toLowerCase());
+  if (!theory) return `<span class="brief-chip">${topicEsc(label)}</span>`;
+  return `<a class="brief-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${topicEsc(theory.name)}</a>`;
+}
+
+function renderTopicBriefings(crosswalk, topicsPayload, theoriesPayload, pnuPayload, mount) {
+  const rows = (crosswalk && crosswalk.rows) || [];
+  const topics = (topicsPayload && (topicsPayload.topics || topicsPayload.rows)) || [];
+  const theories = (theoriesPayload && theoriesPayload.theories) || [];
+  const pnuRows = (pnuPayload && pnuPayload.papers) || [];
+  const theoryByName = new Map(theories.map(row => [String(row.name || '').toLowerCase(), row]));
+  const pnuByPaper = new Map(pnuRows.map(row => [row.paper_id, row]));
+  const topCrosswalk = rows.slice().sort((a, b) => (b.defended_paper_count || b.paper_count || 0) - (a.defended_paper_count || a.paper_count || 0)).slice(0, 4);
+  const topTopics = topics.slice().sort((a, b) => (b.n || 0) - (a.n || 0)).slice(0, 4);
+  const outcomeCount = Array.isArray(crosswalk && crosswalk.outcomes)
+    ? crosswalk.outcomes.length
+    : Object.keys((crosswalk && crosswalk.outcome_index) || {}).length;
+  const familyCount = Array.isArray(crosswalk && crosswalk.families)
+    ? crosswalk.families.length
+    : Object.keys((crosswalk && crosswalk.iv_root_index) || {}).length;
+
+  mount.innerHTML = `
+    <div class="brief-metrics">
+      <div class="brief-metric">
+        <div class="label">Defended bundles</div>
+        <div class="value">${topicEsc(rows.length)}</div>
+        <div class="sub">Crosswalk rows linking outcomes, architectural families, and defended topic bundles.</div>
+      </div>
+      <div class="brief-metric">
+        <div class="label">Outcome terms</div>
+        <div class="value">${topicEsc(outcomeCount)}</div>
+        <div class="sub">Canonical outcomes currently reachable through the crosswalk.</div>
+      </div>
+      <div class="brief-metric">
+        <div class="label">Architectural families</div>
+        <div class="value">${topicEsc(familyCount)}</div>
+        <div class="sub">Architectural families currently represented in the defended crosswalk rows.</div>
+      </div>
+      <div class="brief-metric">
+        <div class="label">Atlas topics</div>
+        <div class="value">${topicEsc(topics.length)}</div>
+        <div class="sub">Topic bundles with shared theories, constructs, and paper neighborhoods.</div>
+      </div>
+      <div class="brief-metric">
+        <div class="label">Paper PNUs</div>
+        <div class="value">${topicEsc((pnuPayload && pnuPayload.summary && pnuPayload.summary.short_summary_count) || 0)}</div>
+        <div class="sub">Paper-level neuroscience summaries currently exported into the public payloads.</div>
+      </div>
+    </div>
+
+    <div class="brief-grid">
+      <section class="brief-block">
+        <h2>Current Atlas topic briefings</h2>
+        <p>These are the strongest defended bundles in the present crosswalk export. They surface the linked theories and common sensors before you enter the fuller progressive browser below.</p>
+        <div class="brief-list">
+          ${topCrosswalk.map(row => {
+            const pnu = (row.paper_ids || []).map(pid => pnuByPaper.get(pid)).find(item => item && item.pnu && item.pnu.short_summary);
+            return `
+              <article class="brief-card">
+                <h3>${topicEsc(row.topic_label || row.topic_id)}</h3>
+                <div class="brief-meta">${topicEsc(row.outcome_label || 'Outcome')} × ${topicEsc(row.iv_root_label || row.iv_label || 'Family')} · ${topicEsc(row.defended_paper_count || row.paper_count || 0)} defended papers · status ${topicEsc(row.evidence_status || 'working')}</div>
+                ${(row.theories && row.theories.length) ? `<div class="brief-chip-row">${row.theories.slice(0, 5).map(label => theoryLink(label, theoryByName)).join('')}</div>` : ''}
+                ${(row.common_sensors && row.common_sensors.length) ? `<div class="brief-chip-row">${row.common_sensors.slice(0, 5).map(label => `<span class="brief-chip">${topicEsc(label)}</span>`).join('')}</div>` : ''}
+                ${pnu ? `<div class="brief-pnu">${topicEsc(topicCompact(pnu.pnu.short_summary, 240))}</div>` : ''}
+              </article>
+            `;
+          }).join('')}
+        </div>
+      </section>
+
+      <section class="brief-block">
+        <h2>Topic bundles with shared theories</h2>
+        <p>The Atlas topic payload groups papers by shared constructs and theories. These cards are not the crosswalk itself; they are the topic bundles that sit behind it.</p>
+        <div class="brief-list">
+          ${topTopics.map(topic => `
+            <article class="brief-card">
+              <h3>${topicEsc(topic.name || topic.id)}</h3>
+              <div class="brief-meta">${topicEsc(topic.cat || 'Topic')} · ${topicEsc(topic.n || 0)} papers · mean credence ${topic.mean_credence == null ? '—' : topicEsc(Number(topic.mean_credence).toFixed(2))}</div>
+              <div class="brief-meta">${topicEsc(topicCompact(topic.desc || '', 220) || 'Description pending.')}</div>
+              ${(topic.shared_theories && topic.shared_theories.length) ? `<div class="brief-chip-row">${topic.shared_theories.slice(0, 5).map(label => theoryLink(label, theoryByName)).join('')}</div>` : ''}
+            </article>
+          `).join('')}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
 function renderCrosswalkFallback(data, mount) {
   const rows = ((data && data.rows) || []).slice().sort((a, b) =>
     (b.paper_count || 0) - (a.paper_count || 0)
@@ -173,10 +294,22 @@ function renderCrosswalkFallback(data, mount) {
 
 (async function(){
   const mount = document.getElementById("__ka_pattern_mount");
+  const briefingMount = document.getElementById("__ka_topic_briefing");
   try {
     let data = null;
+    let topicsPayload = { topics: [] };
+    let theoriesPayload = { theories: [] };
+    let pnuPayload = { papers: [], summary: {} };
+    if (window.KA_DATA_ADAPTER) {
+      [topicsPayload, theoriesPayload, pnuPayload] = await Promise.all([
+        window.KA_DATA_ADAPTER.loadPayload('topics', { topics: [] }),
+        window.KA_DATA_ADAPTER.loadPayload('theories', { theories: [] }),
+        window.KA_DATA_ADAPTER.loadPayload('paper_pnus', { papers: [], summary: {} }),
+      ]);
+    }
     if (window.KA_CROSSWALK && typeof window.KA_CROSSWALK.loadCrosswalk === 'function') {
       data = await window.KA_CROSSWALK.loadCrosswalk();
+      renderTopicBriefings(data, topicsPayload, theoriesPayload, pnuPayload, briefingMount);
       if (typeof window.KA_CROSSWALK.renderProgressiveDisclosure === 'function') {
         window.KA_CROSSWALK.renderProgressiveDisclosure(data, mount);
         return;
@@ -188,10 +321,19 @@ function renderCrosswalkFallback(data, mount) {
         rows: payload.rows || [],
         outcomes: payload.outcome_index || [],
         families: payload.iv_root_index || [],
+        outcome_index: payload.outcome_index || {},
+        iv_root_index: payload.iv_root_index || {},
       };
     }
+    renderTopicBriefings(data || { rows: [], outcome_index: {}, iv_root_index: {} }, topicsPayload, theoriesPayload, pnuPayload, briefingMount);
     renderCrosswalkFallback(data || { rows: [] }, mount);
   } catch (e) {
+    if (briefingMount) {
+      briefingMount.innerHTML =
+        '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px;margin-bottom:14px">'+
+        '<b>Could not load the Atlas topic briefings.</b> Error: '+topicEsc(e.message || e)+
+        '</div>';
+    }
     mount.innerHTML =
       '<div style="background:#F8D7DA;color:#8A1A25;padding:14px 18px;border-radius:8px">'+
       '<b>Could not load the crosswalk data.</b> Ensure <code>data/ka_payloads/topic_crosswalk.json</code> '+
