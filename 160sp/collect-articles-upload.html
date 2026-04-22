@@ -529,6 +529,7 @@
 .wm-bottom { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; color: #fff; }
 .wm-bottom span { color: #F5A623; }
 </style>
+<script src="../ka_config.js"></script>
 <script src="../ka_canonical_navbar.js" defer></script>
 <script src="../ka_user_type.js" defer></script>
 </head>
@@ -1096,7 +1097,7 @@
 
 <script>
 // ── State ─────────────────────────────────────────────────
-const API = '';  // Auth server serves at root: /auth/login, /api/student/*, /api/articles/*
+const API = (window.__KA_CONFIG__?.apiBase ?? '').replace(/\/$/, '');
 let studentId = null;
 let assignments = { q1: null, q2: null, brownie: [] };
 let pendingFiles = { q1: [], q2: [] };
@@ -1107,11 +1108,19 @@ let q2Topics = [];
 let selectedQ2TopicId = '';
 let q1RecoveryOptions = [];
 let selectedQ1RecoveryId = '';
+let lastAuthSignature = '';
+let authRefreshInFlight = null;
 
 // ── Auth ──────────────────────────────────────────────────
 function clearLegacyAuthState() {
   localStorage.removeItem('katlas_token');
   localStorage.removeItem('katlas_user');
+}
+
+function authSignature() {
+  const token = getToken();
+  const user = getUser();
+  return token && user ? `${user}::${token.slice(0, 16)}` : '';
 }
 
 function syncCompatAuthState(user, fallbackEmail) {
@@ -1177,11 +1186,11 @@ function handleLogout() {
     sessionStorage.removeItem('ka_logged_in');
     sessionStorage.removeItem('ka.160.authed');
     sessionStorage.removeItem('ka.studentEmail');
-    sessionStorage.removeItem('ka.admin');
-    sessionStorage.removeItem('ka.adminEmail');
-    sessionStorage.removeItem('ka.adminRole');
+      sessionStorage.removeItem('ka.admin');
+      sessionStorage.removeItem('ka.adminEmail');
+      sessionStorage.removeItem('ka.adminRole');
   }
-  window.location.reload();
+  resetToLoggedOutView();
 }
 
 // ── Password visibility toggle (universal)
@@ -1442,7 +1451,7 @@ async function loadQ1RecoveryOptions(forceRefresh) {
   if (select) select.innerHTML = '';
   if (meta) meta.textContent = 'Loading available Question 1 choices…';
   try {
-    const resp = await fetch('/api/student/q1-options', {
+    const resp = await fetch(`${API}/api/student/q1-options`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     const data = await resp.json();
@@ -1471,7 +1480,7 @@ async function repairQ1Assignment() {
     btn.textContent = 'Repairing…';
   }
   try {
-    const resp = await fetch('/api/student/repair-q1', {
+    const resp = await fetch(`${API}/api/student/repair-q1`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({ question_id: selectedQ1RecoveryId })
@@ -1673,6 +1682,91 @@ function ensureQuestionReady(which) {
   return false;
 }
 
+function resetProgressView(which) {
+  updateProgress(which, 0, 10);
+  const count = document.getElementById(`prog-count-${which}`);
+  if (count) {
+    count.querySelectorAll('.complete-badge').forEach(el => el.remove());
+  }
+}
+
+function resetToLoggedOutView() {
+  lastAuthSignature = '';
+  studentId = null;
+  assignments = { q1: null, q2: null, brownie: [] };
+  pendingFiles = { q1: [], q2: [] };
+  results = { q1: [], q2: [] };
+  manifests = { q1: new Map(), q2: new Map() };
+  titleOnlyEntries = { q1: [], q2: [] };
+  q2Topics = [];
+  selectedQ2TopicId = '';
+  q1RecoveryOptions = [];
+  selectedQ1RecoveryId = '';
+
+  document.getElementById('login-overlay').style.display = 'flex';
+  document.getElementById('display-name').textContent = '';
+  document.getElementById('hero-name').textContent = '';
+  document.getElementById('hero-status').textContent = 'Sign in to load your assigned questions.';
+  document.getElementById('prog-q1-id').textContent = '—';
+  document.getElementById('prog-q1-text').textContent = 'Sign in to load your assignment';
+  document.getElementById('prog-q2-id').textContent = '—';
+  document.getElementById('prog-q2-text').textContent = 'Choose your own topic below';
+  document.getElementById('q2-chooser').style.display = 'block';
+  document.getElementById('q2-topic-select').innerHTML = '';
+  document.getElementById('q2-topic-results-meta').textContent = 'Sign in to load available Question 2 topics.';
+  const q2Msg = document.getElementById('q2-chosen-msg');
+  if (q2Msg) q2Msg.style.display = 'none';
+  const q1Msg = document.getElementById('q1-recovery-msg');
+  if (q1Msg) q1Msg.style.display = 'none';
+
+  updateQ2SelectedCard(null);
+  updateQ2Preview(null);
+  updateQ2TabStatus(false);
+  hideQ1RecoveryState();
+  closeQ1RecoveryModal();
+  setWorkspaceLocked('q1', true, 'Sign in to load your Question 1 assignment.');
+  setWorkspaceLocked('q2', true, 'Choose your Question 2 topic first to unlock uploads.');
+  resetProgressView('q1');
+  resetProgressView('q2');
+  renderResultsTable('q1', []);
+  renderResultsTable('q2', []);
+
+  document.getElementById('brownie-offer').classList.remove('visible');
+  document.getElementById('prog-brownie').classList.remove('visible');
+  document.getElementById('tab-brownie').classList.add('locked');
+}
+
+async function refreshAuthDrivenState(force) {
+  const signature = authSignature();
+  if (!signature) {
+    resetToLoggedOutView();
+    return;
+  }
+  if (!force && signature === lastAuthSignature) return;
+  lastAuthSignature = signature;
+  if (authRefreshInFlight) return authRefreshInFlight;
+  authRefreshInFlight = initPage().finally(() => {
+    authRefreshInFlight = null;
+  });
+  return authRefreshInFlight;
+}
+
+function bindAuthRefreshHooks() {
+  if (window.__kaA0AuthHooksBound) return;
+  const refresh = function () { refreshAuthDrivenState(false); };
+  window.addEventListener('pageshow', refresh);
+  window.addEventListener('focus', refresh);
+  window.addEventListener('ka-auth-state-changed', refresh);
+  window.addEventListener('storage', function(event) {
+    const key = event && event.key;
+    if (!key || key === 'ka_access_token' || key === 'ka_current_user' || key === 'ka_logged_in') refresh();
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') refresh();
+  });
+  window.__kaA0AuthHooksBound = true;
+}
+
 function triggerUploadPicker(which) {
   if (!ensureQuestionReady(which)) return;
   document.getElementById(`file-input-${which}`).click();
@@ -1750,7 +1844,7 @@ async function loadTopicsNeeded(forceRefresh) {
   if (select) select.innerHTML = '';
   if (meta) meta.textContent = 'Loading available Question 2 topics…';
   try {
-    const resp = await fetch('/api/student/topics-needed', {
+    const resp = await fetch(`${API}/api/student/topics-needed`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     if (resp.status === 401) { handleLogout(); return; }
@@ -1774,7 +1868,7 @@ async function chooseQ2(questionId) {
   const token = getToken();
   const topic = getQ2TopicById(questionId);
   try {
-    const resp = await fetch('/api/student/choose-q2', {
+    const resp = await fetch(`${API}/api/student/choose-q2`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({ question_id: questionId })
@@ -2364,6 +2458,7 @@ setWorkspaceLocked('q1', true, 'Loading your Question 1 assignment…');
 setWorkspaceLocked('q2', true, 'Choose your Question 2 topic first to unlock uploads.');
 updateQ2TabStatus(false);
 setQ1RecoveryLinks();
+bindAuthRefreshHooks();
 document.getElementById('q1-recovery-modal')?.addEventListener('click', function(e) {
   if (e.target === this) closeQ1RecoveryModal();
 });
@@ -2372,7 +2467,10 @@ document.addEventListener('keydown', function(e) {
 });
 if (_initToken && _initUser) {
   studentId = _initUser;
+  lastAuthSignature = authSignature();
   initPage();
+} else {
+  resetToLoggedOutView();
 }
 // If not logged in, the login overlay remains visible (display:flex in CSS)
 </script>

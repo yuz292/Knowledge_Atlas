@@ -26,3 +26,6 @@ ka_server.pid
 docs/runtime_smoke_reports/*.md
 docs/runtime_smoke_reports/*.json
 !docs/runtime_smoke_reports/.gitkeep
+docs/browser_smoke_reports/*.md
+docs/browser_smoke_reports/*.json
+!docs/browser_smoke_reports/.gitkeep

@@ -1064,6 +1064,7 @@
 
   let currentUser = null;
   let currentRole = 'student_explorer';
+  let lastAuthSignature = '';
   function togglePwdVis(btn) {
     var inp = btn.parentElement.querySelector('input');
     if (inp.type === 'password') { inp.type = 'text'; btn.innerHTML = '&#128064;'; }
@@ -1071,13 +1072,41 @@
   }
   let demoMode = false;
 
+  function authSignature() {
+    const token = localStorage.getItem('ka_access_token') || '';
+    const stored = localStorage.getItem('ka_current_user') || '';
+    return token && stored ? token.slice(0, 16) + '::' + stored : '';
+  }
+
+  function syncCompatAuthState(user, fallbackEmail) {
+    const auth = window.KA && window.KA.authState;
+    if (auth && typeof auth.primeFromUser === 'function') {
+      auth.primeFromUser(user || { email: fallbackEmail });
+      if (typeof auth.notify === 'function') auth.notify('user-home-login');
+      return;
+    }
+  }
+
+  function clearCanonicalAuthState() {
+    const auth = window.KA && window.KA.authState;
+    if (auth && typeof auth.clear === 'function') {
+      auth.clear();
+      if (typeof auth.notify === 'function') auth.notify('user-home-logout');
+      return;
+    }
+    localStorage.removeItem('ka_access_token');
+    localStorage.removeItem('ka_current_user');
+    localStorage.removeItem('ka_logged_in');
+  }
+
   function loadUser() {
+    currentUser = null;
     const token = localStorage.getItem('ka_access_token');
     const stored = localStorage.getItem('ka_current_user');
-    if (stored) {
+    if (token && stored) {
       try { currentUser = JSON.parse(stored); } catch (e) { currentUser = null; }
     }
-    if (!token && !stored) {
+    if (!token || !stored) {
       const params = new URLSearchParams(window.location.search);
       const urlRole = params.get('role');
       if (urlRole && window.KA_WORKFLOWS.roleMeta[urlRole]) {
@@ -1129,6 +1158,17 @@
       document.getElementById('top-bar-role-badge').style.display = 'inline-block';
       document.getElementById('top-bar-logout').style.display = 'inline-block';
       document.getElementById('top-bar-login-btn').style.display = 'none';
+    } else {
+      const trackBadge = document.getElementById('top-bar-track-badge');
+      document.getElementById('top-bar-name').textContent = 'Public workspace';
+      document.getElementById('top-bar-role-badge').textContent = meta ? meta.label : '';
+      document.getElementById('top-bar-role-badge').style.display = 'inline-block';
+      document.getElementById('top-bar-logout').style.display = 'none';
+      document.getElementById('top-bar-login-btn').style.display = 'inline-block';
+      if (trackBadge) {
+        trackBadge.textContent = '';
+        trackBadge.style.display = 'none';
+      }
     }
   }
 
@@ -1642,12 +1682,11 @@
         localStorage.setItem('ka_access_token', data.access_token);
         localStorage.setItem('ka_current_user', JSON.stringify(data.user));
         localStorage.setItem('ka_logged_in', '1');
+        syncCompatAuthState(data.user, email);
         currentUser = data.user;
         demoMode = false;  // Exit demo mode on successful login
         document.getElementById('login-overlay').style.display = 'none';
-        loadUser();
-        renderTopBar();
-        render(currentRole);
+        refreshAuthDrivenView(true);
       } catch (e) {
         // Auth server not reachable — offer demo mode
         showError('Auth server not reachable. Use demo mode to continue.');
@@ -1674,13 +1713,10 @@
     }
 
     document.getElementById('top-bar-logout').addEventListener('click', function () {
-      localStorage.removeItem('ka_access_token');
-      localStorage.removeItem('ka_current_user');
-      localStorage.removeItem('ka_logged_in');
+      clearCanonicalAuthState();
       currentUser = null;
       demoMode = true;
-      renderTopBar();
-      render(currentRole);
+      refreshAuthDrivenView(true);
     });
 
     function showError(msg) {
@@ -1689,12 +1725,36 @@
     }
   }
 
-  /* ── Boot ────────────────────────────────────────────────────────────── */
-
-  function boot() {
+  function refreshAuthDrivenView(force) {
+    const signature = authSignature();
+    if (!force && signature === lastAuthSignature) return;
+    lastAuthSignature = signature;
     loadUser();
     renderTopBar();
     render(currentRole);
+  }
+
+  function bindAuthRefreshHooks() {
+    if (window.__kaUserHomeAuthHooksBound) return;
+    const refresh = function () { refreshAuthDrivenView(false); };
+    window.addEventListener('pageshow', refresh);
+    window.addEventListener('focus', refresh);
+    window.addEventListener('ka-auth-state-changed', refresh);
+    window.addEventListener('storage', function (event) {
+      const key = event && event.key;
+      if (!key || key === 'ka_access_token' || key === 'ka_current_user' || key === 'ka_logged_in') refresh();
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') refresh();
+    });
+    window.__kaUserHomeAuthHooksBound = true;
+  }
+
+  /* ── Boot ────────────────────────────────────────────────────────────── */
+
+  function boot() {
+    bindAuthRefreshHooks();
+    refreshAuthDrivenView(true);
     initLogin();
     window.KA_COLLECTOR.init();
   }
