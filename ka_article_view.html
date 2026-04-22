@@ -66,6 +66,21 @@
   .soft-box{background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
   .soft-box h3{font-size:.98rem;color:#1C3D3A;margin-bottom:6px}
   .soft-box p{font-size:.9rem}
+  .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .meta-box{background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
+  .meta-box .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:5px}
+  .meta-box .value{font-size:.96rem;color:#1C3D3A}
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .gallery-card{background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;overflow:hidden}
+  .gallery-card img{display:block;width:100%;height:156px;object-fit:cover;background:#EEE7DA}
+  .gallery-copy{padding:12px 13px}
+  .gallery-copy h3{font-size:.98rem;color:#1C3D3A;margin-bottom:5px}
+  .gallery-copy p{font-size:.88rem;color:#5E5B54;margin-bottom:8px}
+  .gallery-copy .meta{font-size:.78rem;color:#8A9A96}
+  .result-surface{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:16px;background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;padding:15px;margin-bottom:16px}
+  .result-surface img{display:block;width:100%;height:170px;object-fit:cover;border-radius:10px;background:#EEE7DA}
+  .result-surface h3{font-size:1rem;color:#1C3D3A;margin-bottom:6px}
+  .result-surface p{font-size:.9rem;margin-bottom:8px}
 
   details.more{margin-top:12px;border-top:1px dashed #E0D8CC;padding-top:12px}
   details.more summary{cursor:pointer;color:#2A7868;font-weight:700}
@@ -85,6 +100,7 @@
     .content-layout{grid-template-columns:1fr}
     .toc{position:static}
     .two-col{grid-template-columns:1fr}
+    .result-surface{grid-template-columns:1fr}
   }
   @media (max-width:720px){
     .page-shell{padding:20px 16px 32px}
@@ -136,6 +152,13 @@ function metricCard(label, value, sub) {
   return `<div class="stat-card"><div class="label">${esc(label)}</div><div class="value">${esc(value)}</div>${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div>`;
 }
 
+function renderChipCollection(items, emptyText) {
+  if (!items || !items.length) {
+    return `<p class="section-note">${esc(emptyText)}</p>`;
+  }
+  return `<div class="chip-row">${items.map(item => `<span class="chip">${esc(item)}</span>`).join('')}</div>`;
+}
+
 function renderPaperRefs(rows, emptyText) {
   if (!rows || !rows.length) {
     return `<p class="section-note">${esc(emptyText)}</p>`;
@@ -171,6 +194,48 @@ function renderMeasureRows(items, key) {
       <div class="counts">${Array.isArray(item.page_refs) && item.page_refs.length ? 'pages ' + esc(item.page_refs.join(', ')) : 'page refs pending'}</div>
     </div>
   `).join('')}</div>`;
+}
+
+function renderMetaBox(label, value) {
+  return `
+    <div class="meta-box">
+      <div class="label">${esc(label)}</div>
+      <div class="value">${esc(value || 'Pending')}</div>
+    </div>
+  `;
+}
+
+function renderVisualGallery(items) {
+  if (!items || !items.length) {
+    return '<p class="section-note">No visual support surfaces were exported for this paper yet.</p>';
+  }
+  return `<div class="gallery-grid">${items.slice(0, 8).map(item => `
+    <div class="gallery-card">
+      ${item.image_url ? '<img src="' + esc(item.image_url) + '" alt="' + esc(item.atlas_title || 'Visual support surface') + '" loading="lazy">' : ''}
+      <div class="gallery-copy">
+        <h3>${esc(item.atlas_title || 'Visual support surface')}</h3>
+        <p>${esc(compact(item.atlas_caption || '', 220) || 'Recovered visual support surface.')}</p>
+        <div class="meta">${esc(item.surface_kind || 'surface')} · page ${esc(item.page || '—')}</div>
+      </div>
+    </div>
+  `).join('')}</div>`;
+}
+
+function renderTechnicalSurface(item) {
+  if (!item || typeof item !== 'object' || Array.isArray(item)) {
+    return '<p class="section-note">No technical result surface was exported for this paper yet.</p>';
+  }
+  return `
+    <div class="result-surface">
+      ${item.image_url ? '<img src="' + esc(item.image_url) + '" alt="' + esc(item.title || 'Technical results surface') + '" loading="lazy">' : ''}
+      <div>
+        <h3>${esc(item.title || 'Technical results surface')}</h3>
+        ${item.summary ? `<p>${esc(item.summary)}</p>` : ''}
+        ${item.caption ? `<p class="section-note">${esc(item.caption)}</p>` : ''}
+        <div class="meta">Page ${esc(item.page || '—')}</div>
+      </div>
+    </div>
+  `;
 }
 
 function updateTocActive() {
@@ -245,10 +310,22 @@ function updateTocActive() {
   const operationalization = detail.operationalization || {};
   const evidenceProfile = detail.evidence_profile || {};
   const atlasReading = detail.atlas_reading || {};
+  const articleMeta = detail.article_meta || {};
+  const detailArgumentation = detail.argumentation || {};
+  const detailTheories = (detail.theories && detail.theories.length ? detail.theories : article.theories) || [];
+  const detailRelatedPapers = (detail.related_papers && detail.related_papers.length ? detail.related_papers : article.related_papers) || [];
+  const constructLabels = detail.constructs || [];
+  const instrumentTags = detail.instruments || [];
+  const visualGallery = detail.visual_support_gallery || [];
+  const technicalSurface = (detail.technical_results_table && typeof detail.technical_results_table === 'object' && !Array.isArray(detail.technical_results_table))
+    ? detail.technical_results_table
+    : null;
   const topClaims = detail.top_claims || [];
   const supportingPapers = detail.supporting_papers || [];
   const contradictingPapers = detail.contradicting_papers || [];
-  const authors = Array.isArray(article.authors) ? article.authors.join(', ') : '';
+  const authors = Array.isArray(articleMeta.authors) && articleMeta.authors.length
+    ? articleMeta.authors.join(', ')
+    : (Array.isArray(article.authors) ? article.authors.join(', ') : '');
   const typeLabel = String(article.article_type || '').replace(/_/g, ' ').trim();
   const topicLabels = article.topic_labels || [];
   const articleArgumentation = article.argumentation_summary || {};
@@ -277,9 +354,9 @@ function updateTocActive() {
           <div class="sub">${evidenceProfile.atlas_credence_percentile == null ? 'percentile pending' : esc(evidenceProfile.atlas_credence_percentile + 'th percentile across indexed papers')}</div>
         </div>
         <div class="metric">
-          <div class="label">Claim network</div>
+        <div class="label">Claim network</div>
           <div class="value">${esc(String(evidenceProfile.paper_claim_count || article.claim_count || 0))}</div>
-          <div class="sub">${esc(String(evidenceProfile.support_edge_count || articleArgumentation.incoming_support_total || 0))} support edges · ${esc(String(evidenceProfile.attack_edge_count || articleArgumentation.incoming_attack_total || 0))} attack edges</div>
+          <div class="sub">${esc(String(evidenceProfile.support_edge_count || detailArgumentation.support_edge_count || articleArgumentation.incoming_support_total || 0))} support edges · ${esc(String(evidenceProfile.attack_edge_count || detailArgumentation.attack_edge_count || articleArgumentation.incoming_attack_total || 0))} attack edges</div>
         </div>
         <div class="metric">
           <div class="label">Measures</div>
@@ -287,7 +364,7 @@ function updateTocActive() {
           <div class="sub">${esc(String(operationalization.instrument_count || 0))} instruments · ${esc(String(operationalization.sensor_count || 0))} sensors</div>
         </div>
         <div class="metric">
-          <div class="label">Verification</div>
+        <div class="label">Verification</div>
           <div class="value">${science.passed_verification ? 'pass' : 'pending'}</div>
           <div class="sub">${esc(science.page_image_policy || 'policy pending')} · ${esc(pnu.verifier_status || 'PNU pending')}</div>
         </div>
@@ -298,9 +375,11 @@ function updateTocActive() {
       <aside class="toc">
         <div class="label">On this page</div>
         <a href="#abstract" class="active">Abstract</a>
+        <a href="#study-record">Study record</a>
         <a href="#atlas-reading">Atlas reading</a>
         <a href="#evidence">Evidence profile</a>
         <a href="#measures">Measures & sensors</a>
+        <a href="#visuals">Visual evidence</a>
         <a href="#pnu">Relevant PNUs</a>
         <a href="#claims">Key claims</a>
         <a href="#support">Support & contradiction</a>
@@ -312,6 +391,28 @@ function updateTocActive() {
         <section class="section" id="abstract">
           <h2>Abstract</h2>
           ${article.abstract ? `<div class="abstract">${paragraphize(article.abstract)}</div>` : '<p class="section-note">No abstract is available in the current payload.</p>'}
+        </section>
+
+        <section class="section" id="study-record">
+          <div class="subhead">Study record</div>
+          <h2>Paper at a glance</h2>
+          <div class="meta-grid">
+            ${renderMetaBox('Primary topic', articleMeta.primary_topic || article.primary_topic || 'Pending')}
+            ${renderMetaBox('Sample size', articleMeta.sample_n == null ? 'Not reported' : articleMeta.sample_n)}
+            ${renderMetaBox('Dominant stance', detailArgumentation.dominant_stance || 'Pending')}
+            ${renderMetaBox('APA citation', articleMeta.apa_citation || 'Pending')}
+          </div>
+          <div class="two-col" style="margin-top:16px">
+            <div class="soft-box">
+              <h3>Main conclusion</h3>
+              ${articleMeta.main_conclusion ? paragraphize(articleMeta.main_conclusion) : '<p class="section-note">No main-conclusion summary was exported.</p>'}
+            </div>
+            <div class="soft-box">
+              <h3>Argumentation snapshot</h3>
+              <p><b>${esc(String(detailArgumentation.claim_count || topClaims.length || 0))}</b> claims, <b>${esc(String(detailArgumentation.support_edge_count || 0))}</b> supports, <b>${esc(String(detailArgumentation.attack_edge_count || 0))}</b> attacks, <b>${esc(String(detailArgumentation.contradiction_count || 0))}</b> contradictions.</p>
+              <p class="section-note">${detailArgumentation.node_qualifier ? esc(detailArgumentation.node_qualifier) : 'The current export does not attach a longer node qualifier for this paper.'}</p>
+            </div>
+          </div>
         </section>
 
         <section class="section" id="atlas-reading">
@@ -345,21 +446,31 @@ function updateTocActive() {
           <div class="stats-grid">
             ${metricCard('Atlas credence', evidenceProfile.atlas_credence_mean == null ? '—' : Number(evidenceProfile.atlas_credence_mean).toFixed(2), evidenceProfile.atlas_credence_percentile == null ? 'Percentile pending' : evidenceProfile.atlas_credence_percentile + 'th percentile')}
             ${metricCard('Claim count', evidenceProfile.paper_claim_count || article.claim_count || 0, 'paper-level extracted claims')}
-            ${metricCard('Support edges', evidenceProfile.support_edge_count || articleArgumentation.incoming_support_total || 0, 'current argumentation layer')}
-            ${metricCard('Attack edges', evidenceProfile.attack_edge_count || articleArgumentation.incoming_attack_total || 0, 'explicit challenge edges')}
-            ${metricCard('Contradictions', evidenceProfile.contradiction_count || articleArgumentation.contested_claim_count || 0, 'cross-paper or intra-paper contestation')}
-            ${metricCard('Search targets', evidenceProfile.search_target_count || articleArgumentation.search_target_count || 0, 'open resolution prompts')}
+            ${metricCard('Support edges', evidenceProfile.support_edge_count || detailArgumentation.support_edge_count || articleArgumentation.incoming_support_total || 0, 'current argumentation layer')}
+            ${metricCard('Attack edges', evidenceProfile.attack_edge_count || detailArgumentation.attack_edge_count || articleArgumentation.incoming_attack_total || 0, 'explicit challenge edges')}
+            ${metricCard('Contradictions', evidenceProfile.contradiction_count || detailArgumentation.contradiction_count || articleArgumentation.contested_claim_count || 0, 'cross-paper or intra-paper contestation')}
+            ${metricCard('Search targets', evidenceProfile.search_target_count || detailArgumentation.search_target_count || articleArgumentation.search_target_count || 0, 'open resolution prompts')}
           </div>
           <p class="section-note" style="margin-top:12px">Until a separate paper-level EN credence is published, this page uses the mean credence of the paper's extracted evidence rows as the best current paper-level credence reading.</p>
-          ${(topicLabels && topicLabels.length) || article.theories?.length ? `
+          ${(topicLabels && topicLabels.length) || detailTheories.length || constructLabels.length || instrumentTags.length ? `
             <div class="two-col" style="margin-top:16px">
               <div class="soft-box">
                 <h3>Topics</h3>
-                ${topicLabels.length ? `<div class="chip-row">${topicLabels.map(label => `<span class="chip">${esc(label)}</span>`).join('')}</div>` : '<p class="section-note">No topics yet.</p>'}
+                ${renderChipCollection(topicLabels, 'No topics yet.')}
               </div>
               <div class="soft-box">
                 <h3>Theories and fronts</h3>
-                ${(article.theories && article.theories.length) ? `<div class="chip-row">${article.theories.map(label => `<span class="chip">${esc(label)}</span>`).join('')}</div>` : '<p class="section-note">No theory links have been normalized for this paper yet.</p>'}
+                ${renderChipCollection(detailTheories, 'No theory links have been normalized for this paper yet.')}
+              </div>
+            </div>
+            <div class="two-col" style="margin-top:16px">
+              <div class="soft-box">
+                <h3>Constructs</h3>
+                ${renderChipCollection(constructLabels, 'No constructs have been exported yet.')}
+              </div>
+              <div class="soft-box">
+                <h3>Named instruments</h3>
+                ${renderChipCollection(instrumentTags, 'No named instruments have been exported yet.')}
               </div>
             </div>` : ''}
         </section>
@@ -386,6 +497,13 @@ function updateTocActive() {
             <h3>Named measures</h3>
             ${renderMeasureRows(operationalization.measurement_inventory, 'measure_name')}
           </div>
+        </section>
+
+        <section class="section" id="visuals">
+          <h2>Visual support gallery</h2>
+          <p class="section-note">These surfaces come from the current V7-derived visual export. They are useful as evidence of stimuli, context, and results, but they are not a substitute for reading the full paper.</p>
+          ${renderTechnicalSurface(technicalSurface)}
+          ${renderVisualGallery(visualGallery)}
         </section>
 
         <section class="section" id="pnu">
@@ -426,8 +544,8 @@ function updateTocActive() {
 
         <section class="section" id="related">
           <h2>Related papers on the same front or method family</h2>
-          ${article.related_papers && article.related_papers.length ? `
-            <div class="list">${article.related_papers.map(row => `
+          ${detailRelatedPapers && detailRelatedPapers.length ? `
+            <div class="list">${detailRelatedPapers.map(row => `
               <div class="list-row">
                 <h3><a href="ka_article_view.html?id=${encodeURIComponent(row.paper_id)}">${esc(row.title || row.paper_id)}</a></h3>
                 <div class="meta">${esc(row.reason || 'related paper')} ${row.primary_front ? '· ' + esc(row.primary_front) : ''}</div>
@@ -451,7 +569,7 @@ function updateTocActive() {
               <p>${article.json_status ? esc(Object.entries(article.json_status).slice(0, 8).map(([k, v]) => `${k}=${v}`).join(' · ')) : 'No field-audit snapshot was attached.'}</p>
             </div>
           </div>
-          <p class="section-note" style="margin-top:12px">Payload sources: <code>articles.json</code> and <code>article_details.json</code>. The richer detail surface is exported from the V7 lifecycle and accepted-row artifacts during the Knowledge Atlas adapter rebuild.</p>
+          <p class="section-note" style="margin-top:12px">Payload sources: <code>articles.json</code> and <code>article_details.json</code>. The richer detail surface is exported from the V7 lifecycle and accepted-row artifacts during the Knowledge Atlas adapter rebuild, including theory links, related-paper neighborhoods, visual support surfaces, and the current PNU reading.</p>
         </section>
       </div>
     </div>

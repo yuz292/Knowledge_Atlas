@@ -225,6 +225,8 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
         reset_page = context.new_page()
         admin_page = context.new_page()
         login_page = context.new_page()
+        article_page = context.new_page()
+        theory_page = context.new_page()
 
         try:
             home_url = f"{config.base_url}/ka_home.html"
@@ -234,6 +236,8 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             reset_url = f"{config.base_url}/ka_reset_password.html?token=invalid-browser-smoke-token"
             admin_url = f"{config.base_url}/160sp/ka_admin.html"
             login_url = f"{config.base_url}/ka_login.html"
+            article_url = f"{config.base_url}/ka_article_view.html?id=PDF-0071"
+            theory_url = f"{config.base_url}/ka_home_theory.html"
 
             home_page.goto(home_url, wait_until="networkidle")
             user_home_page.goto(user_home_url, wait_until="networkidle")
@@ -241,6 +245,8 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             forgot_page.goto(forgot_url, wait_until="networkidle")
             reset_page.goto(reset_url, wait_until="networkidle")
             admin_page.goto(admin_url, wait_until="networkidle")
+            article_page.goto(article_url, wait_until="networkidle")
+            theory_page.goto(theory_url, wait_until="networkidle")
 
             nav_text = home_page.locator(".ka-right").inner_text()
             if "Log in" in nav_text and "Register" in nav_text:
@@ -274,6 +280,23 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
                 results.append(_ok("Reset invalid-token handling", f"Reset page rejected an invalid token honestly: {invalid_text}", url=reset_url))
             else:
                 results.append(_fail("Reset invalid-token handling", f"Reset page did not surface a clear invalid-token message: {invalid_text!r}", url=reset_url))
+
+            article_page.wait_for_selector(".gallery-card img")
+            gallery_count = article_page.locator(".gallery-card img").count()
+            theory_chips = article_page.locator("#evidence .chip").count()
+            if gallery_count >= 1 and theory_chips >= 1:
+                results.append(_ok("Article enrichment surface", f"Article page rendered {gallery_count} visual surfaces and {theory_chips} evidence chips", url=article_url))
+            else:
+                results.append(_fail("Article enrichment surface", f"Article page did not render the expected enriched surface: gallery_count={gallery_count}, theory_chips={theory_chips}", url=article_url))
+
+            theory_page.wait_for_selector("#live-theory-select")
+            theory_options = theory_page.locator("#live-theory-select option").count()
+            theory_cards = theory_page.locator(".live-card").count()
+            mechanism_title = theory_page.locator("text=Mechanism inventory snapshot").count()
+            if theory_options >= 5 and theory_cards >= 3 and mechanism_title >= 1:
+                results.append(_ok("Theory live index", f"Theory explorer rendered {theory_options} selectable theories and {theory_cards} featured theory cards", url=theory_url))
+            else:
+                results.append(_fail("Theory live index", f"Theory explorer did not render the live index as expected: options={theory_options}, cards={theory_cards}, mechanism_title={mechanism_title}", url=theory_url))
 
             if config.reset_email:
                 forgot_page.locator("#email").fill(config.reset_email)

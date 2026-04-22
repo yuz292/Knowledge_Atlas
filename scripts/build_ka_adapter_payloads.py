@@ -3842,7 +3842,7 @@ def build_article_details_payload(articles, evidence, argumentation):
                 for row in top_claim_rows
             ],
             'visual_support_gallery': list(article.get('visual_support_gallery') or []),
-            'technical_results_table': list(article.get('technical_results_table') or []),
+            'technical_results_table': dict(article.get('technical_results_table') or {}),
             'related_papers': list(article.get('related_papers') or []),
             'supporting_papers': paper_ref_rows(support_counter)[:8],
             'contradicting_papers': paper_ref_rows(attack_counter)[:8],

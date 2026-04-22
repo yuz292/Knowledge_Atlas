@@ -22,6 +22,15 @@ def test_article_details_are_enriched_with_theory_and_meta_fields():
     assert "technical_results_table" in sample
 
 
+def test_article_details_keep_technical_result_surface_as_object():
+    payload = _load("article_details.json")
+    sample = payload["details"]["PDF-0071"]
+    technical = sample["technical_results_table"]
+    assert isinstance(technical, dict)
+    assert technical["title"]
+    assert technical["image_url"]
+
+
 def test_paper_pnus_payload_matches_full_v7_ready_surface():
     payload = _load("paper_pnus.json")
     assert payload["summary"]["source_kind"] == "paper_pnu_lookup"

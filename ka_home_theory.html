@@ -145,10 +145,223 @@
       line-height: 1.3;
     }
 
-    .section-subtitle {
+  .section-subtitle {
       font-size: 0.95rem; color: var(--muted);
       margin-bottom: 32px; line-height: 1.65;
       max-width: 680px;
+    }
+
+    .live-loading,
+    .live-error {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 24px 28px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .live-error {
+      border-color: #E7B270;
+      color: #7A4F00;
+      background: #FFF8ED;
+    }
+
+    .live-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .live-metric {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .live-metric-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .live-metric-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .live-metric-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .live-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .live-block {
+      background: #fff;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+
+    .live-block h3 {
+      font-family: Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .live-block-intro {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .live-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .live-card {
+      background: #F9F8F7;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 10px;
+      padding: 14px 15px;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      appearance: none;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+    }
+
+    .live-card:hover,
+    .live-card.is-active {
+      border-color: var(--theory-purple);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    .live-card-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .live-card-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .live-select {
+      width: 100%;
+      border: 1.5px solid #DDD6CD;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: #fff;
+      margin-bottom: 16px;
+    }
+
+    .live-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .live-soft-box {
+      background: #F9F8F7;
+      border: 1px solid #E0DAD3;
+      border-radius: 10px;
+      padding: 14px 15px;
+    }
+
+    .live-soft-box h4 {
+      font-size: 0.92rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .live-soft-box p,
+    .live-list-row p {
+      font-size: 0.87rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .live-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .live-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #F0E8FF;
+      color: var(--theory-purple);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .live-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .live-list-row {
+      background: #F9F8F7;
+      border: 1px solid #E0DAD3;
+      border-radius: 10px;
+      padding: 13px 14px;
+    }
+
+    .live-list-row-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .live-list-row-meta {
+      font-size: 0.79rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .live-list-row a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .live-list-row a:hover {
+      color: var(--amber);
     }
 
     /* ── TOPIC CHECKLIST ── */
@@ -804,6 +1017,7 @@
       .test-row { grid-template-columns: 1fr; }
       .test-label { margin-bottom: 4px; }
       .interest-grid { grid-template-columns: 1fr; }
+      .live-grid { grid-template-columns: 1fr; }
     }
 
     /* ── TEST MODE ── */
@@ -876,6 +1090,7 @@
 </style>
 <script src="ka_canonical_navbar.js" defer></script>
 <script src="ka_user_type.js" defer></script>
+<script src="ka_data_adapter.js"></script>
 </head>
 <body data-ka-regime="global">
 <div id="ka-navbar-slot"></div>
@@ -883,6 +1098,7 @@
 
 <aside class="portal-subnav" aria-label="On this page">
   <div class="portal-subnav-title">On this page</div>
+  <a href="#current-index">Current Index</a>
   <a href="#fronts">Research Fronts</a>
   <a href="#interest">Of Potential Interest</a>
   <a href="#journeys">Choose Your Path</a>
@@ -939,6 +1155,12 @@
 
 <!-- MAIN CONTENT -->
 <div class="main-content">
+
+  <div class="section" id="current-index">
+    <h2 class="section-heading">Current Atlas theory index</h2>
+    <p class="section-subtitle">This section is generated from the current soft-rebuild theory and mechanism payloads. It is the live descriptive index of theory coverage, debate density, and mechanism inventory, not a hand-authored essay.</p>
+    <div id="theory-live-mount" class="live-loading">Loading current theory and mechanism indices…</div>
+  </div>
 
   <!-- SECTION 1: TOPIC CHECKLIST WITH THEORY OVERLAY -->
   <div class="section">
@@ -1554,6 +1776,226 @@
 </div>
 
 <script>
+  const liveEsc = (value) => String(value == null ? '' : value).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])
+  );
+
+  function liveCompact(text, limit = 220) {
+    const value = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!value) return '';
+    return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
+  }
+
+  function liveMetric(label, value, sub) {
+    return `
+      <div class="live-metric">
+        <div class="live-metric-label">${liveEsc(label)}</div>
+        <div class="live-metric-value">${liveEsc(value)}</div>
+        <div class="live-metric-sub">${liveEsc(sub || '')}</div>
+      </div>
+    `;
+  }
+
+  function liveCards(theories, selectedId) {
+    return theories.map(theory => `
+      <button class="live-card ${theory.id === selectedId ? 'is-active' : ''}" data-theory-id="${liveEsc(theory.id)}" type="button">
+        <div class="live-card-title">${liveEsc(theory.name)}</div>
+        <div class="live-card-meta">${liveEsc(String(theory.article_count || 0))} papers · ${liveEsc(String(theory.topic_count || 0))} topic links · ${liveEsc(String(theory.debate_cluster_count || 0))} debate clusters</div>
+      </button>
+    `).join('');
+  }
+
+  function liveListRows(rows, mapper, emptyText) {
+    if (!rows || !rows.length) {
+      return `<p class="live-block-intro">${liveEsc(emptyText)}</p>`;
+    }
+    return `<div class="live-list">${rows.map(mapper).join('')}</div>`;
+  }
+
+  function renderTheoryDetail(theory) {
+    if (!theory) {
+      return '<div class="live-error">No theory record is available in the current payload.</div>';
+    }
+
+    const supportEdges = (theory.evidence_profile || {}).support_edge_count || 0;
+    const attackEdges = (theory.evidence_profile || {}).attack_edge_count || 0;
+    return `
+      <div class="live-detail-grid">
+        <div class="live-soft-box">
+          <h4>Coverage</h4>
+          <p>${liveEsc(String(theory.article_count || 0))} papers, ${liveEsc(String(theory.topic_count || 0))} topic links, and ${liveEsc(String(theory.debate_cluster_count || 0))} debate clusters in the current Atlas index.</p>
+        </div>
+        <div class="live-soft-box">
+          <h4>Argumentation profile</h4>
+          <p>${liveEsc(String(supportEdges))} support edges and ${liveEsc(String(attackEdges))} attack edges currently attached to this theory's paper set.</p>
+        </div>
+      </div>
+
+      <div class="live-soft-box" style="margin-bottom:16px">
+        <h4>Most-linked topics</h4>
+        ${theory.topic_links && theory.topic_links.length ? `
+          <div class="live-chip-row">
+            ${theory.topic_links.slice(0, 8).map(topic => `<span class="live-chip">${liveEsc(topic.label)} (${liveEsc(topic.paper_count)})</span>`).join('')}
+          </div>` : '<p>No topic links were exported for this theory.</p>'}
+      </div>
+
+      <div class="live-soft-box" style="margin-bottom:16px">
+        <h4>Nearby theories</h4>
+        ${theory.related_theories && theory.related_theories.length ? `
+          <div class="live-chip-row">
+            ${theory.related_theories.slice(0, 8).map(row => `<span class="live-chip">${liveEsc(row.name)} (${liveEsc(row.weight)})</span>`).join('')}
+          </div>` : '<p>No cross-theory neighborhood was exported for this theory.</p>'}
+      </div>
+
+      <h4 style="font-size:1rem;color:var(--navy);margin:0 0 10px">Representative papers</h4>
+      ${liveListRows(
+        theory.representative_papers || [],
+        row => `
+          <div class="live-list-row">
+            <div class="live-list-row-title"><a href="ka_article_view.html?id=${encodeURIComponent(row.paper_id)}">${liveEsc(row.title || row.paper_id)}</a></div>
+            <div class="live-list-row-meta">${liveEsc(row.primary_topic || 'Topic pending')} ${row.year ? '· ' + liveEsc(row.year) : ''}</div>
+            <p>${liveEsc(String(row.claim_count || 0))} extracted claims in the current argumentation layer.</p>
+          </div>
+        `,
+        'No representative papers were exported for this theory.'
+      )}
+
+      <h4 style="font-size:1rem;color:var(--navy);margin:18px 0 10px">PNU examples</h4>
+      ${liveListRows(
+        theory.pnu_examples || [],
+        row => `
+          <div class="live-list-row">
+            <div class="live-list-row-title"><a href="ka_article_view.html?id=${encodeURIComponent(row.paper_id)}">${liveEsc(row.title || row.paper_id)}</a></div>
+            <p>${liveEsc(liveCompact(row.short_summary || '', 260) || 'No short PNU summary was exported.')}</p>
+          </div>
+        `,
+        'No PNU examples were exported for this theory.'
+      )}
+    `;
+  }
+
+  async function loadLiveTheoryIndex() {
+    const mount = document.getElementById('theory-live-mount');
+    if (!mount) return;
+
+    try {
+      let theoryPayload;
+      let mechanismPayload;
+      if (window.KA_DATA_ADAPTER) {
+        [theoryPayload, mechanismPayload] = await Promise.all([
+          window.KA_DATA_ADAPTER.loadPayload('theories', { summary: {}, theories: [] }),
+          window.KA_DATA_ADAPTER.loadPayload('mechanisms', { summary: {}, mechanisms: [] }),
+        ]);
+      } else {
+        const [theoryRes, mechanismRes] = await Promise.all([
+          fetch('data/ka_payloads/theories.json', { cache: 'no-store' }),
+          fetch('data/ka_payloads/mechanisms.json', { cache: 'no-store' }),
+        ]);
+        if (!theoryRes.ok) throw new Error('theories.json HTTP ' + theoryRes.status);
+        if (!mechanismRes.ok) throw new Error('mechanisms.json HTTP ' + mechanismRes.status);
+        theoryPayload = await theoryRes.json();
+        mechanismPayload = await mechanismRes.json();
+      }
+
+      const theories = (theoryPayload.theories || []).slice().sort((a, b) => {
+        const articleGap = (b.article_count || 0) - (a.article_count || 0);
+        if (articleGap) return articleGap;
+        return (((b.evidence_profile || {}).support_edge_count || 0) - ((a.evidence_profile || {}).support_edge_count || 0));
+      });
+      const mechanisms = mechanismPayload.mechanisms || [];
+      const focusIds = theories.slice(0, 6);
+      const params = new URLSearchParams(window.location.search);
+      let selectedId = params.get('theory') || (focusIds[0] && focusIds[0].id) || (theories[0] && theories[0].id) || '';
+
+      const frameworkCounts = mechanisms.reduce((acc, row) => {
+        const key = row.framework_name || 'Unclassified';
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+      const topFrameworks = Object.entries(frameworkCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6);
+      const featuredMechanisms = mechanisms.slice().sort((a, b) => {
+        const maturity = (value) => ({ 'How-Actually': 3, 'How-Plausibly': 2, 'How-Possibly': 1 }[value] || 0);
+        const maturityGap = maturity(b.maturity) - maturity(a.maturity);
+        if (maturityGap) return maturityGap;
+        return (b.word_count || 0) - (a.word_count || 0);
+      }).slice(0, 6);
+
+      mount.innerHTML = `
+        <div class="live-metrics">
+          ${liveMetric('Indexed theories', (theoryPayload.summary || {}).theory_count || theories.length, 'current descriptive theory export')}
+          ${liveMetric('Debated theories', (theoryPayload.summary || {}).debated_theory_count || 0, 'theories appearing in debate clusters')}
+          ${liveMetric('Mechanism inventory', (mechanismPayload.summary || {}).mechanism_count || mechanisms.length, 'canonical mechanism manifest entries')}
+          ${liveMetric('Cross-framework links', (mechanismPayload.summary || {}).cross_framework_count || 0, 'mechanisms spanning more than one framework')}
+        </div>
+
+        <div class="live-grid">
+          <div class="live-block">
+            <h3>High-coverage theories</h3>
+            <p class="live-block-intro">These are the theories with the broadest current paper coverage in the Atlas export. Selecting one opens its representative papers, nearby theories, and example PNUs.</p>
+            <select id="live-theory-select" class="live-select" aria-label="Select a theory">
+              ${theories.slice(0, 40).map(row => `<option value="${liveEsc(row.id)}"${row.id === selectedId ? ' selected' : ''}>${liveEsc(row.name)} (${liveEsc(row.article_count)})</option>`).join('')}
+            </select>
+            <div class="live-card-grid" id="live-theory-cards">${liveCards(focusIds, selectedId)}</div>
+            <div id="live-theory-detail"></div>
+          </div>
+
+          <div class="live-block">
+            <h3>Mechanism inventory snapshot</h3>
+            <p class="live-block-intro">${liveEsc(((mechanismPayload.summary || {}).coverage_note) || 'This mechanism inventory is the current canonical export, not yet the full paper-grounded mechanism-chain layer.')}</p>
+            <div class="live-soft-box" style="margin-bottom:16px">
+              <h4>Frameworks with the densest inventory</h4>
+              <div class="live-chip-row">
+                ${topFrameworks.map(([name, count]) => `<span class="live-chip">${liveEsc(name)} (${liveEsc(count)})</span>`).join('')}
+              </div>
+            </div>
+            <h4 style="font-size:1rem;color:var(--navy);margin:0 0 10px">Representative mechanisms</h4>
+            ${liveListRows(
+              featuredMechanisms,
+              row => `
+                <div class="live-list-row">
+                  <div class="live-list-row-title">${liveEsc(row.name)}</div>
+                  <div class="live-list-row-meta">${liveEsc(row.framework_name || 'Framework pending')} · ${liveEsc(row.kind || 'kind pending')} · ${liveEsc(row.maturity || 'maturity pending')}</div>
+                  <p>${liveEsc(row.temporal || 'Temporal scale pending')} · ${liveEsc(String(row.word_count || 0))} words in the current manifest.</p>
+                </div>
+              `,
+              'No mechanisms were exported.'
+            )}
+          </div>
+        </div>
+      `;
+
+      const detailMount = document.getElementById('live-theory-detail');
+      const select = document.getElementById('live-theory-select');
+      const cardButtons = Array.from(document.querySelectorAll('[data-theory-id]'));
+
+      function paint(theoryId) {
+        const theory = theories.find(row => row.id === theoryId) || theories[0];
+        if (!theory) {
+          detailMount.innerHTML = '<div class="live-error">No theory rows were available in the current payload.</div>';
+          return;
+        }
+        selectedId = theory.id;
+        detailMount.innerHTML = renderTheoryDetail(theory);
+        if (select) select.value = theory.id;
+        cardButtons.forEach(button => button.classList.toggle('is-active', button.dataset.theoryId === theory.id));
+        const next = new URL(window.location.href);
+        next.searchParams.set('theory', theory.id);
+        history.replaceState(null, '', next);
+      }
+
+      if (select) {
+        select.addEventListener('change', (event) => paint(event.target.value));
+      }
+      cardButtons.forEach(button => button.addEventListener('click', () => paint(button.dataset.theoryId)));
+      paint(selectedId);
+    } catch (error) {
+      mount.className = 'live-error';
+      mount.innerHTML = `Could not load the live theory and mechanism payloads. Error: <code>${liveEsc(error.message || error)}</code>`;
+    }
+  }
+
   // ── LOCAL STORAGE FOR TOPIC PERSISTENCE ──
   const topicCheckboxes = document.querySelectorAll('.topic-check');
 
@@ -1648,6 +2090,7 @@
 
   // Initialize on load
   loadTopicState();
+  loadLiveTheoryIndex();
 </script>
 
 <footer class="site-footer">

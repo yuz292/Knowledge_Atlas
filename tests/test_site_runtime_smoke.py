@@ -20,11 +20,11 @@ def _fake_request(self, path, *, method="GET", json_body=None, headers=None):
     if path == "ka_topic_facet_view.html":
         return smoke.ResponseData("http://test/ka_topic_facet_view.html", 200, "Topic Page (Facet View) topic_crosswalk.json")
     if path == "ka_article_view.html?id=PDF-0007":
-        return smoke.ResponseData("http://test/ka_article_view.html?id=PDF-0007", 200, "Loading article record article_details.json")
+        return smoke.ResponseData("http://test/ka_article_view.html?id=PDF-0007", 200, "Loading article record Visual support gallery Study record article_details.json")
     if path == "ka_journeys.html":
         return smoke.ResponseData("http://test/ka_journeys.html", 200, "The harder pages of Knowledge Atlas Article Finder problems")
     if path == "ka_home_theory.html":
-        return smoke.ResponseData("http://test/ka_home_theory.html", 200, "Theory Explorer Knowledge Atlas")
+        return smoke.ResponseData("http://test/ka_home_theory.html", 200, "Current Atlas theory index theories.json mechanisms.json Theory Explorer Knowledge Atlas")
     if path == "ka_journey_mechanism.html":
         return smoke.ResponseData("http://test/ka_journey_mechanism.html", 200, "Mechanism layer data/ka_payloads/mechanisms.json")
     if path == "160sp/ka_admin.html":
