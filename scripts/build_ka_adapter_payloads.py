@@ -3740,8 +3740,39 @@ def build_article_details_payload(articles, evidence, argumentation):
                     attack_counter[source_paper_id] += 1
 
         mean_credence = credence_means.get(paper_id)
+        paper_node = paper_nodes.get(paper_id) or {}
+        article_theories = []
+        for value in (article.get('theories') or []) + list(paper_node.get('theories') or []):
+            label = clean_topic_candidate(value)
+            if label and label not in article_theories:
+                article_theories.append(label)
+        article_constructs = []
+        for value in article.get('constructs') or []:
+            label = clean_topic_candidate(value)
+            if label and label not in article_constructs:
+                article_constructs.append(label)
+        article_instruments = []
+        for value in article.get('instruments') or []:
+            label = clean_topic_candidate(value)
+            if label and label not in article_instruments:
+                article_instruments.append(label)
         details[paper_id] = {
             'paper_id': paper_id,
+            'article_meta': {
+                'title': article.get('title') or paper_id,
+                'year': article.get('year'),
+                'doi': article.get('doi') or '',
+                'article_type': article.get('article_type') or '',
+                'primary_topic': article.get('primary_topic') or '',
+                'sample_n': article.get('sample_n'),
+                'venue': article.get('venue') or '',
+                'authors': list(article.get('authors') or []),
+                'apa_citation': article.get('apa_citation') or '',
+                'main_conclusion': article.get('main_conclusion') or '',
+            },
+            'theories': article_theories,
+            'constructs': article_constructs,
+            'instruments': article_instruments,
             'science_summary': {
                 'core_finding': summary_sections.get('Core Finding') or structured_claim.get('core_finding_text') or article.get('main_conclusion') or '',
                 'methods_and_design': summary_sections.get('Methods & Design') or clean_rich_text(accepted.get('methods_surface_summary')),
@@ -3782,12 +3813,21 @@ def build_article_details_payload(articles, evidence, argumentation):
             'evidence_profile': {
                 'atlas_credence_mean': mean_credence,
                 'atlas_credence_percentile': credence_percentile(mean_credence),
-                'paper_claim_count': int((paper_nodes.get(paper_id) or {}).get('claim_count') or 0),
+                'paper_claim_count': int(paper_node.get('claim_count') or 0),
                 'support_edge_count': support_edge_count,
                 'attack_edge_count': attack_edge_count,
-                'contradiction_count': int((paper_nodes.get(paper_id) or {}).get('contradiction_count') or 0),
-                'search_target_count': int((paper_nodes.get(paper_id) or {}).get('search_target_count') or 0),
-                'dominant_stance': (paper_nodes.get(paper_id) or {}).get('dominant_stance') or '',
+                'contradiction_count': int(paper_node.get('contradiction_count') or 0),
+                'search_target_count': int(paper_node.get('search_target_count') or 0),
+                'dominant_stance': paper_node.get('dominant_stance') or '',
+            },
+            'argumentation': {
+                'claim_count': int(paper_node.get('claim_count') or 0),
+                'contradiction_count': int(paper_node.get('contradiction_count') or 0),
+                'dominant_stance': paper_node.get('dominant_stance') or '',
+                'node_qualifier': paper_node.get('node_qualifier') or '',
+                'search_target_count': int(paper_node.get('search_target_count') or 0),
+                'support_edge_count': support_edge_count,
+                'attack_edge_count': attack_edge_count,
             },
             'top_claims': [
                 {
@@ -3801,6 +3841,9 @@ def build_article_details_payload(articles, evidence, argumentation):
                 }
                 for row in top_claim_rows
             ],
+            'visual_support_gallery': list(article.get('visual_support_gallery') or []),
+            'technical_results_table': list(article.get('technical_results_table') or []),
+            'related_papers': list(article.get('related_papers') or []),
             'supporting_papers': paper_ref_rows(support_counter)[:8],
             'contradicting_papers': paper_ref_rows(attack_counter)[:8],
         }
@@ -3810,8 +3853,322 @@ def build_article_details_payload(articles, evidence, argumentation):
             'article_count': len(details),
             'source_kind': 'article_detail_lookup',
             'lifecycle_db': str(LIFECYCLE_DB_PATH.relative_to(ROOT)) if LIFECYCLE_DB_PATH.exists() else '',
+            'theory_enriched_article_count': sum(1 for detail in details.values() if detail.get('theories')),
+            'short_pnu_count': sum(1 for detail in details.values() if (detail.get('pnu') or {}).get('short_summary')),
+            'long_pnu_count': sum(1 for detail in details.values() if (detail.get('pnu') or {}).get('long_summary')),
         },
         'details': details,
+    }
+
+
+def build_paper_pnus_payload(articles, article_details):
+    article_lookup = {
+        str(article.get('paper_id') or '').strip(): article
+        for article in articles
+        if str(article.get('paper_id') or '').strip()
+    }
+    rows = []
+    for paper_id, detail in (article_details.get('details') or {}).items():
+        article = article_lookup.get(paper_id) or {}
+        pnu = detail.get('pnu') or {}
+        operationalization = detail.get('operationalization') or {}
+        argumentation = detail.get('argumentation') or {}
+        rows.append(
+            {
+                'paper_id': paper_id,
+                'title': (detail.get('article_meta') or {}).get('title') or article.get('title') or paper_id,
+                'year': (detail.get('article_meta') or {}).get('year'),
+                'doi': (detail.get('article_meta') or {}).get('doi') or '',
+                'article_type': (detail.get('article_meta') or {}).get('article_type') or '',
+                'primary_topic': (detail.get('article_meta') or {}).get('primary_topic') or article.get('primary_topic') or '',
+                'theories': list(detail.get('theories') or []),
+                'science_summary': {
+                    'core_finding': (detail.get('science_summary') or {}).get('core_finding') or '',
+                    'methods_and_design': (detail.get('science_summary') or {}).get('methods_and_design') or '',
+                    'design_implications': (detail.get('science_summary') or {}).get('design_implications') or '',
+                    'limitations': (detail.get('science_summary') or {}).get('limitations') or '',
+                },
+                'pnu': {
+                    'short_summary': pnu.get('short_summary') or '',
+                    'long_summary': pnu.get('long_summary') or '',
+                    'short_status': pnu.get('short_status') or '',
+                    'long_status': pnu.get('long_status') or '',
+                    'panel_status': pnu.get('panel_status') or '',
+                    'panel_basis_count': int(pnu.get('panel_basis_count') or 0),
+                    'verifier_status': pnu.get('verifier_status') or '',
+                },
+                'operationalization_counts': {
+                    'measurement_count': int(operationalization.get('measurement_count') or 0),
+                    'instrument_count': int(operationalization.get('instrument_count') or 0),
+                    'sensor_count': int(operationalization.get('sensor_count') or 0),
+                },
+                'argumentation': {
+                    'claim_count': int(argumentation.get('claim_count') or 0),
+                    'contradiction_count': int(argumentation.get('contradiction_count') or 0),
+                    'dominant_stance': argumentation.get('dominant_stance') or '',
+                },
+                'supporting_paper_count': len(detail.get('supporting_papers') or []),
+                'contradicting_paper_count': len(detail.get('contradicting_papers') or []),
+            }
+        )
+    rows.sort(
+        key=lambda row: (
+            row['pnu'].get('panel_status') != 'panel_grounded',
+            row['pnu'].get('verifier_status') != 'pass',
+            row['title'],
+        )
+    )
+    return {
+        'summary': {
+            'article_count': len(rows),
+            'short_summary_count': sum(1 for row in rows if row['pnu'].get('short_summary')),
+            'long_summary_count': sum(1 for row in rows if row['pnu'].get('long_summary')),
+            'panel_grounded_count': sum(1 for row in rows if row['pnu'].get('panel_status') == 'panel_grounded'),
+            'verifier_pass_count': sum(1 for row in rows if row['pnu'].get('verifier_status') == 'pass'),
+            'source_kind': 'paper_pnu_lookup',
+            'source_files': {
+                'article_details': 'data/ka_payloads/article_details.json',
+            },
+        },
+        'papers': rows,
+    }
+
+
+def build_theories_payload(articles, topic_hierarchy, argumentation, article_details):
+    detail_lookup = article_details.get('details') or {}
+    stores = {}
+
+    def ensure_theory(name):
+        label = clean_topic_candidate(name)
+        if not label:
+            return None
+        theory_id = slugify(label)
+        if not theory_id:
+            return None
+        existing = stores.get(theory_id)
+        if existing is None:
+            existing = {
+                'id': theory_id,
+                'name': label,
+                'paper_ids': set(),
+                'topic_ids': set(),
+                'cluster_ids': set(),
+                'representative_papers': [],
+                'topic_links': [],
+                'debate_clusters': [],
+                'related_counter': Counter(),
+                'primary_topic_counter': Counter(),
+                'pnu_examples': [],
+                'support_edge_count': 0,
+                'attack_edge_count': 0,
+            }
+            stores[theory_id] = existing
+        elif existing['name'].islower() and any(ch.isupper() for ch in label):
+            existing['name'] = label
+        return existing
+
+    for article in articles:
+        paper_id = str(article.get('paper_id') or '').strip()
+        detail = detail_lookup.get(paper_id) or {}
+        paper_theories = []
+        for value in (detail.get('theories') or article.get('theories') or []):
+            label = clean_topic_candidate(value)
+            if label and label not in paper_theories:
+                paper_theories.append(label)
+        paper_ref = {
+            'paper_id': paper_id,
+            'title': article.get('title') or paper_id,
+            'year': article.get('year'),
+            'primary_topic': article.get('primary_topic') or '',
+            'claim_count': int(article.get('claim_count') or 0),
+        }
+        pnu_short = ((detail.get('pnu') or {}).get('short_summary') or '')
+        support_edge_count = int((detail.get('argumentation') or {}).get('support_edge_count') or 0)
+        attack_edge_count = int((detail.get('argumentation') or {}).get('attack_edge_count') or 0)
+        for label in paper_theories:
+            store = ensure_theory(label)
+            if store is None:
+                continue
+            store['paper_ids'].add(paper_id)
+            store['representative_papers'].append(paper_ref)
+            if article.get('primary_topic'):
+                store['primary_topic_counter'][article['primary_topic']] += 1
+            if pnu_short and len(store['pnu_examples']) < 4:
+                store['pnu_examples'].append(
+                    {
+                        'paper_id': paper_id,
+                        'title': article.get('title') or paper_id,
+                        'short_summary': compact_text(pnu_short, 240),
+                    }
+                )
+            store['support_edge_count'] += support_edge_count
+            store['attack_edge_count'] += attack_edge_count
+
+    for topic in topic_hierarchy.get('topics') or []:
+        topic_theories = []
+        for value in topic.get('theories') or []:
+            label = clean_topic_candidate(value)
+            if label and label not in topic_theories:
+                topic_theories.append(label)
+        topic_ref = {
+            'topic_id': topic.get('id') or '',
+            'label': topic.get('label') or topic.get('name') or humanize(topic.get('id') or ''),
+            'paper_count': int(topic.get('paper_count') or 0),
+        }
+        for label in topic_theories:
+            store = ensure_theory(label)
+            if store is None:
+                continue
+            if topic_ref['topic_id'] not in store['topic_ids']:
+                store['topic_ids'].add(topic_ref['topic_id'])
+                store['topic_links'].append(topic_ref)
+            for sibling in topic_theories:
+                if sibling != label:
+                    store['related_counter'][sibling] += 1
+
+    for cluster in argumentation.get('debate_clusters') or []:
+        cluster_theories = []
+        for value in cluster.get('theories') or []:
+            label = clean_topic_candidate(value)
+            if label and label not in cluster_theories:
+                cluster_theories.append(label)
+        cluster_ref = {
+            'cluster_id': cluster.get('cluster_id') or '',
+            'paper_count': int(cluster.get('paper_count') or 0),
+            'theories': list(cluster_theories),
+        }
+        for label in cluster_theories:
+            store = ensure_theory(label)
+            if store is None:
+                continue
+            if cluster_ref['cluster_id'] not in store['cluster_ids']:
+                store['cluster_ids'].add(cluster_ref['cluster_id'])
+                store['debate_clusters'].append(cluster_ref)
+            for sibling in cluster_theories:
+                if sibling != label:
+                    store['related_counter'][sibling] += 2
+
+    theory_rows = []
+    for store in stores.values():
+        store['representative_papers'].sort(
+            key=lambda row: (-(row.get('claim_count') or 0), str(row.get('year') or ''), row['paper_id'])
+        )
+        store['topic_links'].sort(key=lambda row: (-row['paper_count'], row['label']))
+        store['debate_clusters'].sort(key=lambda row: (-row['paper_count'], row['cluster_id']))
+        related_rows = []
+        for related_name, weight in store['related_counter'].most_common(8):
+            related = ensure_theory(related_name)
+            if related is None or related['id'] == store['id']:
+                continue
+            related_rows.append(
+                {
+                    'id': related['id'],
+                    'name': related['name'],
+                    'weight': int(weight),
+                }
+            )
+        theory_rows.append(
+            {
+                'id': store['id'],
+                'name': store['name'],
+                'article_count': len(store['paper_ids']),
+                'topic_count': len(store['topic_ids']),
+                'debate_cluster_count': len(store['cluster_ids']),
+                'paper_ids': sorted(store['paper_ids']),
+                'representative_papers': store['representative_papers'][:8],
+                'topic_links': store['topic_links'][:8],
+                'debate_clusters': store['debate_clusters'][:8],
+                'primary_topics': [
+                    {'label': label, 'count': count}
+                    for label, count in store['primary_topic_counter'].most_common(8)
+                ],
+                'related_theories': related_rows,
+                'pnu_examples': store['pnu_examples'][:4],
+                'evidence_profile': {
+                    'support_edge_count': int(store['support_edge_count']),
+                    'attack_edge_count': int(store['attack_edge_count']),
+                },
+            }
+        )
+
+    theory_rows.sort(key=lambda row: (-row['article_count'], row['name']))
+    return {
+        'summary': {
+            'theory_count': len(theory_rows),
+            'article_link_count': sum(row['article_count'] for row in theory_rows),
+            'debated_theory_count': sum(1 for row in theory_rows if row['debate_cluster_count']),
+            'topic_linked_theory_count': sum(1 for row in theory_rows if row['topic_count']),
+            'source_kind': 'soft_rebuild_theory_index',
+            'coverage_note': (
+                'Derived from article labels, debate clusters, and topic hierarchy. '
+                'The upstream theory-mechanism packets exist but are currently empty, so this export is intentionally descriptive rather than inferential.'
+            ),
+            'source_files': {
+                'articles': 'data/ka_payloads/articles.json',
+                'article_details': 'data/ka_payloads/article_details.json',
+                'argumentation': 'data/ka_payloads/argumentation.json',
+                'topic_hierarchy': 'data/ka_payloads/topic_hierarchy.json',
+            },
+        },
+        'theories': theory_rows,
+    }
+
+
+def build_mechanisms_payload():
+    manifest = load_json(OUT / 'pnus.json', {})
+    frameworks = manifest.get('frameworks') or []
+    cross_framework = manifest.get('cross_framework') or []
+    mechanisms = []
+    for framework in frameworks:
+        framework_id = framework.get('id') or slugify(framework.get('name') or 'framework')
+        framework_name = framework.get('name') or framework_id
+        for mechanism in framework.get('mechanisms') or []:
+            mechanisms.append(
+                {
+                    'id': mechanism.get('id') or '',
+                    'name': mechanism.get('name') or '',
+                    'framework_id': framework_id,
+                    'framework_name': framework_name,
+                    'frameworks': [framework_name],
+                    'kind': 'framework_specific',
+                    'maturity': mechanism.get('maturity') or '',
+                    'temporal': mechanism.get('temporal') or '',
+                    'file': mechanism.get('file') or '',
+                    'exists': bool(mechanism.get('exists')),
+                    'word_count': int(mechanism.get('word_count') or 0),
+                }
+            )
+    for mechanism in cross_framework:
+        mechanisms.append(
+            {
+                'id': mechanism.get('id') or '',
+                'name': mechanism.get('name') or '',
+                'framework_id': 'cross_framework',
+                'framework_name': 'Cross-Framework',
+                'frameworks': list(mechanism.get('frameworks') or []),
+                'kind': 'cross_framework',
+                'maturity': mechanism.get('maturity') or '',
+                'temporal': mechanism.get('temporal') or '',
+                'file': mechanism.get('file') or '',
+                'exists': bool(mechanism.get('exists')),
+                'word_count': int(mechanism.get('word_count') or 0),
+            }
+        )
+    mechanisms.sort(key=lambda row: (row['framework_name'], row['name']))
+    return {
+        'summary': {
+            'mechanism_count': len(mechanisms),
+            'framework_count': len(frameworks),
+            'cross_framework_count': len(cross_framework),
+            'source_kind': 'mechanism_profile_manifest',
+            'coverage_note': (
+                'This is the canonical mechanism inventory flattened from the existing PNU mechanism manifest. '
+                'It is not yet the paper-grounded mechanism-chain export promised in the journey specifications.'
+            ),
+            'readiness': (manifest.get('summary') or {}).get('readiness') or {},
+        },
+        'source': manifest.get('source') or {},
+        'mechanisms': mechanisms,
     }
 
 
@@ -4118,6 +4475,9 @@ def main():
     topic_crosswalk = build_topic_crosswalk_payload(topic_hierarchy)
     argumentation = build_argumentation_payload()
     article_details = build_article_details_payload(articles, evidence, argumentation)
+    paper_pnus = build_paper_pnus_payload(articles, article_details)
+    theories = build_theories_payload(articles, topic_hierarchy, argumentation, article_details)
+    mechanisms = build_mechanisms_payload()
     annotations = build_annotations_payload()
     interpretation = build_interpretation_payload()
     layers = build_layers_summary(argumentation, annotations, interpretation)
@@ -4144,6 +4504,9 @@ def main():
     (OUT / 'dashboard.json').write_text(json.dumps({'dashboard': dashboard}, indent=2))
     (OUT / 'json_status.json').write_text(json.dumps(json_status, indent=2))
     (OUT / 'article_details.json').write_text(json.dumps(article_details, indent=2))
+    (OUT / 'paper_pnus.json').write_text(json.dumps(paper_pnus, indent=2))
+    (OUT / 'theories.json').write_text(json.dumps(theories, indent=2))
+    (OUT / 'mechanisms.json').write_text(json.dumps(mechanisms, indent=2))
     (OUT / 'topic_hierarchy.json').write_text(json.dumps(topic_hierarchy, indent=2))
     (OUT / 'topic_crosswalk.json').write_text(json.dumps(topic_crosswalk, indent=2))
     (OUT / 'topic_repair_queue.json').write_text(json.dumps({'repair_queue': topic_hierarchy.get('repair_queue') or []}, indent=2))

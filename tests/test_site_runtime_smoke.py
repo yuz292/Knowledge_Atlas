@@ -53,6 +53,24 @@ def _fake_request(self, path, *, method="GET", json_body=None, headers=None):
             200,
             json.dumps({"details": {"PDF-0007": {"title": "Sample"}}}),
         )
+    if path == "data/ka_payloads/paper_pnus.json":
+        return smoke.ResponseData(
+            "http://test/data/ka_payloads/paper_pnus.json",
+            200,
+            json.dumps({"papers": [{"paper_id": "PDF-0007", "pnu": {"short_summary": "Example"}}]}),
+        )
+    if path == "data/ka_payloads/theories.json":
+        return smoke.ResponseData(
+            "http://test/data/ka_payloads/theories.json",
+            200,
+            json.dumps({"summary": {"source_kind": "soft_rebuild_theory_index"}, "theories": [{"id": "attention_restoration_theory"}]}),
+        )
+    if path == "data/ka_payloads/mechanisms.json":
+        return smoke.ResponseData(
+            "http://test/data/ka_payloads/mechanisms.json",
+            200,
+            json.dumps({"summary": {"source_kind": "mechanism_profile_manifest"}, "mechanisms": [{"id": "SC-MECH-1"}]}),
+        )
     if path == "health":
         return smoke.ResponseData(
             "http://test/health",

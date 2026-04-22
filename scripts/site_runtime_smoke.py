@@ -620,6 +620,33 @@ def run_suite(config: SmokeConfig) -> SmokeReport:
             body_markers=(config.sample_article_id,),
         )
     )
+    results.append(
+        check_json_payload(
+            site_client,
+            "Paper PNU payload",
+            "data/ka_payloads/paper_pnus.json",
+            required_keys=("papers",),
+            body_markers=(config.sample_article_id,),
+        )
+    )
+    results.append(
+        check_json_payload(
+            site_client,
+            "Theory payload",
+            "data/ka_payloads/theories.json",
+            required_keys=("theories",),
+            body_markers=('"source_kind": "soft_rebuild_theory_index"',),
+        )
+    )
+    results.append(
+        check_json_payload(
+            site_client,
+            "Mechanism payload",
+            "data/ka_payloads/mechanisms.json",
+            required_keys=("mechanisms",),
+            body_markers=('"source_kind": "mechanism_profile_manifest"',),
+        )
+    )
     if config.auth_health_path:
         results.append(
             check_json_field(
