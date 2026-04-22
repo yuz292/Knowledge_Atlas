@@ -84,6 +84,7 @@ smoke_staging() {
   ensure_path "staging" "$STAGING_PATH"
   (
     cd "$STAGING_PATH"
+    bash scripts/server_ensure_staging_auth.sh
     bash scripts/run_site_runtime_smoke.sh staging --fail-on-skip
   )
   ok "staging runtime smoke passed"
