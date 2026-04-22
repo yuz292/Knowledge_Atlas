@@ -235,6 +235,10 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
         quick_lookup_page = context.new_page()
         classic_topics_page = context.new_page()
         mechanism_page = context.new_page()
+        article_theory_page = context.new_page()
+        article_topic_page = context.new_page()
+        topic_to_theory_page = context.new_page()
+        theory_mechanism_page = context.new_page()
 
         try:
             home_url = f"{config.base_url}/ka_home.html"
@@ -271,6 +275,10 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
             quick_lookup_page.goto(quick_lookup_url, wait_until="networkidle")
             classic_topics_page.goto(classic_topics_url, wait_until="networkidle")
             mechanism_page.goto(mechanism_url, wait_until="networkidle")
+            article_theory_page.goto(article_url, wait_until="networkidle")
+            article_topic_page.goto(article_url, wait_until="networkidle")
+            topic_to_theory_page.goto(topic_url, wait_until="networkidle")
+            theory_mechanism_page.goto(theory_url, wait_until="networkidle")
 
             nav_text = home_page.locator(".ka-right").inner_text()
             if "Log in" in nav_text and "Register" in nav_text:
@@ -307,11 +315,31 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
 
             article_page.wait_for_selector(".gallery-card img")
             gallery_count = article_page.locator(".gallery-card img").count()
-            theory_chips = article_page.locator("#evidence .chip").count()
+            theory_chips = article_page.locator("#evidence .chip, #evidence .chip-link").count()
             if gallery_count >= 1 and theory_chips >= 1:
                 results.append(_ok("Article enrichment surface", f"Article page rendered {gallery_count} visual surfaces and {theory_chips} evidence chips", url=article_url))
             else:
                 results.append(_fail("Article enrichment surface", f"Article page did not render the expected enriched surface: gallery_count={gallery_count}, theory_chips={theory_chips}", url=article_url))
+
+            article_theory_page.wait_for_selector(".article-theory-link")
+            article_theory_page.locator(".article-theory-link").first.click()
+            article_theory_page.wait_for_url("**/ka_home_theory.html?theory=*", wait_until="networkidle")
+            selected_theory = article_theory_page.locator("#live-theory-select").input_value()
+            if selected_theory:
+                results.append(_ok("Article-to-theory journey", f"Article theory link opened theory focus {selected_theory}", url=article_theory_page.url))
+            else:
+                results.append(_fail("Article-to-theory journey", f"Article theory link changed route but did not select a theory: {article_theory_page.url}", url=article_theory_page.url))
+
+            article_topic_page.wait_for_selector(".article-primary-topic-link")
+            focused_topic_label = article_topic_page.locator(".article-primary-topic-link").first.inner_text().strip()
+            article_topic_page.locator(".article-primary-topic-link").first.click()
+            article_topic_page.wait_for_url("**/ka_topic_facet_view.html?topic=*", wait_until="networkidle")
+            article_topic_page.wait_for_selector("#__ka_topic_focus")
+            topic_focus_text = article_topic_page.locator("#__ka_topic_focus").inner_text()
+            if focused_topic_label and focused_topic_label in topic_focus_text:
+                results.append(_ok("Article-to-topic journey", f"Article topic link opened a focused topic briefing for {focused_topic_label}", url=article_topic_page.url))
+            else:
+                results.append(_fail("Article-to-topic journey", f"Topic focus did not preserve the article topic handoff: {topic_focus_text!r}", url=article_topic_page.url))
 
             theory_page.wait_for_selector("#live-theory-select")
             theory_options = theory_page.locator("#live-theory-select option").count()
@@ -321,6 +349,16 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
                 results.append(_ok("Theory live index", f"Theory explorer rendered {theory_options} selectable theories and {theory_cards} featured theory cards", url=theory_url))
             else:
                 results.append(_fail("Theory live index", f"Theory explorer did not render the live index as expected: options={theory_options}, cards={theory_cards}, mechanism_title={mechanism_title}", url=theory_url))
+
+            theory_mechanism_page.wait_for_selector("#live-mechanism-journey-link")
+            theory_mechanism_page.locator("#live-mechanism-journey-link").click()
+            theory_mechanism_page.wait_for_url("**/ka_journey_mechanism.html?theory=*", wait_until="networkidle")
+            theory_mechanism_page.wait_for_selector("#j-mechanism-focus")
+            mechanism_focus_text = theory_mechanism_page.locator("#j-mechanism-focus").inner_text()
+            if "Opened from theory" in mechanism_focus_text:
+                results.append(_ok("Theory-to-mechanism journey", "Theory explorer handed its focus into the mechanism layer", url=theory_mechanism_page.url))
+            else:
+                results.append(_fail("Theory-to-mechanism journey", f"Mechanism page did not surface a theory handoff note: {mechanism_focus_text!r}", url=theory_mechanism_page.url))
 
             theory_journey_page.wait_for_selector("#j-theory-live .j-theory-card")
             journey_theory_cards = theory_journey_page.locator("#j-theory-live .j-theory-card").count()
@@ -337,6 +375,15 @@ def run_suite(config: BrowserSmokeConfig) -> BrowserSmokeReport:
                 results.append(_ok("Topic briefing layer", f"Topic facet page rendered {topic_metrics} summary metrics and {topic_cards} briefing cards", url=topic_url))
             else:
                 results.append(_fail("Topic briefing layer", f"Topic facet page did not render the live briefing layer as expected: metrics={topic_metrics}, cards={topic_cards}", url=topic_url))
+
+            topic_to_theory_page.wait_for_selector(".brief-chip-link")
+            topic_to_theory_page.locator(".brief-chip-link").first.click()
+            topic_to_theory_page.wait_for_url("**/ka_home_theory.html?theory=*", wait_until="networkidle")
+            selected_from_topic = topic_to_theory_page.locator("#live-theory-select").input_value()
+            if selected_from_topic:
+                results.append(_ok("Topic-to-theory journey", f"Topic theory chip opened theory focus {selected_from_topic}", url=topic_to_theory_page.url))
+            else:
+                results.append(_fail("Topic-to-theory journey", f"Topic theory chip changed route but did not preserve a theory focus: {topic_to_theory_page.url}", url=topic_to_theory_page.url))
 
             heatmap_page.wait_for_selector("#__ka_heatmap_briefing .heat-card")
             heatmap_cards = heatmap_page.locator("#__ka_heatmap_briefing .heat-card").count()

@@ -32,6 +32,9 @@
   .topic-note p{font-size:.9rem;line-height:1.6;color:#40514D}
   .topic-note code{background:#F9F5EE;padding:1px 5px;border-radius:4px}
   .topic-briefings{margin-bottom:18px}
+  .brief-focus{background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;padding:16px 18px;margin-bottom:16px}
+  .brief-focus h2{font-family:Georgia,serif;font-size:1.06rem;color:#1C3D3A;margin-bottom:6px}
+  .brief-focus p{font-size:.9rem;line-height:1.58;color:#40514D}
   .brief-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:14px}
   .brief-metric{background:#fff;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
   .brief-metric .label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:4px}
@@ -183,13 +186,17 @@ function topicCompact(text, limit = 210) {
   return value.length <= limit ? value : value.slice(0, limit - 1).trimEnd() + '…';
 }
 
+function topicKey(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
 function theoryLink(label, theoryByName) {
   const theory = theoryByName.get(String(label || '').toLowerCase());
   if (!theory) return `<span class="brief-chip">${topicEsc(label)}</span>`;
   return `<a class="brief-chip-link" href="ka_home_theory.html?theory=${encodeURIComponent(theory.id)}">${topicEsc(theory.name)}</a>`;
 }
 
-function renderTopicBriefings(crosswalk, topicsPayload, theoriesPayload, pnuPayload, mount) {
+function renderTopicBriefings(crosswalk, topicsPayload, theoriesPayload, pnuPayload, mount, focusTopic = '') {
   const rows = (crosswalk && crosswalk.rows) || [];
   const topics = (topicsPayload && (topicsPayload.topics || topicsPayload.rows)) || [];
   const theories = (theoriesPayload && theoriesPayload.theories) || [];
@@ -198,6 +205,13 @@ function renderTopicBriefings(crosswalk, topicsPayload, theoriesPayload, pnuPayl
   const pnuByPaper = new Map(pnuRows.map(row => [row.paper_id, row]));
   const topCrosswalk = rows.slice().sort((a, b) => (b.defended_paper_count || b.paper_count || 0) - (a.defended_paper_count || a.paper_count || 0)).slice(0, 4);
   const topTopics = topics.slice().sort((a, b) => (b.n || 0) - (a.n || 0)).slice(0, 4);
+  const focusKey = topicKey(focusTopic);
+  const focusRow = focusKey
+    ? rows.find(row => topicKey(row.topic_label) === focusKey || topicKey(row.topic_id) === focusKey)
+    : null;
+  const focusPnu = focusRow
+    ? (focusRow.paper_ids || []).map(pid => pnuByPaper.get(pid)).find(item => item && item.pnu && item.pnu.short_summary)
+    : null;
   const outcomeCount = Array.isArray(crosswalk && crosswalk.outcomes)
     ? crosswalk.outcomes.length
     : Object.keys((crosswalk && crosswalk.outcome_index) || {}).length;
@@ -206,6 +220,16 @@ function renderTopicBriefings(crosswalk, topicsPayload, theoriesPayload, pnuPayl
     : Object.keys((crosswalk && crosswalk.iv_root_index) || {}).length;
 
   mount.innerHTML = `
+    ${focusRow ? `
+      <section class="brief-focus" id="__ka_topic_focus">
+        <h2>Journey focus: ${topicEsc(focusRow.topic_label || focusRow.topic_id)}</h2>
+        <p>This topic page was opened with a focused bundle in the URL, so the defended crosswalk row is surfaced first rather than left implicit inside the broader browser.</p>
+        <div class="brief-meta">${topicEsc(focusRow.outcome_label || 'Outcome')} × ${topicEsc(focusRow.iv_root_label || focusRow.iv_label || 'Family')} · ${topicEsc(focusRow.defended_paper_count || focusRow.paper_count || 0)} defended papers · status ${topicEsc(focusRow.evidence_status || 'working')}</div>
+        ${(focusRow.theories && focusRow.theories.length) ? `<div class="brief-chip-row">${focusRow.theories.slice(0, 6).map(label => theoryLink(label, theoryByName)).join('')}</div>` : ''}
+        ${(focusRow.common_sensors && focusRow.common_sensors.length) ? `<div class="brief-chip-row">${focusRow.common_sensors.slice(0, 6).map(label => `<span class="brief-chip">${topicEsc(label)}</span>`).join('')}</div>` : ''}
+        ${focusPnu ? `<div class="brief-pnu">${topicEsc(topicCompact(focusPnu.pnu.short_summary, 260))}</div>` : ''}
+      </section>
+    ` : ''}
     <div class="brief-metrics">
       <div class="brief-metric">
         <div class="label">Defended bundles</div>
@@ -295,6 +319,8 @@ function renderCrosswalkFallback(data, mount) {
 (async function(){
   const mount = document.getElementById("__ka_pattern_mount");
   const briefingMount = document.getElementById("__ka_topic_briefing");
+  const params = new URLSearchParams(window.location.search);
+  const focusTopic = params.get('topic') || '';
   try {
     let data = null;
     let topicsPayload = { topics: [] };
@@ -309,7 +335,7 @@ function renderCrosswalkFallback(data, mount) {
     }
     if (window.KA_CROSSWALK && typeof window.KA_CROSSWALK.loadCrosswalk === 'function') {
       data = await window.KA_CROSSWALK.loadCrosswalk();
-      renderTopicBriefings(data, topicsPayload, theoriesPayload, pnuPayload, briefingMount);
+      renderTopicBriefings(data, topicsPayload, theoriesPayload, pnuPayload, briefingMount, focusTopic);
       if (typeof window.KA_CROSSWALK.renderProgressiveDisclosure === 'function') {
         window.KA_CROSSWALK.renderProgressiveDisclosure(data, mount);
         return;
@@ -325,7 +351,7 @@ function renderCrosswalkFallback(data, mount) {
         iv_root_index: payload.iv_root_index || {},
       };
     }
-    renderTopicBriefings(data || { rows: [], outcome_index: {}, iv_root_index: {} }, topicsPayload, theoriesPayload, pnuPayload, briefingMount);
+    renderTopicBriefings(data || { rows: [], outcome_index: {}, iv_root_index: {} }, topicsPayload, theoriesPayload, pnuPayload, briefingMount, focusTopic);
     renderCrosswalkFallback(data || { rows: [] }, mount);
   } catch (e) {
     if (briefingMount) {

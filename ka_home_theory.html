@@ -319,7 +319,8 @@
       margin-top: 8px;
     }
 
-    .live-chip {
+    .live-chip,
+    .live-chip-link {
       display: inline-flex;
       align-items: center;
       padding: 5px 10px;
@@ -328,6 +329,16 @@
       color: var(--theory-purple);
       font-size: 0.78rem;
       font-weight: 600;
+    }
+
+    .live-chip-link {
+      text-decoration: none;
+      border: 1px solid rgba(111, 77, 163, 0.12);
+    }
+
+    .live-chip-link:hover {
+      background: #E8DBFF;
+      border-color: rgba(111, 77, 163, 0.32);
     }
 
     .live-list {
@@ -1796,6 +1807,25 @@
     `;
   }
 
+  function liveTopicHref(label) {
+    return `ka_topic_facet_view.html?topic=${encodeURIComponent(String(label || '').trim())}`;
+  }
+
+  function liveTheoryHref(id) {
+    return `ka_home_theory.html?theory=${encodeURIComponent(String(id || '').trim())}`;
+  }
+
+  function liveMechanismHref(theory) {
+    const focus = theory && (theory.id || theory.name) ? (theory.id || theory.name) : '';
+    return focus ? `ka_journey_mechanism.html?theory=${encodeURIComponent(focus)}` : 'ka_journey_mechanism.html';
+  }
+
+  function hydrateLiveRuntimeLinks(root) {
+    (root || document).querySelectorAll('[data-runtime-link]').forEach(node => {
+      node.setAttribute('href', node.getAttribute('data-runtime-link'));
+    });
+  }
+
   function liveCards(theories, selectedId) {
     return theories.map(theory => `
       <button class="live-card ${theory.id === selectedId ? 'is-active' : ''}" data-theory-id="${liveEsc(theory.id)}" type="button">
@@ -1835,7 +1865,7 @@
         <h4>Most-linked topics</h4>
         ${theory.topic_links && theory.topic_links.length ? `
           <div class="live-chip-row">
-            ${theory.topic_links.slice(0, 8).map(topic => `<span class="live-chip">${liveEsc(topic.label)} (${liveEsc(topic.paper_count)})</span>`).join('')}
+            ${theory.topic_links.slice(0, 8).map(topic => `<a class="live-chip-link theory-topic-link" data-runtime-link="${liveEsc(liveTopicHref(topic.label))}">${liveEsc(topic.label)} (${liveEsc(topic.paper_count)})</a>`).join('')}
           </div>` : '<p>No topic links were exported for this theory.</p>'}
       </div>
 
@@ -1843,8 +1873,17 @@
         <h4>Nearby theories</h4>
         ${theory.related_theories && theory.related_theories.length ? `
           <div class="live-chip-row">
-            ${theory.related_theories.slice(0, 8).map(row => `<span class="live-chip">${liveEsc(row.name)} (${liveEsc(row.weight)})</span>`).join('')}
+            ${theory.related_theories.slice(0, 8).map(row => `<a class="live-chip-link theory-nearby-link" data-runtime-link="${liveEsc(liveTheoryHref(row.id))}">${liveEsc(row.name)} (${liveEsc(row.weight)})</a>`).join('')}
           </div>` : '<p>No cross-theory neighborhood was exported for this theory.</p>'}
+      </div>
+
+      <div class="live-soft-box" style="margin-bottom:16px">
+        <h4>Continue through the Atlas</h4>
+        <p>Do not read this theory as an isolated proposition. Step into one of its live topics, or carry the theory itself into the mechanism layer.</p>
+        <div class="live-chip-row">
+          ${theory.topic_links && theory.topic_links.length ? `<a class="live-chip-link theory-topic-link" data-runtime-link="${liveEsc(liveTopicHref(theory.topic_links[0].label))}">Open focus topic</a>` : ''}
+          <a class="live-chip-link" id="live-mechanism-journey-link" data-runtime-link="${liveEsc(liveMechanismHref(theory))}">Open mechanism journey</a>
+        </div>
       </div>
 
       <h4 style="font-size:1rem;color:var(--navy);margin:0 0 10px">Representative papers</h4>
@@ -1978,6 +2017,7 @@
         }
         selectedId = theory.id;
         detailMount.innerHTML = renderTheoryDetail(theory);
+        hydrateLiveRuntimeLinks(detailMount);
         if (select) select.value = theory.id;
         cardButtons.forEach(button => button.classList.toggle('is-active', button.dataset.theoryId === theory.id));
         const next = new URL(window.location.href);

@@ -20,6 +20,8 @@
   .pill{display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
   .pill.type{background:rgba(255,255,255,.14);color:#fff}
   .pill.topic{background:rgba(245,166,35,.18);color:#FFD49A}
+  .pill-link{text-decoration:none}
+  .pill-link:hover{box-shadow:0 4px 12px rgba(0,0,0,.14);transform:translateY(-1px)}
   .hero h1{font-family:Georgia,serif;font-size:2.15rem;line-height:1.15;margin-bottom:10px;max-width:980px}
   .hero .authors{font-size:1rem;color:#E5EEEA;margin-bottom:3px}
   .hero .venue{font-size:.92rem;color:#BFD3CD}
@@ -47,7 +49,9 @@
   .subhead{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:8px}
 
   .chip-row{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#F9F5EE;color:#1C3D3A;font-size:.8rem}
+  .chip,.chip-link{display:inline-flex;align-items:center;padding:5px 10px;border:1px solid #E0D8CC;border-radius:999px;background:#F9F5EE;color:#1C3D3A;font-size:.8rem}
+  .chip-link{text-decoration:none}
+  .chip-link:hover{border-color:#2A7868;color:#2A7868;background:#F3FAF8}
 
   .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
   .stat-card{background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;padding:14px 15px}
@@ -81,6 +85,13 @@
   .result-surface img{display:block;width:100%;height:170px;object-fit:cover;border-radius:10px;background:#EEE7DA}
   .result-surface h3{font-size:1rem;color:#1C3D3A;margin-bottom:6px}
   .result-surface p{font-size:.9rem;margin-bottom:8px}
+  .journey-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .journey-card{display:block;background:#F8F6F1;border:1px solid #E0D8CC;border-radius:12px;padding:15px 16px;text-decoration:none;color:#2C2C2C}
+  .journey-card:hover{border-color:#2A7868;box-shadow:0 8px 22px rgba(28,61,58,.08);transform:translateY(-1px)}
+  .journey-card .eyebrow{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#8A9A96;font-weight:700;margin-bottom:7px}
+  .journey-card h3{font-size:1rem;color:#1C3D3A;margin-bottom:6px}
+  .journey-card p{font-size:.9rem;color:#40514D;margin:0 0 9px}
+  .journey-card .meta{font-size:.8rem;color:#6B6B6B}
 
   details.more{margin-top:12px;border-top:1px dashed #E0D8CC;padding-top:12px}
   details.more summary{cursor:pointer;color:#2A7868;font-weight:700}
@@ -152,11 +163,45 @@ function metricCard(label, value, sub) {
   return `<div class="stat-card"><div class="label">${esc(label)}</div><div class="value">${esc(value)}</div>${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div>`;
 }
 
+function lowerKey(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+function topicHref(label) {
+  return `ka_topic_facet_view.html?topic=${encodeURIComponent(String(label || '').trim())}`;
+}
+
+function theoryHref(label, theoryByName) {
+  const raw = String(label || '').trim();
+  if (!raw) return '';
+  const hit = theoryByName.get(lowerKey(raw));
+  if (hit && hit.id) return `ka_home_theory.html?theory=${encodeURIComponent(hit.id)}`;
+  return '';
+}
+
 function renderChipCollection(items, emptyText) {
   if (!items || !items.length) {
     return `<p class="section-note">${esc(emptyText)}</p>`;
   }
   return `<div class="chip-row">${items.map(item => `<span class="chip">${esc(item)}</span>`).join('')}</div>`;
+}
+
+function renderLinkedChipCollection(items, emptyText, hrefFor, extraClass = '') {
+  if (!items || !items.length) {
+    return `<p class="section-note">${esc(emptyText)}</p>`;
+  }
+  return `<div class="chip-row">${items.map(item => {
+    const href = hrefFor(item);
+    if (!href) return `<span class="chip">${esc(item)}</span>`;
+    const cls = ['chip-link', extraClass].filter(Boolean).join(' ');
+    return `<a class="${cls}" data-runtime-link="${esc(href)}">${esc(item)}</a>`;
+  }).join('')}</div>`;
+}
+
+function hydrateRuntimeLinks(root) {
+  (root || document).querySelectorAll('[data-runtime-link]').forEach(node => {
+    node.setAttribute('href', node.getAttribute('data-runtime-link'));
+  });
 }
 
 function renderPaperRefs(rows, emptyText) {
@@ -267,21 +312,26 @@ function updateTocActive() {
 
   let articlesPayload = {};
   let detailsPayload = {};
+  let theoriesPayload = { theories: [] };
   try {
     if (window.KA_DATA_ADAPTER) {
-      [articlesPayload, detailsPayload] = await Promise.all([
+      [articlesPayload, detailsPayload, theoriesPayload] = await Promise.all([
         window.KA_DATA_ADAPTER.loadPayload('articles', { articles: [] }),
         window.KA_DATA_ADAPTER.loadPayload('article_details', { details: {} }),
+        window.KA_DATA_ADAPTER.loadPayload('theories', { theories: [] }),
       ]);
     } else {
-      const [articlesRes, detailsRes] = await Promise.all([
+      const [articlesRes, detailsRes, theoryRes] = await Promise.all([
         fetch('data/ka_payloads/articles.json', { cache: 'no-store' }),
         fetch('data/ka_payloads/article_details.json', { cache: 'no-store' }),
+        fetch('data/ka_payloads/theories.json', { cache: 'no-store' }),
       ]);
       if (!articlesRes.ok) throw new Error('articles payload HTTP ' + articlesRes.status);
       if (!detailsRes.ok) throw new Error('article detail payload HTTP ' + detailsRes.status);
+      if (!theoryRes.ok) throw new Error('theories payload HTTP ' + theoryRes.status);
       articlesPayload = await articlesRes.json();
       detailsPayload = await detailsRes.json();
+      theoriesPayload = await theoryRes.json();
     }
   } catch (error) {
     mount.className = 'empty-state';
@@ -329,6 +379,16 @@ function updateTocActive() {
   const typeLabel = String(article.article_type || '').replace(/_/g, ' ').trim();
   const topicLabels = article.topic_labels || [];
   const articleArgumentation = article.argumentation_summary || {};
+  const theoryRows = (theoriesPayload && theoriesPayload.theories) || [];
+  const theoryByName = new Map(theoryRows.map(row => [lowerKey(row.name || row.id), row]));
+  const firstTheoryLabel = detailTheories.find(Boolean) || '';
+  const firstTheoryRow = theoryByName.get(lowerKey(firstTheoryLabel)) || null;
+  const firstTheoryLink = firstTheoryLabel ? theoryHref(firstTheoryLabel, theoryByName) : '';
+  const primaryTopicLink = article.primary_topic ? topicHref(article.primary_topic) : '';
+  const firstTopicLink = topicLabels.length ? topicHref(topicLabels[0]) : primaryTopicLink;
+  const mechanismLink = firstTheoryRow && firstTheoryRow.id
+    ? `ka_journey_mechanism.html?theory=${encodeURIComponent(firstTheoryRow.id)}`
+    : 'ka_journey_mechanism.html';
 
   document.title = `${article.title || paperId} — Knowledge Atlas`;
   crumb.textContent = article.title || paperId;
@@ -338,7 +398,7 @@ function updateTocActive() {
     <section class="hero">
       <div class="hero-top">
         ${typeLabel ? `<span class="pill type">${esc(typeLabel)}</span>` : ''}
-        ${article.primary_topic ? `<span class="pill topic">${esc(article.primary_topic)}</span>` : ''}
+        ${article.primary_topic ? `<a class="pill topic pill-link article-primary-topic-link" data-runtime-link="${esc(primaryTopicLink)}">${esc(article.primary_topic)}</a>` : ''}
       </div>
       <h1>${esc(article.title || paperId)}</h1>
       ${authors ? `<div class="authors">${esc(authors)}</div>` : ''}
@@ -378,6 +438,7 @@ function updateTocActive() {
         <a href="#study-record">Study record</a>
         <a href="#atlas-reading">Atlas reading</a>
         <a href="#evidence">Evidence profile</a>
+        <a href="#journey">Atlas journey</a>
         <a href="#measures">Measures & sensors</a>
         <a href="#visuals">Visual evidence</a>
         <a href="#pnu">Relevant PNUs</a>
@@ -456,11 +517,11 @@ function updateTocActive() {
             <div class="two-col" style="margin-top:16px">
               <div class="soft-box">
                 <h3>Topics</h3>
-                ${renderChipCollection(topicLabels, 'No topics yet.')}
+                ${renderLinkedChipCollection(topicLabels, 'No topics yet.', label => topicHref(label), 'article-topic-link')}
               </div>
               <div class="soft-box">
                 <h3>Theories and fronts</h3>
-                ${renderChipCollection(detailTheories, 'No theory links have been normalized for this paper yet.')}
+                ${renderLinkedChipCollection(detailTheories, 'No theory links have been normalized for this paper yet.', label => theoryHref(label, theoryByName), 'article-theory-link')}
               </div>
             </div>
             <div class="two-col" style="margin-top:16px">
@@ -473,6 +534,32 @@ function updateTocActive() {
                 ${renderChipCollection(instrumentTags, 'No named instruments have been exported yet.')}
               </div>
             </div>` : ''}
+        </section>
+
+        <section class="section" id="journey">
+          <div class="subhead">Cross-page navigation</div>
+          <h2>Continue the Atlas journey</h2>
+          <p class="section-note" style="margin-bottom:14px">A single paper is usually too small a unit to understand the real structure of the evidence. These links move from this paper into its topic bundle, its theory neighbourhood, and the mechanism layer.</p>
+          <div class="journey-grid">
+            <a class="journey-card journey-link-topic" data-runtime-link="${esc(firstTopicLink || 'ka_topic_facet_view.html')}">
+              <div class="eyebrow">Topic surface</div>
+              <h3>${esc(article.primary_topic || topicLabels[0] || 'Open the topic crosswalk')}</h3>
+              <p>See the defended bundle, its architectural family, and the topic-level theory signals that this paper now sits inside.</p>
+              <div class="meta">${esc(topicLabels.length || 0)} exported topic link${topicLabels.length === 1 ? '' : 's'} from this paper.</div>
+            </a>
+            <a class="journey-card journey-link-theory" data-runtime-link="${esc(firstTheoryLink || 'ka_home_theory.html')}">
+              <div class="eyebrow">Theory surface</div>
+              <h3>${esc(firstTheoryLabel || 'Open the live theory index')}</h3>
+              <p>Move from this paper to the current theory record, its neighbouring theories, and the representative paper set carrying it.</p>
+              <div class="meta">${esc(detailTheories.length || 0)} normalized theory link${detailTheories.length === 1 ? '' : 's'} on this paper.</div>
+            </a>
+            <a class="journey-card journey-link-mechanism" data-runtime-link="${esc(mechanismLink)}">
+              <div class="eyebrow">Mechanism surface</div>
+              <h3>Open the mechanism layer</h3>
+              <p>Carry the paper's theory context into the mechanism inventory and the theories under the greatest argumentative pressure.</p>
+              <div class="meta">${esc(firstTheoryLabel || 'Generic mechanism inventory')} ${firstTheoryLabel ? 'focus' : 'overview'}.</div>
+            </a>
+          </div>
         </section>
 
         <section class="section" id="measures">
@@ -575,6 +662,7 @@ function updateTocActive() {
     </div>
   `;
 
+  hydrateRuntimeLinks(mount);
   window.addEventListener('scroll', updateTocActive, { passive: true });
   updateTocActive();
 })();
