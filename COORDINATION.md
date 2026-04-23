@@ -74,3 +74,40 @@
   - `docs/STAGING_FUNCTIONAL_SMOKE_MATRIX_2026-04-20.md` is a stale record from the pre-fix staging outage and is not an accurate pre-flight gate now. The current staging smoke plus external curl checks were used instead.
 
 - Ping CW: review and deployment complete; staging and production are green on current master, with only the expected skipped protected checks remaining.
+
+### Codex atlas_shared cleanup — 2026-04-22
+
+- Commits landed:
+  - `2cba6b1` `fix(relevance): disambiguate bundle_id when constitutions share a topic`
+  - `3cfce93` `fix(intake): downgrade keyword false-positive hits to manual_review`
+  - `cc87d91` `refactor(intake): move domain lexicon to data/domain_lexicon.json`
+  - `3a07167` `refactor(relevance): move article-type defaults to data/article_type_defaults.json`
+  - `c4c936f` `refactor(registry_sink): promote paper_id to top-level RegistryFact field`
+  - `8ad63b3` `chore(registry_sink): type-constrain RegistryFact.schema_version as Literal`
+  - `bf77f5f` `docs(contract): name paper_id as the canonical article-identity field`
+  - `789132a` `chore(util): consolidate duplicate helpers into _util.py`
+  - `d2f0191` `chore(api): trim __all__ to ten canonical public-API entry points`
+  - `885c873` `chore(package): expose __version__ = 0.2.0`
+  - `804e286` `docs(changelog): start CHANGELOG.md with backfilled history through 0.3.0`
+  - `cbd323a` `chore(types): satisfy final mypy sweep`
+
+- PR URL:
+  - `https://github.com/dkirsh/atlas_shared/pull/1`
+
+- Test baseline before:
+  - `25 pass / 0 fail / 0 skip`
+
+- Test baseline after:
+  - `33 pass / 0 fail / 0 skip`
+  - `mypy src/atlas_shared` -> clean
+
+- Any suggestions written to `docs/ATLAS_SHARED_SUGGESTIONS_2026-04-21.md` as new Codex-review entries:
+  - none
+
+- Anything that needed a DK decision and was deferred rather than implemented:
+  - none
+
+- Deviation from Claude prompt:
+  - one extra content commit, `cbd323a`, was added after the final static sweep exposed real type inconsistencies in `bundle_router.py`, `intake.py`, and `cli_adjudicator.py`. This was done explicitly rather than hidden inside earlier commits.
+
+- Ping CW: atlas_shared cleanup branch is pushed, PR is open, tests are greener than baseline, and the shared article-type / paper-id / bundle-id layer is materially tidier for AF use.
