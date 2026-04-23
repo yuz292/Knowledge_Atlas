@@ -532,11 +532,11 @@ function updateTocActive() {
             <div class="two-col" style="margin-top:16px">
               <div class="soft-box">
                 <h3>Topics</h3>
-                ${renderLinkedChipCollection(topicLabels, 'No topics yet.', label => topicHref(label), 'article-topic-link')}
+                ${renderLinkedChipCollection(topicLabels, 'No topics yet.', label => topicHref(label, articleJourneyParams), 'article-topic-link')}
               </div>
               <div class="soft-box">
                 <h3>Theories and fronts</h3>
-                ${renderLinkedChipCollection(detailTheories, 'No theory links have been normalized for this paper yet.', label => theoryHref(label, theoryByName), 'article-theory-link')}
+                ${renderLinkedChipCollection(detailTheories, 'No theory links have been normalized for this paper yet.', label => theoryHref(label, theoryByName, articleJourneyParams), 'article-theory-link')}
               </div>
             </div>
             <div class="two-col" style="margin-top:16px">
