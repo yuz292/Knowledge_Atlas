@@ -1873,7 +1873,7 @@
       parts.push(`Opened from topic <a class="live-chip-link" data-runtime-link="${liveEsc(liveTopicHref(fromTopic, { fromArticle }))}">${liveEsc(fromTopic)}</a>.`);
     }
     if (fromArticle) {
-      parts.push(`The thread originated in article <a class="live-chip-link" href="ka_article_view.html?id=${encodeURIComponent(fromArticle)}">${liveEsc(fromArticle)}</a>.`);
+      parts.push(`${fromTopic ? 'The thread originated in' : 'Opened from'} article <a class="live-chip-link" href="ka_article_view.html?id=${encodeURIComponent(fromArticle)}">${liveEsc(fromArticle)}</a>.`);
     }
     return `
       <div class="live-soft-box" id="live-theory-handoff" style="margin-bottom:16px">
