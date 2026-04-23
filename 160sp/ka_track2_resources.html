@@ -28,6 +28,13 @@
     <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs</a>
     for cross-repo notes on the unified registry, question constitutions, and the AF to AE handoff.
   </p>
+  <p class="subtitle" style="margin-top:14px;max-width:860px;padding:12px 16px;background:rgba(42,106,136,0.08);border-left:4px solid #2A6A88;border-radius:0 8px 8px 0;">
+    <strong>Canonical intake note.</strong>
+    When Track 2 filters incoming papers from <code>ka_contribute.html</code>, reference harvesting,
+    or ROI search, it should use the shared <code>atlas_shared</code> layer rather than private
+    student logic. See <a href="#atlas-shared-module" style="color:#1E5A72;font-weight:700;">Section 5</a>
+    and the linked cheat sheet for the exact sequence.
+  </p>
 </section>
 
 <div class="ka-shell">
@@ -137,6 +144,48 @@
           <textarea name="body" placeholder="Definition / scope note" required></textarea>
           <button class="ka-btn" type="submit">Save locally</button>
         </form>
+      </div>
+    </section>
+
+    <section id="atlas-shared-module" class="hub-region">
+      <div class="hub-region-head"><div>
+        <div class="hub-region-num">Section 5</div>
+        <div class="hub-region-title">atlas_shared intake module</div>
+      </div></div>
+      <div class="hub-region-body">
+        <p><code>atlas_shared</code> is the canonical Track 2 intake layer for article identity, article type, question relevance, topic constitutions, and bundle routing. Use it whenever you filter incoming candidate papers, whether they came from the public contribute page, the reference-harvest queue, or an ROI search run.</p>
+        <div class="resource-list" id="resources-atlas-shared">
+          <div class="resource-item">
+            <div class="rtitle">Track 2 intake recipe — use this first</div>
+            <div class="rmeta">Canonical workflow for filtering incoming contributions</div>
+            <div class="rdesc">
+              Read <a href="../docs/ATLAS_SHARED_TRACK2_INTAKE_CHEAT_SHEET_2026-04-22.md"><code>ATLAS_SHARED_TRACK2_INTAKE_CHEAT_SHEET_2026-04-22.md</code></a>.
+              It explains the required sequence:
+              <code>PreExtractionIntakeGate</code> → <code>load_topic_constitution_bank()</code> →
+              <code>AdaptiveClassifierSubsystem</code> / <code>QuestionArticleRelevanceFilter</code> →
+              <code>QuestionBundleRouter</code>.
+            </div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">Canonical naming rules</div>
+            <div class="rmeta">Do not improvise IDs</div>
+            <div class="rdesc">
+              Use <code>paper_id</code> as the canonical article identity at the
+              <code>atlas_shared</code> boundary. Let the constitution bank supply the canonical topic
+              identities, and let <code>QuestionBundleRouter</code> assign bundle membership. Do not create a
+              Track-2-only article-type vocabulary or hand-written bundle IDs.
+            </div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">How this applies to incoming contributions</div>
+            <div class="rmeta">Public uploads, harvested references, and ROI hits all use the same gate</div>
+            <div class="rdesc">
+              A candidate with thin metadata is not grounds for a hard reject. The intake gate is conservative:
+              it may accept, defer for metadata, or send an adjacent case to manual review. Reject only clear
+              false positives, and record the real dotted-path subsystem names in registry writes.
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

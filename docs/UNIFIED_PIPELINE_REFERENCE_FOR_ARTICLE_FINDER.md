@@ -182,7 +182,7 @@ Seven areas the Article Finder track can push against.
 
 **4.6 Classifier performance tracking.** `data/classification_reports/classifier_eval_*.json` contains per-run evaluation numbers (precision, recall, F1) but there is no long-term dashboard. A weekly-refreshed panel on the admin Site Health tab showing classifier performance trajectories over time would help detect drift.
 
-**4.7 Cross-repo orphaning.** The three atlas_shared classifiers are importable from any repo, but the import path is non-obvious and the atlas_shared repo itself is not currently surfaced in the site-wide documentation. Track 2 students who need to call `HeuristicArticleTypeClassifier` from the Article_Finder codebase have to discover the import path through code-reading. A one-page "how to use atlas_shared classifiers" cheat sheet, co-located with this document, would shorten the onboarding path.
+**4.7 Cross-repo orphaning.** The three atlas_shared classifiers are importable from any repo, but the import path remains somewhat non-obvious and the shared repo is still easy to miss in casual onboarding. A first remedy now exists: `docs/ATLAS_SHARED_TRACK2_INTAKE_CHEAT_SHEET_2026-04-22.md` gives Track 2 students a one-page recipe for filtering incoming contributions with the canonical `atlas_shared` layer rather than by ad hoc local logic. The remaining work is to make that path feel routine rather than exceptional.
 
 ---
 
