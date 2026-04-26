@@ -22,17 +22,68 @@ sentences explaining your judgement and any qualifications. The
 extractor's prompt library will be regenerated from your annotated
 copy.
 
+### Write-in convention (added 2026-04-25, per DK Q20)
+
+Every option table below carries an *implicit* "Other / write in"
+choice. If none of the listed options matches your preference, you
+may either (a) name a new option directly in the DK preference slot
+and explain why the listed options were inadequate, or (b) propose a
+modification to one of the listed options. The extractor's prompt
+library will be regenerated from your annotated copy regardless of
+whether you picked a listed option, modified one, or wrote in your
+own.
+
+Format for write-in answers:
+
+```
+**DK preference**: [Other — write in]
+[Two to four sentences explaining the new option, why the listed
+options didn't fit, and what consequence the new option should have
+for the fingerprint.]
+```
+
+Format for modification answers:
+
+```
+**DK preference**: [Option <letter>, modified]
+[Two to four sentences explaining the modification and the rationale.]
+```
+
+The interactive walkthrough page (PQ-WALKTHRU-001, in development)
+will surface this choice as an explicit "Other — write in" radio
+button at every node. Until it ships, the markdown above is the
+working interface; this convention is the markdown analogue.
+
+### Ballistic operation (added 2026-04-25, per DK Q15)
+
+When the build runs, hard-rule violations on individual papers do
+not halt the pipeline; they are recorded in the
+`hard_rule_violations` table and the next paper is processed. Your
+preferences below should treat each node as setting policy for the
+*aggregate* run rather than as guarding a specific paper. Where
+appropriate, your preference may include a "queue for review at this
+threshold" qualifier rather than an absolute rule.
+
+### Tree traversal
+
 The tree branches but does not dead-end. Every paper traverses every
 branch in order; later branches may be marked "skip" for a specific
 paper type (a theoretical paper has no N), but the schema records the
 skip explicitly so consumers can see why a field is absent.
 
-Notation conventions:
+### Notation conventions
 
-- **Auto** — extractable by an LLM pass over the paper text.
+- **Auto** — extractable by a single subscription-LLM conversation
+  pass over the paper text.
 - **Programmatic** — verifiable against an external database (Crossref,
-  OSF, Retraction Watch, OpenAlex) without LLM involvement.
-- **Multi-LLM** — extractable by an LLM pass but only with two-model
+  OSF, Retraction Watch, OpenAlex) without LLM involvement. Per build
+  prompt §1.5 and Hard Rule 7, only four fields are
+  programmatic-eligible (preregistration URL, data-availability
+  statement text, code-availability statement text, raw N digits) and
+  programmatic verification is always a redundant check after the LLM
+  call, never instead of it.
+- **Multi-LLM** — extractable by independent Claude (subscription)
+  and ChatGPT (subscription) conversation passes with two-model
   agreement at confidence ≥ 0.85.
 - **Human** — requires adjudication; LLM may suggest, never decide.
 
