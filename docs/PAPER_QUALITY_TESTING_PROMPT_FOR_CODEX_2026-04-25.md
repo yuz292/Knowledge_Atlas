@@ -41,6 +41,16 @@ the failure rather than merely flag it.
 
 ## 1. Pre-flight
 
+**Access constraint (mirrors build prompt §1.5)**: every LLM call
+in this testing pass uses subscription-based chat interfaces
+(Claude Desktop or Cowork for Claude-class; ChatGPT Plus for
+OpenAI-class). No API endpoints. The probes are adapted accordingly
+— audit logs read from conversation transcripts rather than API
+call logs, the deterministic-output probe runs five samples through
+the chat interface rather than three at API temperature 0.3, and
+the confidence-distribution audit uses the sampling-based logprob
+proxy.
+
 ```bash
 # Confirm the build has landed on all three repos' protected branches.
 cd /Users/davidusa/REPOS/atlas_shared && git checkout master \
@@ -66,16 +76,31 @@ cd /Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery \
 # Install the testing dependencies (a small extra set beyond what the
 # build needs):
 pip3 install --break-system-packages \
-    'pytest-recording==0.13.*' \
     'hypothesis==6.*' \
     'tiktoken==0.5.*' \
-    'jaccard-distance==0.3.*'
+    'jaccard-distance==0.3.*' \
+    'krippendorff==0.6.*'
+
+# Confirm subscription adapters are reachable. These checks confirm
+# the harnesses exist and can fire conversations; they do NOT
+# authenticate against API endpoints.
+python3 -m atlas_shared.subscription_adapter check_claude_desktop
+python3 -m atlas_shared.subscription_adapter check_chatgpt_plus
+
+# Confirm no API keys are set during the testing run. Both checks
+# must report False.
+python3 -c "import os; \
+    print('ANTHROPIC_API_KEY set:', bool(os.environ.get('ANTHROPIC_API_KEY'))); \
+    print('OPENAI_API_KEY set:', bool(os.environ.get('OPENAI_API_KEY')))"
 ```
 
 The testing prompt assumes the build's own pytest suites pass on the
-fresh checkout. If they do not, stop and post the failure to
-`COORDINATION.md` under `### CW paper-quality testing — pre-flight
-fail` before proceeding.
+fresh checkout. If they do not, log the failure to
+`reports/paper_quality_testing_preflight_fail_<timestamp>.json` and
+to `COORDINATION.md` under `### CW paper-quality testing — pre-flight
+fail`, then continue to the probes that do not depend on the failing
+component. Per DK 2026-04-25 (Q15), this pass runs ballistically:
+record state, do not halt.
 
 ---
 
@@ -91,79 +116,98 @@ order; later probes assume earlier ones passed.
 ### Probe 1 — Heuristic-detection (LLM-required-fields canary)
 
 **Goal**: confirm Hard Rule 7 — that the seven semantic fields are in
-fact extracted by LLM call rather than by regex or keyword match.
+fact extracted by subscription-LLM conversation rather than by regex
+or keyword match.
 
 **Procedure**: for each of the seven LLM-required fields:
 
 1. Run the extractor on a known-good fixture from the calibration set.
    Record the field's extracted value.
-2. Patch `atlas_shared.llm_adapter.call_llm` and the OpenAI-class
-   equivalent so that every call raises
-   `RuntimeError("LLM disabled for canary test")`.
+2. Patch `atlas_shared.subscription_adapter.fire_claude_conversation`
+   and `atlas_shared.subscription_adapter.fire_chatgpt_conversation`
+   so that every call raises
+   `RuntimeError("Subscription adapter disabled for canary test")`.
 3. Re-run the extractor on the same fixture.
 4. Assert that the extractor either (a) raises the same RuntimeError
-   or (b) routes the field to adjudication with confidence 0.0. Any
-   other outcome — particularly a successful extraction under patched
-   LLMs — is a fail.
+   or (b) routes the field to adjudication with confidence 0.0 and
+   logs a hard-rule violation per build-prompt §5.1. Any other
+   outcome — particularly a successful extraction under patched
+   adapters — is a fail.
 
-**Pass criterion**: all seven fields fail under LLM-disabled mode.
+**Pass criterion**: all seven fields fail under subscription-disabled
+mode. **Note (Q19, 2026-04-25)**: Probe 1 is one of the high-stakes
+probes; per DK's instruction, it should be re-run by a *different
+agent* than the one that built the layer (e.g., AG re-runs Probe 1
+after Codex reports its result). The two verdicts are recorded
+side-by-side in the report.
 
 **Diagnostic on failure**: which field succeeded, and the call stack
 of the function that produced the value. The stack will localise the
 heuristic shortcut.
 
-### Probe 2 — Model-call audit (multi-LLM independence)
+### Probe 2 — Conversation-transcript audit (multi-LLM independence)
 
-**Goal**: confirm Hard Rule 8 — that the Claude-class and OpenAI-class
-adapters run as independent processes with no output-sharing.
+**Goal**: confirm Hard Rule 8 — that the Claude-class and
+OpenAI-class adapters run as independent conversation streams with
+no output-sharing.
 
 **Procedure**:
 
-1. Instrument both adapters' `call_llm` entry points to log every
-   request to `logs/llm_audit_<timestamp>.jsonl`. Each log line:
-   `{paper_id, field, model, prompt_hash, response_hash, ts, pid,
-   parent_pid}`.
+1. Instrument both subscription adapters' `fire_*_conversation`
+   entry points to log every conversation to
+   `logs/conversation_audit_<timestamp>.jsonl`. Each log line:
+   `{paper_id, field, adapter, session_id, conversation_id,
+   prompt_hash, response_hash, ts, pid, parent_pid}`. Subscription
+   chat interfaces produce session and conversation identifiers
+   that play the role API call IDs play under API access.
 2. Run the extractor across the 24-fixture set (20 anchor + 4
    adversarial).
 3. After the run, parse the audit log and assert:
-   (a) every paper produced ≥ N Claude-class calls and ≥ N
-   OpenAI-class calls where N = number of LLM-required fields;
-   (b) no Claude-class `response_hash` appears as the `prompt_hash`
-   or substring-of-`prompt_hash` for any OpenAI-class call on the
-   same paper, and vice-versa;
-   (c) the `pid` for Claude-class calls and OpenAI-class calls on
-   the same paper differ (independent processes).
+   (a) every paper produced ≥ N Claude conversations and ≥ N
+   ChatGPT conversations where N = number of LLM-required fields;
+   (b) no Claude `response_hash` appears as the `prompt_hash` or
+   substring-of-`prompt_hash` for any ChatGPT call on the same
+   paper, and vice-versa;
+   (c) the `session_id` for Claude conversations and ChatGPT
+   conversations on the same paper differ (independent sessions);
+   (d) per-paper `conversation_id` values in each adapter are
+   non-overlapping with conversations from any other paper —
+   confirms no batching that lets two papers' contexts mingle.
 
-**Pass criterion**: all three sub-assertions hold across all 24
-papers.
+**Pass criterion**: all four sub-assertions hold across all 24
+papers. **Note (Q19, 2026-04-25)**: Probe 2 is one of the
+high-stakes probes; re-run by a different agent than the builder.
 
 **Diagnostic on failure**: which paper, which assertion, and the
 offending log lines.
 
 ### Probe 3 — Deterministic-output detection
 
-**Goal**: confirm that LLM calls are not being short-circuited by a
-deterministic cache or by a regex that returns identical output every
-time.
+**Goal**: confirm that subscription conversations are not being
+short-circuited by a deterministic cache or by a regex that returns
+identical output every time.
 
 **Procedure**:
 
-1. For each of the seven LLM-required fields, run the extractor three
-   times on the same fixture at temperature 0.3 with the audit log
-   active.
+1. For each of the seven LLM-required fields, run the extractor
+   **five times** on the same fixture (per DK 2026-04-25, Q6) using
+   independent subscription conversations each time. Subscription
+   chat interfaces do not expose a `temperature` parameter directly;
+   the natural sampling distribution of the chat interface is used.
 2. Compute self-consistency variance:
    - For list-valued fields (rhetorical flags, effect sizes,
      sample-composition entries): mean Jaccard similarity across the
-     three runs.
+     five runs.
    - For numeric fields (effect-size precision, multiple-comparisons
-     count): coefficient of variation across the three runs.
+     count): coefficient of variation across the five runs.
    - For categorical fields (construct-validity verdict, document
-     type): Krippendorff's alpha across the three runs.
+     type): Krippendorff's alpha across the five runs.
 3. Assert that variance falls within the expected envelope per
    field. The envelope is calibrated from the build's Pass 2
-   self-consistency report; this probe re-runs and compares.
+   five-sample self-consistency report; this probe re-runs and
+   compares.
 4. Specifically assert that no LLM-required field has *zero*
-   variance across three samples on the calibration set as a whole.
+   variance across five samples on the calibration set as a whole.
    Zero variance on a field where legitimate paper-to-paper variation
    is documented indicates a deterministic shortcut.
 
@@ -195,31 +239,42 @@ that betray the shortcut.
    study than to the meta-analysis; etc.
 
 **Pass criterion**: cluster structure matches the panel's expected
-typology with ≥ 0.7 silhouette score.
+typology with ≥ 0.6 silhouette score (per DK 2026-04-25, Q14 — 0.7
+is too high a bar for real-world document clustering, 0.5 is too
+permissive, 0.6 is the operating point).
 
 **Diagnostic on failure**: the distance matrix and the offending
 clustering.
 
 ### Probe 5 — Confidence-distribution audit
 
-**Goal**: confirm Hard Rule 9 — that confidence is not threshold-gamed.
+**Goal**: confirm Hard Rule 9 — that confidence is not
+threshold-gamed and is grounded in the sampling-based proxy.
 
 **Procedure**:
 
 1. Across the 24-fixture set, collect every per-field point
-   confidence. Bin into 20 bins from 0.0 to 1.0.
+   confidence (the model's self-reported confidence in the
+   structured response). Bin into 20 bins from 0.0 to 1.0.
 2. Assert that the empirical distribution does not have a spike at
-   any single bin in the 0.85–0.90 range. A spike is defined as a bin
-   count ≥ 1.5× the mean of its two neighbours.
+   any single bin in the 0.85–0.90 range. A spike is defined as a
+   bin count ≥ 1.5× the mean of its two neighbours.
 3. Assert that the distribution has a non-zero mass in at least 8 of
    the 20 bins. A field whose confidence lands in fewer than 8 bins
    across 24 papers is suspiciously low-variance.
-4. Assert that the per-token logprob mean (Hard Rule 9 part b)
-   correlates positively with the point confidence at r ≥ 0.5
-   across the 24-fixture set. A confidence value not anchored in
-   logprob structure is a fabricated heuristic value.
+4. Assert that the **sampling-based logprob proxy** (Hard Rule 9
+   part c — the across-five-sample agreement rate on the field's
+   primary value) correlates positively with the point confidence
+   at Spearman ρ ≥ 0.5 across the 24-fixture set. A confidence
+   value not anchored in cross-sample agreement is a fabricated
+   heuristic value. Note: the original logprob-based check has been
+   replaced because subscription chat interfaces do not expose
+   per-token logprobs; the sampling-based proxy is the alternative
+   per build prompt §1.5 and Hard Rule 9 (revised 2026-04-25).
 
-**Pass criterion**: all four sub-assertions hold.
+**Pass criterion**: all four sub-assertions hold. **Note (Q19,
+2026-04-25)**: Probe 5 is one of the high-stakes probes; re-run by
+a different agent than the builder.
 
 **Diagnostic on failure**: the histogram and the correlation plot.
 
@@ -347,6 +402,11 @@ extra items.
 
 ## 3. Success conditions
 
+The testing pass operates ballistically (per DK 2026-04-25, Q15):
+every probe runs regardless of earlier probe outcomes, every
+verdict is recorded, and the layer's go-live decision is made from
+the full report rather than from any single probe's halt.
+
 The testing pass is **green** when:
 
 - All nine probes pass.
@@ -357,6 +417,8 @@ The testing pass is **green** when:
   metrics, not just verdicts).
 - No probe required a build-side fix to pass — i.e. the layer as
   shipped from the build prompt cleared every probe without changes.
+- The high-stakes probes (1, 2, 5) carry concurring verdicts from
+  Codex and the separated auditor agent (Q19).
 
 The testing pass is **amber** when:
 
@@ -367,15 +429,40 @@ The testing pass is **amber** when:
 
 The testing pass is **red** when:
 
-- Any probe fails after the build-side fix attempt.
+- Any probe fails and the build-side fix attempt does not bring it
+  to green.
 - The diagnostic shows a failure mode this prompt was designed to
   catch (heuristic substitution, multi-LLM faking, threshold gaming,
   paper-type insensitivity).
 - The adjudication queue does not behave as Probe 9 specifies.
+- The high-stakes probes (1, 2, 5) carry *discordant* verdicts
+  between Codex and the separated auditor — one says pass, the
+  other says fail. Discordance on a high-stakes probe is its own
+  red flag and forces a full re-run of the build.
 
-A red verdict halts the layer indefinitely. The build prompt is
-re-opened for revision; DK reviews the failure mode; the build is
-re-run.
+A red verdict halts the *layer's go-live decision* indefinitely;
+the testing pass itself completed and produced a record. The build
+prompt is re-opened for revision; DK reviews the failure mode; the
+build is re-run.
+
+## 3.5 Auditor identity — separated for high-stakes probes (per Q19, 2026-04-25)
+
+Probes 1 (heuristic-detection canary), 2 (conversation-transcript
+audit), and 5 (confidence-distribution audit) are the high-stakes
+probes — they directly check the failure modes that caused this
+hardening to be necessary. Per DK 2026-04-25, these three probes
+are run by a *different agent* than the one that built the layer.
+Codex builds; AG (or a third agent of DK's choosing) audits.
+
+The remaining six probes (3, 4, 6, 7, 8, 9) may be run by Codex
+itself on the testing branch.
+
+The split is recorded in the report: each probe lists "executor"
+(Codex / AG / other) alongside the verdict. Discordance on probes
+1, 2, or 5 between Codex's run and the auditor's run forces a full
+re-run of the build, regardless of which side reported pass and
+which reported fail. The auditor and the builder must converge or
+the layer does not ship.
 
 ---
 
@@ -419,28 +506,107 @@ Tag CW on `COORDINATION.md` when done.
 
 ---
 
-## 6. Failure handling
+## 6. Failure handling — log-and-continue (revised 2026-04-25, Q15)
 
-If any probe fails in a way that is not a simple test-code fix, stop
-and post the failing probe ID, the diagnostic JSON path, and a
-one-sentence hypothesis to `COORDINATION.md` under
-`### CW paper-quality testing — blocker`. Do not adjust the probe's
-pass criterion to make it pass; the criteria are the contract.
+When a probe fails, **do not stop**. Record the failure in the
+probe's diagnostic JSON (with full state for post-hoc inspection),
+add an entry to the summary report, and proceed to the next probe.
+The testing pass produces its full report at the end; DK reviews
+the report and decides what to do with the failures.
+
+Specifically:
+
+- Test-code bugs that prevent a probe from running at all are
+  recorded as `executor_error` in the probe's diagnostic and the
+  next probe runs.
+- Probe assertions that fail on real findings are recorded as
+  `probe_failure` with the specific assertion and the supporting
+  data.
+- Subscription-interface errors (rate limits, auth expiry, context
+  overflow) trigger retry-with-backoff per the build prompt's §5.3
+  policy; a fourth failure is recorded as `subscription_error` and
+  the probe moves on.
+
+The only condition that stops the testing pass mid-run is loss of
+all subscription access — i.e., neither Claude Desktop nor ChatGPT
+Plus is reachable for several consecutive minutes. In that case,
+write the partial report, post the access-loss state to
+`COORDINATION.md` under `### CW paper-quality testing — access
+loss`, and exit cleanly so the run can be resumed.
 
 If the testing pass discovers that a build-prompt rule is genuinely
 unworkable (not merely inconvenient), file the rule-change request
-per Section 4 and wait. Do not relax the rule from the testing
-branch.
+per Section 4 in the final report. Do not relax the rule from the
+testing branch.
 
 ---
 
+## 6.5 Runtime monitoring once the layer is live (per DK 2026-04-25, Q18)
+
+After the testing pass clears and the layer goes live, three
+monitoring layers run on the production fingerprint stream. The
+testing-pass infrastructure ships these monitors as part of the
+final commit; they are not a separate engineering effort.
+
+**Daily** — overseer rollup
+(`scripts/overseer_paper_quality_rollup.py --daily`):
+
+- Adjudication-queue depth at end of day, by field.
+- Hard-rule violation count from the `hard_rule_violations` table,
+  by rule and field.
+- Any field whose live-confidence distribution shifts more than
+  1σ from the calibration baseline; reported as a "drifting field"
+  flag. The 1σ threshold is calibrated against the calibration set's
+  per-field standard deviation.
+- Subscription-interface error tally (rate-limit retries, auth
+  expiries, context overflows).
+
+**Weekly** — drifting-fields report
+(`scripts/overseer_paper_quality_rollup.py --weekly`):
+
+- Per-field histogram of confidences over the past seven days,
+  alongside the calibration histogram for visual comparison.
+- Per-field self-consistency variance over the past seven days,
+  flagging any field whose variance dropped to near-zero (a
+  deterministic-shortcut indicator that may have crept in via a
+  prompt regression).
+- Per-field hard-rule-violation rate, with a flag if any rule's
+  violation rate exceeds 5 % of papers processed.
+
+**Monthly** — DK random-sample re-rating
+(`scripts/overseer_paper_quality_rollup.py --monthly --sample 10`):
+
+- Selects 10 papers at random from those processed in the past
+  month, biased toward papers that landed in the adjudication queue
+  or the holding pen.
+- Presents them to DK with the model's fingerprint and the four
+  sidecar verdicts pre-filled.
+- DK re-rates the four sidecar fields and the model agreement is
+  recorded as fresh ground truth in
+  `quality_calibration_history`. If agreement on any sidecar drops
+  below the anchor-set threshold (per Probe 7), a calibration-drift
+  alert is posted to `COORDINATION.md`.
+
+The monthly re-rating is the load-bearing part of the monitoring
+plan: the calibration set is fixed at 20 papers, but the universe
+of papers is 1 400+ and growing. Without periodic ground-truth
+sampling against new papers, model drift is invisible. Ten
+papers a month is a reasonable cadence for DK to sustain.
+
 ## 7. Timeline
 
-The testing pass is a one-day run. Probes 1–5 are roughly one hour
-each on the calibration set; Probes 6–9 are between thirty minutes
-and two hours each depending on whether the V7 lifecycle DB needs to
-be reset between runs. Total wall-clock time should not exceed eight
-hours.
+The testing pass is a one-day run when probes execute serially.
+Probes 1–5 are roughly one hour each on the calibration set;
+Probes 6–9 are between thirty minutes and two hours each depending
+on whether the V7 lifecycle DB needs to be reset between runs.
+Total wall-clock time should not exceed eight hours.
+
+**Subscription-throughput caveat (added 2026-04-25)**: subscription
+chat interfaces have rate limits that may stretch the run beyond
+eight hours, particularly for Probe 3 (five samples × seven LLM-
+required fields × 24 fixtures = 840 conversations). If the
+projected run time exceeds twelve hours, the testing pass may run
+overnight; that is acceptable.
 
 If any probe exceeds two hours of wall-clock time, post progress to
 `COORDINATION.md` and continue.
