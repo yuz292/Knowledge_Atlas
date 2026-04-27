@@ -1,580 +1,275 @@
 #!/usr/bin/env python3
 """
-T2 Task 2 — Grading & Comment Tool (PRISMA / Abstract-First Architecture)
-==========================================================================
-Run against a student's Knowledge_Atlas clone to assign grades and comments
-for the "Search Pipeline (Abstract-First Triage)" assignment.
-
-Usage
------
-    python3 t2_task2_grader.py /path/to/student/Knowledge_Atlas
-    python3 t2_task2_grader.py --auto-only /path/to/student/Knowledge_Atlas
+T2 Task 2 — Grading & Comment Tool (Gap Targeting & Query Generation)
+======================================================================
+Usage:  python3 t2_task2_grader.py /path/to/student/Knowledge_Atlas
+        python3 t2_task2_grader.py --auto-only /path/to/student/Knowledge_Atlas
 """
 
-import argparse
-import ast
-import json
-import os
-import re
-import sqlite3
-import subprocess
-import sys
+import argparse, json, os, re, subprocess, sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
 
-# ════════════════════════════════════════════════
-# DATA MODEL
-# ════════════════════════════════════════════════
-
 @dataclass
 class TestResult:
-    name: str
-    passed: bool
-    weight: str  # "critical", "important", "minor"
-    details: str = ""
+    name: str; passed: bool; weight: str; details: str = ""
 
 @dataclass
 class RubricScore:
-    criterion: str
-    max_points: int
-    points: int = 0
-    comment: str = ""
+    criterion: str; max_points: int; points: int = 0; comment: str = ""
 
 @dataclass
 class GradeReport:
-    student_name: str = ""
-    student_email: str = ""
-    grader: str = ""
-    timestamp: str = ""
-    rubric_scores: list = field(default_factory=list)
-    auto_tests: list = field(default_factory=list)
-    total_points: int = 0
-    max_points: int = 0
-    overall_comment: str = ""
+    student_name: str = ""; student_email: str = ""; grader: str = ""
+    timestamp: str = ""; rubric_scores: list = field(default_factory=list)
+    auto_tests: list = field(default_factory=list); total_points: int = 0
+    max_points: int = 0; overall_comment: str = ""
     file_manifest: list = field(default_factory=list)
 
 
-# ════════════════════════════════════════════════
-# HELPERS
-# ════════════════════════════════════════════════
-
-def _find_py(repo: Path, hints: list[str], content_markers: list[str]) -> list[Path]:
-    """Find Python files by name hints or content markers."""
-    found = []
-    for h in hints:
-        for p in repo.rglob(h):
-            if p.is_file():
-                found.append(p)
-    if not found:
-        for py in repo.glob("*.py"):
-            try:
-                src = py.read_text(errors="replace")
-                if any(m in src for m in content_markers):
-                    found.append(py)
-            except Exception:
-                pass
-    return found
-
-
-def _source_contains(path: Path, markers: list[str]) -> list[str]:
-    """Return which markers appear in the source file."""
-    try:
-        src = path.read_text(errors="replace")
-        return [m for m in markers if m in src]
-    except Exception:
-        return []
-
-
-def _all_py_sources(repo: Path) -> list[tuple[Path, str]]:
-    """Read all Python files at top level and common subdirs."""
+def _all_py(repo: Path) -> list[tuple[Path, str]]:
     results = []
-    for pattern in ["*.py", "scripts/*.py", "pipeline/*.py", "src/*.py"]:
-        for p in repo.glob(pattern):
-            try:
-                results.append((p, p.read_text(errors="replace")))
-            except Exception:
-                pass
+    for pat in ["*.py", "scripts/*.py", "pipeline/*.py"]:
+        for p in repo.glob(pat):
+            try: results.append((p, p.read_text(errors="replace")))
+            except: pass
     return results
 
 
-# ════════════════════════════════════════════════
-# AUTOMATED TESTS
-# ════════════════════════════════════════════════
+# ── Tests ──
 
-def test_gap_extractor_exists(repo: Path) -> TestResult:
-    """Check that a gap extractor / topic proposer script exists."""
+def test_gap_extractor(repo):
     name = "Gap extractor script exists"
-    found = _find_py(repo,
-        ["gap_extractor.py", "topic_proposer.py", "search_pipeline.py",
-         "gap_analyzer.py", "proposer.py"],
-        ["mechanism_chain", "gap_type", "voi_score"])
-    if found:
-        return TestResult(name, True, "critical",
-                          f"Found: {', '.join(str(f.relative_to(repo)) for f in found)}")
-    return TestResult(name, False, "critical", "No gap extractor script found")
+    for pat in ["gap_extractor.py", "topic_proposer.py", "gap_analyzer.py"]:
+        if (repo / pat).exists():
+            return TestResult(name, True, "critical", f"Found: {pat}")
+    for p, src in _all_py(repo):
+        if "mechanism_chain" in src and "confidence" in src:
+            return TestResult(name, True, "critical", f"Found in {p.name}")
+    return TestResult(name, False, "critical", "No gap extractor found")
 
 
-def test_reads_templates_and_confidence(repo: Path) -> TestResult:
-    """Check the extractor reads PNU templates and checks confidence."""
-    name = "Reads templates + checks confidence"
-    sources = _all_py_sources(repo)
-    for path, src in sources:
-        reads_json = "json.load" in src or "json.loads" in src
-        reads_chain = "mechanism_chain" in src
-        reads_conf = "confidence" in src and ("< 0.5" in src or "<0.5" in src or "threshold" in src)
-        if reads_json and reads_chain:
+def test_reads_templates(repo):
+    name = "Reads PNU templates + confidence"
+    for p, src in _all_py(repo):
+        if "json.load" in src and "mechanism_chain" in src:
+            has_threshold = "< 0.5" in src or "<0.5" in src or "threshold" in src
             detail = "Reads JSON + mechanism_chain"
-            if reads_conf:
-                detail += " + confidence threshold"
-            return TestResult(name, True, "critical", f"{detail} ({path.name})")
-    return TestResult(name, False, "critical",
-                      "No script reads mechanism_chain from template JSON")
+            if has_threshold: detail += " + confidence threshold"
+            return TestResult(name, True, "critical", f"{detail} ({p.name})")
+    return TestResult(name, False, "critical", "No template reading found")
 
 
-def test_voi_integration(repo: Path) -> TestResult:
-    """Check if VOI scoring functions are imported/used."""
+def test_voi_scoring(repo):
     name = "VOI scoring integration"
-    voi_markers = ["VOICalculator", "calculate_voi", "score_voi",
-                   "voi_score", "classify_closure", "voi_search",
-                   "aggregate_paper_voi"]
-    sources = _all_py_sources(repo)
-    found = []
-    for path, src in sources:
-        hits = [m for m in voi_markers if m in src]
+    markers = ["VOICalculator", "calculate_voi", "voi_score", "voi_search"]
+    for p, src in _all_py(repo):
+        hits = [m for m in markers if m in src]
         if hits:
-            found.extend(hits)
-    found = list(set(found))
-    if len(found) >= 2:
-        return TestResult(name, True, "important",
-                          f"Uses VOI functions: {found}")
-    elif found:
-        return TestResult(name, True, "important",
-                          f"Partial VOI use: {found}")
-    return TestResult(name, False, "important",
-                      "No VOI scoring functions found in any script")
+            return TestResult(name, True, "important", f"Uses: {hits} ({p.name})")
+    return TestResult(name, False, "important", "No VOI scoring found")
 
 
-def test_api_integration(repo: Path) -> TestResult:
-    """Check if Semantic Scholar / CrossRef / PubMed APIs are used."""
-    name = "API integration (Semantic Scholar / CrossRef / PubMed)"
-    api_markers = ["SemanticScholarClient", "CrossRefClient", "PubMedClient",
-                   "PaperFetcher", "paper_fetcher", "api.semanticscholar",
-                   "api.crossref", "semantic_scholar", "crossref"]
-    sources = _all_py_sources(repo)
-    found = []
-    for path, src in sources:
-        hits = [m for m in api_markers if m in src]
-        if hits:
-            found.extend(hits)
-    found = list(set(found))
-    if found:
-        return TestResult(name, True, "critical",
-                          f"API clients used: {found}")
-    return TestResult(name, False, "critical",
-                      "No Semantic Scholar / CrossRef / PubMed integration found")
-
-
-def test_abstract_triage(repo: Path) -> TestResult:
-    """Check if abstract-level triage is implemented (classifier + VOI on abstracts)."""
-    name = "Abstract-level triage (classifier + VOI before PDF download)"
-    triage_markers = ["abstract", "triage", "ACCEPT", "EDGE_CASE", "REJECT",
-                      "classifier", "classify", "AdaptiveClassifier"]
-    sources = _all_py_sources(repo)
-    abstract_ref = False
-    triage_logic = False
-    for path, src in sources:
-        if "abstract" in src.lower() and ("classify" in src.lower() or "score_voi" in src):
-            abstract_ref = True
-        if ("ACCEPT" in src and "REJECT" in src) or "triage" in src.lower():
-            triage_logic = True
-    if abstract_ref and triage_logic:
-        return TestResult(name, True, "critical",
-                          "Abstract triage with classifier + accept/reject logic")
-    elif abstract_ref or triage_logic:
-        return TestResult(name, True, "important",
-                          "Partial triage logic found")
-    return TestResult(name, False, "critical",
-                      "No abstract-level triage found — may be downloading PDFs blindly")
-
-
-def test_search_results_exist(repo: Path) -> TestResult:
-    """Check that search results were produced."""
-    name = "Search results exist"
-    results = []
-    for pattern in ["search_results*.json", "data/search*.json",
-                     "data/storage/search*.json", "**/search_results*.json",
-                     "triage_results*.json", "**/triage*.json"]:
-        results.extend(repo.glob(pattern))
-    if results:
-        total = 0
-        for r in results:
+def test_gap_results_json(repo):
+    name = "Gap results JSON exists"
+    for pat in ["gap_results.json", "data/gap*.json", "gaps.json"]:
+        for f in repo.glob(pat):
             try:
-                data = json.loads(r.read_text())
-                if isinstance(data, list):
-                    total += len(data)
-                elif isinstance(data, dict) and "results" in data:
-                    total += len(data["results"])
-            except Exception:
-                pass
-        return TestResult(name, True, "critical",
-                          f"{len(results)} result file(s), {total} total entries")
-    return TestResult(name, False, "critical", "No search result JSON files found")
+                data = json.loads(f.read_text())
+                count = len(data) if isinstance(data, list) else len(data.get("gaps", []))
+                return TestResult(name, True, "critical", f"{f.name}: {count} gaps")
+            except: pass
+    return TestResult(name, False, "critical", "No gap results JSON found")
 
 
-def test_prisma_dashboard(repo: Path) -> TestResult:
-    """Check that a PRISMA-style dashboard exists."""
-    name = "PRISMA dashboard exists"
-    candidates = ["ka_topic_proposer.html", "ka_search_dashboard.html",
-                   "ka_pipeline_dashboard.html", "topic_proposer.html",
-                   "search_pipeline.html", "prisma_dashboard.html"]
-    for c in candidates:
-        p = repo / c
-        if p.exists():
-            src = p.read_text(errors="replace").lower()
-            has_funnel = any(w in src for w in ["funnel", "prisma", "screened",
-                                                  "identified", "included"])
-            has_counts = any(w in src for w in ["accept", "reject", "edge",
-                                                  "triage", "result"])
-            features = []
-            if has_funnel:
-                features.append("PRISMA funnel")
-            if has_counts:
-                features.append("triage counts")
-            return TestResult(name, True, "important",
-                              f"Found: {c} — features: {features}")
-    return TestResult(name, False, "important", "No dashboard page found")
-
-
-def test_dashboard_persistence(repo: Path) -> TestResult:
-    """Check dashboard reads from persistent storage."""
-    name = "Dashboard data persistence"
-    for c in ["ka_topic_proposer.html", "ka_search_dashboard.html",
-              "ka_pipeline_dashboard.html", "topic_proposer.html"]:
-        p = repo / c
-        if p.exists():
-            src = p.read_text(errors="replace")
-            if any(k in src for k in ["fetch(", "localStorage", ".json",
-                                        "XMLHttpRequest", "sqlite"]):
-                return TestResult(name, True, "minor",
-                                  "Dashboard uses persistent data source")
-            return TestResult(name, False, "minor",
-                              "Dashboard may not persist data after refresh")
-    return TestResult(name, False, "minor", "No dashboard found")
-
-
-def test_null_result_handling(repo: Path) -> TestResult:
-    """Check if null results (zero papers found) are handled."""
-    name = "Null result handling"
-    sources = _all_py_sources(repo)
-    for path, src in sources:
-        if any(m in src.lower() for m in ["null result", "no results",
-                                            "zero results", "no papers found",
-                                            "result_count == 0", "len(results) == 0"]):
-            return TestResult(name, True, "minor",
-                              f"Null results handled in {path.name}")
-    return TestResult(name, False, "minor",
-                      "No null result handling found — pipeline may crash on empty searches")
-
-
-def test_classifier_integration(repo: Path) -> TestResult:
-    """Check classifier integration from atlas_shared."""
-    name = "Classifier integration (atlas_shared)"
-    sources = _all_py_sources(repo)
-    for path, src in sources:
-        if any(m in src for m in ["atlas_shared", "AdaptiveClassifier",
-                                    "classifier_system", "classify"]):
-            return TestResult(name, True, "important",
-                              f"Classifier integration in {path.name}")
-    return TestResult(name, False, "important",
-                      "No atlas_shared classifier integration found")
-
-
-def test_db_entries(repo: Path) -> TestResult:
-    """Check if vetted papers appear in the database."""
-    name = "Vetted papers stored in database"
-    for candidate in [repo / "data" / "ka_auth.db", repo / "ka_auth.db"]:
-        if candidate.exists():
+def test_query_results_json(repo):
+    name = "Query results JSON exists"
+    for pat in ["query_results.json", "data/quer*.json", "queries.json"]:
+        for f in repo.glob(pat):
             try:
-                db = sqlite3.connect(str(candidate), timeout=5.0)
-                count = db.execute("SELECT COUNT(*) FROM articles").fetchone()[0]
-                db.close()
-                if count > 0:
+                data = json.loads(f.read_text())
+                items = data if isinstance(data, list) else data.get("queries", [])
+                has_both = False
+                for item in items[:5]:
+                    if isinstance(item, dict):
+                        has_ai = any(k in item for k in ["ai_citation", "ai_scholar", "ai_query"])
+                        has_bool = any(k in item for k in ["boolean", "boolean_query", "keyword"])
+                        if has_ai and has_bool: has_both = True
+                detail = f"{f.name}: {len(items)} queries"
+                if has_both: detail += " (both formats)"
+                return TestResult(name, True, "critical", detail)
+            except: pass
+    return TestResult(name, False, "critical", "No query results JSON found")
+
+
+def test_ai_citation_quality(repo):
+    name = "AI Citation queries are full sentences"
+    for pat in ["query_results.json", "queries.json"]:
+        for f in repo.glob(pat):
+            try:
+                data = json.loads(f.read_text())
+                items = data if isinstance(data, list) else data.get("queries", [])
+                sentence_count = 0
+                for item in items:
+                    if not isinstance(item, dict): continue
+                    q = item.get("ai_citation", item.get("ai_scholar", item.get("ai_query", "")))
+                    if isinstance(q, str) and len(q) > 50 and "?" in q:
+                        sentence_count += 1
+                if sentence_count >= 3:
                     return TestResult(name, True, "important",
-                                      f"{count} articles in database")
-                return TestResult(name, False, "important",
-                                  "articles table exists but is empty")
-            except Exception as e:
-                return TestResult(name, False, "important", f"DB error: {e}")
-    return TestResult(name, False, "important", "Database not found")
+                                      f"{sentence_count} queries are proper research questions")
+                elif sentence_count > 0:
+                    return TestResult(name, True, "important",
+                                      f"Only {sentence_count} queries are full sentences")
+            except: pass
+    return TestResult(name, False, "important", "Cannot verify AI Citation query quality")
 
 
-# ════════════════════════════════════════════════
-# MANUAL RUBRIC (matches assignment grading table)
-# ════════════════════════════════════════════════
+def test_boolean_quality(repo):
+    name = "Boolean queries use proper operators"
+    for pat in ["query_results.json", "queries.json"]:
+        for f in repo.glob(pat):
+            try:
+                data = json.loads(f.read_text())
+                items = data if isinstance(data, list) else data.get("queries", [])
+                proper = 0
+                for item in items:
+                    if not isinstance(item, dict): continue
+                    q = item.get("boolean", item.get("boolean_query", item.get("keyword", "")))
+                    if isinstance(q, str):
+                        has_quotes = '"' in q
+                        has_ops = " AND " in q or " OR " in q
+                        if has_quotes and has_ops: proper += 1
+                if proper >= 3:
+                    return TestResult(name, True, "important",
+                                      f"{proper} queries use quotes + AND/OR")
+                elif proper > 0:
+                    return TestResult(name, True, "important",
+                                      f"Only {proper} queries use proper Boolean syntax")
+            except: pass
+    return TestResult(name, False, "important", "Cannot verify Boolean query quality")
 
-RUBRIC_CRITERIA = [
-    RubricScore("Gap extraction: Identified low-confidence steps, scored by VOI", 15),
-    RubricScore("VOI understanding: Can explain why one gap scores higher than another", 10),
-    RubricScore("API integration: Queried Semantic Scholar/CrossRef, got abstracts back", 15),
-    RubricScore("Abstract triage: Classifier + VOI → defensible ACCEPT/EDGE_CASE/REJECT", 20),
-    RubricScore("PRISMA funnel: Dashboard shows real numbers at each stage", 15),
-    RubricScore("End-to-end trace: One paper traced gap → API → abstract → triage → store", 10),
-    RubricScore("Null results: Documented gaps where no papers exist", 5),
-    RubricScore("Verification questions: Caught real problems in AI's implementation", 10),
-    RubricScore("Automated tests (auto-scored)", 15),
+
+RUBRIC = [
+    RubricScore("Gap extraction: Identified low-confidence steps from templates", 15),
+    RubricScore("VOI scoring: Gaps ranked; can explain why one scores higher", 10),
+    RubricScore("AI Citation queries: Follow 5-component pattern, specific", 10),
+    RubricScore("Boolean queries: Proper AND/OR/quotes, not comma-separated", 10),
+    RubricScore("Spot-check: Tested 3 queries in Google, reported results", 5),
+    RubricScore("Verification questions: Caught problems in AI implementation", 10),
 ]
 
 
-def prompt_manual_score(criterion: RubricScore) -> RubricScore:
-    """Prompt the TA for a score and comment."""
-    print(f"\n{'─' * 60}")
-    print(f"  {criterion.criterion}")
-    print(f"  Max points: {criterion.max_points}")
-    print(f"{'─' * 60}")
+def prompt_manual(c: RubricScore):
+    print(f"\n{'─'*60}\n  {c.criterion}\n  Max: {c.max_points}\n{'─'*60}")
     while True:
         try:
-            raw = input(f"  Score (0–{criterion.max_points}): ").strip()
-            score = int(raw) if raw else 0
-            if 0 <= score <= criterion.max_points:
-                break
-            print(f"  Must be between 0 and {criterion.max_points}")
-        except ValueError:
-            print("  Enter a number")
-        except (EOFError, KeyboardInterrupt):
-            score = 0
-            break
-    comment = input("  Comment (optional): ").strip()
-    criterion.points = score
-    criterion.comment = comment
-    return criterion
+            raw = input(f"  Score (0–{c.max_points}): ").strip()
+            s = int(raw) if raw else 0
+            if 0 <= s <= c.max_points: break
+            print(f"  0–{c.max_points}")
+        except ValueError: print("  Number please")
+        except (EOFError, KeyboardInterrupt): s = 0; break
+    c.points = s
+    c.comment = input("  Comment: ").strip()
+    return c
 
 
-# ════════════════════════════════════════════════
-# SCORING & REPORT
-# ════════════════════════════════════════════════
-
-def compute_auto_score(results: list[TestResult]) -> tuple[int, int]:
-    """Compute points from automated tests. Max 15 points."""
-    max_pts = 15
-    weights = {"critical": 3, "important": 2, "minor": 1}
-    total_weight = sum(weights[r.weight] for r in results)
-    earned_weight = sum(weights[r.weight] for r in results if r.passed)
-    if total_weight == 0:
-        return 0, max_pts
-    return round(max_pts * earned_weight / total_weight), max_pts
+def compute_auto(results):
+    w = {"critical": 3, "important": 2, "minor": 1}
+    total = sum(w[r.weight] for r in results)
+    earned = sum(w[r.weight] for r in results if r.passed)
+    return round(15 * earned / total) if total else 0
 
 
-def render_report(report: GradeReport) -> str:
-    """Render the grade report as markdown."""
+def render(report):
     lines = [
-        "# T2 Task 2 — Grade Report (Search Pipeline / Abstract-First Triage)",
-        "",
+        "# T2 Task 2 — Grade Report (Gap Targeting & Query Generation)", "",
         f"**Student:** {report.student_name or '(not set)'}",
         f"**Email:** {report.student_email or '(not set)'}",
         f"**Grader:** {report.grader or '(not set)'}",
-        f"**Date:** {report.timestamp}",
-        "",
-        "---",
-        "",
-        f"## Total: {report.total_points} / {report.max_points}",
-        "",
-        "## Rubric Scores",
-        "",
-        "| Criterion | Score | Comment |",
+        f"**Date:** {report.timestamp}", "", "---", "",
+        f"## Total: {report.total_points} / {report.max_points}", "",
+        "## Rubric Scores", "", "| Criterion | Score | Comment |",
         "|-----------|-------|---------|",
     ]
     for s in report.rubric_scores:
-        comment = s.comment.replace("|", "\\|") if s.comment else "—"
-        lines.append(f"| {s.criterion} | {s.points}/{s.max_points} | {comment} |")
-
-    lines += [
-        "",
-        "## Automated Test Results",
-        "",
-        "| Test | Status | Weight | Details |",
-        "|------|--------|--------|---------|",
-    ]
+        lines.append(f"| {s.criterion} | {s.points}/{s.max_points} | {(s.comment or '—').replace('|','\\|')} |")
+    lines += ["", "## Automated Tests", "", "| Test | Status | Details |",
+              "|------|--------|---------|"]
     for t in report.auto_tests:
-        icon = "✅" if t.passed else "❌"
-        details = t.details.replace("|", "\\|")[:100]
-        lines.append(f"| {t.name} | {icon} | {t.weight} | {details} |")
-
+        lines.append(f"| {t.name} | {'✅' if t.passed else '❌'} | {t.details[:100].replace('|','\\|')} |")
     if report.file_manifest:
-        lines += ["", "## File Manifest", "", "```"]
-        lines.extend(report.file_manifest)
-        lines += ["```", ""]
-
+        lines += ["", "## File Manifest", "", "```"] + report.file_manifest + ["```"]
     if report.overall_comment:
-        lines += ["", "## Overall Comments", "", report.overall_comment, ""]
-
+        lines += ["", "## Overall Comments", "", report.overall_comment]
     return "\n".join(lines)
 
 
-def collect_file_manifest(repo: Path) -> list[str]:
-    """Get list of changed/new files via git."""
-    manifest = []
-    try:
-        diff = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD"],
-            cwd=str(repo), capture_output=True, text=True, timeout=10)
-        if diff.stdout.strip():
-            manifest.extend(diff.stdout.strip().split("\n"))
-        status = subprocess.run(
-            ["git", "status", "--short"],
-            cwd=str(repo), capture_output=True, text=True, timeout=10)
-        for line in status.stdout.strip().split("\n"):
-            if line.strip():
-                parts = line.strip().split(None, 1)
-                if len(parts) == 2 and parts[1] not in manifest:
-                    manifest.append(f"[{parts[0]}] {parts[1]}")
-    except Exception:
-        manifest.append("(git not available)")
-    return manifest
-
-
-# ════════════════════════════════════════════════
-# MAIN
-# ════════════════════════════════════════════════
-
 def main():
-    parser = argparse.ArgumentParser(
-        description="Grade a student's T2 Task 2 submission (PRISMA pipeline)")
-    parser.add_argument("repo", type=Path,
-                        help="Path to the student's Knowledge_Atlas clone")
-    parser.add_argument("--student-name", default="")
-    parser.add_argument("--student-email", default="")
-    parser.add_argument("--grader", default="")
-    parser.add_argument("--auto-only", action="store_true",
-                        help="Run automated tests only, skip manual rubric")
-    parser.add_argument("--output", type=Path, default=None)
-    args = parser.parse_args()
+    ap = argparse.ArgumentParser(description="Grade T2 Task 2")
+    ap.add_argument("repo", type=Path)
+    ap.add_argument("--student-name", default="")
+    ap.add_argument("--student-email", default="")
+    ap.add_argument("--grader", default="")
+    ap.add_argument("--auto-only", action="store_true")
+    ap.add_argument("--output", type=Path, default=None)
+    args = ap.parse_args()
 
     repo = args.repo.resolve()
-    if not repo.exists():
-        print(f"Error: {repo} does not exist")
-        sys.exit(1)
+    if not repo.exists(): print(f"Error: {repo} not found"); sys.exit(1)
 
-    print("=" * 60)
-    print("  T2 Task 2 Grader — Search Pipeline (Abstract-First Triage)")
-    print("=" * 60)
-    print(f"  Repo: {repo}\n")
+    print(f"{'='*60}\n  T2 Task 2 Grader — Gap Targeting & Query Generation\n{'='*60}\n  Repo: {repo}\n")
 
-    student_name = args.student_name or input("Student name: ").strip()
-    student_email = args.student_email or input("Student email: ").strip()
-    grader = args.grader or input("Grader name: ").strip()
+    sn = args.student_name or input("Student name: ").strip()
+    se = args.student_email or input("Student email: ").strip()
+    gr = args.grader or input("Grader name: ").strip()
 
-    # ── Automated tests
-    print("\n" + "=" * 60)
-    print("  Running automated tests...")
-    print("=" * 60)
+    auto = [test_gap_extractor(repo), test_reads_templates(repo),
+            test_voi_scoring(repo), test_gap_results_json(repo),
+            test_query_results_json(repo), test_ai_citation_quality(repo),
+            test_boolean_quality(repo)]
 
-    auto_results = [
-        test_gap_extractor_exists(repo),
-        test_reads_templates_and_confidence(repo),
-        test_voi_integration(repo),
-        test_api_integration(repo),
-        test_abstract_triage(repo),
-        test_search_results_exist(repo),
-        test_prisma_dashboard(repo),
-        test_dashboard_persistence(repo),
-        test_null_result_handling(repo),
-        test_classifier_integration(repo),
-        test_db_entries(repo),
-    ]
+    print(f"\n{'='*60}\n  Automated tests\n{'='*60}")
+    for r in auto: print(f"  {'✅' if r.passed else '❌'} [{r.weight:>9s}] {r.name}: {r.details}")
+    auto_score = compute_auto(auto)
+    print(f"\n  Auto: {auto_score}/15")
 
-    for r in auto_results:
-        icon = "✅" if r.passed else "❌"
-        print(f"  {icon} [{r.weight:>9s}] {r.name}: {r.details}")
+    # manifest
+    manifest = []
+    try:
+        d = subprocess.run(["git","diff","--name-only","HEAD"], cwd=str(repo),
+                          capture_output=True, text=True, timeout=10)
+        if d.stdout.strip(): manifest.extend(d.stdout.strip().split("\n"))
+        s = subprocess.run(["git","status","--short"], cwd=str(repo),
+                          capture_output=True, text=True, timeout=10)
+        for l in s.stdout.strip().split("\n"):
+            if l.strip():
+                p = l.strip().split(None,1)
+                if len(p)==2 and p[1] not in manifest: manifest.append(f"[{p[0]}] {p[1]}")
+    except: manifest.append("(git not available)")
 
-    auto_score, auto_max = compute_auto_score(auto_results)
-    print(f"\n  Automated score: {auto_score}/{auto_max}")
-
-    # ── File manifest
-    print("\n" + "=" * 60)
-    print("  Collecting file manifest...")
-    print("=" * 60)
-    manifest = collect_file_manifest(repo)
-    for f in manifest:
-        print(f"    {f}")
-
-    # ── Manual rubric
-    rubric_scores = []
+    rubric = []
     if not args.auto_only:
-        print("\n" + "=" * 60)
-        print("  Manual rubric scoring")
-        print("=" * 60)
-        for criterion in RUBRIC_CRITERIA:
-            if "auto-scored" in criterion.criterion.lower():
-                criterion.points = auto_score
-                criterion.comment = (
-                    f"Auto: {sum(1 for r in auto_results if r.passed)}"
-                    f"/{len(auto_results)} tests passed"
-                )
-                rubric_scores.append(criterion)
-            else:
-                rubric_scores.append(prompt_manual_score(criterion))
+        print(f"\n{'='*60}\n  Manual rubric\n{'='*60}")
+        for c in RUBRIC: rubric.append(prompt_manual(c))
     else:
-        for criterion in RUBRIC_CRITERIA:
-            if "auto-scored" in criterion.criterion.lower():
-                criterion.points = auto_score
-                criterion.comment = (
-                    f"Auto: {sum(1 for r in auto_results if r.passed)}"
-                    f"/{len(auto_results)} tests passed"
-                )
-            else:
-                criterion.comment = "(auto-only mode — not scored)"
-            rubric_scores.append(criterion)
+        for c in RUBRIC: c.comment = "(auto-only)"; rubric.append(c)
 
-    # ── Overall comment
-    overall_comment = ""
-    if not args.auto_only:
-        print(f"\n{'─' * 60}")
-        print("  Overall comment (multi-line, end with empty line):")
-        comment_lines = []
-        while True:
-            try:
-                line = input("  > ")
-                if line == "":
-                    break
-                comment_lines.append(line)
-            except (EOFError, KeyboardInterrupt):
-                break
-        overall_comment = "\n".join(comment_lines)
+    total = sum(s.points for s in rubric) + auto_score
+    max_t = sum(s.max_points for s in rubric) + 15
 
-    # ── Build and write report
-    total = sum(s.points for s in rubric_scores)
-    max_total = sum(s.max_points for s in rubric_scores)
+    rpt = GradeReport(sn, se, gr,
+        datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        rubric, auto, total, max_t, "", manifest)
 
-    report = GradeReport(
-        student_name=student_name,
-        student_email=student_email,
-        grader=grader,
-        timestamp=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-        rubric_scores=rubric_scores,
-        auto_tests=auto_results,
-        total_points=total,
-        max_points=max_total,
-        overall_comment=overall_comment,
-        file_manifest=manifest,
-    )
-
-    output_path = args.output
-    if output_path is None:
-        output_dir = repo / "160sp" / "rubrics" / "t2"
-        output_dir.mkdir(parents=True, exist_ok=True)
-        output_path = output_dir / "GRADE_REPORT_T2_TASK2.md"
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(render_report(report))
-
-    print("\n" + "=" * 60)
-    print(f"  TOTAL: {total} / {max_total}")
-    print(f"  Report written to: {output_path}")
-    print("=" * 60)
+    out = args.output or (repo/"160sp"/"rubrics"/"t2"/"GRADE_REPORT_T2_TASK2.md")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render(rpt))
+    print(f"\n{'='*60}\n  TOTAL: {total}/{max_t}\n  Report: {out}\n{'='*60}")
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
