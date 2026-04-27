@@ -229,15 +229,34 @@ Write YOUR OWN contract and tests for this phase.
 
 ## Data sources you should know about
 
+### Tag and annotation data
+
 | Repo / File | What it gives you |
 |---|---|
 | `Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json` | 424 tags across 44 domains — your tag filter categories |
-| `Outcome_Contractor/contracts/oc_export/outcome_vocab.json` | 839 effect terms across 7 domains — your effect filter categories |
-| `Outcome_Contractor/contracts/oc_export/constitutive_bridges.json` | 832 parent→child bridges — the effect hierarchy |
+| `Tagging_Contractor/.../observations/image_tagger_observation.schema.json` | **Official annotation schema** — your `annotations.json` should conform to this. Each tag entry has `tag_id`, `value_type` (binary/ordinal/continuous), `value`, `confidence`, and `evidence` |
+| `Tagging_Contractor/contracts/localized_image_tags.schema.json` | Spatial annotation schema with `semantic_regions`, `dense_maps`, and `pipeline_provenance` — use this if your detectors produce region-level output |
 | Your `collection.json` from Task 1 | 500 images with room types and provenance |
-| Your detector functions from Task 2 | 6 detectors that produce `TagResult` per image |
-| `Article_Eater/data/templates/` | 166 PNU templates linking tags to effects (for building `effect_tag_mapping.json`) |
-| `image-tagger/docs/CONTRACT.md` | Existing Image Tagger API contract — see `ExplorerSearchResponse` for the data model |
+| Your 6 detector functions from Task 2 | Detectors that produce `TagResult` per image |
+
+### Effect and outcome data
+
+| Repo / File | What it gives you |
+|---|---|
+| `Outcome_Contractor/contracts/oc_export/outcome_vocab.json` | 839 effect terms across 7 domains — your effect filter categories |
+| `Outcome_Contractor/contracts/oc_export/constitutive_bridges.json` | 832 parent→child bridges — the effect hierarchy for drill-down |
+| `Outcome_Contractor/contracts/oc_export/ae_outcome_lookup.json` | **Pre-built tag→outcome lookup** — 2,114 entries mapping text terms to outcome IDs. This is your shortcut for the effect browser. Instead of building `effect_tag_mapping.json` from scratch, start here |
+| `Outcome_Contractor/contracts/oc_export/bn_outcome_nodes.json` | Bayesian network node definitions — shows causal structure between outcomes |
+| `Outcome_Contractor/contracts/oc_export/VERSION_MANIFEST.json` | Tells you the schema versions and file checksums for all OC exports |
+
+### Existing viewer code (reference, not required)
+
+| Repo / File | What it gives you |
+|---|---|
+| `image-tagger/Image_Tagger_3.4.74_vlm_lab_TL_runbook_full/frontend/apps/explorer/` | Existing React explorer — study `ImageDetailModal.jsx` to see what APIs it calls (depth, segmentation, materials, affordance). You don't need to use this code, but it shows the data model |
+| `image-tagger/docs/CONTRACT.md` | Image Tagger API contract — `ExplorerSearchResponse` shows the response shape |
+| `image-tagger/docs/ENGINEERING_BRIEF.md` | Architecture overview — four user journeys: Explorer, Workbench, Monitor, Admin |
+| `Article_Eater/data/templates/` | 166 PNU templates linking tags to effects — use these to enrich your `effect_tag_mapping.json` beyond what `ae_outcome_lookup.json` provides |
 
 ---
 
