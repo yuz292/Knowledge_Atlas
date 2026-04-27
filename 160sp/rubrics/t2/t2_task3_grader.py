@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+from contract_evaluator import scan_for_contracts, ContractGateResult
+
 
 @dataclass
 class TestResult:
@@ -28,6 +30,7 @@ class GradeReport:
     auto_tests: list = field(default_factory=list); total_points: int = 0
     max_points: int = 0; overall_comment: str = ""
     file_manifest: list = field(default_factory=list)
+    contract_gate: ContractGateResult = field(default_factory=ContractGateResult)
 
 
 def _all_py(repo):
@@ -230,6 +233,8 @@ def render(report):
     ]
     for s in report.rubric_scores:
         lines.append(f"| {s.criterion} | {s.points}/{s.max_points} | {(s.comment or '—').replace('|','\\|')} |")
+    lines.append("")
+    lines.append(report.contract_gate.render_table())
     lines += ["", "## Automated Tests", "", "| Test | Status | Details |",
               "|------|--------|---------|"]
     for t in report.auto_tests:
@@ -273,6 +278,17 @@ def main():
     auto_score = compute_auto(auto)
     print(f"\n  Auto: {auto_score}/15")
 
+    # ── Contract gate
+    print(f"\n{'='*60}\n  Contract quality evaluation\n{'='*60}")
+    contract_gate = scan_for_contracts(repo, expected_contracts=3)
+    print(f"  {contract_gate.summary}")
+    for c in contract_gate.contracts_found:
+        print(f"    {c.source_file}: {c.quality} "
+              f"(sections={c.section_count}/4, tests={c.test_count})")
+    if not contract_gate.gate_passed:
+        print(f"\n  ⛔ GATE FAILED: {contract_gate.gate_reason}")
+        print(f"  ⛔ Student outputs should NOT be integrated into corpus.")
+
     manifest = []
     try:
         d = subprocess.run(["git","diff","--name-only","HEAD"], cwd=str(repo),
@@ -293,17 +309,23 @@ def main():
     else:
         for c in RUBRIC: c.comment = "(auto-only)"; rubric.append(c)
 
-    total = sum(s.points for s in rubric) + auto_score
-    max_t = sum(s.max_points for s in rubric) + 15
+    total = sum(s.points for s in rubric) + auto_score + contract_gate.score
+    max_t = sum(s.max_points for s in rubric) + 15 + contract_gate.max_score
 
     rpt = GradeReport(sn, se, gr,
         datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-        rubric, auto, total, max_t, "", manifest)
+        rubric, auto, total, max_t, "", manifest, contract_gate)
 
     out = args.output or (repo/"160sp"/"rubrics"/"t2"/"GRADE_REPORT_T2_TASK3.md")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(render(rpt))
-    print(f"\n{'='*60}\n  TOTAL: {total}/{max_t}\n  Report: {out}\n{'='*60}")
+
+    gate_icon = '✅' if contract_gate.gate_passed else '⛔'
+    print(f"\n{'='*60}")
+    print(f"  TOTAL: {total}/{max_t}")
+    print(f"  Contract gate: {gate_icon} {contract_gate.gate_reason}")
+    print(f"  Report: {out}")
+    print(f"{'='*60}")
 
 
 if __name__ == "__main__": main()
