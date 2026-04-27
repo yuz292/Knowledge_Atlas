@@ -1,20 +1,18 @@
 # Track 3: VR Studio — All Tasks
 
-**Track overview:** You will build a pipeline that lets neuroarchitecture researchers modify 3D interior environments via natural language. Starting from openly-licensed 3D models, you'll curate a library of VR-ready rooms, build a real-time viewer with slider controls for 8 environmental manipulation classes, and wire up an AI front-end that converts instructions like "make this a cozy library with 4m ceilings and wood on the north wall" into instant 3D scene modifications.
+**Track overview:** You will build a pipeline that lets neuroarchitecture researchers modify 3D interior environments via natural language. Starting from openly-licensed 3D models (or generating them from photographs via World Labs Marble), you'll curate a library of VR-ready rooms, build a real-time viewer with slider controls for 8 environmental manipulation classes, and wire up an AI front-end that converts instructions like "make this a cozy library with 4m ceilings and wood on the north wall" into instant 3D scene modifications.
 
 **Three tasks, one pipeline:**
 
 | Task | What you build | Points |
 |---|---|---|
 | Task 1 | Collect & catalog ≥ 20 VR-ready 3D models with per-wall mesh annotations | 75 points |
-| Task 2 | VR conversion & manual factor testing — real-time sliders, 10 models × 8 factors | 75 points |
+| Task 2 | VR conversion & manual factor testing — real-time sliders, 10 models × 8 factors, path-traced lighting | 75 points |
 | Task 3 | AI front-end — natural language → validated parametric scene modification | 75 points |
 
-**Contract gate (all tasks):** Every task requires written contracts with inputs, processing, outputs, success conditions, and test checklists. If your contracts are insufficient, your work will be flagged as not ready for integration.
+**Contract gate (all tasks):** Every task requires written contracts with inputs, processing, outputs, success conditions, and test checklists.
 
-**What makes this different:** No existing product does what you're building. Veras and DecorAI produce 2D images. Meshy and Luma generate new models. You are building the first tool that takes an existing 3D room and parametrically modifies it via natural language for experimental VR research. Every component uses proven technology — the innovation is the integration.
-
-**Speed:** Three.js scene modifications execute at **120+ fps** (verified by prototype). Slider dragging and multi-factor changes are perceptually instant.
+**Speed:** Three.js scene modifications execute at **120+ fps**. Path-traced lighting converges in ~2 seconds on any modern laptop.
 
 ---
 
@@ -92,6 +90,29 @@ Write YOUR OWN contract. Include Inputs, Processing, Outputs, Success Conditions
 - **TurboSquid** (free section) — Check license per model
 - **Poly Haven** — CC0, excellent HDRIs and some room models
 - **CGTrader** (free section) — Mixed quality, check license
+
+### Advanced source: World Labs Marble (image → 3D world)
+
+[World Labs Marble](https://marble.worldlabs.ai/) uses spatial AI to generate explorable 3D worlds from a single photograph, text prompt, or video. This is a fundamentally different approach from Sketchfab: instead of downloading someone else's model, you photograph a real space and generate a 3D version.
+
+**What Marble gives you:**
+- Upload a photo of any interior → get a navigable 3D world in ~5 minutes
+- Text prompts work too: "a clinical white office with 3m ceilings and fluorescent lighting"
+- Exports available: Gaussian Splats (for viewing) and **high-quality mesh (GLB)** for modification
+- API access: `POST /marble/v1/worlds:generate` with text or image input
+- [SparkJS](https://sparkjs.dev/) — their Gaussian Splat renderer for Three.js
+
+**Why it matters for research:** Marble is already being used for clinical VR environments — [Champalimaud Foundation and King's College London use it for OCD exposure therapy](https://www.worldlabs.ai/case-studies/3-health-systems), generating patient-specific therapeutic environments. This is the same paradigm as neuroarchitecture stimuli.
+
+**The catch — and how to work around it:**
+Marble's native output is **Gaussian Splats**, not traditional meshes. You cannot select individual walls or modify ceiling height on a splat. To make Marble-generated rooms parametrically modifiable:
+
+1. Generate the world from a reference photo via API (~5 min)
+2. Export the high-quality mesh (GLB) — takes ~1 hour server-side, produces a ~600K triangle fused mesh
+3. Import into Blender → **manually segment** ceiling, walls, floor into separate objects → assign PBR materials → re-export as clean glTF
+4. The result is a photorealistic room with parametric structure
+
+This adds ~1-2 hours per model but produces rooms grounded in real architectural photography rather than stock 3D assets. Use this for at least 3 of your 20 models.
 
 **Deliverable:** `model_sources.json`
 
@@ -327,6 +348,36 @@ function setCeilingHeight(newHeight) {
 ```
 
 **Speed:** These are JavaScript property changes. No re-rendering, no re-compilation. Measured at **120 fps** in our prototype. Slider dragging is perceptually instant.
+
+### Lighting quality requirement
+
+Basic Three.js lights (DirectionalLight + AmbientLight) produce flat, unrealistic scenes with no light bounce, no color bleeding, and no ambient occlusion. For research stimuli, this is unacceptable — 33 of the registry's lighting tags describe properties of **indirect** light.
+
+Your viewer must implement **at least one** of these lighting upgrades:
+
+| Level | Technique | What it adds | Implementation | Laptop requirement |
+|---|---|---|---|---|
+| **Level 2 (minimum)** | HDRI environment map + tone mapping | Realistic ambient from all directions; reflections on glossy surfaces | Load a `.hdr` file from Poly Haven; set `scene.environment`; use `ACESFilmicToneMapping`. ~20 lines. | Any laptop, 120 fps |
+| **Level 3 (expected)** | + Screen-space ambient occlusion (SSAO) | Corners and crevices naturally darken; huge realism boost | Add `SSAOPass` from Three.js post-processing. ~40 lines. | Any laptop, 60-90 fps |
+| **Level 5 (stretch)** | Path tracing via `three-gpu-pathtracer` | Full global illumination: light bounces between surfaces, color bleeds from colored walls to ceiling, soft shadows, caustics | Replace `renderer.render()` with `pathTracer.renderSample()`. ~20 lines. See [Interior Scene demo](https://gkjohnson.github.io/three-gpu-pathtracer/example/bundle/interior.html). | Any laptop with WebGL 2 (all modern laptops). Renders progressively: noisy during interaction, converges to clean in ~2 seconds when you stop. **Not harder to implement than Level 2 — the library does the work.** |
+
+**Verified empirically:** The `three-gpu-pathtracer` [Interior Scene demo](https://gkjohnson.github.io/three-gpu-pathtracer/example/bundle/interior.html) runs on standard laptop GPUs (MacBook Air M1 and up). It uses WebGL 2 (not WebGPU), renders at half resolution during interaction (`renderScale: 0.5`), and reaches 38 samples (visually clean) within ~30 seconds at rest. At 370+ samples, the result is publication-quality. The library has 1.7k GitHub stars, 2,332 commits, MIT license, and is actively maintained.
+
+**The interactive UX for path tracing:**
+
+```
+SLIDER DRAG:     Scene goes noisy (like Blender viewport) — still responsive
+SLIDER RELEASE:  pathTracer.updateMaterials() + pathTracer.reset()
+                 Image converges to clean GI in ~2 seconds
+EXPORT:          Capture converged frame as the research stimulus
+```
+
+**HDRI sources (all CC0, free):**
+
+| Source | What you need |
+|---|---|
+| [Poly Haven](https://polyhaven.com/hdris) | Filter "indoor" category. Download ≥ 3 HDRIs at different color temps (warm interior, neutral studio, cool overcast) |
+| [Ambient CG](https://ambientcg.com) | CC0 HDRIs + matching PBR material textures |
 
 ---
 

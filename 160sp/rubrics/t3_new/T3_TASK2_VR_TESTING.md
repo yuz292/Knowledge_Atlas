@@ -97,6 +97,36 @@ function setCeilingHeight(newHeight) {
 
 **Speed:** These are JavaScript property changes. No re-rendering, no re-compilation. Measured at **120 fps** in our prototype. Slider dragging is perceptually instant.
 
+### Lighting quality requirement
+
+Basic Three.js lights (DirectionalLight + AmbientLight) produce flat, unrealistic scenes with no light bounce, no color bleeding, and no ambient occlusion. For research stimuli, this is unacceptable — 33 of the registry's lighting tags describe properties of **indirect** light.
+
+Your viewer must implement **at least one** of these lighting upgrades:
+
+| Level | Technique | What it adds | Implementation | Laptop requirement |
+|---|---|---|---|---|
+| **Level 2 (minimum)** | HDRI environment map + tone mapping | Realistic ambient from all directions; reflections on glossy surfaces | Load a `.hdr` file from Poly Haven; set `scene.environment`; use `ACESFilmicToneMapping`. ~20 lines. | Any laptop, 120 fps |
+| **Level 3 (expected)** | + Screen-space ambient occlusion (SSAO) | Corners and crevices naturally darken; huge realism boost | Add `SSAOPass` from Three.js post-processing. ~40 lines. | Any laptop, 60-90 fps |
+| **Level 5 (stretch)** | Path tracing via `three-gpu-pathtracer` | Full global illumination: light bounces between surfaces, color bleeds from colored walls to ceiling, soft shadows, caustics | Replace `renderer.render()` with `pathTracer.renderSample()`. ~20 lines. See [Interior Scene demo](https://gkjohnson.github.io/three-gpu-pathtracer/example/bundle/interior.html). | Any laptop with WebGL 2 (all modern laptops). Renders progressively: noisy during interaction, converges to clean in ~2 seconds when you stop. **Not harder to implement than Level 2 — the library does the work.** |
+
+**Verified empirically:** The `three-gpu-pathtracer` [Interior Scene demo](https://gkjohnson.github.io/three-gpu-pathtracer/example/bundle/interior.html) runs on standard laptop GPUs (MacBook Air M1 and up). It uses WebGL 2 (not WebGPU), renders at half resolution during interaction (`renderScale: 0.5`), and reaches 38 samples (visually clean) within ~30 seconds at rest. At 370+ samples, the result is publication-quality. The library has 1.7k GitHub stars, 2,332 commits, MIT license, and is actively maintained.
+
+**The interactive UX for path tracing:**
+
+```
+SLIDER DRAG:     Scene goes noisy (like Blender viewport) — still responsive
+SLIDER RELEASE:  pathTracer.updateMaterials() + pathTracer.reset()
+                 Image converges to clean GI in ~2 seconds
+EXPORT:          Capture converged frame as the research stimulus
+```
+
+**HDRI sources (all CC0, free):**
+
+| Source | What you need |
+|---|---|
+| [Poly Haven](https://polyhaven.com/hdris) | Filter "indoor" category. Download ≥ 3 HDRIs at different color temps (warm interior, neutral studio, cool overcast) |
+| [Ambient CG](https://ambientcg.com) | CC0 HDRIs + matching PBR material textures |
+
 ---
 
 ## Phase 2: Test each model × each factor
