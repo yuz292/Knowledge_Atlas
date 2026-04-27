@@ -36,7 +36,32 @@ The Article Eater has VOI functions for scoring knowledge gaps. You will use one
 
 **What you should learn:** A gap at a hub in the belief network (high centrality, many downstream beliefs) with confidence ~0.4 scores much higher VOI than an isolated gap with confidence 0.45. VOI = "how much would knowing this change our predictions?"
 
-### 1C. Understand the two query types
+### 1C. Know what's already in the corpus
+
+Before you search for new papers, you need to know what you already have. The lifecycle database tracks every PDF in the system.
+
+**Primary source:** `pipeline_lifecycle_full.db`, table `pdf_corpus_inventory`
+
+This table lists every known PDF and its state:
+- Whether it's in `CURRENT_GOLD` (fully processed and validated)
+- Whether it's admitted but not yet gold
+- Whether it's staged only
+- Whether it's registry-backed
+
+**Easiest readable version:** `pdf_corpus_inventory/latest.csv`
+
+The summary report is at `pdf_corpus_inventory/latest.md`.
+
+Ask your AI:
+
+> *"Read `pdf_corpus_inventory/latest.csv`. How many papers are in CURRENT_GOLD? What topics do they cover? This tells me what we already have — I should NOT generate search queries for papers that are already in the corpus."*
+
+If you also need to check for duplicates (same paper under different filenames or DOIs), use the companion table:
+
+**Dedupe source:** `pipeline_lifecycle_full.db`, table `pdf_identity_inventory`  
+**CSV:** `pdf_identity_inventory/latest.csv`
+
+### 1D. Understand the two query types
 
 You will generate queries in two formats. Read `160sp/ka_google_search_guide.html` for the full tutorial, then ask your AI:
 
@@ -260,5 +285,10 @@ The contract → success conditions → test → validate workflow you're learni
 | `src/services/voi_search.py` | `VOICalculator.calculate_voi()` — scores gaps |
 | `src/services/voi_search.py` | `QueryGenerator.generate_queries()` — baseline query generation |
 | `src/services/voi_search.py` | `CrossFieldVocabulary.expand_query()` — cross-discipline synonyms |
+| `pipeline_lifecycle_full.db` | Table `pdf_corpus_inventory` — every PDF and its state (CURRENT_GOLD, staged, etc.) |
+| `pdf_corpus_inventory/latest.csv` | Readable export of the corpus inventory — check what you already have |
+| `pdf_identity_inventory/latest.csv` | Dedupe info — catch duplicate papers under different names |
+| `build_pdf_corpus_inventory_surface.py` | Builds the inventory surface from the lifecycle DB |
+| `refresh_v7_state_surfaces.py` | Regenerates all state surfaces (run this to get fresh data) |
 | `160sp/ka_google_search_guide.html` | Full tutorial on writing AI Citation queries |
 | `query_generator_skill.md` | Prompt template for generating queries from gaps |

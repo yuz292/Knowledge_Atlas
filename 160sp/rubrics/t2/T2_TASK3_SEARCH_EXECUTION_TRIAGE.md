@@ -91,10 +91,30 @@ After collecting abstracts, you classify each paper:
 | **EDGE_CASE** | On-topic but voi_score < 0.5, OR borderline topic match | Stored separately, flagged |
 | **REJECT** | Off-topic per classifier | Logged but not stored |
 | **MISSING_ABSTRACT** | No abstract found from any source | Stored with flag, not triaged |
+| **DUPLICATE** | Already in `pdf_corpus_inventory` | Counted in PRISMA funnel, not re-triaged |
 
 Ask your AI:
 
 > *"Read `Article_Eater/src/cmr/voi_scoring.py`. Find `score_voi()`. What does it score — the abstract text? The finding type? How does it decide between high (0.8+), medium (0.5-0.8), and low (< 0.5)?"*
+
+### 1D. Know what's already in the corpus (deduplication)
+
+Before triaging a paper, check if it's already in the corpus. The lifecycle database tracks every PDF:
+
+**Primary source:** `pipeline_lifecycle_full.db`, table `pdf_corpus_inventory`  
+**Easiest readable version:** `pdf_corpus_inventory/latest.csv`
+
+This table tells you whether a paper is in `CURRENT_GOLD` (already processed), admitted, or staged. If a search result matches a paper already in the inventory, mark it `DUPLICATE` in your PRISMA funnel — it counts as "identified" but is removed at the deduplication stage.
+
+For matching by DOI or title, use the companion table:
+
+**Dedupe source:** `pipeline_lifecycle_full.db`, table `pdf_identity_inventory`  
+**CSV:** `pdf_identity_inventory/latest.csv`
+
+To refresh these tables before starting:
+```bash
+python refresh_v7_state_surfaces.py
+```
 
 ---
 
@@ -361,4 +381,8 @@ The contract → success conditions → test → validate workflow is not a one-
 | `src/services/paper_fetcher.py` | `UnpaywallClient` — checks OA availability |
 | `src/cmr/voi_scoring.py` | `score_voi()` — scores findings by information value |
 | `src/services/discovery_funnel.py` | `classify_closure()` — FULL/PARTIAL/NONE/NEGATIVE |
+| `pipeline_lifecycle_full.db` | Table `pdf_corpus_inventory` — every PDF and its state |
+| `pdf_corpus_inventory/latest.csv` | Readable export — check what's already in the corpus |
+| `pdf_identity_inventory/latest.csv` | Dedupe info — catch duplicate papers under different names |
+| `refresh_v7_state_surfaces.py` | Regenerates all state surfaces (run before starting) |
 | `atlas_shared` | Topic classifier (from Task 1) |
