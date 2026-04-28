@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 3: AI Front-End for Parametric Scene Modification &middot; Track 3 &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <a href="t3_intro.html">Track 3: VR Studio</a> /
+    <span>Task 3: AI Front-End for Parametric Scene Modification</span>
+  </div>
+
+  <!-- 3. PAGE GRID: side-nav + main content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 3: VR Studio</div>
+      <a href="t3_intro.html">Track Overview</a>
+      <a href="t3_task1.html">Task 1: Collect &amp; Catalog VR-Ready 3D Models</a>
+      <a href="t3_task2.html">Task 2: VR Conversion &amp; Manual Factor Testing</a>
+      <a href="t3_task3.html" class="active">Task 3: AI Front-End for Parametric Scene Modification</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">&larr; All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 3 &middot; TASK 3</div>
+        <h1>AI Front-End for Parametric Scene Modification</h1>
+        <p class="hero-sub">Build a scene introspector and an LLM parameter extractor so users modify VR scenes by typing natural-language prompts.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">Track: VR Studio</span>
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">Contract gate</span>
+          <span class="hero-pill">Prereq: Task 2</span>
+        </div>
+      </header>
+
+      <!-- THE BIG PICTURE -->
+      <section>
+        <h2>The big picture</h2>
+        <p>What you will have when you finish: a web-based tool where a researcher types a natural-language instruction such as <em>&ldquo;make this a warm, cozy library with 4-meter ceilings and exposed brick on the north wall,&rdquo;</em> and the system modifies the 3D scene in real time. Every change is checked against your factor viability matrix from Task 2 before it is applied.</p>
+
+        <p>In Task 2 you built sliders and swatches that modify 3D scenes in real time. But sliders force the user to know <em>which</em> parameter to change and <em>what value</em> to set. A researcher who wants to study &ldquo;cozy versus clinical environments&rdquo; should not have to set ceiling=2.6m, CCT=2700K, walls=wood, roughness=0.6, and lighting=0.8 by hand. They should just say it.</p>
+
+        <p><strong>No existing product does this.</strong> Veras, DecorAI, and Decory produce 2D images, not modified 3D models. Meshy and Luma generate new models, not parametric modifications of existing ones. You are building something genuinely new &mdash; but every component uses proven technology.</p>
+
+        <p>Two pieces do most of the work, and they deserve plain-English names before we look at any code:</p>
+        <ul>
+          <li><strong>The <em>scene introspector</em></strong> is a function that surveys whatever model is currently loaded and produces a structured summary &mdash; a JSON snapshot of which walls exist, which ceiling height is in effect, which lights are on, and which modifications this particular model is allowed to undergo. It is the LLM&rsquo;s eyes on the scene.</li>
+          <li><strong>The <em>LLM parameter extractor</em></strong> is the bridge from English to JSON. It takes the user&rsquo;s sentence plus the scene summary and emits a small, constrained dictionary of parameter changes &mdash; <code>ceiling_height</code>, <code>wall_north_color</code>, <code>light_cct</code>, and the rest. The LLM never touches the geometry directly; it only fills in the form.</li>
+        </ul>
+
+        <h3>The architecture</h3>
+<pre>User types: "warm cozy library with 4m ceiling, wood on north wall,
+             dim lighting, small windows, carpet floor"
+                    &darr;
+    &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+    &#x2502;  Scene Introspector              &#x2502;
+    &#x2502;  Reads mesh_roles.json +         &#x2502;
+    &#x2502;  current slider values &rarr;         &#x2502;
+    &#x2502;  produces scene summary JSON     &#x2502;
+    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x252C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+                   &darr;
+    &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+    &#x2502;  LLM Parameter Extractor         &#x2502;
+    &#x2502;  Input: user text + scene summary&#x2502;
+    &#x2502;  Output: structured JSON spec    &#x2502;
+    &#x2502;  {                               &#x2502;
+    &#x2502;    ceiling_height: 4.0,          &#x2502;
+    &#x2502;    wall_north_color: "#8B6914",  &#x2502;
+    &#x2502;    wall_north_roughness: 0.6,    &#x2502;
+    &#x2502;    light_intensity: 0.8,         &#x2502;
+    &#x2502;    light_cct: 2700,              &#x2502;
+    &#x2502;    window_scale: 0.5,            &#x2502;
+    &#x2502;    floor_color: "#DEB887",       &#x2502;
+    &#x2502;    floor_roughness: 0.9          &#x2502;
+    &#x2502;  }                               &#x2502;
+    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x252C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+                   &darr;
+    &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+    &#x2502;  Validation Gate                 &#x2502;
+    &#x2502;  Check each modification against &#x2502;
+    &#x2502;  factor viability matrix:        &#x2502;
+    &#x2502;  - Is ceiling modifiable? OK     &#x2502;
+    &#x2502;  - Is north wall selectable? OK  &#x2502;
+    &#x2502;  - Block unsupported mods NO     &#x2502;
+    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x252C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+                   &darr;
+    &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+    &#x2502;  Scene Modifier                  &#x2502;
+    &#x2502;  Applies validated JSON to       &#x2502;
+    &#x2502;  Three.js scene via your         &#x2502;
+    &#x2502;  Task 2 slider functions         &#x2502;
+    &#x2502;  Updates slider positions to     &#x2502;
+    &#x2502;  reflect new state               &#x2502;
+    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x252C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+                   &darr;
+    &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+    &#x2502;  Live 3D Preview                 &#x2502;
+    &#x2502;  + before/after comparison       &#x2502;
+    &#x2502;  + modification history          &#x2502;
+    &#x2502;  + export modified glTF          &#x2502;
+    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+</pre>
+
+        <div class="callout callout-teal"><strong>Key insight:</strong> The LLM does NOT generate 3D geometry. It maps natural language onto a small, constrained JSON schema. Your Task 2 code does the actual 3D manipulation.</div>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section>
+        <h2>Phase 1: Build the scene introspector</h2>
+        <p>The <em>scene introspector</em> is a function that surveys whatever model is currently loaded and produces a structured summary the LLM can read. The LLM needs to know what room it is editing before it can decide what to change.</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p><strong>Contract objective:</strong> &ldquo;I want a function that reads a loaded glTF scene and its <code>mesh_roles.json</code> and produces a structured summary the LLM can understand.&rdquo;</p>
+          </div>
+        </div>
+
+<pre><code class="lang-javascript">function introspectScene(gltfScene, meshRoles) {
+  const summary = {
+    room: meshRoles.room_dimensions,
+    current_state: {},
+    modifiable: { walls: [], ceiling: false, floor: false, lights: [], windows: [] }
+  };
+
+  for (const [meshName, info] of Object.entries(meshRoles.meshes)) {
+    const mesh = gltfScene.getObjectByName(meshName);
+    if (!mesh) continue;
+    if (info.role === 'ceiling') {
+      summary.current_state.ceiling_height = mesh.position.y;
+      summary.modifiable.ceiling = true;
+    } else if (info.role === 'wall') {
+      summary.modifiable.walls.push(info.wall_id);
+      summary.current_state[`wall_${info.wall_id}_color`] = '#' + mesh.material.color.getHexString();
+    } else if (info.role === 'window') {
+      summary.modifiable.windows.push({ wall: info.parent_wall, position: info.position });
+    }
+    // ... floor, lights, furniture
+  }
+  return summary;
+}
+</code></pre>
+
+        <div class="callout callout-amber"><strong>Success conditions:</strong>
+          <ul>
+            <li>Produces valid JSON for any loaded model</li>
+            <li>Correctly identifies which walls are individually selectable</li>
+            <li>Reports current ceiling height, material colors, and light settings</li>
+            <li>Lists which modifications this specific model supports</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section>
+        <h2>Phase 2: Wire up the LLM parameter extractor</h2>
+        <p>The <em>LLM parameter extractor</em> turns a free-form sentence into the exact JSON the scene modifier expects. The system prompt is the contract &mdash; it defines every field the LLM is allowed to emit.</p>
+
+        <h3>The system prompt (this IS the contract)</h3>
+<pre>You are a 3D scene modification assistant for architectural research.
+
+Given a scene description and a user instruction, output ONLY a JSON object
+with the modifications to apply. Available fields:
+
+GEOMETRY:
+- ceiling_height: number (meters, range 2.0-6.0)
+
+WALLS (per-wall or all):
+- wall_all_color: hex string       - wall_all_roughness: number 0-1
+- wall_north_color: hex string     - wall_north_roughness: number 0-1
+- wall_south_color / roughness     - wall_east_color / roughness
+- wall_west_color / roughness
+
+FLOOR:
+- floor_color: hex string          - floor_roughness: number 0-1
+
+LIGHTING:
+- light_intensity: number 0.1-3.0
+- light_cct: number 2700-6500 (Kelvin)
+
+PROSPECT &amp; REFUGE:
+- window_scale: number 0.2-3.0 (1.0 = current)
+- partition_depth: number 0-2.5 (0 = no partition)
+
+FURNITURE:
+- furniture_visible: boolean
+
+Only include fields the user's instruction changes.
+If the user says "north wall" or "back wall", use wall_north_* fields.
+If the user says "walls" without specifying, use wall_all_* fields.
+Output ONLY valid JSON, no explanation.
+</pre>
+
+        <h3>API integration</h3>
+<pre><code class="lang-javascript">async function extractModifications(userText, sceneSummary, apiKey) {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents: [{ parts: [{ text:
+          `Current scene: ${JSON.stringify(sceneSummary)}\n\nUser instruction: "${userText}"`
+        }] }],
+        generationConfig: { responseMimeType: 'application/json' }
+      })
+    }
+  );
+  const data = await response.json();
+  return JSON.parse(data.candidates[0].content.parts[0].text);
+}
+</code></pre>
+
+        <div class="callout callout-blue"><strong>Why <code>responseMimeType: 'application/json'</code> matters:</strong> It forces the LLM to emit valid JSON &mdash; no markdown wrapping, no explanation text. If the JSON is invalid, you get a hard error you can catch.</div>
+
+        <h3>Multi-instruction parsing</h3>
+        <p>A single user input can specify changes across all 8 factors at once:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Example user instruction</div>
+          <div class="ai-text">
+            <p>&ldquo;Make it a cathedral &mdash; soaring 5.5m ceiling, cool daylight at 6500K, white plaster walls except the north wall which should be exposed stone, marble floor, large panoramic windows, and remove all furniture.&rdquo;</p>
+          </div>
+        </div>
+
+        <p>The LLM should return:</p>
+
+<pre><code class="lang-json">{
+  "ceiling_height": 5.5,
+  "light_intensity": 2.0,
+  "light_cct": 6500,
+  "wall_all_color": "#F5F5F5",
+  "wall_all_roughness": 0.7,
+  "wall_north_color": "#808080",
+  "wall_north_roughness": 0.85,
+  "floor_color": "#F5F5DC",
+  "floor_roughness": 0.15,
+  "window_scale": 2.5,
+  "furniture_visible": false
+}
+</code></pre>
+
+        <p>Apply all modifications <strong>atomically</strong>, in a single render frame. The user sees one transition, not a sequence of individual changes.</p>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section>
+        <h2>Phase 3: Build the validation gate</h2>
+        <p>Before applying any LLM output, validate it against your Task 2 factor viability matrix.</p>
+
+<pre><code class="lang-javascript">function validateModifications(mod, viabilityMatrix, modelId) {
+  const model = viabilityMatrix[modelId];
+  const errors = [];
+  const validated = {};
+
+  for (const [key, value] of Object.entries(mod)) {
+    if (key === 'ceiling_height' &amp;&amp; model.geometry !== 'OK') {
+      errors.push(`Ceiling modification not supported on ${modelId}`);
+    } else if (key.startsWith('wall_') &amp;&amp; key.includes('_color')) {
+      const wallId = key.split('_')[1];
+      if (wallId !== 'all' &amp;&amp; !model.individual_walls) {
+        errors.push(`Per-wall selection not supported; applying to all walls`);
+        validated['wall_all_color'] = value; // fallback
+      } else {
+        validated[key] = value;
+      }
+    } else {
+      validated[key] = value;
+    }
+  }
+
+  return { validated, errors, blocked: errors.filter(e =&gt; e.includes('not supported')) };
+}
+</code></pre>
+
+        <p>The UI must show:</p>
+        <ul>
+          <li>Modifications that were applied</li>
+          <li>Modifications that were degraded (e.g., per-wall fell back to all-wall)</li>
+          <li>Modifications that were blocked (this model does not support them)</li>
+        </ul>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section>
+        <h2>Phase 4: Build presets from the research literature</h2>
+        <p>Create at least 5 presets drawn from real neuroarchitecture experimental conditions. Each preset must cite the original paper and explain which independent variable (IV) it manipulates.</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Preset</th><th>Based on</th><th>Modifications</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Meyers-Levy High Ceiling</strong></td>
+              <td>Meyers-Levy &amp; Zhu (2007), ceiling height &times; creativity</td>
+              <td><code>ceiling=3.5m</code>, <code>walls=white</code>, <code>light_cct=5000K</code></td>
+            </tr>
+            <tr>
+              <td><strong>Meyers-Levy Low Ceiling</strong></td>
+              <td>Same study, low condition</td>
+              <td><code>ceiling=2.4m</code>, <code>walls=white</code>, <code>light_cct=5000K</code></td>
+            </tr>
+            <tr>
+              <td><strong>Biophilic Restoration</strong></td>
+              <td>Browning et al. (2014)</td>
+              <td><code>wall_north_color=green tones</code>, <code>window_scale=2.5</code>, <code>floor=wood</code></td>
+            </tr>
+            <tr>
+              <td><strong>Prospect-Dominant</strong></td>
+              <td>Appleton (1975), prospect-refuge</td>
+              <td><code>window_scale=3.0</code>, <code>ceiling=4.0m</code>, <code>partition_depth=0</code></td>
+            </tr>
+            <tr>
+              <td><strong>Refuge-Dominant</strong></td>
+              <td>Same theory, refuge condition</td>
+              <td><code>window_scale=0.4</code>, <code>ceiling=2.4m</code>, <code>partition_depth=2.0</code></td>
+            </tr>
+            <tr>
+              <td><strong>Clinical Control</strong></td>
+              <td>Standard lab environment</td>
+              <td><code>ceiling=2.7m</code>, <code>walls=white</code>, <code>light_cct=6500K</code>, <code>floor=tile</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- PHASE 5 -->
+      <section>
+        <h2>Phase 5: Test on 10+ diverse models</h2>
+        <p>Test the AI front-end on <strong>at least 10 different models</strong> of varied style:</p>
+        <ul>
+          <li>At least 2 offices, 2 residential, 1 classroom, 1 healthcare, 1 retail or hospitality, 3 other</li>
+          <li>Include at least 2 &ldquo;difficult&rdquo; models (low viability score) so you can test graceful degradation</li>
+        </ul>
+
+        <h3>The 15-test ruthless protocol</h3>
+        <p>For each model, run this validation suite:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>#</th><th>Test</th><th>Pass criterion</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Type &ldquo;raise the ceiling to 5 meters&rdquo;</td><td>Ceiling moves, walls extend, no gaps.</td></tr>
+            <tr><td>2</td><td>Type &ldquo;change the north wall to brick&rdquo;</td><td>Only the north wall changes.</td></tr>
+            <tr><td>3</td><td>Type &ldquo;make it warm and cozy&rdquo;</td><td>Ceiling lowers, CCT drops, intensity dims.</td></tr>
+            <tr><td>4</td><td>Type &ldquo;make it a clinical lab&rdquo;</td><td>Opposite of #3.</td></tr>
+            <tr><td>5</td><td>Type &ldquo;cathedral with stone walls except south wall which is glass&rdquo;</td><td>Per-wall differentiation works.</td></tr>
+            <tr><td>6</td><td>Type a nonsensical instruction (&ldquo;make the ceiling purple and sideways&rdquo;)</td><td>Graceful error, no crash.</td></tr>
+            <tr><td>7</td><td>Apply 3 instructions in sequence</td><td>Each builds on the previous state correctly.</td></tr>
+            <tr><td>8</td><td>Click &ldquo;Reset&rdquo; after modifications</td><td>Returns to original state exactly.</td></tr>
+            <tr><td>9</td><td>Apply a preset</td><td>Sliders update to match.</td></tr>
+            <tr><td>10</td><td>Drag the ceiling slider during an LLM modification</td><td>No conflict.</td></tr>
+            <tr><td>11</td><td>Type an instruction targeting an unsupported factor</td><td>The validation gate blocks it with an explanation.</td></tr>
+            <tr><td>12</td><td>Watch FPS during a multi-factor modification</td><td>Stays &ge; 60 fps.</td></tr>
+            <tr><td>13</td><td>Type a very long instruction (50+ words)</td><td>LLM still parses correctly.</td></tr>
+            <tr><td>14</td><td>Type the same intent in different phrasings (&ldquo;raise roof&rdquo; vs. &ldquo;higher ceiling&rdquo; vs. &ldquo;ceiling at 4m&rdquo;)</td><td>All work.</td></tr>
+            <tr><td>15</td><td>Export the modified glTF</td><td>File is valid and reopens in Blender.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- WHAT YOU SUBMIT -->
+      <section>
+        <h2>What you submit</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>ka_vr_ai_modifier.html</code></td><td>Working AI front-end with NL input, sliders, and validation</td></tr>
+            <tr><td>LLM integration code</td><td>API call with constrained JSON output</td></tr>
+            <tr><td>Validation gate</td><td>Checks modifications against the viability matrix</td></tr>
+            <tr><td>At least 5 research presets</td><td>With citations and IV explanations</td></tr>
+            <tr><td>15-test results on 10 models</td><td>150 test outcomes documented</td></tr>
+            <tr><td>Modification history log</td><td>Every LLM call: input text, output JSON, validation result</td></tr>
+            <tr><td>Material library</td><td>At least 10 PBR presets (wood, brick, concrete, glass, marble, tile, plaster, carpet, slate, metal)</td></tr>
+            <tr><td>Contracts + tests</td><td>Written BEFORE building</td></tr>
+            <tr><td>Demo video</td><td>3-minute recording showing multi-instruction NL on 3 different models</td></tr>
+            <tr><td>File manifest</td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GRADING -->
+      <section>
+        <h2>Grading (75 points)</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Contracts + tests</strong></td><td>10</td><td>Written BEFORE building. Specific. <strong>(CONTRACT GATE)</strong></td></tr>
+            <tr><td><strong>LLM integration</strong></td><td>15</td><td>Constrained JSON output; multi-factor instructions work; per-wall addressing</td></tr>
+            <tr><td><strong>Validation gate</strong></td><td>10</td><td>Checks the viability matrix; blocks unsupported modifications; shows feedback</td></tr>
+            <tr><td><strong>Research presets</strong></td><td>10</td><td>At least 5 presets with citations; IVs correctly mapped to modifications</td></tr>
+            <tr><td><strong>Model coverage</strong></td><td>15</td><td>15-test protocol on at least 10 diverse models; honest reporting</td></tr>
+            <tr><td><strong>Ruthless testing</strong></td><td>10</td><td>Adversarial inputs tested; graceful degradation documented</td></tr>
+            <tr><td><strong>Polish</strong></td><td>5</td><td>Slider sync, reset, export, modification history, FPS maintained</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-rose"><strong>Contract gate:</strong> If your AI front-end omits the validation gate, or your 15-test results are fabricated, your work will not be integrated.</div>
+      </section>
+
+      <!-- EXISTING CODE -->
+      <section>
+        <h2>Existing code you should know about</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Resource</th><th>What it gives you</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>scratch/t3_ai_frontend_v2.html</code></td><td>Working prototype with sliders, material swatches, NL parser, and FPS counter at 120 fps</td></tr>
+            <tr><td>Your <code>ka_vr_viewer.html</code> from Task 2</td><td>Your slider and swatch code &mdash; the AI front-end wraps it</td></tr>
+            <tr><td>Your <code>mesh_roles/*.json</code> from Task 1</td><td>Scene-introspection data source</td></tr>
+            <tr><td>Your factor viability matrix from Task 2</td><td>Input to the validation gate</td></tr>
+            <tr><td><code>Tagging_Contractor</code> registry</td><td>330 manipulable tags across 8 classes &mdash; defines the parameter space</td></tr>
+            <tr><td><code>Article_Eater/data/templates/</code></td><td>166 PNU templates &mdash; experimental conditions for presets</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- WHY THIS MATTERS -->
+      <section>
+        <h2>Why this matters</h2>
+        <div class="callout callout-blue">You are building the first tool that lets a neuroarchitecture researcher say <em>&ldquo;give me the Meyers-Levy high-ceiling condition on this office model&rdquo;</em> and get a modified 3D stimulus in seconds rather than weeks. No existing product does this. Every component &mdash; the introspector, the constrained-output LLM call, the validation gate, the live Three.js modifier &mdash; uses proven technology. The innovation lives in the integration: a small JSON contract sits between English and geometry, and your Task 2 code does the rest.</div>
+      </section>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 3 on GitHub</h2>
+
+        <p>Track 3 uses one branch per student, named <code>track3/your-name</code>
+        (lowercase, hyphenated &mdash; e.g., <code>track3/jane-doe</code>). All three tasks
+        in Track 3 live on this single branch. You'll open one Pull Request per completed
+        task so the instructor can review tasks independently.</p>
+
+        <div class="callout callout-rose"><strong>API key safety:</strong> This task calls a hosted LLM API (Gemini, OpenAI, or Claude). <strong>Never commit API keys to the repository.</strong> Read your key from an environment variable (<code>process.env.GEMINI_API_KEY</code> or a local <code>.env</code> file that is git-ignored), and add a <code>.env.example</code> file showing the variable name with a dummy value. If you accidentally push a key, treat it as compromised: revoke it on the provider's console immediately, then rotate.</div>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+<pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Track 3, fork: Knowledge_Atlas, Tagging_Contractor, Article_Eater
+
+# 2. Clone your fork to your machine
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Knowledge_Atlas.git
+cd Knowledge_Atlas
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Knowledge_Atlas.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track3/&lt;your-name&gt; upstream/main
+
+# 5. Create a local .env file for your LLM API key (DO NOT commit this)
+echo "GEMINI_API_KEY=your-real-key-here" &gt; .env
+echo ".env" &gt;&gt; .gitignore
+git add .gitignore
+git commit -m "track3: ignore .env so api keys are never committed"</code></pre>
+
+        <h3>Working on Task 3</h3>
+<pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track3/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task3: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track3/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 3 for review</h3>
+        <p>When Task 3 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Confirm no API keys are in any committed file: <code>git log -p | grep -iE "(api[_-]?key|secret|token)"</code> should return nothing sensitive.</li>
+          <li>Make sure your latest work is pushed: <code>git push origin track3/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track3/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 3 &middot; Task 3: AI Front-End for Parametric Scene Modification &mdash; &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested.</li>
+          <li>Add the label <code>track3-task3-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>Task 3 is the final task in Track 3, so this PR is your last submission for the track. Keep it open for instructor review &mdash; the instructor will merge or request changes.</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Accidentally committed an API key:</strong> revoke the key on the provider's console first, then remove it from history (<code>git filter-repo</code> or BFG Repo-Cleaner) and force-push. Notify the instructor in the PR.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t3_task2.html" class="prev">&larr; Task 2: VR Conversion &amp; Manual Factor Testing</a>
+    <a href="t3_intro.html" class="next">Track Overview &rarr;</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t3_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -438,18 +438,19 @@ git status --short           # new files</code></pre>
 
       <!-- GRADING -->
       <section>
-        <h2>Grading</h2>
+        <h2>Grading (75 points)</h2>
         <table class="data-table">
           <thead>
-            <tr><th>Criterion</th><th>What we check</th></tr>
+            <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Diagnosis</strong></td><td>Your boxology diagrams are accurate; your gap statement is correct</td></tr>
-            <tr><td><strong>Spec quality</strong></td><td>Your contract is complete, specific, and testable</td></tr>
-            <tr><td><strong>Verification questions</strong></td><td>You asked probing questions that caught real problems in the AI's code</td></tr>
-            <tr><td><strong>Validation</strong></td><td>At least three of four test papers produce correct results and storage</td></tr>
-            <tr><td><strong>Diagnosis of failures</strong></td><td>You correctly identified whether each failure was a spec bug or an implementation bug</td></tr>
-            <tr><td><strong>File manifest</strong></td><td>Your manifest is complete and matches your actual changes</td></tr>
+            <tr><td><strong>Diagnosis</strong></td><td>15</td><td>Your two boxology diagrams (contribute-page data flow and classifier internals) are accurate, and your gap statement correctly identifies what's missing between them.</td></tr>
+            <tr><td><strong>Spec quality</strong></td><td>15</td><td>Your Classifier Integration Contract is complete, specific, and testable — inputs, processing, outputs, storage rules, success conditions all covered.</td></tr>
+            <tr><td><strong>Verification questions</strong></td><td>15</td><td>You asked probing questions that surfaced real problems in the AI's generated code (storage path, classifier argument shape, database write semantics, edge-case handling, multi-submission behaviour).</td></tr>
+            <tr><td><strong>Validation</strong></td><td>15</td><td>At least three of four test papers produce correct verdicts and correct storage; results section displays type, topic(s), and confidence; PDF and DB entries verified on disk.</td></tr>
+            <tr><td><strong>Diagnosis of failures</strong></td><td>10</td><td>For any failed test you correctly identified whether the failure was a spec bug (your contract under-specified) or an implementation bug (the AI's code did not honour the contract).</td></tr>
+            <tr><td><strong>File manifest</strong></td><td>5</td><td>Your manifest is complete, lists every file changed or created with a one-line description, and matches the output of <code>git diff --name-only HEAD</code> and <code>git status --short</code>.</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>75</strong></td><td></td></tr>
           </tbody>
         </table>
       </section>

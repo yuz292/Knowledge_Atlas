@@ -91,25 +91,42 @@
         <li>Each entry has <code>extractability</code> flags that tell you whether the tag can be detected from a 2D photo.</li>
       </ul>
 
-      <p>You can read these entries directly:</p>
+      <p>The registry currently holds <strong>442 tags</strong> &mdash; the
+      original 424 plus the 18 social-interaction latents that shipped with
+      Sprint 1 of the L41&ndash;L58 integration. Of these, 23 are
+      <code>evidence_role: latent</code> (up from 5 before Sprint 1). The
+      authoritative file is at
+      <code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code>.
+      The new social-interaction latents are stamped
+      <code>version_added: "v0.2.9"</code> inside the file. Read the entries
+      directly:</p>
+
       <pre><code class="lang-bash">python3 -c "
 import json
 r = json.load(open('Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json'))
 tags = r['tags']
-# Look at one latent tag
-for tid, t in tags.items():
-    if 'sociopetal' in t.get('canonical_name','').lower() or 'L44' in tid:
-        print(json.dumps(t, indent=2))
-        break
+print(f'Total tags: {len(tags)}')
+print(f'  Evidence-role breakdown: {r[\"statistics\"][\"by_bn_role\"]}')
+# Inspect L44 (sociopetal seating) — the panel pilot exemplar
+print(json.dumps(tags['social.sociopetal_seating'], indent=2))
 "</code></pre>
 
       <div class="callout callout-teal">
         <strong>The registry is your source of truth.</strong> Your detectors must match
-        the registry&rsquo;s vocabulary. If your detector drifts from the
-        <code>definition_long</code>, the semantic audit gate will catch it. The L41–L58
-        social-interaction latents now ship as <code>social.*</code> tag IDs in registry
-        v0.2.9 (e.g. <code>social.sociopetal_seating</code>,
-        <code>social.interactional_visibility</code>).
+        the registry&rsquo;s vocabulary. If a detector drifts from the
+        <code>definition_long</code>, the semantic audit gate (<code>./bin/tc audit-semantics</code>)
+        catches it. The L41&ndash;L58 social-interaction latents are the freshest exemplars of a
+        well-formed latent contract; <strong>read three or four of them</strong> before you
+        write your own detector. Recommended starting points:
+        <code>social.sociopetal_seating</code> (L44, F-formation geometry),
+        <code>social.interactional_visibility</code> (L42, isovist-based, configurational),
+        <code>social.dyadic_intimacy</code> (L48, F-formation categorical with affordance-strength
+        secondary), and <code>social.hosting_script_clarity</code> (L46, binary VLM-driven).
+        Each entry shows the panel-mandated fields you will reference in your own detector
+        contract: <code>extractability</code>, <code>extraction.method_family</code>,
+        <code>extraction.expected_upstream_observables</code>, and the
+        <code>notes.interaction_mode</code> / <code>notes.cross_cultural_variance</code>
+        flags from the architectural panel disposition.
       </div>
 
       <h3>What you bring from Task 1</h3>
@@ -464,7 +481,7 @@ def test_sociopetal_seating_negative_corridor():
           <tr><th>Repo / File</th><th>What it gives you</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code></td><td>424 tags with <code>definition_long</code>, <code>method_family</code>, and <code>extractability</code></td></tr>
+          <tr><td><code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code></td><td>442 tags (original 424 plus the 18 <code>social.*</code> L41&ndash;L58 latents from Sprint 1, stamped <code>version_added: v0.2.9</code>); each entry has <code>definition_long</code>, <code>method_family</code>, <code>extractability</code>, and the panel-added fields <code>extractability.requires_floor_plan</code> / <code>configurational_measure</code> / <code>notes.interaction_mode</code> / <code>notes.cross_cultural_variance</code></td></tr>
           <tr><td><code>Tagging_Contractor/contracts/localized_image_tags.schema.json</code></td><td>JSON schema for tagged image output</td></tr>
           <tr><td><code>./bin/tc audit-semantics</code></td><td>Checks detector output vocabulary against the registry</td></tr>
           <tr><td><code>./bin/tc audit-tags</code></td><td>Checks tag completeness</td></tr>
@@ -543,7 +560,7 @@ git push origin track1/&lt;your-name&gt;</code></pre>
         <h3>Repos this task needs</h3>
         <ul>
           <li><code>Knowledge_Atlas</code> — the course repo where your Track 1 work lives</li>
-          <li><code>Tagging_Contractor</code> — the latent registry; your detectors&rsquo; vocabulary must match <code>registry_v0.2.8.json</code> (and the <code>social.*</code> tag IDs added in v0.2.9)</li>
+          <li><code>Tagging_Contractor</code> — the latent registry; your detectors&rsquo; vocabulary must match <code>registry_v0.2.8.json</code> in its current state (442 tags, including the 18 <code>social.*</code> L41&ndash;L58 latents stamped <code>version_added: v0.2.9</code>; run <code>./bin/tc audit-semantics</code> to confirm completeness)</li>
           <li><code>atlas_shared</code> — shared schemas and utilities used across tracks</li>
         </ul>
 

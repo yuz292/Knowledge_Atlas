@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track 3: VR Studio &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">
+      Knowledge Atlas
+    </a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <span>Track 3: VR Studio</span>
+  </div>
+
+  <!-- 3. PAGE GRID -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 3: VR Studio</div>
+      <a href="t3_intro.html" class="active">Track Overview</a>
+      <a href="t3_task1.html">Task 1: Collect &amp; Catalog VR-Ready 3D Models</a>
+      <a href="t3_task2.html">Task 2: VR Conversion &amp; Manual Factor Testing</a>
+      <a href="t3_task3.html">Task 3: AI Front-End for Parametric Scene Modification</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">&larr; All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 3 &mdash; VR STUDIO</div>
+        <h1>Track 3: VR Studio</h1>
+        <p class="hero-sub">
+          Build the VR pipeline for the Knowledge Atlas &mdash; collect 20+
+          VR-ready 3D models, convert and validate them in an interactive
+          viewer, then ship an AI front-end that modifies scenes from
+          natural-language prompts.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-pill">3 tasks</span>
+          <span class="hero-pill">10 weeks</span>
+          <span class="hero-pill">75 + 75 + 75 points</span>
+        </div>
+      </header>
+
+      <!-- WHAT YOU'LL BUILD -->
+      <section>
+        <h2>What you&rsquo;ll build</h2>
+        <p>
+          The Knowledge Atlas stores evidence that specific environmental
+          features &mdash; ceiling height, light spectrum, surface materials,
+          biophilic content &mdash; alter human cognition and affect. To test
+          those relationships in virtual reality, researchers need 3D rooms
+          they can change one factor at a time. They need to raise a ceiling
+          without warping the walls, swap the north wall&rsquo;s material
+          without touching the other three, and dim the lights without
+          reloading the scene. Almost no off-the-shelf 3D model supports that.
+        </p>
+        <p>
+          Track 3 builds the <em>VR Studio</em> &mdash; the in-house name for
+          the project&rsquo;s end-to-end VR content pipeline &mdash; that
+          makes it possible. You will start with nothing and finish with three
+          working pieces that compose into a single tool. In Task 1 you curate
+          a library of at least twenty VR-ready interior models in
+          glTF or GLB format, scoring each against eight manipulation classes
+          and shipping a mesh annotation file that maps every mesh to its
+          architectural role (ceiling, north wall, window, floor, and so on).
+          In Task 2 you build a WebXR viewer that loads any of those models
+          and exposes real-time slider controls for every manipulation class,
+          then test all ten of your strongest models against all eight factors
+          to produce a factor viability matrix. In Task 3 you wrap that viewer
+          in an AI front-end so a researcher can type &ldquo;a warm cozy
+          library with 4-meter ceilings and exposed brick on the north
+          wall&rdquo; and watch the scene reconfigure in seconds.
+        </p>
+        <p>
+          The architectural innovation is in what the LLM does <em>not</em> do:
+          it never generates 3D geometry. Instead it maps natural language
+          onto a constrained JSON schema of <em>parametric scene</em>
+          modifications &mdash; named parameters (ceiling height, wall colour,
+          light intensity) that runtime code can edit without rebuilding the
+          model. Your Task 2 viewer applies the JSON; a validation gate checks
+          every modification against your viability matrix before it touches
+          the scene. The result is the first tool that lets a neuroarchitecture
+          researcher dial up a Meyers-Levy high-ceiling condition or an
+          Appleton prospect-dominant scene on their own model in seconds
+          rather than weeks.
+        </p>
+      </section>
+
+      <!-- THE THREE TASKS -->
+      <section>
+        <h2>The three tasks</h2>
+        <div class="task-card-grid">
+
+          <a class="task-card" href="t3_task1.html">
+            <div class="task-card-num">TASK 1</div>
+            <div class="task-card-title">Collect &amp; Catalog VR-Ready 3D Interior Models</div>
+            <div class="task-card-desc">
+              Find and curate at least 20 VR-ready interior models in
+              glTF/GLB format, evaluate them against 8 manipulation classes,
+              and ship structured mesh annotation files plus a ruthless
+              validation prompt.
+            </div>
+            <div class="task-card-meta">4 phases &middot; 75 points</div>
+          </a>
+
+          <a class="task-card" href="t3_task2.html">
+            <div class="task-card-num">TASK 2</div>
+            <div class="task-card-title">VR Conversion &amp; Manual Factor Testing</div>
+            <div class="task-card-desc">
+              Build an interactive WebXR viewer with real-time slider
+              controls for each manipulation class, then test every model
+              against every factor and write ruthless validation tests.
+            </div>
+            <div class="task-card-meta">3 phases &middot; 75 points</div>
+          </a>
+
+          <a class="task-card" href="t3_task3.html">
+            <div class="task-card-num">TASK 3</div>
+            <div class="task-card-title">AI Front-End for Parametric Scene Modification</div>
+            <div class="task-card-desc">
+              Build a scene introspector and an LLM parameter extractor so
+              users modify scenes by typing natural-language prompts; add a
+              validation gate, presets from the literature, and tests on 10+
+              models.
+            </div>
+            <div class="task-card-meta">5 phases &middot; 75 points</div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- REPOS YOU'LL NEED -->
+      <section>
+        <h2>Repos you&rsquo;ll need</h2>
+        <p>
+          Track 3 spans four repositories. Fork the ones you will commit to;
+          read the others.
+        </p>
+        <div class="repo-list">
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Knowledge_Atlas" target="_blank" rel="noopener">Knowledge_Atlas</a>
+            </div>
+            <div class="repo-item-purpose">
+              The Atlas itself &mdash; this is where your model catalog,
+              WebXR viewer, and AI front-end ship to students and
+              researchers.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/KA_VR_Studio" target="_blank" rel="noopener">KA_VR_Studio</a>
+            </div>
+            <div class="repo-item-purpose">
+              The VR pipeline repo &mdash; the home for your model library,
+              <code>mesh_roles/</code> annotations, Blender segmentation
+              scripts, the A-Frame viewer, and the AI front-end code.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Tagging_Contractor" target="_blank" rel="noopener">Tagging_Contractor</a>
+            </div>
+            <div class="repo-item-purpose">
+              The latent-tag registry &mdash; 424 tags across 8 manipulation
+              classes (geometry, lighting, materials, colour, biophilic,
+              furniture, acoustic, complexity) that define your viability
+              scoring rubric and parameter space.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Article_Eater" target="_blank" rel="noopener">Article_Eater</a>
+            </div>
+            <div class="repo-item-purpose">
+              Evidence extraction from the published literature, including
+              the 166 PNU mechanism templates whose experimental conditions
+              become the research presets in Task 3 (Meyers-Levy ceilings,
+              Appleton prospect-refuge, biophilic restoration, and the
+              rest).
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- GITHUB SUBMISSION (intro variant) -->
+      <section class="github-submission">
+        <h2 id="submission">How submission works for Track 3</h2>
+
+        <p>
+          Track 3 uses a single git branch per student &mdash;
+          <code>track3/your-name</code> &mdash; across all 3 tasks. Each
+          completed task is submitted as its own Pull Request to the
+          instructor. The full mechanics are on each task page; here&rsquo;s
+          the lifecycle in one paragraph:
+        </p>
+
+        <ol>
+          <li><strong>Once at the start of the track:</strong> fork the
+            track&rsquo;s repos, clone, set the upstream remote, create
+            <code>track3/your-name</code> off <code>upstream/main</code>.</li>
+          <li><strong>Continuously while working:</strong> commit small,
+            push at the end of each session.</li>
+          <li><strong>At the end of each task:</strong> open a Pull Request
+            from your branch to <code>dkirsh:main</code>, title it
+            <code>Track 3 &middot; Task N: ... &mdash; your name</code>,
+            paste your file manifest, tag <code>@dkirsh</code>, do not
+            merge.</li>
+          <li><strong>Across tasks:</strong> keep using the same branch;
+            additional task PRs are opened against the previous task&rsquo;s
+            merge commit.</li>
+        </ol>
+
+        <p>
+          The detailed commands and the per-task PR title format are on each
+          task page under &ldquo;Submit Task N on GitHub.&rdquo;
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t3_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

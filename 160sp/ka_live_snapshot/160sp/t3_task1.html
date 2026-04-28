@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 1: Collect &amp; Catalog VR-Ready 3D Interior Models · Track 3 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <a href="t3_intro.html">Track 3: VR Studio</a> /
+    <span>Task 1: Collect &amp; Catalog VR-Ready 3D Interior Models</span>
+  </div>
+
+  <!-- 3. PAGE GRID: side-nav + main content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 3: VR Studio</div>
+      <a href="t3_intro.html">Track Overview</a>
+      <a href="t3_task1.html" class="active">Task 1: Collect &amp; Catalog VR-Ready 3D Models</a>
+      <a href="t3_task2.html">Task 2: VR Conversion &amp; Manual Factor Testing</a>
+      <a href="t3_task3.html">Task 3: AI Front-End for Parametric Scene Modification</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">&larr; All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">Track 3 · Task 1</div>
+        <h1>Collect &amp; Catalog VR-Ready 3D Interior Models</h1>
+        <p class="hero-sub">Build a curated library of at least 20 VR-ready 3D interior models in glTF or GLB format, each one scored against the eight environmental manipulation classes the Atlas tracks and shipped with a mesh annotation file that names every wall, ceiling, floor, window, light, and piece of furniture.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">Track: VR Studio</span>
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">Contract gate</span>
+        </div>
+      </header>
+
+      <!-- THE BIG PICTURE -->
+      <section>
+        <h2>The big picture</h2>
+        <p>The Knowledge Atlas stores evidence that specific environmental features alter human cognition and affect. Researchers have already manipulated these features experimentally:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Manipulation Class</th><th>Registry tags</th><th>What researchers change</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Geometry</strong> (ceiling height, volume, enclosure)</td><td>46 tags</td><td>Ceiling height &ge; 3.0m vs &le; 2.4m; room proportions; isovist area (the area visible from a single viewpoint)</td></tr>
+            <tr><td><strong>Lighting</strong> (intensity, spectrum, direction)</td><td>33 tags</td><td>Illuminance (lux); color temperature (2700K-6500K); daylight vs artificial</td></tr>
+            <tr><td><strong>Materials</strong> (surface texture, roughness)</td><td>13 tags</td><td>Wood vs concrete vs glass; natural-material ratio; texture density</td></tr>
+            <tr><td><strong>Color</strong> (hue, warmth, saturation)</td><td>5 tags</td><td>Warm vs cool palettes; color diversity; chroma levels</td></tr>
+            <tr><td><strong>Biophilic elements</strong> (plants, water, nature views)</td><td>6 tags</td><td>Plant count; window-view content (greenery vs built-up)</td></tr>
+            <tr><td><strong>Furniture layout</strong> (density, arrangement)</td><td>17 tags</td><td>Seating count; sociopetal vs sociofugal arrangement; clutter density</td></tr>
+            <tr><td><strong>Acoustic properties</strong></td><td>5 tags</td><td>Acoustic privacy; natural sound sources</td></tr>
+            <tr><td><strong>Visual complexity</strong> (detail, order, fractals)</td><td>22 tags</td><td>Fractal dimension; symmetry; ornament density</td></tr>
+          </tbody>
+        </table>
+
+        <p>To test these relationships in VR, researchers need 3D rooms where each factor can be <strong>varied independently while the others stay fixed</strong>. Your job is to collect models that make this possible.</p>
+      </section>
+
+      <!-- WHAT MAKES A MODEL VR-READY -->
+      <section>
+        <h2>What makes a model "VR-ready"</h2>
+        <p>Not every 3D model can be modified parametrically. ("Parametric" here means the geometry, lights, and materials are exposed as named parameters that code can edit at runtime.) These constraints are hard:</p>
+
+        <h3>Constraint 1: Separable named meshes</h3>
+        <p>The ceiling must be a <strong>separate mesh</strong> from the walls. Each wall must be individually identifiable. This rules out:</p>
+        <ul>
+          <li>Photogrammetry scans (one fused mesh) — NO</li>
+          <li>"Baked" models (one mesh with a texture atlas) — NO</li>
+          <li>Architectural models with separate, named objects — YES</li>
+        </ul>
+        <p><strong>Test:</strong> Open the model in Blender (the free open-source 3D editor) and check the Outliner panel. Named objects like "Ceiling", "Wall_North", "Floor" mean the model is viable. A single object called "mesh_001" means it is not.</p>
+
+        <h3>Constraint 2: PBR materials, not baked textures</h3>
+        <p>Models must use <strong>PBR material slots</strong> — physically-based rendering channels (base color, roughness, metalness) that a renderer interprets at draw time — rather than a single pre-baked lightmap painted onto the geometry. PBR is what lets you swap materials at runtime.</p>
+
+        <h3>Constraint 3: Architectural scale</h3>
+        <p>Models must use <strong>real-world units</strong> (meters). To raise a ceiling by 1m you need to know its actual height, and VR immersion breaks the moment scale is wrong.</p>
+
+        <h3>Constraint 4: VR-compatible polygon count</h3>
+        <p>For WebXR at 72 fps or higher: under 500K polygons per scene, under 20 unique materials, textures no larger than 4096 x 4096.</p>
+
+        <h3>Constraint 5: Open license</h3>
+        <p>CC0, CC-BY, or CC-BY-SA. Reject "editorial use only" and "All Rights Reserved."</p>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section>
+        <h2>Phase 1: Find model sources</h2>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p><strong>Contract objective:</strong> "I want a tested, documented list of 3D-model sources I can use to collect VR-ready interior models."</p>
+            <p><strong>Contract is with:</strong> 3D-model repositories and their APIs.</p>
+            <p><strong>Prompt hint:</strong> "I need 5+ sources of openly licensed architectural-interior 3D models in glTF, GLB, FBX, or OBJ format. For each source, give me license, API availability, format, and whether models have separable meshes. Test one search per source."</p>
+          </div>
+        </div>
+
+        <p>Write YOUR OWN contract. Include Inputs, Processing, Outputs, Success Conditions.</p>
+
+        <h3>Free sources: starting points</h3>
+        <ul>
+          <li><strong>Sketchfab</strong> — CC-licensed, API available, downloads as glTF, many architectural interiors.</li>
+          <li><strong>3D Warehouse</strong> — SketchUp models with groups and components; export through Blender.</li>
+          <li><strong>BlenderKit</strong> — Free tier; meshes are separable out of the box.</li>
+          <li><strong>Poly Haven</strong> — CC0; excellent HDRIs and a handful of room models.</li>
+        </ul>
+
+        <h3>Paid sources (check licenses)</h3>
+        <ul>
+          <li><strong>TurboSquid</strong> (free section) — Check the license on every model.</li>
+          <li><strong>CGTrader</strong> (free section) — Mixed quality; check the license.</li>
+        </ul>
+
+        <h3>Generated: World Labs Marble (image to 3D world)</h3>
+        <p><a href="https://marble.worldlabs.ai/">World Labs Marble</a> uses spatial AI to build explorable 3D worlds from a single photograph, text prompt, or video. Instead of downloading someone else's model, you photograph a real room and generate a 3D version of it. This route matters for neuroarchitecture: <a href="https://www.worldlabs.ai/case-studies/3-health-systems">Champalimaud Foundation and King's College London already use Marble to generate patient-specific VR environments for OCD exposure therapy</a>.</p>
+
+        <h4>Step 1: Generate a world</h4>
+        <p><strong>Option A — Web UI (easiest start):</strong> Visit <a href="https://marble.worldlabs.ai/">marble.worldlabs.ai</a>, click Create, upload an interior photo or type a text prompt, and wait about 5 minutes.</p>
+
+        <p><strong>Option B — API (automatable, required for batch processing):</strong></p>
+
+<pre><code class="lang-bash"># Generate a world from a text prompt
+curl -X POST 'https://api.worldlabs.ai/marble/v1/worlds:generate' \
+  -H 'Content-Type: application/json' \
+  -H 'WLT-Api-Key: YOUR_API_KEY' \
+  -d '{
+    "display_name": "Clinical Office Baseline",
+    "model": "marble-1.1",
+    "world_prompt": {
+      "type": "text",
+      "text_prompt": "A clinical white office with 3m ceilings, fluorescent lighting, one window on the south wall, a desk and two chairs"
+    }
+  }'
+
+# Generate a world from a photograph
+curl -X POST 'https://api.worldlabs.ai/marble/v1/worlds:generate' \
+  -H 'Content-Type: application/json' \
+  -H 'WLT-Api-Key: YOUR_API_KEY' \
+  -d '{
+    "display_name": "Psychology Lab Room 204",
+    "model": "marble-1.1",
+    "world_prompt": {
+      "type": "image",
+      "image_prompt": {
+        "source": "uri",
+        "uri": "https://your-host.com/photo_of_room_204.jpg"
+      },
+      "text_prompt": "Interior of a university research lab"
+    }
+  }'
+
+# Poll for completion (~5 min)
+curl -X GET 'https://api.worldlabs.ai/marble/v1/operations/OPERATION_ID' \
+  -H 'WLT-Api-Key: YOUR_API_KEY'</code></pre>
+
+        <p><strong>Generation times:</strong> Text or image to panorama, about 30 seconds. Panorama to full world, about 5 minutes. High-quality mesh export, about 1 hour.</p>
+
+        <h4>Step 2: Export the mesh</h4>
+        <p>In the Marble web viewer, click Export and choose <strong>High-quality mesh (GLB)</strong>. The job runs server-side for about an hour and produces:</p>
+        <ul>
+          <li>A <strong>600K-triangle mesh</strong> with texture maps</li>
+          <li>A <strong>1M-triangle mesh</strong> with vertex colors</li>
+          <li>Both in GLB format (loadable in Blender and Three.js)</li>
+        </ul>
+
+        <div class="callout callout-amber"><strong>Important:</strong> The exported mesh is a <strong>single fused object</strong> — walls, ceiling, and floor share one continuous surface. You cannot select individual walls yet. Step 3 fixes that.</div>
+
+        <h4>Step 3: Segment the fused mesh into separate architectural elements</h4>
+        <p>To make the Marble export parametrically modifiable, split that single surface into individual objects (ceiling, walls, floor, furniture) and assign PBR materials to each. This step is core to the assignment — <strong>you must use at least one of the AI-assisted approaches below</strong>, not do everything by hand.</p>
+
+        <h3>Hand-built in Blender: manual, AI-assisted, and fully automated</h3>
+        <p>There are four ways to segment meshes in Blender, ranging from fully manual to fully automated. Pick whichever you like, but <strong>document which approach you used and evaluate its accuracy.</strong></p>
+
+        <h4>Approach A — Manual segmentation in Blender (~30-45 min per model)</h4>
+        <p>This is the baseline; every student should know how to do it even after automating it later.</p>
+        <ol>
+          <li>Import the GLB: <code>File -&gt; Import -&gt; glTF 2.0</code>.</li>
+          <li>Enter Edit Mode (<code>Tab</code>).</li>
+          <li>Select ceiling faces: <code>Select -&gt; Select All by Trait -&gt; Normal</code> (faces pointing downward).</li>
+          <li>Separate them: <code>Mesh -&gt; Separate -&gt; Selection</code> (<code>P</code>).</li>
+          <li>Rename the new object "Ceiling" in the Outliner.</li>
+          <li>Repeat for floor (upward normals), each wall (by face orientation), and furniture.</li>
+          <li>Assign PBR materials to every separated object.</li>
+          <li>Export: <code>File -&gt; Export -&gt; glTF 2.0</code>.</li>
+        </ol>
+        <p><strong>Effectiveness:</strong> 100% accurate but slow. Use it for your first one or two models to learn the geometry, then automate.</p>
+
+        <h4>Approach B — BlenderMCP: Claude or Cursor controls Blender through MCP (recommended)</h4>
+        <p><a href="https://github.com/ahujasid/blender-mcp"><strong>BlenderMCP</strong></a> (20.7k stars, MIT license) connects Blender to Claude through the <a href="https://modelcontextprotocol.io/">Model Context Protocol</a>. Claude can see your Blender viewport, run Python code, create or modify or delete objects, apply materials, and download Poly Haven assets — all by chatting in natural language.</p>
+
+        <p><strong>Why this is the most powerful option:</strong> Unlike BlenderGPT, BlenderMCP feeds the LLM <strong>viewport screenshots</strong>, so it can see what it just did and correct mistakes. It also pulls HDRIs and materials from Poly Haven, which feeds straight into our VR pipeline.</p>
+
+        <p><strong>Setup:</strong></p>
+        <ol>
+          <li>Install <code>uv</code>: <code>brew install uv</code> (Mac) or <code>powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</code> (Windows).</li>
+          <li>Download <code>addon.py</code> from the <a href="https://github.com/ahujasid/blender-mcp">repo</a> and install it in Blender: <code>Edit -&gt; Preferences -&gt; Add-ons -&gt; Install</code>.</li>
+          <li>In the Blender sidebar (<code>N</code>), open the "BlenderMCP" tab and click "Connect to Claude".</li>
+          <li>Configure your AI client:</li>
+        </ol>
+
+        <p><strong>For Claude Desktop</strong> (add to <code>claude_desktop_config.json</code>):</p>
+<pre><code class="lang-bash">{
+  "mcpServers": {
+    "blender": {
+      "command": "uvx",
+      "args": ["blender-mcp"]
+    }
+  }
+}</code></pre>
+
+        <p><strong>For Cursor</strong> (add to <code>.cursor/mcp.json</code>):</p>
+<pre><code class="lang-bash">{
+  "mcpServers": {
+    "blender": {
+      "command": "uvx",
+      "args": ["blender-mcp"]
+    }
+  }
+}</code></pre>
+
+        <p><strong>Then tell Claude or Cursor:</strong></p>
+<pre><code class="lang-bash">"I've imported a Marble-exported GLB of a room interior. It's a single
+fused mesh. I need you to:
+1. Take a screenshot to see the current scene
+2. Select all downward-facing faces (normal Z &lt; -0.8) and separate them
+   as a new object called 'Ceiling'
+3. Select all upward-facing faces (normal Z &gt; 0.8) and separate them
+   as 'Floor'
+4. Use face normal direction to separate remaining faces into
+   'Wall_North', 'Wall_South', 'Wall_East', 'Wall_West'
+5. Assign Principled BSDF materials to each object
+6. Take a final screenshot to verify"</code></pre>
+
+        <p><strong>Effectiveness:</strong> Roughly 85-90% accurate on rectangular rooms. The LLM sees the viewport and self-corrects. Irregular rooms may still need manual cleanup. Expect 2-3 prompts per model. Total time: about 10-15 minutes per model, verification included.</p>
+
+        <p><strong>Other capabilities relevant to T3:</strong></p>
+        <ul>
+          <li>Pull Poly Haven HDRIs and materials directly (useful for Task 2 lighting).</li>
+          <li>Generate 3D models through the Hyper3D Rodin integration.</li>
+          <li>Export scene information as JSON for the AI front-end.</li>
+        </ul>
+
+        <h4>Approach C — BlenderGPT: natural language inside Blender (~10 min per model)</h4>
+        <p><a href="https://github.com/gd3kr/BlenderGPT"><strong>BlenderGPT</strong></a> (4.9k stars, MIT license) is a Blender add-on that takes natural language, sends it to GPT-4, gets back Blender Python (<code>bpy</code>) code, and runs that code inside Blender.</p>
+
+        <p><strong>Setup:</strong> Download the ZIP from GitHub, install it via <code>Edit -&gt; Preferences -&gt; Add-ons -&gt; Install</code>, and paste your OpenAI API key into the add-on preferences. Open the sidebar (<code>N</code>) and find the "GPT-4 Assistant" tab.</p>
+
+        <p><strong>Key difference from BlenderMCP:</strong> BlenderGPT runs entirely inside Blender (no external MCP server) but has <strong>no viewport awareness</strong> — it cannot see what it just did. It writes code blind, based only on your description. So it works well when you describe geometry precisely (face normals, coordinates) but cannot self-correct visual mistakes.</p>
+
+        <p><strong>Segmentation prompts:</strong></p>
+<pre><code class="lang-bash">"Select all faces on the active mesh object whose normal Z component is
+less than -0.8. Separate the selected faces into a new object. Rename
+that new object to 'Ceiling'."</code></pre>
+
+<pre><code class="lang-bash">"Select all faces whose normal Z component is greater than 0.8.
+Separate into a new object called 'Floor'."</code></pre>
+
+<pre><code class="lang-bash">"For the remaining mesh, select faces where the absolute Y component
+of the normal exceeds 0.7 and the Y component is negative. Separate
+into 'Wall_North'. Then select faces where Y normal &gt; 0.7 and
+separate into 'Wall_South'. Repeat for X axis: negative X normal
+-&gt; 'Wall_West', positive X normal -&gt; 'Wall_East'."</code></pre>
+
+<pre><code class="lang-bash">"Assign a new Principled BSDF material to each separated object.
+Set Ceiling base color to (0.9, 0.9, 0.9), Floor to (0.4, 0.4, 0.4),
+all walls to (0.85, 0.82, 0.75). Set roughness 0.7 for all."</code></pre>
+
+        <p><strong>Effectiveness:</strong> About 80% on rectangular rooms. Without viewport feedback, errors stack up — you will need to inspect the result in Blender and fix problems by hand. Total time: about 10-15 minutes per model.</p>
+
+        <h4>Approach D — Headless Blender Python script (fully automated, no AI required)</h4>
+        <p>This is the fastest option for batch processing. Write the segmentation logic once as a Python script, then run it headlessly (no GUI) on every model:</p>
+
+<pre><code class="lang-python"># segment_marble_export.py
+# Run: blender --background --python segment_marble_export.py -- input.glb output.glb
+import bpy, bmesh, sys, math
+
+argv = sys.argv[sys.argv.index("--") + 1:]
+input_path, output_path = argv[0], argv[1]
+
+# Clear scene, import
+bpy.ops.wm.read_factory_settings(use_empty=True)
+bpy.ops.import_scene.gltf(filepath=input_path)
+obj = [o for o in bpy.context.scene.objects if o.type == 'MESH'][0]
+bpy.context.view_layer.objects.active = obj
+
+# Enter edit mode
+bpy.ops.object.mode_set(mode='EDIT')
+bm = bmesh.from_edit_mesh(obj.data)
+
+# Classify faces by normal direction
+def classify_face(face):
+    n = face.normal
+    if n.z &gt; 0.7: return 'Floor'      # Facing up
+    if n.z &lt; -0.7: return 'Ceiling'    # Facing down
+    angle = math.atan2(n.y, n.x)       # Horizontal direction
+    if -0.785 &lt; angle &lt;= 0.785: return 'Wall_East'
+    if 0.785 &lt; angle &lt;= 2.356: return 'Wall_North'
+    if angle &gt; 2.356 or angle &lt;= -2.356: return 'Wall_West'
+    return 'Wall_South'
+
+# Select and separate each category
+for role in ['Ceiling', 'Floor', 'Wall_North', 'Wall_South', 'Wall_East', 'Wall_West']:
+    bpy.ops.mesh.select_all(action='DESELECT')
+    bm = bmesh.from_edit_mesh(obj.data)
+    for face in bm.faces:
+        if classify_face(face) == role:
+            face.select = True
+    bmesh.update_edit_mesh(obj.data)
+    bpy.ops.mesh.separate(type='SELECTED')
+    # Rename the newly created object
+    new_obj = [o for o in bpy.context.scene.objects if o.name.startswith(obj.name) and o != obj][-1]
+    new_obj.name = role
+
+bpy.ops.object.mode_set(mode='OBJECT')
+
+# Assign PBR materials
+for obj in bpy.context.scene.objects:
+    if obj.type != 'MESH': continue
+    mat = bpy.data.materials.new(name=f"PBR_{obj.name}")
+    mat.use_nodes = True
+    bsdf = mat.node_tree.nodes["Principled BSDF"]
+    bsdf.inputs['Roughness'].default_value = 0.7
+    obj.data.materials.clear()
+    obj.data.materials.append(mat)
+
+# Export
+bpy.ops.export_scene.gltf(filepath=output_path, export_format='GLB')</code></pre>
+
+        <p>Run it: <code>blender --background --python segment_marble_export.py -- marble_room.glb room_segmented.glb</code>.</p>
+
+        <p>Batch every model: <code>for f in marble_exports/*.glb; do blender --background --python segment_marble_export.py -- "$f" "segmented/$(basename $f)"; done</code>.</p>
+
+        <p><strong>Effectiveness:</strong> About 75-80% on simple rectangular rooms. The script fails on L-shaped rooms, angled walls, curved surfaces, and rooms where furniture faces look like wall faces. It has no visual judgment — it works purely from geometry. <strong>You must inspect every output in Blender and fix misclassified faces by hand.</strong> This is the ruthless validation step.</p>
+
+        <p><strong>Advantage:</strong> Zero cost, zero API keys; processes 20 models in under 5 minutes. The human review step is where you earn the grade.</p>
+
+        <h3>Which approach should you use?</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Approach</th><th>Stars</th><th>API cost</th><th>Sees viewport?</th><th>Batch mode?</th><th>Accuracy</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A: Manual</strong></td><td>—</td><td>$0</td><td>N/A (you are the eyes)</td><td>No</td><td>100%</td><td>Learning; fixing AI errors</td></tr>
+            <tr><td><strong>B: BlenderMCP</strong></td><td>20.7k</td><td>Claude API</td><td>Yes (screenshots)</td><td>No</td><td>~85-90%</td><td>Best single-model workflow</td></tr>
+            <tr><td><strong>C: BlenderGPT</strong></td><td>4.9k</td><td>OpenAI API</td><td>No</td><td>No</td><td>~80%</td><td>Quick iteration in Blender</td></tr>
+            <tr><td><strong>D: Headless script</strong></td><td>—</td><td>$0</td><td>No</td><td>Yes</td><td>~75-80%</td><td>Batch-processing 20 models</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Recommended workflow:</strong> Run <strong>Approach D</strong> to batch-segment every model, then <strong>inspect each one in Blender</strong> and use <strong>Approach A or B</strong> to fix the failures. Document every correction — that record is your ruthless validation data.</p>
+
+        <h3>Marble pricing</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Plan</th><th>Worlds/month</th><th>Mesh export</th><th>Cost</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Free</strong></td><td>4</td><td>None</td><td>$0</td></tr>
+            <tr><td><strong>Standard</strong></td><td>12</td><td>Collider mesh</td><td>Check <a href="https://marble.worldlabs.ai/pricing">pricing page</a></td></tr>
+            <tr><td><strong>Pro</strong></td><td>25</td><td>High-quality mesh + commercial rights</td><td>Check <a href="https://marble.worldlabs.ai/pricing">pricing page</a></td></tr>
+            <tr><td><strong>Max</strong></td><td>75</td><td>Everything</td><td>Check <a href="https://marble.worldlabs.ai/pricing">pricing page</a></td></tr>
+            <tr><td><strong>API</strong></td><td>Pay-per-use (credits)</td><td>Through API</td><td><a href="https://docs.worldlabs.ai/api/pricing">API pricing</a></td></tr>
+          </tbody>
+        </table>
+
+        <p>For this assignment, the <strong>Free plan</strong> (4 worlds) is enough to try the workflow, and the <strong>Standard plan</strong> covers 12 Marble-generated rooms. Use Sketchfab for the rest.</p>
+
+        <p>Use Marble for at least 3 of your 20 models so you demonstrate the photo-to-3D-to-parametric pipeline.</p>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p><code>model_sources.json</code></p>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section>
+        <h2>Phase 2: Collect and evaluate at least 20 models</h2>
+        <p>For every model, score it against all 8 manipulation classes. Can you actually change the ceiling? Swap the wall material? Modify individual walls independently?</p>
+
+        <h3>Google Sheet columns (minimum)</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Column</th><th>What it records</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>model_id</code></td><td>Unique ID (e.g., <code>SKF_office_001</code>)</td></tr>
+            <tr><td><code>source</code> / <code>source_url</code></td><td>Where you got it</td></tr>
+            <tr><td><code>license</code></td><td>CC0 / CC-BY / CC-BY-SA</td></tr>
+            <tr><td><code>room_type</code></td><td>office / classroom / living_room / etc.</td></tr>
+            <tr><td><code>format</code></td><td>glTF / GLB / FBX (must convert to glTF)</td></tr>
+            <tr><td><code>poly_count</code></td><td>Total polygons</td></tr>
+            <tr><td><code>named_meshes</code></td><td>Yes/No — are architectural elements separate?</td></tr>
+            <tr><td><code>pbr_materials</code></td><td>Yes/No — uses PBR workflow?</td></tr>
+            <tr><td><code>realistic_scale</code></td><td>Yes/No — meters, not arbitrary units?</td></tr>
+            <tr><td><code>individual_walls</code></td><td>Yes/No — can you select and modify each wall independently?</td></tr>
+            <tr><td><code>ceiling_modifiable</code></td><td>Yes/No</td></tr>
+            <tr><td><code>lighting_modifiable</code></td><td>Yes/No — are lights separate objects?</td></tr>
+            <tr><td><code>materials_modifiable</code></td><td>Yes/No</td></tr>
+            <tr><td><code>windows_identifiable</code></td><td>Yes/No — can you find and resize window meshes?</td></tr>
+            <tr><td><code>furniture_separable</code></td><td>Yes/No — is furniture separate from architecture?</td></tr>
+            <tr><td><code>viability_score</code></td><td>0-8 (count of modifiable classes)</td></tr>
+            <tr><td><code>resolution</code></td><td>Low / Medium / High</td></tr>
+            <tr><td><code>naturalness</code></td><td>1-5 (visual realism)</td></tr>
+            <tr><td><code>notes</code></td><td>Issues, conversion needed, what is missing</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Minimum bar</h3>
+        <ul>
+          <li>At least 20 models total</li>
+          <li>At least 10 with viability score &ge; 4</li>
+          <li>At least 5 different room types</li>
+          <li>At least 3 different sources</li>
+        </ul>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section>
+        <h2>Phase 3: Create mesh annotation files</h2>
+        <p>For each model, write a <code>mesh_roles.json</code> that maps every mesh name to its semantic role. The AI front-end in Task 3 reads this file to know which mesh to modify.</p>
+
+<pre><code class="lang-python">{
+  "model_id": "SKF_office_001",
+  "meshes": {
+    "Cube.003": { "role": "ceiling", "notes": "single plane, height=3.0m" },
+    "Cube.004": { "role": "wall", "wall_id": "north", "notes": "back wall" },
+    "Cube.005": { "role": "wall", "wall_id": "south", "notes": "front wall with window cutout" },
+    "Cube.006": { "role": "wall", "wall_id": "east" },
+    "Cube.007": { "role": "wall", "wall_id": "west" },
+    "Plane.001": { "role": "floor" },
+    "Cube.010": { "role": "window", "parent_wall": "south", "position": "center" },
+    "Cube.011": { "role": "furniture", "subtype": "desk" },
+    "Cube.012": { "role": "furniture", "subtype": "chair" },
+    "Lamp": { "role": "light", "light_type": "point" }
+  },
+  "room_dimensions": { "width_m": 6.0, "depth_m": 5.0, "height_m": 3.0 }
+}</code></pre>
+
+        <div class="callout callout-amber"><strong>Every wall must carry a <code>wall_id</code></strong> (north/south/east/west or left/right/back/front). This is what enables per-wall material and geometry changes.</div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section>
+        <h2>Phase 4: Write a ruthless validation prompt</h2>
+        <p>Before you call any model "ready," test it with a <strong>ruthless prompt</strong> — an adversarial instruction designed to break things.</p>
+
+        <h3>What a ruthless prompt is</h3>
+        <p>A ruthless prompt is an AI instruction that probes every failure mode. Instead of asking "does it work?" you ask "in exactly what ways does it fail?" The structure:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"You are a hostile QA engineer. Your job is to find every way this 3D-model catalog entry could be wrong, misleading, or unusable. For model {model_id}:</p>
+            <p>1. Open the model in Blender. Count the actual meshes and compare them to mesh_roles.json. Are any missing or mislabeled?</p>
+            <p>2. Try to move the ceiling mesh up by 1 meter. Does the room still look right? Do walls gap?</p>
+            <p>3. Try to change the north wall's material to a different color. Does only that wall change, or do others change too (shared material)?</p>
+            <p>4. Check every material — is it PBR, or a baked texture that can't be swapped?</p>
+            <p>5. Measure the room in Blender. Does it match room_dimensions in the JSON?</p>
+            <p>6. Is the model oriented correctly (Y-up or Z-up)? Does the 'north' wall actually face north?</p>
+            <p>Report every discrepancy you find."</p>
+          </div>
+        </div>
+
+        <p>Write a ruthless validation prompt for your catalog. Run it on at least 5 models. Document everything that broke.</p>
+      </section>
+
+      <!-- WHAT YOU SUBMIT -->
+      <section>
+        <h2>What you submit</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>model_sources.json</code></td><td>At least 5 sources, at least 3 tested</td></tr>
+            <tr><td>Google Sheet catalog</td><td>At least 20 models with all columns filled</td></tr>
+            <tr><td><code>models/</code> directory</td><td>All glTF/GLB files</td></tr>
+            <tr><td><code>mesh_roles/</code> directory</td><td>One <code>mesh_roles.json</code> per model</td></tr>
+            <tr><td>Conversion scripts</td><td>Any Blender scripts you used for format conversion</td></tr>
+            <tr><td>Ruthless validation report</td><td>Results of running the adversarial prompt on at least 5 models</td></tr>
+            <tr><td>Contracts + tests</td><td>Written BEFORE building</td></tr>
+            <tr><td>File manifest</td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GRADING -->
+      <section>
+        <h2>Grading (75 points)</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Contracts + tests</strong></td><td>15</td><td>Written BEFORE collecting. Specific success conditions. <strong>(CONTRACT GATE)</strong></td></tr>
+            <tr><td><strong>Model sources</strong></td><td>10</td><td>At least 5 sources, at least 3 tested, licenses documented</td></tr>
+            <tr><td><strong>Model catalog</strong></td><td>15</td><td>At least 20 models, at least 10 viable, at least 5 room types, viability scores accurate</td></tr>
+            <tr><td><strong>Mesh annotations</strong></td><td>15</td><td>Per-wall IDs present, roles correct, dimensions measured</td></tr>
+            <tr><td><strong>Ruthless validation</strong></td><td>10</td><td>Run on at least 5 models, failures documented, fixes applied</td></tr>
+            <tr><td><strong>Verification</strong></td><td>10</td><td>Spot-checked claims, caught discrepancies</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-rose"><strong>Contract gate:</strong> If your contracts and tests are missing or vague, the VR pipeline will not be able to use your models. Write real contracts with real success conditions.</div>
+      </section>
+
+      <!-- EXISTING CODE -->
+      <section>
+        <h2>Existing code you should know about</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Repo / File</th><th>What it gives you</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code></td><td>424 tags; 330 are continuous or ordinal and represent manipulable environmental features</td></tr>
+            <tr><td><code>Article_Eater/data/templates/</code></td><td>166 PNU templates showing what IVs researchers actually manipulate (ceiling height, lighting, materials, etc.)</td></tr>
+            <tr><td><code>Outcome_Contractor/contracts/oc_export/outcome_vocab.json</code></td><td>839 effect terms — the dependent variables these manipulations affect</td></tr>
+            <tr><td><code>160sp/context/context_vr_production.md</code></td><td>VR-production context, including the K-ATLAS evidence model and scene specification format</td></tr>
+            <tr><td><a href="https://marble.worldlabs.ai/">World Labs Marble</a></td><td>Photo or text to 3D world generation; <a href="https://docs.worldlabs.ai/api">API docs</a>; <a href="https://sparkjs.dev/">SparkJS</a> for Gaussian Splat rendering</td></tr>
+            <tr><td><a href="https://github.com/ahujasid/blender-mcp">BlenderMCP</a> (20.7k stars)</td><td>Claude or Cursor controls Blender through MCP; viewport-aware AI control with Poly Haven integration</td></tr>
+            <tr><td><a href="https://github.com/gd3kr/BlenderGPT">BlenderGPT</a> (4.9k stars)</td><td>Natural language to Blender Python code execution inside Blender; no viewport awareness</td></tr>
+            <tr><td>Blender CLI: <code>blender --background --python script.py</code></td><td>Run segmentation/conversion scripts headlessly (no GUI); batch-process all models</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- REUSE -->
+      <section>
+        <h2>Reuse</h2>
+        <div class="callout callout-blue">The model library and mesh annotations you build here are infrastructure for the next two tasks. Task 2 takes your catalog of viable models and tests their factor-by-factor modifications by hand in A-Frame. Task 3 reads your <code>mesh_roles.json</code> files so the AI front-end knows which mesh to modify when a researcher says "the north wall." Accurate annotations now save hours of debugging then.</div>
+      </section>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 1 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track3/your-name</code>
+        (lowercase, hyphenated — e.g., <code>track3/jane-doe</code>). All three tasks in
+        Track 3 live on this single branch. You'll open one Pull Request per completed
+        task so the instructor can review tasks independently.</p>
+
+        <div class="callout callout-amber"><strong>Heads up — large 3D files:</strong> glTF/GLB meshes (especially Marble exports at 600K-1M triangles) can run into hundreds of megabytes per model. Reference these files via <a href="https://git-lfs.github.com/">Git LFS</a> or external storage (Google Drive, S3, the lab's NAS) and link to them from your catalog rather than committing the binaries to the main branch. Your repo should contain JSON, scripts, and small textures — not gigabytes of GLBs.</div>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+<pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Track 3, fork: Knowledge_Atlas, KA_VR_Studio, Tagging_Contractor
+
+# 2. Clone your fork to your machine (repeat for each repo you forked)
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/KA_VR_Studio.git
+cd KA_VR_Studio
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/KA_VR_Studio.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track3/&lt;your-name&gt; upstream/main
+
+# 5. (Recommended) initialize Git LFS for the large 3D files
+git lfs install
+git lfs track "*.glb" "*.gltf" "*.hdr"
+git add .gitattributes</code></pre>
+
+        <h3>Working on Task 1</h3>
+<pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track3/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task1: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track3/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 1 for review</h3>
+        <p>When Task 1 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track3/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track3/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 3 · Task 1: Collect &amp; Catalog VR-Ready 3D Interior Models — &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested. Include links to any externally hosted GLB files.</li>
+          <li>Add the label <code>track3-task1-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>When you start Task 2, keep working on the same <code>track3/&lt;your-name&gt;</code>
+        branch — additional commits will appear in your existing PR <em>only until you open the
+        Task 2 PR</em>, at which point the new task gets its own PR off the same branch (use
+        GitHub's "compare" feature with the previous task's merge commit as the base).</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>LFS quota exceeded:</strong> move the largest GLBs to external storage (Google Drive, S3) and reference them from <code>model_sources.json</code> by URL instead of committing them.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t3_intro.html" class="prev">&larr; Track Overview</a>
+    <a href="t3_task2.html" class="next">Task 2: VR Conversion &amp; Manual Factor Testing &rarr;</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t3_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

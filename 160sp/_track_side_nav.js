@@ -38,7 +38,7 @@
       label: 'Track 1: Image Tagger',
       stub: false,
       items: [
-        { id: 't1_intro',       href: 't1_intro.html',       label: 'Track Overview' },
+        { id: 't1_intro',       href: 't1_intro.html',       label: 'Track Intro' },
         { id: 't1_task1',       href: 't1_task1.html',       label: 'Task 1: Build Image Collection' },
         { id: 't1_task2',       href: 't1_task2.html',       label: 'Task 2: Build Latent Tag Detectors' },
         { id: 't1_task3',       href: 't1_task3.html',       label: 'Task 3: Annotate & Build Image Viewer' },
@@ -50,7 +50,7 @@
       label: 'Track 2: Article Finder',
       stub: false,
       items: [
-        { id: 't2_intro',       href: 't2_intro.html',       label: 'Track Overview' },
+        { id: 't2_intro',       href: 't2_intro.html',       label: 'Track Intro' },
         { id: 't2_task1',       href: 't2_task1.html',       label: 'Task 1: Fix the Contribute Page' },
         { id: 't2_task2',       href: 't2_task2.html',       label: 'Task 2: Gap Targeting & Queries' },
         { id: 't2_task3',       href: 't2_task3.html',       label: 'Task 3: Search Execution & Triage' },
@@ -62,7 +62,7 @@
       label: 'Track 3: VR Studio',
       stub: false,
       items: [
-        { id: 't3_intro',       href: 't3_intro.html',       label: 'Track Overview' },
+        { id: 't3_intro',       href: 't3_intro.html',       label: 'Track Intro' },
         { id: 't3_task1',       href: 't3_task1.html',       label: 'Task 1: Collect & Catalog 3D Models' },
         { id: 't3_task2',       href: 't3_task2.html',       label: 'Task 2: VR Conversion & Factor Testing' },
         { id: 't3_task3',       href: 't3_task3.html',       label: 'Task 3: AI Front-End for Scene Modification' },
@@ -74,7 +74,7 @@
       label: 'Track 4: GUI / Interactivity',
       stub: false,
       items: [
-        { id: 't4_intro',       href: 't4_intro.html',       label: 'Track Overview' },
+        { id: 't4_intro',       href: 't4_intro.html',       label: 'Track Intro' },
         { id: 't4_task1',       href: 't4_task1.html',       label: 'Task 1: Build the Question Corpus' },
         { id: 't4_task2',       href: 't4_task2.html',       label: 'Task 2: Winnow & Fit Answer Shapes' },
         { id: 't4_task3',       href: 't4_task3.html',       label: 'Task 3: Prototype an Evidential Journey' },

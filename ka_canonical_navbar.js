@@ -49,10 +49,10 @@
       { id:'syllabus', label:'Syllabus', href:'ka_schedule.html' },
       { id:'a0',       label:'A0',       href:'week2_exercises.html' },
       { id:'a1',       label:'A1',       href:'week3_agenda.html' },
-      { id:'track1',   label:'Track 1',  href:'ka_track1_hub.html' },
-      { id:'track2',   label:'Track 2',  href:'ka_track2_hub.html' },
-      { id:'track3',   label:'Track 3',  href:'ka_track3_hub.html' },
-      { id:'track4',   label:'Track 4',  href:'ka_track4_hub.html' },
+      { id:'track1',   label:'Track 1',  href:'t1_intro.html' },
+      { id:'track2',   label:'Track 2',  href:'t2_intro.html' },
+      { id:'track3',   label:'Track 3',  href:'t3_intro.html' },
+      { id:'track4',   label:'Track 4',  href:'t4_intro.html' },
     ],
   };
 
