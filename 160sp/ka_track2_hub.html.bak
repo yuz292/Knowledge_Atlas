@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 2 · Article Finder Hub</title>
+<link rel="stylesheet" href="../ka_atlas_shell.css">
+<style>:root { --hub-color: #E8872A; }</style>
+</head>
+<body data-ka-active="" data-ka-journey="contributor"
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 2 manifest",""]]' data-ka-regime="160sp">
+
+<a class="ka-skip" href="#main">Skip to main content</a>
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<section class="hub-banner">
+  <div class="tag">Track 2 · Team Hub</div>
+  <h1>Article Finder</h1>
+  <p class="subtitle">
+    Hunt down high-value primary sources on architectural cognition, triage them by
+    evidentiary strength, and deliver structured, verifiable article records to the
+    Knowledge Atlas pipeline.
+  </p>
+  <p class="subtitle" style="margin-top:14px;max-width:860px;">
+    This page is now the manifest library, not the primary student roadmap. Use
+    <a href="https://github.com/dkirsh/KA_Contextual_Docs/tree/main/track2" target="_blank" rel="noopener noreferrer">KA Contextual Docs / track2</a>
+    for cross-repo notes on registry fields, question constitutions, and AF to AE handoff.
+  </p>
+  <p class="subtitle" style="margin-top:14px;max-width:860px;padding:12px 16px;background:rgba(232,135,42,0.08);border-left:4px solid #E8872A;border-radius:0 8px 8px 0;">
+    <strong>New (2026-04-17): Unified pipeline reference.</strong>
+    A single document describes the 162-column registry, the
+    <code>notify_registry()</code> write-through pattern, the nine
+    registered classifiers, and the seven areas where the pipeline
+    can be improved — with a mermaid boxology of the whole system.
+    Start here if you are new to Track 2 or need to understand how
+    your article uploads flow downstream:
+    <a href="../docs/UNIFIED_PIPELINE_REFERENCE_FOR_ARTICLE_FINDER.md" style="color:#9a5010;font-weight:700;">
+      UNIFIED_PIPELINE_REFERENCE_FOR_ARTICLE_FINDER.md →</a>
+  </p>
+  <p class="roster-count">Spring 2026 roster: 4 enrolled students</p>
+  <div class="callout callout-amber" style="margin-top:20px;max-width:860px;">
+    <h3>Deliverable submission</h3>
+    <p>All deliverables should be submitted as files in your fork of the Article Finder repository, organized by week (e.g., <code>deliverables/week4/</code>). Use GitHub Issues for questions and Pull Requests for code contributions. Before merging any PR, run <code>python scripts/verify_af_record.py</code> locally to confirm your changes pass the functional verification harness.</p>
+  </div>
+</section>
+
+<div class="ka-shell">
+  <aside id="ka-journey-slot"></aside>
+  <div id="main"></div>
+
+  <main id="ka-main">
+
+    <div class="hub-regions">
+
+      <!-- REGION 1 ───────────── -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 1</div>
+            <div class="hub-region-title">Environment setup</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Before claiming any task, every Article Finder needs a working local
+          environment. The pipeline assumes Python 3.11+, a Zotero library pointed at the
+          shared group, and a GitHub account linked to the course organisation.</p>
+
+          <h4>Required tooling</h4>
+          <ul>
+            <li><strong>Python 3.11+</strong> (verify with <code>python3 --version</code>)</li>
+            <li><strong>Zotero 7</strong> desktop + <strong>Zotero Connector</strong> browser extension</li>
+            <li><strong>Git</strong> and a GitHub account enrolled in the course org</li>
+            <li><strong>DOI/CrossRef access</strong> via your UCSD VPN for closed-access PDFs</li>
+          </ul>
+
+          <h4>One-shot bootstrap</h4>
+<pre>git clone https://github.com/dkirsh/Article_Finder_v3_2_3.git
+cd Article_Finder_v3_2_3
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -e .
+pip install -r requirements.txt
+cp config/settings.yaml config/settings.local.yaml
+python3 cli/main.py doctor
+python3 cli/main.py stats</pre>
+          <p>Start with <code>doctor</code> and <code>stats</code>. If either one fails,
+          post in Region 6 (Help &amp; queue) before trying to claim tasks.</p>
+        </div>
+      </section>
+
+      <!-- REGION 2 ───────────── -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 2</div>
+            <div class="hub-region-title">Shared resources</div>
+          </div>
+          <a class="ka-btn" href="ka_track2_resources.html">Open full library →</a>
+        </div>
+        <div class="hub-region-body">
+          <p>Shared prompts, query templates, field-tested search strings, and reference
+          sets live on the Team Resources page. Upload new items there so the whole team
+          benefits.</p>
+          <ul>
+            <li><a href="ka_track2_resources.html#queries">Canonical CrossRef / Semantic Scholar / OpenAlex query templates</a></li>
+            <li><a href="ka_track2_resources.html#rubrics">Evidentiary-strength rubric (VOI banding)</a></li>
+            <li><a href="ka_track2_resources.html#exemplars">Exemplar article records (gold standard)</a></li>
+            <li><a href="ka_track2_resources.html#glossaries">Architectural-cognition glossary (Mallgrave, Robinson, Pallasmaa…)</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- REGION 3 ───────────── -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 3</div>
+            <div class="hub-region-title">Ways of working</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>The team operates on a weekly cadence with one synchronous check-in and
+          asynchronous pair review in between.</p>
+
+          <h4>Weekly rhythm</h4>
+          <ol>
+            <li><strong>Monday:</strong> claim a task from the queue (one at a time; complete
+            before claiming another).</li>
+            <li><strong>Wed/Thu:</strong> submit a draft article record, assign a pair reviewer.</li>
+            <li><strong>Friday:</strong> 30-minute stand-up; defended records merge to the
+            staging branch; contested records discussed with instructor.</li>
+          </ol>
+
+          <h4>Pair-review rule</h4>
+          <p>No article record merges on a solo review. A second Finder must load the
+          record, run the verification recipe, and sign off. This is
+          <em>structured peripheral participation</em> (Lave &amp; Wenger, 1991): every
+          record is a small apprenticeship event.</p>
+
+          <h4>Communication channels</h4>
+          <ul>
+            <li><code>#track2-article-finder</code> Slack — quick questions, daily status</li>
+            <li>GitHub Issues — anything that blocks a merge</li>
+            <li>Weekly office hours — Thursdays 2–3 pm, CSB 155</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- REGION 3.5 ───────────── T2 GRADED DELIVERABLES -->
+      <section class="hub-region" id="region-3-5" style="border-left:4px solid #E8872A;">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num" style="color:#E8872A;">Region 3.5 &middot; Graded deliverables</div>
+            <div class="hub-region-title">Track 2 deliverables (T2.a &ndash; T2.g)</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>A Track 2 student works seven graded deliverables across the quarter.
+             The first three (T2.a &ndash; T2.c) automate the Article Finder
+             pipeline: harvest citations, screen abstracts, and download the
+             PDFs of accepted articles. The next three (T2.d &ndash; T2.f) are
+             the major build-outs &mdash; the three specs linked in Region 4.5
+             below and surfaced on
+             <a href="../ka_journeys.html" style="color:#9a5010;font-weight:600;text-decoration:none">ka_journeys.html</a>.
+             T2.g is a short integration report.</p>
+          <p>Each deliverable will get its own dedicated page in the same
+             style as Track 4&apos;s T4.a&ndash;T4.g pages once the scopes and
+             rubrics are finalised. The table below names what each stage is
+             and what its acceptance criterion looks like.</p>
+
+          <!-- Shared-contract callout (2026-04-21) ─────────────────── -->
+          <div style="margin-top:14px;padding:14px 18px;background:#F4F0E8;border-left:4px solid #6B4520;border-radius:6px;font-size:.9rem;color:#2F1F0D;line-height:1.55">
+            <b style="color:#6B4520">Canonical classification &amp; ID layer &mdash; import, do not reinvent.</b>
+            Every stage below calls the same shared package. Article
+            identifiers, topic identifiers, article-type labels, relevance
+            decisions, and routing are all assigned by
+            <a href="https://github.com/dkirsh/atlas_shared" target="_blank" rel="noopener noreferrer" style="color:#6B4520;font-weight:700">github.com/dkirsh/atlas_shared</a>,
+            not by any Track 2 student&apos;s own code. The five canonical
+            entry points are:
+            <ul style="margin:8px 0 4px 0;padding-left:22px;line-height:1.6">
+              <li><code>atlas_shared.intake.PreExtractionIntakeGate</code> &mdash; conservative pre-extraction intake gate that preserves adjacent and novel-topic papers</li>
+              <li><code>atlas_shared.topic_bank.load_topic_constitution_bank</code> &mdash; loads the panel-derived topic constitutions (canonical topic IDs)</li>
+              <li><code>atlas_shared.relevance.QuestionArticleRelevanceFilter</code> &mdash; per-candidate relevance check against a question constitution</li>
+              <li><code>atlas_shared.classifier_system.AdaptiveClassifierSubsystem</code> &mdash; the article-type classifier of record; call in-process or via <code>ka_article_endpoints.classify_single_paper</code></li>
+              <li><code>atlas_shared.bundle_router.QuestionBundleRouter</code> &mdash; routes an accepted article to the question bundles it belongs to</li>
+            </ul>
+            Two contracts govern how these modules are used:
+            <code>contracts/PRE_EXTRACTION_INTAKE_CONTRACT_2026-04-17.md</code>
+            and <code>contracts/PANEL_TOPIC_EVIDENCE_CONTRACT_2026-04-17.md</code>
+            inside the atlas_shared repo. Read both before writing any
+            classifier, relevance gate, topic router, or intake logic.
+            Suggestions for improvement go to DK &mdash; never directly edit
+            atlas_shared from Track 2 code. For the actual intake recipe used
+            when filtering incoming papers from the public contribute page,
+            reference harvesting, or ROI search, see
+            <a href="ka_track2_resources.html#atlas-shared-module" style="color:#6B4520;font-weight:700">Track 2 resources &sect;5</a>.
+          </div>
+
+          <h4 style="margin-top:14px">Stage 1 &middot; Initial automation pipeline (T2.a &ndash; T2.c)</h4>
+          <ul style="list-style:none;padding:0;margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.a</div>
+              <div style="color:#1C3D3A;font-weight:600">Citation-harvest automation</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 3&ndash;4 &middot; 10 pts &middot; Medium</div>
+              <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Pull candidate references from every corpus paper, deduplicate them, resolve DOIs, and write the result to a harvest queue. Each harvested candidate is routed through <code>atlas_shared.intake.PreExtractionIntakeGate</code>; records that survive the gate carry a canonical article ID. <b>Acceptance</b>: the pipeline runs end-to-end on a known corpus subset and emits a schema-valid <code>reference_candidates.json</code>.</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.b</div>
+              <div style="color:#1C3D3A;font-weight:600">Abstract screening &amp; accept/reject</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 4 &middot; 10 pts &middot; Medium</div>
+              <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Run <code>atlas_shared.classifier_system.AdaptiveClassifierSubsystem</code> and <code>atlas_shared.relevance.QuestionArticleRelevanceFilter</code> on every candidate that has an abstract, using topic constitutions loaded from <code>atlas_shared.topic_bank.load_topic_constitution_bank</code>. Label each candidate <em>accept</em>, <em>reject</em>, or <em>ambiguous</em>; accepted candidates receive a canonical topic ID. <b>Acceptance</b>: classifier precision reaches the threshold DK sets on a held-out labelled set, and the ambiguous queue is reviewable in the <a href="ka_admin.html" style="color:#9a5010;font-weight:600">instructor admin console</a>.</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.c</div>
+              <div style="color:#1C3D3A;font-weight:600">PDF acquisition on accepted articles</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 5 &middot; 10 pts &middot; Medium</div>
+              <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Retrieve the full-text PDF for every accepted article (from publishers, Unpaywall, or legal open-access mirrors), move it to <code>data/pnu_articles/</code> under its canonical article ID from T2.b, and log which retrievals succeeded and why the failures failed. <b>Acceptance</b>: PDF yield reaches 70&#8239;% or better on an accepted batch.</div>
+            </li>
+          </ul>
+
+          <h4 style="margin-top:18px">Stage 2 &middot; Major build-outs (T2.d &ndash; T2.f) &mdash; after Stage 1 passes</h4>
+          <ul style="list-style:none;padding:0;margin-top:8px;display:grid;grid-template-columns:1fr;gap:10px">
+            <li style="background:#FEF3E2;border:2px solid #E8872A;border-radius:6px;padding:12px 16px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.d &middot; AF-1</div>
+              <a href="../ka_journey_af_references.html" style="color:#1C3D3A;font-weight:700;text-decoration:none">Reference-harvest candidate generator (full spec)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 6&ndash;7 &middot; 13 pts &middot; Hard &middot; <b style="color:#9a5010">Major</b></div>
+              <div style="font-size:.85rem;color:#3A2A10;margin-top:6px">Promote the T2.a harvester into a full candidate-generation surface with four upgrades: deduplication across citation styles, value-of-information ranking, per-topic depth scoring (via <code>atlas_shared.bundle_router.QuestionBundleRouter</code>), and an admin approval queue. <b>Acceptance</b>: admins can accept or reject each candidate in one click from the <a href="ka_admin.html" style="color:#9a5010;font-weight:600">instructor admin console</a>, and the rejection reasons feed back into the ranker.</div>
+            </li>
+            <li style="background:#FEF3E2;border:2px solid #E8872A;border-radius:6px;padding:12px 16px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.e &middot; AF-2</div>
+              <a href="../ka_journey_af_roi.html" style="color:#1C3D3A;font-weight:700;text-decoration:none">ROI-based candidate generator (full spec)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 7 &middot; 13 pts &middot; Hard &middot; <b style="color:#9a5010">Major</b></div>
+              <div style="font-size:.85rem;color:#3A2A10;margin-top:6px">Build four research-opportunity finders, one per type: gap-fill, dispute-resolve, theory-test, and mechanism-ground. Each runs a different targeted search over Crossref, OpenAlex, and Semantic Scholar. Retrieved candidates pass through <code>atlas_shared.classifier_system.AdaptiveClassifierSubsystem</code> with a tighter precision threshold than T2.b uses, and accepted hits are routed by <code>atlas_shared.bundle_router.QuestionBundleRouter</code>. <b>Acceptance</b>: tier-1 ROIs render with EN or argumentation justification attached, and the retrieved candidates pass the tighter relevance check before reaching the user.</div>
+            </li>
+            <li style="background:#FEF3E2;border:2px solid #E8872A;border-radius:6px;padding:12px 16px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.f &middot; AF-3</div>
+              <a href="../ka_journey_af_neuro.html" style="color:#1C3D3A;font-weight:700;text-decoration:none">Plausible Neural Underpinnings &mdash; deepening the PNU layer (full spec)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 8 &middot; 13 pts &middot; Very hard &middot; <b style="color:#9a5010">Major</b></div>
+              <div style="font-size:.85rem;color:#3A2A10;margin-top:6px">Deepen the Plausible Neural Underpinnings layer into canonicalised pathways, then annotate each pathway link with the type of evidence that supports it (direct measurement, indirect inference, or theoretical analogy). A sub-sequence matcher searches PubMed, bioRxiv, and the Allen Brain Atlas for papers that ground the links empirically; retrieved papers are ID&apos;d and topic-tagged through the same atlas_shared stack as T2.b. <b>Acceptance</b>: at least one pathway per Tier-1 claim family is fully grounded.</div>
+            </li>
+          </ul>
+
+          <h4 style="margin-top:18px">Stage 3 &middot; Integration report (T2.g)</h4>
+          <ul style="list-style:none;padding:0;margin-top:8px">
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T2.g</div>
+              <div style="color:#1C3D3A;font-weight:600">Track 2 final report</div>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 9 &middot; 6 pts &middot; Easy&ndash;Medium</div>
+              <div style="font-size:.8rem;color:#3A2A10;margin-top:6px">Narrative write-up of which of T2.a&ndash;T2.f each student contributed to, with functional verification evidence, lessons, and handoff notes to the next cohort.</div>
+            </li>
+          </ul>
+
+          <p style="margin-top:14px;font-size:.82rem;color:#6B6B6B;font-style:italic">
+            Point allocation: 10 / 10 / 10 for the automation stages (T2.a,
+            T2.b, T2.c), 13 / 13 / 13 for the three majors (T2.d, T2.e, T2.f),
+            and 6 for the integration report (T2.g) &mdash; 75 points in
+            total, matching Track 4&apos;s allocation under the class
+            5 / 5 / 75 / 15 split. The AF-001&ndash;AF-004 weekly manifests
+            in Region 4 remain as scaffolding tasks inside T2.a and T2.b:
+            seed searches feed the harvester, and scope notes feed the
+            classifier training set.
+          </p>
+        </div>
+      </section>
+
+      <!-- REGION 4 ───────────── TASK CONTEXT (HEAVY) -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 4 · Most important</div>
+            <div class="hub-region-title">Task context &amp; assignment manifests</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Each Article Finder task is specified by a <strong>manifest</strong>: a
+          small, testable contract stating what goes in, what comes out, and what
+          counts as "done." Click any task below to expand its manifest.</p>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">AF-001 · Seed search for "daylight and cognitive performance"</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt>
+                <dd>Produce a 25-item seed corpus of empirical studies on daylight
+                  exposure and cognitive/attentional outcomes, 2010–present.</dd>
+                <dt>Inputs</dt>
+                <dd>Query templates in <code>resources/queries/daylight_cognition.md</code>;
+                  inclusion rubric in <code>rubrics/voi_banding.md</code>.</dd>
+                <dt>Outputs</dt>
+                <dd><code>data/af/af001_daylight_cognition.json</code> — 25 records with
+                  DOI, title, authors, venue, year, abstract, VOI band, and inclusion
+                  justification (&lt;80 words).</dd>
+                <dt>Acceptance</dt>
+                <dd>Pair reviewer runs <code>scripts/verify_af_record.py af001</code> →
+                  exit 0. At least 18 of 25 records have full-text PDFs in Zotero group.
+                  VOI-band distribution is plausible (not all "high", not all "low").</dd>
+                <dt>Estimated effort</dt>
+                <dd>6–8 hours spread over a week.</dd>
+                <dt>Verification</dt>
+                <dd>Functional: the record file loads, schema validates, all DOIs
+                  resolve via CrossRef, ≥70 % have full text attached. No prose scoring.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">AF-002 · Backward citation sweep for Ulrich (1984)</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt>
+                <dd>Enumerate all articles citing Ulrich (1984, <em>Science</em>) that
+                  themselves contain a measured occupant outcome.</dd>
+                <dt>Inputs</dt>
+                <dd>Seed DOI <code>10.1126/science.6143402</code>; Semantic Scholar API key.</dd>
+                <dt>Outputs</dt>
+                <dd><code>data/af/af002_ulrich_forward.json</code> with ≥ 60 records.</dd>
+                <dt>Acceptance</dt>
+                <dd><code>verify_af_record.py af002</code> passes; at least 40 records
+                  carry a measured outcome (not review / theory-only).</dd>
+                <dt>Verification</dt>
+                <dd>Automated: count records flagged <code>has_outcome: true</code> and
+                  whose <code>measurement_field</code> is one of the approved vocabulary terms.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">AF-003 · Scope note for "embodied architecture" (disambiguation)</span>
+              <span class="task-manifest-status status-partial">Partially specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt>
+                <dd>Separate the philosophical / phenomenological strand (Pallasmaa,
+                  Mallgrave, Robinson) from the empirical sensorimotor-simulation strand
+                  (Gallese, Jelić, Djebbara) into two corpora, with a scope note explaining
+                  the boundary.</dd>
+                <dt>Inputs</dt>
+                <dd>Glossary entries in <code>resources/glossaries/embodied.md</code>.</dd>
+                <dt>Outputs</dt>
+                <dd>Two record files + a 400-word scope note (markdown).</dd>
+                <dt>Acceptance</dt>
+                <dd>Scope note reviewed by instructor; corpora each have ≥ 15 records
+                  passing schema validation.</dd>
+                <dt>Verification</dt>
+                <dd>Functional on the record files; instructor sign-off on the note.
+                  <em>Open question for this task: how to functionally verify the
+                  disambiguation itself. Currently under discussion with Prof. Kirsh.</em></dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">AF-004 · Negative-result / failed-replication pass</span>
+              <span class="task-manifest-status status-speculative">Speculative</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt>
+                <dd>Actively seek failed replications and negative findings in
+                  architectural-cognition studies (e.g., ceiling-height / construal,
+                  thermal priming).</dd>
+                <dt>Why speculative</dt>
+                <dd>Negative results are under-published; the yield from a single week
+                  of search is unknown. This is an exploratory task — low-yield outcomes
+                  are themselves informative.</dd>
+                <dt>Outputs</dt>
+                <dd>Whatever is found + a short note on search strategies that did /
+                  did not surface results.</dd>
+                <dt>Verification</dt>
+                <dd>Procedural: queries logged; records schema-valid. No
+                  minimum-count target.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <h4>Manifest schema (reference)</h4>
+<pre>{
+  "task_id":        "AF-XXX",
+  "goal":           "one-sentence purpose",
+  "inputs":         ["query templates", "rubrics", "seed DOIs"],
+  "outputs":        ["file paths produced"],
+  "acceptance":     ["bullet criteria"],
+  "verification":   { "type": "functional|procedural",
+                      "recipe": "scripts/verify_af_record.py &lt;task_id&gt;" },
+  "effort_hours":   "6-8",
+  "status":         "supported|partial|speculative"
+}</pre>
+        </div>
+      </section>
+
+      <!-- REGION 4.5 — AF problem pages (amber) ─────────── -->
+      <section class="hub-region" style="border-left:4px solid #E8872A;">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num" style="color:#9a5010">Region 4.5 · AF problems (= T2.d / T2.e / T2.f majors)</div>
+            <div class="hub-region-title">Specs for the three major Track 2 deliverables</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Each of the three specs below is one of Track 2&apos;s three
+             major graded deliverables &mdash; T2.d, T2.e, and T2.f in Region
+             3.5 above. Students take them on in sequence, but only after
+             Stage 1 (T2.a citation harvest &rarr; T2.b abstract screening
+             &rarr; T2.c PDF acquisition) passes its functional checks.</p>
+          <p>Every spec page walks through four things: what the
+             functionality does, who it serves, why it is hard to build, and
+             what data files and services a real implementation would call.
+             Any visitor may read the spec and audit its design decisions;
+             only Track 2 students propose implementations.</p>
+          <p style="margin-top:12px">The three specs are named, linked, and
+             scoped in <a href="#region-3-5" style="color:#9a5010;font-weight:600">Region 3.5 above</a>
+             under Stage 2 &mdash; go there to reach the full pages. The full
+             index of all fifteen journey surfaces (twelve complicated
+             surfaces plus these three majors) lives at
+             <a href="../ka_journeys.html" style="color:#9a5010;font-weight:600">ka_journeys.html</a>.</p>
+        </div>
+      </section>
+
+      <!-- REGION 5 ───────────── -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 5</div>
+            <div class="hub-region-title">Functional verification</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Every Article Finder deliverable is graded by <strong>whether it works</strong>,
+          not by prose quality. The verification harness is a Python script that loads
+          your output file, validates schema, resolves every DOI, and runs task-specific
+          checks.</p>
+
+          <h4>Run locally before submitting</h4>
+<pre>python3 scripts/verify_af_record.py af001
+# → AF-001: 25 records, schema OK, 24/25 DOIs resolve, 19/25 have PDFs
+#   VOI bands: high=8 medium=13 low=4  → PASS</pre>
+
+          <h4>What the harness checks</h4>
+          <ul>
+            <li>JSON schema validity against <code>contracts/af_record.schema.json</code></li>
+            <li>Every DOI resolves on CrossRef (HTTP 200, metadata returned)</li>
+            <li>Task-specific minima (record count, full-text coverage, VOI distribution)</li>
+            <li>No duplicate DOIs across records</li>
+            <li>Dates, venues, and author strings are well-formed</li>
+          </ul>
+
+          <p style="margin-top:10px;">A record that passes the harness is considered
+          mergeable. Prose review is advisory, not gating. This is deliberate: the
+          Knowledge Atlas needs reliable structured data, and the grader needs to be
+          able to say "yes, this works" without reading 60 pages of JSON.</p>
+        </div>
+      </section>
+
+      <!-- REGION 6 ───────────── -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 6</div>
+            <div class="hub-region-title">Help &amp; queue</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <div class="help-queue">
+            <h5>Where to ask for help</h5>
+            <ul>
+              <li>Stuck on environment? → <code>#track2-article-finder</code>, tag
+                <code>@instructor</code>.</li>
+              <li>Task manifest feels under-specified? → file a GitHub Issue with
+                label <code>manifest-gap</code>.</li>
+              <li>Uncertain whether a paper "counts"? → escalate to the Friday stand-up.</li>
+              <li>Tooling crashes → paste the verify-env output in the channel.</li>
+            </ul>
+          </div>
+          <p style="margin-top:10px;font-size:0.82rem;color:#8A9A96;">
+            <em>Open task queue is the list of manifests above whose status is
+            "Well-specified" and that have not been claimed. Claim via GitHub Issue
+            assignment.</em>
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<footer class="ka-footer">
+  Knowledge Atlas · UCSD Cognitive Science · COGS 160 Spring 2026
+</footer>
+
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_journey_nav.js"      defer></script>
+</body>
+</html>

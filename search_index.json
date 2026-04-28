@@ -1,6 +1,6 @@
 {
  "version": "1.0",
- "generated_at": "2026-04-28T02:00:52.877361+00:00",
+ "generated_at": "2026-04-28T03:14:27.448727+00:00",
  "page_count": 283,
  "pages": [
   {
@@ -4806,15 +4806,15 @@
   {
    "path": "ka_tagger.html",
    "url": "/ka_tagger.html",
-   "title": "ka tagger",
+   "title": "Tag Images · Knowledge Atlas",
    "area": "other",
    "track": "none",
    "headings": [
     "Tag Images"
    ],
-   "excerpt": "Tag Images Tag Assignments Review Articles Suggest Articles My Progress This Week Status Tags submitted: 14 / 20 Hours logged: 6.5 hrs Batches checked: 3 of 5 Tag Images Check out an image batch, apply CNFA tags, and submit for review. Batch KA-IMG-0042 Image 3 of 12 IN PROGRESS Check In Batch Image: workspace_photo_042_003.jpg 1440×960px ← Previous Next → Skip (flag for review) Checked out: Batch KA-IMG-0042 · 12 images · Expires in 47:23 Return Batch Apply CNFA Tags Tag Schema Reference ↗ 🔍 PHASE 0 — 2D IMAGE TAGS − Workspace Type Select workspace type Office Lab Classroom Outdoor Other Lighting Condition Select lighting condition Natural Artificial Mixed Unknown Occupancy Count Posture (Primary) Select primary posture Seated Standing Walking Reclined Display Visible Yes No Equipment Type Computer Tablet Phone Paper Whiteboard PHASE 1 — 3D / DEPTH TAGS Requires depth sensor data + Depth Available No data Notes for Reviewer Submit & Next → Save Draft KA UI · v0.4 Submit Batch for Review You are submitting 23 image tags in this batch. Construct Tagged Sustained Attention Confidence Level High ⚠ Missing Required Fields Cancel Confirm Submission Return Batch Please explain why you are returning this batch: Common Reasons Images unclear / low quality Insufficient context for construct Possible mislabeling in source Cancel Return Batch ← Back to My ATLAS",
-   "full_len": 1372,
-   "size_kb": 21
+   "excerpt": "Tag Images · Knowledge Atlas Skip to main content Contributor pages Tag Images Tag Assignments Review Articles Suggest Articles My Progress This Week Status Tags submitted: 14 / 20 Hours logged: 6.5 hrs Batches checked: 3 of 5 Tag Images Check out an image batch, apply CNFA tags, and submit for review. Batch KA-IMG-0042 Image 3 of 12 IN PROGRESS Check In Batch Image: workspace_photo_042_003.jpg 1440×960px ← Previous Next → Skip (flag for review) Checked out: Batch KA-IMG-0042 · 12 images · Expires in 47:23 Return Batch Apply CNFA Tags Tag Schema Reference ↗ 🔍 PHASE 0 — 2D IMAGE TAGS − Workspace Type Select workspace type Office Lab Classroom Outdoor Other Lighting Condition Select lighting condition Natural Artificial Mixed Unknown Occupancy Count Posture (Primary) Select primary posture Seated Standing Walking Reclined Display Visible Yes No Equipment Type Computer Tablet Phone Paper Whiteboard PHASE 1 — 3D / DEPTH TAGS Requires depth sensor data + Depth Available No data Notes for Reviewer Submit & Next → Save Draft KA UI · v0.4 Submit Batch for Review You are submitting 23 image tags in this batch. Construct Tagged Sustained Attention Confidence Level High ⚠ Missing Required Fields Cancel Confirm Submission Return Batch Please explain why you are returning this batch: Common Reasons Images unclear / low quality Insufficient context for construct Possible mislabeling in source Cancel Return Batch ← Back to My ATLAS",
+   "full_len": 1440,
+   "size_kb": 23
   },
   {
    "path": "ka_theories.html",

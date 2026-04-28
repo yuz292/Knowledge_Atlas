@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track 4 Overview &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../ka_home.html">Home</a> /
+    <a href="ka_schedule.html">160 Student</a> /
+    <span>Track 4</span>
+  </div>
+
+  <div class="page-grid">
+
+    <aside class="side-nav" data-side-nav-page="t4_intro"></aside>
+
+    <main class="content">
+
+      <header class="hero">
+        <div class="hero-track">TRACK 4 &middot; OVERVIEW</div>
+        <h1>GUI &amp; Interactivity: Designing Evidential Journeys</h1>
+        <p class="hero-sub">
+          The previous tracks build the Atlas's content. Track 4 asks
+          how that content reaches a reader. You will design and
+          prototype an <em>evidential journey</em>: a sequence of
+          pages that takes someone from a question they typed in to an
+          answer that is properly warranted, qualified, and
+          rebuttal-aware in the Toulmin sense — not a finished fact
+          handed down from on high, but a defeasible conclusion the
+          reader could in principle defeat by adducing further
+          evidence.
+        </p>
+      </header>
+
+      <section>
+        <h2>What this track is and is not</h2>
+        <p>
+          This is not a usability-testing track. The Atlas is not yet
+          deployed and there are no real users to recruit; the
+          conventional HCI playbook does not apply. What we have
+          instead is a richer, less common problem: design the
+          journeys for personas whose questions, methods, and
+          adequacy conditions vary widely, before any of those
+          personas have actually used the system. The students in
+          this track will spend three weeks (and possibly half of a
+          fourth) producing the artefacts that make journey design
+          possible: a tagged corpus of the questions a chosen
+          persona would actually ask, a working catalog that pairs
+          each question with a canonical answer shape and a defeater
+          economy, and one journey prototype taken end-to-end as a
+          demonstration of what the previous artefacts buy you.
+        </p>
+        <p>
+          The track is heavy on conceptual scaffolding because the
+          alternative — design without the scaffolding — produces
+          journeys that read smoothly but that, on inspection, do not
+          commit to anything specific. A journey that has not chosen
+          its answer shape wanders; a journey that has not named its
+          defeater surprises its reader; a journey that has not
+          articulated the asker's adequacy condition cannot be
+          assessed at all. The scaffolds are the corrective.
+        </p>
+      </section>
+
+      <section>
+        <h2>Personas: each student owns one</h2>
+        <p>
+          The Atlas serves at least eight personas — Maya the 160
+          student, Dr Okafor the researcher, Jordan the contributor,
+          Prof. Bergström the theorist, Sam the practitioner, the
+          TA, the newcomer, the senior PI. (See the
+          <a href="ka_track4_persona_panel.html">persona panel</a>
+          for the canonical descriptions you each chose from at the
+          start of the term.) Each <em>student</em> in a Track 4 team
+          works on the persona they themselves chose; each
+          <em>team</em> is therefore a constellation of four parallel
+          pipelines, not a single shared pipeline with role
+          specialisation.
+        </p>
+        <p>
+          The team's collective work is peer review and critique of
+          the individual pipelines. Three milestones make this
+          concrete. At the end of week five, each student presents
+          their persona profile and three example questions for team
+          scrutiny: are the questions <em>persona-specific enough</em>
+          that they could only have come from that persona? At the
+          end of week six, each student presents their chosen answer
+          shapes and named defeaters for one corpus item, and the
+          team interrogates the choice and the defeater catalog.
+          During week seven, before any submission, the team walks
+          through every prototype; each student runs the LLM-panel
+          reader test on a teammate's prototype rather than their
+          own. Reviewing someone else's journey is more
+          pedagogically valuable than reviewing your own, and it is
+          where the cross-persona perspective enters the design.
+        </p>
+      </section>
+
+      <section>
+        <h2>The carried exemplar: the researcher persona, all the way through</h2>
+        <p>
+          Throughout the three tasks, the <strong>researcher
+          persona (P2, Dr Fatima Okafor)</strong> is carried as the
+          canonical worked example. You will study what a finished
+          Task 1 looks like by reading the
+          <a href="track4/question_corpus_researcher_v1.md">researcher
+          question corpus</a>; you will see what a finished Task 2
+          looks like in the
+          <a href="track4/researcher_fitting_catalog.md">researcher
+          fitting catalog</a>; you will see what a finished Task 3
+          looks like in the working
+          <a href="track4/journey_q29_art_affect_confound.html">Q-29
+          journey prototype</a>. The researcher exemplar shows the
+          standard you are aiming for; you apply the same protocol to
+          your own persona's pipeline.
+        </p>
+        <p>
+          Studying the exemplar is not optional. The single largest
+          failure mode in past iterations of this kind of work is
+          students inventing their own private interpretations of
+          what "build a corpus" or "fit a shape" means rather than
+          calibrating against a worked instance. The exemplar is the
+          calibration, and Task 1 begins with you reading it.
+        </p>
+      </section>
+
+      <section>
+        <h2>The methodological backbone</h2>
+        <p>
+          Three frameworks recur across the three tasks and are
+          worth naming explicitly at the start. The first is
+          <strong>Toulmin's argument structure</strong>
+          (Toulmin, 1958/2003): every defensible answer to a
+          researcher's question can be diagrammed as data flowing
+          to a qualified claim through a warrant licensed by some
+          backing, with a rebuttal stating the conditions under
+          which the claim would fail. Toulmin is one of the five
+          canonical answer shapes in the catalog (see below); it is
+          also the conceptual model behind the others. The second
+          is <strong>Chinn &amp; Brewer's (1993) seven-response
+          menu</strong> for how readers actually respond when
+          presented with evidence that conflicts with a theory they
+          hold: ignore, reject, exclude, hold in abeyance,
+          reinterpret, peripheral change, theory change. Designing
+          a journey that surfaces a defeater without anticipating
+          which of the seven responses the reader will take is
+          designing in the dark. The third is the
+          <strong>five-axis question taxonomy</strong> (cognitive
+          purpose / answer shape / evidential demand / persona fit /
+          theoretical commitment) we use to tag every question in
+          the corpus, drawn from Walton's dialogue typology, the
+          Hill-Cartwright tradition on causal inference, and the
+          shape catalog that Track 4 itself produces.
+        </p>
+      </section>
+
+      <section>
+        <h2>The five canonical answer shapes</h2>
+        <p>
+          Every question in the corpus must be fitted to one of
+          five canonical answer shapes before a journey can be
+          designed for it. The shapes are visualised in detail in
+          the <a href="track4/answer_shape_catalogue.html">answer-
+          shape catalogue</a>; in brief:
+        </p>
+        <ol>
+          <li>
+            <strong>Toulmin diagram</strong> — claim, data, warrant,
+            backing, qualifier, rebuttal in the canonical
+            left-to-right layout. The default for theory-prober and
+            inquiry-with-mechanism questions.
+          </li>
+          <li>
+            <strong>Field map</strong> — a directed concept-map (after
+            Novak &amp; Gowin, 1984) of named positions in a
+            literature, with labelled directional edges. The default
+            for discovery questions and high/high cross-product
+            questions.
+          </li>
+          <li>
+            <strong>Procedure</strong> — a numbered sequence of steps
+            with a provenance column. The default for sensors-seeker
+            and tests-seeker questions whose adequacy depends on
+            regulatory or ethical gates.
+          </li>
+          <li>
+            <strong>Contrast pair</strong> — two to four options
+            laid out side by side with rows of differentia. The
+            default for measures-shopping and instrument-choice
+            questions.
+          </li>
+          <li>
+            <strong>Ranked brief</strong> — a five-to-seven row
+            ranked list with reason, item count, and an honest
+            evidence-quality column. The default for deliberation
+            under brevity constraint.
+          </li>
+        </ol>
+        <p>
+          Shapes can be composed (a field map may have a Toulmin
+          nested inside one of its branches; a contrast pair may
+          resolve into a ranked brief). What the journey designer
+          may not do is leave a question unfitted: a journey
+          without a chosen shape produces a wandering page sequence.
+        </p>
+      </section>
+
+      <section>
+        <h2>The three tasks, in brief</h2>
+        <p>
+          Each task is roughly a week's work, with the team
+          collective milestone at the end of each week.
+        </p>
+        <p>
+          <strong>Task 1 (week 5) — Build a Persona Question
+          Corpus.</strong> Generate forty to sixty real, specific,
+          adequacy-conditioned questions for your persona, each
+          tagged on the five axes. Methodology: LLM panels +
+          literature mining of the PNU templates + cross-product
+          synthesis walking the IV × DV hierarchies. Worked
+          exemplar: the researcher corpus (forty questions across
+          five sub-flavours).
+        </p>
+        <p>
+          <strong>Task 2 (week 6) — Winnow and Fit Answer
+          Shapes.</strong> Run the four-stage winnowing protocol to
+          cut the corpus to a working set; fit each surviving
+          question to one of the five canonical answer shapes; name
+          at least one citable defeater per question that the
+          journey must surface. Worked exemplar: the researcher
+          fitting catalog (ten questions covering all five shapes,
+          with winnowing log).
+        </p>
+        <p>
+          <strong>Task 3 (week 7, optionally bleeding into half of
+          week 8) — Prototype an Evidential Journey.</strong> Build
+          one working HTML prototype that takes a reader from the
+          typed-in question to a populated answer shape with a
+          Chinn-Brewer rebuttal panel exposed by default and a
+          reader-response stage at the end. Test it on three to five
+          LLM-panel agents playing the role of readers from your
+          persona. Worked exemplar: the Q-29 journey on Attention
+          Restoration Theory and the affective confound.
+        </p>
+      </section>
+
+      <section>
+        <h2>How you will be graded</h2>
+        <p>
+          Each task is worth 75 points (225 total for the track).
+          The grading is primarily individual — your corpus, your
+          fitting catalog, your prototype — with a smaller team-grade
+          component that rewards the collective-review rituals (did
+          the team actually push back; did the persona-presentation
+          round produce visible improvements; was the prototype
+          walkthrough substantive). Detailed rubrics are on each
+          task page.
+        </p>
+        <p>
+          One commitment to surface explicitly. The grading rewards
+          <em>honest defeater catalogs</em> over <em>polished
+          prototypes</em>. A beautiful prototype that hides its
+          defeaters has missed the central point of the track; a
+          plainer prototype that surfaces a real, citable threat to
+          its own claim and lets the reader choose a Chinn-Brewer
+          response is doing what the Atlas is for.
+        </p>
+      </section>
+
+      <section>
+        <h2>Where to start</h2>
+        <p>
+          Read this overview, then the
+          <a href="track4/track4_operational_brief.md">operational
+          brief</a> (the directives extracted from the methodology
+          documents). Then look at the
+          <a href="track4/answer_shape_catalogue.html">answer-shape
+          catalogue</a> to develop a feel for the five shapes you
+          will be fitting to. Then begin Task 1 by reading the
+          researcher corpus as your worked exemplar.
+        </p>
+        <p>
+          The deeper background reading — the corpus document, the
+          task-design document — is linked from the side nav.
+          You do not need to read it before starting Task 1; you
+          will reach for it during the work.
+        </p>
+      </section>
+
+      <div style="margin:30px 0 8px;padding:14px 18px;background:#e9dec4;border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div><strong>Next:</strong> begin the question corpus for your assigned persona.</div>
+        <a href="t4_task1.html" style="background:#5a3e1b;color:#fff;padding:6px 14px;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;">Task 1: Build the Corpus &rarr;</a>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t4_intro.html">Track 4 overview</a>
+        <a href="t4_task1.html">Task 1: Build the corpus</a>
+        <a href="t4_task2.html">Task 2: Winnow &amp; fit</a>
+        <a href="t4_task3.html">Task 3: Prototype a journey</a>
+        <a href="t4_submissions.html">Submissions</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+
+  <script src="_track_side_nav.js" defer></script>
+</body>
+</html>

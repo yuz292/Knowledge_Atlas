@@ -40,7 +40,7 @@
         "root_count": 9,
         "topic_count": 102,
         "hidden_topic_count": 0,
-        "cross_relation_count": 748,
+        "cross_relation_count": 755,
         "fallback_iv_paper_count": 34,
         "fallback_dv_paper_count": 48,
         "source_kind": "canonical_topic_artifacts",
@@ -16209,14 +16209,17 @@
               "year": null,
               "claim_count": 1,
               "primary_front": "",
-              "sensor_summary": "",
-              "has_sensor_data": false,
+              "sensor_summary": "EEG, fMRI",
+              "has_sensor_data": true,
               "membership_score": 0.9,
               "membership_kind": "primary"
             }
           ],
           "theories": [],
-          "sensors": [],
+          "sensors": [
+            "EEG",
+            "fMRI"
+          ],
           "fronts": [],
           "hidden_from_view": false,
           "cross_relations": [
@@ -16229,6 +16232,96 @@
               "paper_count": 1,
               "shared_theories": [],
               "shared_sensors": []
+            },
+            {
+              "target_id": "luminous__mechanism",
+              "target_label": "Luminous Environment \u2192 Mechanism / Pathway",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 31,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
+            },
+            {
+              "target_id": "acoustic__cog_performance",
+              "target_label": "Acoustic Environment \u2192 Cognitive Performance",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 22,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
+            },
+            {
+              "target_id": "acoustic__mechanism",
+              "target_label": "Acoustic Environment \u2192 Mechanism / Pathway",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 22,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
+            },
+            {
+              "target_id": "luminous__cog_performance",
+              "target_label": "Luminous Environment \u2192 Cognitive Performance",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 21,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
+            },
+            {
+              "target_id": "spatial__mechanism",
+              "target_label": "Spatial Form \u2192 Mechanism / Pathway",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 20,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
+            },
+            {
+              "target_id": "spatial__cog_performance",
+              "target_label": "Spatial Form \u2192 Cognitive Performance",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 15,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG"
+              ]
+            },
+            {
+              "target_id": "acoustic__affect_negative_stress",
+              "target_label": "Acoustic Environment \u2192 Stress Response",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 13,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
             }
           ]
         },
@@ -24753,7 +24846,7 @@
         "root_count": 9,
         "topic_count": 121,
         "hidden_topic_count": 0,
-        "cross_relation_count": 926,
+        "cross_relation_count": 927,
         "fallback_iv_paper_count": 34,
         "fallback_dv_paper_count": 48,
         "source_kind": "canonical_topic_artifacts",
@@ -46440,8 +46533,8 @@
               "year": null,
               "claim_count": 1,
               "primary_front": "",
-              "sensor_summary": "",
-              "has_sensor_data": false,
+              "sensor_summary": "EEG, fMRI",
+              "has_sensor_data": true,
               "membership_score": 0.9,
               "membership_kind": "primary"
             },
@@ -46461,7 +46554,10 @@
             "Indoor Environmental Quality",
             "Post-Occupancy Evaluation"
           ],
-          "sensors": [],
+          "sensors": [
+            "EEG",
+            "fMRI"
+          ],
           "fronts": [],
           "hidden_from_view": false,
           "cross_relations": [
@@ -46523,28 +46619,43 @@
               "shared_sensors": []
             },
             {
-              "target_id": "acoustic__affect_comfort",
-              "target_label": "Acoustic Environment \u2192 Comfort",
+              "target_id": "luminous__cog_performance",
+              "target_label": "Luminous Environment \u2192 Cognitive Performance",
               "kind": "same_iv_root",
-              "label": "shared theory",
+              "label": "shared sensors",
               "score": 1,
-              "paper_count": 9,
-              "shared_theories": [
-                "Indoor Environmental Quality"
-              ],
-              "shared_sensors": []
+              "paper_count": 51,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
             },
             {
-              "target_id": "thermal__affect_comfort",
-              "target_label": "Thermal & Air Quality \u2192 Comfort",
+              "target_id": "luminous__mechanism",
+              "target_label": "Luminous Environment \u2192 Mechanism / Pathway",
               "kind": "same_iv_root",
-              "label": "shared theory",
+              "label": "shared sensors",
               "score": 1,
-              "paper_count": 7,
-              "shared_theories": [
-                "Indoor Environmental Quality"
-              ],
-              "shared_sensors": []
+              "paper_count": 51,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
+            },
+            {
+              "target_id": "luminous__affect_wellbeing",
+              "target_label": "Luminous Environment \u2192 Wellbeing",
+              "kind": "same_iv_root",
+              "label": "shared sensors",
+              "score": 1,
+              "paper_count": 38,
+              "shared_theories": [],
+              "shared_sensors": [
+                "EEG",
+                "fMRI"
+              ]
             }
           ]
         },
@@ -67515,14 +67626,17 @@
           "year": null,
           "claim_count": 1,
           "primary_front": "",
-          "sensor_summary": "",
-          "has_sensor_data": false,
+          "sensor_summary": "EEG, fMRI",
+          "has_sensor_data": true,
           "membership_score": 0.9,
           "membership_kind": "primary"
         }
       ],
       "theories": [],
-      "sensors": [],
+      "sensors": [
+        "EEG",
+        "fMRI"
+      ],
       "fronts": [],
       "hidden_from_view": false,
       "cross_relations": [
@@ -67535,6 +67649,96 @@
           "paper_count": 1,
           "shared_theories": [],
           "shared_sensors": []
+        },
+        {
+          "target_id": "luminous__mechanism",
+          "target_label": "Luminous Environment \u2192 Mechanism / Pathway",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 31,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG",
+            "fMRI"
+          ]
+        },
+        {
+          "target_id": "acoustic__cog_performance",
+          "target_label": "Acoustic Environment \u2192 Cognitive Performance",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 22,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG",
+            "fMRI"
+          ]
+        },
+        {
+          "target_id": "acoustic__mechanism",
+          "target_label": "Acoustic Environment \u2192 Mechanism / Pathway",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 22,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG",
+            "fMRI"
+          ]
+        },
+        {
+          "target_id": "luminous__cog_performance",
+          "target_label": "Luminous Environment \u2192 Cognitive Performance",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 21,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG",
+            "fMRI"
+          ]
+        },
+        {
+          "target_id": "spatial__mechanism",
+          "target_label": "Spatial Form \u2192 Mechanism / Pathway",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 20,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG",
+            "fMRI"
+          ]
+        },
+        {
+          "target_id": "spatial__cog_performance",
+          "target_label": "Spatial Form \u2192 Cognitive Performance",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 15,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG"
+          ]
+        },
+        {
+          "target_id": "acoustic__affect_negative_stress",
+          "target_label": "Acoustic Environment \u2192 Stress Response",
+          "kind": "same_iv_root",
+          "label": "shared sensors",
+          "score": 1,
+          "paper_count": 13,
+          "shared_theories": [],
+          "shared_sensors": [
+            "EEG",
+            "fMRI"
+          ]
         }
       ]
     },

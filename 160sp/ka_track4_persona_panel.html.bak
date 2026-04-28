@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 4 · In-class Exercise — Persona Panel Prompts</title>
+<link rel="stylesheet" href="../ka_atlas_shell.css">
+<style>
+  :root { --hub-color: #2A7868; }
+  .ex-shell { max-width: 940px; margin: 0 auto; padding: 24px; }
+  .ex-card {
+    background: #fff; border: 1px solid #E0D8CC; border-radius: 10px;
+    padding: 18px 22px; margin-bottom: 16px;
+  }
+  .ex-card h2 {
+    font-family: Georgia, serif; font-size: 1.2rem; color: #1C3D3A;
+    margin-bottom: 8px;
+  }
+  .ex-card h3 {
+    font-family: Georgia, serif; font-size: 1.0rem; color: #1C3D3A;
+    margin: 14px 0 6px;
+  }
+  .ex-card p { font-size: 0.94rem; line-height: 1.65; color: #2D2D2D; }
+  .ex-card ol, .ex-card ul { padding-left: 20px; margin-top: 6px; }
+  .ex-card li { font-size: 0.93rem; line-height: 1.55; margin-bottom: 5px; }
+  .deadline-banner {
+    background: linear-gradient(135deg, #FEF3E2 0%, #FEF7EC 100%);
+    border: 1px solid #E8872A; border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 18px;
+  }
+  .deadline-banner strong { color: #985E0A; }
+  .desid {
+    background: #F9F5EE; border: 1px solid #E0D8CC; border-left: 4px solid #2A7868;
+    border-radius: 6px; padding: 12px 16px; margin: 10px 0;
+  }
+  .desid h4 {
+    font-family: Georgia, serif; color: #1C3D3A; font-size: 0.98rem;
+    margin-bottom: 4px;
+  }
+  .desid p { font-size: 0.88rem; color: #4A4A4A; line-height: 1.55; }
+  .submit-form {
+    background: #FEF7EC; border: 1px dashed #E8872A; border-radius: 8px;
+    padding: 14px 18px; margin-top: 12px;
+  }
+  .submit-form input, .submit-form textarea {
+    width: 100%; padding: 8px 12px; border: 1px solid #C8C0B0; border-radius: 6px;
+    font-size: 0.92rem; margin-bottom: 8px; background: #fff;
+    font-family: inherit;
+  }
+  .submit-form textarea { min-height: 180px; resize: vertical; font-family: ui-monospace, monospace; font-size: 0.86rem; }
+  .saved-list { margin-top: 12px; }
+  .saved-item {
+    background: #fff; border: 1px solid #E0D8CC; border-radius: 6px;
+    padding: 10px 14px; margin-bottom: 8px;
+  }
+  .saved-item .when { font-size: 0.74rem; color: #8A9A96; }
+  .saved-item pre { background: #F9F5EE; padding: 8px; border-radius: 4px;
+    font-size: 0.82rem; white-space: pre-wrap; max-height: 200px; overflow: auto; }
+  .persona-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    background: #E0F0EC; color: #1A5A50; font-size: 0.78rem; font-weight: 600;
+    margin: 2px;
+  }
+</style>
+</head>
+<body data-ka-active="" data-ka-journey="practitioner"
+      data-ka-crumbs='[["Home","ka_home.html"],["UX Hub","ka_track4_hub.html"],["In-class · Persona Panel",""]]' data-ka-regime="160sp">
+
+<a class="ka-skip" href="#main">Skip to main content</a>
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<main class="ex-shell" id="ka-main">
+
+  <div class="deadline-banner">
+    <strong>For tomorrow's class — Thursday, 16 April 2026.</strong>
+    Each Track 4 student takes one persona, builds a panel of three AI advisors who
+    can role-play that persona, and walks the site through that persona's eyes. By
+    the end of class you should have (a) a finished prompt, (b) a critique from the
+    instructor on that prompt, and (c) the beginning of a journey-walkthrough document
+    grounded in your persona's needs.
+  </div>
+
+  <section class="ex-card">
+    <h2>What we are doing and why</h2>
+    <p>
+      This week's deliverable for the UX track is a <em>user journey</em> — at the
+      very least, a serious attempt to understand what a real user of the Knowledge
+      Atlas is trying to do, where they get stuck, and what would help. Walking the
+      site as yourself is not enough; you already know how it works. The discipline
+      of taking on a persona forces you to encounter the site the way a stranger
+      does.</p>
+    <p>
+      We will use AI panels as a leverage tool. Each of you will design a
+      three-member panel — three AI agents, each instantiated with a slightly
+      different version of your persona — and use the panel to generate, critique,
+      and pressure-test journey observations. The quality of what the panel returns
+      depends almost entirely on the quality of the prompt you write to instantiate
+      it. Your work today is to write that prompt well.
+    </p>
+  </section>
+
+  <section class="ex-card">
+    <h2>Step 1 · Pick your persona</h2>
+    <p>Eight personas correspond to the K-ATLAS user types and roles. Each Track 4 student
+      claims a different persona where possible.</p>
+    <p>
+      <span class="persona-pill">P1 · Maya Chen (160 Student)</span>
+      <span class="persona-pill">P2 · Dr. Fatima Okafor (Researcher)</span>
+      <span class="persona-pill">P3 · Jordan Reeves (Contributor)</span>
+      <span class="persona-pill">P4 · Prof. Lena Bergström (Theorist)</span>
+      <span class="persona-pill">P5 · Sam Nakamura (Practitioner)</span>
+      <span class="persona-pill">P6 · Teaching Assistant</span>
+      <span class="persona-pill">P7 · Site Newcomer</span>
+      <span class="persona-pill">P8 · Principal Investigator</span>
+    </p>
+  </section>
+
+  <section class="ex-card">
+    <h2>Step 2 · Draft your panel-creation prompt</h2>
+    <p>
+      Write a prompt that, when handed to a fresh AI, will produce three usable
+      panellists who can collectively role-play your persona on a tour of the site.
+      Submit it via the form at the bottom of this page. Before you do, review the
+      desiderata in Step 3 — your prompt will be graded against them.
+    </p>
+  </section>
+
+  <section class="ex-card">
+    <h2>Step 3 · Desiderata for a good panel-creation prompt</h2>
+    <p>
+      A good panel prompt does not say "act as a 160 student". It constructs three
+      panellists with enough internal structure that their reactions are
+      <em>generative</em> rather than generic. The desiderata below are the
+      criteria the instructor will critique your submitted prompt against.
+    </p>
+
+    <div class="desid">
+      <h4>D1 · Specificity over generality</h4>
+      <p>Each panellist has a named context, not a category. "A 160 student in week
+        4 of the quarter who has never touched FastAPI" beats "a CogSci undergrad".</p>
+    </div>
+
+    <div class="desid">
+      <h4>D2 · Three deliberately-different angles</h4>
+      <p>The three panellists should disagree productively. One sceptic, one
+        enthusiast, one pragmatist — or one focused on speed, one on depth, one on
+        social proof — works better than three near-clones.</p>
+    </div>
+
+    <div class="desid">
+      <h4>D3 · Goals and constraints made explicit</h4>
+      <p>Each panellist has a goal they came to the site to accomplish, a time
+        budget, a device, and a competing tab they could switch to. These constrain
+        the simulation usefully.</p>
+    </div>
+
+    <div class="desid">
+      <h4>D4 · Knowledge state declared</h4>
+      <p>What does this panellist already know about cognitive science, evidence
+        weighting, or the topic the article is about? Vagueness here lets the AI
+        smooth over the parts of the site that would actually confuse a real user.</p>
+    </div>
+
+    <div class="desid">
+      <h4>D5 · Output protocol specified</h4>
+      <p>Tell the panel the exact form their reaction should take: a step-by-step
+        click trace, a list of three friction points with severities, a one-sentence
+        verdict on the page. Without an output protocol you get prose that cannot be
+        compared across panellists.</p>
+    </div>
+
+    <div class="desid">
+      <h4>D6 · A falsifier built in</h4>
+      <p>The prompt should make at least one prediction that the panel could falsify
+        — e.g., "If the persona finds this page useful, list the reason; if not,
+        list the first three things they would have wanted instead." A prompt that
+        cannot disconfirm itself is not generating evidence, only narrative.</p>
+    </div>
+
+    <div class="desid">
+      <h4>D7 · No flattery instructions</h4>
+      <p>Avoid "be helpful", "be encouraging", or anything that biases the panel
+        toward agreement. Negative findings are the main asset of this exercise.</p>
+    </div>
+
+    <div class="desid">
+      <h4>D8 · Anchored to a specific URL or page</h4>
+      <p>The panel walks a real page. Name the URL in the prompt. A panel asked to
+        tour "the site" will produce hallucinated reactions to features that do not
+        exist.</p>
+    </div>
+  </section>
+
+  <section class="ex-card">
+    <h2>Step 4 · Submit your prompt for critique</h2>
+    <p>
+      Paste your panel-creation prompt below and submit. The instructor will return
+      a written critique against the desiderata in Step 3, marking which are met,
+      partially met, or missing, with concrete revision suggestions. Your revised
+      prompt is the artefact you carry into the in-class panel exercise.
+    </p>
+
+    <form class="submit-form" onsubmit="return savePrompt(this)">
+      <strong>Submit your prompt</strong>
+      <input name="student" placeholder="Your name or initials" required>
+      <input name="persona" placeholder="Persona (e.g. 'Researcher · evidence-skeptical')" required>
+      <input name="page"    placeholder="Target page URL on K-ATLAS" required>
+      <textarea name="prompt" placeholder="Paste your full panel-creation prompt here…" required></textarea>
+      <button class="ka-btn" type="submit">Save locally for critique</button>
+      <p style="font-size:0.78rem;color:#7A7060;margin-top:6px;">
+        <em>Local preview</em> — submissions are saved in your browser only; in
+        class, screen-share to share with the instructor. Server submission is the
+        next pass.
+      </p>
+    </form>
+
+    <div class="saved-list" id="saved-list">
+      <!-- populated from localStorage -->
+    </div>
+  </section>
+
+  <section class="ex-card">
+    <h2>Step 5 · After critique — run the panel and document the journey</h2>
+    <ol>
+      <li>Take the revised prompt and instantiate the panel in your AI tool of
+        choice (ChatGPT, Claude, Gemini — the choice is itself part of the data).</li>
+      <li>Walk the panel through the page in the order a real user would. Capture
+        every reaction verbatim.</li>
+      <li>Write a one-page <strong>journey note</strong>: what the panel encountered,
+        what tripped them, what they could not find, and what would have helped. Tag
+        each finding with one of Nielsen's heuristics where applicable.</li>
+      <li>File your journey note as a Pull Request to the
+        <code>docs/ux/journeys/</code> directory.</li>
+    </ol>
+  </section>
+
+  <section class="ex-card">
+    <h2>What "good" looks like at the end of class</h2>
+    <ul>
+      <li>One revised panel-creation prompt, critiqued and improved.</li>
+      <li>One transcript of that panel walking a specific K-ATLAS page.</li>
+      <li>One journey note (≤ 1 page) with at least three actionable findings.</li>
+      <li>At least one of those findings filed as a GitHub Issue with the
+        <code>ux-journey</code> label.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="ka-footer">
+  Knowledge Atlas · UCSD Cognitive Science · COGS 160 Spring 2026
+</footer>
+
+<script>
+(function () {
+  var stored = JSON.parse(localStorage.getItem('ka_t4_persona_prompts') || '[]');
+  var list = document.getElementById('saved-list');
+  stored.forEach(function (s) { list.appendChild(renderSaved(s)); });
+})();
+
+function renderSaved(s) {
+  var d = document.createElement('div');
+  d.className = 'saved-item';
+  d.innerHTML = '<div class="when">' + escapeHtml(s.when) + ' · ' +
+                escapeHtml(s.student) + ' · ' + escapeHtml(s.persona) + '</div>' +
+                '<div style="font-size:0.82rem;margin-top:3px;">Page: <code>' +
+                escapeHtml(s.page) + '</code></div>' +
+                '<pre>' + escapeHtml(s.prompt) + '</pre>';
+  return d;
+}
+
+function savePrompt(form) {
+  var s = {
+    when: new Date().toLocaleString(),
+    student: form.student.value.trim(),
+    persona: form.persona.value.trim(),
+    page:    form.page.value.trim(),
+    prompt:  form.prompt.value
+  };
+  var stored = JSON.parse(localStorage.getItem('ka_t4_persona_prompts') || '[]');
+  stored.push(s);
+  localStorage.setItem('ka_t4_persona_prompts', JSON.stringify(stored));
+  document.getElementById('saved-list').appendChild(renderSaved(s));
+  form.reset();
+  alert('Saved locally. In class, screen-share to share with the instructor.');
+  return false;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+</script>
+
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_journey_nav.js"      defer></script>
+</body>
+</html>

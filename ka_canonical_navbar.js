@@ -420,8 +420,11 @@
         </a>`);
       // Grader's Page (AG's autograder UI). Local stdlib server at :5050;
       // instructor must run `python3 160sp/grader_page/server.py` first.
+      // Click handler probes the server before navigating; if unreachable,
+      // tells the instructor exactly how to start it instead of dropping
+      // them on a browser "could not connect" page.
       parts.push(`
-        <a class="ka-pill ka-pill-admin" href="http://localhost:5050/" target="_blank" rel="noopener" title="AG autograder dashboard (instructor must run server.py first)">
+        <a class="ka-pill ka-pill-admin" href="http://localhost:5050/" target="_blank" rel="noopener" title="AG autograder dashboard (probes server before opening)" data-ka-grader-pill="true">
           <span>🎓 Grader</span>
         </a>`);
     }
@@ -698,12 +701,69 @@
     syncCompatSessionFromLocalAuth,
   };
 
+  /* ─── Grader pill probe ───────────────────────────────────────
+   * The 🎓 Grader pill points at http://localhost:5050/ but that
+   * server is optional — instructors run it ad-hoc. Without a probe,
+   * a click when the server is not running drops the user on the
+   * browser's "could not connect" page with no in-app explanation.
+   * The handler below intercepts the click, attempts a 1-second
+   * fetch with no-cors mode (so reachability is what we test, not
+   * CORS), and either lets the navigation proceed or shows a small
+   * inline tooltip telling the instructor exactly how to start the
+   * server. The pill is identified by data-ka-grader-pill="true".
+   * ───────────────────────────────────────────────────────────── */
+  function wireGraderPillProbe() {
+    document.addEventListener('click', function(ev) {
+      const pill = ev.target.closest('[data-ka-grader-pill="true"]');
+      if (!pill) return;
+      ev.preventDefault();
+      const url = pill.getAttribute('href');
+      const ctrl = new AbortController();
+      const timeout = setTimeout(() => ctrl.abort(), 1000);
+      fetch(url, { mode: 'no-cors', signal: ctrl.signal })
+        .then(() => {
+          clearTimeout(timeout);
+          window.open(url, '_blank', 'noopener');
+        })
+        .catch(() => {
+          clearTimeout(timeout);
+          // Build a small toast inline (no dependencies on existing toast lib).
+          const existing = document.querySelector('.ka-grader-pill-toast');
+          if (existing) existing.remove();
+          const toast = document.createElement('div');
+          toast.className = 'ka-grader-pill-toast';
+          toast.style.cssText = [
+            'position:fixed', 'top:64px', 'right:16px', 'z-index:99999',
+            'max-width:360px', 'background:#fff8eb', 'color:#2C2C2C',
+            'border:1px solid #E8872A', 'border-radius:6px',
+            'padding:12px 14px', 'box-shadow:0 2px 12px rgba(0,0,0,0.15)',
+            'font-family:Arial,sans-serif', 'font-size:13px', 'line-height:1.45'
+          ].join(';');
+          toast.innerHTML =
+            '<strong>Grader server is not running.</strong><br>' +
+            'Start it from a terminal:<br>' +
+            '<code style="display:block;margin:6px 0;padding:6px 8px;background:#f4ead4;border-radius:3px;font-size:12px;">' +
+            'cd 160sp/grader_page &amp;&amp; python3 server.py' +
+            '</code>' +
+            'Then click 🎓 Grader again. ' +
+            '<a href="#" onclick="this.closest(\'.ka-grader-pill-toast\').remove();return false;" ' +
+            'style="float:right;color:#9a5010;font-weight:600;text-decoration:none;">×</a>';
+          document.body.appendChild(toast);
+          setTimeout(() => { if (toast.parentNode) toast.remove(); }, 12000);
+        });
+    });
+  }
+
   /* ─── Boot ───────────────────────────────────────────────── */
 
   bindStateRefresh();
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
+    document.addEventListener('DOMContentLoaded', function() {
+      mount();
+      wireGraderPillProbe();
+    });
   } else {
     mount();
+    wireGraderPillProbe();
   }
 })();

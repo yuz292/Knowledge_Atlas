@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 1: Fix the Contribute Page · Track 2 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <a href="t2_intro.html">Track 2: Article Finder</a> /
+    <span>Task 1: Fix the Contribute Page</span>
+  </div>
+
+  <!-- 3. PAGE GRID: side-nav + main content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 2: Article Finder</div>
+      <a href="t2_intro.html">Track Overview</a>
+      <a href="t2_task1.html" class="active">Task 1: Fix the Contribute Page</a>
+      <a href="t2_task2.html">Task 2: Gap Targeting &amp; Query Generation</a>
+      <a href="t2_task3.html">Task 3: Search Execution &amp; Triage</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">&larr; All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">Track 2 · Task 1</div>
+        <h1>Fix the Contribute Page</h1>
+        <p class="hero-sub">The contribute page accepts PDFs but does nothing with them — no classification, no storage, no feedback. Your job is to repair it so submitted papers get classified, stored in the right place, and reported back to the user.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">Track: Article Finder</span>
+          <span class="hero-pill">Diagnosis · Spec · Fix · Validation</span>
+          <span class="hero-pill">Contract gate</span>
+        </div>
+      </header>
+
+      <!-- WHAT THIS TEACHES -->
+      <section>
+        <h2>What this assignment teaches</h2>
+        <p>You will use AI to fix a broken page. The point, though, is not the fix — the AI will write the code. The point is the three skills around the AI:</p>
+        <ul>
+          <li>Can you <strong>diagnose</strong> what is broken by asking your AI the right questions?</li>
+          <li>Can you <strong>specify</strong> the fix precisely enough that the AI builds the right thing?</li>
+          <li>Can you <strong>verify</strong> that the fix actually works — and catch the silent failures the AI hides from you?</li>
+        </ul>
+      </section>
+
+      <!-- SETUP -->
+      <section>
+        <h2>Setup: Clone the repositories</h2>
+        <p>You need four repositories. All live at <a href="https://github.com/dkirsh">github.com/dkirsh</a>:</p>
+
+<pre><code class="lang-bash"># 1. The Knowledge Atlas site (contains the contribute page you'll fix)
+git clone https://github.com/dkirsh/Knowledge_Atlas.git
+
+# 2. The Article Finder pipeline (the discovery half of the system)
+git clone https://github.com/dkirsh/Article_Finder.git
+
+# 3. The Article Eater extraction engine (the processing half)
+git clone https://github.com/dkirsh/Article_Eater.git
+
+# 4. The shared classifier module (the ID function you'll wire in)
+git clone https://github.com/dkirsh/atlas_shared.git
+cd atlas_shared &amp;&amp; pip install -e . &amp;&amp; cd ..</code></pre>
+
+        <p>Confirm <code>atlas_shared</code> installed cleanly:</p>
+
+<pre><code class="lang-bash">python3 -c "from atlas_shared.classifier_system import AdaptiveClassifierSubsystem; print('OK')"</code></pre>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section>
+        <h2>Phase 1: Diagnose — what's broken?</h2>
+        <p>Before you can connect two programs, you have to understand both. This phase walks you through each one separately, then asks you to name the gap between them.</p>
+
+        <h3>1A. Ask your AI to explain the contribute page</h3>
+        <p>Open <code>Knowledge_Atlas/ka_contribute_public.html</code>. Hand the full source to your AI and ask:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Walk me through exactly what happens when a user drops a PDF and clicks 'Send suggestion.' For each step, tell me: what function runs, what data is created, and where it goes. Then tell me everything that is MISSING that a working version would need."</p>
+          </div>
+        </div>
+
+        <p>Then ask:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Draw a box-and-arrow diagram showing the data flow. Label every missing component."</p>
+          </div>
+        </div>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Your deliverable</div>
+          <p>A boxology diagram and a short "Current State" paragraph describing what the page does and does not do.</p>
+        </div>
+
+        <h3>1B. Ask your AI to explain the classifier</h3>
+        <p>Now do the same for the classifier. Open <code>atlas_shared/src/atlas_shared/classifier_system.py</code>, give it to your AI, and ask:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"This is the classifier for the Knowledge Atlas. Explain two things:</p>
+            <p>1. How does it decide what TYPE of article a PDF is? (empirical, review, theoretical, etc.)<br>
+            2. How does it decide what TOPIC a paper belongs to? (daylight + cognition, ceiling height + creativity, etc.)</p>
+            <p>For each, tell me the class name, the method, and what data it looks at. Then draw a box-and-arrow diagram showing what happens inside <code>classify()</code>."</p>
+          </div>
+        </div>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Your deliverable</div>
+          <p>A boxology diagram of the classifier's internal steps.</p>
+        </div>
+
+        <h3>1C. Name the gap between them</h3>
+        <p>You now have two diagrams: one of what the contribute page does, one of what the classifier does. The gap between them is your assignment.</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Given these two programs, what would I need to build to connect them? Be specific — what endpoint, what data transformations, what storage?"</p>
+          </div>
+        </div>
+
+        <p>Also ask:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Are there any existing files in the Knowledge Atlas repo that already handle article submission? Search for files with 'article' or 'submit' in their names."</p>
+          </div>
+        </div>
+
+        <p>This second question is critical. The repo already contains partial infrastructure, and your AI should find it. Make the AI tell you what is already built so you do not redo it.</p>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Your deliverable</div>
+          <p>A one-paragraph gap statement of the form: "The contribute page currently does X. The classifier can do Y. The existing backend already does Z. To finish the integration, we need W."</p>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section>
+        <h2>Phase 2: Spec — write the contract</h2>
+        <p>A contract is the spec you write before any code is written. It tells the AI — and the grader — what "done" means. Write a contract called the <strong>Classifier Integration Contract</strong> that nails down:</p>
+
+        <ul>
+          <li><strong>Inputs:</strong> What the user provides (PDF, citation, or both)</li>
+          <li><strong>Processing:</strong> What the backend does with it (build the evidence object, call the classifier)</li>
+          <li><strong>Outputs on the page:</strong> For each submitted paper, the user sees in a results section:
+            <ul>
+              <li>The verdict — <strong>accepted</strong>, <strong>edge case</strong>, or <strong>rejected</strong></li>
+              <li>The article type</li>
+              <li>The topic(s) it matches</li>
+              <li>The classifier's confidence score</li>
+            </ul>
+          </li>
+          <li><strong>Storage rules:</strong>
+            <ul>
+              <li>Accepted papers — store both the PDF and a database entry</li>
+              <li>Edge-case papers — store, but flag as edge cases</li>
+              <li>Rejected papers — show in the results panel but do NOT store</li>
+            </ul>
+          </li>
+          <li><strong>Success conditions:</strong> At least three specific test cases with expected outcomes</li>
+        </ul>
+
+        <h3>Check for duplicates before you store</h3>
+
+        <div class="callout callout-amber"><strong>Do not let the page store a paper that is already in the corpus.</strong> Duplicate ingestion silently corrupts the lifecycle database; every storage path in your contract must run the duplicate probe first.</div>
+
+        <p>We give you a foolproof probe that works even on hard-to-read PDFs:</p>
+
+<pre><code class="lang-bash">python3 /Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/scripts/course_scaffolding.py \
+  probe-collection-pdf --pdf-path /absolute/path/to/file.pdf</code></pre>
+
+        <p><strong>How to read the result:</strong></p>
+        <ul>
+          <li><code>sha256_exact</code> or <code>doi_exact</code> &rarr; <strong>The file is already in the corpus. Do not re-ingest it.</strong></li>
+          <li><code>title_fuzzy</code> or <code>page_text_match</code> &rarr; Possible duplicate. Inspect by hand before deciding.</li>
+          <li>No match &rarr; Safe to store as a new paper.</li>
+        </ul>
+
+        <p>If you are calling this from inside Article Finder code rather than from the shell, use the function <code>probe_pdf_against_article_eater(...)</code> in <code>ae_waiting_room_probe.py</code>.</p>
+
+        <p>Your contract's storage rules must include this check. A submission flow that stores duplicates is a bug.</p>
+
+        <h3>Ask your AI about storage layout</h3>
+        <p>You also need to know where the PDFs live and where the database entries live. Ask:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"In the Knowledge Atlas project, where are article PDFs stored? There is a lifecycle database (a SQLite database that tracks every paper's stage in the pipeline) — what tables does it have, and what should a new paper's entry look like when it first arrives? Show me the schema."</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"The pipeline has defined stages. What is the first stage a newly contributed paper should be at? What status should it have?"</p>
+          </div>
+        </div>
+
+        <p>Do not take the AI's answer on faith. Open the database yourself and verify:</p>
+
+<pre><code class="lang-bash">sqlite3 Knowledge_Atlas/160sp/pipeline_lifecycle_full.db ".schema papers"
+sqlite3 Knowledge_Atlas/160sp/pipeline_lifecycle_full.db ".schema lifecycle_events"
+sqlite3 Knowledge_Atlas/160sp/pipeline_lifecycle_full.db "SELECT stage_name, stage_order FROM stage_definitions ORDER BY stage_order;"</code></pre>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Your deliverable</div>
+          <p>The completed contract with concrete storage paths, database column values, and duplicate-check logic filled in.</p>
+        </div>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section>
+        <h2>Phase 3: Fix — delegate to your AI</h2>
+        <p>Now hand the work to the AI. Give it:</p>
+        <ol>
+          <li>Your contract</li>
+          <li>The source of <code>ka_contribute_public.html</code></li>
+          <li>The source of <code>classifier_system.py</code></li>
+          <li>Any existing backend files your AI surfaced in Phase 1C</li>
+        </ol>
+
+        <p>Ask it to build:</p>
+        <ol>
+          <li>A backend endpoint that receives the form submission and runs the classifier</li>
+          <li>A results section on the contribute page that displays the classifier's verdict</li>
+          <li>Storage logic for accepted and edge-case papers</li>
+        </ol>
+
+        <h3>Verification questions you must ask before you trust the code</h3>
+        <p>When the AI hands you code, do not just run it. Interrogate it first. These questions catch the failures the AI will not volunteer:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me exactly where in your code the PDF file gets saved to disk. What path does it use? What happens if that directory does not exist?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me the line where you call <code>AdaptiveClassifierSubsystem.classify()</code>. What are you passing in as the <code>evidence_like</code> argument? Walk me through which fields of ClassificationEvidence get populated from the user's submission."</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me where you write to the database. Which table? What values go in each column? What happens if the paper_id already exists?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"What happens when the classifier returns <code>next_action = 'need_abstract_or_keywords'</code>? Does your code handle that case, or does it silently ignore it?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"How do you distinguish an accepted paper from an edge case in storage? Show me the exact field or flag."</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"If I submit five PDFs in one session, does the results section show all five? Or does each new submission overwrite the previous one?"</p>
+          </div>
+        </div>
+
+        <p>If the AI cannot answer any of these clearly, the fix is incomplete. Push back.</p>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Your deliverable</div>
+          <p>The working code, plus a log of which verification questions surfaced problems and how you fixed each one.</p>
+        </div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section>
+        <h2>Phase 4: Prove — run the tests</h2>
+        <p>A spec is worthless without execution proof. This phase produces the evidence that the system actually works.</p>
+
+        <h3>Prepare test papers</h3>
+        <p>Get at least four PDFs:</p>
+        <ol>
+          <li>A known on-topic empirical paper (one already in the Atlas works well)</li>
+          <li>A clearly off-topic paper (a machine-learning paper, for example)</li>
+          <li>An edge case (an architectural-theory paper with no empirical data)</li>
+          <li>A citation-only submission (no PDF attached)</li>
+        </ol>
+
+        <h3>Run each test and record the result</h3>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Test</th>
+              <th>Input</th>
+              <th>Expected verdict</th>
+              <th>Actual verdict</th>
+              <th>Expected type</th>
+              <th>Actual type</th>
+              <th>Stored?</th>
+              <th>DB entry?</th>
+              <th>PASS?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>On-topic PDF</td><td>accept</td><td></td><td>empirical</td><td></td><td>yes</td><td>yes</td><td></td></tr>
+            <tr><td>2</td><td>Off-topic PDF</td><td>reject</td><td></td><td>—</td><td></td><td>no</td><td>no</td><td></td></tr>
+            <tr><td>3</td><td>Edge-case PDF</td><td>edge_case</td><td></td><td>theoretical</td><td></td><td>yes (flagged)</td><td>yes</td><td></td></tr>
+            <tr><td>4</td><td>Citation only</td><td>varies</td><td></td><td>varies</td><td></td><td>—</td><td>—</td><td></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Verify storage</h3>
+        <p>For every paper that should be stored, check both the file system and the database:</p>
+
+<pre><code class="lang-bash"># Does the PDF file exist?
+ls -la &lt;expected_path&gt;</code></pre>
+
+<pre><code class="lang-sql">-- Does the database entry exist?
+SELECT paper_id, article_type, current_stage, current_status
+FROM papers
+WHERE paper_id = '&lt;id&gt;';
+
+-- Is there a lifecycle event?
+SELECT stage_name, status, agent
+FROM lifecycle_events
+WHERE paper_id = '&lt;id&gt;';
+
+-- Is the edge case distinguishable from the accepted paper?
+SELECT paper_id, current_status
+FROM papers
+ORDER BY created_at DESC
+LIMIT 5;</code></pre>
+
+        <h3>When a test fails — diagnose where the bug lives</h3>
+        <p>For each failure, decide: <strong>is the spec wrong, or is the AI's implementation wrong?</strong></p>
+
+        <ul>
+          <li>If the classifier returns the wrong verdict, the spec may be right but the constitution data may not yet cover the topic. That is a classifier issue, not your bug.</li>
+          <li>If the classifier returns the right verdict but the page does not show it, the AI's code has a rendering bug. That IS your bug.</li>
+          <li>If the PDF lands on disk but the database entry never appears, the AI's code has a storage bug. That IS your bug.</li>
+        </ul>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Your deliverable</div>
+          <p>The completed validation matrix, plus a diagnosis note for any failure that explains whether it was a spec bug or an implementation bug.</p>
+        </div>
+      </section>
+
+      <!-- WHAT YOU SUBMIT -->
+      <section>
+        <h2>What you submit</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>Description and format</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Boxology diagrams</strong> (Phase 1)</td><td>Two diagrams: the contribute page data flow, and the classifier's internal steps</td></tr>
+            <tr><td><strong>Gap statement</strong> (Phase 1)</td><td>One paragraph: what exists, what the classifier does, what is missing</td></tr>
+            <tr><td><strong>Classifier Integration Contract</strong> (Phase 2)</td><td>Your spec with inputs, outputs, storage, and success conditions</td></tr>
+            <tr><td><strong>Working code</strong> (Phase 3)</td><td>The fixed contribute page, endpoint, and storage logic</td></tr>
+            <tr><td><strong>Verification log</strong> (Phase 3)</td><td>The questions you asked your AI, which ones surfaced problems, how you fixed them</td></tr>
+            <tr><td><strong>Validation matrix</strong> (Phase 4)</td><td>Test results for all four (or more) test cases</td></tr>
+            <tr><td><strong>Storage proof</strong> (Phase 4)</td><td>Terminal output showing the PDF exists and the DB entries are correct</td></tr>
+            <tr><td><strong>Diagnosis notes</strong> (Phase 4)</td><td>For any failure: spec bug or implementation bug?</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- FILES YOU MUST SUBMIT -->
+      <section>
+        <h2>Files you must submit</h2>
+        <p>Your submission must include a <strong>file manifest</strong> that lists every file you changed or created with a one-line description. The instructor will diff your repo against the upstream to verify.</p>
+        <p>These are the minimum expected files; your list may include more:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>File</th><th>Change type</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>ka_contribute_public.html</code></td><td>Modified</td><td>Form now posts to a real endpoint; results section sits below the form</td></tr>
+            <tr><td>Backend endpoint file (e.g., added to <code>ka_article_endpoints.py</code> or a new file)</td><td>Modified or New</td><td>Receives the form submission, runs the <code>atlas_shared</code> classifier, returns a JSON result</td></tr>
+            <tr><td><code>data/storage/</code> or <code>data/pnu_articles/</code></td><td>New files</td><td>Stored PDFs for accepted and edge-case papers</td></tr>
+            <tr><td>Database (e.g., <code>data/ka_auth.db</code> or <code>pipeline_lifecycle_full.db</code>)</td><td>Modified</td><td>New rows for submitted papers</td></tr>
+          </tbody>
+        </table>
+
+        <h3>How to generate your manifest</h3>
+
+<pre><code class="lang-bash">cd Knowledge_Atlas
+git diff --name-only HEAD    # files you changed
+git status --short           # new files</code></pre>
+
+        <p>Include the output of both commands in your submission.</p>
+      </section>
+
+      <!-- GRADING -->
+      <section>
+        <h2>Grading</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Criterion</th><th>What we check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Diagnosis</strong></td><td>Your boxology diagrams are accurate; your gap statement is correct</td></tr>
+            <tr><td><strong>Spec quality</strong></td><td>Your contract is complete, specific, and testable</td></tr>
+            <tr><td><strong>Verification questions</strong></td><td>You asked probing questions that caught real problems in the AI's code</td></tr>
+            <tr><td><strong>Validation</strong></td><td>At least three of four test papers produce correct results and storage</td></tr>
+            <tr><td><strong>Diagnosis of failures</strong></td><td>You correctly identified whether each failure was a spec bug or an implementation bug</td></tr>
+            <tr><td><strong>File manifest</strong></td><td>Your manifest is complete and matches your actual changes</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 1 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track2/your-name</code>
+        (lowercase, hyphenated — e.g., <code>track2/jane-doe</code>). All three tasks in
+        Track 2 live on this single branch. You'll open one Pull Request per completed
+        task so the instructor can review tasks independently.</p>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+<pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Track 2 Task 1, fork: Knowledge_Atlas, Article_Finder, Article_Eater,
+#                              atlas_shared
+
+# 2. Clone your fork to your machine (repeat for each repo you forked)
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Knowledge_Atlas.git
+cd Knowledge_Atlas
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Knowledge_Atlas.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track2/&lt;your-name&gt; upstream/main</code></pre>
+
+        <h3>Working on Task 1</h3>
+<pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track2/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task1: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track2/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 1 for review</h3>
+        <p>When Task 1 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track2/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track2/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 2 · Task 1: Fix the Contribute Page — &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested.</li>
+          <li>Add the label <code>track2-task1-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>When you start Task 2, keep working on the same <code>track2/&lt;your-name&gt;</code>
+        branch — additional commits will appear in your existing PR <em>only until you open the
+        Task 2 PR</em>, at which point the new task gets its own PR off the same branch (use
+        GitHub's "compare" feature with the previous task's merge commit as the base).</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t2_intro.html" class="prev">&larr; Track Overview</a>
+    <a href="t2_task2.html" class="next">Task 2: Gap Targeting &amp; Query Generation &rarr;</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t2_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

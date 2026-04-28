@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 3 · AI VR Hub</title>
+<link rel="stylesheet" href="../ka_atlas_shell.css">
+<style>:root { --hub-color: #4A3A78; }</style>
+</head>
+<body data-ka-active="" data-ka-journey="contributor"
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 3","ka_track3_hub.html"],["Team Hub",""]]' data-ka-regime="160sp">
+
+<a class="ka-skip" href="#main">Skip to main content</a>
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<section class="hub-banner">
+  <div class="tag">Track 3 · Team Hub</div>
+  <h1>AI VR — Architectural Cognition in Immersive Environments</h1>
+  <p class="subtitle">
+    Design, build, and instrument VR scenes that test specific hypotheses about how
+    built environments shape attention, affect, and spatial cognition — with AI agents
+    acting as experimental probes or occupants.
+  </p>
+  <p class="roster-count">Spring 2026 roster: 10 enrolled students (largest track)</p>
+</section>
+
+<div style="max-width:1400px;margin:0 auto;padding:16px 24px 0;">
+  <a href="ka_track3_hub.html" style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2A7868,#1C3D3A);color:#fff;padding:16px 24px;border-radius:10px;text-decoration:none;font-size:0.95rem;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:transform 0.15s;">
+    <span style="font-size:1.4rem;">📋</span>
+    <span><strong>Studio Roadmap</strong> — Weekly pages, deliverables, and success criteria for the 7.5-week studio</span>
+    <span style="margin-left:auto;font-size:1.2rem;">→</span>
+  </a>
+</div>
+
+<div class="ka-shell">
+  <aside id="ka-journey-slot"></aside>
+
+  <main id="ka-main">
+
+    <div class="hub-regions">
+
+      <!-- REGION 1 -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 1</div>
+            <div class="hub-region-title">Environment setup</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Track 3 has one official student baseline: Blender for inspecting and cleaning assets, plus
+          a browser-first A-Frame workflow for final course scenes. Unity and Unreal remain prototype
+          environments only.</p>
+
+          <h4>Software</h4>
+          <ul>
+            <li>Blender 4.x for room inspection, scale correction, and cleanup</li>
+            <li>Python 3.11+ and Git for local work</li>
+            <li>Chrome or Firefox for browser scene review and debugging</li>
+            <li>Optional: Meshy or Tripo for isolated props, not for the whole benchmark corpus</li>
+          </ul>
+
+          <h4>First-run checklist</h4>
+          <ol>
+            <li>Install Blender and confirm it opens.</li>
+            <li>Clone <code>Knowledge_Atlas</code> and open the Track 3 setup guide.</li>
+            <li>Download at least three candidate room models in <code>.glb</code>, <code>.fbx</code>, or <code>.obj</code>.</li>
+            <li>Inspect one room in Blender for scale, hierarchy, openings, and materials.</li>
+            <li>Review the workbook so you understand that the final submission path is A-Frame.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- REGION 2 -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 2</div>
+            <div class="hub-region-title">Shared resources</div>
+          </div>
+          <a class="ka-btn" href="ka_track3_resources.html">Open VR Resources →</a>
+        </div>
+        <div class="hub-region-body">
+          <p>The resources page now collects portable room sources, materials, browser-first scene templates,
+          logging patterns, and AI prompt patterns. The principle is simple: share artifacts that another
+          team can actually open and reuse, not one-off local state.</p>
+          <ul>
+            <li><a href="ka_track3_resources.html#scenes">Room shells and scene templates</a></li>
+            <li><a href="ka_track3_resources.html#scripts">Logging and validation snippets</a></li>
+            <li><a href="ka_track3_resources.html#assets">Portable assets, materials, and licences</a></li>
+            <li><a href="ka_track3_resources.html#agents">Prompt patterns for translation and QA</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- REGION 3 -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 3</div>
+            <div class="hub-region-title">Ways of working</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Ten students is a lot for one studio. Expect pair or triple sub-teams with clear handoffs.</p>
+          <ul>
+            <li>Sub-teams of 2–3; each owns one asset, one operator, one scene, or one documentation slice.</li>
+            <li>Every admitted asset must carry a source note, format note, and licence note.</li>
+            <li>Normalise rooms to portable formats such as <code>.glb</code> whenever possible.</li>
+            <li>No scene or asset is treated as “working” until another student can open it and reproduce the basic check.</li>
+            <li>Browser review is the default; headset testing is optional, not the first gate.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- REGION 4 -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 4</div>
+            <div class="hub-region-title">Task context &amp; assignment manifests</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Track 3 work now breaks into four explicit deliverable lanes. They are ordered roughly the way
+          the course expects them to mature.</p>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">T3-001 · Benchmark room evaluation pack</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Build a shared shortlist of room assets that are worth transforming later.</dd>
+                <dt>Outputs</dt><dd>Room sheets with source, format, scale sanity, hierarchy notes, supported transformations, and risks.</dd>
+                <dt>Acceptance</dt><dd>Another student can read the sheet and understand why the room belongs in or out of the corpus.</dd>
+                <dt>Verification</dt><dd>Manual inspection in Blender plus a short written justification, not just a screenshot.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">T3-002 · Controlled transformation variant</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Take one base room and create one variant that changes a single architectural factor cleanly.</dd>
+                <dt>Outputs</dt><dd>Base room, transformed variant, and a short change log stating what changed and what was held constant.</dd>
+                <dt>Acceptance</dt><dd>The intended factor shift is visible and the room remains structurally usable.</dd>
+                <dt>Verification</dt><dd>Peer review plus a checklist for scale, openings, hierarchy, and material continuity.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">T3-003 · Instrumented A-Frame scene</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Turn the selected paradigm into one browser-runnable scene with explicit event hooks and condition labels.</dd>
+                <dt>Outputs</dt><dd><code>vr/scene.html</code> plus <code>vr/LOG_SCHEMA.md</code>.</dd>
+                <dt>Acceptance</dt><dd>The scene loads in browser without console errors and the logging plan is explicit enough for another person to inspect.</dd>
+                <dt>Verification</dt><dd>Local server run, browser console check, and peer walkthrough on desktop or headset.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">T3-004 · Researcher handoff pack</span>
+              <span class="task-manifest-status status-partial">Partially specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Package the work so a new user can understand the room choice, transformation logic, and experimental purpose.</dd>
+                <dt>Outputs</dt><dd>Quick-start instructions, variant notes, limitations note, and one end-to-end example request.</dd>
+                <dt>Open question</dt><dd>How much of this should be a web interface versus a tightly structured document. That will be resolved in the final workflow stage.</dd>
+                <dt>Acceptance</dt><dd>Another student can follow the package without verbal rescue.</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- REGION 5 -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 5</div>
+            <div class="hub-region-title">Functional verification</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <p>Track 3 deliverables are graded by <strong>does the asset or scene remain usable and intelligible</strong>,
+          not by visual polish. Use three checks:</p>
+          <ol>
+            <li><strong>Asset sanity check in Blender</strong> — scale, hierarchy, openings, materials, and obvious breakage.</li>
+            <li><strong>Browser scene check</strong> — the scene loads from a local server, assets resolve, and there are no fatal console errors.</li>
+            <li><strong>Peer walkthrough</strong> — another student can interpret the condition and explain what the scene is supposed to test.</li>
+          </ol>
+          <p style="margin-top:8px;">A scene or asset that fails the first two checks is not “done,” regardless of how promising it looks.</p>
+<pre>cd Knowledge_Atlas
+python3 -m http.server 8000
+# then open /160sp/ka_vr_assignment.html and test your scene from a browser</pre>
+        </div>
+      </section>
+
+      <!-- REGION 6 -->
+      <section class="hub-region">
+        <div class="hub-region-head">
+          <div>
+            <div class="hub-region-num">Region 6</div>
+            <div class="hub-region-title">Help &amp; queue</div>
+          </div>
+        </div>
+        <div class="hub-region-body">
+          <div class="help-queue">
+            <h5>Where to ask for help</h5>
+            <ul>
+              <li>Blender import or scale problems → bring the asset and its source link.</li>
+              <li>Browser or A-Frame load failure → bring the exact console error and the asset path.</li>
+              <li>Asset licensing uncertainty → add the source URL to the resource sheet before reuse.</li>
+              <li>Experimental-design ambiguity → escalate to the workbook and Friday demo, not just to a code fix.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<footer class="ka-footer">
+  Knowledge Atlas · UCSD Cognitive Science · COGS 160 Spring 2026
+</footer>
+
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_journey_nav.js"      defer></script>
+</body>
+</html>

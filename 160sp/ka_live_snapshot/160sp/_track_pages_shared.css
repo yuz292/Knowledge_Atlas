@@ -1,0 +1,390 @@
+/* Shared stylesheet for the new track pages: t1_intro, t1_task1..3, t2_intro, t2_task1..3.
+   Inherits the colour palette and typography from ka_article_finder_assignment.html
+   so the new pages sit visually next to the rest of the 160sp site.
+   Author: Claude (Cowork session) for Prof. David Kirsh, COGS 160 SP, 2026-04-26.
+*/
+
+* , *::before , *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root{
+  --navy:#1C3D3A; --teal:#2A7868; --teal-lt:#5AC8AA; --teal-bg:#E6F5F0;
+  --amber:#E8872A; --amber-lt:#FFF3E0; --amber-dk:#9a5010;
+  --cream:#F7F4EF; --ink:#2C2C2C; --muted:#6B6B6B; --border:#D8D0C5;
+  --white:#FFFFFF; --rose:#A84F6B; --rose-lt:#F8EBF0;
+  --blue:#3A6EA8; --blue-lt:#EBF2F8; --green:#2A7868; --green-lt:#E6F5F0;
+  --code-bg:#1a2a28; --code-fg:#a8e8d0;
+  --ai-bg:#F0EBF8; --ai-border:#c8b4e8; --ai-fg:#3d2e6b; --ai-label:#6B4FA8;
+}
+
+body{
+  font-family: Arial, sans-serif;
+  background: var(--cream); color: var(--ink);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   1. TOP FIXED NAV
+   ============================================================ */
+.top-nav{
+  position: fixed; top:0; left:0; right:0; height:56px;
+  background: var(--navy); border-bottom: 1px solid #0f2423;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
+}
+.top-nav .wordmark{
+  display: flex; align-items: center; gap: 8px;
+  font-family: Georgia, serif; font-size: 1.1rem; font-weight: 600;
+  color: #F5A623; text-decoration: none;
+}
+.top-nav .wordmark:hover{ color: #fff; }
+.top-nav .wordmark-sub{
+  font-size: 0.62rem; color: #7AACA0; letter-spacing: 1.5px;
+  font-family: Arial, sans-serif; font-weight: 400;
+}
+.top-nav .nav-center{
+  flex: 1; display: flex; justify-content: center; align-items: center; gap: 16px;
+  flex-wrap: wrap;
+}
+.top-nav .nav-center a{
+  color: #B8D4CE; font-size: 13px; text-decoration: none;
+  padding: 4px 6px; border-radius: 4px;
+}
+.top-nav .nav-center a:hover{ color: #fff; }
+.top-nav .nav-center a.active{ color: #F5A623; }
+.top-nav .nav-right{ display: flex; align-items: center; gap: 12px; }
+.top-nav .mode-pill{
+  background: var(--blue); color: #fff;
+  padding: 5px 12px; border-radius: 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   2. BREADCRUMB
+   ============================================================ */
+.breadcrumb{
+  max-width: 1200px; margin: 72px auto 8px;
+  padding: 12px 28px 6px;
+  font-size: 0.78rem; color: var(--muted);
+}
+.breadcrumb a{ color: var(--teal); text-decoration: none; }
+.breadcrumb a:hover{ text-decoration: underline; }
+
+/* ============================================================
+   3. PAGE GRID — side-nav + main content
+   ============================================================ */
+.page-grid{
+  max-width: 1200px; margin: 0 auto 60px;
+  padding: 12px 28px;
+  display: grid; grid-template-columns: 220px 1fr; gap: 36px;
+}
+
+/* 3a. Side-nav (sticky left rail on wide screens) */
+.side-nav{
+  position: sticky; top: 80px; align-self: start;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 8px; padding: 18px 16px;
+  font-size: 0.85rem;
+}
+.side-nav-title{
+  font-family: Georgia, serif; font-size: 0.78rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.side-nav a{
+  display: block; padding: 8px 10px; color: var(--ink);
+  text-decoration: none; border-radius: 4px; margin-bottom: 4px;
+  border-left: 3px solid transparent;
+}
+.side-nav a:hover{ background: var(--teal-bg); color: var(--teal); }
+.side-nav a.active{
+  background: var(--teal-bg); color: var(--teal);
+  font-weight: 600; border-left: 3px solid var(--teal);
+}
+.side-nav-divider{ height: 1px; background: var(--border); margin: 12px 0; }
+.side-nav-back{ font-size: 0.78rem; color: var(--muted) !important; }
+
+@media (max-width: 900px){
+  .page-grid{ grid-template-columns: 1fr; gap: 14px; }
+  .side-nav{
+    position: static; display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px 14px;
+  }
+  .side-nav-title, .side-nav-divider { display: none; }
+  .side-nav-back{ display: inline-block; }
+  .side-nav a{
+    display: inline-block; margin-bottom: 0;
+    font-size: 0.78rem; padding: 5px 10px;
+    border: 1px solid var(--border); border-left: 1px solid var(--border);
+  }
+  .side-nav a.active{ border: 1px solid var(--teal); border-left: 1px solid var(--teal); }
+}
+
+/* 3b. Main content */
+.content{ min-width: 0; }
+
+/* ============================================================
+   4. HERO
+   ============================================================ */
+.hero{
+  background: var(--navy); color: #fff;
+  border-radius: 12px; padding: 32px 36px;
+  margin-bottom: 28px; position: relative; overflow: hidden;
+}
+.hero::after{
+  content: ''; position: absolute; right: -60px; top: -40px;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: rgba(90,200,170,.07); pointer-events: none;
+}
+.hero-track{
+  font-size: 11px; letter-spacing: 0.12em;
+  color: var(--teal-lt); text-transform: uppercase;
+  margin-bottom: 8px; font-weight: 600;
+}
+.hero h1{
+  font-family: Georgia, serif; font-size: 1.7rem; font-weight: 400;
+  margin-bottom: 10px; color: #fff;
+}
+.hero-sub{
+  font-size: 0.92rem; color: #b8d8d4;
+  max-width: 720px; line-height: 1.65; margin-bottom: 18px;
+}
+.hero-meta{ display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-pill{
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: #d0ece8; font-size: 11px; padding: 4px 12px; border-radius: 12px;
+}
+
+/* ============================================================
+   5. SECTIONS, HEADINGS, PROSE
+   ============================================================ */
+.content h2, .section-title{
+  font-family: Georgia, serif; font-size: 1.25rem; font-weight: 400;
+  color: var(--navy); border-bottom: 2px solid var(--teal);
+  padding-bottom: 6px; margin: 36px 0 14px;
+}
+.content h3{
+  font-family: Georgia, serif; font-size: 1.05rem; font-weight: 500;
+  color: var(--teal); margin: 24px 0 10px;
+}
+.content h4{
+  font-family: Georgia, serif; font-size: 0.95rem; font-weight: 600;
+  color: var(--navy); margin: 18px 0 8px;
+}
+.content p{ margin-bottom: 14px; font-size: 0.94rem; }
+.content ul, .content ol{ margin: 0 0 14px 22px; }
+.content li{ margin-bottom: 6px; font-size: 0.94rem; }
+.content strong{ color: var(--navy); }
+.content em{ color: var(--ink); }
+.content a{ color: var(--teal); text-decoration: underline; }
+.content a:hover{ color: var(--navy); }
+
+/* ============================================================
+   6. CALLOUTS
+   ============================================================ */
+.callout{
+  padding: 14px 18px; border-radius: 6px;
+  font-size: 0.9rem; line-height: 1.6; margin: 14px 0;
+}
+.callout-teal{ background: var(--teal-bg); border-left: 3px solid var(--teal); color: #1a4a3f; }
+.callout-amber{ background: var(--amber-lt); border-left: 3px solid var(--amber); color: var(--amber-dk); }
+.callout-blue{ background: var(--blue-lt); border-left: 3px solid var(--blue); color: #1a3a6a; }
+.callout-rose{ background: var(--rose-lt); border-left: 3px solid var(--rose); color: #5a1a30; }
+.callout strong{ display: inline; color: inherit; font-weight: 700; }
+
+/* ============================================================
+   7. CODE BLOCKS
+   ============================================================ */
+pre, .code-block{
+  background: var(--code-bg); color: var(--code-fg);
+  font-family: SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem; line-height: 1.55;
+  padding: 14px 18px; border-radius: 6px;
+  margin: 12px 0; overflow-x: auto;
+}
+code{
+  font-family: SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86rem;
+  background: #F0EBE3; color: var(--ink);
+  padding: 2px 5px; border-radius: 3px;
+}
+pre code, .code-block code{
+  background: transparent; color: inherit; padding: 0;
+}
+
+/* ============================================================
+   8. AI PROMPT BOX (the > *"..."* blockquoted prompts)
+   ============================================================ */
+.ai-box{
+  background: var(--ai-bg); border: 1px solid var(--ai-border);
+  border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+}
+.ai-label{
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ai-label); margin-bottom: 8px;
+}
+.ai-text{
+  font-size: 0.92rem; color: var(--ai-fg); line-height: 1.65;
+  font-family: Georgia, serif; font-style: italic;
+}
+.ai-text p { margin-bottom: 8px; font-size: inherit; }
+.ai-text p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   9. TABLES
+   ============================================================ */
+table.data-table{
+  width: 100%; border-collapse: collapse; margin: 14px 0;
+  font-size: 0.86rem; background: var(--white);
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+table.data-table th{
+  background: var(--navy); color: #fff;
+  padding: 10px 12px; text-align: left;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+table.data-table td{
+  padding: 9px 12px; border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+table.data-table tr:last-child td{ border-bottom: none; }
+table.data-table tr:hover td{ background: #FAF7F2; }
+
+/* ============================================================
+   10. DELIVERABLE BOX
+   ============================================================ */
+.deliverable{
+  background: linear-gradient(180deg, #FFF8E8 0%, #FFF3D9 100%);
+  border-left: 4px solid var(--amber);
+  border-radius: 6px; padding: 14px 18px; margin: 14px 0;
+}
+.deliverable-label{
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--amber-dk); margin-bottom: 6px;
+}
+.deliverable p{ font-size: 0.92rem; margin-bottom: 0; color: #4a3a1a; }
+
+/* ============================================================
+   11. WITHIN-TRACK FOOTER NAV (prev / next)
+   ============================================================ */
+.track-footer-nav{
+  max-width: 1200px; margin: 0 auto;
+  padding: 24px 28px;
+  display: flex; justify-content: space-between; gap: 16px;
+  border-top: 1px solid var(--border); margin-top: 40px;
+}
+.track-footer-nav a{
+  color: var(--teal); text-decoration: none; font-size: 0.92rem;
+  padding: 8px 14px; border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--white);
+}
+.track-footer-nav a:hover{
+  background: var(--teal-bg); border-color: var(--teal);
+}
+.track-footer-nav .next{ margin-left: auto; }
+
+/* ============================================================
+   12. SITE FOOTER (global escape hatch)
+   ============================================================ */
+.site-footer{
+  background: var(--navy); color: #b8d8d4;
+  margin-top: 60px; padding: 36px 24px 24px;
+  border-top: 4px solid var(--teal);
+}
+.site-footer-inner{
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 32px; padding-bottom: 22px;
+}
+.site-footer-col{ display: flex; flex-direction: column; gap: 6px; }
+.site-footer-title{
+  font-family: Georgia, serif; font-size: 0.88rem;
+  color: var(--teal-lt); margin-bottom: 4px; letter-spacing: 0.04em;
+}
+.site-footer a{
+  color: #b8d8d4; text-decoration: none; font-size: 0.86rem; padding: 2px 0;
+}
+.site-footer a:hover{ color: var(--white); text-decoration: underline; }
+.site-footer-meta{
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 16px; font-size: 0.78rem; color: #8aa8a4;
+  text-align: center;
+}
+@media (max-width: 700px){
+  .site-footer-inner{ grid-template-columns: 1fr; gap: 22px; }
+}
+
+/* ============================================================
+   13. GITHUB SUBMISSION SECTION (per-task variant)
+   ============================================================ */
+.github-submission{
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 8px; padding: 22px 26px;
+  margin: 36px 0 24px;
+}
+.github-submission h2{
+  border-bottom-color: var(--amber);
+  margin-top: 0;
+}
+.github-submission h3{
+  color: var(--amber-dk); margin-top: 22px;
+}
+.github-submission ol li, .github-submission ul li{ margin-bottom: 8px; }
+
+/* ============================================================
+   14. INTRO PAGE TASK CARDS
+   ============================================================ */
+.task-card-grid{
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; margin: 18px 0;
+}
+.task-card{
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: 10px; padding: 18px 20px;
+  text-decoration: none; color: var(--ink);
+  transition: all 0.15s; display: block;
+}
+.task-card:hover{
+  border-color: var(--teal);
+  box-shadow: 0 3px 12px rgba(42,120,104,0.12);
+  transform: translateY(-1px);
+}
+.task-card-num{
+  font-family: Georgia, serif; font-size: 0.78rem; color: var(--teal);
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.task-card-title{
+  font-family: Georgia, serif; font-size: 1.05rem;
+  color: var(--navy); margin-bottom: 8px; font-weight: 500;
+}
+.task-card-desc{
+  font-size: 0.85rem; color: var(--muted); line-height: 1.55;
+}
+.task-card-meta{
+  font-size: 0.76rem; color: var(--teal); margin-top: 10px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   15. REPO LIST (intro page)
+   ============================================================ */
+.repo-list{
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px; margin: 14px 0;
+}
+.repo-item{
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 16px;
+}
+.repo-item-name{
+  font-family: SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92rem; color: var(--navy); font-weight: 600;
+  margin-bottom: 4px;
+}
+.repo-item-name a{ color: var(--navy); text-decoration: none; }
+.repo-item-name a:hover{ color: var(--teal); text-decoration: underline; }
+.repo-item-purpose{ font-size: 0.84rem; color: var(--muted); }

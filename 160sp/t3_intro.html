@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track 3: VR Studio &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">
+      Knowledge Atlas
+    </a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb"><!-- canonical: Home > User Type > Journey > Page -->
+      <a href="../ka_home.html">Home</a> /
+      <a href="ka_schedule.html">160 Student</a> /
+      <span>Track 3</span>
+    </div>
+
+  <!-- 3. PAGE GRID -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav" data-side-nav-page="t3_intro"></aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 3 &mdash; VR STUDIO</div>
+        <h1>Track 3: VR Studio</h1>
+        <p class="hero-sub">
+          Build a pipeline that turns natural-language instructions into
+          modified 3D rooms in real time &mdash; collect VR-ready interior
+          models, prove every environmental factor can be manipulated, and
+          ship an AI front-end that converts &ldquo;a cozy library with
+          4-metre ceilings and exposed brick on the north wall&rdquo; into
+          an instant scene change.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-pill">3 tasks</span>
+          <span class="hero-pill">10 weeks</span>
+          <span class="hero-pill">75 + 75 + 75 points</span>
+          <span class="hero-pill">120+ fps target</span>
+        </div>
+      </header>
+
+      <!-- WHAT YOU'LL BUILD -->
+      <section>
+        <h2>What you&rsquo;ll build</h2>
+        <p>
+          The Knowledge Atlas catalogues the empirical evidence that interior
+          environments alter human cognition and affect &mdash; ceiling
+          height changes thinking, daylight shifts mood, materials change the
+          feel of a room. A neuroarchitecture researcher who wants to
+          <em>test</em> these claims has to vary one feature while holding
+          everything else constant, which means she needs 3D rooms she can
+          modify parametrically. No existing product gives her that. Tools
+          like Veras and Decory produce 2D images, not editable 3D models;
+          Meshy and Luma generate new models, not parametric edits of
+          existing ones.
+        </p>
+        <p>
+          You will close that gap. In Task 1 you assemble a library of at
+          least 20 VR-ready 3D interior models, each annotated so a program
+          knows which mesh is the ceiling, which is the north wall, which is
+          a window. In Task 2 you load those models in a browser-based VR
+          viewer and prove every factor can be modified in real time
+          &mdash; sliders for ceiling height, light intensity, material
+          roughness; per-wall material swatches; path-traced lighting that
+          converges in two seconds. In Task 3 you wire up a language model
+          that reads the user&rsquo;s instruction, returns a constrained
+          JSON spec, validates every field against your viability matrix,
+          and applies the modifications atomically.
+        </p>
+        <p>
+          The result is the first tool that lets a researcher say &ldquo;give
+          me the Meyers-Levy high-ceiling condition on this office&rdquo; and
+          get a modified 3D stimulus in seconds instead of weeks.
+        </p>
+      </section>
+
+      <!-- THE THREE TASKS -->
+      <section>
+        <h2>The three tasks</h2>
+        <div class="task-card-grid">
+
+          <a class="task-card" href="t3_task1.html">
+            <div class="task-card-num">TASK 1</div>
+            <div class="task-card-title">Collect &amp; Catalog VR-Ready 3D Interior Models</div>
+            <div class="task-card-desc">
+              Source at least 20 openly-licensed glTF/GLB interior models
+              (Sketchfab, BlenderKit, Poly Haven, plus at least three
+              generated through World Labs Marble), evaluate each model
+              against eight manipulation classes, segment the meshes so
+              every wall is individually addressable, and produce a
+              <code>mesh_roles.json</code> per model.
+            </div>
+            <div class="task-card-meta">4 phases &middot; 75 points</div>
+          </a>
+
+          <a class="task-card" href="t3_task2.html">
+            <div class="task-card-num">TASK 2</div>
+            <div class="task-card-title">VR Conversion &amp; Manual Factor Testing</div>
+            <div class="task-card-desc">
+              Build a browser-based A-Frame viewer with real-time slider
+              controls for all eight manipulation classes, including
+              per-wall material selection and at least HDRI-based realistic
+              lighting. Test every factor on at least ten models and produce
+              a factor viability matrix supported by before/after
+              screenshots.
+            </div>
+            <div class="task-card-meta">3 phases &middot; 75 points</div>
+          </a>
+
+          <a class="task-card" href="t3_task3.html">
+            <div class="task-card-num">TASK 3</div>
+            <div class="task-card-title">AI Front-End for Parametric Scene Modification</div>
+            <div class="task-card-desc">
+              Add a natural-language input that runs through an LLM with a
+              constrained JSON schema, a validation gate that checks every
+              modification against your factor viability matrix, and a set
+              of research-derived presets (Meyers-Levy, prospect-refuge,
+              biophilic restoration). Every modification must apply
+              atomically and degrade gracefully when a model does not
+              support it.
+            </div>
+            <div class="task-card-meta">5 phases &middot; 75 points</div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- THE EIGHT MANIPULATION CLASSES -->
+      <section>
+        <h2>The eight manipulation classes</h2>
+        <p>
+          Every model and every viewer has to support the same eight classes
+          of environmental manipulation. These are derived from the
+          Tagging&nbsp;Contractor registry; together they cover 330 of the
+          424 tags. Your mesh annotations in Task 1 must allow every class;
+          your viewer in Task 2 must demonstrate every class; your AI
+          front-end in Task 3 must accept natural-language instructions
+          targeting every class.
+        </p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>What researchers manipulate</th>
+              <th>Example slider</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Geometry</strong></td>
+              <td>Ceiling height, room volume, enclosure ratio, isovist area</td>
+              <td>Ceiling height: 2.0 m &ndash; 6.0 m</td>
+            </tr>
+            <tr>
+              <td><strong>Lighting</strong></td>
+              <td>Illuminance, colour temperature (CCT), daylight vs artificial</td>
+              <td>CCT: 2700 K &ndash; 6500 K</td>
+            </tr>
+            <tr>
+              <td><strong>Materials</strong></td>
+              <td>Wood vs concrete vs glass; surface roughness; natural-material ratio</td>
+              <td>Wall roughness: 0.0 &ndash; 1.0</td>
+            </tr>
+            <tr>
+              <td><strong>Color</strong></td>
+              <td>Hue (warm vs cool), saturation, palette diversity</td>
+              <td>Wall colour swatches</td>
+            </tr>
+            <tr>
+              <td><strong>Biophilic elements</strong></td>
+              <td>Plant count, water features, view content (greenery vs built-up)</td>
+              <td>Window-view backdrop selector</td>
+            </tr>
+            <tr>
+              <td><strong>Furniture layout</strong></td>
+              <td>Seating count, sociopetal vs sociofugal arrangement, clutter density</td>
+              <td>Furniture visibility toggle</td>
+            </tr>
+            <tr>
+              <td><strong>Acoustic properties</strong></td>
+              <td>Acoustic privacy, natural sound sources, ambient sound level</td>
+              <td>Ambient audio loop selector</td>
+            </tr>
+            <tr>
+              <td><strong>Visual complexity</strong></td>
+              <td>Fractal dimension, symmetry, ornament density</td>
+              <td>Partition depth: 0.0 m &ndash; 2.5 m</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- TOOLS / SETUP -->
+      <section>
+        <h2>Tools and accounts you&rsquo;ll need</h2>
+        <p>
+          Track&nbsp;3 has more setup than the other tracks because it spans
+          three software ecosystems &mdash; the browser, Blender, and the
+          LLM API. Get these in place before the first sprint.
+        </p>
+
+        <div class="repo-list">
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://www.blender.org/download/" target="_blank" rel="noopener">Blender 4.x</a>
+              &nbsp;<span class="callout-pill-amber">Required</span>
+            </div>
+            <div class="repo-item-purpose">
+              Free and open-source. You&rsquo;ll use it to import glTF
+              models, segment fused meshes into named architectural
+              elements, and run headless Python scripts for batch
+              processing. Install via <code>brew install --cask blender</code>
+              (Mac) or the official installer.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/ahujasid/blender-mcp" target="_blank" rel="noopener">BlenderMCP</a>
+              &nbsp;<span class="callout-pill-blue">Recommended</span>
+            </div>
+            <div class="repo-item-purpose">
+              Model Context Protocol bridge that lets Claude or Cursor
+              control Blender via natural language with viewport awareness.
+              The most powerful AI-assisted segmentation option for Task 1.
+              <code>brew install uv</code> first, then follow the
+              <a href="https://github.com/ahujasid/blender-mcp">README</a>.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://marble.worldlabs.ai/" target="_blank" rel="noopener">World Labs Marble</a>
+              &nbsp;<span class="callout-pill-amber">At least 3 worlds</span>
+            </div>
+            <div class="repo-item-purpose">
+              Photo &rarr; 3D world generator. The free plan gives you four
+              worlds, the Standard plan gives twelve. You must generate at
+              least three of your twenty models with Marble to demonstrate
+              the photo &rarr; 3D &rarr; parametric pipeline.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://aframe.io/" target="_blank" rel="noopener">A-Frame</a>
+              &nbsp;<span class="callout-pill-teal">Browser-based</span>
+            </div>
+            <div class="repo-item-purpose">
+              WebXR framework that wraps Three.js. Loads glTF natively, runs
+              in any browser, no install. Your Task&nbsp;2 viewer is a
+              single HTML file that drops in A-Frame via a CDN tag.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/gkjohnson/three-gpu-pathtracer" target="_blank" rel="noopener">three-gpu-pathtracer</a>
+              &nbsp;<span class="callout-pill-blue">Stretch goal</span>
+            </div>
+            <div class="repo-item-purpose">
+              Optional path-traced lighting library. Converges in ~2 seconds
+              on any modern laptop with WebGL&nbsp;2. Worth the upgrade for
+              the realism win on Task&nbsp;2; not required.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              Gemini API key
+              &nbsp;<span class="callout-pill-amber">Required for Task 3</span>
+            </div>
+            <div class="repo-item-purpose">
+              Free at
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com</a>.
+              Use the <code>gemini-2.0-flash</code> model with
+              <code>responseMimeType: "application/json"</code> for
+              constrained-JSON parameter extraction. Other LLM APIs work
+              equivalently if you prefer.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- REPOS -->
+      <section>
+        <h2>Repos you&rsquo;ll need</h2>
+        <p>
+          Track&nbsp;3 lives mostly in the <code>Knowledge_Atlas</code> repo,
+          but the AI front-end pulls from two sibling repos for vocabulary
+          and presets.
+        </p>
+        <div class="repo-list">
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Knowledge_Atlas" target="_blank" rel="noopener">Knowledge_Atlas</a>
+            </div>
+            <div class="repo-item-purpose">
+              The Atlas itself &mdash; this is where your model catalog,
+              VR viewer, and AI front-end ship. All three Task deliverables
+              go in this repo on your <code>track3/your-name</code> branch.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Tagging_Contractor" target="_blank" rel="noopener">Tagging_Contractor</a>
+            </div>
+            <div class="repo-item-purpose">
+              The 424-tag registry: 330 of those tags are continuous or
+              ordinal and represent manipulable environmental features.
+              Reference for which factors map to which manipulation classes.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Article_Eater" target="_blank" rel="noopener">Article_Eater</a>
+            </div>
+            <div class="repo-item-purpose">
+              The 166 PNU templates that describe what neuroarchitecture
+              researchers actually manipulate in the published literature
+              &mdash; the source of evidence for your Task&nbsp;3 presets.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- HOW THIS PAGE WORKS -->
+      <section>
+        <h2>How to read these pages</h2>
+        <p>
+          Click any task on the left to see the full assignment.  Every task
+          page has the same layout: a hero with the points and prerequisites,
+          a section explaining why the work matters, the phases broken into
+          contracts and deliverables, the success conditions, the grading
+          rubric, and the GitHub submission instructions.
+        </p>
+        <p>
+          The contracts you write in each phase are graded as carefully as
+          the working code &mdash; vague contracts are flagged at the
+          contract gate and keep your work out of the integrated pipeline.
+          Read the &ldquo;Contract objective&rdquo; box at the start of each
+          phase and write your contract <em>before</em> you ask any AI to
+          build anything.
+        </p>
+      </section>
+
+      <!-- GITHUB SUBMISSION (intro variant) -->
+      <section class="github-submission">
+        <h2 id="submission">How submission works for Track 3</h2>
+
+        <p>
+          Track&nbsp;3 uses a single git branch per student &mdash;
+          <code>track3/your-name</code> &mdash; across all three tasks.
+          Each completed task is submitted as its own Pull Request to the
+          instructor. The full mechanics are on each task page; here&rsquo;s
+          the lifecycle in one paragraph:
+        </p>
+
+        <ol>
+          <li><strong>Once at the start of the track:</strong> fork
+            <code>Knowledge_Atlas</code>, clone, set the
+            <code>upstream</code> remote, and create
+            <code>track3/your-name</code> off
+            <code>upstream/main</code>.</li>
+          <li><strong>Continuously while working:</strong> commit small,
+            push at the end of each session.  Models, mesh annotations, and
+            HTML files all live on this single branch.</li>
+          <li><strong>At the end of each task:</strong> open a Pull Request
+            from your branch to <code>dkirsh:main</code>, title it
+            <code>Track 3 &middot; Task N: ... &mdash; your name</code>,
+            paste your file manifest, tag <code>@dkirsh</code>, and do not
+            merge.</li>
+          <li><strong>Across tasks:</strong> keep using the same branch;
+            additional task PRs are opened against the previous task&rsquo;s
+            merge commit.</li>
+        </ol>
+
+        <p>
+          The detailed commands and the per-task PR title format are on each
+          task page under &ldquo;Submit Task N on GitHub.&rdquo;  Track&nbsp;3
+          submissions also include
+          <strong>screenshots and short screen recordings</strong> as
+          deliverables; pointers go in your PR body and the actual files go
+          in a <code>track3/&lt;your-name&gt;/media/</code> directory on
+          your branch.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t3_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+  <script src="_track_side_nav.js" defer></script>
+
+</body>
+</html>

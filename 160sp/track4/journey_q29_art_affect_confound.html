@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Does ART survive the affective confound? — A worked evidential journey</title>
+  <link rel="stylesheet" href="../_track_pages_shared.css">
+  <style>
+    body { padding-top: 56px; }
+    .wrap { background: var(--paper); }
+  </style>
+  <style>
+    :root {
+      --paper:        #fbf8f1;
+      --ink:          #1f1d1a;
+      --muted:        #5b574f;
+      --rule:         #ddd5c1;
+      --accent:       #5a3e1b;
+      --accent-soft:  #e9dec4;
+      --emphasis:     #8a4b1a;
+      --good:         #2c6b3f;
+      --bad:          #8e2727;
+      --rebut-bg:     #f9f0ee;
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--paper); color: var(--ink); margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      line-height: 1.6; scroll-behavior: smooth; }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 32px 28px 64px; }
+
+    header.j-header { border-bottom: 1px solid var(--rule); padding-bottom: 18px; margin-bottom: 22px; }
+    header.j-header .crumb {
+      font-size: 0.84rem; color: var(--muted); margin-bottom: 8px;
+    }
+    header.j-header .crumb a { color: var(--accent); text-decoration: none; }
+    header.j-header .crumb a:hover { text-decoration: underline; }
+    header.j-header h1 {
+      font-size: 1.7rem; margin: 0 0 6px; letter-spacing: 0.2px;
+    }
+    header.j-header .meta {
+      font-size: 0.86rem; color: var(--muted);
+    }
+
+    .search-box {
+      background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+      padding: 14px 18px; margin: 18px 0 22px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .search-box .icon {
+      font-size: 1.1rem; color: var(--muted);
+    }
+    .search-box input {
+      flex: 1; border: none; background: transparent; font: inherit;
+      color: var(--ink); padding: 4px 0; outline: none;
+    }
+    .search-box .helper {
+      font-size: 0.82rem; color: var(--muted); margin-top: 6px;
+    }
+
+    .step {
+      border-left: 3px solid var(--accent-soft);
+      padding: 14px 18px; margin: 22px 0;
+      background: #fff;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+    }
+    .step.rebut { border-left-color: var(--bad); background: var(--rebut-bg); }
+    .step h2 {
+      font-size: 0.78rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.6px;
+      margin: 0 0 4px; font-weight: 700;
+    }
+    .step.rebut h2 { color: var(--bad); }
+    .step h3 {
+      font-size: 1.18rem; margin: 0 0 12px;
+      letter-spacing: 0.1px; line-height: 1.3;
+    }
+    .step p { margin: 0 0 10px; }
+    .step p:last-child { margin-bottom: 0; }
+    .step .cite {
+      font-size: 0.85rem; color: var(--muted);
+      border-top: 1px dashed var(--rule); padding-top: 8px; margin-top: 14px;
+    }
+    .step .cite b { color: var(--accent); font-weight: 600; }
+
+    /* Inline mini-diagrams */
+    .ascii-fig {
+      font-family: "JetBrains Mono", "Menlo", monospace;
+      font-size: 0.78rem; color: var(--accent);
+      background: var(--accent-soft); padding: 10px 14px;
+      border-radius: 4px; white-space: pre; line-height: 1.45;
+      margin: 12px 0;
+    }
+
+    .stat-figure {
+      display: flex; align-items: baseline; gap: 12px;
+      background: var(--accent-soft); padding: 12px 16px;
+      border-radius: 4px; margin: 12px 0;
+    }
+    .stat-figure .num {
+      font-size: 1.6rem; font-weight: 700; color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-figure .lbl { font-size: 0.92rem; color: var(--muted); }
+
+    .toulmin-mini {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0 14px;
+      margin: 14px 0;
+    }
+    .toulmin-mini .box {
+      border: 1px solid var(--rule); padding: 10px 12px;
+      background: #fff; border-radius: 4px;
+      font-size: 0.86rem;
+    }
+    .toulmin-mini .box.rebut { border-color: var(--bad); background: var(--rebut-bg); }
+    .toulmin-mini .arrow {
+      align-self: center; color: var(--accent);
+      font-size: 1.2rem; padding: 0 8px;
+    }
+    .toulmin-mini .box .label {
+      font-size: 0.72rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.4px;
+      margin: 0 0 4px;
+    }
+    .toulmin-mini .box.rebut .label { color: var(--bad); }
+
+    /* Chinn-Brewer panel */
+    .cb-panel {
+      border: 1px solid var(--rule); border-radius: 6px; background: #fff;
+      padding: 14px 16px; margin: 18px 0;
+    }
+    .cb-panel h4 {
+      font-size: 0.92rem; margin: 0 0 8px; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700;
+    }
+    .cb-panel .cb-prompt {
+      font-size: 0.92rem; color: var(--muted); margin: 0 0 12px;
+    }
+    .cb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .cb-list li {
+      border: 1px solid var(--rule); border-radius: 4px;
+      cursor: pointer; transition: background 0.15s ease;
+      overflow: hidden;
+    }
+    .cb-list li .cb-head {
+      display: grid; grid-template-columns: 24px 1fr auto;
+      gap: 10px; align-items: baseline;
+      padding: 8px 12px; background: var(--accent-soft);
+    }
+    .cb-list li:hover .cb-head { background: #ddcfa6; }
+    .cb-list li .cb-num {
+      font-variant-numeric: tabular-nums; font-weight: 600; color: var(--accent);
+    }
+    .cb-list li .cb-name { font-size: 0.92rem; }
+    .cb-list li .cb-disp {
+      font-size: 0.74rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted);
+    }
+    .cb-list li .cb-disp.protective    { color: var(--bad); }
+    .cb-list li .cb-disp.flexible      { color: #b76e1a; } /* matches widget --warn for cross-page consistency */
+    .cb-list li .cb-disp.revising      { color: var(--good); }
+    .cb-list li .cb-body {
+      display: none; padding: 10px 14px; font-size: 0.88rem; background: #fff;
+    }
+    .cb-list li.open .cb-body { display: block; }
+    .cb-list li .cb-body p { margin: 0 0 8px; }
+    .cb-list li .cb-body p:last-child { margin-bottom: 0; }
+
+    .reader-response {
+      border: 1px solid var(--accent); border-radius: 6px;
+      background: #fff; padding: 18px 20px; margin: 24px 0 12px;
+    }
+    .reader-response h4 {
+      font-size: 1rem; margin: 0 0 10px; color: var(--accent);
+    }
+    .reader-response select, .reader-response textarea {
+      font: inherit; padding: 8px 10px; border: 1px solid var(--rule);
+      border-radius: 3px; background: var(--paper); color: var(--ink);
+      width: 100%; margin-bottom: 12px;
+    }
+    .reader-response textarea { min-height: 80px; resize: vertical; }
+    .reader-response button {
+      font: inherit; padding: 6px 14px; border: 1px solid var(--accent);
+      border-radius: 3px; background: var(--accent); color: #fff;
+      cursor: pointer;
+    }
+    .reader-response button:hover { background: #4a3214; }
+    .reader-response .stored {
+      display: none; margin-top: 12px; padding: 10px 12px;
+      background: var(--accent-soft); border-radius: 4px; font-size: 0.88rem;
+    }
+
+    .footer-note {
+      margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rule);
+      font-size: 0.84rem; color: var(--muted);
+    }
+    .footer-note a { color: var(--accent); }
+    .footer-note cite { font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../../ka_topics.html">Explore</a>
+      <a href="../../ka_evidence.html">Evidence</a>
+      <a href="../../ka_gaps.html">Gaps</a>
+      <a href="../../ka_article_search.html">Articles</a>
+      <a href="../../ka_contribute.html">Contribute</a>
+      <a href="../ka_student_setup.html">Course</a>
+      <a href="../ka_schedule.html">160 Syllabus</a>
+      <a href="../ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../../ka_home.html">Home</a> /
+    <a href="../ka_schedule.html">160 Student</a> /
+    <a href="../t4_intro.html">Track 4</a> /
+    <a href="../t4_task3.html">Task 3</a> /
+    <span>Worked example: Q-29</span>
+  </div>
+
+<div class="wrap">
+
+  <header class="j-header">
+    <div class="crumb">
+      <a href="../../ka_home.html">Knowledge Atlas</a> ·
+      <a href="answer_shape_catalogue.html">Answer-shape catalogue</a> ·
+      Worked journey: Q-29 (researcher persona)
+    </div>
+    <h1>Does Attention Restoration Theory survive the affective confound?</h1>
+    <div class="meta">
+      A worked evidential journey · Toulmin shape · researcher persona ·
+      Q-29 in the canonical question corpus.
+    </div>
+  </header>
+
+  <div class="search-box">
+    <span class="icon">⌕</span>
+    <input type="text" value="Does ART survive the affective confound?"
+           aria-label="Reader's typed question">
+  </div>
+  <p style="font-size: 0.88rem; color: var(--muted); margin: -8px 0 18px;">
+    The reader has typed the question above. The Atlas will now build a
+    Toulmin argument around it, surface the principal defeater inline,
+    and ask the reader which Chinn &amp; Brewer (1993) response they
+    would take with the rebuttal before they leave.
+  </p>
+
+  <!-- STEP 1 — DATA -->
+  <div class="step" id="data">
+    <h2>Step 1 · Data</h2>
+    <h3>Re-analyses controlling for affect attenuate the restoration effect by roughly 40 to 60 per cent.</h3>
+    <p>
+      The empirical core of the affect-confound critique is a set of
+      re-analyses of attention-restoration studies in which the
+      analyst statistically partials out the post-exposure improvement
+      in mood. The restoration effect — operationalised either as
+      improved performance on attention-demanding tasks or as
+      self-reported restorativeness — does not vanish under this
+      treatment, but it shrinks substantially. Pooled across the
+      studies that report enough detail to be re-analysed, the
+      shrinkage falls in the 40 to 60 per cent range.
+    </p>
+    <div class="stat-figure">
+      <span class="num">~40–60%</span>
+      <span class="lbl">
+        attenuation of the restoration effect when affect is
+        statistically controlled.
+        <em style="display:block;font-style:italic;color:var(--muted);font-size:0.82rem;margin-top:4px;">
+          Pooled across roughly a dozen re-analysed studies (Joye &amp;
+          van den Berg, 2011; Stevenson et al., 2018); per-study Ns range
+          from ≈30 to ≈400. The <em>range</em> reflects real heterogeneity
+          across studies rather than a single confidence interval — this
+          is why the journey's claim is "partly survives" rather than a
+          point estimate.
+        </em>
+      </span>
+    </div>
+    <p>
+      What the data does <i>not</i> show is that the residual effect
+      is zero. It also does not show whether the attenuated effect is
+      what is left of "real" restoration after a confound is removed,
+      or whether it is what is left of restoration after a mediator is
+      removed. The two interpretations are statistically
+      indistinguishable at this level of analysis.
+    </p>
+    <div class="cite">
+      <b>Sources.</b> Joye &amp; van den Berg (2011), <i>Urban Forestry
+      &amp; Urban Greening</i>; subsequent re-analyses summarised in
+      Stevenson, Schilhab, &amp; Bentsen (2018), <i>Health &amp; Place</i>.
+    </div>
+  </div>
+
+  <!-- STEP 2 — WARRANT + BACKING -->
+  <div class="step" id="warrant">
+    <h2>Step 2 · Warrant and Backing</h2>
+    <h3>If two candidate mechanisms are always present together, no analysis that fails to separate them can determine which is doing the work.</h3>
+    <p>
+      The argument from data to claim is licensed by a general
+      principle in the philosophy of science: a putative causal
+      mechanism is only established by evidence that distinguishes it
+      from alternative mechanisms operating in the same conditions.
+      Where two candidate mechanisms — restored attention and improved
+      affect — are always present together (because exposure to
+      restorative environments produces both), neither is established
+      until an analysis is run that holds one constant and varies the
+      other.
+    </p>
+    <p>
+      The backing for this warrant lives in the methodological
+      tradition that distinguishes <i>confounders</i> (variables that
+      independently produce the outcome and are correlated with the
+      putative cause) from <i>mediators</i> (variables that lie on the
+      causal pathway between cause and outcome). The distinction is
+      consequential here: a confounder defeats the original mechanistic
+      claim; a mediator preserves the mechanism while specifying its
+      pathway.
+    </p>
+    <div class="cite">
+      <b>Backing.</b> MacKinnon (2008), <i>Introduction to Statistical
+      Mediation Analysis</i>; the confounder-vs-mediator distinction is
+      itself drawn from Hill (1965) and developed in modern causal
+      inference (Pearl, 2009).
+    </div>
+  </div>
+
+  <!-- STEP 3 — CLAIM (with QUALIFIER) -->
+  <div class="step" id="claim">
+    <h2>Step 3 · Qualified Claim</h2>
+    <h3>Attention Restoration Theory partly survives the affective-confound critique; the mechanism it posits remains underdetermined.</h3>
+    <p>
+      Reading the data through the warrant produces the claim above
+      with two attached qualifiers. The first qualifier is
+      <i>partly</i>: the effect itself is not eliminated by the
+      affect-controlled re-analyses, only attenuated. The second
+      qualifier is <i>underdetermined</i>: the residual effect could
+      reflect genuine restoration with a smaller true magnitude than
+      originally claimed, or it could reflect a mood-improvement story
+      that the affect controls did not fully capture, or it could
+      reflect a mixed mechanism in which restoration and affect both
+      contribute through partly overlapping pathways. The data
+      available in 2026 cannot distinguish these.
+    </p>
+    <div class="toulmin-mini">
+      <div class="box">
+        <p class="label">Data</p>
+        Affect-controlled re-analyses attenuate the effect by ~40–60%.
+      </div>
+      <div class="arrow">→</div>
+      <div class="box">
+        <p class="label">Claim (probably)</p>
+        ART partly survives; mechanism uncertain.
+      </div>
+    </div>
+    <p>
+      This is the claim a journey can defensibly leave a reader with
+      in 2026. It is weaker than the canonical Kaplan claim from 1989
+      and 1995; it is stronger than the rejection claim a hostile
+      reading would propose.
+    </p>
+  </div>
+
+  <!-- STEP 4 — REBUTTAL (most important step) -->
+  <div class="step rebut" id="rebuttal">
+    <h2>Step 4 · Rebuttal</h2>
+    <h3>The principal threat to the claim: affect may be a mediator rather than a confounder.</h3>
+    <p>
+      The claim above treats the affect-controlled attenuation as
+      evidence that the original ART mechanism is not as well
+      established as previously believed. A coherent rebuttal exists.
+      If affect is a <i>mediator</i> rather than a <i>confounder</i>
+      — that is, if the causal pathway runs from environment through
+      affective change to restored attention, rather than from
+      environment to restored attention with affect riding along
+      independently — then statistically partialling out affect would
+      attenuate the restoration estimate even though ART's mechanism
+      is intact. Under the mediation reading, the original ART claim
+      is preserved; only its description of the pathway changes.
+    </p>
+    <p>
+      Whether affect is a confounder or a mediator cannot be settled
+      by the existing pooled re-analyses. It would take dose-response
+      and temporal-order designs that the field has only begun to
+      run. A Bayesian reader who began with high credence in ART will
+      reasonably take the data as compatible with the mediation
+      reading and update only modestly; a reader who began sceptical
+      will reasonably take the data as evidence of confounding and
+      update more sharply.
+    </p>
+    <div class="cite">
+      <b>Defeater source.</b> The mediator-vs-confounder distinction as
+      it applies here is articulated in MacKinnon (2008) §1.3; its
+      direct application to ART has been raised in commentary on
+      Joye &amp; van den Berg (2011) and in Hartig et al. (2014),
+      <i>Annual Review of Public Health</i>.
+    </div>
+  </div>
+
+  <!-- STEP 5 — CHINN-BREWER PANEL -->
+  <div class="step" id="chinn-brewer">
+    <h2>Step 5 · How readers respond to a defeater</h2>
+    <h3>The seven responses to anomalous data, applied to the affect-confound critique.</h3>
+    <p>
+      Chinn &amp; Brewer (1993) catalogue seven responses that
+      readers actually take when presented with evidence that
+      conflicts with a theory they hold. The responses are not equally
+      defensible; some preserve the original theory at the cost of
+      epistemic honesty, others revise it at the cost of accumulated
+      commitment. Click any response to see what taking it would mean
+      for a reader of this journey.
+    </p>
+    <div class="cb-panel">
+      <h4>Anomalous datum (this journey)</h4>
+      <p class="cb-prompt">
+        <i>Affect-controlled re-analyses attenuate the ART effect by
+        40–60 per cent.</i>
+      </p>
+      <ul class="cb-list" id="cb-list"></ul>
+    </div>
+  </div>
+
+  <!-- STEP 6 — READER RESPONSE -->
+  <div class="step" id="response">
+    <h2>Step 6 · Your response</h2>
+    <h3>Which response do you take with this defeater, and why?</h3>
+    <p>
+      The journey is designed not to leave a reader with a single
+      answer but to make their <i>response to the defeater</i>
+      explicit. A reader who is invited to choose a Chinn-Brewer
+      response and explain it is doing the epistemic work the journey
+      was built to support.
+    </p>
+    <div class="reader-response">
+      <h4>Record your response (saved locally for this session)</h4>
+      <label for="cb-pick" style="font-size: 0.85rem; color: var(--muted);">
+        Which Chinn &amp; Brewer response would you take?
+      </label>
+      <select id="cb-pick">
+        <option value="">— select —</option>
+        <option value="1">1. Ignore the data</option>
+        <option value="2">2. Reject the data</option>
+        <option value="3">3. Exclude the data from the theory's domain</option>
+        <option value="4">4. Hold the data in abeyance</option>
+        <option value="5">5. Reinterpret the data, theory unchanged</option>
+        <option value="6">6. Make peripheral changes to the theory</option>
+        <option value="7">7. Change the theory</option>
+      </select>
+      <label for="cb-why" style="font-size: 0.85rem; color: var(--muted);">
+        Why this response, in one or two sentences?
+      </label>
+      <textarea id="cb-why" placeholder="Your reasoning…"></textarea>
+      <button id="cb-save">Save my response</button>
+      <div class="stored" id="cb-stored"></div>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    A worked evidential journey for Q-29 of the researcher question
+    corpus. Built as the Task-3 exemplar for COGS 160 SP Track 4 by
+    CW. The Chinn-Brewer widget is the <a
+    href="chinn_brewer_response_widget.html">standalone version</a>
+    inlined here.
+    Sources: <cite>Kaplan &amp; Kaplan (1989); Kaplan (1995); Hartig
+    et al. (1997); Berman et al. (2008); Joye &amp; van den Berg
+    (2011); Hartig et al. (2014); MacKinnon (2008); Chinn &amp; Brewer
+    (1993); Toulmin (1958/2003)</cite>.
+  </p>
+</div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../../ka_home.html">Global home</a>
+        <a href="../../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="../ka_tracks.html">Tracks portal</a>
+        <a href="../t4_intro.html">Track 4 overview</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">Companion artefacts</div>
+        <a href="answer_shape_catalogue.html">Answer-shape catalogue</a>
+        <a href="chinn_brewer_response_widget.html">Chinn-Brewer 7-response widget</a>
+        <a href="../t4_task3.html">Back to Task 3</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+
+<script>
+  const RESPONSES = [
+    { n:1, name:"Ignore the data", disp:"protective",
+      body:"You set the affect-confound critique aside without engaging it; you continue to cite the canonical ART claim as before. Defensible only when you have independent reason to think the critique is irrelevant; otherwise, motivated reasoning." },
+    { n:2, name:"Reject the data", disp:"protective",
+      body:"You argue the re-analyses are flawed — wrong samples, wrong measures, wrong statistical assumptions. Sometimes correct; the point is to make the rejection criteria explicit so your standards are visible to yourself." },
+    { n:3, name:"Exclude the data from the theory's domain", disp:"protective",
+      body:"You accept the re-analyses as valid for the studies they cover but redraw ART's scope so the affected studies fall outside. Legitimate when there is independent reason to think the new domain is genuinely different; cosmetic when ad hoc." },
+    { n:4, name:"Hold the data in abeyance", disp:"flexible",
+      body:"You accept the data and recognise it threatens the canonical ART claim, but defer judgement pending dose-response and temporal-order studies. Often the rational stance under genuine uncertainty." },
+    { n:5, name:"Reinterpret the data, theory unchanged", disp:"flexible",
+      body:"You accept the data but propose that affect mediates rather than confounds the restoration effect. ART's mechanism is preserved under a more specific pathway description. Inventive; should make a new prediction that distinguishes it from the original." },
+    { n:6, name:"Make peripheral changes to the theory", disp:"revising",
+      body:"You keep ART's core but add an auxiliary moderator — for instance, that the canonical claim holds only when affective and attentional pathways can be experimentally dissociated. Lakatos's protective-belt move; useful when principled, problematic when it accumulates." },
+    { n:7, name:"Change the theory", disp:"revising",
+      body:"You treat the data as decisive and abandon the canonical ART claim in favour of a competing account — perhaps the affect-as-primary story, perhaps a hybrid attention-and-affect framework. The most consequential response and the rarest in practice." },
+  ];
+
+  // Render Chinn-Brewer list
+  const list = document.getElementById('cb-list');
+  RESPONSES.forEach(r => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <div class="cb-head">
+        <span class="cb-num">${r.n}.</span>
+        <span class="cb-name">${r.name}</span>
+        <span class="cb-disp ${r.disp}">${r.disp}</span>
+      </div>
+      <div class="cb-body"><p>${r.body}</p></div>`;
+    li.querySelector('.cb-head').addEventListener('click', () => li.classList.toggle('open'));
+    list.appendChild(li);
+  });
+
+  // Reader response storage (in-memory, no localStorage per Atlas convention)
+  let SAVED = null;
+  document.getElementById('cb-save').addEventListener('click', () => {
+    const pick = document.getElementById('cb-pick').value;
+    const why  = document.getElementById('cb-why').value.trim();
+    if (!pick) { alert('Please select a Chinn-Brewer response.'); return; }
+    SAVED = { pick, why };
+    const stored = document.getElementById('cb-stored');
+    const opt    = document.getElementById('cb-pick').selectedOptions[0].text;
+    stored.style.display = 'block';
+    stored.innerHTML = `<b>Saved (this session only):</b><br>Response: ${opt}<br>` +
+                       (why ? `Reasoning: ${why}` : '<i>No reasoning recorded.</i>');
+  });
+</script>
+</body>
+</html>

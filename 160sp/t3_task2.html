@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 2: VR Conversion &amp; Factor Testing &middot; Track 3 &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb"><!-- canonical: Home > User Type > Journey > Page -->
+      <a href="../ka_home.html">Home</a> /
+      <a href="ka_schedule.html">160 Student</a> /
+      <a href="t3_intro.html">Track 3</a> /
+      <span>Task 2: VR Conversion &amp; Factor Testing</span>
+    </div>
+
+  <div class="page-grid">
+
+    <aside class="side-nav" data-side-nav-page="t3_task2"></aside>
+
+    <main class="content">
+
+      <header class="hero">
+        <div class="hero-track">TRACK 3 &middot; TASK 2</div>
+        <h1>VR Conversion &amp; Manual Factor Testing</h1>
+        <p class="hero-sub">
+          Load at least ten of your models in a browser-based A-Frame
+          viewer, build real-time slider controls for all eight
+          manipulation classes, and produce a factor viability matrix
+          supported by before/after screenshots.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">3 phases</span>
+          <span class="hero-pill">Prerequisite: Task 1</span>
+          <span class="hero-pill">120+ fps target</span>
+        </div>
+      </header>
+
+      <h2>The big picture</h2>
+      <p>
+        In Task&nbsp;1 you cataloged twenty-plus 3D models and annotated
+        every mesh.  Now you must <strong>prove</strong> those annotations
+        are correct by actually loading the models in a browser and
+        manually testing every manipulation.  This is not a demo. It is
+        validation engineering &mdash; and the matrix you produce is the
+        input to Task&nbsp;3&rsquo;s validation gate.
+      </p>
+
+      <h3>Why A-Frame, not Unity or Unreal</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Platform</th><th>Learning curve</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A-Frame (WebXR)</strong></td>
+            <td>HTML + JS; loads glTF natively; runs in browser; zero install</td>
+            <td>&#10003; Use this</td>
+          </tr>
+          <tr>
+            <td>Unity</td>
+            <td>C#; 2-week onboarding; heavy project files</td>
+            <td>&#10005; Too slow for six weeks</td>
+          </tr>
+          <tr>
+            <td>Unreal</td>
+            <td>C++ / Blueprint; steepest curve; massive files</td>
+            <td>&#10005; Not feasible</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        You already know HTML and JavaScript from Tracks&nbsp;1 and 2.
+        A-Frame wraps Three.js, a glTF loads with one HTML tag, and
+        modifications are JavaScript property changes that execute at
+        <strong>120 fps</strong> in our prototype.
+      </p>
+
+      <h2>Phase 1: Build the interactive viewer</h2>
+
+      <div class="callout-teal">
+        <strong>Contract objective:</strong>
+        &ldquo;I want an HTML page that loads any of my glTF models and
+        provides real-time slider controls for each manipulation
+        class.&rdquo;
+        <br><strong>Contract is with:</strong> your glTF models, your
+        <code>mesh_roles.json</code> annotations from Task&nbsp;1, and
+        the Three.js / A-Frame API.
+      </div>
+
+      <h3>Real-time sliders (continuous, instant feedback)</h3>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Slider</th><th>What it controls</th><th>Range</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ceiling height</td><td><code>ceiling</code> mesh <code>position.y</code> + wall scale</td><td>2.0 m &ndash; 6.0 m</td></tr>
+          <tr><td>Wall roughness</td><td>Material roughness on selected wall(s)</td><td>0.0 &ndash; 1.0</td></tr>
+          <tr><td>Light intensity</td><td>Main light + ambient intensity</td><td>0.1 &ndash; 3.0</td></tr>
+          <tr><td>Color temperature</td><td>Light colour mapped from Kelvin</td><td>2700 K &ndash; 6500 K</td></tr>
+          <tr><td>Window scale</td><td>Window mesh scale</td><td>0.2&times; &ndash; 3.0&times;</td></tr>
+          <tr><td>Partition depth</td><td>Refuge partition visibility + depth</td><td>0.0 m &ndash; 2.5 m</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Discrete selectors (click to apply)</h3>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Selector</th><th>What it controls</th><th>Options</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Wall material swatches</td><td>Wall colour + roughness</td><td>Plaster, Brick, Concrete, Wood, White, Glass, Slate</td></tr>
+          <tr><td>Floor material swatches</td><td>Floor colour + roughness</td><td>Hardwood, Carpet, Tile, Polished</td></tr>
+          <tr><td>Wall selector</td><td>Which wall(s) are affected</td><td>All, North, South, East, West, Individual</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout-amber">
+        <strong>Per-wall selection is non-negotiable.</strong> The user
+        must be able to click "North Wall" and change only that
+        wall&rsquo;s material. This is what your
+        <code>mesh_roles.json</code> <code>wall_id</code> annotations from
+        Task&nbsp;1 enable. A viewer without per-wall selection cannot be
+        used by the AI front-end.
+      </div>
+
+      <h3>How wall selection works</h3>
+      <pre class="code-block">// mesh_roles.json tells us which mesh is which wall
+const roles = await fetch('mesh_roles/SKF_office_001.json').then(r =&gt; r.json());
+
+const walls = Object.entries(roles.meshes)
+  .filter(([name, info]) =&gt; info.role === 'wall')
+  .map(([name, info]) =&gt; ({ meshName: name, wallId: info.wall_id }));
+
+// When user selects "north" and clicks a material swatch:
+function setWallMaterial(wallId, color, roughness) {
+  const target = wallId === 'all' ? walls : walls.filter(w =&gt; w.wallId === wallId);
+  target.forEach(w =&gt; {
+    const mesh = scene.getObjectByName(w.meshName);
+    mesh.material.color.set(color);
+    mesh.material.roughness = roughness;
+  });
+}</pre>
+
+      <h3>How ceiling height works (the geometry challenge)</h3>
+      <pre class="code-block">function setCeilingHeight(newHeight) {
+  const ceiling = scene.getObjectByName(ceilingMeshName);
+  const originalHeight = roles.room_dimensions.height_m;
+  ceiling.position.y = newHeight;
+
+  walls.forEach(w =&gt; {
+    const mesh = scene.getObjectByName(w.meshName);
+    mesh.scale.y = newHeight / originalHeight;
+    mesh.position.y = newHeight / 2;
+  });
+
+  lights.forEach(l =&gt; { l.position.y = newHeight - 0.3; });
+}</pre>
+
+      <p>
+        These are JavaScript property changes &mdash; no re-rendering, no
+        re-compilation.  Slider dragging is perceptually instant and
+        measured at 120 fps in our prototype.
+      </p>
+
+      <h3>Lighting quality requirement</h3>
+
+      <p>
+        Basic Three.js lights (<code>DirectionalLight</code> +
+        <code>AmbientLight</code>) produce flat, unrealistic scenes with
+        no light bounce, no colour bleeding, no ambient occlusion. For
+        research stimuli, this is unacceptable &mdash; 33 of the registry
+        lighting tags describe properties of <em>indirect</em> light.
+        Your viewer must implement <strong>at least one</strong> of these
+        lighting upgrades:
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Technique</th>
+            <th>What it adds</th>
+            <th>Implementation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Level 2</strong> (minimum)</td>
+            <td>HDRI environment map + tone mapping</td>
+            <td>Realistic ambient from all directions; reflections on glossy surfaces</td>
+            <td>Load a <code>.hdr</code> from Poly Haven, set <code>scene.environment</code>, use <code>ACESFilmicToneMapping</code>. ~20 lines.</td>
+          </tr>
+          <tr>
+            <td><strong>Level 3</strong> (expected)</td>
+            <td>+ Screen-space ambient occlusion (SSAO)</td>
+            <td>Corners and crevices darken naturally; large realism boost</td>
+            <td>Add <code>SSAOPass</code> from Three.js post-processing. ~40 lines.</td>
+          </tr>
+          <tr>
+            <td><strong>Level 5</strong> (stretch)</td>
+            <td>Path tracing via <code>three-gpu-pathtracer</code></td>
+            <td>Full global illumination: light bounces between surfaces, colour bleeds, soft shadows, caustics</td>
+            <td>Replace <code>renderer.render()</code> with <code>pathTracer.renderSample()</code>. ~20 lines. See <a href="https://gkjohnson.github.io/three-gpu-pathtracer/example/bundle/interior.html">Interior Scene demo</a>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The <code>three-gpu-pathtracer</code> Interior Scene demo runs on
+        standard laptop GPUs (MacBook Air M1 and up).  It uses WebGL&nbsp;2
+        (not WebGPU), renders at half resolution during interaction, and
+        reaches a visually clean 38 samples in about 30 seconds at rest.
+        At 370+ samples the result is publication-quality.  The library is
+        actively maintained, MIT-licensed, 1.7k GitHub stars.
+      </p>
+
+      <p>The interactive UX for path tracing:</p>
+
+      <pre class="code-block">SLIDER DRAG:     Scene goes noisy (like a Blender viewport) — still responsive
+SLIDER RELEASE:  pathTracer.updateMaterials() + pathTracer.reset()
+                 Image converges to clean GI in ~2 seconds
+EXPORT:          Capture converged frame as the research stimulus</pre>
+
+      <h3>HDRI sources (all CC0, free)</h3>
+      <ul>
+        <li><a href="https://polyhaven.com/hdris" target="_blank" rel="noopener">Poly Haven HDRIs</a> &mdash; filter "indoor". Download &ge; 3 at different colour temps (warm interior, neutral studio, cool overcast).</li>
+        <li><a href="https://ambientcg.com" target="_blank" rel="noopener">Ambient CG</a> &mdash; CC0 HDRIs and matching PBR material textures.</li>
+      </ul>
+
+      <h2>Phase 2: Test each model &times; each factor</h2>
+
+      <p>
+        Load each of your top ten models (viability score &ge; 4 from
+        Task&nbsp;1) and systematically test all eight manipulation
+        classes.  For each model &times; factor combination, record one
+        of these outcomes:
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Symbol</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>&#10003;</td><td>Works correctly &mdash; the visual change is clearly visible</td></tr>
+          <tr><td>&#9888;</td><td>Partially works &mdash; e.g. shared material affects multiple walls when only one was selected</td></tr>
+          <tr><td>&#10005;</td><td>Does not work &mdash; e.g. no separate ceiling mesh</td></tr>
+          <tr><td>n/a</td><td>Not applicable &mdash; e.g. no acoustic meshes to modify</td></tr>
+        </tbody>
+      </table>
+
+      <p>The result is a 10&times;8 factor viability matrix:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Geometry</th>
+            <th>Lighting</th>
+            <th>Materials</th>
+            <th>Color</th>
+            <th>Biophilic</th>
+            <th>Furniture</th>
+            <th>Acoustic</th>
+            <th>Complexity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Model 1</td><td>&#10003;</td><td>&#10003;</td><td>&#9888;</td><td>&#10003;</td><td>&#10005;</td><td>&#10003;</td><td>n/a</td><td>&#9888;</td></tr>
+          <tr><td>Model 2</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>n/a</td><td>&#10003;</td></tr>
+          <tr><td>...</td><td colspan="8" style="text-align:center; color:var(--muted);">Fill in for all 10 models</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Testing protocol for each factor</h3>
+      <ol>
+        <li>Set the slider to its <strong>lowest</strong> value (e.g. ceiling = 2.0 m)</li>
+        <li>Take a screenshot</li>
+        <li>Set to the <strong>highest</strong> value (e.g. ceiling = 6.0 m)</li>
+        <li>Take a screenshot</li>
+        <li>Record: did it work? what broke? how long did the modification take?</li>
+      </ol>
+
+      <h3>Extended manipulation classes</h3>
+      <p>
+        Beyond the six original sliders, your viewer should also support
+        these where the model allows:
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Class</th><th>What to test</th><th>How to implement</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Window placement</td>
+            <td>Move window mesh from one wall to another</td>
+            <td>Re-parent window to different wall mesh; update position</td>
+          </tr>
+          <tr>
+            <td>Furniture density</td>
+            <td>Show / hide furniture meshes</td>
+            <td>Toggle <code>mesh.visible</code> on furniture-role meshes</td>
+          </tr>
+          <tr>
+            <td>View content</td>
+            <td>Change what is visible through the window</td>
+            <td>Swap the window mesh&rsquo;s emissive texture or backdrop</td>
+          </tr>
+          <tr>
+            <td>Partition walls</td>
+            <td>Add / remove internal dividers</td>
+            <td>Toggle visibility of partition-role meshes</td>
+          </tr>
+          <tr>
+            <td>Floor-plan proportions</td>
+            <td>Make the room wider or narrower</td>
+            <td>Scale floor + walls + ceiling on X or Z</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Phase 3: Write ruthless validation tests</h2>
+
+      <p>
+        For each model you tested, write a <strong>ruthless prompt</strong>
+        that an AI cannot pass unless the viewer actually works.  Run this
+        on every model.  The results go into the factor viability matrix.
+      </p>
+
+      <div class="ai-box">
+        <em>Load model SKF_office_001 in the viewer. Execute these 12 tests
+        in sequence:</em>
+        <ol>
+          <li><em>Set ceiling to 2.0 m. Is the ceiling visually at desk
+          height? If not, the scale is wrong.</em></li>
+          <li><em>Set ceiling to 5.0 m. Do the walls extend to meet it,
+          or is there a gap?</em></li>
+          <li><em>Select <strong>only</strong> the north wall. Change it to
+          brick. Verify: south, east, and west walls are
+          unchanged.</em></li>
+          <li><em>Set colour temperature to 2700 K. Does the room look
+          warm? Set to 6500 K. Does it look clinical?</em></li>
+          <li><em>Set window scale to 3.0&times;. Does the window mesh
+          overlap adjacent walls?</em></li>
+          <li><em>Set window scale to 0.2&times;. Is the window still
+          visible or does it disappear?</em></li>
+          <li><em>Change floor to marble (roughness 0.15). Does it look
+          reflective?</em></li>
+          <li><em>Hide all furniture meshes. Is only architecture
+          remaining?</em></li>
+          <li><em>Check the FPS counter during slider drag. Is it &ge; 60
+          fps throughout?</em></li>
+          <li><em>Set all sliders to extreme values simultaneously. Does
+          anything z-fight or overlap?</em></li>
+          <li><em>Reset to defaults. Does the model return to its original
+          state exactly?</em></li>
+          <li><em>Open the browser console. Are there any JavaScript
+          errors?</em></li>
+        </ol>
+        <em>Report pass / fail for each test.</em>
+      </div>
+
+      <h2>What you submit</h2>
+
+      <table class="data-table">
+        <thead><tr><th>Item</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><code>ka_vr_viewer.html</code></td><td>Interactive viewer with sliders + material swatches + per-wall selection</td></tr>
+          <tr><td>Factor viability matrix</td><td>10 models &times; 8 factors, each &#10003; / &#9888; / &#10005;</td></tr>
+          <tr><td>Before / after screenshots</td><td>Every factor &times; every model &mdash; minimum 80 screenshots</td></tr>
+          <tr><td>Ruthless validation results</td><td>Pass / fail for the 12-test protocol on each model</td></tr>
+          <tr><td>Modification log</td><td>What broke at scale and how you fixed it</td></tr>
+          <tr><td>Contracts + tests</td><td>Written <em>before</em> building</td></tr>
+          <tr><td>File manifest</td><td><code>git diff --name-only upstream/main</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2>Grading (75 points)</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Contracts + tests</strong> <span class="callout-pill-rose">CONTRACT GATE</span></td>
+            <td>10</td>
+            <td>Written <em>before</em> building. Specific.</td>
+          </tr>
+          <tr>
+            <td><strong>Viewer functionality</strong></td>
+            <td>20</td>
+            <td>All eight factors controllable; per-wall selection; sliders real-time</td>
+          </tr>
+          <tr>
+            <td><strong>Model coverage</strong></td>
+            <td>15</td>
+            <td>&ge; 10 models tested, &ge; 5 room types</td>
+          </tr>
+          <tr>
+            <td><strong>Factor viability matrix</strong></td>
+            <td>15</td>
+            <td>Accurate, supported by screenshots, failures documented</td>
+          </tr>
+          <tr>
+            <td><strong>Ruthless validation</strong></td>
+            <td>10</td>
+            <td>12-test protocol run on all models, results honest</td>
+          </tr>
+          <tr>
+            <td><strong>Verification</strong></td>
+            <td>5</td>
+            <td>Caught problems, documented fixes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout-rose">
+        <strong>Contract gate.</strong> If your viewer does not include
+        per-wall selection or your viability matrix is fabricated, your
+        work will not be integrated.
+      </div>
+
+      <h2>Existing code you should know about</h2>
+      <ul>
+        <li><code>scratch/t3_ai_frontend_v2.html</code> &mdash; working prototype with sliders, material swatches, FPS counter, and NL parser.  Study this before building.</li>
+        <li><a href="https://aframe.io/" target="_blank" rel="noopener">A-Frame documentation</a> &mdash; entity-component system, glTF loading, light components.</li>
+        <li>Three.js <code>GLTFLoader</code> docs &mdash; how to traverse loaded glTF scene graphs.</li>
+        <li>Your <code>mesh_roles/*.json</code> from Task&nbsp;1 &mdash; the mesh-to-role mappings your viewer consumes.</li>
+      </ul>
+
+      <h2>Why this matters</h2>
+      <p>
+        Your viewer is the testing harness for Task&nbsp;3&rsquo;s AI
+        front-end.  Every slider you build here becomes a parameter the
+        LLM can control via natural language.  Your factor viability
+        matrix tells Task&nbsp;3 exactly which modifications are safe to
+        expose for which models.
+      </p>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 2 on GitHub</h2>
+
+        <p>
+          Stay on the same <code>track3/your-name</code> branch you used
+          for Task&nbsp;1.  Open Task&nbsp;2&rsquo;s PR against
+          Task&nbsp;1&rsquo;s merge commit using GitHub&rsquo;s
+          <em>compare</em> feature.
+        </p>
+
+        <h3>Working on Task 2</h3>
+        <pre class="code-block">git checkout track3/&lt;your-name&gt;
+git pull --rebase upstream main
+
+# Commit small as you go
+git add ka_vr_viewer.html screenshots/ viability_matrix.csv ruthless_validation.md
+git commit -m "task2: A-Frame viewer with HDRI lighting + per-wall selection"
+
+git push origin track3/&lt;your-name&gt;</pre>
+
+        <h3>Submitting Task 2 for review</h3>
+        <ol>
+          <li>Push the latest: <code>git push origin track3/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from
+            <code>&lt;YOUR-USERNAME&gt;:track3/&lt;your-name&gt;</code> to
+            <code>dkirsh:main</code> &mdash; use the compare feature with
+            Task&nbsp;1&rsquo;s merge commit as the base.</li>
+          <li>Title:
+            <code>Track 3 &middot; Task 2: VR Conversion &amp; Factor Testing &mdash; &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your file manifest, plus a short
+            paragraph describing your lighting upgrade level (Level 2 / 3 /
+            5), the FPS you measured, and the most interesting failure your
+            ruthless validation found.</li>
+          <li>Add the label <code>track3-task2-review</code> and tag
+            <code>@dkirsh</code>.</li>
+          <li>Leave the PR open.  <strong>Do not merge.</strong></li>
+        </ol>
+
+        <p>
+          Screenshots and short screen recordings go in
+          <code>track3/&lt;your-name&gt;/media/task2/</code> on your branch.
+          For files larger than 50 MB, use Git LFS or upload to the course
+          shared drive and link from the PR body.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t3_task1.html" class="prev">&larr; Task 1: Collect &amp; Catalog 3D Models</a>
+    <a href="t3_task3.html" class="next">Task 3: AI Front-End &rarr;</a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t3_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+  <script src="_track_side_nav.js" defer></script>
+
+</body>
+</html>

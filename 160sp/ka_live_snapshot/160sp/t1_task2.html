@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 2: Build Latent Tag Detectors · Track 1 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <a href="t1_intro.html">Track 1: Image Tagger</a> /
+    <span>Task 2: Build Latent Tag Detectors</span>
+  </div>
+
+  <!-- 3. PAGE LAYOUT: side-nav + content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 1: Image Tagger</div>
+      <a href="t1_intro.html">Track Overview</a>
+      <a href="t1_task1.html">Task 1: Build an Image Collection</a>
+      <a href="t1_task2.html" class="active">Task 2: Build Latent Tag Detectors</a>
+      <a href="t1_task3.html">Task 3: Annotate Collection &amp; Build Image Viewer</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">← All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- Hero -->
+      <header class="hero">
+        <div class="hero-track">TRACK 1 · TASK 2</div>
+        <h1>Build Latent Tag Detectors</h1>
+        <p class="hero-sub">
+          Write working Python detectors for six latent environmental tags. Each detector
+          ships with a design note, a typed contract, and a test suite that runs against a
+          gold-set of labelled images.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">Prerequisite: Task 1</span>
+          <span class="hero-pill">Contract gate</span>
+        </div>
+      </header>
+
+      <!-- ============================================================
+           BIG PICTURE
+           ============================================================ -->
+      <h2>The big picture</h2>
+      <p>
+        In Task 1 you gathered 500 architectural interior photographs with provenance.
+        In Task 2 you tag them — not with simple labels like &ldquo;living room&rdquo; or
+        &ldquo;bedroom,&rdquo; but with <strong>latent tags</strong>: numerical measures
+        of environmental features that affect human cognition and behaviour. (Latent
+        because the feature is not directly visible as a noun in the image; you compute
+        it from geometric relationships among visible objects.)
+      </p>
+
+      <h3>What the instructor already did (Sprint 1)</h3>
+      <p>
+        Before this course began, the instructor finished Sprint 1: the 18
+        social-interaction latent variables (L41–L58) from the Environment-Cognition
+        Taxonomy V2.6 (the project&rsquo;s master vocabulary of environmental tags) are
+        already integrated into the Tagging Contractor registry. That means:
+      </p>
+      <ul>
+        <li>Every latent tag (L44 Sociopetal Seating, L17 Prospect, L42 Interactional Visibility, and the rest) <strong>already exists in the registry</strong>, with a full semantic contract.</li>
+        <li>Each entry has a <code>definition_long</code> field that explains what the tag means in human terms.</li>
+        <li>Each entry has a <code>method_family</code> field that specifies <em>how</em> to detect the tag from an image.</li>
+        <li>Each entry has <code>extractability</code> flags that tell you whether the tag can be detected from a 2D photo.</li>
+      </ul>
+
+      <p>You can read these entries directly:</p>
+      <pre><code class="lang-bash">python3 -c "
+import json
+r = json.load(open('Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json'))
+tags = r['tags']
+# Look at one latent tag
+for tid, t in tags.items():
+    if 'sociopetal' in t.get('canonical_name','').lower() or 'L44' in tid:
+        print(json.dumps(t, indent=2))
+        break
+"</code></pre>
+
+      <div class="callout callout-teal">
+        <strong>The registry is your source of truth.</strong> Your detectors must match
+        the registry&rsquo;s vocabulary. If your detector drifts from the
+        <code>definition_long</code>, the semantic audit gate will catch it. The L41–L58
+        social-interaction latents now ship as <code>social.*</code> tag IDs in registry
+        v0.2.9 (e.g. <code>social.sociopetal_seating</code>,
+        <code>social.interactional_visibility</code>).
+      </div>
+
+      <h3>What you bring from Task 1</h3>
+      <ul>
+        <li>Your <strong>500 images</strong>, organised by room type, with provenance</li>
+        <li>Your <strong><code>space_types.json</code></strong> taxonomy</li>
+        <li>Your <strong>collection page</strong> for browsing and managing images</li>
+      </ul>
+
+      <h3>What the tagger provides (intermediate representations)</h3>
+      <p>
+        For a gold-set of images, the tagger has already computed the heavy
+        machine-vision outputs you would otherwise have to produce yourself:
+      </p>
+      <ul>
+        <li><strong>COCO-133 segmentation masks</strong> — pixel-level labels for 133 object classes (people, furniture, objects)</li>
+        <li><strong>Monocular depth maps</strong> — estimated distance per pixel</li>
+        <li><strong>Skeletonised floor masks</strong> — circulation paths extracted from the floor regions</li>
+        <li><strong>Basic VLM/CLIP tag predictions</strong> — simple visual features predicted by a Vision-Language Model (a neural net that maps images to text labels)</li>
+      </ul>
+      <p>
+        Your detectors compute <em>on top of</em> these intermediate representations.
+        You are not training neural networks. You are writing geometric and logical
+        predicates — computational geometry, not deep learning.
+      </p>
+
+      <!-- ============================================================
+           THE 18 LATENT TAGS
+           ============================================================ -->
+      <h2>The 18 latent tags, grouped by detection method</h2>
+      <p>
+        Each tag belongs to one of three families, set by the kind of geometric
+        computation it requires. The full set of social-interaction latents (L41–L58
+        from V2.6) lives in the registry as <code>social.*</code> tag IDs; the ten
+        listed below are the implementation targets for this task.
+      </p>
+
+      <h3>Family A: Furniture geometry (object detection + spatial arrangement)</h3>
+      <p>
+        These tags fall out of pairwise angles, distances, and cluster counts over the
+        COCO-133 segmentation masks the tagger has already produced. Classical
+        F-formation geometry (Kendon, 1990; Marquardt et al., 2012) supplies the
+        predicates.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Tag ID</th><th>Tag name</th><th>What it measures</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>L44</td><td>Sociopetal Seating</td><td>Are seats arranged facing each other (conversation-promoting)?</td></tr>
+          <tr><td>L48</td><td>Dyadic Intimacy</td><td>Is there a pair of seats at intimate distance (&lt; 1.2 m)?</td></tr>
+          <tr><td>L49</td><td>Small-Group Support</td><td>Does the seating arrangement support 3–5 person groups?</td></tr>
+          <tr><td>L53</td><td>Shared Attention Anchor</td><td>Is there a focal point (screen, fireplace, window) that the seating faces?</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Family B: Sightlines and isovists (depth map + spatial analysis)</h3>
+      <p>
+        These tags fall out of <em>isovist</em> analysis: the polygon visible from a
+        vantage point, with metrics like isovist area, maximum viewshed depth, and
+        partition-height ratios computed over the monocular depth map (Benedikt, 1979;
+        Wiener et al., 2007).
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Tag ID</th><th>Tag name</th><th>What it measures</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>L42</td><td>Interactional Visibility</td><td>Can occupants see each other across the space?</td></tr>
+          <tr><td>L54</td><td>Boundary Permeability</td><td>How open versus enclosed are the spatial boundaries?</td></tr>
+          <tr><td>L17</td><td>Prospect</td><td>Does the space offer long views (high prospect)?</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Family C: Circulation and apertures (floor plan skeleton + graph analysis)</h3>
+      <p>
+        These tags reduce to path counts, aperture widths, and dead-end detection over
+        the skeletonised floor mask (Hillier &amp; Hanson, 1984).
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Tag ID</th><th>Tag name</th><th>What it measures</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>L41</td><td>Chance-Encounter Potential</td><td>Does the layout create intersections where people meet by accident?</td></tr>
+          <tr><td>L47</td><td>Turn-Taking Support</td><td>Do circulation paths support natural conversational turn-taking?</td></tr>
+          <tr><td>L57</td><td>Disengagement Ease</td><td>Can a person leave a social situation without disrupting it?</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ============================================================
+           ASSIGNMENT
+           ============================================================ -->
+      <h2>Your assignment: implement 6 detectors</h2>
+      <div class="callout callout-amber">
+        <strong>Choose six tags, with at least two from each family.</strong> For each
+        of those six, follow the 7-Step Scaffold below. The two-per-family minimum
+        guarantees you exercise object-arrangement geometry, isovist analysis, and
+        circulation graph analysis — the three computational patterns the rest of the
+        Image Tagger pipeline depends on.
+      </div>
+
+      <!-- ============================================================
+           7-STEP SCAFFOLD
+           ============================================================ -->
+      <h2>The 7-Step Scaffold</h2>
+      <p>
+        The scaffold runs Panel → Spec → Tests → Build → Verify → Diagnose → Iterate.
+        Each step locks down a commitment before the next step extends it.
+      </p>
+
+      <h3>Step 1: Panel — write a detector design note</h3>
+      <p>
+        For each of your 6 tags, write a one-page <strong>detector design note</strong>
+        that nails down:
+      </p>
+      <p><strong>(a)</strong> The upstream tags the detector consumes — which intermediate
+        representations does it need (depth map, segmentation mask, skeleton)?</p>
+      <p><strong>(b)</strong> The geometric or logical predicate that encodes the latent
+        tag. Example: &ldquo;Sociopetal Seating = TRUE if ≥ 3 detected seating objects
+        have pairwise facing angles &lt; 45° and centroid distances &lt; 2.5 m in the
+        depth-projected coordinate frame.&rdquo;</p>
+      <p><strong>(c)</strong> The failure modes you expect. Example: &ldquo;Monocular
+        depth is unreliable beyond 5 m, so L17 Prospect may underestimate viewshed depth
+        in large atriums.&rdquo;</p>
+
+      <div class="ai-box">
+        <div class="ai-label">Ask your AI</div>
+        <div class="ai-text">
+          <p><strong>Contract objective:</strong> &ldquo;I want a one-page design note
+          for detector L__ that states what inputs it consumes, what geometric predicate
+          it computes, and where it will fail.&rdquo;</p>
+          <p><strong>Contract is with:</strong> The Tagging Contractor registry (for the
+          tag&rsquo;s <code>definition_long</code> and <code>method_family</code>) and
+          the tagger&rsquo;s existing intermediate representations.</p>
+          <p><strong>Prompt hint:</strong> &ldquo;Read the registry entry for tag L__ in
+          <code>registry_v0.2.8.json</code>. What does <code>definition_long</code> say?
+          What does <code>method_family</code> say? Now design a detector: what
+          intermediate data do I need, what geometric computation do I run, and what
+          score do I output?&rdquo;</p>
+        </div>
+      </div>
+
+      <p>
+        <strong>Panel review:</strong> Before moving on to Step 2, critique your
+        teammates&rsquo; design notes. Does the predicate actually encode what the tag
+        means? Are the failure modes realistic?
+      </p>
+
+      <h3>Step 2: Spec — convert the note to a typed function signature</h3>
+      <p>
+        Convert the design note into a <strong>typed function signature with a
+        docstring</strong>, written in the same vocabulary the registry uses in
+        <code>definition_long</code>. The docstring is the contract: if it drifts from
+        the registry, the semantic gate will catch it.
+      </p>
+      <pre><code class="lang-python">def detect_sociopetal_seating(
+    segmentation_mask: np.ndarray,
+    depth_map: np.ndarray,
+    detected_objects: list[DetectedObject],
+) -&gt; TagResult:
+    """Detect sociopetal seating arrangement (L44).
+
+    Computes pairwise facing angles between detected seating objects
+    using F-formation geometry (Kendon, 1990). Returns score &gt; 0.5
+    when &gt;= 3 seating objects have pairwise facing angles &lt; 45 degrees
+    and centroid distances &lt; 2.5m in the depth-projected coordinate frame.
+
+    Inputs:
+        segmentation_mask: COCO-133 segmentation output (H x W int array)
+        depth_map: Monocular depth estimate (H x W float array, meters)
+        detected_objects: List of detected objects with class, bbox, confidence
+
+    Returns:
+        TagResult with score (0-1), confidence, and evidence dict
+
+    Failure modes:
+        - Depth unreliable &gt; 5m: facing angle estimation degrades
+        - Occluded furniture: segmentation misses partially visible seats
+    """</code></pre>
+
+      <div class="ai-box">
+        <div class="ai-label">Ask your AI</div>
+        <div class="ai-text">
+          <p><strong>Contract objective:</strong> &ldquo;I want a typed function
+          signature for detector L__ that matches the registry vocabulary.&rdquo;</p>
+          <p><strong>Contract is with:</strong> The registry&rsquo;s
+          <code>definition_long</code> field.</p>
+        </div>
+      </div>
+
+      <h3>Step 3: Tests — write pytest cases BEFORE you implement</h3>
+      <p>
+        Write your test cases against the Sprint 1 gold-set images.
+        <strong>Minimum:</strong>
+      </p>
+      <ul>
+        <li>6 passing positives (images where the tag IS present, confirmed by human labelling)</li>
+        <li>4 passing negatives (images where the tag is NOT present)</li>
+        <li>A regression fixture for every edge case the panel surfaced in Step 1</li>
+      </ul>
+      <pre><code class="lang-python">def test_sociopetal_seating_positive_living_room():
+    """Living room with U-shaped sofa arrangement should score &gt; 0.5."""
+    result = detect_sociopetal_seating(
+        segmentation_mask=load_gold("img_042_seg.npy"),
+        depth_map=load_gold("img_042_depth.npy"),
+        detected_objects=load_gold("img_042_objects.json"),
+    )
+    assert result.score &gt; 0.5
+    assert result.confidence &gt; 0.3
+
+def test_sociopetal_seating_negative_corridor():
+    """Empty corridor with no seating should score &lt; 0.2."""
+    result = detect_sociopetal_seating(...)
+    assert result.score &lt; 0.2</code></pre>
+
+      <div class="callout callout-rose">
+        <strong>Write the tests BEFORE you write the detector.</strong> That is
+        test-driven development. The tests are what defines &ldquo;correct.&rdquo;
+      </div>
+
+      <h3>Step 4: Build — implement the detector</h3>
+      <p>Now write the detector function. Rules:</p>
+      <ul>
+        <li><strong>Keep each detector under 150 lines.</strong> If it grows past that, the predicate is probably wrong.</li>
+        <li><strong>Reuse the existing intermediate representations.</strong> Don&rsquo;t recompute segmentation or depth — consume what the tagger already produces.</li>
+        <li><strong>Keep the computation transparent.</strong> A reader should be able to diagnose the detector by reading the code, not by probing a neural network.</li>
+        <li><strong>Commit to <code>track1/extractors/L__-your-team/</code>.</strong></li>
+      </ul>
+      <p>
+        Most detectors in Families A–C reduce to one of three computations over the
+        tagger&rsquo;s intermediate representations:
+      </p>
+      <ul>
+        <li><strong>Family A (Furniture geometry):</strong> pairwise operations over COCO-133 bounding boxes plus depth-projected coordinates</li>
+        <li><strong>Family B (Sightlines):</strong> isovist computation over the monocular depth map</li>
+        <li><strong>Family C (Circulation):</strong> graph analysis (path counting, dead-end detection) over the skeletonised floor mask</li>
+      </ul>
+
+      <h3>Step 5: Verify — run your tests</h3>
+      <pre><code class="lang-bash">pytest track1/extractors/L44-your-team/test_L44.py -v</code></pre>
+      <p>
+        All 10 tests (6 positive + 4 negative) must pass. If they fail, one of three
+        things is wrong:
+      </p>
+      <ul>
+        <li>Your detector has a bug (fix the code)</li>
+        <li>A test has a bad gold label (verify the image manually)</li>
+        <li>The intermediate representation is poor quality (document it as a known limitation)</li>
+      </ul>
+
+      <h3>Step 6: Diagnose — run the semantic gate</h3>
+      <p>
+        The Tagging Contractor ships an audit tool that checks your detector&rsquo;s
+        output vocabulary against the registry:
+      </p>
+      <pre><code class="lang-bash">./bin/tc audit-semantics --extractor track1/extractors/L44-your-team/</code></pre>
+      <p>
+        If the audit fails, your docstring or output format has drifted from the
+        registry. Fix it.
+      </p>
+
+      <h3>Step 7: Iterate — write the detector card</h3>
+      <p>For each detector, write a short card:</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Field</th><th>Content</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tag ID</strong></td><td>L44</td></tr>
+          <tr><td><strong>Tag name</strong></td><td>Sociopetal Seating</td></tr>
+          <tr><td><strong>Family</strong></td><td>A (Furniture geometry)</td></tr>
+          <tr><td><strong>Inputs consumed</strong></td><td>COCO-133 segmentation, monocular depth</td></tr>
+          <tr><td><strong>Predicate</strong></td><td>≥ 3 seating objects with pairwise facing angles &lt; 45° and centroids &lt; 2.5 m</td></tr>
+          <tr><td><strong>Score range</strong></td><td>0.0 – 1.0</td></tr>
+          <tr><td><strong>Known failure modes</strong></td><td>Depth unreliable &gt; 5 m; occluded furniture</td></tr>
+          <tr><td><strong>Test results</strong></td><td>6/6 positive, 4/4 negative</td></tr>
+          <tr><td><strong>Audit status</strong></td><td>PASS</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ============================================================
+           DELIVERABLES
+           ============================================================ -->
+      <h2>What you submit</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Item</th><th>What it is</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>6 design notes</strong> (Step 1)</td><td>One page each, with inputs, predicate, failure modes</td></tr>
+          <tr><td><strong>6 typed function signatures</strong> (Step 2)</td><td>Docstrings match registry vocabulary</td></tr>
+          <tr><td><strong>6 test suites</strong> (Step 3)</td><td>≥ 10 tests each (6 positive + 4 negative)</td></tr>
+          <tr><td><strong>6 detector implementations</strong> (Step 4)</td><td>Under 150 lines each</td></tr>
+          <tr><td><strong>Test results</strong> (Step 5)</td><td>pytest output showing all tests pass</td></tr>
+          <tr><td><strong>Audit results</strong> (Step 6)</td><td><code>tc audit-semantics</code> output for each detector</td></tr>
+          <tr><td><strong>6 detector cards</strong> (Step 7)</td><td>One summary table per detector</td></tr>
+          <tr><td><strong>Contracts</strong></td><td>Your written contracts for each phase</td></tr>
+          <tr><td><strong>File manifest</strong></td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="deliverable">
+        <div class="deliverable-label">Top-line deliverable</div>
+        <p>Six working detectors — design note, typed signature, ≥ 10 passing tests,
+        implementation under 150 lines, semantic-audit pass, and detector card —
+        committed under <code>track1/extractors/L__-your-team/</code> for each tag.</p>
+      </div>
+
+      <!-- ============================================================
+           GRADING
+           ============================================================ -->
+      <h2>Grading (75 points)</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Contracts + design notes</strong></td><td>15</td><td>Written BEFORE building. Predicates are specific. <strong>(CONTRACT GATE)</strong></td></tr>
+          <tr><td><strong>Test suites</strong></td><td>15</td><td>Written BEFORE detectors. ≥ 10 tests per detector.</td></tr>
+          <tr><td><strong>Detector implementations</strong></td><td>20</td><td>Correct, under 150 lines, reuses existing intermediates</td></tr>
+          <tr><td><strong>Audit pass</strong></td><td>10</td><td><code>tc audit-semantics</code> passes for all 6 detectors</td></tr>
+          <tr><td><strong>Detector cards</strong></td><td>5</td><td>Complete, accurate, failure modes documented</td></tr>
+          <tr><td><strong>Verification</strong></td><td>10</td><td>Caught problems in the AI&rsquo;s implementation, documented the fixes</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-rose">
+        <strong>⛔ Contract gate:</strong> Missing or vague design notes and contracts
+        flag your detectors and keep them out of the tagger. Write real predicates with
+        real failure modes.
+      </div>
+
+      <!-- ============================================================
+           KEY REFERENCES
+           ============================================================ -->
+      <h2>Key references</h2>
+      <ul>
+        <li>Kendon, A. (1990). <em>Conducting Interaction: Patterns of Behavior in Focused Encounters.</em> Cambridge University Press. — F-formation geometry for seating arrangement analysis.</li>
+        <li>Marquardt, N., Hinckley, K., &amp; Greenberg, S. (2012). Cross-device interaction via micro-mobility and F-formations. — Computational F-formation detection from spatial data.</li>
+        <li>Benedikt, M. L. (1979). To take hold of space: Isovists and isovist fields. <em>Environment and Planning B,</em> 6(1), 47–65. — Isovist theory for visibility analysis.</li>
+        <li>Wiener, J. M., Franz, G., Rossmanith, N., Reichelt, A., Mallot, H. A., &amp; Bülthoff, H. H. (2007). Isovist analysis captures properties of space relevant for locomotion and experience. <em>Perception,</em> 36(7), 1066–1083. — Isovist-based spatial cognition metrics.</li>
+        <li>Hillier, B., &amp; Hanson, J. (1984). <em>The Social Logic of Space.</em> Cambridge University Press. — Space syntax for circulation and encounter analysis.</li>
+      </ul>
+
+      <!-- ============================================================
+           EXISTING CODE
+           ============================================================ -->
+      <h2>Existing code you should know about</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo / File</th><th>What it gives you</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code></td><td>424 tags with <code>definition_long</code>, <code>method_family</code>, and <code>extractability</code></td></tr>
+          <tr><td><code>Tagging_Contractor/contracts/localized_image_tags.schema.json</code></td><td>JSON schema for tagged image output</td></tr>
+          <tr><td><code>./bin/tc audit-semantics</code></td><td>Checks detector output vocabulary against the registry</td></tr>
+          <tr><td><code>./bin/tc audit-tags</code></td><td>Checks tag completeness</td></tr>
+          <tr><td><code>image-tagger/docs/CONTRACT.md</code></td><td>Image Tagger API contract (upload, explore, workbench)</td></tr>
+          <tr><td>Sprint 1 gold-set</td><td>Pre-computed segmentation masks, depth maps, skeletons for labelled images</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ============================================================
+           REUSE
+           ============================================================ -->
+      <h2>Reuse</h2>
+      <p>
+        The detectors you ship here become science-pipeline infrastructure. Task 3 runs
+        your detectors on the full 500-image collection and surfaces them in a public
+        viewer; later cohorts will run inter-rater agreement on your output and evaluate
+        detector accuracy against human judgement. Build them as long-lived components,
+        not throwaway code.
+      </p>
+
+      <!-- ============================================================
+           GITHUB SUBMISSION SECTION
+           ============================================================ -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 2 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track1/your-name</code>
+        (lowercase, hyphenated — e.g., <code>track1/jane-doe</code>). All three tasks in
+        a track live on this single branch. You&rsquo;ll open one Pull Request per
+        completed task so the instructor can review tasks independently.</p>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+        <pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on the repo page)
+#    For Track 1, fork: Knowledge_Atlas, Tagging_Contractor (the latent registry —
+#    important for this task), atlas_shared
+
+# 2. Clone your forks to your machine
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Knowledge_Atlas.git
+cd Knowledge_Atlas
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Knowledge_Atlas.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track1/&lt;your-name&gt; upstream/main</code></pre>
+
+        <h3>Working on Task 2</h3>
+        <pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track1/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task2: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track1/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 2 for review</h3>
+        <p>When Task 2 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track1/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track1/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 1 · Task 2: Build Latent Tag Detectors — &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested.</li>
+          <li>Add the label <code>track1-task2-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>When you start Task 3, keep working on the same <code>track1/&lt;your-name&gt;</code>
+        branch — additional commits will appear in your existing PR <em>only until you open the
+        Task 3 PR</em>, at which point the new task gets its own PR off the same branch (use
+        GitHub&rsquo;s &ldquo;compare&rdquo; feature with the previous task&rsquo;s merge commit
+        as the base).</p>
+
+        <h3>Repos this task needs</h3>
+        <ul>
+          <li><code>Knowledge_Atlas</code> — the course repo where your Track 1 work lives</li>
+          <li><code>Tagging_Contractor</code> — the latent registry; your detectors&rsquo; vocabulary must match <code>registry_v0.2.8.json</code> (and the <code>social.*</code> tag IDs added in v0.2.9)</li>
+          <li><code>atlas_shared</code> — shared schemas and utilities used across tracks</li>
+        </ul>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don&rsquo;t email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t1_task1.html" class="prev">← Task 1: Build an Image Collection</a>
+    <a href="t1_task3.html" class="next">Task 3: Annotate Collection &amp; Build Image Viewer →</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t1_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

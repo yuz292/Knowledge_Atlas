@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 3: Prototype an Evidential Journey &middot; Track 4 &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../ka_home.html">Home</a> /
+    <a href="ka_schedule.html">160 Student</a> /
+    <a href="t4_intro.html">Track 4</a> /
+    <span>Task 3</span>
+  </div>
+
+  <div class="page-grid">
+
+    <aside class="side-nav" data-side-nav-page="t4_task3"></aside>
+
+    <main class="content">
+
+      <header class="hero">
+        <div class="hero-track">TRACK 4 &middot; TASK 3 &middot; WEEKS 7–8</div>
+        <h1>Prototype an Evidential Journey</h1>
+        <p class="hero-sub">
+          75 points. Due Friday 15 May 2026 (end of week 7), with
+          a midpoint-of-week-8 extension to Wednesday 20 May 2026
+          if your team needs it. The first two tasks produced
+          paper artefacts; this one produces a working one. A
+          journey is not designed when it is described in prose —
+          it is designed when a reader can click through it.
+        </p>
+      </header>
+
+      <section>
+        <h2>Why this task exists</h2>
+        <p>
+          The move from spec to prototype reveals everything that
+          the spec elided. The prototype forces you to make choices
+          the previous tasks could defer: which page does the
+          reader land on; what is on the page above the fold; how is
+          the rebuttal exposed; what is the next click. These
+          choices are where journey design lives, and they cannot be
+          made well without the corpus and the fitting catalog
+          behind them. They also cannot be made well without
+          actually building the artefact: a journey that exists only
+          in description is a journey that has not been tested
+          against the readers it was built for.
+        </p>
+        <p>
+          The pedagogical goal is integrative. After three weeks of
+          building intellectual scaffolding, you produce one working
+          thing that demonstrates what the scaffolding buys.
+        </p>
+      </section>
+
+      <section>
+        <h2>Study the Q-29 journey first</h2>
+        <p>
+          The carried exemplar for Task 3 is the
+          <a href="track4/journey_q29_art_affect_confound.html">Q-29
+          working journey on Attention Restoration Theory and the
+          affective confound</a>. Open it. Walk through it. It is
+          designed to model what a finished prototype looks like:
+          a typed-in question on the landing page; a Toulmin
+          sequence drawn out across data, warrant-and-backing,
+          qualified claim, and rebuttal; the rebuttal panel given
+          equal visual weight to the data; the Chinn-Brewer widget
+          exposed inline with all seven responses populated for
+          the journey's specific defeater; and a reader-response
+          stage that asks which of the seven responses the reader
+          would take and stores it for the session.
+        </p>
+        <p>
+          You will produce something analogous for one question
+          from your working corpus. The shape may not be Toulmin —
+          if your chosen question is a deliberation rather than an
+          inquiry, your journey will be a contrast pair or ranked
+          brief. The structural commitments transfer regardless:
+          landing page, populated answer shape, rebuttal panel,
+          reader-response stage.
+        </p>
+      </section>
+
+      <section>
+        <h2>What you produce</h2>
+        <p>
+          Three artefacts.
+        </p>
+        <p>
+          <strong>(a) One working journey prototype.</strong> A
+          small set of HTML files (no back-end required; no
+          framework required) for one question from your working
+          corpus. The prototype must include all four of the
+          following pieces — every one of them is a separate line
+          on the rubric:
+        </p>
+        <ul style="list-style:none;padding-left:0;margin:8px 0 12px;">
+          <li style="padding:8px 12px;border-left:3px solid var(--accent,#5a3e1b);background:#fffaef;margin-bottom:6px;">
+            <strong>☐ Landing page</strong> that accepts the typed-in
+            question (or shows it pre-populated).
+          </li>
+          <li style="padding:8px 12px;border-left:3px solid var(--accent,#5a3e1b);background:#fffaef;margin-bottom:6px;">
+            <strong>☐ Populated answer shape</strong> — a sequence
+            of pages or a single page with disclosure regions
+            implementing your chosen shape (Toulmin / field map /
+            procedure / contrast pair / ranked brief), with the
+            diagram drawn inline.
+          </li>
+          <li style="padding:8px 12px;border-left:3px solid var(--bad,#8e2727);background:#fff3f0;margin-bottom:6px;">
+            <strong>☐ Chinn-Brewer rebuttal panel</strong> exposed by
+            default (not behind a toggle), populated with the named
+            defeaters from your Task-2 catalog. <em>Skipping this
+            is the most common Track-4 failure mode; see Pitfalls
+            below.</em>
+          </li>
+          <li style="padding:8px 12px;border-left:3px solid var(--accent,#5a3e1b);background:#fffaef;margin-bottom:6px;">
+            <strong>☐ Reader-response stage</strong> at the end that
+            asks which Chinn-Brewer response the reader would take
+            and why, and stores their answer for the session.
+          </li>
+        </ul>
+        <p>
+          <strong>(b) An LLM-panel reader test.</strong> Run three
+          to five LLM agents through the prototype as readers from
+          your persona. Record per agent: where the agent stopped;
+          which Chinn-Brewer response the agent took; what the
+          agent said would have made the journey more adequate.
+          This is not a substitute for human user testing but it
+          is a defensible first-pass check. The reader-test prompt
+          template is in
+          <a href="track4/track4_task_design.md">the task-design
+          document</a> §3.3.
+        </p>
+        <p>
+          <strong>(c) A short written reflection.</strong> Two
+          pages, in academic prose. What you learned in moving from
+          spec to prototype; what the prototype revealed that the
+          corpus and fitting passes had hidden; what your LLM-panel
+          reader test surfaced; what you would change if you had
+          three more weeks. The reflection prompt is in the
+          task-design document §3.4.
+        </p>
+      </section>
+
+      <section>
+        <h2>Use the skeleton kit</h2>
+        <p>
+          The <a href="track4/answer_shape_catalogue.html">answer-
+          shape catalogue</a> is your skeleton kit. Each shape on
+          that page can be lifted out as a starting template (the
+          SVG for Toulmin and field map, the HTML grid for contrast
+          pair and ranked brief, the ordered-list pattern for
+          procedure). The CSS variables match the rest of the Atlas
+          so you do not need to invent a colour scheme. The
+          <a href="track4/chinn_brewer_response_widget.html">Chinn-
+          Brewer widget</a> is also drop-in: you can include it as
+          an iframe or inline its source. Replace the placeholder
+          anomaly text with one of your defeaters from Task 2.
+        </p>
+        <p>
+          The Atlas's house style is plain HTML and minimal CSS,
+          consistent with the existing track pages. A team should
+          be spending its last week on content and on reader
+          testing, not on JavaScript framework configuration.
+        </p>
+      </section>
+
+      <section>
+        <h2>Team milestone — week 7 walkthrough</h2>
+        <p>
+          Before any submission, the team walks through every
+          prototype together. Each student runs the LLM-panel
+          reader test on a <em>teammate's</em> prototype rather
+          than on their own. Reviewing someone else's journey is
+          more pedagogically useful than reviewing your own — the
+          reviewer is forced to occupy a different persona's
+          adequacy condition than the one they spent three weeks
+          internalising — and it is where the cross-persona
+          intelligence enters the prototype evaluation.
+        </p>
+        <p>
+          Bring three findings to the team meeting from your
+          teammate's prototype: one place the journey worked; one
+          place it confused you; one Chinn-Brewer response you
+          took with the rebuttal and why.
+        </p>
+      </section>
+
+      <section>
+        <h2>Grading rubric</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Dimension</th><th>Points</th><th>What earns full credit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Working prototype</td><td>30</td><td>Five+ pages or one rich disclosure page; correct diagram; Chinn-Brewer widget populated and exposed by default</td></tr>
+            <tr><td>Rebuttal economy</td><td>15</td><td>Defeaters from Task 2 are surfaced honestly; the reader-response stage works and stores the response</td></tr>
+            <tr><td>LLM-panel reader test</td><td>15</td><td>Three to five readers run; per-reader notes recorded; failures of the journey reported</td></tr>
+            <tr><td>Reflection</td><td>10</td><td>Two pages in academic prose, honest about ambiguities and uncertainties</td></tr>
+            <tr><td>Site integration</td><td>5</td><td>Top nav, breadcrumb, side-nav, footer; consistent with the rest of the Atlas</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Pitfalls</h2>
+        <p>
+          The single largest failure mode is treating the prototype
+          as a front-end exercise and skipping the rebuttal panel.
+          A journey without an exposed Chinn-Brewer panel is not
+          yet an evidential journey; it is a tutorial. The grading
+          rubric weights rebuttal economy at 15% of Task 3
+          specifically because a beautiful prototype that hides its
+          defeaters has missed the central point of the track.
+        </p>
+        <p>
+          The second-largest failure mode is writing a reflection
+          that is essentially an advertisement for the prototype.
+          The reflection is graded on honesty about what you found
+          ambiguous, what your reader test surfaced, and what you
+          remain uncertain about. A reflection that admits no
+          uncertainty is read as either dishonest or
+          insufficiently reflective.
+        </p>
+      </section>
+
+      <div class="callout-amber">
+        <strong>What you submit at end of week 7 (or midpoint of
+        week 8).</strong> Your prototype HTML file(s); your
+        LLM-panel reader-test transcripts and notes; your two-page
+        reflection; the team-collective walkthrough notes. Submit
+        by Pull Request on your branch.
+      </div>
+
+      <div style="margin:24px 0 8px;padding:14px 18px;background:#e9dec4;border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div><strong>Next:</strong> open your submissions tracker to see the grader's report once your PR is reviewed.</div>
+        <a href="t4_submissions.html" style="background:#5a3e1b;color:#fff;padding:6px 14px;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;">Submissions &rarr;</a>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t4_intro.html">Track 4 overview</a>
+        <a href="t4_task2.html">Previous: Task 2</a>
+        <a href="t4_submissions.html">Submissions</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+
+  <script src="_track_side_nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track 2: Article Finder &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">
+      Knowledge Atlas
+    </a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb"><!-- canonical: Home > User Type > Journey > Page -->
+      <a href="../ka_home.html">Home</a> /
+      <a href="ka_schedule.html">160 Student</a> /
+      <span>Track 2</span>
+    </div>
+
+  <!-- 3. PAGE GRID -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav" data-side-nav-page="t2_intro"></aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 2 &mdash; ARTICLE FINDER</div>
+        <h1>Track 2: Article Finder</h1>
+        <p class="hero-sub">
+          Build a PRISMA-compliant article discovery pipeline &mdash; fix the
+          contribute page, extract knowledge gaps, generate targeted queries,
+          execute searches, and triage results at the abstract level.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-pill">3 tasks</span>
+          <span class="hero-pill">10 weeks</span>
+          <span class="hero-pill">75 + 60 + 75 points</span>
+          <span class="hero-pill">+20 contract bonus on Tasks 2 &amp; 3</span>
+        </div>
+      </header>
+
+      <!-- WHAT YOU'LL BUILD -->
+      <section>
+        <h2>What you&rsquo;ll build</h2>
+        <p>
+          The Knowledge Atlas needs a steady inflow of papers. Researchers
+          working on environment-and-cognition need to know which questions
+          the literature has answered, which it has only half-answered, and
+          which it has not yet asked. Without a disciplined discovery
+          pipeline, the Atlas drifts on whatever its contributors happen to
+          have read this week.
+        </p>
+        <p>
+          You will build that pipeline end-to-end, and you will build it to
+          the PRISMA reporting standard &mdash; the gold-standard checklist
+          for documenting how a literature search found, screened, and
+          selected its papers. PRISMA is the difference between a search
+          someone else can audit and a pile of links nobody can defend.
+        </p>
+        <p>
+          You start in Task 1 with a broken contribute page that accepts PDFs
+          and does nothing with them. You diagnose what is missing, write a
+          contract that specifies the fix, hand the contract to your AI, and
+          verify that submitted papers actually get classified, stored, and
+          reported back to the user. In Task 2 you turn to discovery proper:
+          you read the Article Eater&rsquo;s PNU mechanism templates,
+          identify the knowledge gaps the Atlas most needs filled, score them
+          by Value of Information, and translate each gap into a paired
+          Google AI Citation query and a Boolean query. In Task 3 you run
+          those queries through SerpAPI, collect abstracts via a multi-source
+          fallback chain, triage the returned papers at the abstract level,
+          and report every step of the funnel on a PRISMA dashboard.
+        </p>
+        <p>
+          The throughline is the contract. Every task requires a written
+          contract that specifies inputs, processing, outputs, success
+          conditions, and a test checklist. A weak contract produces weak
+          work; Tasks 2 and 3 each award twenty bonus points for contract
+          quality, because the contract is the artefact that lets a
+          collaborator (human or AI) build the right thing without watching
+          you do it.
+        </p>
+      </section>
+
+      <!-- HOW THE PIPELINE IS ORGANISED -->
+      <section>
+        <h2>How the pipeline is organised</h2>
+        <p>
+          The pipeline has a specific shape, and the shape matters. Candidate
+          references arrive from two channels. The first is review papers
+          already in the Atlas corpus that cite other work; an Article Eater
+          script (<code>extract_neuro_key_review_references.py</code>) already
+          harvests these and produces a co-citation count per DOI. The
+          second channel is search engines that respond to the queries you
+          write in Task 2. Search runs through a coordinated set of three
+          harvest scrapers, plus a fourth scraper that operates only at PDF
+          retrieval:
+        </p>
+        <ul>
+          <li><strong>SerpAPI</strong> &mdash; paid Google Scholar channel; fast, reliable, capped at 250 free credits per month.</li>
+          <li><strong><code>scholarly</code></strong> &mdash; free Python package that scrapes Google Scholar HTML; the quota-exhausted fallback. Brittle; CAPTCHA-prone; document its results as best-effort.</li>
+          <li><strong><code>paper-scraper</code></strong> &mdash; free preprint-server scraper covering arXiv, bioRxiv, medRxiv, and chemRxiv; the right tool for high-VOI gaps where the literature is moving fast.</li>
+          <li><strong><code>scidownl</code></strong> &mdash; PDF acquisition tool of last resort; Sci-Hub-mirror-backed; UCSD library policy unresolved. <em>Opt-in only, after Unpaywall and OpenAlex both fail, with instructor sign-off.</em> Treated as a Stage-3 source, never a default scraper.</li>
+        </ul>
+        <p>
+          Every candidate, regardless of channel, walks through the same
+          three-stage triage funnel. Stage 1 is metadata-only screening on
+          title and venue &mdash; a cheap classifier pass that rejects 30 to
+          50 per cent of search noise without spending a Semantic Scholar
+          request or a SerpAPI credit. Stage 2 is abstract collection through
+          the four-source fallback chain (Semantic Scholar &rarr; CrossRef
+          &rarr; PubMed &rarr; OpenAlex), classifier scoring on the abstract,
+          and a four-way decision: <code>ACCEPT</code>, <code>EDGE_CASE</code>,
+          <code>REJECT</code>, or <code>MISSING_ABSTRACT</code>. Stage 3 is
+          PDF retrieval, run only for <code>ACCEPT</code> rows and only via
+          the source cascade (Unpaywall first, OpenAlex OA second,
+          <code>scidownl</code> third when the policy flag is set). The
+          cardinal rule of the funnel: <em>never download a PDF to decide
+          whether you want the paper.</em>
+        </p>
+      </section>
+
+      <!-- WHERE HARVESTED REFERENCES LIVE -->
+      <section>
+        <h2>Where harvested references live: the <code>article_references</code> table</h2>
+        <p>
+          Every candidate reference your pipeline harvests &mdash; whether
+          from a review-PDF reference list or from one of the three search
+          scrapers &mdash; lands as a row in the <code>article_references</code>
+          table in the article lifecycle database
+          (<code>pipeline_lifecycle_full.db</code>). This table is the
+          candidate buffer between <em>harvesting</em> and <em>acquisition</em>:
+          it holds papers the system <em>knows about</em> but does not yet
+          have a PDF for.
+        </p>
+        <p>
+          The table carries provenance (<code>discovered_via</code>,
+          <code>discovered_from_paper_id</code>, <code>discovered_query</code>),
+          triage state (<code>triage_stage</code>, <code>triage_decision</code>,
+          <code>voi_score</code>, <code>classifier_score</code>), and forward
+          links into the <code>papers</code> table once the PDF is acquired
+          (<code>acquired_paper_id</code>). The PRISMA dashboard you build in
+          Task 3 reconstructs the entire funnel from one SQL group-by on this
+          table; no spreadsheets, no parallel state, no free-floating JSON.
+          The full DDL lives in <code>scripts/coordination/lifecycle/schema.sql</code>;
+          the reconnaissance document at
+          <a href="../docs/AF_PIPELINE_RECON_2026-04-27.md">docs/AF_PIPELINE_RECON_2026-04-27.md</a>
+          §3 walks through the schema, the indexes, and the
+          <code>v_acquisition_queue</code> convenience view.
+        </p>
+        <div class="callout callout-amber">
+          <strong>Free-floating outputs do not count.</strong>
+          A reference list extracted into a JSON file that never joins back
+          to the lifecycle DB is invisible to the rest of the pipeline. Every
+          harvested candidate must land as an <code>article_references</code>
+          row; otherwise the next harvester will rediscover it, the PRISMA
+          dashboard cannot count it, and your work is unverifiable.
+        </div>
+      </section>
+
+      <!-- THE THREE TASKS -->
+      <section>
+        <h2>The three tasks</h2>
+        <div class="task-card-grid">
+
+          <a class="task-card" href="t2_task1.html">
+            <div class="task-card-num">TASK 1</div>
+            <div class="task-card-title">Fix the Contribute Page</div>
+            <div class="task-card-desc">
+              Diagnose what is broken on the PDF-submission page, write a
+              contract, delegate the fix to your AI, and prove it works with
+              at least four test papers.
+            </div>
+            <div class="task-card-meta">4 phases &middot; graded on diagnosis, spec, fix, validation</div>
+          </a>
+
+          <a class="task-card" href="t2_task2.html">
+            <div class="task-card-num">TASK 2</div>
+            <div class="task-card-title">Gap Targeting &amp; Query Generation</div>
+            <div class="task-card-desc">
+              Read PNU templates, identify knowledge gaps, score them by
+              Value of Information, and generate paired Google AI Citation
+              and Boolean queries.
+            </div>
+            <div class="task-card-meta">4 phases &middot; 60 points</div>
+          </a>
+
+          <a class="task-card" href="t2_task3.html">
+            <div class="task-card-num">TASK 3</div>
+            <div class="task-card-title">Search Execution &amp; Triage</div>
+            <div class="task-card-desc">
+              Run your queries through SerpAPI, collect abstracts via a
+              multi-source fallback chain, triage at the abstract level, and
+              report the PRISMA funnel.
+            </div>
+            <div class="task-card-meta">6 phases &middot; 75 points</div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- REPOS YOU'LL NEED -->
+      <section>
+        <h2>Repos you&rsquo;ll need</h2>
+        <p>
+          Track 2 spans four repositories. Fork the ones you will commit to;
+          read the others.
+        </p>
+        <div class="repo-list">
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Knowledge_Atlas" target="_blank" rel="noopener">Knowledge_Atlas</a>
+            </div>
+            <div class="repo-item-purpose">
+              The Atlas itself &mdash; this is where the contribute page you
+              fix in Task 1 lives, and where your discovery dashboard ships.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Article_Finder" target="_blank" rel="noopener">Article_Finder</a>
+            </div>
+            <div class="repo-item-purpose">
+              The discovery half of the system &mdash; the pipeline that
+              turns knowledge gaps into queries, runs them, and triages the
+              returned abstracts.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Article_Eater" target="_blank" rel="noopener">Article_Eater</a>
+            </div>
+            <div class="repo-item-purpose">
+              The processing half &mdash; evidence extraction from the
+              published literature, including the PNU mechanism templates
+              whose unfilled slots are the gaps your queries target.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/atlas_shared" target="_blank" rel="noopener">atlas_shared</a>
+            </div>
+            <div class="repo-item-purpose">
+              Shared schemas and the classifier subsystem that the
+              contribute page wires into. Install with
+              <code>pip install -e .</code> from the repo root.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- GITHUB SUBMISSION (intro variant) -->
+      <section class="github-submission">
+        <h2 id="submission">How submission works for Track 2</h2>
+
+        <p>
+          Track 2 uses a single git branch per student &mdash;
+          <code>track2/your-name</code> &mdash; across all 3 tasks. Each
+          completed task is submitted as its own Pull Request to the
+          instructor. The full mechanics are on each task page; here&rsquo;s
+          the lifecycle in one paragraph:
+        </p>
+
+        <ol>
+          <li><strong>Once at the start of the track:</strong> fork the
+            track&rsquo;s repos, clone, set the upstream remote, create
+            <code>track2/your-name</code> off <code>upstream/main</code>.</li>
+          <li><strong>Continuously while working:</strong> commit small,
+            push at the end of each session.</li>
+          <li><strong>At the end of each task:</strong> open a Pull Request
+            from your branch to <code>dkirsh:main</code>, title it
+            <code>Track 2 &middot; Task N: ... &mdash; your name</code>,
+            paste your file manifest, tag <code>@dkirsh</code>, do not
+            merge.</li>
+          <li><strong>Across tasks:</strong> keep using the same branch;
+            additional task PRs are opened against the previous task&rsquo;s
+            merge commit.</li>
+        </ol>
+
+        <p>
+          The detailed commands and the per-task PR title format are on each
+          task page under &ldquo;Submit Task N on GitHub.&rdquo;
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t2_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+  <script src="_track_side_nav.js" defer></script>
+
+</body>
+</html>

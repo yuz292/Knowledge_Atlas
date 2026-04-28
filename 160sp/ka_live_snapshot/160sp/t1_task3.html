@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 3: Annotate Collection & Build Image Viewer · Track 1 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <a href="t1_intro.html">Track 1: Image Tagger</a> /
+    <span>Task 3: Annotate Collection &amp; Build Image Viewer</span>
+  </div>
+
+  <!-- 3. PAGE GRID -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 1: Image Tagger</div>
+      <a href="t1_intro.html">Track Overview</a>
+      <a href="t1_task1.html">Task 1: Build an Image Collection</a>
+      <a href="t1_task2.html">Task 2: Build Latent Tag Detectors</a>
+      <a href="t1_task3.html" class="active">Task 3: Annotate Collection &amp; Build Image Viewer</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">← All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 1 · TASK 3</div>
+        <h1>Annotate the Collection &amp; Build the Image Viewer</h1>
+        <p class="hero-sub">Run your six latent-tag detectors across all 500 images, then ship a standalone HTML viewer that lets anyone browse the collection by tag domain or by human effect.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">Prerequisite: Tasks 1 &amp; 2</span>
+          <span class="hero-pill">Phases: 3</span>
+        </div>
+      </header>
+
+      <!-- WHY WE NEED THIS -->
+      <h2>Why we need this</h2>
+      <p>In Task 2 you built six latent-tag detectors. But you only tested them on a small gold-set. Task 3 runs them on the <strong>entire 500-image collection</strong> and then ships a viewer so humans can browse, search, and verify the results.</p>
+
+      <p>The image-tagger repo already has an Explorer app (v3.4.74), but it is a full React/Vite application that needs a running backend, a database, and authentication. It is developer infrastructure — not something a student or researcher can open in a browser and use.</p>
+
+      <p>The gap looks like this:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>What exists</th><th>What's missing</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>424 tags in the <code>Tagging_Contractor</code> registry, organised across 44 domains</td>
+            <td>No way to browse images <em>by tag</em> without running the full tagger backend</td>
+          </tr>
+          <tr>
+            <td>839 outcome terms in the <code>Outcome_Contractor</code>, across 7 domains (Cognitive, Affective, Behavioural, Social, Physiological, Neural, Health)</td>
+            <td>No way to ask "show me spaces that promote creativity" and see matching images</td>
+          </tr>
+          <tr>
+            <td>832 constitutive bridges that link effects into a hierarchy</td>
+            <td>No UI that uses this hierarchy for filtering</td>
+          </tr>
+          <tr>
+            <td>Your 500 images with provenance (Task 1)</td>
+            <td>No searchable viewer for your collection</td>
+          </tr>
+          <tr>
+            <td>Your 6 latent-tag detectors (Task 2)</td>
+            <td><strong>They have only run on a small gold-set — not on the full collection</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>You are going to close both gaps: first annotate everything, then build the viewer.</p>
+
+      <!-- PHASE 1 -->
+      <h2>Phase 1: Run your detectors on the full image collection</h2>
+      <p>Annotations come before the browser. This is the moment of truth for your Task 2 detectors: do they actually work at scale?</p>
+
+      <h3>What we learned from prototyping this task</h3>
+      <p>We prototyped the full pipeline for one latent tag (L42 Interactional Visibility) to confirm everything works end-to-end. Here is what the prototype taught us:</p>
+
+      <p><strong>Dependencies are minimal.</strong> You only need <code>Pillow</code> (PIL) and <code>numpy</code>. No deep-learning frameworks are required — your detectors compute geometric predicates over image statistics, not neural-network features.</p>
+
+      <p><strong>Proxy features work.</strong> The registry says L42 wants "floor-plan-augmented isovist computation." You don't have floor plans. That's fine. The registry acknowledges this: the 2D-proxy approach uses edge density, brightness variance, and partition coverage as stand-ins for the full isovist. Document what your detectors are proxying and why.</p>
+
+      <p><strong>Directional accuracy is what matters.</strong> Our prototype scored an open office at 2.4/4.0 and a cubicle farm at 1.9/4.0 — the right direction, modest separation. That is what to expect from a proxy approach without real depth maps. If your detector separates high-visibility from low-visibility spaces in the right direction, it is working.</p>
+
+      <p><strong>Use the registry's output format.</strong> Each tag in the registry carries a <code>value_type</code> (binary, ordinal, continuous) and a <code>value_range</code>. The social-interaction tags use <code>ordinal</code> over <code>[0, 4]</code> (a Likert scale). Your annotations must use the registry's <code>tag_id</code> as the key, not a name you invent.</p>
+
+      <p><strong>Set confidence honestly.</strong> Without real depth maps or segmentation, your confidence should be low (0.2–0.4). If you add a real depth model like MiDaS, confidence rises. Document what confidence means in your detector's docstring.</p>
+
+      <h3>1A. Write the batch-runner contract</h3>
+
+      <div class="ai-box">
+        <div class="ai-label">AI Prompt — copy verbatim</div>
+        <div class="ai-text">
+          <p><strong>Contract objective:</strong> "I want a script that runs all 6 of my latent tag detectors on every image in <code>collection.json</code> and produces a single <code>annotations.json</code> file with scores per image."</p>
+          <p><strong>Contract is with:</strong> Your 6 detector functions (from Task 2) and your <code>collection.json</code> (from Task 1).</p>
+          <p><strong>Prompt hint:</strong> "I have 6 detector functions and 500 images. Write a batch runner that loads each image, runs all 6 detectors using PIL and numpy, and writes the results to annotations.json. It must handle failures gracefully — if one detector crashes on one image, log the error and continue. I only need Pillow and numpy, no ML frameworks."</p>
+        </div>
+      </div>
+
+      <p><strong>Your contract must cover:</strong></p>
+      <ul>
+        <li>Reads image paths from <code>collection.json</code></li>
+        <li>For each image, loads the image with PIL and computes proxy features (edge density, brightness statistics, colour statistics)</li>
+        <li>Runs all 6 detectors and collects the results per detector per image</li>
+        <li>Writes a single <code>annotations.json</code> that follows the <code>image_tagger_observation</code> schema:</li>
+      </ul>
+
+      <pre><code class="lang-json">{
+  "version": "1.0",
+  "generated_at": "2026-04-27T...",
+  "detectors": ["social.interactional_visibility", "social.sociopetal_seating",
+                "social.dyadic_intimacy", "social.small_group_conversation",
+                "social.shared_attention_anchor", "social.boundary_permeability"],
+  "images": {
+    "img_001.jpg": {
+      "room_type": "living_room",
+      "tags": {
+        "social.sociopetal_seating": {
+          "value": 2.8,
+          "value_type": "ordinal",
+          "confidence": 0.35,
+          "evidence": {
+            "facing_pairs": 3,
+            "cluster_size": 4,
+            "depth_source": "proxy"
+          }
+        },
+        "social.interactional_visibility": {
+          "value": 3.2,
+          "value_type": "ordinal",
+          "confidence": 0.30,
+          "evidence": {
+            "partition_score": 0.15,
+            "openness_score": 0.82,
+            "partition_coverage": 0.08
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "img_099.jpg": {"detector": "social.shared_attention_anchor", "error": "image too dark for edge detection"}
+  },
+  "stats": {
+    "total_images": 500,
+    "images_annotated": 497,
+    "images_with_errors": 3,
+    "mean_scores": {"social.sociopetal_seating": 1.85, "social.interactional_visibility": 2.10}
+  }
+}</code></pre>
+
+      <div class="callout callout-amber">
+        <strong>Key:</strong> Use the registry's <code>tag_id</code> (e.g. <code>social.interactional_visibility</code>), NOT a name you invent. Use <code>value</code> (not <code>score</code>) with the tag's <code>value_type</code> and <code>value_range</code> from the registry.
+      </div>
+
+      <h3>1B. Write your tests BEFORE running</h3>
+      <ul>
+        <li>The script runs on 10 images without crashing</li>
+        <li>Each image gets scores for all 6 detectors (or a logged error)</li>
+        <li><code>annotations.json</code> is valid JSON and matches the schema above</li>
+        <li>Failed images appear in the <code>errors</code> section (not silently dropped)</li>
+        <li>The <code>stats</code> section has correct counts</li>
+        <li>Score distributions are plausible (not all 0.0, not all 1.0)</li>
+      </ul>
+
+      <h3>1C. Run the batch and verify</h3>
+
+      <pre><code class="lang-bash">python3 batch_annotate.py --collection collection.json --output annotations.json</code></pre>
+
+      <p>When it finishes, check:</p>
+
+      <div class="ai-box">
+        <div class="ai-label">AI Prompt — copy verbatim</div>
+        <div class="ai-text">
+          <p>"How many images were annotated? How many had errors? Show me the score distribution for each detector — are they plausible?"</p>
+        </div>
+      </div>
+
+      <p><strong>Reality check:</strong> these are 0–4 Likert scores. If a detector scores &gt; 2.5 on more than 80% of images, something is wrong — not every space has sociopetal seating. If a detector scores &lt; 0.5 on everything, it is probably broken. Our prototype found means around 1.9–2.4 across room types, which is plausible.</p>
+
+      <pre><code class="lang-python"># Quick sanity check
+import json
+ann = json.load(open("annotations.json"))
+for det in ann["detectors"]:
+    scores = [img["tags"][det]["value"]
+              for img in ann["images"].values() if det in img.get("tags", {})]
+    print(f"{det}: mean={sum(scores)/len(scores):.2f}, "
+          f">2.5: {sum(1 for s in scores if s > 2.5)}/{len(scores)}")</code></pre>
+
+      <h3>1D. Fix the detector issues that scale surfaces</h3>
+      <p>Running on 500 images surfaces problems that 10 gold-set images never reveal:</p>
+      <ul>
+        <li>Missing depth maps for certain room types</li>
+        <li>Segmentation that fails on unusual furniture</li>
+        <li>Edge cases in your geometric predicates</li>
+      </ul>
+      <p>Document what broke, fix it, re-run. This is the most valuable engineering lesson in the task.</p>
+
+      <div class="deliverable">
+        <div class="deliverable-label">Deliverable</div>
+        <p><code>annotations.json</code> with scores for 500 images, plus a "batch run report" that documents the errors found and the fixes applied.</p>
+      </div>
+
+      <!-- PHASE 2 -->
+      <h2>Phase 2: Build the image viewer</h2>
+      <p>With <code>annotations.json</code> in hand, build a standalone HTML viewer. We have prototyped this and confirmed it ships as a single HTML file with inline CSS and JavaScript — no framework, no backend, no build step.</p>
+
+      <div class="ai-box">
+        <div class="ai-label">AI Prompt — copy verbatim</div>
+        <div class="ai-text">
+          <p><strong>Contract objective:</strong> "I want a standalone HTML page that loads <code>annotations.json</code> and the tag registry, and lets users browse images by tag domain or by human effect."</p>
+        </div>
+      </div>
+
+      <h3>Architecture: one HTML file, three data files</h3>
+
+      <pre><code class="lang-bash">ka_image_viewer.html      ← your viewer (HTML + CSS + JS, all inline)
+annotations.json          ← your Phase 1 output (500 images × 6 tag scores)
+effect_tag_mapping.json   ← maps Outcome_Contractor effects to tag IDs
+collection.json           ← your Task 1 image manifest (paths + provenance)</code></pre>
+
+      <p>The viewer loads these JSON files at startup with <code>fetch()</code>. Everything runs client-side.</p>
+
+      <h3>Component 1: Mode selector (tag mode vs. effect mode)</h3>
+      <p>Two tab buttons sit at the top. Clicking a tab switches the filter bar.</p>
+
+      <pre><code class="lang-bash">┌─────────────────────────────────────────────────────┐
+│  [Search by Tag]   [Search by Effect]               │
+└─────────────────────────────────────────────────────┘</code></pre>
+
+      <ul>
+        <li><strong>Tag mode</strong> shows domain checkboxes from the Tagging_Contractor registry.</li>
+        <li><strong>Effect mode</strong> shows domain checkboxes from the Outcome_Contractor vocabulary.</li>
+      </ul>
+
+      <h3>Component 2: Filter bar</h3>
+      <p><strong>In tag mode</strong>, generate one checkbox per tag domain dynamically from the registry. Group the 44 domains into manageable categories:</p>
+
+      <pre><code class="lang-bash">┌─────────────────────────────────────────────────────┐
+│ [Search images, tags, effects...                ]   │
+│                                                     │
+│ [ ] Social-Spatial (18)  [ ] Lighting (41)          │
+│ [ ] Spatial Config (39)  [ ] Biophilia (20)         │
+│ [ ] Materials (14)       [ ] Complexity (22)        │
+│ [ ] Color (14)           [ ] ...more                │
+└─────────────────────────────────────────────────────┘</code></pre>
+
+      <p><strong>In effect mode</strong>, show one checkbox per Outcome_Contractor domain:</p>
+
+      <pre><code class="lang-bash">┌─────────────────────────────────────────────────────┐
+│ [ ] Cognitive (100)    [ ] Affective (94)           │
+│ [ ] Behavioral (147)   [ ] Social (128)             │
+│ [ ] Physiological (131) [ ] Neural (107)            │
+│ [ ] Health (132)                                    │
+└─────────────────────────────────────────────────────┘</code></pre>
+
+      <p><strong>How to build the domain checkboxes:</strong></p>
+
+      <pre><code class="lang-javascript">// Load registry, extract unique domains, count tags per domain
+const registry = await fetch('registry_v0.2.8.json').then(r => r.json());
+const domains = {};
+for (const [tid, tag] of Object.entries(registry.tags)) {
+  const d = tag.domain || 'unknown';
+  domains[d] = (domains[d] || 0) + 1;
+}
+// Render as checkbox inputs
+filterBar.innerHTML = Object.entries(domains)
+  .sort((a,b) => b[1] - a[1])
+  .map(([name, count]) =>
+    `&lt;input type="checkbox" id="d-${name}" onchange="render()"&gt;` +
+    `&lt;label for="d-${name}"&gt;${name} (${count})&lt;/label&gt;`
+  ).join('');</code></pre>
+
+      <h3>Component 3: Image grid</h3>
+      <p>A CSS Grid of image cards. Each card shows:</p>
+      <ul>
+        <li><strong>Thumbnail</strong> (the actual image, served from a <code>collection.json</code> path)</li>
+        <li><strong>Image name</strong> (from the filename)</li>
+        <li><strong>Room type</strong> (from collection metadata)</li>
+        <li><strong>Tag count</strong> ("6 tags")</li>
+        <li><strong>Top tag score</strong> as a coloured bar (green &gt; 0.6, yellow 0.3–0.6, red &lt; 0.3)</li>
+        <li><strong>Score label</strong> ("interactional visibility: 3.2/4.0")</li>
+      </ul>
+
+      <pre><code class="lang-css">.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}</code></pre>
+
+      <p><strong>Filtering logic:</strong> when checkboxes are selected, filter <code>annotations.json</code> to show only images that carry tags in the selected domains with scores above a threshold (for example, &gt; 0.5).</p>
+
+      <p><strong>Pagination:</strong> 500 images is too many for one DOM render. Use lazy loading or "Load more" — 50 images per page.</p>
+
+      <h3>Component 4: Image detail modal</h3>
+      <p>When the user clicks a card, open a modal:</p>
+
+      <pre><code class="lang-bash">┌─────────────────────────────────────────────────────┐
+│                                              [×]    │
+│  test open office                                   │
+│  Room: office · Source: Unsplash · License: CC0     │
+│                                                     │
+│  ┌─────────────────────────────────────────────┐    │
+│  │                                             │    │
+│  │          [Full-size image]                  │    │
+│  │                                             │    │
+│  └─────────────────────────────────────────────┘    │
+│                                                     │
+│  Tags & Scores                                      │
+│  ┌─────────────────────────────────────────────┐    │
+│  │ interactional visibility    3.2/4.0  ████░  │    │
+│  │   partition_score: 0.150                    │    │
+│  │   openness: 0.820                           │    │
+│  │   partition_coverage: 0.080                 │    │
+│  ├─────────────────────────────────────────────┤    │
+│  │ sociopetal seating          1.8/4.0  ██░░░  │    │
+│  │   facing_pairs: 2                           │    │
+│  │   cluster_size: 3                           │    │
+│  └─────────────────────────────────────────────┘    │
+│                                                     │
+│  Linked Effects                                     │
+│  [Social] ← interactional visibility, sociopetal    │
+│  [Cognitive] ← interactional visibility             │
+└─────────────────────────────────────────────────────┘</code></pre>
+
+      <p>The modal must show:</p>
+      <ul>
+        <li><strong>Score bars:</strong> coloured bars proportional to the 0–4 Likert value</li>
+        <li><strong>Evidence table:</strong> every key/value pair from the <code>evidence</code> dict in the annotation</li>
+        <li><strong>Linked effects:</strong> for each Outcome_Contractor domain that maps to tags present on this image, show the domain name and which tags triggered it. Drive this from <code>effect_tag_mapping.json</code>.</li>
+        <li><strong>Provenance:</strong> source URL, photographer, licence — pulled from <code>collection.json</code></li>
+      </ul>
+
+      <h3>Component 5: Effect explanations (effect mode only)</h3>
+      <p>When browsing by effect, each card must show WHY it matched:</p>
+
+      <pre><code class="lang-bash">tag → mechanism → effect
+
+Example: "interactional visibility (3.2/4.0) → mutual awareness → Social outcomes"</code></pre>
+
+      <p>Build the chain from <code>ae_outcome_lookup.json</code> (a pre-built mapping between text terms and outcome IDs in the Knowledge Atlas pipeline) and the PNU templates.</p>
+
+      <h3>How to build <code>effect_tag_mapping.json</code></h3>
+      <p>This file is the bridge between the Outcome_Contractor's 7 effect domains and the Tagging_Contractor's tag IDs. The effect-mode filter cannot work without it.</p>
+
+      <p><strong>Option A (recommended — reuse existing data):</strong></p>
+
+      <pre><code class="lang-python"># Start from ae_outcome_lookup.json (2,114 pre-built term→outcome mappings)
+import json
+lookup = json.load(open('Outcome_Contractor/contracts/oc_export/ae_outcome_lookup.json'))
+# This maps text terms → outcome IDs
+# Cross-reference with your tag IDs to build domain-level mapping</code></pre>
+
+      <p><strong>Option B (manual, for your 6 tags):</strong></p>
+      <p>You only have 6 detectors, so you can map them to effects by hand:</p>
+
+      <pre><code class="lang-json">{
+  "effect_to_tags": {
+    "social": ["social.interactional_visibility", "social.sociopetal_seating",
+               "social.dyadic_intimacy", "social.shared_attention_anchor"],
+    "cog": ["social.interactional_visibility"],
+    "affect": ["social.sociopetal_seating", "social.dyadic_intimacy"],
+    "behav": ["social.sociopetal_seating", "social.interactional_visibility"]
+  }
+}</code></pre>
+
+      <div class="ai-box">
+        <div class="ai-label">AI Prompt — copy verbatim</div>
+        <div class="ai-text">
+          <p>Ask your AI: "Given these 6 latent tags and their registry definitions, which Outcome_Contractor domains (Cognitive, Affective, Behavioral, Social, Physiological, Neural, Health) does each tag relate to? Use the PNU templates in Article_Eater/data/templates/ for evidence."</p>
+        </div>
+      </div>
+
+      <h3>Success conditions</h3>
+      <ul>
+        <li>The viewer loads <code>annotations.json</code>, <code>collection.json</code>, and <code>effect_tag_mapping.json</code> at startup</li>
+        <li>Tag mode: domain checkboxes are generated from the registry; filtering shows only matching images</li>
+        <li>Effect mode: 7 domain checkboxes from the Outcome_Contractor; filtering uses the effect→tag mapping</li>
+        <li>Free-text search works across image names, room types, tag names, and effect names</li>
+        <li>The image grid handles 500 images via lazy loading or pagination (50 per page)</li>
+        <li>Clicking a card opens a detail modal with all tags, scores, evidence, effects, and provenance</li>
+        <li>Score bars are colour-coded (green/yellow/red) and proportional to the value</li>
+        <li>The viewer needs no backend — it works as a standalone HTML file opened directly in a browser</li>
+        <li>The two modes can be combined (e.g. "Social-Spatial" tag domain + "Cognitive" effect domain)</li>
+      </ul>
+
+      <!-- PHASE 3 -->
+      <h2>Phase 3: Polish and integrate</h2>
+      <ul>
+        <li>Score distributions look correct (not all 0.0, not all 4.0)</li>
+        <li>Provenance is visible on every image (source URL, photographer, licence)</li>
+        <li>Annotation scores show as visual bars with value labels</li>
+        <li>The modal closes on Escape and on overlay click</li>
+        <li>The layout is responsive (works on mobile and desktop)</li>
+        <li>The page title and subtitle describe what the tool does</li>
+        <li>An empty state ("No images match your filters") shows when nothing matches</li>
+      </ul>
+
+      <p>Write YOUR OWN contract and tests for this phase.</p>
+
+      <!-- WHAT YOU SUBMIT -->
+      <h2>What you submit</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Item</th><th>What it is</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><code>annotations.json</code></strong> (Phase 1)</td><td>All 500 images annotated with all 6 detector scores</td></tr>
+          <tr><td><strong>Batch run report</strong> (Phase 1)</td><td>Errors found at scale, fixes applied, score distributions</td></tr>
+          <tr><td><strong><code>ka_image_viewer.html</code></strong> (Phase 2)</td><td>Standalone viewer with tag and effect search</td></tr>
+          <tr><td><strong><code>effect_tag_mapping.json</code></strong> (Phase 2)</td><td>Mapping from effects to tags</td></tr>
+          <tr><td><strong>Contracts + tests</strong></td><td>Your written contracts and test checklists for each phase</td></tr>
+          <tr><td><strong>Viewer walkthrough</strong></td><td>Screenshots or a recording showing both search modes</td></tr>
+          <tr><td><strong>File manifest</strong></td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+        </tbody>
+      </table>
+
+      <!-- GRADING -->
+      <h2>Grading (75 points)</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Contracts + tests</strong></td><td>10</td><td>Written BEFORE building. Specific. <strong>(CONTRACT GATE)</strong></td></tr>
+          <tr><td><strong>Batch annotation</strong></td><td>15</td><td>500 images annotated, errors logged, score distributions plausible</td></tr>
+          <tr><td><strong>Scale fixes</strong></td><td>10</td><td>Documents what broke at scale and how you fixed it</td></tr>
+          <tr><td><strong>Tag browser</strong></td><td>15</td><td>Domain checkboxes work, filtering works, grid handles 500 images</td></tr>
+          <tr><td><strong>Effect browser</strong></td><td>15</td><td>7 Outcome domains, drill-down, tag→effect chain shown</td></tr>
+          <tr><td><strong>Image detail + polish</strong></td><td>10</td><td>Tags, effects, provenance, confidence all visible; standalone HTML</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-rose">
+        <strong>⛔ Contract gate:</strong> Missing or vague contracts and tests flag your work as not ready for integration.
+      </div>
+
+      <!-- DATA SOURCES -->
+      <h2>Data sources you should know about</h2>
+
+      <h3>Tag and annotation data</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo / File</th><th>What it gives you</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code></td><td>424 tags across 44 domains — your tag-filter categories</td></tr>
+          <tr><td><code>Tagging_Contractor/.../observations/image_tagger_observation.schema.json</code></td><td><strong>Official annotation schema</strong> — your <code>annotations.json</code> must conform to this. Each tag entry carries <code>tag_id</code>, <code>value_type</code> (binary/ordinal/continuous), <code>value</code>, <code>confidence</code>, and <code>evidence</code>.</td></tr>
+          <tr><td><code>Tagging_Contractor/contracts/localized_image_tags.schema.json</code></td><td>Spatial annotation schema with <code>semantic_regions</code>, <code>dense_maps</code>, and <code>pipeline_provenance</code> — use this if your detectors emit region-level output</td></tr>
+          <tr><td>Your <code>collection.json</code> from Task 1</td><td>500 images with room types and provenance</td></tr>
+          <tr><td>Your 6 detector functions from Task 2</td><td>Detectors that produce a <code>TagResult</code> per image</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Effect and outcome data</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo / File</th><th>What it gives you</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Outcome_Contractor/contracts/oc_export/outcome_vocab.json</code></td><td>839 effect terms across 7 domains — your effect-filter categories</td></tr>
+          <tr><td><code>Outcome_Contractor/contracts/oc_export/constitutive_bridges.json</code></td><td>832 parent→child bridges — the effect hierarchy for drill-down</td></tr>
+          <tr><td><code>Outcome_Contractor/contracts/oc_export/ae_outcome_lookup.json</code></td><td><strong>Pre-built tag→outcome lookup</strong> — 2,114 entries that map text terms to outcome IDs. This is the shortcut for the effect browser; start here instead of building <code>effect_tag_mapping.json</code> from scratch.</td></tr>
+          <tr><td><code>Outcome_Contractor/contracts/oc_export/bn_outcome_nodes.json</code></td><td>Bayesian-network node definitions — shows the causal structure between outcomes</td></tr>
+          <tr><td><code>Outcome_Contractor/contracts/oc_export/VERSION_MANIFEST.json</code></td><td>Schema versions and file checksums for every OC export</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Existing viewer code (reference, not required)</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Repo / File</th><th>What it gives you</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>image-tagger/Image_Tagger_3.4.74_vlm_lab_TL_runbook_full/frontend/apps/explorer/</code></td><td>Existing React explorer — read <code>ImageDetailModal.jsx</code> to see which APIs it calls (depth, segmentation, materials, affordance). You don't need to use this code, but it lays out the data model.</td></tr>
+          <tr><td><code>image-tagger/docs/CONTRACT.md</code></td><td>Image Tagger API contract — <code>ExplorerSearchResponse</code> shows the response shape</td></tr>
+          <tr><td><code>image-tagger/docs/ENGINEERING_BRIEF.md</code></td><td>Architecture overview — four user journeys: Explorer, Workbench, Monitor, Admin</td></tr>
+          <tr><td><code>Article_Eater/data/templates/</code></td><td>166 PNU templates that link tags to effects — use these to enrich <code>effect_tag_mapping.json</code> beyond what <code>ae_outcome_lookup.json</code> provides</td></tr>
+        </tbody>
+      </table>
+
+      <!-- REUSE -->
+      <h2>Reuse</h2>
+      <p>What you ship here outlives the assignment. Your <code>annotations.json</code> becomes the canonical annotation layer for the image collection, and your viewer becomes the public-facing tool for the Image Tagger track. Future cohorts will inherit both — build them as long-lived infrastructure, not as throwaway code.</p>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 3 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track1/your-name</code> (lowercase, hyphenated — e.g., <code>track1/jane-doe</code>). All three tasks in Track 1 live on this single branch. You'll open one Pull Request per completed task so the instructor can review tasks independently.</p>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+        <pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Track 1 · Task 3, you need:
+#      - Knowledge_Atlas       (where ka_image_viewer.html lives)
+#      - Article_Eater         (for ae_outcome_lookup.json and PNU templates)
+#      - Outcome_Contractor    (for the OC export JSONs)
+#      - Tagging_Contractor    (for the tag registry and observation schema)
+
+# 2. Clone your fork to your machine (example for Knowledge_Atlas)
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Knowledge_Atlas.git
+cd Knowledge_Atlas
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Knowledge_Atlas.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track1/&lt;your-name&gt; upstream/main</code></pre>
+
+        <h3>Working on Task 3</h3>
+        <pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track1/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task3: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track1/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 3 for review</h3>
+        <p>When Task 3 is complete and all the deliverables on this page are checked off:</p>
+
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track1/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track1/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 1 · Task 3: Annotate Collection &amp; Build Image Viewer — &lt;your-name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested.</li>
+          <li>Add the label <code>track1-task3-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>Task 3 is the last task in Track 1. Once your Task 3 PR is merged, the track is complete — no further branch work is required.</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t1_task2.html" class="prev">← Task 2: Build Latent Tag Detectors</a>
+    <a href="t1_intro.html" class="next">Track Overview →</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t1_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

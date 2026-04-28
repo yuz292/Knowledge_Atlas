@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 1: Build a Persona Question Corpus &middot; Track 4 &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../ka_home.html">Home</a> /
+    <a href="ka_schedule.html">160 Student</a> /
+    <a href="t4_intro.html">Track 4</a> /
+    <span>Task 1</span>
+  </div>
+
+  <div class="page-grid">
+
+    <aside class="side-nav" data-side-nav-page="t4_task1"></aside>
+
+    <main class="content">
+
+      <header class="hero">
+        <div class="hero-track">TRACK 4 &middot; TASK 1 &middot; WEEK 5</div>
+        <h1>Build a Persona Question Corpus</h1>
+        <p class="hero-sub">
+          75 points. Due Friday 1 May 2026 (end of week 5). The
+          first move in designing for an audience is to know what
+          the audience is asking. The corpus you build this week is
+          what makes every later design decision in Track 4
+          testable.
+        </p>
+      </header>
+
+      <section>
+        <h2>Why this task exists</h2>
+        <p>
+          A great deal of design work goes wrong because the designer
+          imagines a generic user with a generic question and
+          engineers a generic answer; the generic answer satisfies
+          no one. The corpus you build this week is the corrective.
+          It forces you to commit, on paper, to specific questions
+          phrased in the way <em>your specific persona</em> would
+          phrase them, with the <strong>adequacy condition</strong>
+          — what would make the answer feel insufficient — written
+          out explicitly. Without an adequacy condition you cannot
+          judge whether a journey is succeeding; you can only judge
+          whether it is finishing.
+        </p>
+        <p>
+          A second reason to begin here. Researchers, students,
+          contributors, practitioners, theorists, and PIs do not ask
+          the same questions. They do not even ask the same kinds of
+          questions. Treating the Atlas as if it served a single
+          user produces a system that is shaped to no actual user.
+          Your corpus is the artefact that lets your team reason
+          about persona variability concretely rather than as a
+          slogan, because four students working on four different
+          personas will produce four very different corpora and the
+          contrast itself is instructive.
+        </p>
+      </section>
+
+      <section>
+        <h2>Read the researcher corpus first</h2>
+        <p>
+          Before you generate a single question for your own
+          persona, read the
+          <a href="track4/question_corpus_researcher_v1.md">researcher
+          question corpus</a> from start to finish. It is the
+          carried exemplar for Track 4 — the standard of "done"
+          that you are calibrating against. Pay particular attention
+          to the five sub-flavours of the researcher persona
+          (general, measures-seeker, sensors-seeker, tests-seeker,
+          theory-prober) and to the way each question carries its
+          adequacy condition explicitly.
+        </p>
+        <p>
+          You will produce something analogous for your persona —
+          not necessarily five sub-flavours of exactly the same
+          kind, but a similar structural commitment that captures
+          the variation <em>within</em> your persona's question
+          space. (Maya the 160 student has different sub-flavours
+          than the researcher; Sam the practitioner has different
+          ones again.)
+        </p>
+      </section>
+
+      <section>
+        <h2>What you produce</h2>
+        <p>
+          A spreadsheet (or equivalent JSON) with one row per
+          question. Forty to sixty questions, covering the variation
+          within your persona. Each row carries the following fields.
+        </p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Field</th><th>What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Local ID, e.g. M-Q-014 for the fourteenth Maya question</td></tr>
+            <tr><td><code>question</code></td><td>The question, phrased in the asker's voice</td></tr>
+            <tr><td><code>adequacy_condition</code></td><td>One sentence describing what would make the answer feel insufficient</td></tr>
+            <tr><td><code>cognitive_purpose</code></td><td>information-seeking / inquiry / deliberation / persuasion / discovery</td></tr>
+            <tr><td><code>answer_shape</code></td><td>Toulmin / field-map / procedure / contrast-pair / ranked-brief (a tentative tag in Task 1; finalised in Task 2)</td></tr>
+            <tr><td><code>evidential_demand</code></td><td>suggestive / converging / mechanistic / causal-with-mechanism / measurement-grade</td></tr>
+            <tr><td><code>persona_fit</code></td><td>persona ID + sub-flavour</td></tr>
+            <tr><td><code>theoretical_commitment</code></td><td>the ontological or methodological assumption the question embeds</td></tr>
+            <tr><td><code>source</code></td><td>panel / mining / cross-product</td></tr>
+            <tr><td><code>provenance</code></td><td>panel ID, template ID, or hierarchy coordinates</td></tr>
+            <tr><td><code>notes</code></td><td>optional</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>How to generate questions: three sources</h2>
+        <p>
+          You will use three sources in combination. Each source
+          produces a different kind of question; only the
+          combination produces a corpus that covers your persona's
+          actual question space.
+        </p>
+
+        <h3>Source 1 — LLM panels</h3>
+        <p>
+          Configure three panels of eight to twelve agent variants
+          each. Vary the agents along career stage, disciplinary
+          home, methodological orientation, and theoretical
+          commitment. Give each agent a scenario card — a one-
+          paragraph situation in which your persona finds themselves
+          and turns to the Atlas — and ask them to produce: the
+          question they would type, the answer that would satisfy
+          them, what would make the answer feel insufficient, and
+          one further question they would want to ask once they got
+          an initial answer.
+        </p>
+        <p>
+          The system prompt template, sample scenario cards, and a
+          worked panel-agent run are in
+          <a href="track4/track4_task_design.md">the task-design
+          document</a> §1.2 through §1.4. The Panel Architect on
+          your team is responsible for standing up the panel
+          infrastructure your whole team will use.
+        </p>
+
+        <h3>Source 2 — Literature mining</h3>
+        <p>
+          The Atlas's PNU template library
+          (<code>Article_Eater_PostQuinean_v1_recovery/data/templates/</code>)
+          is a record of questions the field already thought worth
+          asking — roughly 166 templates as of this term, each one
+          encoding a structured claim about a mechanism in the
+          built environment. For each template you sample, write
+          down the question the template <em>answers</em>, then
+          write down three to five follow-up questions that a
+          person who had just received the template's answer would
+          next ask. The mining-prompt template is in the task-
+          design document §1.5. The Mining Lead on your team
+          coordinates which templates the team is sampling.
+        </p>
+
+        <h3>Source 3 — Cross-product synthesis</h3>
+        <p>
+          The Atlas joins two large hierarchical vocabularies —
+          the Tagging_Contractor (~440 active tags across roughly
+          twenty domains: <em>affect, affordance, biophilia, cnfa,
+          cognitive, color, complexity, fluency, isovist, material,
+          provenance, science, smell, social, sound, spatial, style,
+          touch</em>) and the Outcome_Contractor (seven top-level
+          domains across <em>affect, behav, cog, health, neural,
+          physio, social</em> with roughly eighty level-2 outcome
+          terms beneath them). A cross-product question is one of
+          the form <em>"how does X (an IV at level k) affect Y (a
+          DV at level m), moderated by Z?"</em>. The four most
+          informative corners are low/low, low/high, high/low, and
+          high/high; generate at least three to five questions per
+          corner. The Cross-Product Lead on your team coordinates.
+        </p>
+      </section>
+
+      <section>
+        <h2>How to tag questions</h2>
+        <p>
+          Every question carries five tags. The tagging codebook is
+          maintained by the Codebook Custodian on your team so the
+          tags mean the same thing across the four parallel
+          corpora. The five axes:
+        </p>
+        <ol>
+          <li>
+            <strong>Cognitive purpose.</strong> What is the asker
+            doing — filling a known gap (information-seeking),
+            settling an open question (inquiry), choosing among
+            options (deliberation), loading a position into a
+            debate (persuasion), looking for the question they
+            ought to be asking (discovery)?
+          </li>
+          <li>
+            <strong>Answer shape.</strong> Which of the five
+            canonical shapes will the answer take? You commit to a
+            tentative shape in Task 1; you finalise it in Task 2.
+          </li>
+          <li>
+            <strong>Evidential demand.</strong> What threshold of
+            evidence would satisfy the asker — a single suggestive
+            study, multiple converging lines, a credible mechanism,
+            causal-with-mechanism, or measurement-grade
+            (psychometric properties of an instrument)?
+          </li>
+          <li>
+            <strong>Persona fit.</strong> Which sub-flavour of your
+            persona would naturally ask this? If you find yourself
+            unable to answer, the question is probably mistagged.
+          </li>
+          <li>
+            <strong>Theoretical commitment.</strong> What
+            ontological or methodological assumption does the
+            question presuppose? A Kaplan-loyalist asking about
+            restoration is not asking the same question as a
+            Kaplan-sceptic; the journey will fail differently for
+            each.
+          </li>
+        </ol>
+        <p>
+          A worked tagging example for Q-12 from the researcher
+          corpus is in the task-design document §1.7.
+        </p>
+      </section>
+
+      <section>
+        <h2>Team milestone — end of week 5</h2>
+        <p>
+          Before submitting your corpus, the team meets for a
+          <strong>persona-presentation round</strong>. Each student
+          presents their persona profile and three example
+          questions. The team's job is to push back on whether the
+          questions are <em>persona-specific enough</em> — would
+          your persona, and only your persona, plausibly ask this?
+          A question that any researcher could ask is not yet a
+          researcher question; a question Maya could plausibly ask
+          but so could Jordan is undercommitted on persona fit.
+          The presentation round is where the cross-persona
+          intelligence of the team enters the work.
+        </p>
+      </section>
+
+      <section>
+        <h2>Grading rubric</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Dimension</th><th>Points</th><th>What earns full credit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Coverage</td><td>20</td><td>Each sub-flavour of your persona has at least five questions; cross-product corners are populated</td></tr>
+            <tr><td>Tagging quality</td><td>20</td><td>Five-axis tags are present, internally consistent, and survive a peer-review pass</td></tr>
+            <tr><td>Adequacy conditions</td><td>15</td><td>Every question has a sentence that names what would make the answer insufficient</td></tr>
+            <tr><td>Provenance</td><td>10</td><td>Every question is traced to its panel run, mined template, or hierarchy coordinates</td></tr>
+            <tr><td>Honest documentation</td><td>10</td><td>The methods file documents panel configurations, mining samples, and known LLM-panel limitations</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Pitfalls</h2>
+        <p>
+          The single largest failure mode is questions that read
+          smoothly but cannot be journey-designed because their
+          adequacy condition is "I will know it when I see it". The
+          Codebook Custodian on your team should gate hard on
+          adequacy conditions during the week. A question without a
+          one-sentence adequacy condition does not enter the corpus;
+          it goes back for revision.
+        </p>
+        <p>
+          A second failure mode is over-mining: producing a hundred
+          questions that all follow the same pattern from one
+          source. Coverage of all sub-flavours and the four
+          cross-product corners is the structural antidote.
+        </p>
+      </section>
+
+      <div class="callout-amber">
+        <strong>What you submit at end of week 5.</strong>
+        Your tagged corpus (40–60 questions, all five fields per
+        row); a short methods file documenting your panel
+        configurations and mining samples; the team's
+        persona-presentation-round notes (for any one corpus from
+        the team — not all four). Submit by opening a Pull Request
+        on your <code>track4/&lt;your-name&gt;</code> branch.
+      </div>
+
+      <div style="margin:24px 0 8px;padding:14px 18px;background:#e9dec4;border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div><strong>Next:</strong> winnow your corpus and fit each surviving question to one of the five canonical answer shapes.</div>
+        <a href="t4_task2.html" style="background:#5a3e1b;color:#fff;padding:6px 14px;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;">Task 2: Winnow &amp; Fit &rarr;</a>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t4_intro.html">Track 4 overview</a>
+        <a href="t4_task2.html">Next: Task 2</a>
+        <a href="t4_submissions.html">Submissions</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+
+  <script src="_track_side_nav.js" defer></script>
+</body>
+</html>

@@ -717,8 +717,15 @@ body.impersonating { padding-top: 32px; }
         Primary grader: AI (Claude Opus 4.6). Points are allocated class-wide: 5 A0 + 5 A1 + 75 track + 15 Work-on-160F = 100.
         See <a href="rubrics/AI_GRADING_DESIGN_2026-04-17.md" target="_blank">AI grading design</a>
         and <a href="rubrics/README.md" target="_blank">rubrics README</a>.
+        Automated-check layer is the autograder suite at
+        <code>160sp/autograders/</code> (twelve graders, including Track 4);
+        run the dashboard with
+        <code>cd 160sp/grader_page &amp;&amp; python3 server.py</code>
+        and open
+        <a href="http://localhost:5050/" target="_blank" rel="noopener">http://localhost:5050/</a>.
       </div>
     </div><div class="btn-row">
+      <a class="btn btn-primary btn-sm" href="http://localhost:5050/" target="_blank" rel="noopener">🎓 Open Grader Dashboard</a>
       <button class="btn btn-secondary btn-sm" onclick="runGradingPass()">Run grading pass</button>
       <button class="btn btn-secondary btn-sm" onclick="exportGradingCsv()">Export CSV</button>
     </div></div>

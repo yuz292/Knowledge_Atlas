@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 3: Search Execution &amp; Triage · Track 2 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb"><!-- canonical: Home > User Type > Journey > Page -->
+      <a href="../ka_home.html">Home</a> /
+      <a href="ka_schedule.html">160 Student</a> /
+      <a href="t2_intro.html">Track 2</a> /
+      <span>Task 3: Search Execution &amp; Abstract Triage</span>
+    </div>
+
+  <!-- 3. PAGE GRID: side-nav + main content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav" data-side-nav-page="t2_task3"></aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 2 · TASK 3</div>
+        <h1>Search Execution &amp; Abstract-First Triage</h1>
+        <p class="hero-sub">Wire the four-scraper harvest layer (SerpAPI, <code>scholarly</code>, <code>paper-scraper</code>, and PDF-only-last-resort <code>scidownl</code>), write every candidate into the <code>article_references</code> table, walk each row through the three-stage triage funnel (metadata-only, then abstract-and-classifier, then PDF retrieval), and acquire PDFs only for candidates that have cleared abstract triage &mdash; never before. The proof of the pipeline is a PRISMA funnel reconstructed directly from <code>article_references</code>.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">Track: Article Finder</span>
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">PRISMA deliverable</span>
+        </div>
+      </header>
+
+      <!-- TASK META -->
+      <section>
+        <p><strong>Track:</strong> Article Finder &nbsp;·&nbsp; <strong>Prerequisite:</strong> Task 2 (you need your ranked gap list and query pairs).</p>
+        <p><strong>What you build:</strong> Run your search queries through SerpAPI (which scrapes Google Scholar), collect each paper's abstract through a fallback chain of free academic APIs, decide at the abstract level whether each paper is worth keeping, and report the whole funnel on a PRISMA-style dashboard.</p>
+        <p><strong>Core lesson:</strong> Never download a PDF to decide whether it is relevant. Triage at the cheapest level — abstracts — using free APIs. Then prove the pipeline works with real PRISMA funnel numbers.</p>
+      </section>
+
+      <!-- PRISMA WHAT/WHY -->
+      <section>
+        <h2>What PRISMA Is and Why You Are Building One</h2>
+
+        <div class="callout callout-blue">
+          <p>PRISMA (<strong>Preferred Reporting Items for Systematic Reviews and Meta-Analyses</strong>) is the gold-standard reporting checklist for systematic literature searches. It forces you to document your funnel transparently — every paper that came in, every paper that fell out, and the reason for each removal.</p>
+        </div>
+
+<pre><code>Records identified through database searching        (n = ?)
+    &darr;
+Duplicates removed                                    (n = ?)
+    &darr;
+Records screened by title + abstract                  (n = ?)  &rarr;  Excluded (n = ?)
+    &darr;
+Full-text articles assessed for eligibility           (n = ?)  &rarr;  Excluded with reasons (n = ?)
+    &darr;
+Studies included in final synthesis                   (n = ?)
+</code></pre>
+
+        <p>Your dashboard must show these numbers. They are the proof that your pipeline works.</p>
+      </section>
+
+      <!-- SETUP -->
+      <section>
+        <h2>Setup</h2>
+
+        <h3>Get your SerpAPI key</h3>
+        <ol>
+          <li>Go to <a href="https://serpapi.com">serpapi.com</a> and sign up (free plan).</li>
+          <li>The free plan gives you <strong>250 searches per month</strong> for non-commercial use.</li>
+          <li>After email and phone verification, copy your API key from the dashboard.</li>
+          <li>Store it as an environment variable: <code>export SERPAPI_KEY=your_key_here</code></li>
+        </ol>
+
+        <div class="callout callout-amber">
+          <strong>Budget your searches.</strong> At 250 per month, you have enough for roughly 10–15 gaps &times; 2 queries each, plus retries. Do not waste credits on test queries — debug your Boolean syntax in Google Scholar manually first.
+        </div>
+
+        <h3>Verify your Task 2 outputs</h3>
+        <p>You need these files from Task 2:</p>
+        <ul>
+          <li><code>gap_results.json</code> — ranked gaps with VOI scores</li>
+          <li><code>query_results.json</code> — AI Citation + Boolean query pairs per gap</li>
+        </ul>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section>
+        <h2>Phase 1: Understand the Search &amp; Triage Architecture</h2>
+        <p>Four pieces have to fit together: SerpAPI to find papers, an abstract fallback chain to enrich them, the triage logic to classify them, and a deduplication check to skip what we already have. This phase walks you through each piece before you start building.</p>
+
+        <h3>1A. Understand SerpAPI</h3>
+        <p>SerpAPI scrapes Google Scholar and returns the results as structured JSON. Ask your AI:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"Read the SerpAPI Google Scholar documentation. What fields does it return per result? Does it return full abstracts? What about DOIs?"</p>
+          </div>
+        </div>
+
+        <p><strong>What you should learn:</strong> Each SerpAPI result gives you:</p>
+        <ul>
+          <li><code>title</code>, <code>link</code>, <code>snippet</code> (a 2–3-sentence fragment, NOT the full abstract)</li>
+          <li><code>publication_info</code> (authors, venue, year)</li>
+          <li><code>inline_links.cited_by.total</code> (citation count)</li>
+          <li>Sometimes a <code>resource.link</code> (a direct PDF link)</li>
+          <li><strong>It does NOT reliably return DOIs or full abstracts</strong></li>
+        </ul>
+        <p>So SerpAPI gets you only halfway. You then need a second step that looks each paper up by title or DOI to fetch the full abstract.</p>
+
+        <h3>1B. Understand the abstract fallback chain</h3>
+        <p>The Article Eater ships with working API clients for the major free abstract sources. When SerpAPI hands you a title but no abstract, you try each source in order:</p>
+
+<pre><code>SerpAPI result (title + snippet + maybe DOI)
+  &darr; extract DOI from link if possible
+  1. Semantic Scholar (fetch_by_doi or search by title) &rarr; abstract?
+  2. CrossRef (fetch by DOI) &rarr; abstract?
+  3. PubMed (search by title) &rarr; abstract?
+  4. OpenAlex (api.openalex.org/works/doi:XXX) &rarr; abstract?
+  5. If ALL fail &rarr; tag: MISSING_ABSTRACT
+</code></pre>
+
+        <p>Ask your AI:</p>
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"Read <code>Article_Eater/src/services/paper_fetcher.py</code>. Find <code>SemanticScholarClient</code>, <code>CrossRefClient</code>, and <code>PubMedClient</code>. Each has a <code>search()</code> method and a <code>fetch()</code> or <code>fetch_by_doi()</code> method. Show me how I would: (1) take a title from SerpAPI, (2) search Semantic Scholar for it, (3) get the abstract from the result."</p>
+          </div>
+        </div>
+
+        <h3>1C. Understand the triage logic</h3>
+        <p>Once you have abstracts, you classify each paper into one of five buckets:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Decision</th><th>Criteria</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>ACCEPT</strong></td><td>On-topic (per the classifier) AND voi_score &ge; 0.5</td><td>Stored in lifecycle DB</td></tr>
+            <tr><td><strong>EDGE_CASE</strong></td><td>On-topic but voi_score &lt; 0.5, OR a borderline topic match</td><td>Stored separately and flagged</td></tr>
+            <tr><td><strong>REJECT</strong></td><td>Off-topic per the classifier</td><td>Logged but not stored</td></tr>
+            <tr><td><strong>MISSING_ABSTRACT</strong></td><td>No abstract found from any source</td><td>Stored with a flag, not triaged</td></tr>
+            <tr><td><strong>DUPLICATE</strong></td><td>Already in <code>pdf_corpus_inventory</code></td><td>Counted in the PRISMA funnel, not re-triaged</td></tr>
+          </tbody>
+        </table>
+
+        <p>Ask your AI:</p>
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"Read <code>Article_Eater/src/cmr/voi_scoring.py</code>. Find <code>score_voi()</code>. What does it score — the abstract text? The finding type? How does it decide between high (0.8+), medium (0.5–0.8), and low (&lt; 0.5)?"</p>
+          </div>
+        </div>
+
+        <h3>1D. Know what is already in the corpus (deduplication)</h3>
+        <p>Before you triage a paper, check whether it is already in the corpus. You met this probe in Task 1; here it does the same job for a different reason. In Task 1 you used it to stop the contribute page from re-storing a duplicate. In Task 3 you use it to mark search hits as <code>DUPLICATE</code> so they show up in the right slot of the PRISMA funnel rather than getting re-processed.</p>
+
+        <p>The lifecycle database tracks every PDF in the system.</p>
+
+        <p><strong>Primary source:</strong> <code>pipeline_lifecycle_full.db</code>, table <code>pdf_corpus_inventory</code><br>
+        <strong>Easiest readable version:</strong> <code>pdf_corpus_inventory/latest.csv</code></p>
+
+        <p>This table tells you whether a paper sits in <code>CURRENT_GOLD</code> (already processed), is admitted, or is staged. If a search result matches a paper already in the inventory, mark it <code>DUPLICATE</code> in your PRISMA funnel — it counts as "identified" but is removed at the deduplication stage.</p>
+
+        <p>For matching by DOI or title, use the companion table:</p>
+
+        <p><strong>Dedupe source:</strong> <code>pipeline_lifecycle_full.db</code>, table <code>pdf_identity_inventory</code><br>
+        <strong>CSV:</strong> <code>pdf_identity_inventory/latest.csv</code></p>
+
+        <h4>Foolproof duplicate check (use this)</h4>
+        <p>If you have a PDF in hand and want to know whether it is already anywhere in the pipeline or corpus, run the probe tool — the same one you used in Task 1:</p>
+
+<pre><code class="lang-bash">python3 /Users/davidusa/REPOS/Article_Eater_PostQuinean_v1_recovery/scripts/course_scaffolding.py \
+  probe-collection-pdf --pdf-path /absolute/path/to/file.pdf
+</code></pre>
+
+        <p><strong>How to read the result:</strong></p>
+        <ul>
+          <li><code>sha256_exact</code> or <code>doi_exact</code> &rarr; <strong>Existing duplicate. Do not re-ingest.</strong></li>
+          <li><code>title_fuzzy</code> or <code>page_text_match</code> &rarr; Possible duplicate. Inspect by hand before deciding.</li>
+          <li>No match &rarr; New paper, safe to triage and store.</li>
+        </ul>
+
+        <p>If you are calling this from inside Article Finder code rather than from the shell, use <code>probe_pdf_against_article_eater(...)</code> in <code>ae_waiting_room_probe.py</code>. The test that proves this works is <code>test_cataloger_skips_article_eater_duplicate_before_db_insert</code> in <code>test_import.py</code>.</p>
+
+        <p>To refresh the inventory tables before you start:</p>
+<pre><code class="lang-bash">python refresh_v7_state_surfaces.py
+</code></pre>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section>
+        <h2>Phase 2: Wire the search runner &mdash; four scrapers, one harvest layer</h2>
+        <div class="callout callout-teal">
+          <strong>Four scrapers, not one.</strong>
+          The SerpAPI integration below is the primary harvest channel and
+          the one you must wire end-to-end. Three additional scrapers
+          extend the layer:
+          <code>scholarly</code> (free Google Scholar fallback when
+          SerpAPI's 250-credit/month quota is exhausted),
+          <code>paper-scraper</code> (free preprint-server channel: arXiv,
+          bioRxiv, medRxiv, chemRxiv), and
+          <code>scidownl</code> (PDF retrieval only, last resort, see Phase 5
+          for the policy gate). All three optional scrapers write into the
+          same <code>article_references</code> table as SerpAPI; only
+          <code>discovered_via</code> differs. Wire SerpAPI first; add the
+          others as your contract grows.
+        </div>
+        <p>The search runner is the first executable stage of the Task 3 pipeline. It takes the query pairs from Task 2 and turns them into raw SerpAPI results.</p>
+
+        <h3>2A. Write YOUR OWN search-runner contract</h3>
+
+        <div class="callout callout-teal">
+          <p><strong>Contract objective:</strong> "I want a program that takes my search queries and runs them against Google Scholar via SerpAPI, collecting structured results."</p>
+          <p><strong>Contract is with:</strong> The SerpAPI <code>google_scholar</code> engine and your query pairs from Task 2.</p>
+          <p><strong>Prompt hint:</strong> <em>"I need a contract for a search runner that sends Boolean queries to SerpAPI's Google Scholar endpoint, extracts DOIs from result URLs, de-duplicates by title, and records null results. Help me write Inputs, Processing, Outputs, and Success Conditions."</em></p>
+        </div>
+
+        <p>Same discipline as Task 2: <strong>you</strong> write the contract, with Inputs, Processing, Outputs, and Success Conditions.</p>
+
+        <p><strong>Minimum bar</strong> your contract must cover:</p>
+        <ul>
+          <li>Takes the query pairs from Task 2 as input</li>
+          <li>Sends Boolean queries to SerpAPI's <code>google_scholar</code> engine</li>
+          <li>Extracts a DOI from each result URL where possible</li>
+          <li>De-duplicates by title</li>
+          <li>Records null results (gap searched, zero papers found)</li>
+          <li>Tracks API credit usage</li>
+        </ul>
+
+        <h3>2B. Write your tests BEFORE you build</h3>
+        <p>Your test checklist:</p>
+        <ul>
+          <li>SerpAPI call uses <code>engine: google_scholar</code> (not regular Google)</li>
+          <li>Each search costs exactly one credit (verify in the SerpAPI dashboard)</li>
+          <li>Total searches stay under 250</li>
+          <li>Zero-result searches are recorded, not skipped</li>
+          <li>Output JSON is valid and parseable</li>
+          <li>DOI extraction regex works on three sample URLs</li>
+        </ul>
+
+        <h3>2C. Build and validate</h3>
+        <p>Ask your AI to build it. The SerpAPI call should look like this:</p>
+
+<pre><code class="lang-python">import serpapi
+params = {
+    "engine": "google_scholar",
+    "q": your_boolean_query,
+    "api_key": os.environ["SERPAPI_KEY"],
+    "num": 10
+}
+results = serpapi.search(params)
+</code></pre>
+
+        <p>Then run your tests and interrogate the result:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"Show me the exact SerpAPI call. What engine are you using? What parameters?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"How many API credits does each search cost? How many searches will my pipeline run total? Will I stay under 250?"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 3 (NEW) -->
+      <section>
+        <h2>Phase 3: The <code>article_references</code> table — every candidate, one row</h2>
+        <p>
+          Before any candidate is triaged, abstract-collected, or downloaded,
+          it must live as a row in the <code>article_references</code> table
+          in <code>pipeline_lifecycle_full.db</code>. This table is the
+          candidate buffer between <em>harvesting</em> and <em>acquisition</em>:
+          it holds papers the system <em>knows about</em> but does not yet
+          have a PDF for. Without it, every harvester re-deduplicates on its
+          own, the PRISMA dashboard cannot count, and your pipeline is
+          unverifiable.
+        </p>
+
+        <h3>3A. The schema you write into</h3>
+        <p>
+          The full DDL is in
+          <code>scripts/coordination/lifecycle/schema.sql</code> and
+          documented in the
+          <a href="../docs/AF_PIPELINE_RECON_2026-04-27.md">AF pipeline
+          recon doc</a> §3. The columns your search runner and harvesters
+          must populate on insert:
+        </p>
+        <ul>
+          <li><strong>Identity</strong>: <code>reference_id</code> (generated, format <code>REF-YYYY-MM-DD-NNNNNN</code>), <code>doi</code> (normalised, lowercased, no URL prefix), <code>title_raw</code>, <code>title_normalized</code>, <code>first_author_surname</code>, <code>publication_year</code>, <code>venue</code>.</li>
+          <li><strong>Provenance</strong>: <code>discovered_via</code> (one of <code>review_pdf_extract</code>, <code>serpapi_scholar</code>, <code>scholarly_search</code>, <code>paperscraper_search</code>, <code>openalex_expansion</code>, <code>crossref_search</code>, <code>student_upload</code>); <code>discovered_from_paper_id</code> (FK to <code>papers</code>, when harvested out of an existing PDF); <code>discovered_query</code>; <code>discovery_run_id</code>.</li>
+          <li><strong>Triage state</strong> (initial, on insert): <code>triage_stage = 'metadata_only'</code>; <code>discovered_at</code> = ISO 8601 timestamp.</li>
+          <li><strong>Raw evidence</strong>: <code>raw_citation</code> (the messy reference-list line as captured), <code>snippet</code> (search snippet or abstract fragment).</li>
+        </ul>
+
+        <h3>3B. Deduplication on insert (do this before every <code>INSERT</code>)</h3>
+        <ol>
+          <li>Normalise the candidate's DOI with the existing <code>normalize_doi()</code> helper from <code>build_neuro_review_acquisition_queue.py</code>.</li>
+          <li>If a row exists with the same <code>doi</code>, do not insert. Instead <code>UPDATE … SET discovered_via = discovered_via || ', ' || NEW.discovered_via</code> so you preserve the multi-channel provenance.</li>
+          <li>If no DOI but a fuzzy-matched <code>title_normalized</code> already exists in <code>pdf_identity_inventory</code> above the existing-corpus threshold, insert with <code>triage_stage = 'duplicate'</code> immediately.</li>
+        </ol>
+
+        <h3>3C. Two harvesters, one table</h3>
+        <p>
+          Both the four-scraper search runner (Phase 2 above) <em>and</em>
+          the review-PDF reference harvester write into this same table.
+          The review-PDF harvester is largely already written for you in
+          the AE coordination scripts:
+        </p>
+        <ul>
+          <li><code>scripts/coordination/extract_neuro_key_review_references.py</code> &mdash; extracts reference lists from review-kind PDFs using <code>pdfplumber</code>. Use its logic; do not write a parallel parser.</li>
+          <li><code>scripts/coordination/build_neuro_review_acquisition_queue.py</code> &mdash; canonical DOI normaliser and corpus-dedupe filter. Reuse its functions in your insert path.</li>
+          <li>Real harvested data already exists at <code>/Users/davidusa/REPOS/_Collecting Articles/Neuro key articles/_atlas_inventory/latest_neuro_review_reference_harvest.json</code> &mdash; 46 review PDFs, dictionary of <code>{doi: cite_count}</code>. Use this as your prototyping corpus before you wire the live harvester.</li>
+        </ul>
+
+        <div class="callout callout-amber">
+          <strong>Free-floating outputs do not count.</strong>
+          A reference list extracted into a JSON file that never lands in
+          <code>article_references</code> is invisible to the rest of the
+          pipeline. Every harvested candidate must be inserted (or
+          deduplicated against an existing row) before any later phase
+          touches it. Your grader checks for this.
+        </div>
+      </section>
+
+      <!-- PHASE 4 (was Phase 3) -->
+      <section>
+        <h2>Phase 4: Three-stage triage &mdash; metadata, abstract, PDF</h2>
+        <p>
+          The pipeline you build has one cardinal rule: <em>never download a
+          PDF to decide whether you want the paper.</em> The three-stage
+          triage funnel exists to enforce that rule cheaply and defensibly.
+          Sub-phase 4A is the metadata-only screen (Stage 1). Sub-phase 4B is
+          the abstract collection that follows (Stage 2). Sub-phase 4C is the
+          triage decision on the abstract. Stage 3 (PDF retrieval) is the
+          subject of Phase 5; it runs only after a row reaches
+          <code>triage_decision = 'ACCEPT'</code> here.
+        </p>
+
+        <h3>4A. Stage 1 &mdash; metadata-only triage</h3>
+        <p>
+          Runs immediately at ingest, before any abstract is fetched.
+          Pass the candidate's title and venue through the
+          <code>atlas_shared</code> classifier; if classifier confidence
+          is below threshold (suggested: 0.20), set
+          <code>triage_stage = 'rejected_at_metadata'</code> and never
+          enrich further. This is where 30 to 50 per cent of search noise
+          should die without spending a Semantic Scholar request, an
+          OpenAlex polite-pool slot, or a SerpAPI credit.
+        </p>
+
+        <h3>4B. Stage 2A &mdash; collect abstracts (only for survivors of 4A)</h3>
+        <p>SerpAPI hands you titles and snippets. To triage, you need full abstracts. This sub-phase walks each Stage-1 survivor through the fallback chain (Semantic Scholar &rarr; CrossRef &rarr; PubMed &rarr; OpenAlex) until a real abstract appears &mdash; or until every source comes up empty and you tag the paper MISSING_ABSTRACT.</p>
+
+        <h3>4C. Write YOUR OWN abstract-collector contract</h3>
+
+        <div class="callout callout-teal">
+          <p><strong>Contract objective:</strong> "I want a program that takes SerpAPI results (which have snippets, not abstracts) and finds the full abstract for each paper from free academic APIs."</p>
+          <p><strong>Contract is with:</strong> The <code>SemanticScholarClient</code>, <code>CrossRefClient</code>, <code>PubMedClient</code> in <code>Article_Eater/src/services/paper_fetcher.py</code>, and the OpenAlex API.</p>
+          <p><strong>Prompt hint:</strong> <em>"I need a contract for an abstract collector. It takes search results with DOIs and tries to find full abstracts from Semantic Scholar, CrossRef, PubMed, and OpenAlex in fallback order. Papers with no abstract from any source get tagged MISSING_ABSTRACT. Help me write the contract."</em></p>
+        </div>
+
+        <p><strong>Minimum bar</strong> your contract must cover:</p>
+        <ul>
+          <li>Takes SerpAPI results as input (with DOIs where available)</li>
+          <li>Tries multiple abstract sources in fallback order (S2 &rarr; CrossRef &rarr; PubMed &rarr; OpenAlex)</li>
+          <li>For papers without DOIs, falls back to title-based search</li>
+          <li>Tags papers with no abstract as <code>MISSING_ABSTRACT</code> (does not silently drop them)</li>
+          <li>Records which source supplied the abstract</li>
+          <li>Respects rate limits (Semantic Scholar: &le; 20 req/min without an API key)</li>
+        </ul>
+
+        <p><strong>Success conditions you must define:</strong></p>
+        <ul>
+          <li>What abstract hit rate is acceptable? (Aim for &ge; 70 percent on papers with DOIs.)</li>
+          <li>What counts as a "found" abstract versus a snippet?</li>
+          <li>How do you handle ambiguous title matches?</li>
+        </ul>
+
+        <h3>3B. Write your tests BEFORE you build</h3>
+        <ul>
+          <li>Fallback chain actually tries multiple sources, not just Semantic Scholar</li>
+          <li>Rate-limiting delays are present (look for <code>time.sleep</code> or <code>_RateLimiter</code>)</li>
+          <li>MISSING_ABSTRACT count is tracked and reported</li>
+          <li>Each paper's <code>abstract_source</code> field is set correctly</li>
+          <li>Output includes <code>study_type</code> from <code>estimate_study_type()</code></li>
+        </ul>
+
+        <h3>3C. Build and validate</h3>
+
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"Show me the fallback chain. If Semantic Scholar has no abstract for a DOI, what is the next source you try?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"How do you handle rate limits? Do you add delays between API calls?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">AI prompt</div>
+          <div class="ai-text">
+            <p>"For papers without DOIs, how do you search by title? What happens if the title match is ambiguous?"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 4D (was Phase 4: Triage Abstracts) -->
+      <section>
+        <h2>Phase 4D: Stage 2B &mdash; the triage decision</h2>
+        <p>With abstracts in hand, the pipeline can finally make decisions. Triage is the choke point: it converts a long list of candidate papers into a short list of papers worth downloading.</p>
+
+        <h3>4A. Write YOUR OWN triage contract</h3>
+
+        <div class="callout callout-teal">
+          <p><strong>Contract objective:</strong> "I want a program that reads each paper's abstract and decides: is this paper worth downloading?"</p>
+          <p><strong>Contract is with:</strong> The <code>atlas_shared</code> classifier (from Task 1) and <code>score_voi()</code> from <code>Article_Eater/src/cmr/voi_scoring.py</code>.</p>
+          <p><strong>Prompt hint:</strong> <em>"I need a contract for an abstract triage module. It runs each abstract through the atlas_shared topic classifier, then scores it with score_voi(). Output is a 4-way classification: ACCEPT, EDGE_CASE, REJECT, or MISSING_ABSTRACT, each with a human-readable reason. Help me write the contract."</em></p>
+        </div>
+
+        <p><strong>Minimum bar</strong> your contract must cover:</p>
+        <ul>
+          <li>Runs each abstract through the <code>atlas_shared</code> classifier (topic matching)</li>
+          <li>Scores each abstract with <code>score_voi()</code> from <code>cmr/voi_scoring.py</code></li>
+          <li>Produces a four-way classification: ACCEPT / EDGE_CASE / REJECT / MISSING_ABSTRACT</li>
+          <li>Attaches a human-readable <code>triage_reason</code> to every decision</li>
+          <li>Stores ACCEPT papers in the lifecycle DB; stores EDGE_CASE separately</li>
+        </ul>
+
+        <p><strong>Success conditions you must define:</strong></p>
+        <ul>
+          <li>What is the minimum number of papers triaged?</li>
+          <li>What classifier confidence threshold separates on-topic from off-topic?</li>
+          <li>What VOI threshold separates ACCEPT from EDGE_CASE?</li>
+        </ul>
+
+        <h3>4B. Write your tests BEFORE you build</h3>
+        <ul>
+          <li>Every triaged paper carries a <code>triage_decision</code> field</li>
+          <li>Every triaged paper carries a <code>triage_reason</code> (never empty)</li>
+          <li>ACCEPT papers appear in the database</li>
+          <li>EDGE_CASE papers are stored but flagged</li>
+          <li>REJECT papers are logged, not silently dropped</li>
+          <li>MISSING_ABSTRACT papers skip triage rather than getting scored as REJECT</li>
+        </ul>
+      </section>
+
+      <!-- PHASE 5 (NEW) -->
+      <section>
+        <h2>Phase 5: PDF acquisition cascade and the <code>scidownl</code> policy gate</h2>
+        <p>
+          Stage 3 of the funnel is PDF retrieval. It runs only for rows
+          where Phase 4 set <code>triage_decision = 'ACCEPT'</code>, and it
+          walks a strict source cascade in order. Every attempt is recorded
+          in <code>pdf_acquisition_attempts</code> (count) and
+          <code>pdf_acquisition_last_source</code> (which source was tried
+          last). On success, the new PDF is added to <code>papers</code>
+          and the originating <code>article_references</code> row's
+          <code>acquired_paper_id</code> is set to the new
+          <code>paper_id</code>.
+        </p>
+
+        <h3>5A. The source cascade (in order)</h3>
+        <ol>
+          <li><strong>Unpaywall</strong> &mdash; the existing
+            <code>ingest/pdf_downloader.py</code> handles this. Always tried
+            first; legal, free, license-clean.</li>
+          <li><strong>OpenAlex OA URL</strong> &mdash; tried second. The
+            <code>open_access</code> field on the OpenAlex record carries a
+            direct PDF URL when the work is OA. Free, license-clean.</li>
+          <li><strong><code>scidownl</code></strong> &mdash; tried <em>only</em>
+            if the previous two fail <em>and</em> the policy gate (5B) is
+            passed. Sci-Hub-mirror-backed; legality varies by jurisdiction;
+            UCSD library policy unresolved.</li>
+        </ol>
+
+        <h3>5B. The <code>scidownl</code> policy gate (read this in full before Phase 5 begins)</h3>
+        <p>
+          <code>scidownl</code> is not a default scraper and not a
+          dependency you wire in unconditionally. It is a last-resort PDF
+          source with an unresolved institutional policy question. Your
+          pipeline must satisfy <em>all four</em> of the following before a
+          single <code>scidownl</code> call is made:
+        </p>
+        <ol>
+          <li>The config flag <code>enable_paid_or_grey_sources</code> is
+            set to <code>true</code> in your YAML config (defaults to
+            <code>false</code>).</li>
+          <li>The file <code>policy_clearance.json</code> exists in your
+            project root and is countersigned by your instructor (a single
+            line of text plus a date is sufficient; the file's existence is
+            what the gate checks).</li>
+          <li>Both Unpaywall and OpenAlex OA have failed for this specific
+            <code>reference_id</code> in the current run; you log
+            <code>pdf_acquisition_last_source</code> reflecting that.</li>
+          <li>The row's <code>triage_decision</code> is exactly
+            <code>'ACCEPT'</code>; <code>EDGE_CASE</code> rows do not get
+            <code>scidownl</code> attempts.</li>
+        </ol>
+        <p>
+          Every <code>scidownl</code> call writes
+          <code>pdf_acquisition_last_source = 'scidownl'</code> and a row
+          to <code>lifecycle_transitions</code> with the
+          <code>reference_id</code>, the timestamp, and the success/failure
+          outcome. There is no silent fallback. Talk to your instructor
+          before the flag is turned on; do not make this decision
+          unilaterally.
+        </p>
+
+        <h3>5C. The acquisition queue (where the worker reads from)</h3>
+        <p>
+          Use the convenience view <code>v_acquisition_queue</code>, which
+          surfaces every <code>ACCEPT</code> row whose
+          <code>acquired_paper_id</code> is null, sorted by
+          <code>voi_score</code> descending. Your PDF-retrieval worker
+          reads from this view and walks the source cascade for each row.
+          Rows whose acquisition fails through every cascade source remain
+          in the queue with their <code>pdf_acquisition_attempts</code>
+          incremented; the dashboard surfaces them as the
+          <em>wanted-but-unobtainable</em> bucket.
+        </p>
+
+        <div class="callout callout-amber">
+          <strong>Two named failure modes to avoid.</strong>
+          (1) <em>Downloading PDFs before triaging</em> &mdash; the funnel
+          state machine in <code>triage/funnel_state.py</code> is what
+          stops this. Do not write a parallel acquisition path that bypasses
+          it. (2) <em><code>scidownl</code> as default rather than
+          last-resort</em> &mdash; the four-condition policy gate above is
+          what stops this. The flag defaults to <code>false</code>, the
+          clearance file does not exist by default, and the cascade only
+          reaches Step 3 after Steps 1 and 2 both fail.
+        </div>
+      </section>
+
+      <!-- PHASE 6 (was Phase 5) -->
+      <section>
+        <h2>Phase 6: Build the PRISMA Dashboard from <code>article_references</code></h2>
+        <p>The dashboard is the public face of your pipeline. It collects every count along the funnel and shows them in one place, so a reader can see — at a glance — how many papers entered, how many fell out at each stage, and why.</p>
+
+        <h3>5A. Dashboard requirements</h3>
+        <p>Build a web page (<code>ka_topic_proposer.html</code> or similar) that shows:</p>
+        <ol>
+          <li><strong>Gap Summary</strong> — how many gaps were identified, top five by VOI</li>
+          <li><strong>Search Summary</strong> — how many queries ran, how many results came back</li>
+          <li><strong>Abstract Collection</strong> — how many abstracts were found vs. tagged MISSING_ABSTRACT</li>
+          <li><strong>Triage Results</strong> — ACCEPT / EDGE_CASE / REJECT counts</li>
+          <li><strong>PRISMA Funnel</strong> — the complete funnel with real numbers</li>
+          <li><strong>Null Results</strong> — gaps for which no papers were found</li>
+        </ol>
+        <p>Data must persist after a page refresh (use a JSON file, localStorage, or an API endpoint).</p>
+
+        <h3>5B. The PRISMA funnel table (required deliverable)</h3>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Funnel Stage</th><th>Count</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gaps targeted (from Task 2)</td><td></td></tr>
+            <tr><td>Queries executed (SerpAPI)</td><td></td></tr>
+            <tr><td>Records returned</td><td></td></tr>
+            <tr><td>Duplicates removed</td><td></td></tr>
+            <tr><td>Abstracts collected</td><td></td></tr>
+            <tr><td>MISSING_ABSTRACT (no abstract found)</td><td></td></tr>
+            <tr><td>Screened by classifier</td><td></td></tr>
+            <tr><td>&rarr; ACCEPT (on-topic, high VOI)</td><td></td></tr>
+            <tr><td>&rarr; EDGE_CASE (borderline)</td><td></td></tr>
+            <tr><td>&rarr; REJECT (off-topic)</td><td></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- PHASE 7 (was Phase 6) -->
+      <section>
+        <h2>Phase 7: Prove It Works</h2>
+
+        <h3>Step 1: Run the full pipeline</h3>
+<pre><code class="lang-bash">python3 search_runner.py --queries query_results.json
+python3 abstract_collector.py --results search_results.json
+python3 abstract_triage.py --papers papers_with_abstracts.json
+</code></pre>
+
+        <h3>Step 2: Trace one paper end-to-end</h3>
+        <p>Pick ONE paper that made it through the entire pipeline and trace its journey:</p>
+
+<pre><code>Gap source: Template T__ step __ (confidence: 0.__, VOI: 0.__)
+  &rarr; Boolean query: "_______________"
+  &rarr; SerpAPI result #__ of __
+  &rarr; Title: [paper title]
+  &rarr; DOI: [if found]
+  &rarr; Abstract source: Semantic Scholar / CrossRef / PubMed / OpenAlex
+  &rarr; Abstract: [first 100 chars...]
+  &rarr; Classifier: topic=Q__, confidence=0.__
+  &rarr; VOI score: 0.__, bucket=high/medium/low
+  &rarr; Triage: ACCEPT / EDGE_CASE
+  &rarr; Stored at: [DB entry or file path]
+</code></pre>
+
+        <h3>Step 3: Report null results</h3>
+        <p>For high-VOI gaps that returned zero search results, write up each one:</p>
+
+<pre><code>Gap: Template T__ step __ (VOI: 0.__)
+  Description: _______________
+  Queries tried: [list]
+  Result: NO PAPERS FOUND
+  Implication: This gap may be genuinely unfilled in the literature.
+</code></pre>
+
+        <h3>Step 4: Report MISSING_ABSTRACT papers</h3>
+
+<pre><code>Papers with MISSING_ABSTRACT: N out of M total
+  Example: [title] — no abstract from any source
+  These papers cannot be triaged but are stored for future manual review.
+</code></pre>
+      </section>
+
+      <!-- WHAT YOU SUBMIT -->
+      <section>
+        <h2>What You Submit</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>Description and Format</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Search results</strong></td><td>Raw SerpAPI results as JSON</td></tr>
+            <tr><td><strong>Abstract collection</strong></td><td>Papers with abstracts plus source attribution</td></tr>
+            <tr><td><strong>Triage results</strong></td><td>ACCEPT / EDGE_CASE / REJECT / MISSING_ABSTRACT decisions</td></tr>
+            <tr><td><strong>PRISMA funnel</strong></td><td>Completed funnel table with real numbers</td></tr>
+            <tr><td><strong>Dashboard</strong></td><td>Working web page showing pipeline results</td></tr>
+            <tr><td><strong>End-to-end trace</strong></td><td>One paper traced from gap &rarr; SerpAPI &rarr; abstract &rarr; triage &rarr; store</td></tr>
+            <tr><td><strong>Null result report</strong></td><td>Gaps for which no papers were found</td></tr>
+            <tr><td><strong>File manifest</strong></td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- FILES YOU MUST CHANGE OR CREATE -->
+      <section>
+        <h2>Files You Must Change or Create</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>File</th><th>Type</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>search_runner.py</code></td><td>New</td><td>Calls SerpAPI with Boolean queries</td></tr>
+            <tr><td><code>abstract_collector.py</code></td><td>New</td><td>Collects abstracts via the fallback chain</td></tr>
+            <tr><td><code>abstract_triage.py</code></td><td>New</td><td>Runs the classifier + VOI on abstracts</td></tr>
+            <tr><td><code>search_results.json</code></td><td>New</td><td>Raw SerpAPI results</td></tr>
+            <tr><td><code>triage_results.json</code></td><td>New</td><td>Triage decisions with reasons</td></tr>
+            <tr><td><code>ka_topic_proposer.html</code></td><td>New</td><td>PRISMA dashboard</td></tr>
+            <tr><td>Database</td><td>Modified</td><td>New entries for ACCEPT papers</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GRADING -->
+      <section>
+        <h2>Grading (75 points)</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>SerpAPI integration</strong></td><td>8</td><td>Successfully queried Google Scholar; results land as <code>article_references</code> rows with <code>discovered_via = 'serpapi_scholar'</code></td></tr>
+            <tr><td><strong>Three other scrapers wired</strong></td><td>5</td><td><code>scholarly</code> fallback, <code>paper-scraper</code> preprint channel, <code>scidownl</code> as Stage-3-only source &mdash; each writes to <code>article_references</code> with its own <code>discovered_via</code> tag</td></tr>
+            <tr><td><strong><code>article_references</code> wiring</strong></td><td>10</td><td>Every candidate becomes a row; DOI normalised on insert; duplicates handled via UPDATE on <code>discovered_via</code>; provenance columns populated</td></tr>
+            <tr><td><strong>Abstract collection (Stage 2)</strong></td><td>12</td><td>Fallback chain works; &ge; 70 percent abstract hit rate on DOI papers; runs only on Stage-1 survivors</td></tr>
+            <tr><td><strong>Three-stage triage with atomic transitions</strong></td><td>12</td><td>Stage 1 metadata-only screen, Stage 2 abstract decision, Stage 3 PDF retrieval &mdash; each transition logged in <code>lifecycle_transitions</code></td></tr>
+            <tr><td><strong><code>scidownl</code> policy gate handled correctly</strong></td><td>5</td><td>Config flag default <code>false</code>; <code>policy_clearance.json</code> required; Unpaywall + OpenAlex must fail first; every call logged</td></tr>
+            <tr><td><strong>PRISMA funnel from <code>article_references</code></strong></td><td>8</td><td>Dashboard reads counts directly from one SQL group-by; no parallel state</td></tr>
+            <tr><td><strong>End-to-end trace</strong></td><td>8</td><td>One paper fully traced through <code>article_references</code> from harvest to acquired</td></tr>
+            <tr><td><strong>Null results + MISSING_ABSTRACT</strong></td><td>3</td><td>Documented, not treated as failures</td></tr>
+            <tr><td><strong>Verification questions</strong></td><td>4</td><td>Caught real problems in the AI's implementation</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- A NOTE ABOUT REUSE -->
+      <section>
+        <h2>A Note About Reuse</h2>
+        <p>The PRISMA funnel you just built is not a one-off deliverable. <strong>Every future task that adds papers to the corpus will require the same funnel,</strong> updated with new numbers. Design your dashboard with that in mind — when the next task runs new searches, the same page should refresh with new counts rather than be rebuilt from scratch. Treat the PRISMA dashboard as durable infrastructure for the rest of the course, not a deliverable you ship and forget.</p>
+      </section>
+
+      <!-- EXISTING CODE -->
+      <section>
+        <h2>Existing Code You Should Know About</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>File</th><th>What it provides</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>src/services/paper_fetcher.py</code></td><td><code>SemanticScholarClient.search()</code> + <code>fetch_by_doi()</code></td></tr>
+            <tr><td><code>src/services/paper_fetcher.py</code></td><td><code>CrossRefClient.search()</code> + <code>fetch()</code></td></tr>
+            <tr><td><code>src/services/paper_fetcher.py</code></td><td><code>PubMedClient.search()</code> + <code>fetch()</code></td></tr>
+            <tr><td><code>src/services/paper_fetcher.py</code></td><td><code>PaperFetcher.search()</code> — unified multi-source search</td></tr>
+            <tr><td><code>src/services/paper_fetcher.py</code></td><td><code>estimate_study_type()</code> — auto-derives study type from abstract</td></tr>
+            <tr><td><code>src/services/paper_fetcher.py</code></td><td><code>UnpaywallClient</code> — checks open-access availability</td></tr>
+            <tr><td><code>src/cmr/voi_scoring.py</code></td><td><code>score_voi()</code> — scores findings by information value</td></tr>
+            <tr><td><code>src/services/discovery_funnel.py</code></td><td><code>classify_closure()</code> — FULL/PARTIAL/NONE/NEGATIVE</td></tr>
+            <tr><td><code>pipeline_lifecycle_full.db</code></td><td>Table <code>pdf_corpus_inventory</code> — every PDF and its state</td></tr>
+            <tr><td><code>pdf_corpus_inventory/latest.csv</code></td><td>Readable export — check what is already in the corpus</td></tr>
+            <tr><td><code>pdf_identity_inventory/latest.csv</code></td><td>Dedupe info — catches the same paper under different filenames</td></tr>
+            <tr><td><code>course_scaffolding.py probe-collection-pdf</code></td><td>Foolproof duplicate check — run on any PDF to see if it is already in the corpus</td></tr>
+            <tr><td><code>ae_waiting_room_probe.py</code></td><td><code>probe_pdf_against_article_eater()</code> — the same check, callable from Python</td></tr>
+            <tr><td><code>refresh_v7_state_surfaces.py</code></td><td>Regenerates all state surfaces (run before starting)</td></tr>
+            <tr><td><code>atlas_shared</code></td><td>Topic classifier (from Task 1)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 3 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track2/your-name</code>
+        (lowercase, hyphenated — e.g., <code>track2/jane-doe</code>). All three tasks in
+        Track 2 live on this single branch. You'll open one Pull Request per completed
+        task so the instructor can review tasks independently.</p>
+
+        <div class="callout callout-rose">
+          <strong>Do not commit your SerpAPI key.</strong> Keep it in your shell environment (<code>export SERPAPI_KEY=...</code>) and reference it in code as <code>os.environ["SERPAPI_KEY"]</code>. A leaked key gets your free quota burned by strangers. Add anything that contains the literal key to <code>.gitignore</code> before your first commit.
+        </div>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+<pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Track 2 Task 3, fork: Article_Finder, Article_Eater
+#                              (paper_fetcher.py + voi_scoring.py + lifecycle DB),
+#                              Knowledge_Atlas (for the PRISMA dashboard page)
+
+# 2. Clone your fork to your machine (repeat for each repo you forked)
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Article_Finder.git
+cd Article_Finder
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Article_Finder.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track2/&lt;your-name&gt; upstream/main</code></pre>
+
+        <h3>Working on Task 3</h3>
+<pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track2/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task3: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track2/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 3 for review</h3>
+        <p>When Task 3 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track2/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track2/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 2 · Task 3: Search Execution &amp; Triage — &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested. Include your PRISMA funnel numbers.</li>
+          <li>Add the label <code>track2-task3-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>Task 3 is the last task in Track 2. After review, the instructor will signal closure on your track. If you want to keep iterating on the dashboard or extend the pipeline, leave your branch in place and open follow-up PRs against the merged Task 3 commit.</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t2_task2.html" class="prev">&larr; Task 2: Gap Targeting &amp; Query Generation</a>
+    <a href="t2_intro.html" class="next">Track Overview &rarr;</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t2_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+  <script src="_track_side_nav.js" defer></script>
+
+</body>
+</html>

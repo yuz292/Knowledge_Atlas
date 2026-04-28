@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 4 · UX Hub</title>
+<link rel="stylesheet" href="../ka_atlas_shell.css">
+<style>:root { --hub-color: #2A7868; }</style>
+</head>
+<body data-ka-active="" data-ka-journey="practitioner"
+      data-ka-crumbs='[["Home","ka_home.html"],["Tracks","ka_track_picker.html"],["UX Hub",""]]' data-ka-regime="160sp">
+
+<a class="ka-skip" href="#main">Skip to main content</a>
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<div style="background:linear-gradient(135deg,#2A7868,#1C5A4E);border-radius:12px;margin:18px 24px 0;padding:18px 22px;display:flex;align-items:center;gap:16px;">
+  <div style="flex:1">
+    <div style="font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7AACA0;">New for Spring 2026</div>
+    <a href="track4_hub.html" style="font-family:Georgia,serif;font-size:1.2rem;color:#fff;text-decoration:none;font-weight:700;">UX Studio Roadmap &rarr;</a>
+    <div style="font-size:.85rem;color:#B8D4CE;margin-top:4px;">Weekly pages with assignments, deliverables, and the full heuristic audit framework.</div>
+  </div>
+</div>
+
+<section class="hub-banner">
+  <div class="tag">Track 4 · Team Hub</div>
+  <h1>User Experience</h1>
+  <p class="subtitle">
+    Shape how visitors navigate, read, and trust the Knowledge Atlas. Your deliverables
+    are interfaces, information architectures, and heuristic-driven critiques that
+    improve the site's usability for students, researchers, theorists, and
+    practitioners.
+  </p>
+  <p class="roster-count">Spring 2026 roster: 4 enrolled students</p>
+</section>
+
+<div class="ka-shell">
+  <aside id="ka-journey-slot"></aside>
+  <main id="ka-main">
+
+    <div class="hub-regions">
+
+      <section class="hub-region" style="border-left:4px solid #6B2FA0;">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num" style="color:#6B2FA0;">Region 0 · UX research resource</div>
+          <div class="hub-region-title">K-ATLAS Archive (gated)</div>
+        </div></div>
+        <div class="hub-region-body">
+          <p>The archive indexes pages that were retired, folded into other
+             surfaces, or held pending redesign. They are kept for their
+             design DNA — prior patterns, useful prose fragments, and UX
+             ideas worth mining in redesign work. Access is gated to Track 4
+             and the instructor admin console only; the archive is not
+             linked from any public navbar or sitemap.</p>
+          <p style="margin-top:10px;">
+            <a href="../ka_archive.html" style="display:inline-block;padding:8px 14px;background:#6B2FA0;color:#fff;text-decoration:none;border-radius:6px;font-size:.86rem;font-weight:600;">🗄 Open the archive →</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="hub-region">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num">Region 1</div>
+          <div class="hub-region-title">Environment setup</div>
+        </div></div>
+        <div class="hub-region-body">
+          <ul>
+            <li>A modern browser (Chromium-based or Firefox) with DevTools</li>
+            <li>Node 18+ and a local clone of the <code>Knowledge_Atlas</code> repo</li>
+            <li>axe DevTools or Lighthouse extension for accessibility audits</li>
+            <li>Figma account (free tier sufficient) for wireframes</li>
+          </ul>
+<pre>git clone https://github.com/ucsd-cogs160/knowledge_atlas.git
+cd knowledge_atlas
+python3 -m http.server 8000    # quick static-serve of the site</pre>
+          <p>Then open <code>http://localhost:8000/160sp/ka_schedule.html</code> to
+          exercise the site exactly as students see it.</p>
+        </div>
+      </section>
+
+      <section class="hub-region">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num">Region 2</div>
+          <div class="hub-region-title">Shared resources</div>
+        </div></div>
+        <div class="hub-region-body">
+          <ul>
+            <li>Nielsen 10 usability heuristics (cheat sheet)</li>
+            <li>WCAG 2.1 AA quick-reference</li>
+            <li>Site-wide style tokens (<code>ka_atlas_shell.css</code> palette)</li>
+            <li>User personas (Student, Researcher, Theorist, Contributor, Practitioner)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="hub-region">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num">Region 3</div>
+          <div class="hub-region-title">Ways of working</div>
+        </div></div>
+        <div class="hub-region-body">
+          <ul>
+            <li>Solo or pair-claim a UX task; deliver via Pull Request.</li>
+            <li>Every heuristic critique cites the specific heuristic violated and a fix.</li>
+            <li>Keyboard navigability and colour contrast are non-negotiable on any merge.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="hub-region" style="border-left:4px solid #E8872A;">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num" style="color:#E8872A;">Region 3.5 · Graded deliverables</div>
+          <div class="hub-region-title">Track 4 deliverables (T4.a &ndash; T4.g)</div>
+        </div></div>
+        <div class="hub-region-body">
+          <p>Each deliverable has a dedicated page with its goal, step-by-step instructions,
+             the pages and files you will touch, an explicit naive-approach counter-example
+             so you can see what scores low, the verification rubric, and a live workspace
+             that saves drafts to your browser. Click through in order; each page ends by
+             pointing to the next.</p>
+          <ul style="list-style:none;padding:0;margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.a</div>
+              <a href="ka_t4_a_heuristic_audit.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Heuristic audit of the public site (10 findings)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 3&ndash;4 &middot; 12 pts &middot; Medium</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.b</div>
+              <a href="ka_t4_b_scenarios.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Scenario-based walkthroughs (3 archetypes)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 4 &middot; 5 pts &middot; Easy</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.b.2</div>
+              <a href="ka_t4_b2_variant_evaluation.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Topic-page variant evaluation (6 variants)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 5 &middot; 10 pts &middot; Medium</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.c</div>
+              <a href="ka_t4_c_usability_pilot.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Moderated usability pilot (n = 5)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 5&ndash;6 &middot; 15 pts &middot; Hard</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.d</div>
+              <a href="ka_t4_d_severity_backlog.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Severity rubric &amp; prioritised backlog</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 6 &middot; 5 pts &middot; Medium</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.e</div>
+              <a href="ka_t4_e_reproducibility.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Paired reproducibility check</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 7 &middot; 13 pts &middot; Hard</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.f</div>
+              <a href="ka_t4_f_redesign.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Redesign proposal (3 mid-fidelity)</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Weeks 7&ndash;8 &middot; 10 pts &middot; Medium</div>
+            </li>
+            <li style="background:#FEF3E2;border:1px solid #E8872A;border-radius:6px;padding:10px 14px">
+              <div style="font-family:ui-monospace,Menlo,monospace;font-weight:700;color:#9a5010">T4.g</div>
+              <a href="ka_t4_g_final_report.html" style="color:#1C3D3A;font-weight:600;text-decoration:none">Track 4 final report</a>
+              <div style="font-size:.8rem;color:#6B6B6B;margin-top:4px">Week 8 &middot; 5 pts &middot; Easy&ndash;Medium</div>
+            </li>
+          </ul>
+          <p style="margin-top:14px;font-size:.85rem;color:#6B6B6B">
+            Total Track 4 allocation: 75 points (10 of which are claimed by T4.b.2,
+            the topic-page variant evaluation). The full class is 100 points with
+            the standard 5/5/75/15 split; Track 4 fills the 75-point project block.
+          </p>
+          <div style="margin-top:16px;padding:12px 16px;background:#EFECFA;border-left:4px solid #6B53B8;border-radius:6px;font-size:0.9rem">
+            <b style="color:#4A3A8E">Track 4 owns the redesign lifecycle on the twelve complicated surfaces.</b>
+            The Atlas has twelve "complicated surfaces" &mdash; epistemic network,
+            Bayesian network, interpretation, argumentation, QA, mechanism, theory,
+            gaps, evidence landscape, research fronts, ontology inspector, topic
+            inspector &mdash; that each publish a spec page describing what the page
+            shows, who needs it, why the design is hard, the naive solution in place
+            now, and a per-user-type critique prompt. Every other track can read
+            these pages as a reference resource; only Track 4 proposes redesigns.
+            The seven graded deliverables above are the pipeline: T4.a audits
+            find the problems, T4.b walks through user scenarios on them, T4.c
+            pilots them, T4.d prioritises the findings, T4.e checks
+            reproducibility, T4.f delivers three mid-fidelity redesigns per
+            student, T4.g reports out. Pages still at <em>naive</em> or
+            <em>absent</em> status carry the highest redesign leverage.
+            <a href="../ka_journeys.html" style="display:inline-block;margin-top:6px;color:#4A3A8E;font-weight:600;text-decoration:none">Browse the complicated-surfaces index &rarr;</a>
+          </div>
+          <p style="margin-top:10px;font-size:.82rem;color:#6B6B6B;font-style:italic">
+            Scope note. The three Article Finder spec pages
+            (<code>ka_journey_af_references</code>,
+            <code>ka_journey_af_roi</code>,
+            <code>ka_journey_af_neuro</code>) share the same journey index
+            but belong to Track 2 as graded deliverables T2.d, T2.e, and
+            T2.f. Track 2 students tackle them after their automation
+            pipeline (T2.a citation harvest, T2.b abstract screening, T2.c
+            PDF acquisition) passes its functional checks. A Track 4
+            student may critique an AF spec&apos;s explanation quality as
+            part of T4.a, but the implementation itself stays with Track 2.
+          </p>
+        </div>
+      </section>
+
+      <section class="hub-region">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num">Region 4</div>
+          <div class="hub-region-title">Task context &amp; manifests</div>
+        </div></div>
+        <div class="hub-region-body">
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">UX-001 · Heuristic audit of a single page</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Produce a written heuristic audit of one named page.</dd>
+                <dt>Outputs</dt><dd>Markdown report with at least 6 findings, each tagged
+                  with a Nielsen heuristic, a severity (0–4), and a concrete remediation.</dd>
+                <dt>Acceptance</dt><dd>Instructor accepts report; at least 3 remediations
+                  are shipped as PRs.</dd>
+                <dt>Verification</dt><dd>Procedural: report file exists, schema conforms,
+                  shipped PRs link back to findings.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">UX-002 · WCAG 2.1 AA contrast sweep</span>
+              <span class="task-manifest-status status-supported">Well-specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Identify every text/background pair in the site below 4.5:1
+                  contrast and propose compliant replacements.</dd>
+                <dt>Verification</dt><dd>Automated: <code>verify_contrast.py</code> runs
+                  axe against all site pages and reports zero regressions after fixes.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="task-manifest">
+            <div class="task-manifest-head" onclick="this.parentElement.classList.toggle('open')">
+              <span class="task-manifest-title">UX-003 · Keyboard-only navigation pass</span>
+              <span class="task-manifest-status status-partial">Partially specified</span>
+            </div>
+            <div class="task-manifest-body">
+              <dl>
+                <dt>Goal</dt><dd>Drive the entire site with keyboard only; identify every
+                  unreachable interactive element.</dd>
+                <dt>Verification</dt><dd>Hybrid: script checks for <code>tabindex</code>
+                  and focus-visible; human confirms flow on at least three representative
+                  user journeys.</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="hub-region">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num">Region 5</div>
+          <div class="hub-region-title">Functional verification</div>
+        </div></div>
+        <div class="hub-region-body">
+          <p>UX deliverables are harder to auto-grade than VR or Article Finder, so we
+          combine automated checks (axe, Lighthouse, contrast) with human sign-off on a
+          scripted user journey.</p>
+          <ul>
+            <li>Lighthouse Accessibility score must not decrease after any merge.</li>
+            <li>axe must report zero critical issues on pages changed in the PR.</li>
+            <li>Journey scripts (list of step descriptions) must be reproducible by a
+              second student in &lt; 5 minutes.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="hub-region">
+        <div class="hub-region-head"><div>
+          <div class="hub-region-num">Region 6</div>
+          <div class="hub-region-title">Help &amp; queue</div>
+        </div></div>
+        <div class="hub-region-body">
+          <div class="help-queue">
+            <h5>Where to ask for help</h5>
+            <ul>
+              <li><code>#track4-ux</code> Slack</li>
+              <li>Weekly UX crit — Fridays 3 pm</li>
+              <li>Escalate ambiguous heuristic calls to the crit</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<footer class="ka-footer">
+  Knowledge Atlas · UCSD Cognitive Science · COGS 160 Spring 2026
+</footer>
+
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_journey_nav.js"      defer></script>
+</body>
+</html>

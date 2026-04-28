@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 1: Build an Image Collection · Track 1 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb"><!-- canonical: Home > User Type > Journey > Page -->
+      <a href="../ka_home.html">Home</a> /
+      <a href="ka_schedule.html">160 Student</a> /
+      <a href="t1_intro.html">Track 1</a> /
+      <span>Task 1: Build an Image Collection</span>
+    </div>
+
+  <!-- 3. PAGE GRID: side-nav + main content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav" data-side-nav-page="t1_task1"></aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">Track 1 · Task 1</div>
+        <h1>Build an Image Collection</h1>
+        <p class="hero-sub">By the end of this task you will own 500 openly-licensed photographs of architectural interiors, organised by room type, with every image traceable back to the web page you found it on.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">Track: Image Tagger</span>
+          <span class="hero-pill">75 points</span>
+          <span class="hero-pill">Contract gate</span>
+        </div>
+      </header>
+
+      <!-- THE BIG PICTURE -->
+      <section>
+        <h2>The big picture</h2>
+        <p>The Knowledge Atlas studies how buildings shape people — how ceiling height changes thinking, how daylight shifts mood, how clutter raises stress. Studying these effects computationally takes thousands of photographs of real interior spaces. Your job is to gather 500 of them.</p>
+
+        <p>But "gather" does not mean "drag images off Google." Every image must:</p>
+        <ol>
+          <li><strong>Carry an open licence</strong> — Creative Commons, public domain, or equivalent. No copyright violations.</li>
+          <li><strong>Carry provenance</strong> — for every image you know where you found it, who took it, and what licence it carries.</li>
+          <li><strong>Carry a category</strong> — you know what kind of room it shows.</li>
+        </ol>
+
+        <p>You will build the tools that make this efficient, then use those tools to gather your 500.</p>
+      </section>
+
+      <!-- THE 15 ROOM TYPES -->
+      <section>
+        <h2>The 15 room types</h2>
+        <p>The collection must span a wide range of interior spaces. Use these 15 categories:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>#</th><th>Room type</th><th>What to search for</th><th>Why we need it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><code>living_room</code></td><td>living room, lounge, sitting room</td><td>Furniture layout, daylight, biophilia, colour warmth</td></tr>
+            <tr><td>2</td><td><code>bedroom</code></td><td>bedroom, sleeping quarters</td><td>Lighting warmth, enclosure, materials, tranquillity</td></tr>
+            <tr><td>3</td><td><code>kitchen</code></td><td>kitchen, cooking area</td><td>Component detection (cabinets, counters), materials, layout</td></tr>
+            <tr><td>4</td><td><code>bathroom</code></td><td>bathroom, restroom, washroom</td><td>Materials (tile, glass), fixtures, spatial geometry</td></tr>
+            <tr><td>5</td><td><code>office</code></td><td>office interior, workspace, workstation</td><td>Task lighting, spatial openness, visual complexity</td></tr>
+            <tr><td>6</td><td><code>classroom</code></td><td>classroom, lecture hall, seminar room</td><td>Social-spatial layout, lighting, legibility</td></tr>
+            <tr><td>7</td><td><code>hospital</code></td><td>hospital room, clinic interior, patient room</td><td>Safety, materials, lighting, wayfinding</td></tr>
+            <tr><td>8</td><td><code>restaurant</code></td><td>restaurant interior, café, dining room</td><td>Social density, lighting ambience, material warmth</td></tr>
+            <tr><td>9</td><td><code>lobby</code></td><td>hotel lobby, building lobby, atrium</td><td>Spatial volume, ceiling height, prospect-refuge</td></tr>
+            <tr><td>10</td><td><code>corridor</code></td><td>hallway, corridor, passage</td><td>Spatial geometry, wayfinding, enclosure ratio</td></tr>
+            <tr><td>11</td><td><code>library</code></td><td>library interior, reading room</td><td>Cognitive restoration, natural light, visual order</td></tr>
+            <tr><td>12</td><td><code>retail</code></td><td>retail store, shop interior, showroom</td><td>Colour, lighting, visual complexity, layout</td></tr>
+            <tr><td>13</td><td><code>museum</code></td><td>museum gallery, exhibition space</td><td>Spatial volume, lighting, visual complexity</td></tr>
+            <tr><td>14</td><td><code>worship</code></td><td>church interior, temple, mosque</td><td>Ceiling height, geometry, fractal patterns, affect</td></tr>
+            <tr><td>15</td><td><code>gym</code></td><td>gym, fitness centre, sports hall</td><td>Spatial openness, materials, lighting intensity</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-teal"><strong>Optional extension:</strong> You may add up to 5 more categories if you discover important gaps. These 15 are the minimum.</div>
+
+        <p>Save this list as <code>space_types.json</code> in your repo. Use this format:</p>
+
+<pre><code class="lang-bash">{
+  "living_room": {
+    "search_terms": ["living room interior", "lounge interior", "sitting room"],
+    "why": "Furniture layout, daylight, biophilia, color warmth"
+  },
+  "bedroom": {
+    "search_terms": ["bedroom interior", "sleeping quarters"],
+    "why": "Lighting warmth, enclosure, materials, tranquility"
+  }
+}</code></pre>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section>
+        <h2>Phase 1: Find your image sources</h2>
+        <p>Find at least <strong>5 websites or databases</strong> that supply openly-licensed photographs of architectural interiors. Some offer free APIs; some you will browse by hand. All must publish a clear licence.</p>
+
+        <h3>What "openly licensed" means</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Licence</th><th>OK to use?</th><th>Attribution needed?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>CC0 (Public Domain)</td><td>Yes</td><td>No</td></tr>
+            <tr><td>CC-BY</td><td>Yes</td><td>Yes — credit the photographer</td></tr>
+            <tr><td>CC-BY-SA</td><td>Yes</td><td>Yes — credit and share alike</td></tr>
+            <tr><td>Unsplash Licence</td><td>Yes</td><td>Attribution appreciated, not required</td></tr>
+            <tr><td>Pexels Licence</td><td>Yes</td><td>No attribution required</td></tr>
+            <tr><td>CC-NC (Non-Commercial)</td><td>Check first</td><td>OK for academic research, not commercial</td></tr>
+            <tr><td>All Rights Reserved / ©</td><td>No</td><td>Cannot use</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Starting points (you must find more)</h3>
+        <ul>
+          <li><strong>Unsplash</strong> (unsplash.com) — high-quality, free API, strong architectural content</li>
+          <li><strong>Pexels</strong> (pexels.com) — free API, no attribution needed</li>
+          <li><strong>Flickr</strong> (flickr.com) — API with CC-licence filtering, large architecture groups</li>
+          <li><strong>Wikimedia Commons</strong> (commons.wikimedia.org) — CC and public-domain interiors</li>
+          <li><strong>Pixabay</strong> (pixabay.com) — free, CC0-equivalent licence</li>
+        </ul>
+
+        <h3>Your deliverable: <code>image_sources.json</code></h3>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p><strong>Contract objective:</strong> "I want a tested, documented list of image sources I can use to collect 500 interior photos."</p>
+            <p><strong>Contract is with:</strong> Public image APIs and websites.</p>
+            <p><strong>Prompt hint:</strong> "I need to find 5+ sources of openly-licensed architectural interior photos. For each: does it have an API? What license? How do I search it? Test one query and tell me how many results."</p>
+          </div>
+        </div>
+
+        <p>Write YOUR OWN contract for this phase. Cover Inputs, Processing, Outputs, and Success Conditions.</p>
+
+        <div class="callout callout-amber"><strong>Success conditions (minimum):</strong>
+          <ul>
+            <li>At least 5 sources documented</li>
+            <li>Each source records: name, URL, licence type, API availability (yes/no)</li>
+            <li>At least 3 sources tested with a sample query</li>
+            <li>Each tested source records how many results the sample query returned</li>
+          </ul>
+        </div>
+
+<pre><code class="lang-bash">{
+  "sources": [
+    {
+      "name": "Unsplash",
+      "url": "https://unsplash.com",
+      "api_url": "https://api.unsplash.com/",
+      "has_api": true,
+      "license": "Unsplash License (free, attribution appreciated)",
+      "rate_limit": "50 requests/hour (free tier)",
+      "tested": true,
+      "test_query": "modern living room interior",
+      "test_results": 1247
+    }
+  ]
+}</code></pre>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p><code>image_sources.json</code> — at least 5 documented sources, at least 3 tested with sample queries.</p>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section>
+        <h2>Phase 2: Build the search pipeline</h2>
+        <p>Now automate the gathering. Write a Python script that takes a room type and a source, runs the search, and saves the results. We call this the <strong>search pipeline</strong> — the script that drives queries against your image sources and returns structured records.</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p><strong>Contract objective:</strong> "I want a script that searches my image sources for photos of each room type and saves the results as JSON."</p>
+            <p><strong>Contract is with:</strong> Your image source APIs and <code>space_types.json</code>.</p>
+            <p><strong>Prompt hint:</strong> "Build a Python script that reads space_types.json, loops through each room type, queries the Unsplash/Pexels/Flickr API for that room type's search terms, and saves results as JSON. Each result must include: image URL, thumbnail URL, photographer name, source name, source page URL, and license."</p>
+          </div>
+        </div>
+
+        <p>Write YOUR OWN contract. Then write your tests BEFORE building:</p>
+
+        <div class="callout callout-amber">
+          <ul>
+            <li>API keys live in environment variables, not in source code</li>
+            <li>The script respects rate limits (look for <code>time.sleep</code>)</li>
+            <li>Every image record carries <code>url</code>, <code>source_name</code>, <code>source_page_url</code>, and <code>license</code></li>
+            <li>Output JSON validates</li>
+            <li>Zero-result searches are logged, not silently skipped</li>
+          </ul>
+        </div>
+
+        <h3>What each image record must look like</h3>
+
+<pre><code class="lang-bash">{
+  "url": "https://images.unsplash.com/photo-abc123",
+  "thumbnail_url": "https://images.unsplash.com/photo-abc123?w=400",
+  "title": "Modern minimalist living room",
+  "photographer": "Jane Doe",
+  "source_name": "Unsplash",
+  "source_page_url": "https://unsplash.com/photos/abc123",
+  "license": "Unsplash License",
+  "space_type": "living_room",
+  "search_query": "modern living room interior",
+  "collected_at": "2026-05-01T12:00:00Z"
+}</code></pre>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p><code>search_pipeline.py</code> + <code>search_results.json</code></p>
+        </div>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section>
+        <h2>Phase 3: Build the collection page</h2>
+        <p>Build a web page that lets you browse search results, accept or reject images, upload local files, and watch your progress toward 500.</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p><strong>Contract objective:</strong> "I want an interactive page where I can manage my image collection — search, browse, accept/reject, upload, and export."</p>
+            <p><strong>Contract is with:</strong> Your search results and the Image Tagger upload API.</p>
+            <p><strong>Prompt hint:</strong> "Build an HTML page with these features: (1) a search bar that loads results from search_results.json, (2) a thumbnail grid with accept/reject buttons, (3) a file upload zone for drag-and-drop, (4) provenance fields that are required before accepting, (5) a progress counter showing N/500, (6) an export button that downloads the collection as JSON."</p>
+          </div>
+        </div>
+
+        <h3>Required features</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Feature</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Search / filter</strong></td><td>Filters images by room type or keyword</td></tr>
+            <tr><td><strong>Thumbnail grid</strong></td><td>Shows images with title, source, licence</td></tr>
+            <tr><td><strong>Accept / Reject</strong></td><td>Accepts an image into the collection or rejects it</td></tr>
+            <tr><td><strong>Upload</strong></td><td>Drag-and-drop for local files or folders</td></tr>
+            <tr><td><strong>Provenance fields</strong></td><td>Source URL and source name — required before accepting</td></tr>
+            <tr><td><strong>Progress counter</strong></td><td>Shows how many images you have collected out of 500</td></tr>
+            <tr><td><strong>Export</strong></td><td>Downloads <code>collection.json</code> with full provenance</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Provenance is non-negotiable</h3>
+        <p>Every image in your collection must carry these fields:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Field</th><th>Required?</th><th>Auto-filled from search?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>source_page_url</code></td><td>Yes</td><td>Yes (from API)</td></tr>
+            <tr><td><code>source_name</code></td><td>Yes</td><td>Yes (from API)</td></tr>
+            <tr><td><code>photographer</code></td><td>Best effort</td><td>Usually (from API)</td></tr>
+            <tr><td><code>license</code></td><td>Yes</td><td>Yes (from API)</td></tr>
+            <tr><td><code>space_type</code></td><td>Yes</td><td>Yes (from search)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-rose"><strong>Do not guess provenance.</strong> For images you upload manually (not from a search), type in the source URL and source name yourself. If you cannot tell where an image came from, leave it out.</div>
+
+        <p>Write YOUR OWN contract and tests for this phase.</p>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p><code>ka_image_collection.html</code></p>
+        </div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section>
+        <h2>Phase 4: Collect 500 images</h2>
+        <p>Use your pipeline and your collection page to gather the 500.</p>
+
+        <h3>Distribution targets</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Requirement</th><th>Target</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total images</td><td>500</td></tr>
+            <tr><td>Room types covered</td><td>&ge; 12 of the 15</td></tr>
+            <tr><td>Images per top-10 room type</td><td>&ge; 15 each</td></tr>
+            <tr><td>Sources used</td><td>&ge; 3 different databases</td></tr>
+            <tr><td>Images with full provenance</td><td>500 / 500</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Spot-check your provenance</h3>
+        <p>Pick <strong>10 random images</strong> from your collection. For each one:</p>
+        <ol>
+          <li>Open the <code>source_page_url</code> in a browser. Does the page exist?</li>
+          <li>Does the licence on the page match what you recorded?</li>
+          <li>Is the photographer credit correct?</li>
+        </ol>
+        <p>Record what you find. Discrepancies happen — what counts is that you checked.</p>
+
+        <h3>Collection report</h3>
+        <p>Fill in this table:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Metric</th><th>Your count</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total images</td><td>/500</td></tr>
+            <tr><td>Room types represented</td><td>/15</td></tr>
+            <tr><td>Images from search pipeline</td><td></td></tr>
+            <tr><td>Images from manual upload</td><td></td></tr>
+            <tr><td>Sources used</td><td></td></tr>
+            <tr><td>Provenance spot-check: pages exist</td><td>/10</td></tr>
+            <tr><td>Provenance spot-check: licence matches</td><td>/10</td></tr>
+          </tbody>
+        </table>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p><code>collection.json</code> + the collection report (in your submission)</p>
+        </div>
+      </section>
+
+      <!-- WHAT YOU SUBMIT -->
+      <section>
+        <h2>What you submit</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>Filename</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Space types</td><td><code>space_types.json</code></td></tr>
+            <tr><td>Image sources</td><td><code>image_sources.json</code></td></tr>
+            <tr><td>Search pipeline</td><td><code>search_pipeline.py</code></td></tr>
+            <tr><td>Search results</td><td><code>search_results.json</code></td></tr>
+            <tr><td>Collection page</td><td><code>ka_image_collection.html</code></td></tr>
+            <tr><td>Image collection</td><td><code>collection.json</code> (500 images with provenance)</td></tr>
+            <tr><td>Collection report</td><td>The table above, filled in</td></tr>
+            <tr><td>Contracts + tests</td><td>Your written contracts and test checklists</td></tr>
+            <tr><td>File manifest</td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GRADING -->
+      <section>
+        <h2>Grading (75 points)</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Contracts + tests</strong></td><td>20</td><td>Written BEFORE building. Specific, not vague. <strong>(CONTRACT GATE)</strong></td></tr>
+            <tr><td><strong>Image sources</strong></td><td>10</td><td>&ge; 5 sources, &ge; 3 tested, licences documented</td></tr>
+            <tr><td><strong>Search pipeline</strong></td><td>10</td><td>Automated, respects rate limits, tracks provenance</td></tr>
+            <tr><td><strong>Collection page</strong></td><td>15</td><td>Search + browse + upload + provenance + export</td></tr>
+            <tr><td><strong>500 images</strong></td><td>15</td><td>Full provenance, &ge; 12 room types, &ge; 3 sources</td></tr>
+            <tr><td><strong>Verification</strong></td><td>5</td><td>Spot-checked provenance, caught issues in the AI's implementation</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-rose"><strong>Contract gate:</strong> Missing or vague contracts ("it works") flag your submission and keep your images out of the Atlas. Write real contracts with real success conditions.</div>
+      </section>
+
+      <!-- REUSE -->
+      <section>
+        <h2>Reuse</h2>
+        <div class="callout callout-blue">The work you ship in Task 1 is infrastructure for the rest of the track. Your image sources, your search pipeline, and your collection page feed Task 2 (where you tag these images), Task 3 (where you run inter-rater agreement on them), and Task 4 (where you train a classifier on them). Build them right the first time.</div>
+      </section>
+
+      <!-- EXISTING CODE -->
+      <section>
+        <h2>Existing code you should know about</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Repo / File</th><th>What it gives you</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Tagging_Contractor/core/trs-core/v0.2.8/registry/registry_v0.2.8.json</code></td><td>The tag registry — 424 tags grouped by domain. Tells you which features matter in each room type.</td></tr>
+            <tr><td><code>Tagging_Contractor/Tagging_Contractor_What_it_is_and_How_to_use_it.md</code></td><td>How the tagging system works</td></tr>
+            <tr><td><code>image-tagger/docs/CONTRACT.md</code></td><td>Image Tagger API — the upload endpoint your images will eventually pass through</td></tr>
+            <tr><td><code>Outcome_Contractor/README.md</code></td><td>The human-side vocabulary (cognitive and affective effects) — the reason we need these images</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 1 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track1/your-name</code>
+        (lowercase, hyphenated — e.g., <code>track1/jane-doe</code>). All three tasks in
+        Track 1 live on this single branch. You'll open one Pull Request per completed
+        task so the instructor can review tasks independently.</p>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+<pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Track 1, fork: Knowledge_Atlas, Tagging_Contractor, Article_Eater,
+#                       image-tagger, Outcome_Contractor
+
+# 2. Clone your fork to your machine (repeat for each repo you forked)
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Knowledge_Atlas.git
+cd Knowledge_Atlas
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Knowledge_Atlas.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track1/&lt;your-name&gt; upstream/main</code></pre>
+
+        <h3>Working on Task 1</h3>
+<pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track1/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task1: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track1/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 1 for review</h3>
+        <p>When Task 1 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track1/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track1/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 1 · Task 1: Build an Image Collection — &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested.</li>
+          <li>Add the label <code>track1-task1-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>When you start Task 2, keep working on the same <code>track1/&lt;your-name&gt;</code>
+        branch — additional commits will appear in your existing PR <em>only until you open the
+        Task 2 PR</em>, at which point the new task gets its own PR off the same branch (use
+        GitHub's "compare" feature with the previous task's merge commit as the base).</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t1_intro.html" class="prev">&larr; Track Overview</a>
+    <a href="t1_task2.html" class="next">Task 2: Build Latent Tag Detectors &rarr;</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t1_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+  <script src="_track_side_nav.js" defer></script>
+
+</body>
+</html>

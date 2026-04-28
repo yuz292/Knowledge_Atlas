@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Five Answer Shapes — Track 4 Schemata</title>
+  <link rel="stylesheet" href="../_track_pages_shared.css">
+  <style>
+    body { padding-top: 56px; }
+    .wrap { background: var(--paper); }
+  </style>
+  <style>
+    :root {
+      --paper:        #fbf8f1;
+      --ink:          #1f1d1a;
+      --muted:        #5b574f;
+      --rule:         #ddd5c1;
+      --accent:       #5a3e1b;
+      --accent-soft:  #e9dec4;
+      --emphasis:     #8a4b1a;
+      --warm:         #c08a4a;
+      --cool:         #4d6b7a;
+      --good:         #2c6b3f;
+      --bad:          #8e2727;
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--paper); color: var(--ink); margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      line-height: 1.55; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 36px 28px 64px; }
+    h1 { font-size: 1.7rem; margin: 0 0 4px; letter-spacing: 0.2px; }
+    .lede { color: var(--muted); margin: 4px 0 28px; max-width: 70ch;
+      font-size: 0.97rem; }
+    h2 { font-size: 1.2rem; margin: 36px 0 6px; color: var(--accent);
+      letter-spacing: 0.5px; }
+    h2 .num { display: inline-block; width: 28px; color: var(--emphasis);
+      font-variant-numeric: tabular-nums; }
+    h3 { font-size: 0.92rem; margin: 14px 0 6px; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.5px; }
+
+    .shape-card {
+      border: 1px solid var(--rule); border-radius: 6px;
+      background: #fff; margin: 18px 0 10px;
+      padding: 22px 24px;
+    }
+    .shape-card .desc {
+      font-size: 0.95rem; color: var(--ink); margin: 0 0 12px;
+      max-width: 70ch;
+    }
+    .shape-card .when {
+      font-size: 0.88rem; color: var(--muted);
+      border-left: 3px solid var(--accent-soft); padding: 4px 0 4px 12px;
+      margin: 0 0 16px;
+    }
+    .shape-card .example-q {
+      font-size: 0.92rem; color: var(--accent);
+      font-style: italic; margin: 14px 0 6px;
+    }
+    .shape-card .shape-title {
+      font: 600 1.04rem "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      color: var(--ink);
+      margin: 0 0 4px;
+      letter-spacing: 0.2px;
+      max-width: 70ch;
+    }
+    .shape-card .shape-title .fig-label {
+      font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      font-size: 0.78rem; margin-right: 8px;
+      vertical-align: 1px;
+    }
+    .shape-card .shape-caption {
+      font-size: 0.86rem; color: var(--muted);
+      border-left: 3px solid var(--accent-soft);
+      padding: 8px 14px;
+      margin: 8px 0 18px;
+      max-width: 72ch;
+      line-height: 1.55;
+    }
+    .shape-card .shape-caption b {
+      color: var(--accent); font-weight: 600;
+    }
+
+    /* Diagram common */
+    .diagram {
+      display: flex; justify-content: center; align-items: center;
+      margin: 18px 0; min-height: 320px;
+    }
+    svg { max-width: 100%; height: auto; }
+
+    /* Shape 1: Toulmin diagram — uses SVG */
+    .toulmin-key { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px;
+      font-size: 0.86rem; max-width: 600px; margin: 14px auto; }
+    .toulmin-key div { padding: 6px 8px; border-left: 3px solid var(--accent-soft); }
+
+    /* Shape 2: Field map */
+    .fieldmap { background: #fff; border: 1px solid var(--rule);
+      padding: 14px; border-radius: 4px; }
+
+    /* Shape 3: Procedure — vertical step list */
+    .procedure-list { counter-reset: step; margin: 8px 0; padding: 0;
+      list-style: none; }
+    .procedure-list li {
+      counter-increment: step;
+      display: grid; grid-template-columns: 36px 1fr 220px;
+      gap: 14px; padding: 10px 12px; border: 1px solid var(--rule);
+      border-radius: 4px; margin-bottom: 6px; background: #fff;
+    }
+    .procedure-list li::before {
+      content: counter(step);
+      grid-column: 1; align-self: start;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent-soft); color: var(--accent);
+      font-weight: 600; display: flex; align-items: center; justify-content: center;
+    }
+    .procedure-list .step-text { font-size: 0.92rem; }
+    .procedure-list .step-prov  { font-size: 0.82rem; color: var(--muted);
+      border-left: 1px dashed var(--rule); padding-left: 12px; }
+    .procedure-list .step-prov b { color: var(--accent); font-weight: 600; }
+
+    /* Shape 4: Contrast pair (n columns) */
+    .contrast-table {
+      display: grid; grid-template-columns: 200px repeat(3, 1fr);
+      border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+      font-size: 0.9rem;
+    }
+    .contrast-table > div {
+      padding: 10px 12px; border-bottom: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+    .contrast-table > div:nth-child(4n) { border-right: none; }
+    .contrast-table .col-head {
+      background: var(--accent-soft); font-weight: 600; color: var(--accent);
+    }
+    .contrast-table .row-label {
+      font-size: 0.82rem; color: var(--muted); text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .contrast-table .verdict-good { color: var(--good); font-weight: 600; }
+    .contrast-table .verdict-mid  { color: var(--warm); font-weight: 600; }
+    .contrast-table .verdict-bad  { color: var(--bad);  font-weight: 600; }
+
+    /* Shape 5: Ranked brief */
+    .ranked {
+      display: grid; grid-template-columns: 32px 200px 1fr 70px 100px 110px;
+      gap: 0; border: 1px solid var(--rule); border-radius: 4px;
+      overflow: hidden; font-size: 0.9rem;
+    }
+    .ranked > div {
+      padding: 9px 12px; border-bottom: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+    .ranked > div:nth-child(6n) { border-right: none; }
+    .ranked .col-head {
+      background: var(--accent-soft); font-weight: 600; color: var(--accent);
+      font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .ranked .rank-num {
+      font-variant-numeric: tabular-nums; text-align: center;
+      font-weight: 600; color: var(--accent);
+    }
+    .ranked .ev-strong  { color: var(--good); }
+    .ranked .ev-mod     { color: var(--warm); }
+    .ranked .ev-weak    { color: var(--bad);  }
+
+    /* Footer */
+    .footer-note {
+      margin-top: 36px; font-size: 0.84rem; color: var(--muted);
+      border-top: 1px solid var(--rule); padding-top: 12px;
+    }
+    .footer-note cite { font-style: italic; }
+
+    .toc {
+      display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 0.88rem;
+      margin: 14px 0 20px;
+    }
+    .toc a { color: var(--accent); text-decoration: none;
+      border-bottom: 1px dashed var(--accent-soft); padding-bottom: 1px; }
+    .toc a:hover { border-bottom-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../../ka_topics.html">Explore</a>
+      <a href="../../ka_evidence.html">Evidence</a>
+      <a href="../../ka_gaps.html">Gaps</a>
+      <a href="../../ka_article_search.html">Articles</a>
+      <a href="../../ka_contribute.html">Contribute</a>
+      <a href="../ka_student_setup.html">Course</a>
+      <a href="../ka_schedule.html">160 Syllabus</a>
+      <a href="../ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../../ka_home.html">Home</a> /
+    <a href="../ka_schedule.html">160 Student</a> /
+    <a href="../t4_intro.html">Track 4</a> /
+    <a href="../t4_task2.html">Task 2</a> /
+    <span>Answer-Shape Catalogue</span>
+  </div>
+
+<div class="wrap">
+
+  <h1>Five Answer Shapes</h1>
+  <p class="lede">
+    Every question in the corpus is fitted to one of five canonical answer
+    shapes before it becomes a journey. The shapes are not arbitrary
+    decorations — each one is a different commitment about what would
+    satisfy a reader. A theory-prober wants a Toulmin; a newcomer wants a
+    field map; a sensors-seeker wants a procedure; a measures-shopper
+    wants a contrast pair; a busy PI wants a ranked brief. This page
+    visualises each shape with a worked example from the researcher
+    corpus.
+  </p>
+
+  <div class="toc">
+    <a href="#toulmin">1. Toulmin diagram</a>
+    <a href="#fieldmap">2. Field map</a>
+    <a href="#procedure">3. Procedure</a>
+    <a href="#contrast">4. Contrast pair</a>
+    <a href="#ranked">5. Ranked brief</a>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SHAPE 1: TOULMIN SUNBURST                                    -->
+  <!-- ============================================================ -->
+  <h2 id="toulmin"><span class="num">1.</span>Toulmin diagram</h2>
+  <div class="shape-card">
+    <p class="desc">
+      A horizontal inference from <b>data</b> to <b>claim</b>,
+      tagged with a <b>qualifier</b> on the inference arrow itself
+      (e.g., "probably", "usually", "in adult office workers"). The
+      <b>warrant</b> hangs vertically from the inference arrow and
+      states the rule that licenses the move from data to claim. The
+      <b>backing</b> hangs below the warrant and justifies the
+      warrant itself — typically a theoretical framework, a body of
+      prior literature, or a methodological norm. The <b>rebuttal</b>
+      hangs vertically from the claim and names the conditions under
+      which the claim would fail. The geometry is not decoration:
+      reading top-to-bottom on the left tells you why the inference
+      is licensed; reading top-to-bottom on the right tells you what
+      could undercut it. (After Toulmin, 1958/2003; the canonical
+      layout is the one used in most logic and rhetoric textbooks.)
+    </p>
+    <p class="when">
+      <b>Use when:</b> the question is theory-prober, the cognitive
+      purpose is inquiry or persuasion, and the evidential demand is
+      causal-with-mechanism. The default shape for any answer where the
+      reader will press on the warrant.
+    </p>
+
+    <p class="example-q">
+      Worked example: Q-29 — <i>Does Kaplan's Attention Restoration Theory
+      survive once you control for the affective confound?</i>
+    </p>
+    <p class="shape-title">
+      <span class="fig-label">Figure 1.</span>
+      Attention Restoration Theory partly survives the affective-confound
+      critique, but its mechanism remains underdetermined.
+    </p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 880 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Toulmin diagram, canonical layout">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1f3a8a"/>
+          </marker>
+          <style>
+            .label-head { font: 600 18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+              fill: #1f1d1a; }
+            .label-body { font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+              fill: #1f1d1a; }
+            .qualifier  { font: italic 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+              fill: #5b574f; }
+            .axis       { stroke: #1f3a8a; stroke-width: 2.4; fill: none; }
+          </style>
+        </defs>
+
+        <!-- TOP HORIZONTAL: Data → (qualifier) → Claim -->
+        <text class="label-head" x="20"  y="34">Fact (Data)</text>
+        <text class="label-body" x="20"  y="60">Re-analyses controlling for affect</text>
+        <text class="label-body" x="20"  y="78">attenuate the restoration effect by</text>
+        <text class="label-body" x="20"  y="96">≈ 40–60% (Joye &amp; van den Berg, 2011).</text>
+
+        <text class="label-head" x="540" y="34">(probably) Conclusion</text>
+        <text class="label-body" x="540" y="60">Attention Restoration Theory</text>
+        <text class="label-body" x="540" y="78">partly survives the affect control;</text>
+        <text class="label-body" x="540" y="96">the mechanism remains uncertain.</text>
+
+        <!-- Horizontal arrow Data → Claim with qualifier label -->
+        <line class="axis" x1="180" y1="22" x2="540" y2="22" marker-end="url(#arrow)"/>
+        <text class="qualifier" x="330" y="16">(probably)</text>
+
+        <!-- VERTICAL DOWN FROM MIDPOINT TO WARRANT -->
+        <line class="axis" x1="360" y1="22"  x2="360" y2="220"/>
+        <text class="label-head" x="240" y="240">Warrant</text>
+        <text class="label-body" x="240" y="266">If a putative mechanism is not</text>
+        <text class="label-body" x="240" y="284">separable from a confounder, it</text>
+        <text class="label-body" x="240" y="302">is not established as a mechanism.</text>
+
+        <!-- VERTICAL DOWN FROM WARRANT TO BACKING -->
+        <line class="axis" x1="360" y1="310" x2="360" y2="430"/>
+        <text class="label-head" x="240" y="450">Backing</text>
+        <text class="label-body" x="240" y="476">Mediation-analysis norms;</text>
+        <text class="label-body" x="240" y="494">mediator vs. confounder partition</text>
+        <text class="label-body" x="240" y="512">(MacKinnon, 2008).</text>
+
+        <!-- VERTICAL DOWN FROM CONCLUSION TO REBUTTAL -->
+        <line class="axis" x1="700" y1="22"  x2="700" y2="220" stroke="#8e2727"/>
+        <text class="label-head" x="600" y="240" style="fill:#8e2727">Rebuttal</text>
+        <text class="label-body" x="600" y="266">Affect may mediate the</text>
+        <text class="label-body" x="600" y="284">restoration effect rather than</text>
+        <text class="label-body" x="600" y="302">confound it; the partition is</text>
+        <text class="label-body" x="600" y="320">not yet decisive, and EEG</text>
+        <text class="label-body" x="600" y="338">markers may dissociate the two.</text>
+      </svg>
+    </div>
+
+    <p class="shape-caption">
+      The thesis that natural and biophilic environments help people
+      recover from stress by reducing attention fatigue (Kaplan &amp;
+      Kaplan, 1989; Kaplan, 1995) was challenged on the grounds that
+      it did not control for the improvement in mood and emotion that
+      nature exposure also produces — so better affect, not restored
+      attention, might be the real de-stressor (Joye &amp; van den
+      Berg, 2011). The warrant for that challenge is a general one in
+      the philosophy of science: when two candidate mechanisms are
+      always present together, no analysis that fails to separate them
+      can determine which is doing the work. The rebuttal is that the
+      jury is still out on whether affect is in fact a confound or
+      whether it sits downstream of restoration as a mediator — in
+      which case ART's mechanism is preserved and merely re-described.
+      On balance the probable conclusion in 2026 is that the
+      restoration effect itself remains, weakened by the
+      affect-controlled re-analyses, while the mechanism that produces
+      it is not yet settled.
+    </p>
+
+    <h3>How a journey fills it in</h3>
+    <p class="desc">
+      One landing page for each of the six positions. The rebuttal is
+      surfaced inline with the claim, not buried at the bottom — the
+      reader sees the threat to the inference at the same moment they
+      see the inference. The journey ends on a page that asks the
+      reader which Chinn-Brewer response they want to take.
+    </p>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SHAPE 2: FIELD MAP                                           -->
+  <!-- ============================================================ -->
+  <h2 id="fieldmap"><span class="num">2.</span>Field map (concept-map style)</h2>
+  <div class="shape-card">
+    <p class="desc">
+      A directed map of a literature, drawn after Novak &amp; Gowin's
+      (1984) concept-map convention. Nodes are positions, theories, or
+      camps. Edges are <i>labelled and directional</i> — the label
+      names the relationship: <i>extends</i>, <i>operationalises</i>,
+      <i>rebuts</i>, <i>narrows</i>, <i>informs</i>, <i>motivates</i>,
+      <i>reinterprets</i>. A vertical time axis on the left lets the
+      reader see how the field moved from a foundational position to
+      its present state. Two adjacent exemplars are worth knowing:
+      Wardley's (2018) value-chain map adds an explicit <i>evolution</i>
+      axis (genesis → custom-built → product → commodity) for
+      questions about where a field is heading; Kunz &amp; Rittel's
+      (1970) IBIS, popularised as Conklin's (2005) dialogue mapping,
+      makes pro/con relationships explicit by typing edges as
+      <i>supports</i>, <i>objects-to</i>, or <i>responds-to</i>. All
+      three share the rule that <b>edges carry typed direction</b>;
+      that rule is what makes the diagram a map rather than a cluster.
+    </p>
+    <p class="when">
+      <b>Use when:</b> the cognitive purpose is discovery, the
+      question sits at a high/high cell of the IV × DV cross-product,
+      or the asker wants orientation in a literature they do not yet
+      know. The default shape for a newcomer-style researcher
+      question.
+    </p>
+
+    <p class="example-q">
+      Worked example: Q-07 — <i>What's an honest summary of where
+      attention-restoration theory stands in 2026?</i>
+    </p>
+    <p class="shape-title">
+      <span class="fig-label">Figure 2.</span>
+      The attention-restoration literature, 1989–2025: a foundation,
+      two operationalisations, a critique that ties them together, and
+      two reinterpretations that descend from the critique.
+    </p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 880 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Field map, concept-map style with time axis">
+        <defs>
+          <marker id="fm-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5a3e1b"/>
+          </marker>
+          <marker id="fm-arrow-rebut" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#8e2727"/>
+          </marker>
+          <style>
+            .node-box  { fill: #fff; stroke: #5a3e1b; stroke-width: 1.4; }
+            .node-foundation { fill: #e9dec4; }
+            .node-method     { fill: #ece2d0; }
+            .node-critique   { fill: #f0d8d2; stroke: #8e2727; }
+            .node-reinterp   { fill: #d6dde6; }
+            .node-bridge     { fill: #d8e4d4; }
+            .node-name { font: 600 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+              fill: #1f1d1a; text-anchor: middle; }
+            .node-cite { font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+              fill: #5b574f; text-anchor: middle; }
+            .edge-supp { stroke: #5a3e1b; stroke-width: 1.4; fill: none; }
+            .edge-rebut { stroke: #8e2727; stroke-width: 1.6; fill: none; }
+            .edge-label { font: italic 11px "Iowan Old Style", Palatino, Georgia, serif;
+              fill: #5a3e1b; }
+            .edge-label-rebut { font: italic 11px "Iowan Old Style", Palatino, Georgia, serif;
+              fill: #8e2727; }
+            .axis-line { stroke: #b9b3a2; stroke-width: 1; }
+            .axis-tick { stroke: #b9b3a2; stroke-width: 1; }
+            .axis-text { font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+              fill: #5b574f; }
+            .axis-title { font: italic 11px "Iowan Old Style", Palatino, Georgia, serif;
+              fill: #5b574f; }
+          </style>
+        </defs>
+
+        <!-- TIME AXIS (vertical, left) -->
+        <line class="axis-line" x1="60" y1="40" x2="60" y2="580"/>
+        <text class="axis-title" x="14" y="30">earlier</text>
+        <text class="axis-title" x="14" y="595">later</text>
+        <line class="axis-tick" x1="55" y1="80"  x2="65" y2="80"/>
+        <text class="axis-text" x="6"  y="84">~1989</text>
+        <line class="axis-tick" x1="55" y1="220" x2="65" y2="220"/>
+        <text class="axis-text" x="6"  y="224">~2005</text>
+        <line class="axis-tick" x1="55" y1="370" x2="65" y2="370"/>
+        <text class="axis-text" x="6"  y="374">~2015</text>
+        <line class="axis-tick" x1="55" y1="510" x2="65" y2="510"/>
+        <text class="axis-text" x="6"  y="514">~2025</text>
+
+        <!-- NODES -->
+        <!-- Foundation -->
+        <rect class="node-box node-foundation" x="320" y="55" width="240" height="60" rx="6"/>
+        <text class="node-name" x="440" y="80">Kaplan &amp; Kaplan ART</text>
+        <text class="node-cite" x="440" y="98">soft fascination, directed-attention</text>
+        <text class="node-cite" x="440" y="110">(Kaplan &amp; Kaplan, 1989; Kaplan, 1995)</text>
+
+        <!-- Operationalisations -->
+        <rect class="node-box node-method" x="120" y="195" width="220" height="60" rx="6"/>
+        <text class="node-name" x="230" y="220">PRS scale family</text>
+        <text class="node-cite" x="230" y="238">Perceived Restorativeness Scale</text>
+        <text class="node-cite" x="230" y="250">(Hartig et al., 1997; Berto, 2005)</text>
+
+        <rect class="node-box node-method" x="540" y="195" width="220" height="60" rx="6"/>
+        <text class="node-name" x="650" y="220">Cognitive-task evidence</text>
+        <text class="node-cite" x="650" y="238">post-nature performance gains</text>
+        <text class="node-cite" x="650" y="250">(Berman et al., 2008; Bratman et al., 2015)</text>
+
+        <!-- Critique -->
+        <rect class="node-box node-critique" x="320" y="345" width="240" height="60" rx="6"/>
+        <text class="node-name" x="440" y="370">Affect-confound critique</text>
+        <text class="node-cite" x="440" y="388">restoration ≈ mood lift?</text>
+        <text class="node-cite" x="440" y="400">(Joye &amp; van den Berg, 2011)</text>
+
+        <!-- Reinterpretations -->
+        <rect class="node-box node-reinterp" x="540" y="490" width="220" height="60" rx="6"/>
+        <text class="node-name" x="650" y="515">Predictive-processing</text>
+        <text class="node-cite" x="650" y="533">re-reading of restoration</text>
+        <text class="node-cite" x="650" y="545">(post-2020 reinterpretations)</text>
+
+        <rect class="node-box node-bridge" x="120" y="490" width="220" height="60" rx="6"/>
+        <text class="node-name" x="230" y="515">Biophilia integration</text>
+        <text class="node-cite" x="230" y="533">restoration as a sub-effect</text>
+        <text class="node-cite" x="230" y="545">(Hartmann &amp; Apaolaza, 2010)</text>
+
+        <!-- EDGES with labels -->
+        <!-- Foundation → PRS (operationalises) -->
+        <path class="edge-supp" d="M 380 115 Q 290 150 230 195" marker-end="url(#fm-arrow)"/>
+        <text class="edge-label" x="240" y="155">operationalises</text>
+
+        <!-- Foundation → Cognitive-task (operationalises) -->
+        <path class="edge-supp" d="M 500 115 Q 590 150 650 195" marker-end="url(#fm-arrow)"/>
+        <text class="edge-label" x="555" y="155">operationalises</text>
+
+        <!-- PRS → Critique (the construct that is challenged) -->
+        <path class="edge-rebut" d="M 280 255 Q 320 305 380 345" marker-end="url(#fm-arrow-rebut)"/>
+        <text class="edge-label-rebut" x="232" y="306">construct challenged</text>
+
+        <!-- Cognitive-task → Critique (the effect that is re-analysed) -->
+        <path class="edge-rebut" d="M 600 255 Q 560 305 500 345" marker-end="url(#fm-arrow-rebut)"/>
+        <text class="edge-label-rebut" x="500" y="306">effect re-analysed</text>
+
+        <!-- Critique → Predictive-processing (motivates) -->
+        <path class="edge-supp" d="M 500 405 Q 600 445 650 490" marker-end="url(#fm-arrow)"/>
+        <text class="edge-label" x="568" y="450">motivates</text>
+
+        <!-- Critique → Biophilia (motivates) -->
+        <path class="edge-supp" d="M 380 405 Q 290 445 230 490" marker-end="url(#fm-arrow)"/>
+        <text class="edge-label" x="232" y="450">motivates</text>
+
+        <!-- Foundation → Biophilia (informs, long arc) -->
+        <path class="edge-supp" d="M 320 100 Q 130 280 130 490" marker-end="url(#fm-arrow)" stroke-dasharray="3 4"/>
+        <text class="edge-label" x="80" y="345">informs</text>
+
+      </svg>
+    </div>
+
+    <p class="shape-caption">
+      The Kaplan &amp; Kaplan (1989) thesis — that natural environments
+      restore depleted directed attention through "soft fascination"
+      that does not require effortful focus — was operationalised in
+      two complementary ways during the late 1990s and 2000s. The
+      Perceived Restorativeness Scale (Hartig et al., 1997; Berto,
+      2005) captured what people <i>report</i> about an environment's
+      restorative qualities; cognitive-task batteries (Berman et al.,
+      2008; Bratman et al., 2015) measured whether attention-demanding
+      performance <i>actually</i> improved after nature exposure. Both
+      lines of work were challenged together by Joye &amp; van den
+      Berg's (2011) argument that the effect they appeared to
+      demonstrate was not separable from a simpler mood-improvement
+      story. That single critique is the central transit point of the
+      modern field: the predictive-processing reinterpretations of the
+      early 2020s and the biophilia-integration accounts both descend
+      from it, each preserving some of Kaplan's original architecture
+      while reframing the mechanism. The original thesis has not been
+      displaced; it has been operationalised, challenged, and
+      partially preserved by reinterpretation. A reader who arrives in
+      2026 looking for a single "state of the literature" will not
+      find one — what they will find is a field that has split into a
+      foundational position, two operationalisation traditions, a
+      critique, and two heirs that descend from the critique rather
+      than from the foundation.
+    </p>
+
+    <h3>How a journey fills it in</h3>
+    <p class="desc">
+      Each node is a click target leading to a sub-page that briefly
+      describes the position, its central paper, its operational
+      definition of restoration, and its place in the field's
+      sequence. Each <i>edge</i> is also a click target — clicking on
+      <i>operationalises</i> opens a page that shows how the
+      foundational claim was rendered measurable; clicking on
+      <i>construct challenged</i> opens a contrast-pair view of the
+      original PRS treatment versus the affect-controlled re-analysis.
+      A reader's journey is a path through the graph; the journey
+      designer chooses an entry node by persona (Kaplan loyalists
+      enter at the foundation, sceptics enter at the critique) and a
+      stopping rule (a fixed depth, or until a question's adequacy
+      condition is met).
+    </p>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SHAPE 3: PROCEDURE                                           -->
+  <!-- ============================================================ -->
+  <h2 id="procedure"><span class="num">3.</span>Procedure</h2>
+  <div class="shape-card">
+    <p class="desc">
+      A numbered sequence of steps with provenance for each step. The
+      provenance column says <i>why this step is here</i> — a citation, a
+      regulatory requirement, an empirical justification. A procedure is
+      not a recipe: a reader needs to know which steps are
+      negotiable and which are non-negotiable, and the provenance column
+      makes that visible.
+    </p>
+    <p class="when">
+      <b>Use when:</b> the question is sensors-seeker or tests-seeker and
+      the adequacy demand is practical with regulatory or ethical gates.
+      Also the default shape for many contributor (P3) questions in later
+      passes.
+    </p>
+
+    <p class="example-q">
+      Worked example: Q-21 — <i>How do I instrument a residential apartment
+      to measure indoor luminance, spectrum, and occupancy in a way an IRB
+      will approve and tenants will tolerate?</i>
+    </p>
+    <p class="shape-title">
+      <span class="fig-label">Figure 3.</span>
+      A five-step deployment protocol for a residential lighting and
+      occupancy study, with each step's authorising source named.
+    </p>
+
+    <ol class="procedure-list">
+      <li>
+        <div class="step-text"><b>Define spatial sampling.</b>
+        Place spectroradiometers at 1.2 m height in living room, kitchen,
+        and one bedroom; orient receivers vertically toward the dominant
+        window wall.</div>
+        <div class="step-prov"><b>Provenance:</b> CIE S 026/E:2018 §4.3
+        on receiver placement; pilot data showed bedroom lux differs
+        ≥10× between window and far wall.</div>
+      </li>
+      <li>
+        <div class="step-text"><b>Choose sampling rate.</b> 1 Hz for
+        photopic illuminance, 1/60 Hz for spectrum (full SPD captures
+        every 60 s).</div>
+        <div class="step-prov"><b>Provenance:</b> Brown et al. (2022)
+        recommend ≥1 Hz to capture transient cloud effects; SPD storage
+        cost dominates above 1/60 Hz.</div>
+      </li>
+      <li>
+        <div class="step-text"><b>Layer occupancy.</b> Battery-powered
+        PIR (passive infrared) sensors in each instrumented room; no
+        cameras, no microphones.</div>
+        <div class="step-prov"><b>Provenance:</b> IRB will reject
+        cameras in residential interiors absent extraordinary
+        justification (UCSD HRPP §III.C.4).</div>
+      </li>
+      <li>
+        <div class="step-text"><b>Tenant negotiation.</b> Walk-through
+        with tenant prior to deployment; offer a "blackout" toggle the
+        tenant can flip for ≥4 h to suspend logging.</div>
+        <div class="step-prov"><b>Provenance:</b> Williams et al. (2020)
+        compliance audit found ≥30% drop-out without an opt-out
+        affordance; tenant agency is also an IRB norm.</div>
+      </li>
+      <li>
+        <div class="step-text"><b>Pilot the deployment for 7 days.</b>
+        Inspect data daily; do not begin formal data collection until
+        sensors have logged ≥6 of 7 days without dropout.</div>
+        <div class="step-prov"><b>Provenance:</b> internal lab norm;
+        sensor-failure modes (battery, occlusion) typically appear in
+        the first week.</div>
+      </li>
+    </ol>
+
+    <p class="shape-caption">
+      A residential lighting study has to satisfy three constituencies
+      at once, and the protocol's shape is determined by their
+      simultaneous demands. The first is the measurement standard —
+      CIE S 026/E:2018 — which fixes receiver placement at 1.2 m and
+      orientation toward the dominant window wall, because a
+      spectroradiometer measuring at chest height in a kitchen tells
+      you about the kitchen and not about the worker. The second is
+      the Institutional Review Board, which will reject any
+      residential deployment that records identifiable behaviour;
+      cameras and microphones are out, and passive infrared occupancy
+      detection is the rare instrument that captures the variable an
+      occupancy researcher needs (someone is in the room) without
+      capturing the variable an IRB will not let cross the apartment
+      threshold (who they are or what they are saying). The third is
+      the tenant, who will withdraw if the instrumentation feels
+      surveillant; Williams et al. (2020) found a thirty per cent
+      drop-out rate in residential studies that lacked a tenant-
+      controlled "blackout" toggle, and that finding now drives the
+      design rather than the data analysis. The seven-day pilot is
+      the lab's hard-learned rule: sensor failures (battery, occlusion,
+      network drop-out) almost always appear in the first week, and a
+      deployment that does not catch them produces a month of unusable
+      data. A team that departs from this protocol in some particular
+      respect must say which of the three constituencies it is
+      choosing to relax — the protocol does not authorise quiet
+      omissions.
+    </p>
+
+    <h3>How a journey fills it in</h3>
+    <p class="desc">
+      Each step is a page; the provenance column is rendered as a
+      sidebar that the reader can collapse. The journey exposes a
+      "negotiability indicator" on each step: which steps can be
+      adapted for context (most) and which are hard regulatory or
+      ethical gates (the IRB ones). A defeater panel at the end asks
+      the reader to consider what specifically about their building or
+      population would call for departing from the procedure.
+    </p>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SHAPE 4: CONTRAST PAIR                                       -->
+  <!-- ============================================================ -->
+  <h2 id="contrast"><span class="num">4.</span>Contrast pair (n columns)</h2>
+  <div class="shape-card">
+    <p class="desc">
+      Two or more options laid out side-by-side, with rows of differentia
+      down the left. The rows are themselves curated: the journey
+      designer chooses which dimensions matter, and the reader can see
+      the choice. A contrast pair is not a winner-takes-all comparison
+      — its job is to make the trade-offs explicit so the reader's
+      decision is informed.
+    </p>
+    <p class="when">
+      <b>Use when:</b> the question is a measures-seeker or sensors-seeker
+      choice and the cognitive purpose is deliberation. Two- and three-way
+      contrasts are the most common; beyond four columns, switch to a
+      ranked brief.
+    </p>
+
+    <p class="example-q">
+      Worked example: Q-19 — <i>EmotiBit vs. BIOPAC dry-electrode vs.
+      research-grade cuff for continuous skin conductance during a
+      museum visit.</i>
+    </p>
+    <p class="shape-title">
+      <span class="fig-label">Figure 4.</span>
+      Three skin-conductance instruments compared on seven decision-
+      relevant differentia for an ambulatory museum-walking study.
+    </p>
+
+    <div class="contrast-table">
+      <div class="col-head"></div>
+      <div class="col-head">EmotiBit</div>
+      <div class="col-head">BIOPAC dry-electrode</div>
+      <div class="col-head">Research-grade cuff</div>
+
+      <div class="row-label">Wearability</div>
+      <div class="verdict-good">High — wrist or body via dot stickers</div>
+      <div class="verdict-mid">Medium — chest leads</div>
+      <div class="verdict-bad">Low — tethered</div>
+
+      <div class="row-label">Signal quality</div>
+      <div class="verdict-good">Multi-sensor (EDA + PPG + IMU + temp)</div>
+      <div class="verdict-good">Lab-grade SCR resolution</div>
+      <div class="verdict-good">Reference standard</div>
+
+      <div class="row-label">Sampling rate</div>
+      <div class="verdict-mid">25 Hz EDA</div>
+      <div class="verdict-good">≥125 Hz</div>
+      <div class="verdict-good">≥250 Hz</div>
+
+      <div class="row-label">Movement artefact</div>
+      <div class="verdict-bad">Substantial during walking; IMU helps</div>
+      <div class="verdict-mid">Moderate; correctable</div>
+      <div class="verdict-good">Minimal but immobile</div>
+
+      <div class="row-label">Cost (per unit)</div>
+      <div class="verdict-good">~$700; open-source</div>
+      <div class="verdict-bad">~$8,000+</div>
+      <div class="verdict-bad">~$15,000+</div>
+
+      <div class="row-label">IRB friction</div>
+      <div class="verdict-good">Low — no leads, no audio</div>
+      <div class="verdict-mid">Moderate — chest leads</div>
+      <div class="verdict-mid">Moderate — tether</div>
+
+      <div class="row-label">Suitable for: museum walking</div>
+      <div class="verdict-good">Yes</div>
+      <div class="verdict-mid">Possible with careful fitting</div>
+      <div class="verdict-bad">No</div>
+    </div>
+
+    <p class="shape-caption">
+      The choice among continuous skin-conductance instruments for an
+      ambulatory study is not a choice among "better" and "worse"
+      devices but a choice about which compromise the study can
+      absorb. The research-grade cuff is the field's reference
+      standard for signal quality, but it tethers the participant and
+      so cannot be used in a museum at all. The BIOPAC dry-electrode
+      system delivers lab-grade SCR resolution at a sampling rate
+      above 125 Hz, which preserves the fast morphology of individual
+      skin-conductance responses, but the chest leads draw IRB
+      scrutiny in any setting where the participant has to be
+      ambulant in public space. The EmotiBit produces a lower
+      sampling-rate EDA signal at 25 Hz and so cannot resolve the
+      fastest SCR features, but it is open-source, costs about $700
+      per unit, and arrives with a multi-sensor stack — PPG, IMU, and
+      skin temperature — whose value for an ambulatory study is not
+      cosmetic: the IMU stream supports motion-artefact correction
+      that is otherwise impossible at the wrist. For a museum-walking
+      study the trade-off resolves toward EmotiBit because the
+      alternatives cannot be deployed in this use case at all; the
+      study accepts the loss of about one order of magnitude of EDA
+      temporal resolution because its hypotheses concern arousal
+      trends across exhibits rather than the morphology of individual
+      responses. A study that needs that morphology must change its
+      use case rather than its instrument.
+    </p>
+
+    <h3>How a journey fills it in</h3>
+    <p class="desc">
+      Rows can be re-weighted by the reader (a "what matters most to me"
+      slider on each row). A change in row weights re-colours the cells
+      and produces a recommended option on the right edge of the
+      diagram. A defeater panel at the end asks: under what conditions
+      would the recommendation be wrong?
+    </p>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SHAPE 5: RANKED BRIEF                                        -->
+  <!-- ============================================================ -->
+  <h2 id="ranked"><span class="num">5.</span>Ranked brief</h2>
+  <div class="shape-card">
+    <p class="desc">
+      A ranked list of options with three columns: the option, the
+      criteria-based reason, and the evidence quality (strong /
+      moderate / weak). The brief is short — typically five to seven
+      rows — and assumes a reader who is choosing under time pressure.
+      The evidence column is non-negotiable: every row carries an
+      honest evidence rating.
+    </p>
+    <p class="when">
+      <b>Use when:</b> the cognitive purpose is deliberation under
+      brevity constraint. The default shape for measures-shopping under
+      time pressure and for senior-PI strategic questions in P8's
+      forthcoming pass.
+    </p>
+
+    <p class="example-q">
+      Worked example: Q-09 — <i>What's the best validated instrument for
+      perceived restorativeness in office settings, suitable for repeated
+      measures within a workday?</i>
+    </p>
+    <p class="shape-title">
+      <span class="fig-label">Figure 5.</span>
+      Five validated perceived-restorativeness instruments, ranked for
+      use in within-workday repeated-measures office studies, with
+      administration time and evidence quality per option.
+    </p>
+
+    <div class="ranked">
+      <div class="col-head">#</div>
+      <div class="col-head">Instrument</div>
+      <div class="col-head">Why this ranking</div>
+      <div class="col-head">Items</div>
+      <div class="col-head">Admin time</div>
+      <div class="col-head">Evidence</div>
+
+      <div class="rank-num">1</div>
+      <div>Perceived Restorativeness Scale, brief (PRS-11)</div>
+      <div>Validated for repeated within-day administration; smallest
+        item count of the validated forms; covers all four ART
+        dimensions.</div>
+      <div>11</div>
+      <div>~2–3 min</div>
+      <div class="ev-strong">Strong</div>
+
+      <div class="rank-num">2</div>
+      <div>Restoration Outcome Scale (ROS-6)</div>
+      <div>Measures perceived restoration outcome rather than environment;
+        complementary to PRS but does not replace it.</div>
+      <div>6</div>
+      <div>~1–2 min</div>
+      <div class="ev-strong">Strong</div>
+
+      <div class="rank-num">3</div>
+      <div>SBE single-item restoration probe</div>
+      <div>Useful as a momentary supplement; highly sensitive but
+        unidimensional.</div>
+      <div>1</div>
+      <div>~10 sec</div>
+      <div class="ev-mod">Moderate</div>
+
+      <div class="rank-num">4</div>
+      <div>POMS-SF (mood proxy)</div>
+      <div>Often used as a restoration proxy but does not measure
+        restoration directly; included only for triangulation.</div>
+      <div>37</div>
+      <div>~5–7 min</div>
+      <div class="ev-mod">Moderate (proxy)</div>
+
+      <div class="rank-num">5</div>
+      <div>Custom VAS scale</div>
+      <div>Quick to administer; psychometric properties site-specific
+        and not transferable.</div>
+      <div>1–3</div>
+      <div>~15–30 sec</div>
+      <div class="ev-weak">Weak</div>
+    </div>
+
+    <p class="shape-caption">
+      Choosing a perceived-restorativeness instrument for within-
+      workday repeated measures is, before it is anything else, a
+      choice about how much of an office worker's day the
+      measurement can absorb. The brief PRS-11 is ranked first not
+      because it is the most validated instrument overall — the
+      older PRS-26 has a longer validation history — but because it
+      is the briefest validated form that still covers all four ART
+      dimensions (being-away, fascination, extent, compatibility),
+      and at two to three minutes per administration it can be
+      delivered three or four times across a workday without
+      participant fatigue collapsing the data. The ROS-6 is ranked
+      second because it measures the <i>outcome</i> of restoration
+      rather than the perceived restorativeness of the environment;
+      this makes it complementary to PRS-11 rather than a substitute,
+      and a study that wants both axes of the construct should plan
+      to administer the two together. The SBE single-item probe is
+      third on the strength of its ten-second administration time —
+      it is the only instrument here that can be administered as a
+      momentary intrusion rather than a measurement event — but it
+      sacrifices dimensional coverage entirely. POMS-SF appears as a
+      proxy because the literature uses it that way, but it does not
+      measure restoration directly and at five to seven minutes per
+      administration it is barely workable for repeated within-day
+      use. Custom VAS scales are quick but their psychometric
+      properties are site-specific and do not transport across
+      studies. A team choosing for a different use case — a single
+      end-of-day measurement in a longitudinal study, say — would
+      rank these instruments differently: the PRS-26 would likely
+      move to the top, and POMS-SF's administration time would no
+      longer rule it out.
+    </p>
+
+    <h3>How a journey fills it in</h3>
+    <p class="desc">
+      Each row is a click target leading to a one-page brief on that
+      instrument: psychometric provenance, validation samples,
+      administration cost, known sensitivities. The brief ends with a
+      "rebuttal" row that names the most common objection the
+      recommended instrument faces, and points at the alternative most
+      likely to address it.
+    </p>
+  </div>
+
+  <p class="footer-note">
+    Companion to <cite>question_corpus_researcher_v1.md</cite> and
+    <cite>track4_operational_brief.md</cite>. Shapes are not exclusive:
+    a field map may have a Toulmin nested inside one of its branches; a
+    contrast pair may resolve into a ranked brief. Knowledge Atlas, COGS
+    160 Track 4, v1.
+  </p>
+
+</div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../../ka_home.html">Global home</a>
+        <a href="../../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="../ka_tracks.html">Tracks portal</a>
+        <a href="../t4_intro.html">Track 4 overview</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">Companion artefacts</div>
+        <a href="chinn_brewer_response_widget.html">Chinn-Brewer 7-response widget</a>
+        <a href="journey_q29_art_affect_confound.html">Q-29 worked journey</a>
+        <a href="../t4_task2.html">Back to Task 2</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

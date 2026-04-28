@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinn &amp; Brewer (1993) — Seven Responses to Anomalous Data</title>
+  <link rel="stylesheet" href="../_track_pages_shared.css">
+  <style>
+    /* keep page-local "paper" voice for the content area; clear fixed top-nav */
+    body { padding-top: 56px; }
+    .wrap { background: var(--paper); }
+  </style>
+  <style>
+    /* Self-contained widget. Designed to drop into a Track 4 journey prototype
+       as an <iframe> or to be inlined. No external dependencies. */
+    :root {
+      --paper:        #fbf8f1;
+      --ink:          #1f1d1a;
+      --muted:        #5b574f;
+      --rule:         #ddd5c1;
+      --accent:       #5a3e1b;
+      --accent-soft:  #e9dec4;
+      --emphasis:     #8a4b1a;
+      --warn:         #b76e1a;
+      --good:         #2c6b3f;
+      --bad:          #8e2727;
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--paper); color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      line-height: 1.55; margin: 0; padding: 0; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 32px 28px 48px; }
+    h1 { font-size: 1.55rem; margin: 0 0 6px 0; letter-spacing: 0.2px; }
+    h2 { font-size: 1.05rem; margin: 28px 0 8px; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.5px; }
+    .lede { color: var(--muted); margin: 4px 0 18px;
+      font-size: 0.97rem; max-width: 70ch; }
+
+    .anomaly-card {
+      border: 1px solid var(--rule);
+      border-left: 4px solid var(--emphasis);
+      background: #fff;
+      padding: 14px 16px; border-radius: 4px;
+      margin: 14px 0 22px;
+    }
+    .anomaly-label { font-size: 0.78rem; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--emphasis); margin: 0 0 4px; }
+    .anomaly-text { margin: 0; font-style: italic; }
+
+    .controls { display: flex; gap: 10px; flex-wrap: wrap;
+      margin: 12px 0 18px; align-items: center; }
+    .controls label { font-size: 0.85rem; color: var(--muted); }
+    .controls select {
+      font: inherit; padding: 4px 8px; border: 1px solid var(--rule);
+      border-radius: 3px; background: #fff; }
+    .controls button {
+      font: inherit; padding: 4px 10px; border: 1px solid var(--rule);
+      border-radius: 3px; background: var(--accent-soft);
+      color: var(--ink); cursor: pointer; }
+    .controls button:hover { background: #e0d3b0; }
+
+    .responses { display: grid; gap: 10px; }
+    .response {
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .response-head {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 12px; align-items: baseline;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: var(--accent-soft);
+      transition: background 0.15s ease;
+    }
+    .response-head:hover { background: #e0d3b0; }
+    .response-num {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .response-name { font-weight: 600; }
+    .response-disposition {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--muted);
+    }
+    .response-disposition.theory-protective { color: var(--bad); }
+    .response-disposition.theory-flexible    { color: var(--warn); }
+    .response-disposition.theory-revising    { color: var(--good); }
+
+    .response-body {
+      display: none;
+      padding: 12px 16px 16px;
+      font-size: 0.95rem;
+    }
+    .response.open .response-body { display: block; }
+    .response-body p { margin: 0 0 8px; }
+    .response-body p:last-child { margin-bottom: 0; }
+    .response-body .label {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--muted); margin-right: 6px;
+    }
+    .scenario-instance {
+      border-top: 1px dashed var(--rule);
+      margin-top: 10px; padding-top: 10px;
+      font-style: italic; color: var(--accent);
+    }
+
+    .legend {
+      font-size: 0.82rem; color: var(--muted); margin-top: 18px;
+      border-top: 1px solid var(--rule); padding-top: 10px;
+    }
+    .legend span.dot { display: inline-block; width: 9px; height: 9px;
+      border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .legend .protective { background: var(--bad); }
+    .legend .flexible   { background: var(--warn); }
+    .legend .revising   { background: var(--good); }
+
+    .footer-note {
+      margin-top: 20px; font-size: 0.82rem; color: var(--muted);
+      border-top: 1px solid var(--rule); padding-top: 10px;
+    }
+    .footer-note cite { font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a class="wordmark" href="../../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../../ka_topics.html">Explore</a>
+      <a href="../../ka_evidence.html">Evidence</a>
+      <a href="../../ka_gaps.html">Gaps</a>
+      <a href="../../ka_article_search.html">Articles</a>
+      <a href="../../ka_contribute.html">Contribute</a>
+      <a href="../ka_student_setup.html">Course</a>
+      <a href="../ka_schedule.html">160 Syllabus</a>
+      <a href="../ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../../ka_home.html">Home</a> /
+    <a href="../ka_schedule.html">160 Student</a> /
+    <a href="../t4_intro.html">Track 4</a> /
+    <a href="../t4_task3.html">Task 3</a> /
+    <span>Chinn &amp; Brewer 7-Response Widget</span>
+  </div>
+
+  <div class="wrap">
+    <h1>Seven Responses to Anomalous Data</h1>
+    <p class="lede">
+      Chinn &amp; Brewer (1993) catalogued how readers actually respond when
+      presented with evidence that conflicts with a theory they hold. Their
+      seven-response menu is descriptive, not prescriptive: it tells journey
+      designers what readers <em>do</em>, not what they should do. Use it to
+      anticipate how a reader will receive the evidence on a journey page,
+      and to surface the response options explicitly rather than letting
+      them happen invisibly.
+    </p>
+
+    <div class="anomaly-card">
+      <p class="anomaly-label">Anomalous datum (worked example)</p>
+      <p class="anomaly-text" id="anomaly-text">
+        A pre-registered replication finds no effect of biophilic indoor
+        plants on perceived restorativeness in office workers, despite a
+        large meta-analytic effect in earlier studies.
+      </p>
+    </div>
+
+    <div class="controls">
+      <label for="scenario">Worked example:</label>
+      <select id="scenario">
+        <option value="biophilia">Biophilia replication failure</option>
+        <option value="ceiling">Ceiling-height construal failure</option>
+        <option value="art">Attention restoration vs. affect confound</option>
+      </select>
+      <button id="open-all">Open all</button>
+      <button id="close-all">Close all</button>
+    </div>
+
+    <div class="responses" id="responses"></div>
+
+    <div class="legend">
+      <span class="dot protective"></span>theory-protective &nbsp;·&nbsp;
+      <span class="dot flexible"></span>theory-flexible &nbsp;·&nbsp;
+      <span class="dot revising"></span>theory-revising
+    </div>
+
+    <p class="footer-note">
+      Source: Chinn, C. A., &amp; Brewer, W. F. (1993). The role of anomalous
+      data in knowledge acquisition: A theoretical framework and implications
+      for science instruction. <cite>Review of Educational Research</cite>, 63(1),
+      1–49. https://doi.org/10.3102/00346543063001001
+      &nbsp;Knowledge Atlas, COGS 160 Track 4, v1.
+    </p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../../ka_home.html">Global home</a>
+        <a href="../../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="../ka_tracks.html">Tracks portal</a>
+        <a href="../t4_intro.html">Track 4 overview</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This widget</div>
+        <a href="answer_shape_catalogue.html">Answer-shape catalogue</a>
+        <a href="journey_q29_art_affect_confound.html">Q-29 worked journey</a>
+        <a href="../t4_task3.html">Back to Task 3</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ----- Static data: the seven responses -----------------------------
+    const RESPONSES = [
+      {
+        n: 1, name: "Ignore the data",
+        disposition: "theory-protective",
+        gloss: "The reader notices the anomaly but treats it as not worth attending to. The theory is unaffected because the datum never enters the active belief network.",
+        diagnostic: "If a journey page presents anomalous data and the reader skips past, this is what is happening. Design implication: anomalies must be made unignorable — typographically, structurally, or by being named in a heading.",
+        scenarios: {
+          biophilia: "The reader notices the failed replication on the page but does not register it as relevant; they continue to cite the original meta-analysis in their grant proposal.",
+          ceiling:   "The reader skims past the Vasquez-Echeverria et al. (2017) failed replication of Meyers-Levy & Zhu and continues to cite the construal-level effect as established.",
+          art:       "The reader sees the affect-confound critique referenced in passing and continues without it ever changing what they cite."
+        }
+      },
+      {
+        n: 2, name: "Reject the data",
+        disposition: "theory-protective",
+        gloss: "The reader engages the anomaly but dismisses it as flawed — the methodology is bad, the sample is wrong, the analysis is suspicious. The theory is unaffected because the datum is now disqualified.",
+        diagnostic: "Often correct! Bad studies should be rejected. But it can also be motivated reasoning, and the journey should make the rejection criteria explicit so the reader's standards are visible to themselves.",
+        scenarios: {
+          biophilia: "The reader argues the replication used the wrong plant species, the wrong office setting, or a sample that was too brief. The original effect stands.",
+          ceiling:   "The reader argues the replication used a sample of a different cultural background and that the original Meyers-Levy & Zhu effect is preserved in the original population.",
+          art:       "The reader rejects the affect-confound critique on the grounds that the affect measure used was itself confounded."
+        }
+      },
+      {
+        n: 3, name: "Exclude the data from the theory's domain",
+        disposition: "theory-protective",
+        gloss: "The reader accepts the data as valid but redraws the theory's scope so the anomaly falls outside. The theory is preserved by narrowing what it claims to cover.",
+        diagnostic: "Legitimate when there is independent reason to think the new domain is genuinely different; cosmetic when the redraw is ad hoc. Journey design should ask the reader to articulate what would re-include the excluded case.",
+        scenarios: {
+          biophilia: "The reader concludes that biophilia effects hold in residential settings but not offices, narrowing the theory's domain to residential interiors.",
+          ceiling:   "The reader argues the construal-level effect holds for retail/marketing contexts but not for cognitive-task contexts; the original theory is preserved within its narrower scope.",
+          art:       "The reader argues attention restoration applies to genuine wilderness exposure but not to indoor-plant interventions; the canonical theory survives in its narrower domain."
+        }
+      },
+      {
+        n: 4, name: "Hold the data in abeyance",
+        disposition: "theory-flexible",
+        gloss: "The reader accepts the data and recognises it threatens the theory but defers judgement, expecting future work to clarify. The theory is unchanged for now, with a flag.",
+        diagnostic: "Often the rational stance under uncertainty. Journey design should support this by letting the reader bookmark unresolved tensions and track them across sessions.",
+        scenarios: {
+          biophilia: "The reader notes the replication, flags it as needing follow-up, and waits to see whether further pre-registered work converges before updating their position.",
+          ceiling:   "The reader bookmarks the replication failure as a contested finding and waits for further pre-registered evidence before acting.",
+          art:       "The reader registers the affect-confound critique as serious but waits for an integrative analysis before changing their citations."
+        }
+      },
+      {
+        n: 5, name: "Reinterpret the data, theory unchanged",
+        disposition: "theory-flexible",
+        gloss: "The reader accepts the data but proposes a new interpretation that is consistent with the existing theory. The theory survives under a new gloss of what the data show.",
+        diagnostic: "Often inventive and valuable; sometimes a way of avoiding update. The reinterpretation should make a new prediction that distinguishes it from the original story.",
+        scenarios: {
+          biophilia: "The reader proposes that the null effect reflects a saturation effect (offices are already too biophilic to detect change); the underlying theory is preserved.",
+          ceiling:   "The reader reinterprets the null result as a ceiling-effect on the construal-level measure, preserving the theory but shifting where the effect is detectable.",
+          art:       "The reader argues that affect mediates rather than confounds the restoration effect; the theory is preserved in a mediated form."
+        }
+      },
+      {
+        n: 6, name: "Make peripheral changes to the theory",
+        disposition: "theory-revising",
+        gloss: "The reader accepts the data and modifies an auxiliary assumption of the theory while preserving its core. The theory updates without abandoning its main claims.",
+        diagnostic: "The Lakatosian (1970) protective-belt move. Journey design should help the reader see when a peripheral change is principled vs. when it has become a symptom of a degenerating research programme.",
+        scenarios: {
+          biophilia: "The reader keeps the biophilia hypothesis but adds an auxiliary moderator: effects appear only when baseline visual access to nature is below a threshold.",
+          ceiling:   "The reader keeps the construal-level account but adds that the effect is moderated by attentional engagement with the spatial frame.",
+          art:       "The reader keeps attention restoration but moves the locus of the mechanism from soft fascination to a combination of soft fascination plus affective lift."
+        }
+      },
+      {
+        n: 7, name: "Change the theory",
+        disposition: "theory-revising",
+        gloss: "The reader treats the data as decisive and gives up the original theory in favour of a competing or new one. The most consequential response and the rarest in practice.",
+        diagnostic: "The case Kuhn (1962) made famous. Journey design rarely produces this outcome in a single visit; what it can do is lay the groundwork over many visits by making peripheral patches visibly accumulate.",
+        scenarios: {
+          biophilia: "The reader concludes that biophilia, as a unitary construct, does not survive measurement scrutiny; they switch to a more decomposed account (e.g., specific fractal-exposure effects, specific affective-cue effects).",
+          ceiling:   "The reader abandons the construal-level account in this domain and adopts a prospect-refuge or affordance-based account.",
+          art:       "The reader abandons the canonical attention-restoration account and adopts an affect-as-mechanism account or a Kaplan/Joye hybrid."
+        }
+      },
+    ];
+
+    // ----- Anomaly text per scenario ----------------------------------
+    const ANOMALIES = {
+      biophilia: "A pre-registered replication finds no effect of biophilic indoor plants on perceived restorativeness in office workers, despite a large meta-analytic effect in earlier studies.",
+      ceiling:   "Vasquez-Echeverria et al. (2017) report a pre-registered replication of Meyers-Levy & Zhu (2007) and find an effect a fraction of the original size, with confidence intervals overlapping zero.",
+      art:       "A re-analysis of the canonical attention-restoration studies shows that controlling for affective improvement substantially attenuates the restoration effect, raising the question of whether restoration is anything beyond mood lift."
+    };
+
+    // ----- Render -----------------------------------------------------
+    const container = document.getElementById('responses');
+    function render(scenarioKey) {
+      container.innerHTML = '';
+      RESPONSES.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'response';
+        div.innerHTML = `
+          <div class="response-head" data-num="${r.n}">
+            <span class="response-num">${r.n}.</span>
+            <span class="response-name">${r.name}</span>
+            <span class="response-disposition ${r.disposition}">${r.disposition.replace('-', ' ')}</span>
+          </div>
+          <div class="response-body">
+            <p><span class="label">What it is</span>${r.gloss}</p>
+            <p><span class="label">Design diagnostic</span>${r.diagnostic}</p>
+            <p class="scenario-instance"><span class="label">In this case</span>${r.scenarios[scenarioKey]}</p>
+          </div>`;
+        container.appendChild(div);
+      });
+      // Attach click handlers
+      container.querySelectorAll('.response-head').forEach(h => {
+        h.addEventListener('click', () => {
+          h.parentElement.classList.toggle('open');
+        });
+      });
+      document.getElementById('anomaly-text').textContent = ANOMALIES[scenarioKey];
+    }
+
+    document.getElementById('scenario').addEventListener('change', e => {
+      render(e.target.value);
+    });
+    document.getElementById('open-all').addEventListener('click', () => {
+      container.querySelectorAll('.response').forEach(r => r.classList.add('open'));
+    });
+    document.getElementById('close-all').addEventListener('click', () => {
+      container.querySelectorAll('.response').forEach(r => r.classList.remove('open'));
+    });
+
+    render('biophilia');
+  </script>
+</body>
+</html>

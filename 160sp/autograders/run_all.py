@@ -19,6 +19,9 @@ GRADERS = {
     ("t3", 1): "t3_task1_grader",
     ("t3", 2): "t3_task2_grader",
     ("t3", 3): "t3_task3_grader",
+    ("t4", 1): "t4_task1_grader",
+    ("t4", 2): "t4_task2_grader",
+    ("t4", 3): "t4_task3_grader",
 }
 
 def get_grader(track: str, task: int):
@@ -53,7 +56,7 @@ def run_self_test():
 
 def main():
     parser = argparse.ArgumentParser(description="160sp Autograder Suite")
-    parser.add_argument("--track", choices=["t1","t2","t3"], help="Track to grade")
+    parser.add_argument("--track", choices=["t1","t2","t3","t4"], help="Track to grade")
     parser.add_argument("--task", type=int, choices=[1,2,3], help="Task number")
     parser.add_argument("--student", default="unknown", help="Student ID or 'all'")
     parser.add_argument("--dir", default=".", help="Submission directory")

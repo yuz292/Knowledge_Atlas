@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track 1: Image Tagger &middot; COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">
+      Knowledge Atlas
+    </a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <span>Track 1: Image Tagger</span>
+  </div>
+
+  <!-- 3. PAGE GRID -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 1: Image Tagger</div>
+      <a href="t1_intro.html" class="active">Track Overview</a>
+      <a href="t1_task1.html">Task 1: Build an Image Collection</a>
+      <a href="t1_task2.html">Task 2: Build Latent Tag Detectors</a>
+      <a href="t1_task3.html">Task 3: Annotate Collection &amp; Build Image Viewer</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">&larr; All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">TRACK 1 &mdash; IMAGE TAGGER</div>
+        <h1>Track 1: Image Tagger</h1>
+        <p class="hero-sub">
+          Build the visual annotation pipeline for the Knowledge Atlas &mdash;
+          collect 500 images, write detectors for 6 latent tags, run them at
+          scale, and ship a public viewer.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-pill">3 tasks</span>
+          <span class="hero-pill">10 weeks</span>
+          <span class="hero-pill">75 + 75 + 75 points</span>
+        </div>
+      </header>
+
+      <!-- WHAT YOU'LL BUILD -->
+      <section>
+        <h2>What you&rsquo;ll build</h2>
+        <p>
+          The Knowledge Atlas studies how buildings shape the people inside
+          them &mdash; how ceiling height changes thinking, how daylight shifts
+          mood, how clutter raises stress. To study those effects
+          computationally you need photographs, and you need each photograph
+          to carry both a licence and a measurement.
+        </p>
+        <p>
+          You will start with nothing and finish with a working pipeline. In
+          Task 1 you gather 500 openly-licensed interior photos across fifteen
+          room types, with full provenance for every file. In Task 2 you write
+          six detectors that read those images and output <em>latent tags</em>
+          &mdash; numerical scores for social-spatial features like sociopetal
+          seating, prospect, and interactional visibility. In Task 3 you run
+          the detectors over the whole collection and ship a standalone
+          browser that lets anyone search the images by tag or by human
+          effect. The collection, the detectors, and the viewer all become
+          long-lived infrastructure for the Atlas.
+        </p>
+      </section>
+
+      <!-- THE THREE TASKS -->
+      <section>
+        <h2>The three tasks</h2>
+        <div class="task-card-grid">
+
+          <a class="task-card" href="t1_task1.html">
+            <div class="task-card-num">TASK 1</div>
+            <div class="task-card-title">Build an Image Collection</div>
+            <div class="task-card-desc">
+              Find five openly-licensed image sources, build a search
+              pipeline, and gather 500 architectural-interior photographs
+              with full provenance &mdash; source URL, photographer, licence,
+              and room type for every file.
+            </div>
+            <div class="task-card-meta">4 phases &middot; 75 points</div>
+          </a>
+
+          <a class="task-card" href="t1_task2.html">
+            <div class="task-card-num">TASK 2</div>
+            <div class="task-card-title">Build Latent Tag Detectors</div>
+            <div class="task-card-desc">
+              Pick six latent tags from the Tagging Contractor registry and
+              implement detectors for them. Each detector ships with a
+              design note, a typed contract that matches the registry, and a
+              pytest suite that passes the semantic-audit gate.
+            </div>
+            <div class="task-card-meta">7-step scaffold &middot; 75 points</div>
+          </a>
+
+          <a class="task-card" href="t1_task3.html">
+            <div class="task-card-num">TASK 3</div>
+            <div class="task-card-title">Annotate Collection &amp; Build Image Viewer</div>
+            <div class="task-card-desc">
+              Run your six detectors across all 500 images, write the results
+              to a schema-conformant <code>annotations.json</code>, and
+              build a single-file HTML viewer that lets users browse the
+              collection by tag domain or by human effect.
+            </div>
+            <div class="task-card-meta">3 phases &middot; 75 points</div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- REPOS YOU'LL NEED -->
+      <section>
+        <h2>Repos you&rsquo;ll need</h2>
+        <p>
+          Track 1 spans four repositories. Fork the ones you will commit to;
+          read the others.
+        </p>
+        <div class="repo-list">
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Knowledge_Atlas" target="_blank" rel="noopener">Knowledge_Atlas</a>
+            </div>
+            <div class="repo-item-purpose">
+              The Atlas itself &mdash; this is where your collection page,
+              annotations, and image viewer ship to students and researchers.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Tagging_Contractor" target="_blank" rel="noopener">Tagging_Contractor</a>
+            </div>
+            <div class="repo-item-purpose">
+              The latent-tag registry: 424 tags across 44 domains, each with
+              a <code>definition_long</code>, <code>method_family</code>, and
+              <code>extractability</code>. The source of truth your
+              detectors must match.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/Article_Eater" target="_blank" rel="noopener">Article_Eater</a>
+            </div>
+            <div class="repo-item-purpose">
+              Evidence extraction from the published literature, including
+              the PNU templates that link environmental tags to outcomes
+              &mdash; useful for Task 3&rsquo;s effect-mode browser.
+            </div>
+          </div>
+
+          <div class="repo-item">
+            <div class="repo-item-name">
+              <a href="https://github.com/dkirsh/atlas_shared" target="_blank" rel="noopener">atlas_shared</a>
+            </div>
+            <div class="repo-item-purpose">
+              Shared schemas and contracts used across Atlas repos. Reference
+              when you need to produce JSON that other Atlas tools will
+              consume.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- GITHUB SUBMISSION (intro variant) -->
+      <section class="github-submission">
+        <h2 id="submission">How submission works for Track 1</h2>
+
+        <p>
+          Track 1 uses a single git branch per student &mdash;
+          <code>track1/your-name</code> &mdash; across all 3 tasks. Each
+          completed task is submitted as its own Pull Request to the
+          instructor. The full mechanics are on each task page; here&rsquo;s
+          the lifecycle in one paragraph:
+        </p>
+
+        <ol>
+          <li><strong>Once at the start of the track:</strong> fork the
+            track&rsquo;s repos, clone, set the upstream remote, create
+            <code>track1/your-name</code> off <code>upstream/main</code>.</li>
+          <li><strong>Continuously while working:</strong> commit small,
+            push at the end of each session.</li>
+          <li><strong>At the end of each task:</strong> open a Pull Request
+            from your branch to <code>dkirsh:main</code>, title it
+            <code>Track 1 &middot; Task N: ... &mdash; your name</code>,
+            paste your file manifest, tag <code>@dkirsh</code>, do not
+            merge.</li>
+          <li><strong>Across tasks:</strong> keep using the same branch;
+            additional task PRs are opened against the previous task&rsquo;s
+            merge commit.</li>
+        </ol>
+
+        <p>
+          The detailed commands and the per-task PR title format are on each
+          task page under &ldquo;Submit Task N on GitHub.&rdquo;
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t1_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 &middot; Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

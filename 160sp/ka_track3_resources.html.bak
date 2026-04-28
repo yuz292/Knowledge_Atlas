@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 3 · VR Resources</title>
+<link rel="stylesheet" href="../ka_atlas_shell.css">
+<style>:root { --hub-color: #4A3A78; }</style>
+</head>
+<body data-ka-active="" data-ka-journey="contributor"
+      data-ka-crumbs='[["Home","../ka_home.html"],["COGS 160","ka_schedule.html"],["Track 3","ka_track3_hub.html"],["Resources",""]]' data-ka-regime="160sp">
+
+<a class="ka-skip" href="#main">Skip to main content</a>
+<div id="ka-navbar-slot"></div>
+<div id="ka-breadcrumb-slot"></div>
+
+<section class="hub-banner">
+  <div class="tag">Track 3 · Shared Resources</div>
+  <h1>VR Resources <span class="local-badge">Local preview</span></h1>
+  <p class="subtitle">
+    Portable room sources, browser-first scene templates, logging snippets, asset notes,
+    and prompt patterns curated by the Track 3 studio. Add what your sub-team has built
+    only when another student could actually reuse it.
+  </p>
+</section>
+
+<div class="ka-shell">
+  <aside id="ka-journey-slot"></aside>
+  <main id="ka-main">
+
+    <section id="scenes" class="hub-region">
+      <div class="hub-region-head"><div>
+        <div class="hub-region-num">Section 1</div>
+        <div class="hub-region-title">Room shells &amp; scene templates</div>
+      </div></div>
+      <div class="hub-region-body">
+        <div class="resource-list" id="resources-scenes">
+          <div class="resource-item">
+            <div class="rtitle">minimal_room_shell.glb</div>
+            <div class="rmeta">Seeded idea · portable GLB · neutral interior shell</div>
+            <div class="rdesc">Use as the model of a good benchmark room: realistic scale, inspectable hierarchy,
+              and enough structure to support controlled changes in ceiling, enclosure, light, or materials.</div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">starter_scene.html</div>
+            <div class="rmeta">Seeded idea · A-Frame template · browser-runnable</div>
+            <div class="rdesc">Minimal scene shell for the course submission path. Good starting point for Phase 3 in the workbook.</div>
+          </div>
+        </div>
+        <form class="resource-add-form" onsubmit="return addResource('scenes', this)">
+          <strong>Add a room shell or template</strong>
+          <input name="title" placeholder="Template or room name (e.g. 'open_office_shell.glb')" required>
+          <input name="meta"  placeholder="Author · date · format · licence">
+          <textarea name="body" placeholder="What it is for, what it supports, and what could break" required></textarea>
+          <button class="ka-btn" type="submit">Save locally</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="scripts" class="hub-region">
+      <div class="hub-region-head"><div>
+        <div class="hub-region-num">Section 2</div>
+        <div class="hub-region-title">Logging &amp; validation snippets</div>
+      </div></div>
+      <div class="hub-region-body">
+        <div class="resource-list" id="resources-scripts">
+          <div class="resource-item">
+            <div class="rtitle">log-events component stub</div>
+            <div class="rmeta">Seeded idea · A-Frame component · event logging scaffold</div>
+            <div class="rdesc">Use for explicit scene start, condition, task, and outcome events. Pair it with the workbook's <code>vr/LOG_SCHEMA.md</code>.</div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">scene_review_checklist.md</div>
+            <div class="rmeta">Seeded idea · peer QA checklist</div>
+            <div class="rdesc">Checklist for scale sanity, asset load, browser errors, condition clarity, and obvious experimental breakage.</div>
+          </div>
+        </div>
+        <form class="resource-add-form" onsubmit="return addResource('scripts', this)">
+          <strong>Add a logging or validation snippet</strong>
+          <input name="title" placeholder="Snippet name" required>
+          <input name="meta"  placeholder="Author · date · file type">
+          <textarea name="body" placeholder="What it checks or logs, and where it should be used" required></textarea>
+          <button class="ka-btn" type="submit">Save locally</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="assets" class="hub-region">
+      <div class="hub-region-head"><div>
+        <div class="hub-region-num">Section 3</div>
+        <div class="hub-region-title">Portable assets &amp; licences</div>
+      </div></div>
+      <div class="hub-region-body">
+        <div class="resource-list" id="resources-assets">
+          <div class="resource-item">
+            <div class="rtitle">Poly Haven HDRIs &amp; textures</div>
+            <div class="rmeta">CC0 · lighting and material reference</div>
+            <div class="rdesc">Preferred source for skies, lighting reference, and portable materials that survive the browser path well.</div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">Sketchfab downloadable interiors</div>
+            <div class="rmeta">Mixed licences · check each asset before reuse</div>
+            <div class="rdesc">Useful for benchmark rooms when the hierarchy is clean and the licence is explicit.</div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">Quaternius / Kenney packs</div>
+            <div class="rmeta">Lightweight props and interior parts</div>
+            <div class="rdesc">Good for placeholder furniture, small props, and low-friction browser scenes.</div>
+          </div>
+        </div>
+        <form class="resource-add-form" onsubmit="return addResource('assets', this)">
+          <strong>Add an asset source or pack</strong>
+          <input name="title" placeholder="Pack name" required>
+          <input name="meta"  placeholder="Source · licence · attribution">
+          <textarea name="body" placeholder="What is in it, what format it uses, and where it fits in Track 3" required></textarea>
+          <button class="ka-btn" type="submit">Save locally</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="agents" class="hub-region">
+      <div class="hub-region-head"><div>
+        <div class="hub-region-num">Section 4</div>
+        <div class="hub-region-title">AI prompt patterns</div>
+      </div></div>
+      <div class="hub-region-body">
+        <div class="resource-list" id="resources-agents">
+          <div class="resource-item">
+            <div class="rtitle">Request → factor translator prompt</div>
+            <div class="rmeta">Seeded idea · language to structured parameters</div>
+            <div class="rdesc">Use when a research request must be converted into explicit architectural edits, allowed ranges, and validation checks.</div>
+          </div>
+          <div class="resource-item">
+            <div class="rtitle">Asset QA reviewer prompt</div>
+            <div class="rmeta">Seeded idea · asset critique assistant</div>
+            <div class="rdesc">Use when reviewing whether a room asset is suitable for the benchmark set or likely to fail under transformation.</div>
+          </div>
+        </div>
+        <form class="resource-add-form" onsubmit="return addResource('agents', this)">
+          <strong>Add a prompt pattern</strong>
+          <input name="title" placeholder="Prompt name / version" required>
+          <input name="meta"  placeholder="Author · date · model used">
+          <textarea name="body" placeholder="Prompt purpose, known quirks, and what must still be checked by hand" required></textarea>
+          <button class="ka-btn" type="submit">Save locally</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="ka-footer">
+  Knowledge Atlas · UCSD Cognitive Science · COGS 160 Spring 2026
+</footer>
+
+<script>
+(function () {
+  ['scenes','scripts','assets','agents'].forEach(function (key) {
+    var list = document.getElementById('resources-' + key);
+    if (!list) return;
+    var stored = JSON.parse(localStorage.getItem('ka_t3_res_' + key) || '[]');
+    stored.forEach(function (r) { list.appendChild(renderResource(r)); });
+  });
+})();
+
+function renderResource(r) {
+  var d = document.createElement('div');
+  d.className = 'resource-item';
+  d.innerHTML = '<div class="rtitle">' + escapeHtml(r.title) +
+                ' <span class="local-badge">Local</span></div>' +
+                '<div class="rmeta">' + escapeHtml(r.meta || '') + '</div>' +
+                '<div class="rdesc">' + escapeHtml(r.body).replace(/\n/g,'<br>') + '</div>';
+  return d;
+}
+
+function addResource(key, form) {
+  var r = {
+    title: form.title.value.trim(),
+    meta:  form.meta.value.trim() || ('Added ' + new Date().toISOString().slice(0,10)),
+    body:  form.body.value.trim()
+  };
+  var stored = JSON.parse(localStorage.getItem('ka_t3_res_' + key) || '[]');
+  stored.push(r);
+  localStorage.setItem('ka_t3_res_' + key, JSON.stringify(stored));
+  document.getElementById('resources-' + key).appendChild(renderResource(r));
+  form.reset();
+  return false;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+</script>
+
+<script src="../ka_canonical_navbar.js" defer></script>
+<script src="../ka_journey_nav.js"      defer></script>
+</body>
+</html>

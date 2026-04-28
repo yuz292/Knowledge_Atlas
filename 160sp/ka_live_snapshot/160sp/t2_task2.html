@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 2: Gap Targeting & Query Generation · Track 2 · COGS 160</title>
+  <link rel="stylesheet" href="_track_pages_shared.css">
+</head>
+<body>
+
+  <!-- 1. TOP FIXED NAV -->
+  <nav class="top-nav">
+    <a class="wordmark" href="../ka_home.html" aria-label="Knowledge Atlas — global home">Knowledge Atlas</a>
+    <div class="nav-center">
+      <a href="../ka_topics.html">Explore</a>
+      <a href="../ka_evidence.html">Evidence</a>
+      <a href="../ka_gaps.html">Gaps</a>
+      <a href="../ka_article_search.html">Articles</a>
+      <a href="../ka_contribute.html">Contribute</a>
+      <a href="ka_student_setup.html">Course</a>
+      <a href="ka_schedule.html">160 Syllabus</a>
+      <a href="ka_tracks.html" class="active">Tracks</a>
+    </div>
+    <div class="nav-right"><span class="mode-pill">STUDENT</span></div>
+  </nav>
+
+  <!-- 2. BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="ka_tracks.html">All Tracks</a> /
+    <a href="t2_intro.html">Track 2: Article Finder</a> /
+    <span>Task 2: Gap Targeting &amp; Query Generation</span>
+  </div>
+
+  <!-- 3. PAGE GRID: side-nav + main content -->
+  <div class="page-grid">
+
+    <!-- 3a. SIDE NAV -->
+    <aside class="side-nav">
+      <div class="side-nav-title">Track 2: Article Finder</div>
+      <a href="t2_intro.html">Track Overview</a>
+      <a href="t2_task1.html">Task 1: Fix the Contribute Page</a>
+      <a href="t2_task2.html" class="active">Task 2: Gap Targeting &amp; Query Generation</a>
+      <a href="t2_task3.html">Task 3: Search Execution &amp; Triage</a>
+      <div class="side-nav-divider"></div>
+      <a href="ka_tracks.html" class="side-nav-back">&larr; All Tracks</a>
+    </aside>
+
+    <!-- 3b. MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-track">Track 2 · Task 2</div>
+        <h1>Gap Targeting &amp; Query Generation</h1>
+        <p class="hero-sub">Build a gap extractor that reads the Article Eater's 166 PNU templates, scores their knowledge gaps by Value of Information, and turns the highest-priority gaps into matched pairs of natural-language and Boolean search queries.</p>
+        <div class="hero-meta">
+          <span class="hero-pill">Track: Article Finder</span>
+          <span class="hero-pill">60 points</span>
+          <span class="hero-pill">No SerpAPI yet</span>
+        </div>
+      </header>
+
+      <!-- CORE LESSON -->
+      <section>
+        <div class="callout callout-blue"><strong>Core lesson.</strong> Before you search for anything, you have to know <em>what</em> you are looking for and <em>why</em>. VOI scoring tells you which gaps matter most. Query design decides whether you find relevant papers or noise.</div>
+      </section>
+
+      <!-- SETUP -->
+      <section>
+        <h2>Setup</h2>
+        <p>You should already have the four repositories from Task 1:</p>
+        <ul>
+          <li><code>Knowledge_Atlas</code> — the site (with your fixed contribute page)</li>
+          <li><code>Article_Finder</code> — the discovery pipeline</li>
+          <li><code>Article_Eater</code> — the extraction engine (it holds both the gap data and the VOI functions)</li>
+          <li><code>atlas_shared</code> — the shared classifier (installed via <code>pip install -e .</code>)</li>
+        </ul>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section>
+        <h2>Phase 1: Understand the gap data and the VOI system</h2>
+        <p>Before you build anything, you need to understand the raw material — what a PNU template looks like, what VOI measures, and what the corpus already contains. Skip this phase and your queries will hunt for papers we already have.</p>
+
+        <h3>1A. Understand the PNU templates</h3>
+        <p>The Article Eater holds 166 PNU (Plausible Neural Underpinning) templates. Each template describes a mechanism chain — how an environmental feature (say, ceiling height) produces a psychological outcome (say, creativity) through a series of neural processes. Every step in that chain has a <strong>confidence score</strong>. A low-confidence step is a <strong>knowledge gap</strong>: a place in the chain where the literature has not yet pinned down the mechanism.</p>
+
+        <p>Pick three templates from <code>Article_Eater/data/templates/</code> and ask your AI:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"These are PNU templates from the Knowledge Atlas. Walk me through one template completely: what does each step in the <code>mechanism_chain</code> represent, what does <code>confidence</code> mean for each step, and what does a low-confidence step (&lt; 0.6) tell us about what is missing from the research corpus?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Now look at all three templates and identify: which steps have confidence below 0.6? For each gap, tell me what specific study would fill it."</p>
+          </div>
+        </div>
+
+        <h3>1B. Understand the VOI scoring system</h3>
+        <p>Value of Information is the lever you use to rank gaps. The Article Eater already supplies a <code>VOICalculator</code> for this; you will call it. Ask your AI:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Read <code>Article_Eater/src/services/voi_search.py</code>. Find <code>VOICalculator</code> and its <code>calculate_voi()</code> method. What inputs does it take? What does the combined VOI score mean? When would a gap get a HIGH score vs. a LOW score?"</p>
+          </div>
+        </div>
+
+        <div class="callout callout-teal"><strong>What you should learn:</strong> A gap that sits at a hub in the belief network — high centrality, many downstream beliefs that depend on it — with confidence near 0.4 scores far higher in VOI than an isolated gap with confidence 0.45. VOI answers the question: "how much would knowing this change our predictions?"</div>
+
+        <h3>1C. Know what is already in the corpus</h3>
+        <p>Before you generate a single search query, find out what we already have. Searching for papers we already own wastes API credits and pollutes the funnel.</p>
+
+        <p>The lifecycle database tracks every PDF in the system.</p>
+
+        <p><strong>Primary source:</strong> <code>pipeline_lifecycle_full.db</code>, table <code>pdf_corpus_inventory</code></p>
+
+        <p>This table lists every known PDF and its state:</p>
+        <ul>
+          <li>Whether it is in <code>CURRENT_GOLD</code> (fully processed and validated)</li>
+          <li>Whether it is admitted but not yet gold</li>
+          <li>Whether it is staged only</li>
+          <li>Whether it is registry-backed</li>
+        </ul>
+
+        <p><strong>Easiest readable version:</strong> <code>pdf_corpus_inventory/latest.csv</code></p>
+        <p>The summary report is at <code>pdf_corpus_inventory/latest.md</code>.</p>
+
+        <p>Ask your AI:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Read <code>pdf_corpus_inventory/latest.csv</code>. How many papers are in CURRENT_GOLD? What topics do they cover? This tells me what we already have — I should NOT generate search queries for papers that are already in the corpus."</p>
+          </div>
+        </div>
+
+        <p>If you also need to catch the same paper appearing under different filenames or DOIs, use the companion table:</p>
+
+        <p><strong>Dedupe source:</strong> <code>pipeline_lifecycle_full.db</code>, table <code>pdf_identity_inventory</code><br>
+           <strong>CSV:</strong> <code>pdf_identity_inventory/latest.csv</code></p>
+
+        <h3>1D. Understand the two query types</h3>
+        <p>You will write queries in two formats, and they answer different questions. Read <code>160sp/ka_google_search_guide.html</code> for the full tutorial, then ask your AI:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Explain the difference between a Google AI Citation query and a Google Scholar Boolean query. When would I use each? What makes one better than the other for finding specific mechanism-level evidence?"</p>
+          </div>
+        </div>
+
+        <p><strong>Google AI Citation</strong> (natural language — what you type into Google):</p>
+<pre><code>What neuroimaging evidence shows that exposure to natural versus urban
+environments reduces amygdala reactivity, and does this explain the
+stress-buffering effect attributed to Stress Recovery Theory?</code></pre>
+
+        <p><strong>Google Scholar Boolean</strong> (structured — what SerpAPI sends to Google Scholar):</p>
+<pre><code>("amygdala" OR "amygdala reactivity") AND ("natural environment" OR
+"nature exposure") AND ("stress" OR "cortisol") AND ("fMRI" OR
+"neuroimaging") -review</code></pre>
+
+        <p>The differences in plain terms:</p>
+        <ul>
+          <li><strong>AI Citation</strong> uses full sentences with theory names and mechanism descriptions. Google's AI handles synonyms and intent for you.</li>
+          <li><strong>Boolean</strong> uses exact keywords joined by AND/OR with quotes around phrases. Add <code>-review</code> to exclude review articles when you want primary research. Use <code>intitle:</code> to require that a term appear in the title.</li>
+        </ul>
+
+        <h3>1E. Get a boxology diagram of the full pipeline</h3>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Draw a box-and-arrow diagram of this complete pipeline (Tasks 2 and 3 combined):</p>
+            <p>1. Read PNU templates &rarr; extract gaps with confidence &lt; 0.5<br>
+               2. Score gaps using VOICalculator &rarr; sort by priority<br>
+               3. Generate search queries (AI Citation + Boolean)<br>
+               4. Execute searches via SerpAPI &rarr; get titles, snippets, DOIs<br>
+               5. Collect full abstracts via Semantic Scholar / CrossRef / PubMed / OpenAlex<br>
+               6. Triage abstracts through classifier + VOI scoring<br>
+               7. Classify papers: ACCEPT / EDGE_CASE / REJECT / MISSING_ABSTRACT<br>
+               8. Display PRISMA funnel on dashboard"</p>
+          </div>
+        </div>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p>The boxology diagram, plus a list of five specific gaps with their confidence scores.</p>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section>
+        <h2>Phase 2: Build the gap extractor</h2>
+        <p>The gap extractor turns 166 templates into a ranked, machine-readable list of knowledge gaps. It is the input to everything downstream.</p>
+
+        <h3>2A. Write YOUR OWN contract</h3>
+
+        <div class="callout callout-teal">
+          <p><strong>Contract objective:</strong> "I want a program that reads PNU template JSON files and tells me which knowledge gaps are most worth searching for."</p>
+          <p><strong>Contract is with:</strong> The <code>VOICalculator</code> in <code>Article_Eater/src/services/voi_search.py</code> and the PNU templates in <code>Article_Eater/data/templates/</code>.</p>
+          <p><strong>Prompt hint:</strong> <em>"I need to write a contract for a gap extraction program. The program reads PNU template JSON files, walks their mechanism_chain, and uses VOICalculator.calculate_voi() to score each gap. Help me write the Inputs, Processing, Outputs, and Success Conditions sections."</em></p>
+        </div>
+
+        <p>Write the contract yourself before you ask any AI to build anything. This is the most important habit in the course: <strong>if you cannot specify what you want, you cannot verify what you got.</strong></p>
+
+        <p>Your contract must have these four sections:</p>
+        <ol>
+          <li><strong>Inputs</strong> — Which files does the program read? In what format?</li>
+          <li><strong>Processing</strong> — What does the program do, step by step?</li>
+          <li><strong>Outputs</strong> — What does the program produce? Which fields, in what format?</li>
+          <li><strong>Success conditions</strong> — How will you know it worked? Be specific. "It works" is not a success condition. "Extracts at least 10 gaps across 166 templates, each with template_id, step_number, confidence &lt; 0.6, and gap_type" IS a success condition.</li>
+        </ol>
+
+        <div class="callout callout-amber"><strong>Minimum bar</strong> — your contract must cover at least these:
+          <ul>
+            <li>Reads PNU template JSON files and walks <code>mechanism_chain</code></li>
+            <li>Extracts steps whose confidence falls below a threshold you set</li>
+            <li>Scores each gap with <code>VOICalculator.calculate_voi()</code></li>
+            <li>Writes structured JSON with gap_type, voi_score, and what is missing</li>
+          </ul>
+        </div>
+
+        <h3>2B. Write your tests BEFORE you build</h3>
+        <p>A test is a sentence about what the program must do, written before the program exists. Ask your AI:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Given my contract, what are 5 things that could go wrong? For each, write a test I can run to check. For example: 'What if a template has no mechanism_chain field?'"</p>
+          </div>
+        </div>
+
+        <p>Write your tests as a checklist:</p>
+        <ul>
+          <li>[ ] Handles templates with no low-confidence steps (skips them, does not crash)</li>
+          <li>[ ] VOI scores fall between 0 and 1</li>
+          <li>[ ] Output JSON is valid and parseable</li>
+          <li>[ ] At least 10 gaps found (if fewer, is the threshold wrong?)</li>
+          <li>[ ] Gaps sorted by VOI, highest first</li>
+        </ul>
+
+        <h3>2C. Delegate to your AI, then validate</h3>
+        <p>Hand the AI your contract and ask it to build a Python script. Then run your tests and interrogate the result:</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me how you read the mechanism_chain from a template. Which field has the confidence? What threshold do you use?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me the VOI scores for 3 gaps. Why does one score higher than another?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Run the script on 3 templates. Does the output match my contract's output spec? Show me the JSON."</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section>
+        <h2>Phase 3: Generate search queries</h2>
+        <p>A ranked gap list is useless without queries to chase the gaps. This phase turns each gap into a matched pair of search queries — one natural-language and one Boolean — ready for Task 3 to execute.</p>
+
+        <h3>3A. Write YOUR OWN query-generator contract</h3>
+
+        <div class="callout callout-teal">
+          <p><strong>Contract objective:</strong> "I want a program that takes my ranked gap list and generates search queries I can use to find papers that fill those gaps."</p>
+          <p><strong>Contract is with:</strong> The <code>QueryGenerator</code> in <code>Article_Eater/src/services/voi_search.py</code> and the patterns in <code>ka_google_search_guide.html</code>.</p>
+          <p><strong>Prompt hint:</strong> <em>"I need to write a contract for a query generator. It takes a JSON list of knowledge gaps (with VOI scores) and produces two search queries per gap: a Google AI Citation natural-language query and a Google Scholar Boolean query. Help me write the contract."</em></p>
+        </div>
+
+        <p>Same discipline as Phase 2: <strong>you</strong> write the contract. Cover:</p>
+        <ol>
+          <li><strong>Inputs</strong> — the gap list from Phase 2</li>
+          <li><strong>Processing</strong> — how queries are generated (refer to <code>ka_google_search_guide.html</code>)</li>
+          <li><strong>Outputs</strong> — what fields each gap carries (both query types plus a gap summary)</li>
+          <li><strong>Success conditions</strong> — at minimum:
+            <ul>
+              <li>At least 10 gaps carry both an AI Citation and a Boolean query</li>
+              <li>AI Citation queries are full sentences that follow the 5-component pattern</li>
+              <li>Boolean queries use <code>"exact phrases"</code>, <code>AND</code>, <code>OR</code>, and <code>-review</code></li>
+              <li>At least three queries have been tested manually in Google and produce relevant first-page results</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>3B. Write your validation tests</h3>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"What makes a bad Boolean query? Give me 3 examples of common mistakes and how to detect them automatically."</p>
+          </div>
+        </div>
+
+        <p>Your validation checklist:</p>
+        <ul>
+          <li>[ ] No Boolean query is a bare comma-separated word list (it must contain AND/OR)</li>
+          <li>[ ] Every AI Citation query ends with <code>?</code> and runs longer than 50 characters</li>
+          <li>[ ] Every Boolean query contains at least one <code>"exact phrase"</code></li>
+          <li>[ ] At least three queries return relevant results when tested in Google</li>
+        </ul>
+
+        <h3>3C. Use the query-generation prompt template</h3>
+        <p>We supply a prompt template designed to produce high-quality queries. See <code>query_generator_skill.md</code> in this rubrics folder.</p>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>Give your AI the prompt template along with three gaps from your extractor. Ask it to generate queries. Then test one AI Citation query in Google by hand — does the first page of results contain relevant papers?</p>
+          </div>
+        </div>
+
+        <h3>3D. Verification questions</h3>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me the Boolean query for one gap. Does it use exact-phrase quotes? Does it have OR groups for synonyms? Would Google Scholar parse it correctly?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Show me the AI Citation query for the same gap. Does it follow the 5-component pattern? Could a researcher read it as a real research question?"</p>
+          </div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Take a gap about [specific mechanism]. Generate both query types. Now explain: which query would find a broader set of papers, and which would find more precisely targeted papers?"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section>
+        <h2>Phase 4: Prove it works</h2>
+
+        <h3>Step 1: Run the gap extractor</h3>
+<pre><code class="lang-bash">python3 gap_extractor.py --templates Article_Eater/data/templates/</code></pre>
+        <p>Verify:</p>
+        <ul>
+          <li>[ ] At least 10 gaps identified</li>
+          <li>[ ] Gaps sorted by VOI score</li>
+          <li>[ ] Each gap carries template_id, step number, confidence, gap_type, voi_score</li>
+        </ul>
+
+        <h3>Step 2: Generate queries for the top 10 gaps</h3>
+<pre><code class="lang-bash">python3 query_generator.py --gaps gap_results.json</code></pre>
+        <p>Verify:</p>
+        <ul>
+          <li>[ ] Each gap carries both an AI Citation and a Boolean query</li>
+          <li>[ ] AI Citation queries are full sentences, not keyword lists</li>
+          <li>[ ] Boolean queries use AND/OR/quotes properly</li>
+        </ul>
+
+        <h3>Step 3: Manual spot-check</h3>
+        <p>Pick three queries and paste the AI Citation version into Google. For each:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Gap</th>
+              <th>Query (first 50 chars)</th>
+              <th>First-page relevant?</th>
+              <th>Top result title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td></td><td>Yes / No / Partial</td><td></td></tr>
+            <tr><td>2</td><td></td><td></td><td></td></tr>
+            <tr><td>3</td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Step 4: Review your query quality</h3>
+
+        <div class="ai-box">
+          <div class="ai-label">Ask your AI</div>
+          <div class="ai-text">
+            <p>"Review these 10 queries against the patterns in ka_google_search_guide.html. Which queries are strong? Which are weak? How would you improve the weak ones?"</p>
+          </div>
+        </div>
+
+        <div class="deliverable">
+          <div class="deliverable-label">Deliverable</div>
+          <p>Gap list, query pairs, the spot-check table, and the AI's review of query quality.</p>
+        </div>
+      </section>
+
+      <!-- WHAT YOU SUBMIT -->
+      <section>
+        <h2>What you submit</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>Description and format</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Gap analysis</strong> (Phase 1)</td><td>Boxology diagram plus five gaps with VOI scores</td></tr>
+            <tr><td><strong>Gap extractor</strong> (Phase 2)</td><td>Working script plus contract</td></tr>
+            <tr><td><strong>Query pairs</strong> (Phase 3)</td><td>Ten or more gaps with AI Citation + Boolean queries</td></tr>
+            <tr><td><strong>Spot-check</strong> (Phase 4)</td><td>Manual test of three queries in Google</td></tr>
+            <tr><td><strong>Query review</strong> (Phase 4)</td><td>AI review of query quality</td></tr>
+            <tr><td><strong>File manifest</strong></td><td><code>git diff --name-only HEAD</code> and <code>git status --short</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- FILES YOU MUST CHANGE OR CREATE -->
+      <section>
+        <h2>Files you must change or create</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>File</th><th>Type</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>gap_extractor.py</code></td><td>New</td><td>Reads templates, extracts gaps, scores them by VOI</td></tr>
+            <tr><td><code>query_generator.py</code></td><td>New</td><td>Generates AI Citation + Boolean queries per gap</td></tr>
+            <tr><td><code>gap_results.json</code></td><td>New</td><td>Ranked gap list with VOI scores</td></tr>
+            <tr><td><code>query_results.json</code></td><td>New</td><td>Query pairs for each gap</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GRADING -->
+      <section>
+        <h2>Grading (60 points)</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Criterion</th><th>Points</th><th>What we check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Gap extraction</strong></td><td>15</td><td>Correctly identifies low-confidence steps from templates</td></tr>
+            <tr><td><strong>VOI scoring</strong></td><td>10</td><td>Gaps ranked by VOI; you can explain why one scores higher</td></tr>
+            <tr><td><strong>AI Citation queries</strong></td><td>10</td><td>Follow the 5-component pattern, specific enough for retrieval</td></tr>
+            <tr><td><strong>Boolean queries</strong></td><td>10</td><td>Proper AND/OR/quotes, not just comma-separated words</td></tr>
+            <tr><td><strong>Spot-check</strong></td><td>5</td><td>Three queries tested manually in Google, results reported</td></tr>
+            <tr><td><strong>Verification questions</strong></td><td>10</td><td>Caught real problems in the AI's implementation</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- A NOTE ABOUT REUSE -->
+      <section>
+        <h2>A note about reuse</h2>
+        <div class="callout callout-blue">The contract &rarr; success conditions &rarr; test &rarr; validate workflow you are practising here is not a one-off exercise. <strong>You will reuse it directly in Task 3</strong>, where you execute searches and triage results through a PRISMA funnel, and in every later task that touches the corpus. In particular, the PRISMA funnel becomes a recurring deliverable: any time you add papers to the corpus, you must show the funnel as proof that you did so rigorously. Treat this Task 2 contract as a template you will refine, not a throwaway.</div>
+      </section>
+
+      <!-- EXISTING CODE -->
+      <section>
+        <h2>Existing code you should know about</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>File</th><th>What it provides</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>src/services/voi_search.py</code></td><td><code>VOICalculator.calculate_voi()</code> — scores gaps</td></tr>
+            <tr><td><code>src/services/voi_search.py</code></td><td><code>QueryGenerator.generate_queries()</code> — baseline query generation</td></tr>
+            <tr><td><code>src/services/voi_search.py</code></td><td><code>CrossFieldVocabulary.expand_query()</code> — cross-discipline synonyms</td></tr>
+            <tr><td><code>pipeline_lifecycle_full.db</code></td><td>Table <code>pdf_corpus_inventory</code> — every PDF and its state (CURRENT_GOLD, staged, etc.)</td></tr>
+            <tr><td><code>pdf_corpus_inventory/latest.csv</code></td><td>Readable export of the corpus inventory — check what you already have</td></tr>
+            <tr><td><code>pdf_identity_inventory/latest.csv</code></td><td>Dedupe info — catches the same paper under different filenames</td></tr>
+            <tr><td><code>course_scaffolding.py probe-collection-pdf</code></td><td>Foolproof duplicate check — run on any PDF to see if it is already in the corpus</td></tr>
+            <tr><td><code>ae_waiting_room_probe.py</code></td><td><code>probe_pdf_against_article_eater()</code> — the same check, callable from Python</td></tr>
+            <tr><td><code>build_pdf_corpus_inventory_surface.py</code></td><td>Builds the inventory surface from the lifecycle DB</td></tr>
+            <tr><td><code>refresh_v7_state_surfaces.py</code></td><td>Regenerates all state surfaces (run this to get fresh data)</td></tr>
+            <tr><td><code>160sp/ka_google_search_guide.html</code></td><td>Full tutorial on writing AI Citation queries</td></tr>
+            <tr><td><code>query_generator_skill.md</code></td><td>Prompt template for generating queries from gaps</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- GITHUB SUBMISSION -->
+      <section class="github-submission">
+        <h2 id="submission">Submit Task 2 on GitHub</h2>
+
+        <p>Each track has one branch per student, named <code>track2/your-name</code>
+        (lowercase, hyphenated — e.g., <code>track2/jane-doe</code>). All three tasks in
+        Track 2 live on this single branch. You'll open one Pull Request per completed
+        task so the instructor can review tasks independently.</p>
+
+        <div class="callout callout-teal"><strong>No SerpAPI key needed for Task 2.</strong> This task ends just before any external search runs — you build the gap list and the query pairs, but you do not yet send anything to SerpAPI. Save your free SerpAPI budget (250 searches/month) for Task 3, where every credit counts.</div>
+
+        <h3>One-time setup (do once at the start of the track)</h3>
+<pre><code class="lang-bash"># 1. Fork the relevant repos on GitHub (use the Fork button on each repo page)
+#    For Task 2, fork: Article_Finder, Article_Eater (PNU templates and
+#                      VOICalculator live here), Knowledge_Atlas
+
+# 2. Clone your fork to your machine (repeat for each repo you forked)
+git clone git@github.com:&lt;YOUR-USERNAME&gt;/Article_Finder.git
+cd Article_Finder
+
+# 3. Add the upstream remote so you can pull instructor updates
+git remote add upstream git@github.com:dkirsh/Article_Finder.git
+
+# 4. Create your track branch, off the latest main
+git fetch upstream
+git checkout -b track2/&lt;your-name&gt; upstream/main</code></pre>
+
+        <h3>Working on Task 2</h3>
+<pre><code class="lang-bash"># Make sure you're on your track branch
+git checkout track2/&lt;your-name&gt;
+
+# Commit early and often as you work — small, reviewable commits
+git add &lt;files-you-changed&gt;
+git commit -m "task2: short description of what this commit does"
+
+# Push to your fork at the end of each work session
+git push origin track2/&lt;your-name&gt;</code></pre>
+
+        <h3>Submitting Task 2 for review</h3>
+        <p>When Task 2 is complete and all the deliverables on this page are checked off:</p>
+        <ol>
+          <li>Make sure your latest work is pushed: <code>git push origin track2/&lt;your-name&gt;</code></li>
+          <li>On GitHub, open a Pull Request from <code>&lt;YOUR-USERNAME&gt;:track2/&lt;your-name&gt;</code> to <code>dkirsh:main</code></li>
+          <li>Title the PR: <code>Track 2 · Task 2: Gap Targeting &amp; Query Generation — &lt;your name&gt;</code></li>
+          <li>In the PR body, paste your <strong>file manifest</strong> (run <code>git diff --name-only upstream/main</code>) and a one-paragraph summary of what you built and what you tested.</li>
+          <li>Add the label <code>track2-task2-review</code> and tag the instructor (<code>@dkirsh</code>).</li>
+          <li>Leave the PR open. <strong>Do not merge.</strong> The instructor will review and either merge, request changes, or comment for follow-up.</li>
+        </ol>
+
+        <p>When you start Task 3, keep working on the same <code>track2/&lt;your-name&gt;</code>
+        branch — additional commits will appear in your existing PR <em>only until you open the
+        Task 3 PR</em>, at which point the new task gets its own PR off the same branch (use
+        GitHub's "compare" feature with the previous task's merge commit as the base).</p>
+
+        <h3>If you get stuck</h3>
+        <ul>
+          <li><strong>Merge conflict:</strong> <code>git fetch upstream &amp;&amp; git rebase upstream/main</code>, resolve conflicts, then <code>git push --force-with-lease</code>.</li>
+          <li><strong>Forgot to commit before switching machines:</strong> <code>git stash</code> on the old machine, push, then <code>git stash pop</code> after pulling on the new machine.</li>
+          <li><strong>Unsure if the instructor has reviewed:</strong> the PR page on GitHub shows review state. Don't email; let the PR system carry the conversation.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 4a. WITHIN-TRACK FOOTER NAV -->
+  <nav class="track-footer-nav" aria-label="Within-track navigation">
+    <a href="t2_task1.html" class="prev">&larr; Task 1: Fix the Contribute Page</a>
+    <a href="t2_task3.html" class="next">Task 3: Search Execution &amp; Triage &rarr;</a>
+  </nav>
+
+  <!-- 4b. SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-col">
+        <div class="site-footer-title">Knowledge Atlas</div>
+        <a href="../ka_home.html">Global home</a>
+        <a href="../ka_sitemap.html">Site map</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">COGS 160 SP</div>
+        <a href="ka_tracks.html">Tracks portal</a>
+        <a href="ka_student_setup.html">Course setup</a>
+        <a href="ka_schedule.html">Syllabus</a>
+      </div>
+      <div class="site-footer-col">
+        <div class="site-footer-title">This track</div>
+        <a href="t2_intro.html">Track overview</a>
+        <a href="#submission">Submit on GitHub</a>
+      </div>
+      <div class="site-footer-meta">
+        COGS 160 Spring 2026 · Prof. David Kirsh, UCSD Cognitive Science.
+        Page maintained as part of the Knowledge Atlas project.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
