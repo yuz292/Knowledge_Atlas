@@ -266,6 +266,19 @@ function renderMetaBox(label, value) {
   `;
 }
 
+function renderPnuPanelBasis(items) {
+  if (!items || !items.length) {
+    return '<p class="section-note">No panel basis rows were exported for this paper.</p>';
+  }
+  return `<div class="list">${items.slice(0, 6).map(item => `
+    <div class="list-row">
+      <h3>${esc(item.panel_id || item.role || 'Panel basis')}</h3>
+      <div class="meta">${esc(item.role || 'role pending')} · ${esc(item.status || 'status pending')}</div>
+      <div class="counts">${item.used_to_generate ? 'used to generate' : 'reference basis only'}${item.doc_path ? ' · ' + esc(item.doc_path) : ''}</div>
+    </div>
+  `).join('')}</div>`;
+}
+
 function renderVisualGallery(items) {
   if (!items || !items.length) {
     return '<p class="section-note">No visual support surfaces were exported for this paper yet.</p>';
@@ -617,6 +630,28 @@ function updateTocActive() {
             ${metricCard('PNU long form', pnu.long_status || 'pending', 'extended mechanism reading')}
             ${metricCard('Panel grounding', pnu.panel_status || 'pending', (pnu.panel_basis_count || 0) + ' panel sources')}
             ${metricCard('Verifier', pnu.verifier_status || 'pending', 'current lifecycle status')}
+          </div>
+          <div class="two-col" style="margin-top:16px">
+            <div class="soft-box">
+              <h3>PNU provenance</h3>
+              <p>Lifecycle status: <b>${esc(pnu.status || 'pending')}</b></p>
+              <p>Source modality: <b>${esc(pnu.source_modality || 'pending')}</b></p>
+              <p>Generation method: <b>${esc(pnu.generation_method || 'pending')}</b></p>
+              <p>Theory/mechanism status: <b>${esc(pnu.theory_mechanism_status || 'pending')}</b></p>
+              <p>Requires repair: <b>${pnu.requires_repair ? 'yes' : 'no'}</b></p>
+              <p>Verifier errors: <b>${esc(String(pnu.verifier_error_count || 0))}</b></p>
+            </div>
+            <div class="soft-box">
+              <h3>PNU evidence surface</h3>
+              <p>${Array.isArray(pnu.page_refs) && pnu.page_refs.length ? 'Page refs: ' + esc(pnu.page_refs.join(', ')) : 'Page refs pending.'}</p>
+              <p>${Array.isArray(pnu.page_image_paths) && pnu.page_image_paths.length ? esc(pnu.page_image_paths.length + ' page-image path(s) exported') : 'No page-image paths exported.'}</p>
+              <p>${pnu.html_path ? 'HTML artifact: ' + esc(pnu.html_path) : 'No PNU HTML artifact exported.'}</p>
+              <p>${pnu.json_path ? 'JSON artifact: ' + esc(pnu.json_path) : 'No PNU JSON artifact exported.'}</p>
+            </div>
+          </div>
+          <div class="soft-box" style="margin-top:16px">
+            <h3>Panel basis</h3>
+            ${renderPnuPanelBasis(pnu.panel_basis)}
           </div>
           ${pnu.long_summary ? `
             <details class="more">

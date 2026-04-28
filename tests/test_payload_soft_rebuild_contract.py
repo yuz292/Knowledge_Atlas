@@ -33,16 +33,32 @@ def test_article_details_keep_technical_result_surface_as_object():
 
 def test_paper_pnus_payload_matches_full_v7_ready_surface():
     payload = _load("paper_pnus.json")
-    assert payload["summary"]["source_kind"] == "paper_pnu_lookup"
+    assert payload["summary"]["source_kind"] == "paper_pnu_artifacts_export"
     assert payload["summary"]["article_count"] == 760
     assert payload["summary"]["short_summary_count"] == 760
     assert payload["summary"]["long_summary_count"] == 760
     assert payload["summary"]["panel_grounded_count"] == 760
     assert payload["summary"]["verifier_pass_count"] == 760
+    assert payload["summary"]["papers_with_panel_basis"] == 760
+    assert "pnu_artifacts" in payload["summary"]["source_files"]["lifecycle_table"]
     sample = payload["papers"][0]
     assert sample["pnu"]["short_summary"]
     assert sample["pnu"]["panel_status"] == "panel_grounded"
     assert sample["pnu"]["verifier_status"] == "pass"
+    assert sample["pnu"]["source_modality"]
+    assert isinstance(sample["pnu"]["panel_basis"], list)
+    assert "page_refs" in sample["pnu"]
+
+
+def test_article_details_export_richer_pnu_provenance():
+    payload = _load("article_details.json")
+    sample = payload["details"]["PDF-0356"]["pnu"]
+    assert sample["status"] in {"ready", "not_applicable"}
+    assert sample["source_modality"]
+    assert sample["generation_method"]
+    assert isinstance(sample["panel_basis"], list)
+    assert "page_refs" in sample
+    assert "page_image_paths" in sample
 
 
 def test_theories_payload_is_present_and_honest_about_coverage():

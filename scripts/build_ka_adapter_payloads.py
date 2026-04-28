@@ -1003,6 +1003,40 @@ def clean_rich_text(value):
     return text.strip()
 
 
+def exportable_path(value):
+    raw = str(value or '').strip()
+    if not raw:
+        return ''
+    try:
+        path = Path(raw)
+    except Exception:
+        return raw
+    try:
+        return str(path.relative_to(ROOT))
+    except Exception:
+        try:
+            return str(path.relative_to(AE))
+        except Exception:
+            return str(path)
+
+
+def compact_panel_basis_rows(rows, limit=6):
+    out = []
+    for row in rows[:limit]:
+        if not isinstance(row, dict):
+            continue
+        out.append(
+            {
+                'panel_id': str(row.get('panel_id') or '').strip(),
+                'role': str(row.get('role') or '').strip(),
+                'status': str(row.get('status') or '').strip(),
+                'used_to_generate': bool(row.get('used_to_generate')),
+                'doc_path': exportable_path(row.get('doc_path')),
+            }
+        )
+    return out
+
+
 def extract_science_summary_sections(raw_summary):
     payload = safe_json_loads(raw_summary, {})
     if isinstance(payload, dict):
@@ -3712,6 +3746,9 @@ def build_article_details_payload(articles, evidence, argumentation):
         measurement_inventory = safe_json_loads(accepted.get('measurement_inventory'), []) or []
         instrument_inventory = safe_json_loads(accepted.get('instrument_inventory'), []) or []
         sensor_inventory = safe_json_loads(accepted.get('sensor_inventory'), []) or []
+        pnu_page_refs = safe_json_loads(pnu.get('page_refs_json'), []) or []
+        pnu_page_image_paths = [exportable_path(path) for path in (safe_json_loads(pnu.get('page_image_paths_json'), []) or []) if str(path or '').strip()]
+        pnu_panel_basis = compact_panel_basis_rows(safe_json_loads(pnu.get('panel_basis_json'), []) or [])
 
         summary_sections = extract_science_summary_sections(accepted.get('science_writer_summary'))
         top_claim_rows = sorted(
@@ -3792,13 +3829,24 @@ def build_article_details_payload(articles, evidence, argumentation):
                 'outcome_vocab_name': structured_claim.get('outcome_vocab_name') or '',
             },
             'pnu': {
+                'status': pnu.get('pnu_status') or '',
                 'short_summary': clean_rich_text(pnu.get('pnu_short_summary_300w')),
                 'long_summary': clean_rich_text(pnu.get('pnu_long_version')),
                 'short_status': pnu.get('pnu_short_summary_status') or '',
                 'long_status': pnu.get('pnu_long_version_status') or '',
                 'panel_status': pnu.get('panel_status') or '',
                 'panel_basis_count': int(pnu.get('panel_basis_count') or 0),
+                'panel_basis': pnu_panel_basis,
+                'source_modality': pnu.get('source_modality') or '',
+                'generation_method': pnu.get('pnu_generation_method') or '',
+                'theory_mechanism_status': pnu.get('theory_mechanism_status') or '',
                 'verifier_status': pnu.get('pnu_verifier_status') or '',
+                'verifier_error_count': int(pnu.get('pnu_verifier_error_count') or 0),
+                'requires_repair': bool(pnu.get('requires_pnu_repair')),
+                'page_refs': [int(value) for value in pnu_page_refs if str(value).strip()],
+                'page_image_paths': pnu_page_image_paths,
+                'html_path': exportable_path(pnu.get('pnu_html_path')),
+                'json_path': exportable_path(pnu.get('pnu_json_path')),
             },
             'operationalization': {
                 'measurement_count': max(int(science_writer.get('measurement_count') or 0), len(measurement_inventory)),
@@ -3889,13 +3937,24 @@ def build_paper_pnus_payload(articles, article_details):
                     'limitations': (detail.get('science_summary') or {}).get('limitations') or '',
                 },
                 'pnu': {
+                    'status': pnu.get('status') or '',
                     'short_summary': pnu.get('short_summary') or '',
                     'long_summary': pnu.get('long_summary') or '',
                     'short_status': pnu.get('short_status') or '',
                     'long_status': pnu.get('long_status') or '',
                     'panel_status': pnu.get('panel_status') or '',
                     'panel_basis_count': int(pnu.get('panel_basis_count') or 0),
+                    'panel_basis': list(pnu.get('panel_basis') or []),
+                    'source_modality': pnu.get('source_modality') or '',
+                    'generation_method': pnu.get('generation_method') or '',
+                    'theory_mechanism_status': pnu.get('theory_mechanism_status') or '',
                     'verifier_status': pnu.get('verifier_status') or '',
+                    'verifier_error_count': int(pnu.get('verifier_error_count') or 0),
+                    'requires_repair': bool(pnu.get('requires_repair')),
+                    'page_refs': list(pnu.get('page_refs') or []),
+                    'page_image_paths': list(pnu.get('page_image_paths') or []),
+                    'html_path': pnu.get('html_path') or '',
+                    'json_path': pnu.get('json_path') or '',
                 },
                 'operationalization_counts': {
                     'measurement_count': int(operationalization.get('measurement_count') or 0),
@@ -3925,9 +3984,16 @@ def build_paper_pnus_payload(articles, article_details):
             'long_summary_count': sum(1 for row in rows if row['pnu'].get('long_summary')),
             'panel_grounded_count': sum(1 for row in rows if row['pnu'].get('panel_status') == 'panel_grounded'),
             'verifier_pass_count': sum(1 for row in rows if row['pnu'].get('verifier_status') == 'pass'),
-            'source_kind': 'paper_pnu_lookup',
+            'papers_with_page_refs': sum(1 for row in rows if row['pnu'].get('page_refs')),
+            'papers_with_panel_basis': sum(1 for row in rows if row['pnu'].get('panel_basis_count')),
+            'source_kind': 'paper_pnu_artifacts_export',
+            'coverage_note': (
+                'This payload now exports the real V7 lifecycle PNU artifact rows, including panel grounding, '
+                'generation provenance, and page-evidence fields where they exist.'
+            ),
             'source_files': {
                 'article_details': 'data/ka_payloads/article_details.json',
+                'lifecycle_table': 'Article_Eater pipeline_lifecycle_full.db::pnu_artifacts',
             },
         },
         'papers': rows,
