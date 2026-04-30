@@ -29,3 +29,8 @@ docs/runtime_smoke_reports/*.json
 docs/browser_smoke_reports/*.md
 docs/browser_smoke_reports/*.json
 !docs/browser_smoke_reports/.gitkeep
+infinigen_out/
+venvs/
+*.blend
+*.blend1
+__pycache__/
