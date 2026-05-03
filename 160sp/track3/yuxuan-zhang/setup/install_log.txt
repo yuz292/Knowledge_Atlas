@@ -1,0 +1,12 @@
+total 1441768
+drwxr-xr-x  11 raven  staff        352 Apr 30 01:34 .
+drwxr-xr-x   5 raven  staff        160 Apr 30 15:47 ..
+-rw-r--r--   1 raven  staff        985 Apr 30 01:34 MaskTag.json
+drwxr-xr-x   3 raven  staff         96 Apr 30 01:34 assets
+-rw-r--r--   1 raven  staff      92969 Apr 30 01:33 optim_records.csv
+-rw-r--r--   1 raven  staff      16940 Apr 30 01:33 optim_records.png
+-rw-r--r--   1 raven  staff       1012 Apr 30 01:34 pipeline_coarse.csv
+-rw-r--r--   1 raven  staff        706 Apr 30 01:34 polycounts.txt
+-rw-r--r--   1 raven  staff  737955197 Apr 30 01:34 scene.blend
+-rw-r--r--   1 raven  staff      96934 Apr 30 01:34 solve_state.json
+-rw-r--r--   1 raven  staff          7 Apr 30 01:34 version.txt
