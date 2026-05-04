@@ -1,0 +1,6 @@
+{
+  "splat_source": "160sp/track3/yuxuan-zhang/scans/bathroom.glb",
+  "extraction_time": "2026-05-03T21:00:00",
+  "quality_flag": "stub",
+  "note": "splat_to_hdri.py raised SyntaxError on Python 3.11 (bytes/nonbytes literal mix at line 123); stub HDR written per scaffold specification"
+}

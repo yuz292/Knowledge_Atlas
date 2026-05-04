@@ -1,0 +1,17 @@
+[
+  {
+    "name": "bathroom_wall_tiles",
+    "bbox": [[-1.50, 0.00, -2.00], [1.50, 2.10, -1.90]],
+    "target_class": "tile"
+  },
+  {
+    "name": "bathroom_floor",
+    "bbox": [[-1.50, 0.00, -2.00], [1.50, 0.05, 1.50]],
+    "target_class": "tile"
+  },
+  {
+    "name": "bathroom_ceiling",
+    "bbox": [[-1.50, 2.35, -2.00], [1.50, 2.40, 1.50]],
+    "target_class": "plaster"
+  }
+]
