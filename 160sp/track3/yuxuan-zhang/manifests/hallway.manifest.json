@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ka://manifests/hallway.v1",
+  "title": "Hallway / Corridor Parameter Manifest",
+  "description": "Six knobs an LLM front-end may turn for hallway.",
+  "infinigen_entity": "infinigen.entities.Hallway",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ceiling_height_m": {
+      "type": "number",
+      "minimum": 2.0,
+      "maximum": 3.5,
+      "default": 2.7,
+      "unit": "m",
+      "description": "Floor-to-ceiling clear height of the corridor.",
+      "citation": "Vartanian et al. (2015); Meyers-Levy & Zhu (2007)",
+      "rationale": "Ceiling height is the dominant spatial variable in hallways. Vartanian et al. (2015) show ceiling height between 2.4-3.0m significantly modulates approach-avoidance decisions in circulation spaces."
+    },
+    "corridor_width_m": {
+      "type": "number",
+      "minimum": 0.9,
+      "maximum": 2.4,
+      "default": 1.2,
+      "unit": "m",
+      "description": "Clear width of the corridor between finished wall surfaces.",
+      "citation": "Vartanian et al. (2015); Joye (2007)",
+      "rationale": "Corridor width jointly determines perceived enclosure with ceiling height. Widths below 1.1m produce strong enclosure effects. Joye (2007) identifies narrow corridors as high cognitive-load environments."
+    },
+    "wall_material_id": {
+      "type": "string",
+      "enum": ["white_plaster", "warm_wood_panel", "grey_concrete", "light_brick", "dark_plaster"],
+      "default": "white_plaster",
+      "unit": "categorical",
+      "description": "Named material token for corridor wall surfaces.",
+      "citation": "Ulrich (1991)",
+      "rationale": "Wall material warmth affects perceived stress in transitional spaces. Ulrich (1991) identifies material warmth as a primary wellness variable in enclosed circulation paths."
+    },
+    "daylight_intensity": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 0.4,
+      "unit": "normalised",
+      "description": "Scalar on natural light from windows or borrowed light openings.",
+      "citation": "Kaplan & Kaplan (1989); Münch et al. (2020)",
+      "rationale": "Daylight access reduces perceived confinement and supports restoration during transit. Kaplan & Kaplan (1989) identify prospect-refuge balance as critical in corridor design."
+    },
+    "biophilia_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4,
+      "default": 1,
+      "unit": "count",
+      "description": "Number of plant entities placed along the corridor length.",
+      "citation": "Kaplan & Kaplan (1989); Ulrich (1991)",
+      "rationale": "Plant presence provides restorative micro-encounters during transit. Ulrich (1991) reports brief exposure to greenery in transitional spaces reduces stress markers."
+    },
+    "wall_warmth_index": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 0.5,
+      "unit": "normalised",
+      "description": "0 = cool palette (whites, greys); 1 = warm palette (creams, wood tones).",
+      "citation": "Ulrich (1991); Meyers-Levy & Zhu (2007)",
+      "rationale": "Colour temperature interacts with ceiling height on mood. Meyers-Levy & Zhu (2007) show warm palettes under lower ceilings can compensate for enclosure-driven avoidance responses."
+    }
+  },
+  "required": ["ceiling_height_m", "corridor_width_m"]
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ka://manifests/bathroom.v1",
+  "title": "Bathroom Parameter Manifest",
+  "description": "Six knobs an LLM front-end may turn for bathroom.",
+  "infinigen_entity": "infinigen.entities.Bathroom",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ceiling_height_m": {
+      "type": "number",
+      "minimum": 1.8,
+      "maximum": 3.0,
+      "default": 2.4,
+      "unit": "m",
+      "description": "Floor-to-ceiling clear height of the bathroom.",
+      "citation": "Vartanian et al. (2015); Meyers-Levy & Zhu (2007)",
+      "rationale": "Ceiling height modulates perceived enclosure and approach-avoidance decisions. Bathrooms with lower ceilings (1.8-2.1m) produce stronger enclosure effects than any other room type due to their small footprint."
+    },
+    "daylight_intensity": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 0.5,
+      "unit": "normalised",
+      "description": "Scalar on the natural light contribution through windows or skylights.",
+      "citation": "Münch et al. (2020); Kaplan & Kaplan (1989)",
+      "rationale": "Daylight access in bathrooms modulates morning circadian entrainment and perceived cleanliness. Münch et al. (2020) identify bathrooms as a critical site for morning light exposure."
+    },
+    "tile_material_id": {
+      "type": "string",
+      "enum": ["white_ceramic", "grey_stone", "marble", "mosaic_blue", "terracotta", "dark_slate"],
+      "default": "white_ceramic",
+      "unit": "categorical",
+      "description": "Named material token for wall and floor tile surface.",
+      "citation": "Ulrich (1991)",
+      "rationale": "Surface material warmth and cleanliness cues contribute directly to stress reduction and perceived hygiene. Ulrich (1991) identifies material texture as a primary wellness variable in healthcare interiors."
+    },
+    "fixture_count": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 6,
+      "default": 3,
+      "unit": "count",
+      "description": "Number of fixture entities placed: toilet, sink, shower, bathtub, towel rail, mirror.",
+      "citation": "Joye (2007)",
+      "rationale": "Fixture density controls perceived clutter and cognitive load. Joye (2007) links object density to complexity perception and restorative capacity."
+    },
+    "wall_warmth_index": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 0.4,
+      "unit": "normalised",
+      "description": "0 = cool palette (blues, greys); 1 = warm palette (creams, terracottas).",
+      "citation": "Ulrich (1991); Meyers-Levy & Zhu (2007)",
+      "rationale": "Colour temperature of bathroom surfaces affects perceived warmth and stress recovery. Ulrich (1991) reports warm material palettes reduce physiological stress markers in enclosed spaces."
+    },
+    "biophilia_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3,
+      "default": 1,
+      "unit": "count",
+      "description": "Number of plant entities placed in the bathroom.",
+      "citation": "Kaplan & Kaplan (1989); Ulrich (1991)",
+      "rationale": "Even minimal greenery in bathrooms provides restorative cues. Kaplan & Kaplan (1989) identify plant presence as a reliable restoration trigger in small enclosed spaces."
+    }
+  },
+  "required": ["ceiling_height_m", "daylight_intensity"]
+}
